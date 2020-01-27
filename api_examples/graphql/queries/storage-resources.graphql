@@ -1,0 +1,42 @@
+{
+  # List statistics and details for storage related resources. The storage category
+  # is used across multiple providers (e.g. AWS & GCP) and all resources visible
+  # to the caller. Limit the first page of results to 5 items.
+  allStorageResources: resources(
+    filter: "resourceCategory:'@turbot/turbot#/resource/categories/storage' limit:5"
+  ) {
+    # Overall statistics for the environment, available through next pages
+    metadata {
+      stats {
+        total
+      }
+    }
+    # Items returned by the current query (limited to 5 in this case)
+    items {
+      # Turbot metadata about the resource. This is provider agnostic.
+      turbot {
+        title
+        id
+        tags
+        akas
+      }
+      # Resource Type for this specific item, e.g. AWS > EC2 > Volume.
+      type {
+        title
+        turbot {
+          akas
+        }
+        # Resource Category for the item & type. Per the filter, it will be a child of Resource > Storage.
+        category {
+          title
+          turbot {
+            akas
+          }
+        }
+      }
+    }
+    paging {
+      next
+    }
+  }
+}

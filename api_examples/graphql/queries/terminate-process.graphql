@@ -1,0 +1,10 @@
+mutation {
+  # Processes timeout after 45 mins if stuck, but this mutation can be used
+  # to terminate a process explicitly if required.
+  terminateProcess( input: { id: "176411629053598" } ) {
+    state
+    turbot {
+      id
+    }
+  }
+}

@@ -1,0 +1,15 @@
+mod_list = [
+    "aws",
+    "aws-cisv1",
+    "aws-cloudtrail",
+    "aws-cloudwatch",
+    "aws-config",
+    "aws-ec2",
+    "aws-iam",
+    "aws-kms",
+    "aws-logs",
+    "aws-s3",
+    "aws-sns",
+    "aws-vpc",
+    "cis",
+  ]
