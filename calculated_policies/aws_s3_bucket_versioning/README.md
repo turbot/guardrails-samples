@@ -1,10 +1,10 @@
-# S3 Smart Folder Example
+# AWS S3 / Enable versioning on production buckets.
 
-Provides a Terraform configuration for creating a smart folder and applying example turbot policy settings for an S3 bucket.
+Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the AWS > S3 > Bucket > Versioning policy.  The Calculated policy enables versioning when a tag is present on the bucket resource matching {Environment:=Prod} and disables versioning if it is not present or set to an alternate value.
 
 ## Template Input (GraphQL)
 The template input to a calculated policy is a GraphQL query.  In this case the query selects all tags from the resource:
-```
+```graphql
     { 
         resource {
             tags
@@ -31,8 +31,8 @@ To create the smart folder, you must have:
 ## Running the Example
 
 To run the S3 Example:
-- Navigate to the directory on the command line `cd s3_smartfolder_example`
+- Navigate to the directory on the command line `cd aws_s3_bucket_versioning`
 - Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied
 - Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings
 
-> The baseline runs with the default values. However, you could create and set your own defaults using `.tfvars` file that will override the existing files.
+> The template will run with the default values set in `default.tfvars`; however, you could create and set your own defaults using a `.tfvars` file that will override the existing files.
