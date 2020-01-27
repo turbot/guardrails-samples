@@ -20,3 +20,5 @@ Includes policy configurations (including some calculated policies) for implemen
 ## Baselines
 Baselines provide a starting point for the most common configuration templates needed when creating a new Turbot workspace or onboarding a cloud provider resource into Turbot.  Baselines are implemented with [Terraform](https://www.terraform.io), allowing you to manage and provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
+## Calculated Policies
+Provides templates for implementing calculated policies. Calculated policies allow Turbot administrators to modify or extend the default behavior and logic that Turbot uses to evaluate controls. The calculated policy examples are implemented with [Terraform](https://www.terraform.io) allowing you to manage and provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
