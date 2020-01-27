@@ -1,0 +1,42 @@
+# In a healthy environment, controls will never (or at least very rarely) be in
+# error, invalid or tbd states. Here we report on all controls of any type in those
+# states so they can be investigated and remediated.
+{
+  controls(filter: "state:error,invalid,tbd") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      state
+      turbot {
+        id
+      }
+      type {
+        trunk {
+          items {
+            turbot {
+              title
+            }
+          }
+        }
+      }
+      resource {
+        turbot {
+          id
+        }
+        trunk {
+          items {
+            turbot {
+              title
+            }
+          }
+        }
+      }
+    }
+    paging {
+      next
+    }
+  }
+}

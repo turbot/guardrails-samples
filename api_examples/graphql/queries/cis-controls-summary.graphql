@@ -1,0 +1,43 @@
+{
+  # CIS controls report (all vendors, all resources)
+  cisControls: controlSummariesByControlCategory(filter:"controlCategory:'tmod:@turbot/cis#/control/categories/cis'") {
+    metadata {
+      stats {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+    items {
+      category {
+        turbot {
+          akas
+        }
+        trunk {
+          items {
+            turbot {
+              title
+            }
+          }
+        }
+      }
+      summary {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+  }
+}
