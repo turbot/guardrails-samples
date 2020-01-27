@@ -17,10 +17,10 @@ resource "turbot_policy_setting" "s3_bucket_versioning" {
   EOT
   # Nun
   template      = <<EOT
-    {% if $.resource.tags.data-classification == "temp" %}
-    "Enforce: Disabled"
-    {% else %}
+    {% if $.resource.tags.Environment == "Prod" %}
     "Enforce: Enabled"
+    {% else %}
+    "Enforce: Disabled"
     {% endif %}
   EOT
 }
