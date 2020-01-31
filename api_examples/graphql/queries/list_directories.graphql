@@ -1,0 +1,8 @@
+{
+  resources(filter:"resourceType:directory") {
+    items {
+      trunk { title }
+      turbot { id akas }
+    }
+  }
+}

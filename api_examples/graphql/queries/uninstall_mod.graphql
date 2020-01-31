@@ -1,0 +1,24 @@
+# Where  id is the id of mod installed in
+
+mutation uninstallMod {
+  uninstallMod(input: { id: "175212288707582" }) {
+    __typename
+    success # Result of the mod uninstall request
+  }
+}
+
+#  Can get mod turbot id by updating $.title in the filter
+query modInfo {
+  resources(
+    filter: "resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self $.title:'@turbot/aws'"
+  ) {
+    items {
+      turbot {
+        id
+      }
+      modId: get(path: "$id")
+      version: get(path: "version")
+      peerDependencies: get(path: "peerDependencies")
+    }
+  }
+}

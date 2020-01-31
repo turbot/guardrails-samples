@@ -1,0 +1,9 @@
+{
+  resources(filter:"resourceType:'tmod:@turbot/turbot-iam#/resource/types/profile'") {
+    items {
+      trunk { title }
+      turbot { id akas }
+      type { uri }
+    }
+  }
+}

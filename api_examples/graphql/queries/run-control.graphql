@@ -1,5 +1,4 @@
-
 # Run a specific control with ID
 mutation {
-  runControl(command: { meta: { controlId: "166875835509027" } })
+  runControl(input: { id: "166875835509027" })
 }
