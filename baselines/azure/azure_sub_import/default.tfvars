@@ -1,11 +1,11 @@
-azure_app_password_expiration  = "2030-01-01T01:02:03Z"
+azure_app_password_expiration  = "<'YYYY-MM-DD'T'HH:MM:SS'Z>"
 
-azure_app_name                 = "turbot_v5"
+azure_app_name                 = "<app_name>"
 
-azure_app_password             = "test123"
+azure_app_password             = "<password>"
 
-azure_environment_type         = "Global Cloud"
+azure_environment_type         = "<clound_environment>"
 
-azure_subscription_id          = "3510ae4d-530b-497d-8f30-53b9616fc6c1"
+azure_subscription_id          = "<azure_subscription_id>"
 
-parent_resource                = "175652911922416"
+parent_resource                = "<15 digit tubot folder id under which the aws account to be imported>"

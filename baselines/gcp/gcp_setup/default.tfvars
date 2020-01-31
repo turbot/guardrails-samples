@@ -1,3 +1,3 @@
-smart_folder_title = "gcp setup folder"
+smart_folder_title = "<folder name>"
 
-folder_parent = "tmod:@turbot/turbot#/"
+folder_parent      = "tmod:@turbot/turbot#/"

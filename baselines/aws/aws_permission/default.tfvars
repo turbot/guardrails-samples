@@ -1,7 +1,7 @@
-user_details = {
-	  "email"                 = "Display Name"
-		"test_user1@turbot.com" = "Test User1"
-		"test_user2@turbot.com" = "Test User2"
-	}
+local_directory_name      = "<directory_name>"
 
-local_directory_name = "test_directory"
+user_details = {
+  "<example1@domain.com>" = "<(1)firstname lastname>"
+  "<example2@domain.com>" = "<(2)firstname lastname>"
+}
+grant_scope_id            = "tmod:@turbot/turbot#/"

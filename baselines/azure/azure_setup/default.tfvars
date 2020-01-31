@@ -1,3 +1,3 @@
-smart_folder_title = "Azure Setup"
+smart_folder_title = "<folder_name>"
 
-folder_parent = "tmod:@turbot/turbot#/"
+folder_parent      = "tmod:@turbot/turbot#/"

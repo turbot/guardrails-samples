@@ -1,1 +1,1 @@
-target_resource = 175642982529237
+target_resource = "<resource_id>"

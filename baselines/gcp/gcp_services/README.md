@@ -10,12 +10,13 @@ To run the GCP Services baseline, you must have:
 
   - [Terraform](https://www.terraform.io) Version 12
   - [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
-  - [Credentials](https://turbot-dev.com/v5/docs/api/credentials) configured to connect to your Turbot workspace and GCP account
+  - [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and AWS account
 
 ## Running the Baseline
 
 To run the GCP Services baseline:
 
-- Go to the GCP services baseline directory in the repository with `cd gcp_services`
-- Run `terraform plan -var-file=default.tfvars` to review the changes to be applied
-- Run `terraform apply -var-file=default.tfvars` to apply the changes
+  - Go to the GCP services baseline directory in the repository with `cd gcp_services`
+  - Update `target_resource` in `default.tfvars`
+  - Run `terraform plan -var-file=default.tfvars` to review the changes to be applied
+  - Run `terraform apply -var-file=default.tfvars` to apply the changes

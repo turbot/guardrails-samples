@@ -1,7 +1,7 @@
-target_resource = "tmod:@turbot/turbot#/"
+target_resource              = "tmod:@turbot/turbot#/"
 
 provider_status = {
-    "API Management"       = "Enforce: Registered"
+    "API Management"         = "Enforce: Registered"
     "Compute"                = "Enforce: Registered"
     "Network"                = "Enforce: Registered"
     "Security"               = "Enforce: Registered"

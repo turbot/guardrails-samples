@@ -1,4 +1,4 @@
-target_resource = 173255901224128
+target_resource         = "<resource_id>"
 
 service_status  = {
     aws-cloudtrail      = "Enabled"

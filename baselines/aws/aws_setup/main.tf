@@ -1,7 +1,7 @@
 resource "turbot_smart_folder" "aws_folder" {
-  title         = var.smart_folder_title
-  description   = "Smart folder for importing the aws account"
-  parent        = var.folder_parent
+  title       = var.smart_folder_title
+  description = "Smart folder for importing the aws account:"
+  parent      = var.folder_parent
 }
 
 # Region Defaults

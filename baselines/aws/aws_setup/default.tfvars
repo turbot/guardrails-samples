@@ -1,9 +1,9 @@
-smart_folder_title = "AWS Setup Smart"
+smart_folder_title = "<folder name>"
 
-folder_parent = "tmod:@turbot/turbot#/"
+folder_parent      = "tmod:@turbot/turbot#/"
 
-aws_regions = <<EOT
+aws_regions        = <<EOT
   - us-east-1
   EOT
 
-setup_cloudtrail = true
+setup_cloudtrail   = true

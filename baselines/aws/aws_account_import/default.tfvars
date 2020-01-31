@@ -1,9 +1,9 @@
-aws_account_id = "602911532822"
+aws_account_id     = "<12 digit aws account id to be imported>"
 
-parent_resource = "175646280389309"
+parent_resource    = "<15 digit tubot folder id under which the aws account to be imported>"
 
-role_name = "turbot_service_role"
+role_name          = "turbot_service_role"
 
-turbot_account_id = "525041748188"
+turbot_account_id  = "<12 digit master account id>"
 
-turbot_external_id = "turbot"
+turbot_external_id = "<8 digit sts:ExternalId>"

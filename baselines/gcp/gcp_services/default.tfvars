@@ -1,5 +1,6 @@
-target_resource = 173869911182894
+target_resource          = "<resource id>"
 
+#This is list of services that you would like to Enable or Disable, Service names must match the policy_map
 service_status  = {
     gcp-computeengine    = "Enabled"
     gcp-pubsub           = "Enabled"

@@ -21,8 +21,6 @@ resource "aws_iam_role" "turbot_service_role" {
                         })
 }
 
-
-
 #### Attach the AdministratorAccess policy to the Turbot Role
 resource "aws_iam_role_policy_attachment" "role_admin_policy" {
   role       = aws_iam_role.turbot_service_role.name
@@ -60,14 +58,13 @@ resource "aws_iam_role_policy_attachment" "role_sns_admin_policy" {
 
 #### Create the AWS > Account resource in Turbot
 resource "turbot_resource" "account_resource" {
-  parent = var.parent_resource
-  type   = "tmod:@turbot/aws#/resource/types/account"
-  data   = jsonencode({
-            "Id": "${var.aws_account_id}",
-            "turbot": {}
-          })
+  parent     = var.parent_resource
+  type       = "tmod:@turbot/aws#/resource/types/account"
+  data       = jsonencode({
+                "Id": "${var.aws_account_id}",
+                "turbot": {}
+              })
 }
-
 
 #### Set the credentials (Role, exteranl id) for the account via Turbot policies
 

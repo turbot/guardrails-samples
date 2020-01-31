@@ -1,7 +1,9 @@
 variable "smart_folder_title" {
-  type    = string
+  description = "Enter Smart folder name for importing the gcp account:"
+  type        = string
 }
 
 variable "folder_parent" {
-  type    = string
+  type        = string
+  default     = "tmod:@turbot/turbot#/"
 }

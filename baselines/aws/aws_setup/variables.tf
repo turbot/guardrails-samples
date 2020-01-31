@@ -1,19 +1,21 @@
 variable "smart_folder_title" {
-  type    = string
+  description = "Smart folder for importing the aws account:"
+  type        = string
 }
 
 variable "aws_regions" {
-  type = string
+  type        = string
 
-  default = <<EOT
+  default     = <<EOT
   - us-east-1
   EOT
 }
 
 variable "setup_cloudtrail" {
-  default = true
+  default     = true
 }
 
 variable "folder_parent" {
-  type = string
+  type        = string
+  default     = "tmod:@turbot/turbot#/"
 }

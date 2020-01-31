@@ -1,7 +1,7 @@
 resource "turbot_smart_folder" "azure_folder" {
   parent        = var.folder_parent
   title         = var.smart_folder_title
-  description   = "Folder to import the Azure Subscription"
+  description   = "Folder to import the Azure Subscription:"
 }
 
 # Create Event through Event Handler
