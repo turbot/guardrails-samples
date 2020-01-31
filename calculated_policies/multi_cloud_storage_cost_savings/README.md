@@ -16,7 +16,7 @@ The template input to a calculated policy is a GraphQL query.  In this case the 
 }
 ```
 ### Template (Nunjucks)
-The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html) with custom logic:
+The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html) with custom logic:  
 Azure
 ```nunjucks
   {%- if $.storageAccount.turbot.tags.Environment == "Dev"%}
