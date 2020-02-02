@@ -11,7 +11,7 @@ resource "turbot_local_directory" "test_dir" {
 resource "turbot_local_directory_user" "create_user" {
   count        = length(var.user_details)
   title        = var.user_details[keys(var.user_details)[count.index]]
-  email        = keys(var.user_details)[count.index]
+  email        = lower(keys(var.user_details)[count.index])
   display_name = var.user_details[keys(var.user_details)[count.index]]
   parent       = turbot_local_directory.test_dir.id
 }
@@ -20,7 +20,7 @@ resource "turbot_local_directory_user" "create_user" {
 resource "turbot_profile" "create_user_profile" {
   count        = length(var.user_details)
   title        = turbot_local_directory_user.create_user[count.index].title
-  email        = keys(var.user_details)[count.index]
+  email        = lower(keys(var.user_details)[count.index])
   status       = "Active"
   given_name   = split(" ", var.user_details[keys(var.user_details)[count.index]])[0]
   family_name  = split(" ", var.user_details[keys(var.user_details)[count.index]])[1]
