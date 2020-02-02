@@ -1,9 +1,6 @@
-local_directory_name = "Qualcomm Local Directory"
+local_directory_name = "Test Local Directory"
 
 user_details = {
-  "abauer@qualcomm.com"       = "Aaron Bauer"
-  "rbracewe@qti.qualcomm.com" = "Robert Bracewell"
-  "melder@qualcomm.com"       = "Matthew Elder"
-  "jcutting@qualcomm.com"     = "Jeremiah Cutting"
-  "mattyoun@qualcomm.com"     = "Matthew Young"
+  "user1@test.com" = "User One"
+  "user2@test.com" = "User Two"
 }

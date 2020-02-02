@@ -1,18 +1,17 @@
-################################        Variables        ###################################
 variable "local_directory_name" {
+  description = "Enter the name for the local directory to be created:"
   type        = string
-  description = "Enter the name of local directory to be created"
 }
 
-# It should be the turbot id of turbot, folder or resource
+variable "user_details" {
+  description = "Enter the user details (`<example@domain.com>`=`<firstname lastname>`):"
+  type        = map(string)
+}
+
+# It is the turbot id of turbot folder or resource.
 # The Admin and Owner grants will be activated at this level
+# "tmod:@turbot/turbot#/" is the aka of Turbot level
 variable "grant_scope_id" {
   type    = string
   default = "tmod:@turbot/turbot#/"
-}
-
-############################## List of users with details to create  ###############
-variable "user_details" {
-  type        = map(string)
-  description = "Enter the user details in (`<email>` = `<display name>`)"
 }

@@ -1,17 +1,4 @@
-# variable "turbot_profile" {
-#   type        = "string"
-#   default     = "punisher"
-#   description = "Turbot profile for the workspace where this terraform code will be executed"
-# }
-
-# provider "turbot" {
-#   profile = var.turbot_profile
-# }
-
-# terraform apply -var-file="default.tfvars"
-# terraform destroy -var-file="default.tfvars"
-
-##############################  Local Directory Creation    ###################################
+##########  Local Directory Creation    ##########
 resource "turbot_local_directory" "test_dir" {
   parent              = "tmod:@turbot/turbot#/"
   title               = var.local_directory_name
@@ -20,7 +7,7 @@ resource "turbot_local_directory" "test_dir" {
 }
 
 
-###############################  User Creation    ###################################
+##########  User Creation    ##########
 resource "turbot_local_directory_user" "create_user" {
   count        = length(var.user_details)
   title        = var.user_details[keys(var.user_details)[count.index]]
@@ -29,7 +16,7 @@ resource "turbot_local_directory_user" "create_user" {
   parent       = turbot_local_directory.test_dir.id
 }
 
-###############################  User Profile Creation    ###################################
+##########  User Profile Creation    ##########
 resource "turbot_profile" "create_user_profile" {
   count        = length(var.user_details)
   title        = turbot_local_directory_user.create_user[count.index].title
@@ -42,7 +29,9 @@ resource "turbot_profile" "create_user_profile" {
   profile_id   = keys(var.user_details)[count.index]
 }
 
-###############################  Grant Creation    ###################################
+##########  Grant Creation    ##########
+
+# Create Turbot/Admin grant
 resource "turbot_grant" "grant_admin" {
   count    = length(var.user_details)
   resource = "tmod:@turbot/turbot#/"
@@ -51,6 +40,7 @@ resource "turbot_grant" "grant_admin" {
   identity = turbot_profile.create_user_profile[count.index].id
 }
 
+# Create Turbot/Owner grant
 resource "turbot_grant" "grant_owner" {
   count    = length(var.user_details)
   resource = "tmod:@turbot/turbot#/"
@@ -59,13 +49,16 @@ resource "turbot_grant" "grant_owner" {
   identity = turbot_profile.create_user_profile[count.index].id
 }
 
-###############################  Grant Activation    ###################################
+##########  Grant Activation    ##########
+
+# Activate Turbot/Admin grant
 resource "turbot_grant_activation" "activate_admin_grant" {
   count    = length(var.user_details)
   resource = var.grant_scope_id
   grant    = turbot_grant.grant_admin[count.index].id
 }
 
+# Activate Turbot/Owner grant
 resource "turbot_grant_activation" "activate_owner_grant" {
   count    = length(var.user_details)
   resource = var.grant_scope_id
