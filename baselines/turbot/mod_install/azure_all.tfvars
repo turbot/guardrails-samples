@@ -12,15 +12,18 @@ mod_list = [
   "azure-firewall",
   "azure-frontdoorservice",
   "azure-iam",
+  "azure-keyvault",
   "azure-loadbalancer",
   "azure-loganalytics",
   "azure-monitor",
   "azure-mysql",
   "azure-network",
+  "azure-networkwatcher",
   "azure-postgresql",
   "azure-provider",
   "azure-searchmanagement",
   "azure-securitycenter",
   "azure-sql",
-  "azure-storage"
+  "azure-storage",
+  "azure-cisv1"
 ]
