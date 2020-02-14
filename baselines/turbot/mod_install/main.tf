@@ -1161,96 +1161,6 @@ resource "turbot_mod" "azure" {
   count   = contains(var.mod_list, "azure") ? 1 : 0
 }
 
-resource "turbot_mod" "azure-aks" {
-  count = contains(var.mod_list, "azure-aks") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-aks"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-apimanagement" {
-  count = contains(var.mod_list, "azure-apimanagement") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-apimanagement"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-applicationgateway" {
-  count = contains(var.mod_list, "azure-applicationgateway") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-applicationgateway"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-applicationinsights" {
-  count = contains(var.mod_list, "azure-applicationinsights") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-applicationinsights"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-appservice" {
-  count = contains(var.mod_list, "azure-appservice") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-appservice"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-compute" {
-  count = contains(var.mod_list, "azure-compute") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-compute"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-cosmosdb" {
-  count = contains(var.mod_list, "azure-cosmosdb") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-cosmosdb"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-datafactory" {
-  count = contains(var.mod_list, "azure-datafactory") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-datafactory"
-  version    = ">=5.0.0-beta.1"
-}
-
-resource "turbot_mod" "azure-dns" {
-  count = contains(var.mod_list, "azure-dns") ? 1 : 0
-
-  parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
-  org        = "turbot"
-  mod        = "azure-dns"
-  version    = ">=5.0.0-beta.1"
-}
-
 resource "turbot_mod" "azure-provider" {
   count = contains(var.mod_list, "azure-provider") ? 1 : 0
 
@@ -1271,6 +1181,132 @@ resource "turbot_mod" "azure-iam" {
   ]
   org     = "turbot"
   mod     = "azure-iam"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-aks" {
+  count = contains(var.mod_list, "azure-aks") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-aks"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-apimanagement" {
+  count = contains(var.mod_list, "azure-apimanagement") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-apimanagement"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-applicationgateway" {
+  count = contains(var.mod_list, "azure-applicationgateway") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-applicationgateway"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-applicationinsights" {
+  count = contains(var.mod_list, "azure-applicationinsights") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-applicationinsights"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-appservice" {
+  count = contains(var.mod_list, "azure-appservice") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-appservice"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-compute" {
+  count = contains(var.mod_list, "azure-compute") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-compute"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-cosmosdb" {
+  count = contains(var.mod_list, "azure-cosmosdb") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-cosmosdb"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-datafactory" {
+  count = contains(var.mod_list, "azure-datafactory") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-datafactory"
+  version = ">=5.0.0-beta.1"
+}
+
+resource "turbot_mod" "azure-dns" {
+  count = contains(var.mod_list, "azure-dns") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.azure,
+    turbot_mod.azure-iam,
+    turbot_mod.azure-provider
+  ]
+  org     = "turbot"
+  mod     = "azure-dns"
   version = ">=5.0.0-beta.1"
 }
 
@@ -1393,7 +1429,7 @@ resource "turbot_mod" "azure-networkwatcher" {
   depends_on = [
     turbot_mod.azure,
     turbot_mod.azure-iam,
-    turbot_mod.azure-provider
+    turbot_mod.azure-provider,
     turbot_mod.azure-network
   ]
   org     = "turbot"
@@ -1498,9 +1534,10 @@ resource "turbot_mod" "azure-cisv1" {
 }
 
 resource "turbot_mod" "cis" {
+  count = contains(var.mod_list, "cis") ? 1 : 0
+
   parent  = "tmod:@turbot/turbot#/"
   org     = "turbot"
   mod     = "cis"
   version = ">=5.0.0-beta.1"
-  count   = contains(var.mod_list, "cis") ? 1 : 0
 }
