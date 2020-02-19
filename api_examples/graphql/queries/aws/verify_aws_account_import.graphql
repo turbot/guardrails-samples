@@ -1,0 +1,19 @@
+query awsAccountCheck {
+  resources(input: $input)  {
+    items {
+      object
+    }
+  }
+}
+
+{ "filter: resourceType:'tmod:@turbot/aws#/resource/types/account' $.Id:899206412154"}
+
+
+####
+query awsAccountCheck {
+  resources(filter: "resourceType:'tmod:@turbot/aws#/resource/types/account' $.Id:899206412154") {
+    items {
+      object
+    }
+  }
+}
