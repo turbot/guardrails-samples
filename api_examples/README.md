@@ -18,10 +18,10 @@ Simple, example clients for running queries against Turbot's GraphQL API.
 
 Practical examples of Turbot GraphQL queries:
 
-* [List all storage resources](./graphql/queries/storage-resources.graphql)
-* [Full version history of a resource](./graphql/queries/resource-history.graphql)
-* [List controls to investigate in states Error, Invalid or TBD](./graphql/queries/controls-to-investigate.graphql)
+* [List all storage resources](graphql/queries/turbot/storage_resources.graphql)
+* [Full version history of a resource](graphql/queries/turbot/resource_history.graphql)
+* [List controls to investigate in states Error, Invalid or TBD](graphql/queries/turbot/controls_to_investigate.graphql)
 * [Paging through results](./graphql/queries/paging.graphql)
-* [Run a control](./graphql/queries/run-control.graphql)
-* [CIS controls summary (all providers, all resources)](./graphql/queries/cis-controls-summary.graphql)
-* [Create a profile](./graphql/queries/create_profile.graphql)
+* [Run a control](graphql/queries/turbot/run_control.graphql)
+* [CIS controls summary (all providers, all resources)](graphql/queries/turbot/cis_controls_summary.graphql)
+* [Create a profile](graphql/queries/turbot/create_profile.graphql)

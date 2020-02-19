@@ -1,0 +1,62 @@
+#################################  STEP 1  #################################
+####### Create AWS Account Mutation  #######
+mutation CreateAwsAccount($input: CreateResourceInput!) {
+  createResource(input: $input) {
+    turbot {
+      id
+    }
+  }
+}
+
+####### Input to above CreateAwsAccount Mutation  #######
+# parent:       It is the turbot id of folder to import account
+# Id:           AWS account Id
+# Partiton:     can be one of the "aws" or "aws-us-gov"
+{
+  "input": {
+    "parent": "180935021994784",
+    "type": "tmod:@turbot/aws#/resource/types/account",
+    "data": {
+      "Id": "123456789012"
+    },
+    "metadata":{
+      "aws":{
+        "accountId": "123456789012",
+        "partition": "aws"
+      }
+    }
+  }
+}
+
+#################################  STEP 2  #################################
+# Used the turbot id returned from STEP 1 as resource for below policy settings
+
+####### Set AWS Account Policies Mutation  #######
+mutation SetAwsAccountPolicies($inputIamRole: CreatePolicySettingInput!, $inputIAMRoleExternalIdCommand: CreatePolicySettingInput!) {
+  iamRole: createPolicySetting(input: $inputIamRole) {
+    turbot {
+      id
+    }
+  }
+  iamRoleExternalId: createPolicySetting(input: $inputIAMRoleExternalIdCommand) {
+    turbot {
+      id
+    }
+  }
+}
+
+
+{
+  "inputIamRole": {
+    "type": "tmod:@turbot/aws#/policy/types/turbotIamRole",
+    "resource": "182995065624549",
+    "value": "arn:aws:iam::123456789012:role/turbot/core/turbot-superuser",
+    "precedence": "REQUIRED"
+  },
+  "inputIAMRoleExternalIdCommand": {
+    "type": "tmod:@turbot/aws#/policy/types/turbotIamRoleExternalId",
+    "resource": "182995065624549",
+    "value": "turbot",
+    "precedence": "REQUIRED"
+  }
+}
