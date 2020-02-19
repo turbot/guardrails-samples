@@ -1,0 +1,12 @@
+query azureSubscriptionCheck($filter: [String!]) {
+  resources(filter: $filter) {
+    items {
+      object
+    }
+  }
+}
+
+############Variables#############
+{
+  "filter": "resourceType:'tmod:@turbot/azure#/resource/types/subscription' $.subscriptionId:a4bda6dd-9eaf-48cf-9b4b-795a2f599cf1"
+}

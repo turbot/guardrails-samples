@@ -1,0 +1,12 @@
+query gcpProjectCheck($filter: [String!]) {
+  resources(filter: $filter) {
+    items {
+      object
+    }
+  }
+}
+
+#####Variables###########
+{
+  "filter": "resourceType:'tmod:@turbot/gcp#/resource/types/project' $.projectId:'demo-project'"
+}
