@@ -15,8 +15,7 @@ To run the aws setup baseline, you must have:
   - [Terraform](https://www.terraform.io) Version 12
   - [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
   - [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and AWS account
-  - `turbot`, `turbot-iam`, `aws-cloudtrail`, `aws-s3` and `aws-cisv1` mods
-
+  - These mods: `turbot`, `turbot-iam`, `aws`, `aws-iam`, `aws-cloudtrail`, `aws-s3`, `aws-kms`, `aws-s3`, `aws-sns`, `aws-cloudwatch`, `aws-events`.  If they aren't already installed or are behind in versions, this Terraform will install/upgrade these mods.
 
 ## Running the Baseline
 
