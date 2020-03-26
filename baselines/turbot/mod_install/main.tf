@@ -158,7 +158,7 @@ resource "turbot_mod" "aws-sns" {
   version = ">=5.0.0-beta.1"
 }
 
-resource "turbot_mod" "aws-vpc" {
+resource "turbot_mod" "aws-vpc-core" {
   count = contains(var.mod_list, "aws-vpc") ? 1 : 0
 
   parent = "tmod:@turbot/turbot#/"
@@ -169,7 +169,40 @@ resource "turbot_mod" "aws-vpc" {
     turbot_mod.aws-kms
   ]
   org     = "turbot"
-  mod     = "aws-vpc"
+  mod     = "aws-vpc-core"
+  version = ">=5.0.0-beta.1"
+}
+resource "turbot_mod" "aws-vpc-internet" {
+  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.aws-vpc-core
+  ]
+  org     = "turbot"
+  mod     = "aws-vpc-internet"
+  version = ">=5.0.0-beta.1"
+}
+resource "turbot_mod" "aws-vpc-connect" {
+  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.aws-vpc-core
+  ]
+  org     = "turbot"
+  mod     = "aws-vpc-connect"
+  version = ">=5.0.0-beta.1"
+}
+resource "turbot_mod" "aws-vpc-security" {
+  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+
+  parent = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.aws-vpc-core
+  ]
+  org     = "turbot"
+  mod     = "aws-vpc-security"
   version = ">=5.0.0-beta.1"
 }
 
@@ -475,7 +508,10 @@ resource "turbot_mod" "aws-cisv1" {
     turbot_mod.aws-kms,
     turbot_mod.aws-logs,
     turbot_mod.aws-sns,
-    turbot_mod.aws-vpc
+    turbot_mod.aws-vpc-core,
+    turbot_mod.aws-vpc-connect,
+    turbot_mod.aws-vpc-internet,
+    turbot_mod.aws-vpc-security
   ]
   org     = "turbot"
   mod     = "aws-cisv1"

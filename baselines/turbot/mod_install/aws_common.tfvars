@@ -8,5 +8,8 @@ mod_list = [
   "aws-logs",
   "aws-s3",
   "aws-sns",
-  "aws-vpc"
+  "aws-vpc-core",
+  "aws-vpc-connect",
+  "aws-vpc-internet",
+  "aws-vpc-security"
 ]
