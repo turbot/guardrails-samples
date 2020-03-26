@@ -11,8 +11,8 @@ mod_list = [
   "aws-s3",
   "aws-sns",
   "aws-vpc-core",
-  "aws-vpc-security",
   "aws-vpc-connect",
   "aws-vpc-internet",
+  "aws-vpc-security",
   "cis",
 ]
