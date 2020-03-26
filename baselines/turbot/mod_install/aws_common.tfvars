@@ -11,5 +11,5 @@ mod_list = [
   "aws-vpc-core",
   "aws-vpc-connect",
   "aws-vpc-internet",
-  "aws-vpc-security",
+  "aws-vpc-security"
 ]
