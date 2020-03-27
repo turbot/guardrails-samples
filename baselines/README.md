@@ -26,9 +26,9 @@ Turbot Baselines provide best-practice configurations and examples for setting T
 To run Turbot baselines, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 
-Additionally, You must set your config.tf or environment variables to connect to your Turbot workspace, as detail in the Turbot Terraform Provider [Installation Instructions](https://github.com/turbotio/terraform-provider-turbot/blob/master/installation.md)
+Additionally, You must set your config.tf or environment variables to connect to your Turbot workspace, as detail in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider)
 
 ## Running a baseline
 
