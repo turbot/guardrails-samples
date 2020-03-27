@@ -1,0 +1,91 @@
+##For Azure Subscription Import
+#################################  STEP 1  #################################
+####### Create Azure Subscription Mutation  #######
+mutation CreateAzureSubscription($input: CreateResourceInput!) {
+      createResource(input: $input) {
+        turbot {
+          id
+      }
+    }
+  }
+
+####### Input to above CreateAzureSubscription Mutation  #######
+# parent:           It is the turbot id of folder to import subscription
+# tenantId:         Azure Tenant Id
+# subscriptionId:   Azure Subscription Id
+{
+  "input": {
+    "parent": "178196155553668",
+    "type": "tmod:@turbot/azure#/resource/types/subscription",
+    "data": {
+      "subscriptionId": "3510ae4d-530b-497d-8f30-53b9616fc6c1"
+    },
+    "metadata": {
+      "azure": {
+        "subscriptionId": "3510ae4d-530b-497d-8f30-53b9616fc6c1",
+        "tenantId": "a1b2c3d4e-ab12-4cea-abeb-0a4c334d7f64"
+      }
+    }
+  }
+}
+
+#################################  STEP 2  #################################
+# Used the turbot id returned from STEP 1 as resource for below policy settings
+
+####### Create Azure Subscription Policies Mutation  #######
+
+mutation SetAzureSubscriptionPolicies($setTenantId: CreatePolicySettingInput!, $setClientId: CreatePolicySettingInput!, $setClientKey: CreatePolicySettingInput!, $setEnvironment: CreatePolicySettingInput!) {
+  tenantId: createPolicySetting(input: $setTenantId) {
+    turbot {
+      id
+    }
+  }
+  clientId: createPolicySetting(input: $setClientId) {
+    turbot {
+      id
+    }
+  }
+  clientKey: createPolicySetting(input: $setClientKey) {
+    turbot {
+      id
+    }
+  }
+  environment: createPolicySetting(input: $setEnvironment) {
+    turbot {
+      id
+    }
+  }
+}
+
+####### Input to above SetAzureSubscriptionPolicies Mutation  #######
+# Azure > Tenant ID
+# Azure > Client ID
+# Azure > Client Key
+# Azure > Environment  can be "Global Cloud" or "US Government"
+
+{
+    "setTenantId": {
+      "type": "tmod:@turbot/azure#/policy/types/tenantId",
+      "resource": "182652961499113",
+      "value": "a1b2c3d4e-ab12-4cea-abeb-0a4c334d7f64",
+      "precedence": "REQUIRED"
+    },
+    "setClientId": {
+      "type": "tmod:@turbot/azure#/policy/types/clientId",
+      "resource": "182652961499113",
+      "value": "a1b2c3d4e5-b453-a1b2-c3d4-ef56383c2afeb",
+      "precedence": "REQUIRED"
+    },
+    "setClientKey": {
+      "type": "tmod:@turbot/azure#/policy/types/clientKey",
+      "resource": "182652961499113",
+      "value": "d=abcd@fdgdgdgj5wVsEOmA3oq",
+      "precedence": "REQUIRED"
+    },
+    "setEnvironment": {
+      "type": "tmod:@turbot/azure#/policy/types/environment",
+      "resource": "182652961499113",
+      "value": "Global Cloud",
+      "precedence": "REQUIRED"
+    }
+}
