@@ -1,25 +1,31 @@
 #### Create the AWS IAM role for Turbot
 resource "aws_iam_role" "turbot_service_role" {
-  name               = var.role_name
+  name = var.role_name
   assume_role_policy = jsonencode({
-                        "Version": "2012-10-17",
-                        "Statement": [
-                            {
-                                "Action": "sts:AssumeRole",
-                                "Principal": {
-                                    "AWS": "arn:aws:iam::${var.turbot_account_id}:root"
-                                },
-                                "Effect": "Allow",
-                                "Sid": "",
-                                "Condition": {
-                                    "StringEquals": {
-                                    "sts:ExternalId": "${var.turbot_external_id}"
-                                    }
-                                }
-                            }
-                        ]
-                        })
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : "sts:AssumeRole",
+        "Principal" : {
+          "AWS" : "arn:aws:iam::${var.turbot_account_id}:root"
+        },
+        "Effect" : "Allow",
+        "Sid" : "",
+        "Condition" : {
+          "StringEquals" : {
+            "sts:ExternalId" : "${var.turbot_external_id}"
+          }
+        }
+      }
+    ]
+  })
 }
+
+# TODO: remove this
+provider "aws" {
+  region = "us-east-1"
+}
+# TODO: remove this
 
 #### Attach the AdministratorAccess policy to the Turbot Role
 resource "aws_iam_role_policy_attachment" "role_admin_policy" {
@@ -58,26 +64,31 @@ resource "aws_iam_role_policy_attachment" "role_sns_admin_policy" {
 
 #### Create the AWS > Account resource in Turbot
 resource "turbot_resource" "account_resource" {
-  parent     = var.parent_resource
-  type       = "tmod:@turbot/aws#/resource/types/account"
-  data       = jsonencode({
-                "Id": "${var.aws_account_id}",
-                "turbot": {}
-              })
+  parent = var.parent_resource
+  type   = "tmod:@turbot/aws#/resource/types/account"
+  metadata = jsonencode({
+    "aws" : {
+      "accountId" : "${var.aws_account_id}",
+      "partition" : "aws"
+    }
+  })
+  data = jsonencode({
+    "Id" : "${var.aws_account_id}"
+  })
 }
 
 #### Set the credentials (Role, exteranl id) for the account via Turbot policies
 
 # AWS > Account > Turbot IAM Role > External ID
 resource "turbot_policy_setting" "turbotIamRoleExternalId" {
-  resource   = turbot_resource.account_resource.id
-  type       = "tmod:@turbot/aws#/policy/types/turbotIamRoleExternalId"
-  value      = var.turbot_external_id
+  resource = turbot_resource.account_resource.id
+  type     = "tmod:@turbot/aws#/policy/types/turbotIamRoleExternalId"
+  value    = var.turbot_external_id
 }
 
 # AWS > Account > Turbot IAM Role
 resource "turbot_policy_setting" "turbotIamRole" {
-  resource   = turbot_resource.account_resource.id
-  type       = "tmod:@turbot/aws#/policy/types/turbotIamRole"
-  value      = aws_iam_role.turbot_service_role.arn
+  resource = turbot_resource.account_resource.id
+  type     = "tmod:@turbot/aws#/policy/types/turbotIamRole"
+  value    = aws_iam_role.turbot_service_role.arn
 }
