@@ -8,7 +8,7 @@ Provides a Terraform configuration for creating a smart folder and applying a ca
 Each tag will be checked for case, and if there is an upper case character, it will be converted to lower case.
 
 ### Template Input (GraphQL)
-The template input to a calculated policy is a GraphQL query.  In this case the query selects various metadata about the bucket:
+The template input to a calculated policy is a GraphQL query.  In this case the query selects tagging metadata about the bucket:
 ```graphql
 {
   bucket{
