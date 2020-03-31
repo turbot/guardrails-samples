@@ -30,7 +30,7 @@ variable "aws_region" {
 }
 
 variable "aws_profile" {
-  description = "The AWS profile which will when running the script. Leaving this value blank will use the AWS environment variables values."
+  description = "The AWS profile which will when running the script. Leaving this value blank will use the default profile."
   type        = string
 }
 
