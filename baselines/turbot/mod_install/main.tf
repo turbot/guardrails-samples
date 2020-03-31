@@ -159,7 +159,7 @@ resource "turbot_mod" "aws-sns" {
 }
 
 resource "turbot_mod" "aws-vpc-core" {
-  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+  count = contains(var.mod_list, "aws-vpc-core") ? 1 : 0
 
   parent = "tmod:@turbot/turbot#/"
   depends_on = [
@@ -173,7 +173,7 @@ resource "turbot_mod" "aws-vpc-core" {
   version = ">=5.0.0-beta.1"
 }
 resource "turbot_mod" "aws-vpc-internet" {
-  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+  count = contains(var.mod_list, "aws-vpc-internet") ? 1 : 0
 
   parent = "tmod:@turbot/turbot#/"
   depends_on = [
@@ -184,7 +184,7 @@ resource "turbot_mod" "aws-vpc-internet" {
   version = ">=5.0.0-beta.1"
 }
 resource "turbot_mod" "aws-vpc-connect" {
-  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+  count = contains(var.mod_list, "aws-vpc-connect") ? 1 : 0
 
   parent = "tmod:@turbot/turbot#/"
   depends_on = [
@@ -195,7 +195,7 @@ resource "turbot_mod" "aws-vpc-connect" {
   version = ">=5.0.0-beta.1"
 }
 resource "turbot_mod" "aws-vpc-security" {
-  count = contains(var.mod_list, "aws-vpc") ? 1 : 0
+  count = contains(var.mod_list, "aws-vpc-security") ? 1 : 0
 
   parent = "tmod:@turbot/turbot#/"
   depends_on = [
