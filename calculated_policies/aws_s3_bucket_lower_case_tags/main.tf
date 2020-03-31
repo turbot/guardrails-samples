@@ -21,28 +21,28 @@ resource "turbot_policy_setting" "s3_tag_template" {
   template       = <<EOT
   {%- set keys = [] %}
   {%- for k,v in $.bucket.turbot.tags %}
-  {%- set ignore = keys.push(k) %}
+    {%- set ignore = keys.push(k) %}
   {%- endfor %}
   {%- set ignore = keys.sort() %}
   {%- set set_keys = [] %}
   {%- for k in keys %}
-  {%- set lower_k = k | lower %}
-  {%- set lower_v = $.bucket.turbot.tags[k] | lower %}
-  {%- if k == lower_k %}
-  {%- if lower_v != $.bucket.turbot.tags[k] %}
-  "{{lower_k}}": "{{lower_v}}"
-  {%- set ignore = set_keys.push(lower_k) %}
-  {%- endif %}
-  {%- else %}
-  "{{k}}": null
-  {%- if not set_keys.includes(lower_k) %}
-  "{{lower_k}}": "{{lower_v}}"
-  {%- endif %}
-  {%- set ignore = set_keys.push(lower_k) %}
-  {%- endif %}
+    {%- set lower_k = k | lower %}
+    {%- set lower_v = $.bucket.turbot.tags[k] | lower %}
+    {%- if k == lower_k %}
+      {%- if lower_v != $.bucket.turbot.tags[k] %}
+        "{{lower_k}}": "{{lower_v}}"
+        {%- set ignore = set_keys.push(lower_k) %}
+      {%- endif %}
+    {%- else %}
+      "{{k}}": null
+      {%- if not set_keys.includes(lower_k) %}
+        "{{lower_k}}": "{{lower_v}}"
+      {%- endif %}
+      {%- set ignore = set_keys.push(lower_k) %}
+    {%- endif %}
   {%- endfor %}
   {%- if not set_keys | length %}
-  {}
+    {}
   {%- endif %}
   EOT
 }
