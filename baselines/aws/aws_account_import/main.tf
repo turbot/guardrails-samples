@@ -1,4 +1,4 @@
-#### Configures the provider to use a specific profile, otherwise the provider will use the AWS environment variable settings
+#### Configures the provider to use a specific profile, otherwise the provider will use the default profile
 provider "aws" {
   profile = var.aws_profile
   region  = var.aws_region
