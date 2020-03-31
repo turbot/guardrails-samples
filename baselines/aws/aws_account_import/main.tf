@@ -1,3 +1,9 @@
+#### Configures the provider to use a specific profile, otherwise the provider will use the AWS environment variable settings
+provider "aws" {
+  profile = var.aws_profile
+  region  = var.aws_region
+}
+
 #### Create the AWS IAM role for Turbot
 resource "aws_iam_role" "turbot_service_role" {
   name = var.role_name
@@ -20,12 +26,6 @@ resource "aws_iam_role" "turbot_service_role" {
     ]
   })
 }
-
-# TODO: remove this
-provider "aws" {
-  region = "us-east-1"
-}
-# TODO: remove this
 
 #### Attach the AdministratorAccess policy to the Turbot Role
 resource "aws_iam_role_policy_attachment" "role_admin_policy" {

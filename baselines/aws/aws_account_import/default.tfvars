@@ -7,4 +7,8 @@ turbot_account_id = "<12 digit master account id>"
 
 turbot_external_id = "<8 digit sts:ExternalId>"
 
+aws_region = "<AWS region to run the script>"
+
+aws_profile = "<Optional - AWS Profile to use otherwise uses the AWS environment variables>"
+
 role_name = "turbot_service_role"
