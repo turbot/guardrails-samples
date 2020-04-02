@@ -72,47 +72,52 @@ def run_controls(config_file, profile, parent, sub, tenant, client_id, client_ke
         }
     }
 
-    try:
-        print("Importing subscription")
-        sub_run = endpoint(azure_mutation, azure_variables)
-        sub_rid = sub_run['data']['createResource']['turbot']['id']
-        # print("Sub run: {}".format(sub_run))
-        print("\tSubscription Resource ID: {}".format(sub_rid))
+    print("Importing subscription: {}".format(sub))
+    sub_response = endpoint(azure_mutation, azure_variables)
+    if "errors" in sub_response:
+        return report_graphql_error("azure_mutation", sub_response["errors"])
 
-        credentials_variables = {
-            "setTenantId": {
-                "type": "tmod:@turbot/azure#/policy/types/tenantId",
-                "resource": sub_rid,
-                "value": tenant,
-                "precedence": "REQUIRED"
-            },
-            "setClientId": {
-                "type": "tmod:@turbot/azure#/policy/types/clientId",
-                "resource": sub_rid,
-                "value": client_id,
-                "precedence": "REQUIRED"
-            },
-            "setClientKey": {
-                "type": "tmod:@turbot/azure#/policy/types/clientKey",
-                "resource": sub_rid,
-                "value": client_key,
-                "precedence": "REQUIRED"
-            },
-            "setEnvironment": {
-                "type": "tmod:@turbot/azure#/policy/types/environment",
-                "resource": sub_rid,
-                "value": "Global Cloud",
-                "precedence": "REQUIRED"
-            }
+    sub_rid = sub_response['data']['createResource']['turbot']['id']
+    print("Created Subscription Resource ID: {}".format(sub_rid))
+
+    credentials_variables = {
+        "setTenantId": {
+            "type": "tmod:@turbot/azure#/policy/types/tenantId",
+            "resource": sub_rid,
+            "value": tenant,
+            "precedence": "REQUIRED"
+        },
+        "setClientId": {
+            "type": "tmod:@turbot/azure#/policy/types/clientId",
+            "resource": sub_rid,
+            "value": client_id,
+            "precedence": "REQUIRED"
+        },
+        "setClientKey": {
+            "type": "tmod:@turbot/azure#/policy/types/clientKey",
+            "resource": sub_rid,
+            "value": client_key,
+            "precedence": "REQUIRED"
+        },
+        "setEnvironment": {
+            "type": "tmod:@turbot/azure#/policy/types/environment",
+            "resource": sub_rid,
+            "value": "Global Cloud",
+            "precedence": "REQUIRED"
         }
+    }
 
-        creds_run = endpoint(credentials_mutation, credentials_variables)
-        # print("Creds run: {}".format(creds_run))
-        print("Import complete")
-    except Exception as e:
-        print("Create Sub response: {}".format(sub_run))
-        print("Set Creds response: {}".format(creds_run))
-        print("Could not set subscription credentials because of error: {}".format(e))
+    creds_response = endpoint(credentials_mutation, credentials_variables)
+    if "errors" in creds_response:
+        return report_graphql_error("credentials_mutation", creds_response["errors"])
+
+    print("Import complete")
+
+
+def report_graphql_error(section, errors):
+    print("Error(s) detected when running mutation: {}".format(section))
+    for error in errors:
+        print(error["message"])
 
 
 if __name__ == "__main__":
