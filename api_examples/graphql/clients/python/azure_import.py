@@ -19,38 +19,39 @@ def run_controls(config_file, profile, parent, sub, tenant, client_id, client_ke
     endpoint = HTTPEndpoint(config.graphql_endpoint, headers)
 
     azure_mutation = '''
-  mutation CreateAzureSubscription($input: CreateResourceInput!) {
-      createResource(input: $input) {
-        turbot {
-          id
+      mutation CreateAzureSubscription($input: CreateResourceInput!) {
+          createResource(input: $input) {
+            turbot {
+              id
+          }
+        }
       }
-    }
-  }
     '''
+
     credentials_mutation = '''
       mutation SetAzureSubscriptionPolicies($setTenantId: CreatePolicySettingInput!, $setClientId: CreatePolicySettingInput!, $setClientKey: CreatePolicySettingInput!, $setEnvironment: CreatePolicySettingInput!) {
-      tenantId: createPolicySetting(input: $setTenantId) {
-        turbot {
-          id
+        tenantId: createPolicySetting(input: $setTenantId) {
+          turbot {
+            id
+          }
+        }
+        clientId: createPolicySetting(input: $setClientId) {
+          turbot {
+            id
+          }
+        }
+        clientKey: createPolicySetting(input: $setClientKey) {
+          turbot {
+            id
+          }
+        }
+        environment: createPolicySetting(input: $setEnvironment) {
+          turbot {
+            id
+          }
         }
       }
-      clientId: createPolicySetting(input: $setClientId) {
-        turbot {
-          id
-        }
-      }
-      clientKey: createPolicySetting(input: $setClientKey) {
-        turbot {
-          id
-        }
-      }
-      environment: createPolicySetting(input: $setEnvironment) {
-        turbot {
-          id
-        }
-      }
-    }
-        '''
+    '''
 
     """
     The parent variable holds the resource ID of the folder where this subscription will be imported.
@@ -78,7 +79,6 @@ def run_controls(config_file, profile, parent, sub, tenant, client_id, client_ke
         # print("Sub run: {}".format(sub_run))
         print("\tSubscription Resource ID: {}".format(sub_rid))
 
-
         credentials_variables = {
             "setTenantId": {
                 "type": "tmod:@turbot/azure#/policy/types/tenantId",
@@ -105,7 +105,6 @@ def run_controls(config_file, profile, parent, sub, tenant, client_id, client_ke
                 "precedence": "REQUIRED"
             }
         }
-
 
         creds_run = endpoint(credentials_mutation, credentials_variables)
         # print("Creds run: {}".format(creds_run))
