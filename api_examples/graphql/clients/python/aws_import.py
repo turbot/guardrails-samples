@@ -1,5 +1,4 @@
 import click
-import os
 import turbot
 from sgqlc.endpoint.http import HTTPEndpoint
 
@@ -85,6 +84,7 @@ def run_controls(config_file, profile, parent, account, role_arn, external_id):
             "precedence": "REQUIRED"
         }
     }
+
     creds_response = endpoint(credentials_mutation, credentials_variables)
     if "errors" in creds_response:
         return report_graphql_error("credentials_mutation", creds_response["errors"])
