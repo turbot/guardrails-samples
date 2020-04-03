@@ -6,7 +6,7 @@
 
 # AWS > IAM > Role > Trust Relationship Statements > Approved*/
 resource "turbot_policy_setting" "iam_trust_relationship_approved" {
-    resource = turbot_smart_folder.iam_cross_account
+    resource = turbot_smart_folder.iam_cross_account.id
     type = "tmod:@turbot/aws-iam#/policy/types/trustRelationshipStatementsApproved"
     value = "Check: Approved"
 }
