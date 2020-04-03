@@ -1,4 +1,4 @@
-# Turbot Audit Train configuration
+# Turbot Audit Trail configuration
 
 Provides a Terraform configuration for creating a smart folder and configuring Turbot to create a Global CloudTrail in the specified region for audit logging purposes.
 
