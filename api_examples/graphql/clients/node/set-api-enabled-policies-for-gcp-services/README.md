@@ -1,4 +1,7 @@
-# Calculate policy values
+# Set API enable policies for GCP services
+
+The script enables a collection of API enabled policies for GCP services.
+The configuration of services which will have their API enable is defined by a map of services.
 
 ## Example
 
@@ -25,5 +28,5 @@ export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 And run the example:
 
 ```shell
-node calculate-policy-values-for-filter.js
+node set-api-enabled-policies-for-gcp-services.js
 ```

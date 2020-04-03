@@ -1,4 +1,6 @@
-# Calculate policy values
+# Filtered controls in alert
+
+Filters a list of controls by tag and finds the controls that are in alert
 
 ## Example
 
@@ -25,5 +27,5 @@ export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 And run the example:
 
 ```shell
-node calculate-policy-values-for-filter.js
+node controls-in-alert-by-tag.js
 ```

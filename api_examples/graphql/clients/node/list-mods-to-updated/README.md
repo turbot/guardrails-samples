@@ -1,4 +1,6 @@
-# Calculate policy values
+# List mods to updated
+
+Script will determine which mods in the Turbot environment is out of date and can be update.
 
 ## Example
 
@@ -25,5 +27,5 @@ export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 And run the example:
 
 ```shell
-node calculate-policy-values-for-filter.js
+node list-mods-to-updated.js
 ```
