@@ -4,6 +4,12 @@
 # If set to `Enforce: Delete unapproved`, any unapproved rules will be revoked from the IAM policy. Adjust the value in the bottom policy to match the accounts that
 #  have cross account access approved from the organization.
 
+resource "turbot_smart_folder" "iam_cross_account" {
+  title         = var.smart_folder_title
+  description   = "Create a smart folder to apply the IAM Cross Account policy settings"
+  parent        = "tmod:@turbot/turbot#/"
+}
+
 # AWS > IAM > Role > Trust Relationship Statements > Approved*/
 resource "turbot_policy_setting" "iam_trust_relationship_approved" {
     resource = turbot_smart_folder.iam_cross_account.id
