@@ -1,6 +1,6 @@
-# S3 Smart Folder Example
+# AWS RDS Encryption at rest
 
-Provides a Terraform configuration for creating a smart folder and applying example turbot policy settings for an S3 bucket.
+Provides a Terraform configuration for creating a smart folder and creating a policy to set an RDS instances as not approved if the encrpytion at rest does not meet minimum requirements.
 
 
 ## Pre-requisites
@@ -13,8 +13,8 @@ To create the smart folder, you must have:
 ## Running the Example
 
 To run the S3 Example:
-- Navigate to the directory on the command line `cd s3_smartfolder_example`
+- Navigate to the directory on the command line `cd aws_rds_encryption_at_rest`
 - Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied
 - Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings
 
-> The baseline runs with the default values. However, you could create and set your own defaults using `.tfvars` file that will override the existing files.
+> The terraform plan sets the policy to check for AWS managed key or higher. Alternate values include: `None`, `None or higher`, `AWS managed key`, `Customer managed key`, and `Encryption at Rest > Customer Managed Key`
