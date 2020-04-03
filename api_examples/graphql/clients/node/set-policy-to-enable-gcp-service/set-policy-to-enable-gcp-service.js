@@ -41,17 +41,17 @@ async function main() {
     ["gcp-storage", "storageEnabled"]
   ];
 
-  let policyMap = new Map(services);
+  let policymap = new Map(services);
 
   // Query to get the ID of Turbot
   const query = `
-    query MyQuery {
-      resource(id: "tmod:@turbot/turbot#/") {
-        turbot {
-          id
-        }
+  query MyQuery {
+    resource(id: "tmod:@turbot/turbot#/") {
+      turbot {
+        id
       }
-    }`;
+    }
+  }`;
 
   const data = await graphQLClient.request(query, {});
   console.log(data);
@@ -60,7 +60,7 @@ async function main() {
   // let resourceId = "176097085664257";
   let resourceId = data.resource.turbot.id;
 
-  for (let [key, value] of policyMap) {
+  for (let [key, value] of policymap) {
     var vars = {
       input: {
         type: `tmod:@turbot/${key}#/policy/types/${value}`,

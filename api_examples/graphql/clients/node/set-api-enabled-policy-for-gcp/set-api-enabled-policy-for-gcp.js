@@ -45,13 +45,13 @@ async function main() {
 
   // Query to get the ID of Turbot
   const query = `
-    query MyQuery {
-      resource(id: "tmod:@turbot/turbot#/") {
-        turbot {
-          id
-        }
+  query MyQuery {
+    resource(id: "tmod:@turbot/turbot#/") {
+      turbot {
+        id
       }
-    }`;
+    }
+  }`;
 
   const data = await graphQLClient.request(query, {});
   console.log(data);
