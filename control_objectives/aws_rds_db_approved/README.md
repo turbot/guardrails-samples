@@ -17,4 +17,4 @@ To run the S3 Example:
 - Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied
 - Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings
 
-> The baseline runs with the default values. However, you could create and set your own defaults using `.tfvars` file that will override the existing files.
+> The terraform plan runs with default values. Ensure the policy values are correct in main.tf before applying the plan.
