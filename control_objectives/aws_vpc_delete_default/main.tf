@@ -8,6 +8,7 @@ resource "turbot_smart_folder" "vpc_default_vpc" {
 
 # Setting policy to see if default VPC exists
 # AWS > VPC > Default VPC > Approved
+# Alternate values include `Skip` and `Enforce: Force delete unapproved`
 
 resource "turbot_policy_setting" "vpc_default_vpc_approved" {
     resource = turbot_smart_folder.vpc_default_vpc.id
