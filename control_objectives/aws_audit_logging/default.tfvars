@@ -1,1 +1,1 @@
-smart_folder_title = "S3 Baseline Smart"
+smart_folder_title = "AWS Audit Logging"
