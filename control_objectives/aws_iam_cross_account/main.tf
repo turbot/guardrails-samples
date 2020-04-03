@@ -23,7 +23,7 @@ resource "turbot_policy_setting" "iam_trust_relationship_approved" {
 */ 
 
 # AWS > IAM > Role > Trust Relationship Statements > Approved > Trusted Accounts
-resource "turbot_policy_setting" "iam_trustedaccounts" {
+resource "turbot_policy_setting" "iam_trusted_accounts" {
     resource = turbot_smart_folder.iam_cross_account.id
     type = "tmod:@turbot/aws-iam#/policy/types/trustRelationshipStatementsApprovedTrustedAwsAccounts"
     value = "- 123456789012/n- arn:aws:iam::560741234067:root/n- 492552618977"
