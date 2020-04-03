@@ -12,8 +12,8 @@ To create the smart folder, you must have:
 
 ## Running the Example
 
-To run the S3 Example:
-- Navigate to the directory on the command line `cd s3_smartfolder_example`
+To run the RDS Example:
+- Navigate to the directory on the command line `cd aws_rds_db_approved`
 - Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied
 - Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings
 
