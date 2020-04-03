@@ -1,4 +1,4 @@
-# S3 Smart Folder Example
+# IAM Cross Account Access Smart Folder Example
 
 Provides a Terraform configuration for creating a smart folder and applying example Turbot policies to check if an IAM resource has valid
 trusted account relationships. 
