@@ -1,5 +1,5 @@
 {
-  "name": "@turbot/api-examples",
+  "name": "list-all-policies-in-environment",
   "dependencies": {
     "btoa": "^1.2.1",
     "graphql-request": "^1.8.2",
