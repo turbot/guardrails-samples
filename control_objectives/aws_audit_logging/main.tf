@@ -2,7 +2,7 @@
 The Turbot Audit Trail provides a mechanism for configuring a CloudTrail to record API calls to your AWS accounts.
 AWS > Turbot > Audit Trail */
 
-resource "turbot_smart_folder" "turbot_audit_Trail" {
+resource "turbot_smart_folder" "turbot_audit_trail" {
   title         = var.smart_folder_title
   description   = "Create a smart folder to apply the Turbot Trail policy settings"
   parent        = "tmod:@turbot/turbot#/"
