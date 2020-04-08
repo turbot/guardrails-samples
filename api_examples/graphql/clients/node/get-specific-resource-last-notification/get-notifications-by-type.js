@@ -1,19 +1,15 @@
 const { GraphQLClient } = require("graphql-request");
 const btoa = require("btoa");
 
-// Possible values can at the url https://turbot.com/v5/docs/concepts/notifications#notification-types
-// Multiple type are possible - Below example is same as notificationType:resource
-const NOTIFICATION_TYPE = "resource_created,resource_updated,resource_deleted";
-// Single types are also possible, see commented example
-// const NOTIFICATION_TYPE = "resource_created";
+// For this example, we have used the aka of the Turbot resource as we know this is constant.
+// The code will take the resource AKA and do a resource id lookup.
+// The code will then use this resource id to get the notifications for that resource.
+const RESOURCE_AKA = "tmod:@turbot/turbot#/";
 
-// Notifications can be filtered by a time range. The below examples returns all notifications for the last 10 days
-// For more information on date time filters: https://turbot.com/v5/docs/reference/filter#datetime-filters
-const DATE_TIME_FILTER = "<T-10d";
-
-// Notifications can be sorted. The below examples sorts the returned results in reverse order (latest first).
-// For more information on sorting: https://turbot.com/v5/docs/reference/filter#sorting
-const SORT_TYPE = "-timestamp";
+// Sets the amount of notifications we want to get back from the Turbot instance.
+// In the example it is set to 1, getting the last notification.
+// Changing this will return the last n notifications, where n is the limit.
+const FILTER_LIMIT = "1";
 
 async function main() {
   const endpoint = process.env.TURBOT_GRAPHQL_ENDPOINT;
@@ -26,6 +22,36 @@ async function main() {
     },
   });
 
+  const emptyVariables = {};
+
+  // -------------------------------------------------------------------
+  // Query 1: Find the resource id when an aka is provided
+  // -------------------------------------------------------------------
+
+  console.log(`Looking up resource id for resource: ${RESOURCE_AKA}`);
+  const lookupQuery = `
+    query {
+      resource(id: "${RESOURCE_AKA}") {
+        turbot {
+          title
+          id
+        }
+      }
+    }
+  `;
+
+  const lookupResult = await graphQLClient.request(lookupQuery, emptyVariables);
+
+  // Look up was successful, set the id
+  const foundItem = lookupResult.resource.turbot;
+  console.log(`Resource id found: ${foundItem.id}`);
+
+  // -------------------------------------------------------------------
+  // Query 2: Find the notifications based on the id found in the lookup
+  // -------------------------------------------------------------------
+
+  console.log(`Querying last ${FILTER_LIMIT} notification(s) for resource ${foundItem.title}`);
+
   /* 
     The query returns unnecessary fields which will be populated depending on the value of the resource type class
     
@@ -36,9 +62,9 @@ async function main() {
     If the type is a member of the notification class grant, fields returned: [ resource, grant ]
     If the type is a member of the notification class activeGrant, fields returned: [ resource ]
   */
-  const query = `
+  const notificationsQuery = `
     query {
-      notifications(filter: "type:${NOTIFICATION_TYPE} timestamp:${DATE_TIME_FILTER} sort:${SORT_TYPE}") {
+      notifications(filter: "resource:${foundItem.id} limit:${FILTER_LIMIT} sort:-timestamp") {
         items
         {
           notificationType
@@ -83,11 +109,9 @@ async function main() {
     }
   `;
 
-  const variables = {};
+  const notificationsResult = await graphQLClient.request(notificationsQuery, emptyVariables);
 
-  const data = await graphQLClient.request(query, variables);
-
-  console.log(JSON.stringify(data, null, 2));
+  console.log(JSON.stringify(notificationsResult, null, 2));
 }
 
 main().catch((error) => console.error(error));

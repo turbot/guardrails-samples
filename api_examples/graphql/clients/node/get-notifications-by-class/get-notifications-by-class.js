@@ -3,6 +3,16 @@ const btoa = require("btoa");
 
 // Possible values allowed are: [ "resource", "policyValue", "policySetting", "control", "grant", "activeGrant" ]
 const NOTIFICATION_TYPE_CLASS = "resource";
+// Multiple types are also possible, see commented example
+// const NOTIFICATION_TYPE_CLASS = "resource,policyValue";
+
+// Notifications can be filtered by a time range. The below examples returns all notifications for the last 10 days
+// For more information on date time filters: https://turbot.com/v5/docs/reference/filter#datetime-filters
+const DATE_TIME_FILTER = "<T-10d";
+
+// Notifications can be sorted. The below examples sorts the returned results in reverse order (latest first).
+// For more information on sorting: https://turbot.com/v5/docs/reference/filter#sorting
+const SORT_TYPE = "-timestamp";
 
 async function main() {
   const endpoint = process.env.TURBOT_GRAPHQL_ENDPOINT;
@@ -14,6 +24,10 @@ async function main() {
       authorization: "Basic " + btoa(`${accessKeyId}:${secretAccessKey}`),
     },
   });
+
+  console.log(`Query notifications for type class: ${NOTIFICATION_TYPE_CLASS}`);
+  console.log(`Applying timestamp filter: ${DATE_TIME_FILTER}`);
+  console.log(`Applying sorting: ${SORT_TYPE}`);
 
   /* 
     The query returns unnecessary fields which will be populated depending on the value of the resource type class
@@ -27,7 +41,7 @@ async function main() {
   */
   const query = `
     query {
-      notifications(filter: "notificationType:${NOTIFICATION_TYPE_CLASS} limit:300 sort:-timestamp") {
+      notifications(filter: "notificationType:${NOTIFICATION_TYPE_CLASS} timestamp:${DATE_TIME_FILTER} sort:${SORT_TYPE}") {
         items
         {
           notificationType
@@ -73,9 +87,9 @@ async function main() {
     }
   `;
 
-  const variables = {};
+  const emptyVariables = {};
 
-  const data = await graphQLClient.request(query, variables);
+  const data = await graphQLClient.request(query, emptyVariables);
 
   console.log(JSON.stringify(data, null, 2));
 }
