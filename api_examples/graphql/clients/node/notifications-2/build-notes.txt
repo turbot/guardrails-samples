@@ -1,0 +1,36 @@
+          case "resource":
+            type.push("resource_created");
+            type.push("resource_updated");
+            type.push("resource_deleted");
+            break;
+          case "policyValue":
+            type.push("policy_value_created");
+            type.push("policy_value_updated");
+            type.push("policy_value_deleted");
+            isPolicyValue = true;
+            break;
+          case "policySetting":
+            type.push("policy_setting_created");
+            type.push("policy_setting_updated");
+            type.push("policy_setting_deleted");
+            isPolicySetting = true;
+            break;
+          case "control":
+            type.push("control_created");
+            type.push("control_updated");
+            type.push("control_deleted");
+            type.push("control_notify");
+            type.push("action_notify");
+            break;
+          case "grant":
+            type.push("grant_created");
+            type.push("grant_updated");
+            type.push("grant_deleted");
+            break;
+          case "activeGrant":
+            type.push("active_grants_created");
+            type.push("active_grants_updated");
+            type.push("active_grants_deleted");
+            break;
+
+            // Possible values can at the url https://turbot.com/v5/docs/concepts/notifications#notification-types
