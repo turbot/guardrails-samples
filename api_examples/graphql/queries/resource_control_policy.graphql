@@ -1,0 +1,34 @@
+query ResourceControlPolicyQuery {
+  resources(paging: "", filter: "resourceType:'tmod:@turbot/aws#/resource/types/aws'") {
+    items {
+      data
+      controls(filter: "state:alarm,error,ok") {
+        items {
+          reason
+          state
+          turbot {
+            dependencies {
+              policyValues {
+                items {
+                  state
+                  value
+                  type {
+                    modUri
+                    description
+                    categoryUri
+                    input
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}
