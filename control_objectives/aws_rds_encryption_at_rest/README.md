@@ -1,6 +1,6 @@
 # AWS RDS Encryption at rest
 
-Provides a Terraform configuration for creating a smart folder and creating a policy to set an RDS instances as not approved if the encrpytion at rest does not meet minimum requirements.
+Provides a Terraform configuration for creating a smart folder and creating a policy to set an RDS instances as not approved if the encryption at rest does not meet minimum requirements.
 
 
 ## Pre-requisites
