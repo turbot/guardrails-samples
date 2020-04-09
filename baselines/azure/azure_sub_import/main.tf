@@ -42,7 +42,6 @@ resource "turbot_resource" "subscription_resource" {
   })
   data = jsonencode({
     "subscriptionId" : "${var.azure_subscription_id}"
-    "displayName"    : "${data.azurerm_subscription.subscription_to_import.display_name}"
   })
 }
 
