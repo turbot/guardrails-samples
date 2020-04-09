@@ -1,6 +1,13 @@
-# Azure Account Import
+# Get notifications for a specific resource
 
-A fully functioning example in Python on importing an existing Azure subscription into Turbot.
+This script provides an example of how to look up a resource id using a Turbot aka.
+From there the script will return the last notification for the found resource if it exists.
+
+In this example, the script is configured to return the last notification only.
+For more information on how to (limit results)[https://turbot.com/v5/docs/reference/filter#limiting-results].
+
+In this example, the script will sort the notifications displaying most recent first.
+For more information on how to use (sorting)[https://turbot.com/v5/docs/reference/filter#sorting].
 
 ## Prerequisites
 
@@ -76,15 +83,15 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 And run the example:
 
 ```shell
-python3 aws_import.py --help
+python3 get-specific-resource-last-notification.py
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key>
+python3 get-specific-resource-last-notification.py --help
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key> --config-file <config_location>
+python3 get-specific-resource-last-notification.py --limit 1
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key> --profile <turbot_profile>
+python3 get-specific-resource-last-notification.py --aka "tmod:@turbot/turbot#/"
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key> --config-file <config_location> --profile <turbot_profile>
+python3 get-specific-resource-last-notification.py --limit 1 --aka "tmod:@turbot/turbot#/"
 ```
 
 ### Virtual environments deactivation

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import setuptools
 from distutils.core import setup
 
 setup(name='Turbot',
