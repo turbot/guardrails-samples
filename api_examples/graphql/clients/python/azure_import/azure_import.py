@@ -53,9 +53,9 @@ def run_controls(config_file, profile, parent, sub, tenant, client_id, client_ke
       }
     '''
 
-    """
-    The parent variable holds the resource ID of the folder where this subscription will be imported.
-    """
+    #
+    # The parent variable holds the resource ID of the folder where this subscription will be imported.
+    #
     azure_variables = {
         "input": {
             "parent": parent,

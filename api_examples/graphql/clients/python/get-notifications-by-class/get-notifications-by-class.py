@@ -26,51 +26,50 @@ def run_controls(config_file, profile, notification_class, datetime_filter, sort
     # If the type is a member of the notification class activeGrant, fields returned: [ resource ]
     #
     query = '''
-        query {
+      query {
         notifications(filter: "notificationType:%s timestamp:%s sort:%s") {
-            items
-            {
+          items
+          {
             notificationType
 
             policyValue {
-                default
-                value
-                state
-                reason
-                details
-                secretValue
-                isCalculated
+              default
+              value
+              state
+              reason
+              details
+              secretValue
+              isCalculated
             }
 
             policyValue {
-                default
-                value
-                state
-                reason
-                details
-                secretValue
-                isCalculated
+              default
+              value
+              state
+              reason
+              details
+              secretValue
+              isCalculated
             }
-
             grant {
-                permissionTypeId
-                permissionLevelId
-                roleName
-                validFromTimestamp
-                validToTimestamp
+              permissionTypeId
+              permissionLevelId
+              roleName
+              validFromTimestamp
+              validToTimestamp
             }
 
             control {
-                reason
-                details
+              reason
+              details
             }
 
             resource {
-                object
+              object
             }
-            }
+          }
         }
-        }
+      }
     ''' % (notification_class, datetime_filter, sort)
 
     print(f'Query notifications for type class: {notification_class}')
