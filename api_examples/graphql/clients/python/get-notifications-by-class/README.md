@@ -1,6 +1,13 @@
-# Azure Account Import
+# Get notifications by notification class
 
-A fully functioning example in Python on importing an existing Azure subscription into Turbot.
+This script will return a filtered collection of notifications the notification class to filter results.
+For more information on (filtering notifications)[https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications].
+
+In this example, the script will return all notifications that were returned over the last 10 days.
+For more information on how to use (datetime filters)[https://turbot.com/v5/docs/reference/filter#datetime-filters].
+
+In this example, the script will sort the notifications displaying most recent first.
+For more information on how to use (sorting)[https://turbot.com/v5/docs/reference/filter#sorting].
 
 ## Prerequisites
 
@@ -76,15 +83,17 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 And run the example:
 
 ```shell
-python3 aws_import.py --help
+python3 get-notifications-by-class.py
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key>
+python3 get-notifications-by-class.py --help
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key> --config-file <config_location>
+python3 get-notifications-by-class.py --notification_class resource
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key> --profile <turbot_profile>
+python3 get-notifications-by-class.py --datetime_filter "<T-10d"
 
-python3 aws_import.py --parent <parent_id> --sub <subscription_id> --tenant <tenant_id> --client_id <client_id> --client_key <client_key> --config-file <config_location> --profile <turbot_profile>
+python3 get-notifications-by-class.py --sort "-timestamp"
+
+python3 get-notifications-by-class.py --notification_class resource --datetime_filter "<T-10d" --sort "-timestamp"
 ```
 
 ### Virtual environments deactivation
