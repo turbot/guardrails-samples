@@ -106,3 +106,18 @@ query storageBucketsWithNoPolicyStatement {
     }
   }
 }
+
+query BucketsWithWriteACL {
+  # Gives all the buckets with write ACL on the bucket policy
+  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      Name: get(path: "Name")
+      ACL: get(path: "Acl")
+    }
+  }
+}
