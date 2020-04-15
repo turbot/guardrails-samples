@@ -4,7 +4,7 @@ azure_app_name                 = "<app_name>"
 
 azure_app_password             = "<password>"
 
-azure_environment_type         = "<clound_environment>"
+azure_environment_type         = "<cloud_environment>"
 
 azure_subscription_id          = "<azure_subscription_id>"
 
