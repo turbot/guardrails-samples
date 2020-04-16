@@ -1,5 +1,5 @@
 variable "gcp_project_id" {
-  description = "Enter the GCP Project Id that you wish to import: Note that you must set your AWS credentials for this account either in your environment variables or default profile:"
+  description = "Enter the GCP Project Id that you wish to import: Note that you must set your GCP credentials for this account either in your environment variables or default profile:"
   type        = string
 }
 
@@ -14,7 +14,7 @@ variable "private_key" {
 }
 
 variable "parent_resource" {
-  description = "Enter the Turbot Resource ID for the folder into which to import the AWS account, or `tmod:@turbot/turbot#/` to import at the Turbot root:"
+  description = "Enter the Turbot Resource ID for the folder into which to import the GCP project, or `tmod:@turbot/turbot#/` to import at the Turbot root:"
   type        = string
   default     = "tmod:@turbot/turbot#/"
 }

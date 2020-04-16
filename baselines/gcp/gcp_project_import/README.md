@@ -14,16 +14,16 @@ To run the account import baseline, you must have:
   - [Terraform](https://www.terraform.io) Version 12
   - [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
   -  Terraform [Google Cloud Platform Provider](https://www.terraform.io/docs/providers/google/index.html)
-  - [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and AWS account
+  - [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and GCP project.
   - CloudTrail set up in every region of your account.
 
 
 
 ## Running the Baseline
 
-To run the aws account import baseline:
+To run the gcp project import baseline:
 
-  - Go to the aws account import baseline directory in the repository with `cd gcp_project_import`
+  - Go to the gcp project import baseline directory in the repository with `cd gcp_project_import`
   - Update `default.tfvars` with appropriate values
   - Run `terraform plan -var-file=default.tfvars` and review the plan for import
   - Run `terraform apply -var-file=default.tfvars` to import the account
