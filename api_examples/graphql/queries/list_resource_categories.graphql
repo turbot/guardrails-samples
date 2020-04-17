@@ -1,0 +1,33 @@
+# Description
+# -----------
+#
+# Returns all installed control categories
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resource_categories.graphql
+#
+
+# Filter
+# ------
+#
+# sort:
+#   Sets the order of the returned query results.
+#   In this example, it is set to path which will return the results in hierarchical order.
+#
+
+query ListResourceCategories {
+  resourceCategories(filter: "sort:path") {
+    items {
+      uri
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+# Description
+# -----------
+#
+#
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_policy_types.graphql
+#
+
+# Filter
+# ------
+#
+# sort:
+#   Sets the order of the returned query results.
+#   In this example, it is set to path which will return the results in hierarchical order.
+#
+
+query ListPolicyTypes {
+  policyTypes(filter: "sort:path") {
+    items {
+      uri
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

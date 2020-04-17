@@ -1,0 +1,51 @@
+# Description
+# -----------
+#
+#
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_controls_by_partial_control_category_akas.graphql
+#
+
+# Filter
+# ------
+#
+# resourceCategoryId:
+#   The resource category that should be queried.
+#   The value should exactly match the uri of the resource category.
+#   In example, this is set to `tmod:@turbot/turbot#/resource/categories/turbot`.
+#
+# resourceCategoryLevel:
+#   Controls the level of the resource categories that should be returned resource category hierarchy.
+#   In example only items that match the resource category are returned by setting value to `self`
+#
+
+query ListControlsTargetingResourceCategoryId {
+  controls(filter: "resourceCategoryId:tmod:@turbot/turbot#/resource/categories/turbot resourceCategoryLevel:self") {
+    items {
+      state
+      reason
+      details
+      type {
+        title
+        controlUri: uri
+        modUri
+        targets
+      }
+      resource {
+        type {
+          uri
+        }
+      }
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}
