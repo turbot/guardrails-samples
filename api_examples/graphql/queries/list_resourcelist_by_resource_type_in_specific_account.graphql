@@ -1,8 +1,8 @@
 # Description
 # -----------
 #
-#
-#
+# The query return s3 buckets in a specific account.
+# For convinience, the example limit is set to 5.
 
 # Usage
 # -----
