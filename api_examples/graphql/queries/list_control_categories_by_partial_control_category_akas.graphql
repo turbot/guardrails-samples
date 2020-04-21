@@ -1,0 +1,40 @@
+# Description
+# -----------
+#
+#
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_control_categories_by_partial_control_category_akas.graphql
+#
+
+# Filter
+# ------
+#
+# controlCategory:
+#   The control category that should be returned.
+#   The matching algorithm will perform a caseless compare of the akas from right to left.
+#   In example, this is set to `turbot`, which will match any item with `turbot` at the end.
+#   Other possibilities are `categories/turbot` and `gories/turbot` which will both return matches.
+#   Matching `categories/turbo` will fail.
+#
+# controlCategoryLevel:
+#   Controls which items to return from the control category hierarchy.
+#   In example only items that match are returned by setting value to `self`
+#
+
+query ListControlCategoriesByPartialControlCategoryAkas {
+  controlCategories(filter: "controlCategory:turbot controlCategoryLevel:self") {
+    items {
+      uri
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

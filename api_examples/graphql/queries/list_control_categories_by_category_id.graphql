@@ -1,0 +1,40 @@
+# Description
+# -----------
+#
+#
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_control_categories_by_category_id.graphql
+#
+
+# Filter
+# ------
+#
+# controlCategoryId:
+#   The control category that should be queried.
+#   The value should exactly match the uri of the control category.
+#   In example, this is set to `controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot`.
+#
+# controlCategoryLevel:
+#   Controls which items to return from the control category hierarchy.
+#   In example only items that match are returned by setting value to `self`
+#
+
+query ListControlCategoriesByCategoryId {
+  controlCategories(
+    filter: "controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot controlCategoryLevel:self"
+  ) {
+    items {
+      uri
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}
