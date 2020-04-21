@@ -1,13 +1,16 @@
 # Description
 # -----------
 #
+# Lists all the controls that partially match the passed in control type aka.
 #
+# Preferred method of finding the control using the complete aka:
+#   list_controls_targeting_control_type_id.graphql
 #
 
 # Usage
 # -----
 #
-# turbot graphql --query ./list_controls_by_partial_control_type_akas.graphql
+# turbot graphql --query ./list_controls_targeting_partial_control_type_id.graphql
 #
 
 # Filter
@@ -25,7 +28,15 @@
 #   In example only items that match are returned by setting value to `self`
 #
 
-query ListControlsByPartialControlTypeAkas {
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
+
+query ListControlsTargetingPartialControlTypeAkas {
   controls(filter: "controlType:turbot controlTypeLevel:self") {
     items {
       state

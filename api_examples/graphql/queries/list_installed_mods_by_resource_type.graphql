@@ -28,10 +28,12 @@
 # sort:
 #   sorting by appropriate fields.
 #   In example, sorting by title.
-
+#
 
 query ListInstalledModsByResourceType {
-  resources(filter: "resource:'tmod:@turbot/turbot#/' resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {
+  resources(
+    filter: "resource:'tmod:@turbot/turbot#/' resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200"
+  ) {
     items {
       akas
       version: get(path: "version")
