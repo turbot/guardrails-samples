@@ -20,9 +20,12 @@
 # Searching tags with $.:
 #   Using $. one can filter resources using any property of the object.
 #   In example, '$.Acl.Grants.*.Permission:WRITE_ACP,WRITE' returns resources with ACL Grants Permission with Write Permissions.
+#
 
 query ListResourcesByResourceTypeWithWriteACL {
-  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300") {
+  resources(
+    filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300"
+  ) {
     metadata {
       stats {
         total

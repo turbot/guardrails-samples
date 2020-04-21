@@ -3,6 +3,7 @@
 #
 # The query return s3 buckets in a specific account.
 # For convinience, the example limit is set to 5.
+#
 
 # Usage
 # -----
@@ -24,7 +25,6 @@
 # limit:
 #   Number of data returned.
 #   In example, 'limit:5' 5 buckets in account '175816468884383'.
-
 
 query ListResourceListByResourceType {
   resourceList(filter: "resource:'175816468884383' resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:5") {

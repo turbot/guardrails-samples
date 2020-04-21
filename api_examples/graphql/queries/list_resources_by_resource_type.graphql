@@ -20,7 +20,7 @@
 # limit:
 #   Number of data returned.
 #   In example, 'limit:5' 5 buckets are returned.
-
+#
 
 query ListResourcesByResourceType {
   resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:5") {
