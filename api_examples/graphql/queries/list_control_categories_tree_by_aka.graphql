@@ -22,7 +22,7 @@
 #
 # controlCategoryLevel:
 #   Controls which items to return from the control category hierarchy.
-#   In example only items that match are returned by setting value to `self` and `descendants` which will return the all the children 
+#   In example only items that match are returned by setting value to `self` and `descendants` which will return the all the children
 #   of the found catefory and its children's children.
 #
 # sort:
@@ -38,15 +38,11 @@
 # - GraphQL controlCategories: https://turbot.com/v5/docs/reference/graphql/query/controlCategories
 #
 
-query ListControlCategoriesTreeByAka
- {
-  controlCategories(
-    filter: "controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot controlCategoryLevel:self,descendant sort:path"
-  ) {
+query ListControlCategoriesTreeByAka {
+  controlCategories(filter: "controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot controlCategoryLevel:self,descendant sort:path") {
     items {
       uri
     }
-
     metadata {
       stats {
         total
@@ -54,5 +50,3 @@ query ListControlCategoriesTreeByAka
     }
   }
 }
-
-list_control_categories_tree_by_category_id

@@ -21,6 +21,15 @@
 # resource:
 #   AKA or ID for the turbot product will be returned.
 #   In example, filters the resources with turbot account id '175816468884383'.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
 
 query ListControlsInSpecificAccount {
   controls(filter: "state:error,invalid,tbd resource:'175816468884383'") {
