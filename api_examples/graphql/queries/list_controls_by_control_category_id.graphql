@@ -1,7 +1,9 @@
 # Description
 # -----------
 #
+# NOTE The preferred method when using the full exact aka.
 #
+# Lists all the controls that completely matches the passed in control category aka.
 #
 
 # Usage
@@ -23,7 +25,15 @@
 #   In example only items that match are returned by setting value to `self`
 #
 
-query ListControlsByControlCategoryUri {
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
+
+query ListControlsByControlCategoryId {
   controls(filter: "controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot controlCategoryLevel:self") {
     items {
       state

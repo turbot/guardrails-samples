@@ -1,7 +1,7 @@
 # Description
 # -----------
 #
-# List the entire policy type hierarchy.
+# List the entire control types hierarchy.
 #
 
 # Usage
@@ -27,11 +27,11 @@
 #
 # For full documentation see:
 # - Filter documentation: https://turbot.com/v5/docs/reference/filter
-# - GraphQL policyTypes: https://turbot.com/v5/docs/reference/graphql/query/policyTypes
+# - GraphQL controlTypes: https://turbot.com/v5/docs/reference/graphql/query/controlTypes
 #
 
-query ListPolicyTypes {
-  policyTypes(filter: "is:policyType sort:path") {
+query ListControlTypes {
+  controlTypes(filter: "is:controlType sort:path") {
     items {
       uri
     }

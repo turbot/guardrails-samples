@@ -1,24 +1,27 @@
 # Description
 # -----------
 #
-# NOTE The preferred method when using the full exact aka.
+# Lists all the controls that partially match the passed in policy type aka.
 #
-# Lists all the controls that completely matches the passed in policy type aka.
+# Preferred method of finding the control using the complete aka:
+#   list_controls_targeting_policy_type_id.graphql
 #
 
 # Usage
 # -----
 #
-# turbot graphql --query ./list_controls_targeting_policy_type_id.graphql
+# turbot graphql --query ./list_controls_targeting_partial_policy_type_id.graphql
 #
 
 # Filter
 # ------
 #
-# policyTypeId:
-#   The policy type that should be queried.
-#   The value should exactly match the uri of the policy type.
-#   In example, this is set to `tmod:@turbot/turbot#/policy/categories/turbot`.
+# policyType:
+#   The policy type that the control targets.
+#   The matching algorithm will perform a caseless compare of the akas from right to left.
+#   In example, this is set to `turbot`, which will match any item with `turbot` at the end.
+#   Other possibilities are `categories/turbot` and `gories/turbot` which will both return matches.
+#   Matching `categories/turbo` will fail.
 #
 # policyTypeLevel:
 #   Controls the level of the policy categories that should be returned policy type hierarchy.
@@ -33,8 +36,8 @@
 # - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
 #
 
-query ListControlsTargetingPolicyTypeId {
-  controls(filter: "policyTypeId:tmod:@turbot/turbot#/resource/categories/turbot policyTypeLevel:self") {
+query ListControlsTargetingPartialPolicyTypeAkas {
+  controls(filter: "policyType:turbot policyTypeLevel:self") {
     items {
       state
       reason
