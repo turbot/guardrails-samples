@@ -1,0 +1,25 @@
+# Examples to access the turbot metadata like turbot.title and turbot.tags
+
+query turbotTitle {
+  # Accessing the resource using the title as a filter condition
+  resources(filter: "$.turbot.title:'test007buck'") {
+    items {
+      turbot {
+        title
+      }
+      object
+    }
+  }
+}
+
+query turbotTags {
+  # Accessing the resource using the turbot tags as a filter condition
+  resources(filter: "$.turbot.tags.'new':/^tes-/") {
+    items {
+      turbot {
+        title
+      }
+      object
+    }
+  }
+}

@@ -1,0 +1,39 @@
+# Description
+# -----------
+#
+# List the 10 oldest alerts in  the workspace with state error, invalid, tbd.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_controls_ten_oldest_alerts.graphql
+#
+
+# Filter
+# ------
+#
+# state:
+#   Any controls that are in any of these states alarm/ok/tbd/skipped/error will be returned.
+#   The matching algorithm will perform a caseless compare of the akas from right to left.
+#   In example, filters the controls that are in either error, invalid or tbd state.
+#
+# sort:
+#   sorting by appropriate fields.
+#   In example, sorting by stateChangeTimestamp.
+
+query ListControlsTenOldestAlerts {
+  controls(filter: "state:error,invalid,tbd sort:stateChangeTimestamp limit:10") {
+    items {
+      state
+      reason
+      type {
+        uri
+        title
+      }
+      turbot {
+        stateChangeTimestamp
+      }
+    }
+  }
+}

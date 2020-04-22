@@ -1,0 +1,39 @@
+# Description
+# -----------
+#
+# The query filter the s3 bucket with ACL Grants Permission with Write Permissions.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_by_resource_type_with_write_acl.graphql
+#
+
+# Filter
+# ------
+#
+# resourceType:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' (aka for s3 bucket) are returned.
+#
+# Searching tags with $.:
+#   Using $. one can filter resources using any property of the object.
+#   In example, '$.Acl.Grants.*.Permission:WRITE_ACP,WRITE' returns resources with ACL Grants Permission with Write Permissions.
+#
+
+query ListResourcesByResourceTypeWithWriteACL {
+  resources(
+    filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      Name: get(path: "Name")
+      ACL: get(path: "Acl")
+    }
+  }
+}

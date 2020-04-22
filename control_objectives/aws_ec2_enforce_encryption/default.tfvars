@@ -1,0 +1,1 @@
+smart_folder_title = "EC2 enforce snapshot and volume encryption"
