@@ -9,8 +9,8 @@ point for your own integrations.
 
 Simple, example clients for running queries against Turbot's GraphQL API.
 
-* [Node / Javascript](./graphql/clients/node/README.md)
-* [Python](./graphql/clients/python/README.md)
+* [Node / Javascript](./graphql/clients/node)
+* [Python](./graphql/clients/python)
 * [Bash / Shell](./graphql/clients/shell/README.md)
 
 

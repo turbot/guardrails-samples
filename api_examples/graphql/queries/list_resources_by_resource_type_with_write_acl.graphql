@@ -22,10 +22,16 @@
 #   In example, '$.Acl.Grants.*.Permission:WRITE_ACP,WRITE' returns resources with ACL Grants Permission with Write Permissions.
 #
 
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
 query ListResourcesByResourceTypeWithWriteACL {
-  resources(
-    filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300"
-  ) {
+  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300") {
     metadata {
       stats {
         total

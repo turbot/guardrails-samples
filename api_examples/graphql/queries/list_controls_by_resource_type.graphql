@@ -21,6 +21,15 @@
 # resourceType:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/aws#/resource/types/aws' (the AWS controls) are returned.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
 
 query ListControlsByResourceType {
   controls(filter: "state:error,invalid,tbd resourceType:tmod:@turbot/aws#/resource/types/aws") {

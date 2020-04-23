@@ -24,6 +24,14 @@
 #   In example, the Controls with key/value pair were: wolf are returned.
 #
 
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
+
 query ListControlsByTags {
   controls(filter: "state:ok $.turbot.tags.were:'wolf' stateChangeTimestamp:>T-15m") {
     items {
