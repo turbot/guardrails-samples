@@ -1,6 +1,6 @@
 target_resource          = "<resource id>"
 
-#This is list of services that you would like to Enable or Disable, Service names must match the policy_map
+# This is list of services that you would like to Enable or Disable, Service names must match the policy_map
 service_status  = {
     gcp-computeengine    = "Enabled"
     gcp-pubsub           = "Enabled"
@@ -10,11 +10,12 @@ service_status  = {
     gcp-dns              = "Disabled"
   }
 
-#This is a map of Turbot policy types to service names. It is advised not to modify the below list.
+# This is a map of Turbot policy types to service names. It is advised not to modify the below list.
 policy_map    = {
     gcp-appengine        = "appEngineEnabled"
     gcp-bigquery         = "bigQueryEnabled"
     gcp-bigtable         = "bigtableEnabled"
+    gcp-composer         = "composerEnabled"
     gcp-computeengine    = "computeEngineEnabled"
     gcp-dataproc         = "dataprocEnabled"
     gcp-dns              = "dnsEnabled"
@@ -26,16 +27,18 @@ policy_map    = {
     gcp-monitoring       = "monitoringEnabled"
     gcp-network          = "networkServiceEnabled"
     gcp-pubsub           = "pubsubEnabled"
+    gcp-scheduler        = "schedulerEnabled"
     gcp-spanner          = "spannerEnabled"
     gcp-sql              = "sqlEnabled"
     gcp-storage          = "storageEnabled"
 }
 
-#This is a map of service API enabled policy types to service names. It is advised not to modify the below list.
+# This is a map of service API enabled policy types to service names. It is advised not to modify the below list.
 api_policy_map    = {
     gcp-appengine        = "appEngineApiEnabled"
     gcp-bigquery         = "bigQueryApiEnabled"
     gcp-bigtable         = "bigtableApiEnabled"
+    gcp-composer         = "composerApiEnabled"
     gcp-computeengine    = "computeEngineApiEnabled"
     gcp-dataproc         = "dataprocApiEnabled"
     gcp-dns              = "dnsApiEnabled"
@@ -47,6 +50,7 @@ api_policy_map    = {
     gcp-monitoring       = "monitoringApiEnabled"
     gcp-network          = "networkServiceApiEnabled"
     gcp-pubsub           = "pubsubApiEnabled"
+    gcp-scheduler        = "schedulerApiEnabled"
     gcp-spanner          = "spannerApiEnabled"
     gcp-sql              = "sqlApiEnabled"
     gcp-storage          = "storageApiEnabled"
