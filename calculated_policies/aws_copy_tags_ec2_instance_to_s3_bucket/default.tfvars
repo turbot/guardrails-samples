@@ -1,0 +1,1 @@
+smart_folder_title = "s3 bucket tag"
