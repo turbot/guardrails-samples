@@ -7,9 +7,9 @@ variable "target_resource" {
 # Enter the list of services that you would like to "Enable" or "Disable"
 # Service names must match the "policy_map" below
 variable "service_status" {
-  type       = map
+  type = map
 
-  default    = {
+  default = {
     azure-compute    = "Enabled"
     azure-cosmosdb   = "Enabled"
     azure-storage    = "Enabled"
@@ -18,9 +18,9 @@ variable "service_status" {
   }
 }
 
-#This is a map of Turbot policy types to service names. It is advised not to modify the below list.
+# This is a map of Turbot policy types to service names. It is advised not to modify the below list.
 variable "policy_map" {
-  type       = map
+  type = map
 
   default = {
     azure-aks                 = "aksEnabled"
