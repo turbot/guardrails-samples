@@ -1,13 +1,13 @@
 # Get notifications by notification type
 
 This script will return a filtered collection of notifications using the notification type to filter results.
-For more information on (notifications types)[https://turbot.com/v5/docs/concepts/notifications#notification-types].
+For more information on [notifications types](https://turbot.com/v5/docs/concepts/notifications#notification-types).
 
 In this example, the script will return all notifications that were returned over the last 10 days.
-For more information on how to use (datetime filters)[https://turbot.com/v5/docs/reference/filter#datetime-filters].
+For more information on how to use [datetime filters](https://turbot.com/v5/docs/reference/filter#datetime-filters).
 
 In this example, the script will sort the notifications displaying most recent first.
-For more information on how to use (sorting)[https://turbot.com/v5/docs/reference/filter#sorting].
+For more information on how to use [sorting](https://turbot.com/v5/docs/reference/filter#sorting).
 
 ## Prerequisites
 

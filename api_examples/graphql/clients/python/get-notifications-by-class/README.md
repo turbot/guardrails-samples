@@ -1,13 +1,13 @@
 # Get notifications by notification class
 
 This script will return a filtered collection of notifications the notification class to filter results.
-For more information on (filtering notifications)[https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications].
+For more information on [filtering notifications](https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications).
 
 In this example, the script will return all notifications that were returned over the last 10 days.
-For more information on how to use (datetime filters)[https://turbot.com/v5/docs/reference/filter#datetime-filters].
+For more information on how to use [datetime filters](https://turbot.com/v5/docs/reference/filter#datetime-filters).
 
 In this example, the script will sort the notifications displaying most recent first.
-For more information on how to use (sorting)[https://turbot.com/v5/docs/reference/filter#sorting].
+For more information on how to use [sorting](https://turbot.com/v5/docs/reference/filter#sorting).
 
 ## Prerequisites
 
