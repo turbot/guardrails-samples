@@ -5,9 +5,9 @@ data "azurerm_subscription" "subscription_to_import" {
 }
 
 output "subscription_display_name" {
-  value           = "${data.azurerm_subscription.subscription_to_import.display_name}"
+  value = "${data.azurerm_subscription.subscription_to_import.display_name}"
 }
 
 output "tennant_id" {
-  value           = "${data.azurerm_subscription.subscription_to_import.tenant_id}"
+  value = "${data.azurerm_subscription.subscription_to_import.tenant_id}"
 }
