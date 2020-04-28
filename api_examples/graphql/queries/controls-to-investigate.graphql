@@ -41,6 +41,7 @@
   }
 }
 
+
 query unhealthyControlsInWorkspace {
   # List all the controls in the workspace with the state error, invalid and tbd
   # Many fields can be selected to display in the results, below example focuses on the unique fields as an example.
@@ -104,9 +105,7 @@ query unhealthyAWSControls {
   # Azure Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/azure#/resource/types/azure"
   # GCP Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/gcp#/resource/types/gcp"
   # Turbot Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/turbot#/resource/types/turbot"
-  controls(
-    filter: "state:error,invalid,tbd resourceType:tmod:@turbot/aws#/resource/types/aws"
-  ) {
+  controls(filter: "state:error,invalid,tbd resourceType:tmod:@turbot/aws#/resource/types/aws") {
     metadata {
       stats {
         total
@@ -133,9 +132,7 @@ query unhealthyAWSControls {
 
 query tenOldestAlertsInWorkspace {
   # List the 10 oldest alerts in  the workspace with state error, invalid, tbd
-  controls(
-    filter: "state:error,invalid,tbd sort:stateChangeTimestamp limit:10"
-  ) {
+  controls(filter: "state:error,invalid,tbd sort:stateChangeTimestamp limit:10") {
     items {
       state
       reason
@@ -150,11 +147,10 @@ query tenOldestAlertsInWorkspace {
   }
 }
 
+
 query tenOldestAlertsForS3BucketInAWSAccount {
   # List the 10 oldest alerts for S3 Bucket resource type in an AWS Account with turbot ID 162262236546812 with state error, invalid, tbd
-  controls(
-    filter: "state:error,invalid,tbd resource:'162262236546812' resourceType:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10"
-  ) {
+  controls(filter: "state:error,invalid,tbd resource:'162262236546812' resourceType:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {
     items {
       state
       reason
@@ -211,9 +207,7 @@ query controlsSummary {
 query controlsStateByTags {
   # Query any controls that are in any of these states
   # alarm/ok/tbd/skipped/error by specific tag within a specific timeframe
-  controls(
-    filter: "state:ok $.turbot.tags.were:'wolf' stateChangeTimestamp:>T-15m"
-  ) {
+  controls(filter: "state:ok $.turbot.tags.were:'wolf' stateChangeTimestamp:>T-15m") {
     items {
       state
       type {
