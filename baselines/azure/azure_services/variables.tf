@@ -5,7 +5,7 @@ variable "target_resource" {
 }
 
 # Enter the list of services that you would like to "Enable" or "Disable"
-# Service names must match the "policy_map" below
+# Service names must match the key names for the "policy_map" below
 variable "service_status" {
   type = map
 
