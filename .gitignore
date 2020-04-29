@@ -295,3 +295,6 @@ $RECYCLE.BIN/
 # Ignore vscode workspace settings
 .vscode
 
+# Testing configuration
+*.tfvars
+!default.tfvars

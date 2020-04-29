@@ -27,7 +27,7 @@ resource "azurerm_role_definition" "event_handler_role" {
   name        = "Turbot/EventHandlerRole"
   scope       = "/subscriptions/${var.azure_subscription_id}"
   description = "This is a custom role required by turbot to setup event handler to import subscription in read only mod."
-  
+
   permissions {
     actions = [
       "Microsoft.HDInsight/register/action",
@@ -79,8 +79,8 @@ resource "turbot_resource" "subscription_resource" {
   metadata = jsonencode({
     "azure" : {
       "subscriptionId" : "${var.azure_subscription_id}",
-      "tenantId"      : "${data.azurerm_subscription.subscription_to_import.tenant_id}"
-    }  
+      "tenantId" : "${data.azurerm_subscription.subscription_to_import.tenant_id}"
+    }
   })
   data = jsonencode({
     "subscriptionId" : "${var.azure_subscription_id}"

@@ -4,10 +4,10 @@ This script provides an example of how to look up a resource id using a Turbot a
 From there the script will return the last notification for the found resource if it exists.
 
 In this example, the script is configured to return the last notification only.
-For more information on how to (limit results)[https://turbot.com/v5/docs/reference/filter#limiting-results].
+For more information on how to [limit results](https://turbot.com/v5/docs/reference/filter#limiting-results).
 
 In this example, the script will sort the notifications displaying most recent first.
-For more information on how to use (sorting)[https://turbot.com/v5/docs/reference/filter#sorting].
+For more information on how to use [sorting](https://turbot.com/v5/docs/reference/filter#sorting).
 
 ## Prerequisites
 
