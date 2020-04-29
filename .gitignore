@@ -296,4 +296,5 @@ $RECYCLE.BIN/
 .vscode
 
 # Testing configuration
-punisher*.tfvars
+*.tfvars
+!default.tfvars

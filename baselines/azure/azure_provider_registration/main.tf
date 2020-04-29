@@ -4,7 +4,7 @@ resource "turbot_smart_folder" "azure_folder" {
   description = "Folder to import the Azure Subscription:"
 }
 
-resource "turbot_smart_folder_attachment" "test" {
+resource "turbot_smart_folder_attachment" "azure_folder" {
   resource     = var.target_resource
   smart_folder = turbot_smart_folder.azure_folder.id
 }
