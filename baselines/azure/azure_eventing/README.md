@@ -1,15 +1,17 @@
-# Azure Provider Registration Baseline
+# Azure Eventing Baseline
 
-Turbot Azure Services baseline provides a Terraform configuration to registration status or check current registration status for Azure services in Turbot.
+Terraform script that creates a calculated policy which enables:
 
-**NOTE:** `provider_status` must match values found in the `provider_registration_map` map.
-**NOTE:** It is advised not to modify the `provider_registration_map` map.
+- Event Polling
+- Event Handling
+- Resource Group creation for Event Handling
 
 ## Prerequisites
 
 - Setup Turbot [credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials)
 - Installed [Terraform](https://www.terraform.io/downloads.html)
 - Installed [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- An environment with `turbot`, `turbot-iam`, `azure` and `azure-monitor` mods installed as a minimum.
 
 ## Running the Baseline
 
@@ -24,8 +26,6 @@ Variables that are exposed by this script are:
 - target_resource
 - smart_folder_title
 - folder_parent (Optional)
-- provider_status (Optional)
-- provider_registration_map (Optional)
 
 Open the file `variables.tf` for further details.
 

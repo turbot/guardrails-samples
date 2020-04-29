@@ -1,20 +1,48 @@
 # Azure Services Baseline
 
-Turbot Azure Services baseline provides a terraform configuration to enable or disable Azure services in Turbot.
+Turbot Azure Services baseline provides a Terraform configuration to enable or disable Azure services in Turbot.
+
+**NOTE:** `service_status` must match values found in the `policy_map` map.
+**NOTE:** It is advised not to modify the `policy_map` map.
 
 ## Prerequisites
 
-To run the Azure Services baseline, you must have:
-
-- [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
-- [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and AWS account
+- Setup Turbot [credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials)
+- Installed [Terraform](https://www.terraform.io/downloads.html)
+- Installed [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
 
 ## Running the Baseline
 
-To run the Azure services baseline:
+Scripts can be run in the folder that contains the script.
 
-- Go to the Azure services baseline directory in the repository with `cd azure_services`
-- Update the `target_resource` in `default.tfvars`
-- Run `terraform plan -var-file=default.tfvars` to review the changes to be applied
-- Run `terraform apply -var-file=default.tfvars` to apply the changes
+### Configure the script
+
+Update default.tfvars or create a new Terraform configuration file.
+
+Variables that are exposed by this script are:
+
+- target_resource
+- smart_folder_title
+- folder_parent (Optional)
+- service_status (Optional)
+- policy_map (Optional)
+
+Open the file `variables.tf` for further details.
+
+### Initialize Terraform
+
+If not previously run then initialize Terraform to get all necessary providers.
+
+Command: `terraform init`
+
+### Apply default configuration
+
+If seeking to apply the configuration using the configuration file `defaults.tfvars`.
+
+Command: `terraform apply -var-file=default.tfvars`
+
+### Apply custom configuration
+
+If seeking to apply the configuration using a custom configuration file `<custom_filename>.tfvars`.
+
+Command: `terraform apply -var-file=<custom_filename>.tfvars`
