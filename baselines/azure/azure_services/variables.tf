@@ -34,7 +34,7 @@ variable "policy_map" {
     azure-datafactory         = "dataFactoryEnabled"
     azure-dns                 = "dnsEnabled"
     azure-firewall            = "firewallServiceEnabled"
-    azure-frontdoorservice    = "frontDoorsEnabled"
+    azure-frontdoorservice    = "frontDoorServiceEnabled"
     azure-iam                 = "iamEnabled"
     azure-keyvault            = "keyVaultEnabled"
     azure-loadbalancer        = "loadBalancerServiceEnabled"
