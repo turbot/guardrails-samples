@@ -9,3 +9,8 @@ variable "folder_parent" {
   type    = string
   default = "tmod:@turbot/turbot#/"
 }
+
+variable "target_resource" {
+  description = "Enter a target_resource to attach the smart folder and apply its policies."
+  type        = string
+}
