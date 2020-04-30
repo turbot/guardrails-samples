@@ -1,0 +1,62 @@
+# Description
+# -----------
+#
+# List all CIS the policy types for a specific cloud provider
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list-cis-policy-types-by-cloud-provider.graphql
+#
+
+# Filter
+# ------
+#
+# policyType:
+#   Used to filter the returned policy types.
+#   In example, we have used the policyType filter twice which works as a logical AND.
+#   The first policyType is set to `cis`, which will limit the returned subset to any CIS policy.
+#   The second policyType is set to `azure`, which will further limit the returned subset to only include policies for Azure Cloud.
+#
+# sort:
+#   Sets the order of the returned query results.
+#   In this example, it is set to path which will return the results in hierarchical order.
+#
+
+# Use Cases
+# ---------
+#
+#   Azure CIS only
+#   ------------
+#     Set the second policyType to `azure` to get CIS policy types for Azure.
+#
+#   GCP CIS only
+#   ------------
+#     Set the second policyType to `gcp` to get CIS policy types for GCP.
+#
+#   AWS CIS only
+#   ------------
+#     Set the second policyType to `aws` to get CIS policy types for AWS.
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL policyTypes: https://turbot.com/v5/docs/reference/graphql/query/policyTypes
+#
+
+query ListCisPolicyTypesByCloudProvider {
+  policyTypes(filter: "policyType:cis policyType:azure sort:path") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      title
+      uri
+    }
+  }
+}
