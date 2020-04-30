@@ -10,7 +10,7 @@
 # Usage
 # -----
 #
-# turbot graphql --query ./get_notifications_for_policy_setting_changes_by_actor_identity_id.graphql
+# turbot graphql --query ./list_notifications_for_policy_setting_changes_by_actor_identity_id.graphql
 #
 
 # Filter
@@ -43,7 +43,7 @@
 # - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query GetNotificationsForPolicySettingChangesByActorIdentityId {
+query ListNotificationsForPolicySettingChangesByActorIdentityId {
   notifications(filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:-173249891011852") {
     metadata {
       stats {

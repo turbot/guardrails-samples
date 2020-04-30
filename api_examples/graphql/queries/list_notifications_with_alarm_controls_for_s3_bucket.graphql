@@ -10,7 +10,7 @@
 # Usage
 # -----
 #
-# turbot graphql --query ./get_notifications_with_alarm_controls_for_s3_bucket.graphql
+# turbot graphql --query ./list_notifications_with_alarm_controls_for_s3_bucket.graphql
 #
 
 # Filter
@@ -38,7 +38,7 @@
 # - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query GetNotificationsWithAlarmControlsForS3Bucket {
+query ListNotificationsWithAlarmControlsForS3Bucket {
   notifications(filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self") {
     metadata {
       stats {
