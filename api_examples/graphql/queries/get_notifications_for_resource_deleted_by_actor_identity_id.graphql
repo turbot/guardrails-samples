@@ -10,7 +10,7 @@
 # Usage
 # -----
 #
-# turbot graphql --query ./get_notifications_for_resource_deleted_by_non_turbot_identity.graphql
+# turbot graphql --query ./get_notifications_for_resource_deleted_by_actor_identity_id.graphql
 #
 
 # Filter
@@ -19,24 +19,20 @@
 # notificationType:
 #   Filter on the general type of notifications.
 #   This will filter all create, update, and delete notifications of a given class. 
-#   In example, this is set to `notificationType:resource_deleted`.
+#   In example, this is set to `notificationType:resource_deleted`. 
+#   The same example can be modified to filter resources,actions,policy values and many more that are either created , updated or deleted during any specific time.
+#   The link for all notificationTypes that are supported by turbot is provided in Documentation below.
 #
 # actorIdentityId:
 #   The ID of the profile who last updated or created the resource.
 #   In example, the profile id is for punisher i.e. '173249891011852'.
 #   In example, the data are filtered that are deleted by non turbot identity i.e. 'actorIdentityId:-173249891011852'.
-#
-# sort:
-#   Sets the order of the returned query results.
-#   In this example, it is set to `sort:-timestamp`.
+#   The 'actorIdentityId:-173249891011852' signifies any actor other than turbot. The '-' is used to negated a filter condition.
 #
 # timestamp:
 #   The time when resource was last created or updated.
 #   In this example, it is set for last 24 hours.
 #
-# limit:
-#   The number of data filtered out.
-#   In this example, it is set to 10.
 
 # Documentation
 # -------------
@@ -47,8 +43,8 @@
 # - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query GetNotificationsForResourceDeletedByNonTurbotIdentity {
-  notifications(filter: "notificationType:resource_deleted timestamp:>T-1d sort:-timestamp actorIdentityId:-173249891011852 limit:10") {
+query GetNotificationsForResourceDeletedByActorIdentityId {
+  notifications(filter: "notificationType:resource_deleted timestamp:>T-1d actorIdentityId:-173249891011852") {
     metadata {
       stats {
         total

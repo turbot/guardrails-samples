@@ -25,10 +25,6 @@
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' are returned.
 #
-# sort:
-#   Sets the order of the returned query results.
-#   In this example, it is set to `sort:-timestamp`.
-#
 # timestamp:
 #   The time when resource was last created or updated.
 #   In this example, it is set for last 24 hours.
@@ -43,7 +39,7 @@
 #
 
 query GetNotificationsWithAlarmControlsForS3Bucket {
-  notifications(filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self sort:-timestamp") {
+  notifications(filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self") {
     metadata {
       stats {
         total
