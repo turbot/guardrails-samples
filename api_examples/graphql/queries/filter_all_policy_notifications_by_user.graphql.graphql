@@ -1,13 +1,13 @@
 # Description
 # -----------
 #
-# Query will return all policy the notification for the last day and filter by an actor identity.
+# Query will return all policy the notification for the last day and filter by an user.
 #
 
 # Usage
 # -----
 #
-# turbot graphql --query ./filter_all_policy_notifications_by_actor.graphql
+# turbot graphql --query ./filter_all_policy_notifications_by_user.graphql
 #
 
 # Filter
@@ -52,7 +52,7 @@
 # - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query FilterAllPolicyNotificationsByActor {
+query FilterAllPolicyNotificationsByUser {
   notifications(
     filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:-<user_actor_id>"
   ) {
