@@ -1,0 +1,1 @@
+smart_folder_title = "AWS S3 Limit Public Access"
