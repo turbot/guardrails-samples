@@ -3,6 +3,7 @@
 Turbot Azure Services baseline provides a Terraform configuration to registration status or check current registration status for Azure services in Turbot.
 
 **NOTE:** `provider_status` must match values found in the `provider_registration_map` map.
+
 **NOTE:** It is advised not to modify the `provider_registration_map` map.
 
 ## Prerequisites
@@ -35,14 +36,26 @@ If not previously run then initialize Terraform to get all necessary providers.
 
 Command: `terraform init`
 
-### Apply default configuration
+### Apply using default configuration
 
 If seeking to apply the configuration using the configuration file `defaults.tfvars`.
 
 Command: `terraform apply -var-file=default.tfvars`
 
-### Apply custom configuration
+### Apply using custom configuration
 
 If seeking to apply the configuration using a custom configuration file `<custom_filename>.tfvars`.
 
 Command: `terraform apply -var-file=<custom_filename>.tfvars`
+
+### Destroy using default configuration
+
+If seeking to apply the configuration using the configuration file `defaults.tfvars`.
+
+Command: `terraform destroy -var-file=default.tfvars`
+
+### Destroy using custom configuration
+
+If seeking to apply the configuration using a custom configuration file `<custom_filename>.tfvars`.
+
+Command: `terraform destroy -var-file=<custom_filename>.tfvars`

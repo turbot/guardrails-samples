@@ -49,14 +49,16 @@
 
 query ListCisPolicyTypesByCloudProvider {
   policyTypes(filter: "policyType:cis policyType:azure sort:path") {
+    items {
+      title
+      uri
+      resolvedSchema
+    }
+
     metadata {
       stats {
         total
       }
-    }
-    items {
-      title
-      uri
     }
   }
 }
