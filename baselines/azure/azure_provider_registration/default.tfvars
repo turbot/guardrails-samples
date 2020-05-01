@@ -8,10 +8,6 @@ smart_folder_title = "<folder_name>"
 # Optional - leaving unchanged will default to the Turbot level
 # folder_parent = "<resource_id or aka>"
 
-# Examples
-# target_resource = "tmod:@turbot/turbot#/"
-# target_resource = "187486019045335"
-
 # Optional - leaving unchanged will use the default map which will set the controls to Skip
 # provider_status = {
 #   ApiManagement    = "Skip"

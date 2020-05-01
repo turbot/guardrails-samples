@@ -1,10 +1,6 @@
-# Azure Services Baseline
+# Azure CIS V1 Baseline
 
-Turbot Azure Services baseline provides a Terraform configuration to enable or disable Azure services in Turbot.
-
-**NOTE:** `service_status` must match values found in the `policy_map` map.
-
-**NOTE:** It is advised not to modify the `policy_map` map.
+Turbot CIS V1 baseline to configure CIS policies centrally.
 
 ## Prerequisites
 
@@ -25,8 +21,7 @@ Variables that are exposed by this script are:
 - target_resource
 - smart_folder_title
 - folder_parent (Optional)
-- service_status (Optional)
-- policy_map (Optional)
+- cis_policy_setting (Optional)
 
 Open the file `variables.tf` for further details.
 
