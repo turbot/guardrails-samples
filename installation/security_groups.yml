@@ -1,13 +1,12 @@
 AWSTemplateFormatVersion: 2010-09-09
 Dscription: Turbot required AWS Security groups for TEF 1.6.0+
 
-Parameters: 
+Parameters:
   TurbotVpc:
     Description: VPC where Turbot is installed into.
-    Type: 'AWS::EC2::VPC::Id'
+    Type: "AWS::EC2::VPC::Id"
 
-
-Resources: 
+Resources:
   OutboundInternetSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -35,14 +34,14 @@ Resources:
           IpProtocol: tcp
 
   LoadBalancerSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupName: turbot_load_balancer_security_group
       GroupDescription: Load Balancer
       VpcId: !Ref TurbotVpc
 
   ApiServiceSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupName: turbot_api_security_group
       GroupDescription: API Service
