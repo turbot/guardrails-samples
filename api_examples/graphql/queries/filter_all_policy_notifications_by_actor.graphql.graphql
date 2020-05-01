@@ -1,0 +1,89 @@
+# Description
+# -----------
+#
+# Query will return all policy the notification for the last day and filter by an actor identity.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./filter_all_policy_notifications_by_actor.graphql
+#
+
+# Filter
+# ------
+#
+# notificationType:
+#   Used to filter by notification types.
+#   In this example, the only notification types that will be returned are `policy_setting_created`,
+#   `policy_setting_updated` and `policy_setting_deleted`.
+#
+# actorIdentityId:
+#   Filter using an actor id.
+#   In this example, the query will return all policy notifications excluding a user identified by the placeholder
+#   `<user_actor_id>`.
+#
+
+# Use Cases
+# ---------
+#
+#   Filter for user only
+#   ---------------------
+#     To filter the policy notifications for a specific user, then the actor identity should be set to
+#     `actorIdentityId:<user_actor_id>`
+#
+#   Filter excluding user
+#   ----------------------
+#     To filter the policy notifications and to exclude a specific user, then the actor identity should be set to
+#     `actorIdentityId:-<user_actor_id>`
+#
+#   Filter excluding Turbot Identity
+#   --------------------------------
+#     The Turbot actor identity can be retrieved by using the GraphQL query in the TDK `get_turbot_id.graphql`.
+#     Substitute that value into the `<user_actor_id>`.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
+# - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
+#
+
+query FilterAllPolicyNotificationsByActor {
+  notifications(
+    filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:-<user_actor_id>"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      notificationType
+      actor {
+        identity {
+          title
+        }
+      }
+      resource {
+        turbot {
+          title
+          createTimestamp
+          actorIdentityId
+          akas
+        }
+      }
+      policySetting {
+        actor {
+          identity {
+            title
+          }
+        }
+        value
+      }
+    }
+  }
+}
