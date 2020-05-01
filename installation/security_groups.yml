@@ -22,8 +22,8 @@ Resources:
           #
           # Without opening port 80, ECS optimised image will timeout:
           # Could not retrieve mirrorlist http://repo.ap-southeast-2.amazonaws.com/latest/main/mirror.list error was
-          # 12: Timeout on http://repo.ap-southeast-2.amazonaws.com/latest/main/mirror.list: (28, 'Connection timed out after 5000 milliseconds')
-          # Mar 05 00:12:33 cloud-init[2231]: util.py[WARNING]: Package upgrade failed
+          # 12: Timeout on http://repo.ap-southeast-2.amazonaws.com/latest/main/mirror.list: (28, 'Connection timed out
+          # after 5000 milliseconds') Mar 05 00:12:33 cloud-init[2231]: util.py[WARNING]: Package upgrade failed
           #
           # The instance still boots OK but it's adding extra initialisation time
           #
