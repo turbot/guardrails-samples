@@ -4,7 +4,7 @@
 #
 # The query returns the data from activity log.
 # Filters out the control on a s3 bucket that moved from any state to ALARM within last 24 hours.
-# 
+#
 #
 
 # Usage
@@ -18,7 +18,7 @@
 #
 # notificationType:
 #   Filter on the general type of notifications.
-#   This will filter all create, update, and delete notifications of a given class. 
+#   This will filter all create, update, and delete notifications of a given class.
 #   In example, this is set to `notificationType:control_updated`.
 #
 # resourceType:
@@ -39,12 +39,9 @@
 #
 
 query ListNotificationsWithAlarmControlsForS3Bucket {
-  notifications(filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self") {
-    metadata {
-      stats {
-        total
-      }
-    }
+  notifications(
+    filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self"
+  ) {
     items {
       notificationType
       resource {
@@ -57,6 +54,12 @@ query ListNotificationsWithAlarmControlsForS3Bucket {
             reason
           }
         }
+      }
+    }
+
+    metadata {
+      stats {
+        total
       }
     }
   }

@@ -1,8 +1,7 @@
 # Description
 # -----------
 #
-# Query will return all policy notifications for the last day and will filter out any notification triggered by a
-# particular user.
+# Query will return all policy notifications for the last day triggered by a particular user provided the user exists.
 #
 
 # Substitute
@@ -28,13 +27,13 @@
 # Use Cases
 # ---------
 #
-#   Excluding the user Turbot Identity
+#   Include the user Turbot Identity
 #   ----------------------------------
 #     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_identity_id.graphql`.
 #     2. Replace `<actor_indentity_id>` with this value.
 #     3. Excute this GraphQL script
 #
-#   Excluding a particular user
+#   Include a particular user
 #   ---------------------------
 #     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_identity_id.graphql`.
 #     2. Replace `<actor_indentity_id>` with this value.
@@ -50,9 +49,9 @@
 #   - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query ListPolicyNotificationsExcludingUser {
+query ListPolicyNotificationsForUser {
   notifications(
-    filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:-<actor_indentity_id>"
+    filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:<actor_indentity_id>"
   ) {
     items {
       notificationType

@@ -4,7 +4,7 @@
 #
 # The query returns the data from activity log.
 # Filters out the resources that are deleted by a non-turbot identity within last 24 hours.
-# 
+#
 #
 
 # Usage
@@ -18,8 +18,8 @@
 #
 # notificationType:
 #   Filter on the general type of notifications.
-#   This will filter all create, update, and delete notifications of a given class. 
-#   In example, this is set to `notificationType:resource_deleted`. 
+#   This will filter all create, update, and delete notifications of a given class.
+#   In example, this is set to `notificationType:resource_deleted`.
 #   The same example can be modified to filter resources,actions,policy values and many more that are either created , updated or deleted during any specific time.
 #   The link for all notificationTypes that are supported by turbot is provided in Documentation below.
 #
@@ -45,11 +45,6 @@
 
 query ListNotificationsForResourceDeletedByActorIdentityId {
   notifications(filter: "notificationType:resource_deleted timestamp:>T-1d actorIdentityId:-173249891011852") {
-    metadata {
-      stats {
-        total
-      }
-    }
     items {
       notificationType
       actor {
@@ -66,6 +61,12 @@ query ListNotificationsForResourceDeletedByActorIdentityId {
           actorIdentityId
           akas
         }
+      }
+    }
+
+    metadata {
+      stats {
+        total
       }
     }
   }
