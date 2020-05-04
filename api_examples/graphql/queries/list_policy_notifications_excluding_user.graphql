@@ -52,7 +52,7 @@
 
 query ListPolicyNotificationsExcludingUser {
   notifications(
-    filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:-<actor_indentity_id>"
+    filter: "actorIdentityId:-<actor_indentity_id> notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d"
   ) {
     items {
       notificationType

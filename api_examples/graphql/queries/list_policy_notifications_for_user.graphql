@@ -51,7 +51,7 @@
 
 query ListPolicyNotificationsForUser {
   notifications(
-    filter: "notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d actorIdentityId:<actor_indentity_id>"
+    filter: "notificationType:actorIdentityId:<actor_indentity_id> policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d"
   ) {
     items {
       notificationType
