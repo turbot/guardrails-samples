@@ -1,0 +1,40 @@
+# Description
+# -----------
+#
+# The query that returns the actor identity ID for any user identity.
+#
+
+# Substitute
+# ----------
+#
+# Substitute real values for the token <email_address>.
+#
+# <email_address>:
+#   Any valid email address provided as long it is a known user to the Turbot instance.
+#   If the user is a known user, an entry will be returned otherwise an empty query will
+#   be returned.
+
+# Execute
+# -------
+#
+# To execute the query after substitution, run the Turbot CLI command:
+#   `turbot graphql --query ./get_turbot_actor_identity_id.graphql`
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+#   - Filter documentation: https://turbot.com/v5/docs/reference/filter
+#   - GraphQL resources: https://turbot.com/v5/docs/reference/filter/resources
+#
+
+query GetUserActorIdentityId {
+  resources(filter: "resourceId:<email_address> level:self") {
+    items {
+      turbot {
+        actorIdentityId
+      }
+    }
+  }
+}

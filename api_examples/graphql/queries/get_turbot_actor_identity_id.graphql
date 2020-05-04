@@ -1,0 +1,30 @@
+# Description
+# -----------
+#
+# The query that returns the actor identity ID for the Turbot identity.
+#
+
+# Execute
+# -------
+#
+# To execute the query after substitution, run the Turbot CLI command:
+#   `turbot graphql --query ./get_turbot_actor_identity_id.graphql`
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+#   - Filter documentation: https://turbot.com/v5/docs/reference/filter
+#   - GraphQL resources: https://turbot.com/v5/docs/reference/filter/resources
+#
+
+query GetTurbotActorIdentityId {
+  resources(filter: "resourceId:turbot://identity/turbot") {
+    items {
+      turbot {
+        actorIdentityId: id
+      }
+    }
+  }
+}
