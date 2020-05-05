@@ -1,6 +1,27 @@
-##For AWS Account Import
+# Prerequisites
+# -------------
+#
+# Create a Role by selecting 'Another AWS account' option. For Account ID, enter 525041748188 (Turbot's SaaS AWS account ID) if you are a SaaS customer.
+# Check 'Require External ID' and enter an External ID. You can choose any valid external ID.
+# To enable readonly access for Turbot with event handler support, the policies that need to be attached to the role are: AmazonSNSFullAccess, CloudWatchFullAcces, CloudWatchEventsFullAccess, and ReadOnlyAccess.
+# Make sure the 'Require MFA' is disabled on the role.
+
+# Documentation
+# -------------
+#
+# For full documentation to check how the import work and details on mutation:
+# - Account Import: https://turbot.com/v5/docs/integrations/aws/import-aws-account
+# - Mutations: https://turbot.com/v5/docs/reference/graphql/mutation
+
 #################################  STEP 1  #################################
 ####### Create AWS Account Mutation  #######
+# Description
+# -----------
+#
+# The mutation type defines GraphQL operations that change data on the server. Many operations like create,update,delete can be performed on turbot console.
+# 
+# This mutation creates a resource for the given parent and type and with the given data.
+
 mutation CreateAWSAccount($input: CreateResourceInput!) {
   createResource(input: $input) {
     turbot {
@@ -10,8 +31,10 @@ mutation CreateAWSAccount($input: CreateResourceInput!) {
 }
 
 ####### Input to above CreateAWSAccount Mutation  #######
-# parent:           It is the turbot id of folder to import account
-# accountId:         The aws account id that needs to be imported.
+# parent:     It is the turbot folder id under which the account is getting imported.
+# accountId:  The aws account id that needs to be imported.
+# partition:  If the account is imported to a commercial env it will be 'aws'. In case of gov cloud the value will be 'aws-us-gov'.
+
 {
   "input": {
     "parent": "187486019045335",
@@ -29,9 +52,13 @@ mutation CreateAWSAccount($input: CreateResourceInput!) {
 }
 
 #################################  STEP 2  #################################
-# Used the turbot id returned from STEP 1 as resource for below policy settings
+# Used the turbot id returned from STEP 1 as resource for below policy settings.
 
 ####### Create AWS IAM Role Policies Mutation  #######
+# Description
+# -----------
+#
+# Create a policy setting for the given type, resource and precedence.
 
 mutation SetIamRoleArnPolicy($setIamRoleArnPolicy: CreatePolicySettingInput!, $setIamRoleExternalIdPolicy: CreatePolicySettingInput!) {
   IamRoleArnPolicy: createPolicySetting(input: $setIamRoleArnPolicy) {
@@ -47,12 +74,15 @@ mutation SetIamRoleArnPolicy($setIamRoleArnPolicy: CreatePolicySettingInput!, $s
 }
 
 ####### Input to above setIamRoleArnPolicy Mutation  #######
+# resource:  the turbot id returned from STEP 1.
+# setIamRoleArnPolicy_value: The aka of the role policy that was created. It can be retrived from the AWS console.
+# setIamRoleExternalIdPolicy_value: It can be retrived from the AWS console, in the role (that was created) next to trust relationship.
 
 {
   "setIamRoleArnPolicy": {
     "type": "tmod:@turbot/aws#/policy/types/turbotIamRole",
     "resource": "190672596431738",
-    "value": "arn:aws:iam::688720832404:role/Turbot_ReadOnly",
+    "value": "arn:aws:iam::688720832404:role/turbot-superuser",
     "precedence": "REQUIRED"
   },
   "setIamRoleExternalIdPolicy": {
