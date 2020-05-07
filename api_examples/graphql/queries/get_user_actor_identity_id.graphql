@@ -13,6 +13,7 @@
 #   Any valid email address provided as long it is a known user to the Turbot instance.
 #   If the user is a known user, an entry will be returned otherwise an empty query will
 #   be returned.
+#
 
 # Execute
 # -------

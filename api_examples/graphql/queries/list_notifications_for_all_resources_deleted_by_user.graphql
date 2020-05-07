@@ -1,6 +1,59 @@
 # Description
 # -----------
 #
+# Query will return "resource that were delete" for the last day triggered by a particular user provided the user exists.
+#
+
+# Substitute
+# ----------
+#
+# Substitute real values for the token <actor_indentity_id>.
+#
+# <actor_indentity_id>:
+#   Any valid actor identity id can be substituted.
+#   To get actor identity id for a user, please see GraphQL example:
+#     `get_user_actor_identity_id.graphql`.
+#   To get the actor identity id for Turbot identity, please see GraphQL example:
+#     `get_turbot_actor_identity_id.graphql.graphql`.
+#
+
+# Execute
+# -------
+#
+# To execute the query after substitution, run the Turbot CLI command:
+#   `turbot graphql --query ./list_notifications_for_all_resources_deleted_by_user.graphql`
+#
+
+# Use Cases
+# ---------
+#
+#   Include the user Turbot Identity
+#   ----------------------------------
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_identity_id.graphql`.
+#     2. Replace `<actor_indentity_id>` with this value.
+#     3. Excute this GraphQL script
+#
+#   Include a particular user
+#   ---------------------------
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_identity_id.graphql`.
+#     2. Replace `<actor_indentity_id>` with this value.
+#     3. Excute this GraphQL script
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+#   - Filter documentation: https://turbot.com/v5/docs/reference/filter
+#   - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
+#   - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
+#
+
+################# OLD
+
+# Description
+# -----------
+#
 #
 # The query returns the data from activity log.
 # Filters out the resources that are deleted by a non-turbot identity within last 24 hours.
@@ -43,8 +96,8 @@
 # - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query ListNotificationsForResourceDeletedByActorIdentityId {
-  notifications(filter: "notificationType:resource_deleted timestamp:>T-1d actorIdentityId:-173249891011852") {
+query ListNotificationsForAllResourcesDeletedByUser {
+  notifications(filter: "actorIdentityId:<actor_indentity_id> notificationType:resource_deleted timestamp:>T-1d") {
     items {
       notificationType
       actor {
