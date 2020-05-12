@@ -1,9 +1,9 @@
 # Description
 # -----------
 #
-# The mutation query import GCP project to a turbot folder. The mutation query works as in 2 step.
-# STEP 1 is to create GCP project inside the turbot folder.
-# STEP 2 is to use the turbot id that is returned from STEP 1 as resource for setting client email and privet key.
+# The mutation query import GCP project to a Turbot Folder. The mutation query works as in 2 step.
+# STEP 1 is to create a GCP project inside the Turbot Folder.
+# STEP 2 is to use the Turbot ID that is returned from STEP 1 as resource ID for setting client email and privet key.
 
 # Prerequisites
 # -------------
@@ -11,7 +11,7 @@
 # Create a service account in IAM for the project that needs to be imported. 
 # After the service account has been created, assign the following roles: owner,viewer,Pub/Sub Admin and Logging Admin.
 # Generate an access key for the service account. Once you select the key format as 'JASON', a document will 
-# automatically downloaded, which contains all the details including the private key.
+# automatically get downloaded, which contains all the details including the private key.
 # In order for Turbot to be able to manage services in the project, admins must enable the Cloud Resource Manager 
 # and Service Management APIs.
 
@@ -21,28 +21,28 @@
 # Substitute real values for STEP 1.
 #
 # <parent>:
-#   Any valid turbot folder id can be substituted.
-#   To get turbot folder id, please see the perticular turbot env where the account is suppose to be imported.
+#   Any valid Turbot folder ID can be substituted.
+#   To get Turbot folder ID, please see the perticular Turbot env where the account is suppose to be imported.
 #   One can either select an existing folder under 'Turbot' or create a new folder by clicking on the hamburger menu and
 #   selecting 'New child resource'.
-#   By selecting the folder, the folder id can be taken from the 'overview' tab on turbot env.
+#   By selecting the folder, the folder ID can be taken from the 'overview' tab on Turbot env.
 #   
 # <projectId>:
-#   The gcp project id that needs to be imported.
-#   It can be retrived from the gcp console Home, under project info.
+#   The GCP project ID that needs to be imported.
+#   It can be retrieved from the GCP console Home, under project info.
 
 # Use Cases
 # ---------
 #
 #   STEP 1
 #   ------
-#     1. Get the parent id form turbot console.
+#     1. Get the parent ID form Turbot console.
 #     2. Get the projectId form GCP console.
 #     3. Excute STEP 1 GraphQL script.
 #
 #   STEP 2
 #   ------
-#     1. Get the turbot id returned from STEP 1.
+#     1. Get the Turbot ID returned from STEP 1.
 #     2. Get Client Email from the GCP console.
 #     3. Get private Key from the doc, that was downloaded during the service account creation.
 #     4. Excute STEP 2 GraphQL script.
@@ -65,18 +65,18 @@ mutation CreateGCPproject($input: CreateResourceInput!) {
   }
 }
 
-####### Input to above CreateAWSAccount Mutation  #######
+####### Input to above CreateGCPproject Mutation  #######
 
 {
   "input": {
-    "parent": "187486019045335",
+    "parent": "<folder id>", # the Turbot folder ID under which the account is getting imported.
     "type": "tmod:@turbot/gcp#/resource/types/project",
     "data": {
-      "projectId": "punisher-aaa"
+      "projectId": "<gcp-project-id>" # The GCP project ID that needs to be imported.
     },
     "metadata": {
       "gcp": {
-        "projectId": "punisher-aaa"
+        "projectId": "<gcp-project-id>" # The GCP project ID that needs to be imported.
       }
     }
   }
@@ -103,15 +103,14 @@ mutation SetPolicy($SetClientEmail: CreatePolicySettingInput!, $setPrivateKey: C
 {
   "SetClientEmail": {
     "type": "tmod:@turbot/gcp#/policy/types/clientEmail",
-    "resource": "191202281439197", # the turbot id returned from STEP 1.
-    "value": "clara-73@punisher-aaa.iam.gserviceaccount.com", # taken from GCP console,'IAM & Admin > Service Accounts'.
+    "resource": "<resource id>", # the Turbot resource ID returned from STEP 1.
+    "value": "<client-email>", # taken from GCP console,'IAM & Admin > Service Accounts'.
     "precedence": "REQUIRED"
   },
   "setPrivateKey": {
     "type": "tmod:@turbot/gcp#/policy/types/privateKey",
-    "resource": "191202281439197", # the turbot id returned from STEP 1.
-    # privateKey value is retrived from the downloaded document.
-    "value": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0tceoDIJvb5m7\nIJ/ZX/6nHAGl7elzCpdxKT1HkDY8HA3NzQJL0ExibRzllfUwp5TZI2MI/Ukz7SBE\n2K8cWzUOvCqQmSk3l2XiPRyUJk+o2wENPwlMzYi3wqc9lfLWP1GZcgQefO4q8e+4\ndz9d72wJ2lGJKpX5yWIK/vjWFRRLu7uEQZejaGpmHUrQ8cEkvCQ06MbmmGpcYxXj\nKo69AeINDMCldpu8sZMYh1TaAiKAB+ANpFKDzx4zxU99Zu9SrnOawIwv4tQV24Eg\nDqSvcaT3+MuTEU3l/+wpH3PR9QKvl5DfJS4SHLz70o0xucFb4tzyFLlW70b0wmPT\ns3dUsJ7vAgMBAAECggEABvq0CxHJwiXA/fDnMm0xRXyzInQGtHArbS3//nWSi84P\nSUfPIOS/d6Eg6gLHPA4c3nKbt7jglgrSxjqAL7mbx9fom8yA1QWsLWT+QwA/ysu6\njvSyTUFa6rKLUnAqJR3kXJ45QxMJ3F0I3yYivdG8ji8l0eBhwMFiqNl9Ra5GvGTa\nLuE5tdWol4BjZ8ftrP9TFU/8QcFvKHBEwlqVj6qfrXo0zmAoJAQEdlmWZf0k6jP6\ngz1s0PoCpv3EPBfHVWX1NX/oyN3NHru8z96WcvxKDNB9ERLHprAx76PrdvacHGEW\n6xE9nE0iylg7IW5NYBlP9upZGDP1lInYk5iMBkp60QKBgQDx4yVrk9UQKidYLBZp\nmCAesc+SgbcqvDXq/zXHG2AdbPwZTXVLv40Oxg07APM0cbx8Ktq9NMQoGGTDv5TO\n+1gyDCu73LZoBXc120nmh88+xUo2YW+KeWuCc+MZjHx2HvLbVZKjy+TWQXNwkiSt\nHcSKT4q2Toi4h6xYlG1eGJluRQKBgQC/QOJvBiHb7EdgAKw1NmUNDDGx+nuciv65\nZ/eQAgOfVnJiVhZThpcpURW5JJzloEeA3LJJU43JlzeISb1SEdpmMhV+NRcRiG45\nC5zj6KaK1/K7/UHAYsyVashGysQX3WrXY5XhpdmsPCHQ8m4aGNu1Wn7qEVa+HSgi\n6Z/kPUDVowKBgDL2mLvBufJd70w0fcRhuOK+s+06R01JulJ40uvQaL/KZpMuLrh2\n81FZiRAVcyhpjjzbCpsysuF/wjs78i5p5nsk9VHvfr8L58IBIeDgXFntV2V9wfJ7\nApvJrt+DKfX5L1HnBa5dFynNQHVHVVLkIrTBbYhbo5K9gyJmo2Rf6nPBAoGBAJ85\nw8qvDk1sf1fb94Mt0B92wYDtizAfQEbX2fHY228yp3RbO6c6bGsHiNBlPQKn2B/e\nncgSef8VmDQtQCMtnehrVh2G0bfVH/76Pho4vT7m3r3H8Y/cMXtMNYVKlstPmf3M\neSIt0/Vi8rxkuWmcvH5V40e4O8F3wMygOG/q1ymFAoGAXACJGwIPEQChq9GgtBDL\n2dvICkM8khfqDiW1ZjKiARf9nIQyKshTd2ZBkMvYiEPWS7XiJjC5ojKWGkNmgbpF\n6uy8K9StIO8C9Aq4CnnlC4bNNNUiw4jU0JcxXX9X+cK7I/B+0MucfW7yesnJfyTw\n3v7c0/fkdMFTSrQToykNaZA=\n-----END PRIVATE KEY-----\n",
+    "resource": "<resource id>", # the Turbot resource ID returned from STEP 1.
+    "value": "<privet-key>"     # privateKey value is retrieved from the downloaded document.
     "precedence": "REQUIRED"
   }
 }
