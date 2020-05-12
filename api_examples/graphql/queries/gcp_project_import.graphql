@@ -43,7 +43,7 @@
 #   STEP 2
 #   ------
 #     1. Get the Turbot ID returned from STEP 1.
-#     2. Get Client Email from the GCP console.
+#     2. Get client email from the GCP console.
 #     3. Get private key from the doc, that was downloaded during the service account creation.
 #     4. Execute STEP 2 GraphQL script.
 
