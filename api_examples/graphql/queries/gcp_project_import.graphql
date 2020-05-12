@@ -38,14 +38,14 @@
 #   ------
 #     1. Get the parent ID from Turbot console.
 #     2. Get the projectId from GCP console.
-#     3. Excute STEP 1 GraphQL script.
+#     3. Execute STEP 1 GraphQL script.
 #
 #   STEP 2
 #   ------
 #     1. Get the Turbot ID returned from STEP 1.
 #     2. Get Client Email from the GCP console.
 #     3. Get private Key from the doc, that was downloaded during the service account creation.
-#     4. Excute STEP 2 GraphQL script.
+#     4. Execute STEP 2 GraphQL script.
 
 # Documentation
 # -------------
