@@ -1,7 +1,7 @@
 # Description
 # -----------
 #
-# The mutation query import GCP project to a Turbot Folder. The mutation query works as in 2 step.
+# The mutation query import GCP project to a Turbot Folder. The mutation query needs to be run in 2 steps.
 # STEP 1 is to create a GCP project inside the Turbot Folder.
 # STEP 2 is to use the Turbot ID that is returned from STEP 1 as resource ID for setting client email and privet key.
 
@@ -36,8 +36,8 @@
 #
 #   STEP 1
 #   ------
-#     1. Get the parent ID form Turbot console.
-#     2. Get the projectId form GCP console.
+#     1. Get the parent ID from Turbot console.
+#     2. Get the projectId from GCP console.
 #     3. Excute STEP 1 GraphQL script.
 #
 #   STEP 2
@@ -69,7 +69,7 @@ mutation CreateGCPproject($input: CreateResourceInput!) {
 
 {
   "input": {
-    "parent": "<folder id>", # the Turbot folder ID under which the account is getting imported.
+    "parent": "<folder-id>", # the Turbot folder ID under which the account is getting imported.
     "type": "tmod:@turbot/gcp#/resource/types/project",
     "data": {
       "projectId": "<gcp-project-id>" # The GCP project ID that needs to be imported.
@@ -103,13 +103,13 @@ mutation SetPolicy($SetClientEmail: CreatePolicySettingInput!, $setPrivateKey: C
 {
   "SetClientEmail": {
     "type": "tmod:@turbot/gcp#/policy/types/clientEmail",
-    "resource": "<resource id>", # the Turbot resource ID returned from STEP 1.
+    "resource": "<resource-id>", # the Turbot resource ID returned from STEP 1.
     "value": "<client-email>", # taken from GCP console,'IAM & Admin > Service Accounts'.
     "precedence": "REQUIRED"
   },
   "setPrivateKey": {
     "type": "tmod:@turbot/gcp#/policy/types/privateKey",
-    "resource": "<resource id>", # the Turbot resource ID returned from STEP 1.
+    "resource": "<resource-id>", # the Turbot resource ID returned from STEP 1.
     "value": "<privet-key>"     # privateKey value is retrieved from the downloaded document.
     "precedence": "REQUIRED"
   }
