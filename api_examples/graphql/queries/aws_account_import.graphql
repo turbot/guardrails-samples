@@ -40,8 +40,8 @@
 #
 #   STEP 1
 #   ------
-#     1. Get the parent ID form Turbot console.
-#     2. Get the accountId form AWS console.
+#     1. Get the parent ID from Turbot console.
+#     2. Get the accountId from AWS console.
 #     3. Enter the value for partition either "aws" or "aws-us-gov".
 #     4. Excute STEP 1 GraphQL script.
 #
