@@ -1,7 +1,7 @@
 # Description
 # -----------
 #
-# The mutation query import AWS account to a turbot folder. The mutation query needs to be run in 2 steps.
+# The mutation query import AWS account to a Turbot folder. The mutation query needs to be run in 2 steps.
 # STEP 1 is to create an AWS Account inside the Turbot folder.
 # STEP 2 uses the Turbot ID that is returned from STEP 1 as resource for policy settings.
 
@@ -74,7 +74,7 @@ mutation CreateAWSAccount($input: CreateResourceInput!) {
 
 {
   "input": {
-    "parent": "<folder id>", # the Turbot folder ID under which the account is getting imported.
+    "parent": "<folder-id>", # the Turbot folder ID under which the account is getting imported.
     "type": "tmod:@turbot/aws#/resource/types/account",
     "data": {
       "Id": "<aws-account-id>" # The AWS account ID that needs to be imported.
@@ -109,13 +109,13 @@ mutation SetIamRoleArnPolicy($setIamRoleArnPolicy: CreatePolicySettingInput!, $s
 {
   "setIamRoleArnPolicy": {
     "type": "tmod:@turbot/aws#/policy/types/turbotIamRole",
-    "resource": "<resource id>", # the Turbot resource ID returned from STEP 1.
+    "resource": "<resource-id>", # the Turbot resource ID returned from STEP 1.
     "value": "<role-policy-aka>", # role policy aka, can be retrieved from the AWS console.
     "precedence": "REQUIRED"
   },
   "setIamRoleExternalIdPolicy": {
     "type": "tmod:@turbot/aws#/policy/types/turbotIamRoleExternalId",
-    "resource": "<resource id>", # the Turbot resource ID returned from STEP 1.
+    "resource": "<resource-id>", # the Turbot resource ID returned from STEP 1.
     "value": "<external-id>", #the External ID from the role using AWS console. It can be found next to trust relationship.
     "precedence": "REQUIRED"
   }
