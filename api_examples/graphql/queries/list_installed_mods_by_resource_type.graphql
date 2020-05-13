@@ -1,0 +1,40 @@
+# Description
+# -----------
+#
+# Query all the mods that are installed.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_installed_mods_by_resource_type.graphql
+#
+
+# Filter
+# ------
+#
+# resource:
+#   AKA or ID for the turbot product will be returned.
+#   In example, filters the resources with uri 'tmod:@turbot/turbot#'.
+#
+# resourceType:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/turbot#/resource/types/mod' (the mods that are installed) are returned.
+#
+# resourceTypeLevel:
+#   Determines the scope of the filter search, in relation to the specific resource type.
+#   In example, returns resources within self only.
+#
+# sort:
+#   sorting by appropriate fields.
+#   In example, sorting by title.
+
+
+query ListInstalledModsByResourceType {
+  resources(filter: "resource:'tmod:@turbot/turbot#/' resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {
+    items {
+      akas
+      version: get(path: "version")
+    }
+  }
+}

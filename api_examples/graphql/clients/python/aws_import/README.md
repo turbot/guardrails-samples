@@ -32,7 +32,7 @@ source .venv/bin/activate
 Then install python library dependencies:
 
 ```shell
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### Turbot configuration

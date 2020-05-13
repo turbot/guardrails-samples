@@ -1,0 +1,51 @@
+# Description
+# -----------
+#
+#
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_controls_by_partial_control_category_akas.graphql
+#
+
+# Filter
+# ------
+#
+# policyTypeId:
+#   The policy type that should be queried.
+#   The value should exactly match the uri of the policy type.
+#   In example, this is set to `tmod:@turbot/turbot#/policy/categories/turbot`.
+#
+# policyTypeLevel:
+#   Controls the level of the policy categories that should be returned policy type hierarchy.
+#   In example only items that match the policy type are returned by setting value to `self`
+#
+
+query ListControlsTargetingPolicyTypeId {
+  controls(filter: "policyTypeId:tmod:@turbot/turbot#/resource/categories/turbot policyTypeLevel:self") {
+    items {
+      state
+      reason
+      details
+      type {
+        title
+        controlUri: uri
+        modUri
+        targets
+      }
+      resource {
+        type {
+          uri
+        }
+      }
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

@@ -40,3 +40,183 @@
     }
   }
 }
+
+
+query unhealthyControlsInWorkspace {
+  # List all the controls in the workspace with the state error, invalid and tbd
+  # Many fields can be selected to display in the results, below example focuses on the unique fields as an example.
+  controls(filter: "state:error,invalid,tbd") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      state
+      type {
+        uri
+        title
+      }
+      resource {
+        turbot {
+          title
+          akas
+        }
+      }
+    }
+    paging {
+      next
+    }
+  }
+}
+
+query unhealthyControlsInFolder {
+  # List all the controls in a turbot folder with the state error, invalid and tbd
+  # where 182532796222472  is the turbot Id of the folder.
+  # To get account level controls, replace the below turbot id with that of AWS Account/Azure Subscription/GCP Project.
+  controls(filter: "state:error,invalid,tbd resource:'182532796222472'") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      state
+      type {
+        uri
+        title
+      }
+      resource {
+        turbot {
+          title
+          akas
+        }
+      }
+    }
+    paging {
+      next
+    }
+  }
+}
+
+query unhealthyAWSControls {
+  # List all the AWS controls in the workspace with the state error, invalid and tbd
+  # As shown below, we can list other provider and turbot controls as well.
+  # Azure Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/azure#/resource/types/azure"
+  # GCP Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/gcp#/resource/types/gcp"
+  # Turbot Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/turbot#/resource/types/turbot"
+  controls(filter: "state:error,invalid,tbd resourceType:tmod:@turbot/aws#/resource/types/aws") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      state
+      type {
+        uri
+        title
+      }
+      resource {
+        turbot {
+          title
+          akas
+        }
+      }
+    }
+    paging {
+      next
+    }
+  }
+}
+
+query tenOldestAlertsInWorkspace {
+  # List the 10 oldest alerts in  the workspace with state error, invalid, tbd
+  controls(filter: "state:error,invalid,tbd sort:stateChangeTimestamp limit:10") {
+    items {
+      state
+      reason
+      type {
+        uri
+        title
+      }
+      turbot {
+        stateChangeTimestamp
+      }
+    }
+  }
+}
+
+
+query tenOldestAlertsForS3BucketInAWSAccount {
+  # List the 10 oldest alerts for S3 Bucket resource type in an AWS Account with turbot ID 162262236546812 with state error, invalid, tbd
+  controls(filter: "state:error,invalid,tbd resource:'162262236546812' resourceType:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {
+    items {
+      state
+      reason
+      type {
+        uri
+        title
+      }
+      turbot {
+        stateChangeTimestamp
+      }
+    }
+  }
+}
+
+query controlsSummary {
+  # Summarize controls by resource type for a given AWS account with turbot id 169970390928576.
+  # Turbot automatically detects the best level to show results, and
+  # provides the full trunk information and summary statistics.
+  # This works with resourceType filter as well.
+  # Example: filter: "resource:'169970390928576' resourceType:tmod:@turbot/aws-iam#/resource/types/iam"
+  controlSummariesByResourceType(filter: "resource:'169970390928576'") {
+    metadata {
+      stats {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+    items {
+      type {
+        uri
+      }
+      summary {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+  }
+}
+
+query controlsStateByTags {
+  # Query any controls that are in any of these states
+  # alarm/ok/tbd/skipped/error by specific tag within a specific timeframe
+  controls(filter: "state:ok $.turbot.tags.were:'wolf' stateChangeTimestamp:>T-15m") {
+    items {
+      state
+      type {
+        uri
+      }
+      turbot {
+        id
+        stateChangeTimestamp
+      }
+    }
+  }
+}

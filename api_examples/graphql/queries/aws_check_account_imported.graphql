@@ -1,0 +1,40 @@
+#How to check if a specific aws account has already been imported into the target workspace.
+# Tested against TE 5.18.1
+query AccountImported($filter: [String!]) {
+  resources(filter: $filter) {
+    items {
+      metadata
+    }
+  }
+}
+
+# Variables
+# Filter for AWS Accounts and the AWS Account ID
+{"filter": "resourceType:'tmod:@turbot/aws#/resource/types/account' 308917436262"}
+
+# The account has already been imported.
+#{
+#  "data": {
+#    "resources": {
+#      "items": [
+#        {
+#          "metadata": {
+#            "aws": {
+#              "accountId": "308917436192",
+#              "partition": "aws"
+#            }
+#          }
+#        }
+#      ]
+#    }
+#  }
+#}
+
+#  When the account has not been imported.
+#{
+#  "data": {
+#    "resources": {
+#      "items": []
+#    }
+#  }
+#}

@@ -42,9 +42,9 @@ def run_controls(config_file, profile, parent, account, role_arn, external_id):
       }
     '''
 
-    """
-    The parent variable holds the resource ID of the folder where this subscription will be imported.
-    """
+    #
+    # The parent variable holds the resource ID of the folder where this account will be imported.
+    #
     aws_variables = {
         "input": {
             "parent": parent,
