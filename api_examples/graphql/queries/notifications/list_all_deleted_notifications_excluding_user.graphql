@@ -28,6 +28,8 @@
 #   To get the actor identity id for Turbot identity, please see GraphQL example:
 #     `get_turbot_actor_id.graphql.graphql`.
 #
+# All notifications returned will be within the last 24 hours.
+#
 
 # Execute
 # -------
@@ -63,7 +65,7 @@
 
 query ListAllDeletedNotificationsByUser {
   notifications(
-    filter: "actorIdentityId:-<actor_id> type:resource_deleted,policy_setting_deleted,policy_value_deleted,control_deleted,action_deleted,scheduled_action_deleted,grant_deleted,active_grants_deleted,favorite_deleted,watch_deleted"
+    filter: "actorIdentityId:-<actor_id> timestamp:>T-1d type:resource_deleted,policy_setting_deleted,policy_value_deleted,control_deleted,action_deleted,scheduled_action_deleted,grant_deleted,active_grants_deleted,favorite_deleted,watch_deleted"
   ) {
     metadata {
       stats {

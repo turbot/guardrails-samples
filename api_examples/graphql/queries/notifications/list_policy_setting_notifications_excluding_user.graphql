@@ -9,6 +9,8 @@
 #   - policy_setting_updated
 #   - policy_setting_deleted
 #
+# All notifications returned will be within the last 24 hours.
+#
 
 # Substitute
 # ----------
@@ -57,7 +59,7 @@
 
 query ListPolicySettingNotificationsExcludingUser {
   notifications(
-    filter: "actorIdentityId:-<actor_id> notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d"
+    filter: "actorIdentityId:-<actor_id> timestamp:>T-1d notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted"
   ) {
     items {
       notificationType

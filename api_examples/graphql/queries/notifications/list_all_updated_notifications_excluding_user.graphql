@@ -15,6 +15,8 @@
 #   - favorites
 #   - watch
 #
+# All notifications returned will be within the last 24 hours.
+#
 
 # Substitute
 # ----------
@@ -63,7 +65,7 @@
 
 query ListAllUpdatedNotificationsByUser {
   notifications(
-    filter: "actorIdentityId:-<actor_id> type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
+    filter: "actorIdentityId:-<actor_id> timestamp:>T-1d type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
   ) {
     metadata {
       stats {

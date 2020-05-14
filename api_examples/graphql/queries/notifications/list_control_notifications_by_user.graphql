@@ -8,6 +8,8 @@
 #   - control_updated
 #   - control_deleted
 #
+# All notifications returned will be within the last 24 hours.
+#
 
 # Substitute
 # ----------
@@ -56,7 +58,7 @@
 
 query ListControlNotificationsByUser {
   notifications(
-    filter: "notificationType:actorIdentityId:<actor_id> control_created,control_updated,control_deleted timestamp:>T-1d"
+    filter: "notificationType:actorIdentityId:<actor_id> timestamp:>T-1d control_created,control_updated,control_deleted"
   ) {
     items {
       notificationType

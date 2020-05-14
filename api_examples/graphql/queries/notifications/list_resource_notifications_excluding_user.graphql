@@ -9,6 +9,8 @@
 #   - resource_updated
 #   - resource_deleted
 #
+# All notifications returned will be within the last 24 hours.
+#
 
 # Substitute
 # ----------
@@ -57,7 +59,7 @@
 
 query ListResourceNotificationsExcludingUser {
   notifications(
-    filter: "actorIdentityId:-<actor_id> notificationType:resource_created,resource_updated,resource_deleted timestamp:>T-1d"
+    filter: "actorIdentityId:-<actor_id> timestamp:>T-1d notificationType:resource_created,resource_updated,resource_deleted"
   ) {
     items {
       notificationType
