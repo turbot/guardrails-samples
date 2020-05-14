@@ -1,0 +1,94 @@
+# Description
+# -----------
+#
+# A query that will return all the update notifications for a specificied user.
+# The update notification will consist of notification from the following notification types:
+#   - resource
+#   - policy setting
+#   - policy value
+#   - control
+#   - action
+#   - scheduled action
+#   - grant
+#   - active grant
+#   - favorites
+#   - watch
+#
+
+# Substitute
+# ----------
+#
+# Substitute real values for the token <actor_indentity_id>.
+#
+# <actor_indentity_id>:
+#   Any valid actor identity id can be substituted.
+#   To get actor identity id for a user, please see GraphQL example:
+#     `get_user_actor_identity_id.graphql`.
+#   To get the actor identity id for Turbot identity, please see GraphQL example:
+#     `get_turbot_actor_identity_id.graphql.graphql`.
+#
+
+# Execute
+# -------
+#
+# To execute the query after substitution, run the Turbot CLI command:
+#   `turbot graphql --query ./list_all_updated_notifications_by_user.graphql`
+#
+
+# Use Cases
+# ---------
+#
+#   User: Turbot Identity
+#   ---------------------
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_identity_id.graphql`.
+#     2. Replace `<actor_indentity_id>` with this value.
+#     3. Execute this GraphQL script
+#
+#   User: Other
+#   ---------------------------
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_identity_id.graphql`.
+#     2. Replace `<actor_indentity_id>` with this value.
+#     3. Execute this GraphQL script
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
+# - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
+#
+
+query ListAllUpdatedNotificationsByUser {
+  notifications(
+    filter: "actorIdentityId:<actor_indentity_id> type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+
+    items {
+      notificationType
+      actor {
+        identity {
+          title
+          turbot {
+            id
+          }
+        }
+      }
+      resource {
+        data
+        turbot {
+          title
+          createTimestamp
+          updateTimestamp
+          akas
+        }
+      }
+    }
+  }
+}

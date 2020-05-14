@@ -34,7 +34,7 @@ query GetUserActorIdentityId {
   resources(filter: "resourceId:<email_address> level:self") {
     items {
       turbot {
-        actorIdentityId
+        actorIdentityId: id
       }
     }
   }
