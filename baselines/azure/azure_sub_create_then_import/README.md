@@ -25,12 +25,12 @@ Update default.tfvars or create a new Terraform configuration file.
 
 Variables that are exposed by this script are:
 
+- azure_app_password_expiration
+- azure_app_name
+- azure_app_password
 - azure_environment_type
 - azure_subscription_id
 - parent_resource
-- azure_client_id
-- azure_tenant_id
-- azure_client_secret
 
 Open the file `variables.tf` for further details.
 
@@ -44,7 +44,7 @@ Command: `terraform init`
 
 If seeking to apply the configuration using the configuration file `defaults.tfvars`.
 
-Command: `terraform apply -var-file="default.tfvars"`
+Command: `terraform apply -var-file="default.tfvars"` 
 
 ### Apply using custom configuration
 
