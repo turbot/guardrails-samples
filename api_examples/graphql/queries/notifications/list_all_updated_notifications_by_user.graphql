@@ -19,14 +19,14 @@
 # Substitute
 # ----------
 #
-# Substitute real values for the token <actor_indentity_id>.
+# Substitute real values for the token <actor_id>.
 #
-# <actor_indentity_id>:
+# <actor_id>:
 #   Any valid actor identity id can be substituted.
 #   To get actor identity id for a user, please see GraphQL example:
-#     `get_user_actor_identity_id.graphql`.
+#     `get_user_actor_id.graphql`.
 #   To get the actor identity id for Turbot identity, please see GraphQL example:
-#     `get_turbot_actor_identity_id.graphql.graphql`.
+#     `get_turbot_actor_id.graphql.graphql`.
 #
 
 # Execute
@@ -41,14 +41,14 @@
 #
 #   User: Turbot Identity
 #   ---------------------
-#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_identity_id.graphql`.
-#     2. Replace `<actor_indentity_id>` with this value.
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_id.graphql`.
+#     2. Replace `<actor_id>` with this value.
 #     3. Execute this GraphQL script
 #
 #   User: Other
 #   ---------------------------
-#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_identity_id.graphql`.
-#     2. Replace `<actor_indentity_id>` with this value.
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_id.graphql`.
+#     2. Replace `<actor_id>` with this value.
 #     3. Execute this GraphQL script
 #
 
@@ -63,7 +63,7 @@
 
 query ListAllUpdatedNotificationsByUser {
   notifications(
-    filter: "actorIdentityId:<actor_indentity_id> type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
+    filter: "actorIdentityId:<actor_id> type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
   ) {
     metadata {
       stats {
