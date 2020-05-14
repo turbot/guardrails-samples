@@ -1,0 +1,5 @@
+region_resource = ""
+default_package = ""
+default_package_url = ""
+default_bucket = ""
+ssm_document_role = ""
