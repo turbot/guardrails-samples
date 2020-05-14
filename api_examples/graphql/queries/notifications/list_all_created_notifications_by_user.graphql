@@ -1,8 +1,9 @@
 # Description
 # -----------
 #
-# A query that will return all the update notifications for a specificied user.
-# The update notification will consist of notification from the following notification types:
+# A query that will return all the create notifications for a specificied user.
+#
+# The create notifications will consist of notifications from the following notification types:
 #   - resource
 #   - policy setting
 #   - policy value
@@ -32,7 +33,7 @@
 # -------
 #
 # To execute the query after substitution, run the Turbot CLI command:
-#   `turbot graphql --query ./list_all_updated_notifications_by_user.graphql`
+#   `turbot graphql --query ./list_all_created_notifications_by_user.graphql`
 #
 
 # Use Cases
@@ -60,9 +61,9 @@
 # - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query ListAllUpdatedNotificationsByUser {
+query ListAllCreatedNotificationsByUser {
   notifications(
-    filter: "actorIdentityId:<actor_indentity_id> type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
+    filter: "actorIdentityId:<actor_indentity_id> type:resource_created,policy_setting_created,policy_value_created,control_created,action_created,scheduled_action_created,grant_created,active_grants_created,favorite_created,watch_created"
   ) {
     metadata {
       stats {
@@ -85,7 +86,6 @@ query ListAllUpdatedNotificationsByUser {
         turbot {
           title
           createTimestamp
-          updateTimestamp
           akas
         }
       }

@@ -2,6 +2,7 @@
 # -----------
 #
 # A query that will return all the delete notifications for a specificied user.
+#
 # The delete notifications will consist of notifications from the following notification types:
 #   - resource
 #   - policy setting

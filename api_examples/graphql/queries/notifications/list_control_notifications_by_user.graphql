@@ -1,7 +1,12 @@
 # Description
 # -----------
 #
-# Query will return all policy notifications for the last day triggered by a particular user provided the user exists.
+# Query will return all control notifications for the last day triggered by a particular user provided the user exists.
+#
+# The notifications returned:
+#   - control_created
+#   - control_updated
+#   - control_deleted
 #
 
 # Substitute
@@ -21,7 +26,7 @@
 # -------
 #
 # To execute the query after substitution, run the Turbot CLI command:
-#   `turbot graphql --query ./list_policy_notifications_excluding_user.graphql`
+#   `turbot graphql --query ./list_control_notifications_by_user.graphql`
 #
 
 # Use Cases
@@ -49,9 +54,9 @@
 #   - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query ListPolicyNotificationsForUser {
+query ListControlNotificationsByUser {
   notifications(
-    filter: "notificationType:actorIdentityId:<actor_indentity_id> policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d"
+    filter: "notificationType:actorIdentityId:<actor_indentity_id> control_created,control_updated,control_deleted timestamp:>T-1d"
   ) {
     items {
       notificationType

@@ -1,8 +1,19 @@
 # Description
 # -----------
 #
-# Query will return all policy notifications for the last day and will filter out any notification triggered by a
-# particular user.
+# A query that will return all the update notifications and exclude the specificied user.
+#
+# The update notification will consist of notification from the following notification types:
+#   - resource
+#   - policy setting
+#   - policy value
+#   - control
+#   - action
+#   - scheduled action
+#   - grant
+#   - active grant
+#   - favorites
+#   - watch
 #
 
 # Substitute
@@ -22,66 +33,62 @@
 # -------
 #
 # To execute the query after substitution, run the Turbot CLI command:
-#   `turbot graphql --query ./list_policy_notifications_excluding_user.graphql`
+#   `turbot graphql --query ./list_all_updated_notifications_excluding_user.graphql`
 #
 
 # Use Cases
 # ---------
 #
-#   Excluding the user Turbot Identity
-#   ----------------------------------
+#   User: Turbot Identity
+#   ---------------------
 #     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_identity_id.graphql`.
 #     2. Replace `<actor_indentity_id>` with this value.
-#     3. Excute this GraphQL script
+#     3. Execute this GraphQL script
 #
-#   Excluding a particular user
+#   User: Other
 #   ---------------------------
 #     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_identity_id.graphql`.
 #     2. Replace `<actor_indentity_id>` with this value.
-#     3. Excute this GraphQL script
+#     3. Execute this GraphQL script
 #
 
 # Documentation
 # -------------
 #
 # For full documentation see:
-#   - Filter documentation: https://turbot.com/v5/docs/reference/filter
-#   - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
-#   - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
+# - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
 #
 
-query ListPolicyNotificationsExcludingUser {
+query ListAllUpdatedNotificationsByUser {
   notifications(
-    filter: "actorIdentityId:-<actor_indentity_id> notificationType:policy_setting_created,policy_setting_updated,policy_setting_deleted timestamp:>T-1d"
+    filter: "actorIdentityId:-<actor_indentity_id> type:resource_updated,policy_setting_updated,policy_value_updated,control_updated,action_updated,scheduled_action_updated,grant_updated,active_grants_updated,favorite_updated,watch_updated"
   ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+
     items {
       notificationType
       actor {
         identity {
           title
+          turbot {
+            id
+          }
         }
       }
       resource {
+        data
         turbot {
           title
           createTimestamp
-          actorIdentityId
+          updateTimestamp
           akas
         }
-      }
-      policySetting {
-        actor {
-          identity {
-            title
-          }
-        }
-        value
-      }
-    }
-
-    metadata {
-      stats {
-        total
       }
     }
   }
