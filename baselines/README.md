@@ -6,18 +6,14 @@ Turbot Baselines provide best-practice configurations and examples for setting T
 
 | Baseline                    | Path                                                               | Description                                                                                             |
 | --------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| Mod Install                 | [mod_install](./turbot/mod_install)                                | Manage the installation of Turbot mods in your workspace                                                |
 | Local Directory             | [local_directory](./turbot/local_directory)                        | Create local directory and users in your workspace                                                      |
 | AWS Setup                   | [aws_setup](./aws/aws_setup)                                       | Common quickstart setup for AWS - prepare your environment to import an AWS account                     |
 | AWS Account Import          | [aws_account_import](./aws/aws_account_import)                     | Import an AWS Account into Turbot                                                                       |
 | AWS Services                | [aws_services](./aws/aws_services)                                 | Enable/Disable AWS Services in Turbot                                                                   |
-| AWS S3 Baseline             | [s3_baseline](./aws/s3_baseline)                                   | Setup S3 policies with recommended settings                                                             |
-| AWS CIS Remediation         | [aws_cis](./aws/aws_cis)                                           | Set policies to remediate aws-cisv1 1.4 to 1.11 as of now                                               |
 | GCP Setup                   | [gcp_setup](./gcp/gcp_setup)                                       | Common quickstart setup for GCP - prepare your environment to import GCP Projects                       |
 | GCP Services                | [gcp_services](./gcp/gcp_services)                                 | Enable/Disable GCP Services in Turbot & also enforce api enabled policy based on service Enable/Disable |
-| Azure Setup                 | [azure_setup](./azure/azure_setup)                                 | Common quickstart setup for Azure - prepare your environment to import Azure Subscriptions              |
 | Azure Subscription Import   | [azure_sub_import](./azure/azure_sub_import)                       | Import an Azure subscription into Turbot                                                                |
-| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_import_ro)                    | Import an Azure subscription into Turbot with event handler and readonly mode                           |
+| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)                    | Import an Azure subscription into Turbot with event handler and readonly mode                           |
 | Azure Services              | [azure_services](./azure/azure_services)                           | Enable/Disable Azure Services in Turbot                                                                 |
 | Azure Provider Registration | [azure_provider_registration](./azure/azure_provider_registration) | Set the policy for Azure provider registration                                                          |
 
