@@ -1,11 +1,14 @@
 # AWS Systems Manager / Package Installer
 
 ## Use cases
-The business owner of the AWS platform wants to install packages on instances through [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager). Instances may have access to internet or not
+The business owner of the AWS platform wants to install packages on instances through 
+[AWS Systems Manager](https://docs.aws.amazon.com/systems-manager). Instances may have access to internet or not
 
 ## Implementation Details
-This stack defines a set of [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager) documents designed to allow package installation on instances (with or without access to internet).
-This terraform configuration set SSM document definitions on `AWS> SSM> Stack> Source` policy, which will create the documents on AWS account region, defined on [default.tfvars](default.tfvars) file
+This stack defines a set of [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager) documents designed to 
+allow package installation on instances (with or without access to internet).
+This terraform configuration sets SSM document definitions on `AWS > SSM > Stack > Source` policy, which will create 
+the documents on AWS account region, defined on [default.tfvars](default.tfvars) file
 
 ## Pre-requisites
 
