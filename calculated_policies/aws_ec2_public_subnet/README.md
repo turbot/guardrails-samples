@@ -1,12 +1,15 @@
 # AWS EC2 Instance Not Approved if Public Subnet
 
 ## User Story
+
 There is an organizational requirement that in specific accounts, no EC2 instance can be booted within a subnet with an associated route table which has routes pointing to an Internet Gateway (IGW).
 
 ## Implementation Details
+
 This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using `AWS > EC2 > Instance > Approved > Usage` policy, and then setting `AWS > EC2 > Instance > Approved` to check. T
 
 ### Template Input (GraphQL)
+
 The template input to a calculated policy is a GraphQL query.  This query is two-fold. First, it finds the subnet ID contained within the EC2 instance metadata. Second, all route tables in the account are found, and the associated subnet ID as well as the collection of routes :
 ```graphql
 {
@@ -22,6 +25,7 @@ The template input to a calculated policy is a GraphQL query.  This query is two
 }
 ```
 ### Template (Nunjucks)
+
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html) with custom logic:
 ```js
 {%- set hasIGW = false -%}
@@ -52,8 +56,8 @@ To create the smart folder, you must have:
 ## Running the Example
 
 To run the template:
-- Navigate to the directory on the command line `cd aws_ec2_public_subnet`
-- Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied
-- Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings
+1. Navigate to the directory on the command line `cd aws_ec2_public_subnet`
+2. Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied
+3. Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings
 
-> The template will run with the default values set in `default.tfvars`; however, you could create and set your own defaults using a `.tfvars` file that will override the existing files.
+The template will run using the default values defined [default.tfvars](default.tfvars)
