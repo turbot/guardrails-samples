@@ -65,9 +65,11 @@ Use this entry point type when there is no direct access to the package source.
 Using this method, it is required that the URL of the package to install and a valid S3 bucket which be used to cache the package.
 
 ### Turbot-LinuxS3PackageInstaller
+
 This document should never be directly run but is a helper document to install the package.
 
 ## Current limitations
+
 - Currently only Ubuntu is supported. Add support to more Linux flavours and Windows
 - Handle package dependencies when installing through S3
 - Test edge cases
