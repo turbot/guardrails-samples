@@ -63,7 +63,7 @@ async function main() {
 
       const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/README.md`);
       await writeFile(destination, renderResult);
-      console.log(chalk.white(`Generated Document: ${calcPolicy})`));
+      console.log(chalk.white(`Generated Document: ${calcPolicy}`));
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy: ${calcPolicy}`, e));
     }
