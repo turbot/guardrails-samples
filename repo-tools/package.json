@@ -1,7 +1,7 @@
 {
-  "name": "generate-calc-policy-documentation.js",
+  "name": "repo-tools",
   "version": "1.0.0",
-  "description": "Generates calculated policy documentation based off the input list calc-policy-list.yaml",
+  "description": "Scripts to run document generation for differing example types to keep documentation uniformity.",
   "scripts": {
     "gen-doc:calc-policies": "echo \"Error: no test specified\""
   },
