@@ -1,0 +1,16 @@
+{
+  "name": "generate-calc-policy-documentation.js",
+  "version": "1.0.0",
+  "description": "Generates calculated policy documentation based off the input list calc-policy-list.yaml",
+  "scripts": {
+    "gen-doc:calc-policies": "echo \"Error: no test specified\""
+  },
+  "author": "Turbot HQ, Inc",
+  "license": "ISC",
+  "dependencies": {
+    "js-hcl-parser": "^1.0.1",
+    "js-yaml": "^3.13.1",
+    "moment": "^2.26.0",
+    "nunjucks": "^3.2.1"
+  }
+}
