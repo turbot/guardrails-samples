@@ -1,7 +1,7 @@
 {
   "name": "repo-tools",
   "version": "1.0.0",
-  "description": "Scripts to run document generation for differing example types to keep documentation uniformity.",
+  "description": "Document generation scripts to keep documentation uniformity for differing TDK example types.",
   "scripts": {
     "gen-doc:calc-policies": "node gen-doc-calc-policies.js"
   },
