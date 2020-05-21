@@ -298,3 +298,5 @@ $RECYCLE.BIN/
 # Testing configuration
 *.tfvars
 !default.tfvars
+
+documentation-tools/
