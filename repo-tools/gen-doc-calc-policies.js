@@ -8,6 +8,7 @@ const moment = require("moment");
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+const readdir = util.promisify(fs.readdir);
 
 async function loadVariables(calcPolicy) {
   const resolved = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/variables.tf`);
@@ -27,8 +28,8 @@ async function loadVariables(calcPolicy) {
   return contents.variable;
 }
 
-async function loadConfigurations() {
-  const fileContents = await readFile(`${__dirname}/calc-policy-list.yaml`, "utf8");
+async function loadConfiguration(configuration) {
+  const fileContents = await readFile(`${__dirname}/templates/calc-policy/${configuration}/template.yml`, "utf8");
   return yaml.safeLoad(fileContents);
 }
 
@@ -49,23 +50,20 @@ async function harvestedVariables(configuration) {
 async function main() {
   console.log(`Generate Documentation: Calculated Policies - ${moment().format()}`);
 
-  const configurations = await loadConfigurations();
+  const calcPolicies = await readdir(`${__dirname}/templates/calc-policy`);
 
-  for (const configuration of configurations.policies) {
+  for (const calcPolicy of calcPolicies) {
     try {
-      const variables = await harvestedVariables(configuration.name);
+      const variables = await harvestedVariables(calcPolicy);
+      const configuration = await loadConfiguration(calcPolicy);
       const renderContext = { variables, configuration };
 
       const renderResult = nunjucks.render(`${__dirname}/templates/calc-policy-template.njk`, renderContext);
 
-      const destination = path.resolve(`${__dirname}/../calculated_policies/${configuration.name}/README.md`);
+      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/README.md`);
       await writeFile(destination, renderResult);
     } catch (e) {
-      if (e.code === "ENOENT") {
-        console.error(`Calculated policy not found: ${configuration.name}`);
-      } else {
-        console.error(e);
-      }
+      console.error(`Error generating calculated policy: ${calcPolicy}`, e);
     }
   }
 
