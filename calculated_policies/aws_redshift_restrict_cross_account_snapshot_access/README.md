@@ -2,13 +2,14 @@
 
 ## Use case
 
-Sets manual snapshots that have cross-account access to unapproved.
+Use this policy if you would like to restrict the usage of allowing an external account getting access to the
+Redshift manual snapshots of the current account.
 
 ## Implementation Details
 
-Calculated policy for policy `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`.
-If a manual snapshot is configured to allow access from external accounts restore access then the approved usage policy
-will be set to `Not approved` otherwise it will be set to `Approved`.
+Calculated policy for policy `AWS &gt; Redshift &gt; Manual Cluster Snapshot &gt; Approved &gt; Usage`.
+If a manual snapshot is configured to allow access from external accounts restore access then the approved usage 
+policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
@@ -25,8 +26,8 @@ If the query returns an array of zero items, then there are no accounts with cro
 
 ### Template (Nunjucks)
 
-The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html) with logic to
-approve if Redshift has no cross-account access.
+Approval logic for Redshift cross-account access.
+
 
 ```nunjucks
 {% if $.clusterSnapshotManual.AccountsWithRestoreAccess | length -%}
@@ -35,6 +36,8 @@ approve if Redshift has no cross-account access.
   Approved
 {% endif -%}
 ```
+
+The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
 
 ## Prerequisites
 
