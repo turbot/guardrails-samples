@@ -5,6 +5,7 @@ const hclParser = require("js-hcl-parser");
 const path = require("path");
 const nunjucks = require("nunjucks");
 const moment = require("moment");
+const chalk = require("chalk");
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -48,7 +49,7 @@ async function harvestedVariables(configuration) {
 }
 
 async function main() {
-  console.log(`Generate Documentation: Calculated Policies - ${moment().format()}`);
+  console.log(chalk.gray(`Generate Documentation: Calculated Policies\nStart time: ${moment().format()}`));
 
   const calcPolicies = await readdir(`${__dirname}/templates/calc-policy`);
 
@@ -62,12 +63,13 @@ async function main() {
 
       const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/README.md`);
       await writeFile(destination, renderResult);
+      console.log(chalk.white(`Generated Document: ${calcPolicy})`));
     } catch (e) {
-      console.error(`Error generating calculated policy: ${calcPolicy}`, e);
+      console.error(chalk.red(`Error generating calculated policy: ${calcPolicy}`, e));
     }
   }
 
-  console.log(`Generate Documentation Complete - ${moment().format()}`);
+  console.log(chalk.gray(`Generate Documentation Complete\nEnd time: ${moment().format()}`));
 }
 
 main();
