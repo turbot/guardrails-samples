@@ -7,7 +7,7 @@ Redshift manual snapshots of the current account.
 
 ## Implementation Details
 
-Calculated policy for policy `AWS &gt; Redshift &gt; Manual Cluster Snapshot &gt; Approved &gt; Usage`.
+Calculated policy for policy `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`.
 If a manual snapshot is configured to allow access from external accounts restore access then the approved usage 
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
