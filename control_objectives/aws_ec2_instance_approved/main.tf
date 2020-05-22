@@ -1,3 +1,10 @@
+# EC2 Volume Approved folder
+resource "turbot_smart_folder" "ec2_volume_approved" {
+  title         = var.smart_folder_title
+  description   = "Create a smart folder and set volume approved policies"
+  parent        = "tmod:@turbot/turbot#/"
+}
+
 # Determine the action to take when an AWS EC2 instances is not approved based on AWS > EC2 > Instance > Approved > * policies
 # AWS > EC2 > Instance > Approved
 resource "turbot_policy_setting" "ec2_instance_approved" {
