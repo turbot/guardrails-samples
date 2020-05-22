@@ -10,7 +10,7 @@ resource "turbot_smart_folder" "rds_storage_alarms" {
 # AWS > RDS > DB Instance > DB Free Storage Space Alarm
 
  resource "turbot_policy_setting" "rds_db_freespace" {
-  resource = turbot_smart_folder.va_rds.id
+  resource = turbot_smart_folder.rds_storage_alarms.id
   type = "tmod:@turbot/aws-rds#/policy/types/dBInstanceFreeStorageSpaceAlarm"
   value = "Check: No alarm"
 }
