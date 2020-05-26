@@ -1,0 +1,73 @@
+# Description
+# -----------
+#
+#
+# The query returns the data from activity log.
+# Filters the control that moved to alarm state in last 24 hours. In this example it filters the controls for
+# s3 bucket.
+#
+
+# Substitute
+# ----------
+#
+# Substitute aka/id for any resource in <resourceType>.
+#
+# <resourceType>:
+#   Any valid resource id or aka can be substituted.
+#   The same graphql examples can be run for different resources, just by substituting the respective resource's id/aka.
+#
+
+# Execute
+# -------
+#
+# To execute the query after substitution, run the Turbot CLI command:
+#   `turbot graphql --query ./list_notifications_for_controls_that_moved_to_alarm_state.graphql`
+#
+
+# Use Cases
+# ---------
+#
+#   Filtering with resource id/aka
+#   ------------------------------
+#     1. Replace <resourceType> with the id/aka for any resource for example
+#        'tmod:@turbot/aws-ec2#/resource/types/keyPair'.
+#     2. Execute this GraphQL script
+#
+#   Filtering resources with any state of control
+#   ---------------------------------------------
+#     1. Replace the filter 'controls(filter: "state:alarm")' with any other desirable state value like ok,error,tbd etc.
+#     2. Execute this GraphQL script
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
+# - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
+#
+
+query ListNotificationsForControlsThatMovedToAlarmState {
+  notifications(filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      notificationType
+      resource {
+        trunk {
+          title
+        }
+        controls(filter: "state:alarm") {
+          items {
+            state
+            reason
+          }
+        }
+      }
+    }
+  }
+}
