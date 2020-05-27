@@ -1,24 +1,24 @@
-# {{ configuration.title }}
+# {{ configuration.title | safe }}
 
 ## Use case
 
-{{ configuration.useCase }}
+{{ configuration.useCase | safe }}
 ## Implementation Details
 
 {{ configuration.details | safe }}
 ### Template Input (GraphQL)
 
-{{ configuration.templateInput.details }}
+{{ configuration.templateInput.details | safe }}
 ```graphql
-{{ configuration.templateInput.query -}}
+{{ configuration.templateInput.query | safe -}}
 ```
 
 ### Template (Nunjucks)
 
-{{ configuration.template.details }}
+{{ configuration.template.details | safe }}
 
 ```nunjucks
-{{ configuration.template.source -}}
+{{ configuration.template.source | safe -}}
 ```
 
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
