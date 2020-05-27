@@ -52,7 +52,7 @@ async function main() {
   console.log(chalk.gray(`Generate Documentation: Calculated Policies\nStart time: ${moment().format()}`));
 
   let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
-  //calcPolicies = calcPolicies.filter((v) => v.isDirectory());
+  calcPolicies = calcPolicies.filter((v) => v.isDirectory());
 
   for (const calcPolicy of calcPolicies) {
     try {
