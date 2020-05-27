@@ -11,8 +11,8 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const readdir = util.promisify(fs.readdir);
 
-async function loadVariables(calcPolicy) {
-  const resolved = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/variables.tf`);
+async function loadVariables(calcPolicyName) {
+  const resolved = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/variables.tf`);
   let contents = await readFile(resolved, "utf8");
   contents = contents.match(/.*\n/g);
 
@@ -29,14 +29,14 @@ async function loadVariables(calcPolicy) {
   return contents.variable;
 }
 
-async function loadConfiguration(configuration) {
-  const fileContents = await readFile(`${__dirname}/templates/calc-policy/${configuration}/template.yml`, "utf8");
+async function loadConfiguration(calcPolicyName) {
+  const fileContents = await readFile(`${__dirname}/templates/calc-policy/${calcPolicyName}/template.yml`, "utf8");
   return yaml.safeLoad(fileContents);
 }
 
-async function harvestedVariables(configuration) {
+async function harvestedVariables(calcPolicyName) {
   const harvestedVariables = [];
-  const variables = await loadVariables(configuration);
+  const variables = await loadVariables(calcPolicyName);
 
   for (const variable of variables) {
     const name = Object.keys(variable)[0];
@@ -51,21 +51,23 @@ async function harvestedVariables(configuration) {
 async function main() {
   console.log(chalk.gray(`Generate Documentation: Calculated Policies\nStart time: ${moment().format()}`));
 
-  const calcPolicies = await readdir(`${__dirname}/templates/calc-policy`);
+  let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
+  //calcPolicies = calcPolicies.filter((v) => v.isDirectory());
 
   for (const calcPolicy of calcPolicies) {
     try {
-      const variables = await harvestedVariables(calcPolicy);
-      const configuration = await loadConfiguration(calcPolicy);
+      const calcPolicyName = calcPolicy.name;
+      const variables = await harvestedVariables(calcPolicyName);
+      const configuration = await loadConfiguration(calcPolicyName);
       const renderContext = { variables, configuration };
 
-      const renderResult = nunjucks.render(`${__dirname}/templates/calc-policy-template.njk`, renderContext);
+      const renderResult = nunjucks.render(`${__dirname}/templates/calc-policy/template.njk`, renderContext);
 
-      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/README.md`);
+      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
       await writeFile(destination, renderResult);
-      console.log(chalk.white(`Generated Document: ${calcPolicy}`));
+      console.log(chalk.white(`Generated Document: ${calcPolicyName}`));
     } catch (e) {
-      console.error(chalk.red(`Error generating calculated policy: ${calcPolicy}`, e));
+      console.error(chalk.red(`Error generating calculated policy ${calcPolicy.name}\nOriginal Error:\n`, e));
     }
   }
 
