@@ -50,7 +50,6 @@ template:
   description: Configures the section of the documentation that deals with the template logic
   type: object
   required:
-    - details
     - source
   properties:
     details:
@@ -58,7 +57,9 @@ template:
       type: string
     source:
       description: The actual Nunjucks source that is passed into the Turbot policy template property
-      type: string
+      type:
+        - string
+        - array
 ```
 
 ### Run Document Generation
