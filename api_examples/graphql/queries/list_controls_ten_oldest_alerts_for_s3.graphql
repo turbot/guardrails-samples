@@ -29,6 +29,15 @@
 # sort:
 #   sorting by appropriate fields.
 #   In example, sorting by stateChangeTimestamp.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
 
 query ListControlsTenOldestAlertsForS3 {
   controls(filter: "state:error,invalid,tbd resource:'175816468884383' resourceType:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {

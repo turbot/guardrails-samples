@@ -20,6 +20,15 @@
 # Searching tags with $.:
 #   Using $. one can filter resources using any property(here tags) of the object.
 #   In example, '$.turbot.tags.'new':/^tes-/' returnes any resource which has the key as 'new' and any value that starts with 'tes'.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
 
 query ListResourcesByResourceTypeWithSpecificTag {
   resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {

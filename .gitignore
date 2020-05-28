@@ -292,6 +292,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Ignore vscode workspace settings
-.vscode
-
+# Testing configuration
+*.tfvars
+!default.tfvars

@@ -1,23 +1,61 @@
 # Azure Provider Registration Baseline
 
-Turbot Azure Provider Registration baseline provides a [terraform](https://www.terraform.io) configuration to enable or disable provider registration for Azure services.
+Turbot Azure Services baseline provides a Terraform configuration to registration status or check current registration status for Azure services in Turbot.
 
-  - Service names must match the `policy_map`.
+**NOTE:** `provider_status` must match values found in the `provider_registration_map` map.
 
-> It is advised not to modify the `policy_map` list.
+**NOTE:** It is advised not to modify the `provider_registration_map` map.
 
 ## Prerequisites
 
-To run the Azure Provider Registration baseline, you must have:
-
-  - [Terraform](https://www.terraform.io) Version 12
-  - [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
-  - [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and AWS account
+- Setup Turbot [credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials)
+- Installed [Terraform](https://www.terraform.io/downloads.html)
+- Installed [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
 
 ## Running the Baseline
 
-To execute the Azure Provider Registration baseline:
+Scripts can be run in the folder that contains the script.
 
-  - Go to the Azure provider registration directory with `cd azure_provider_registration`
-  - Run `terraform plan -var-file=default.tfvars` to review the changes to be applied
-  - Run `terraform apply -var-file=default.tfvars` to apply the changes
+### Configure the script
+
+Update default.tfvars or create a new Terraform configuration file.
+
+Variables that are exposed by this script are:
+
+- target_resource
+- smart_folder_title
+- folder_parent (Optional)
+- provider_status (Optional)
+- provider_registration_map (Optional)
+
+Open the file `variables.tf` for further details.
+
+### Initialize Terraform
+
+If not previously run then initialize Terraform to get all necessary providers.
+
+Command: `terraform init`
+
+### Apply using default configuration
+
+If seeking to apply the configuration using the configuration file `defaults.tfvars`.
+
+Command: `terraform apply -var-file=default.tfvars`
+
+### Apply using custom configuration
+
+If seeking to apply the configuration using a custom configuration file `<custom_filename>.tfvars`.
+
+Command: `terraform apply -var-file=<custom_filename>.tfvars`
+
+### Destroy using default configuration
+
+If seeking to apply the configuration using the configuration file `defaults.tfvars`.
+
+Command: `terraform destroy -var-file=default.tfvars`
+
+### Destroy using custom configuration
+
+If seeking to apply the configuration using a custom configuration file `<custom_filename>.tfvars`.
+
+Command: `terraform destroy -var-file=<custom_filename>.tfvars`

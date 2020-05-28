@@ -28,7 +28,15 @@
 # sort:
 #   sorting by appropriate fields.
 #   In example, sorting by title.
+#
 
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
 
 query ListInstalledModsByResourceType {
   resources(filter: "resource:'tmod:@turbot/turbot#/' resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {

@@ -20,7 +20,15 @@
 # limit:
 #   Number of data returned.
 #   In example, 'limit:5' 5 buckets are returned.
+#
 
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
 
 query ListResourcesByResourceType {
   resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:5") {

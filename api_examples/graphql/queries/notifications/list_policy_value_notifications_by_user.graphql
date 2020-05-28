@@ -1,0 +1,94 @@
+# Description
+# -----------
+#
+# Query will return all policy value notifications for the last day triggered by a particular user provided the user exists.
+#
+# The notifications returned:
+#   - policy_value_created
+#   - policy_value_updated
+#   - policy_value_deleted
+#
+# All notifications returned will be within the last 24 hours.
+#
+
+# Substitute
+# ----------
+#
+# Substitute real values for the token <actor_id>.
+#
+# <actor_id>:
+#   Any valid actor identity id can be substituted.
+#   To get actor identity id for a user, please see GraphQL example:
+#     `get_user_actor_id.graphql`.
+#   To get the actor identity id for Turbot identity, please see GraphQL example:
+#     `get_turbot_actor_id.graphql.graphql`.
+#
+
+# Execute
+# -------
+#
+# To execute the query after substitution, run the Turbot CLI command:
+#   `turbot graphql --query ./list_policy_value_notifications_by_user.graphql`
+#
+
+# Use Cases
+# ---------
+#
+#   Include the user Turbot Identity
+#   ----------------------------------
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_turbot_actor_id.graphql`.
+#     2. Replace `<actor_id>` with this value.
+#     3. Excute this GraphQL script
+#
+#   Include a particular user
+#   ---------------------------
+#     1. Get the actor identity id for Turbot identity by running GraphQL example: `get_user_actor_id.graphql`.
+#     2. Replace `<actor_id>` with this value.
+#     3. Excute this GraphQL script
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+#   - Filter documentation: https://turbot.com/v5/docs/reference/filter
+#   - GraphQL notifications: https://turbot.com/v5/docs/reference/filter/notifications
+#   - GraphQL notifications type: https://turbot.com/v5/docs/concepts/notifications#notification-types
+#
+
+query ListPolicyValueNotificationsByUser {
+  notifications(
+    filter: "notificationType:actorIdentityId:<actor_id> timestamp:>T-1d policy_value_created,policy_value_updated,policy_value_deleted"
+  ) {
+    items {
+      notificationType
+      actor {
+        identity {
+          title
+        }
+      }
+      resource {
+        turbot {
+          title
+          createTimestamp
+          actorIdentityId
+          akas
+        }
+      }
+      policySetting {
+        actor {
+          identity {
+            title
+          }
+        }
+        value
+      }
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

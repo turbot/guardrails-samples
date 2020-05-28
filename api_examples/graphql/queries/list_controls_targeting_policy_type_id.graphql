@@ -1,13 +1,15 @@
 # Description
 # -----------
 #
+# NOTE The preferred method when using the full exact aka.
 #
+# Lists all the controls that completely matches the passed in policy type aka.
 #
 
 # Usage
 # -----
 #
-# turbot graphql --query ./list_controls_by_partial_control_category_akas.graphql
+# turbot graphql --query ./list_controls_targeting_policy_type_id.graphql
 #
 
 # Filter
@@ -21,6 +23,14 @@
 # policyTypeLevel:
 #   Controls the level of the policy categories that should be returned policy type hierarchy.
 #   In example only items that match the policy type are returned by setting value to `self`
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
 #
 
 query ListControlsTargetingPolicyTypeId {

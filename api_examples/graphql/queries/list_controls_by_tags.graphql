@@ -1,7 +1,9 @@
 # Description
 # -----------
+#
 # The query  will return any controls that are in any of these states alarm/ok/tbd/skipped/error
 # by specific tag within a specific timeframe.
+#
 
 # Usage
 # -----
@@ -20,6 +22,14 @@
 # tags:
 #   Controls which has a specific tag key/value pair are returned.
 #   In example, the Controls with key/value pair were: wolf are returned.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
 #
 
 query ListControlsByTags {
