@@ -2,7 +2,7 @@
 
 ## Use case
 
-Use this policy if you would like to restrict the usage of EC2 instance images to AMIs owned by AWS accounts that are trusted
+Use this policy if you would like to restrict the usage of EC2 instance images to AMIs owned by AWS accounts that are trusted.
 
 ## Implementation Details
 
@@ -35,7 +35,7 @@ GraphQL query that will get the instance image.
 ### Template (Nunjucks)
 
 Approval logic for EC2 instance trusted AWS accounts AMIs.
-If instance image ownerId is not in `approvedAccounts` list, then it will return `Not approved`
+If instance image ownerId is not in `approvedAccounts` list, then it will return `Not approved`.
 
 
 ```nunjucks
