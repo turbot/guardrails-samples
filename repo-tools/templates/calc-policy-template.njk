@@ -14,8 +14,10 @@
 ```
 
 ### Template (Nunjucks)
+{%- if configuration.template.details %}
 
 {{ configuration.template.details | safe }}
+{%- endif %}
 
 ```nunjucks
 {{ configuration.template.source | safe -}}
