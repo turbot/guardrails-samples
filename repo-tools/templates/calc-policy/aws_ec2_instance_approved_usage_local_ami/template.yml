@@ -1,6 +1,6 @@
 title: AWS EC2 Instance - restrict instance image to local AMI
 useCase: |
-  Use this policy if you would like to restrict the usage of EC2 instance images to local AMI (AMI owned by the same account)
+  Use this policy if you would like to restrict the usage of EC2 instance images to local account AMI images only.
 details: |
   Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
   If a EC2 instance image is not owned by the account that the instance is running in, then the approved usage
