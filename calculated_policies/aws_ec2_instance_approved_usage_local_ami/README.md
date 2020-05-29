@@ -7,7 +7,8 @@ Use this policy if you would like to restrict the usage of EC2 instance images t
 ## Implementation Details
 
 Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-If a EC2 instance image is not owned by the account that the instance is running in, then the approved usage
+Approval policy that will limit running EC2 instances to only use local EC2 instance images.
+If an EC2 instance image is not owned by the account that the instance is running on, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
