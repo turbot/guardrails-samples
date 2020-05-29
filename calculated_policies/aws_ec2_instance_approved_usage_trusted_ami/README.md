@@ -1,8 +1,8 @@
-# AWS EC2 Instance - restrict instance images to trusted AMI
+# AWS EC2 Instance - Restrict Instance Images to trusted AMI
 
 ## Use case
 
-Use this policy if you would like to restrict the usage of EC2 instance images to trusted AMI whitelisted beforehand
+Use this policy if you would like to restrict the usage of EC2 Instance Images to a list of trusted AMIs.
 
 ## Implementation Details
 
@@ -12,7 +12,7 @@ policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
-GraphQL query that will get the instance image.
+GraphQL query that will get the Instance Image.
 
 ```graphql
 {
@@ -24,9 +24,8 @@ GraphQL query that will get the instance image.
 
 ### Template (Nunjucks)
 
-Approval logic for EC2 instance trusted AMI.
-If instance image is not in `approvedImageIds` list, then it will return `Not approved`
-
+Approval logic for EC2 Instance trusted AMI.
+If Instance Image is not in `approvedImageIds` list, then it will return `Not approved`.
 
 ```nunjucks
 {% set approvedImageIds = [
