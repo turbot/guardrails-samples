@@ -1,6 +1,6 @@
 title: AWS EC2 Instance - Restrict Instance Images to trusted AMI
 useCase: |
-  Use this policy if you would like to restrict the usage of EC2 Instance Images to trusted AMI whitelisted beforehand
+  Use this policy if you would like to restrict the usage of EC2 Instance Images to a list of trusted AMIs.
 details: |
   Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
   If a EC2 Instance Image is not in the trusted AMI list, then the approved usage
