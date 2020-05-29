@@ -2,7 +2,7 @@
 
 ## Use case
 
-Use this policy if you would like to restrict the usage of EC2 instance images to AMIs owned by AWS accounts that is trusted
+Use this policy if you would like to restrict the usage of EC2 instance images to AMIs owned by AWS accounts that are trusted
 
 ## Implementation Details
 
