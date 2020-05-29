@@ -1,20 +1,20 @@
-# AWS EC2 Instance - restrict instance image to local AMI
+# AWS EC2 Instance - restrict Instance Image to local AMI
 
 ## Use case
 
-Use this policy if you would like to restrict the usage of EC2 instance images to local account AMI images only.
+Use this policy if you would like to restrict the usage of EC2 Instance Images to local account AMI Images only.
 
 ## Implementation Details
 
 Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-Approval policy that will limit running EC2 instances to only use local EC2 instance images.
-If an EC2 instance image is not owned by the account that the instance is running on, then the approved usage
+Approval policy that will limit running EC2 Instances to only use local EC2 Instance Images.
+If an EC2 instance Image is not owned by the account that the Instance is running on, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
 GraphQL query that will check if a Instance has accounts with restore access.
-If the query returns an array of zero items, then the instance image is not a local AMI.
+If the query returns an array of zero items, then the Instance Image is not a local AMI.
 
 ```graphql
 - {
@@ -38,7 +38,7 @@ If the query returns an array of zero items, then the instance image is not a lo
 
 ### Template (Nunjucks)
 
-Approval logic for EC2 instance image local AMI.
+Approval logic for EC2 Instance Image local AMI.
 
 
 ```nunjucks
