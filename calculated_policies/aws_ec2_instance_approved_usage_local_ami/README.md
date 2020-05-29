@@ -2,7 +2,7 @@
 
 ## Use case
 
-Use this policy if you would like to restrict the usage of EC2 instance images to local AMI (AMI owned by the same account)
+Use this policy if you would like to restrict the usage of EC2 instance images to local account AMI images only.
 
 ## Implementation Details
 
