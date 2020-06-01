@@ -1,4 +1,4 @@
-title: Multi-Cloud Storage / Set least expensive storage options for development environments.
+title: Multi-Cloud Storage - Set least expensive storage options for development environments
 useCase: |
   The business owner of the AWS and Azure cloud platforms who wants to save cost by ensuring that the configuration of 
   storage resources are optimized for cost savings in development accounts. 

@@ -1,4 +1,4 @@
-# AWS EC2 Instance - restrict Instance Image to local AMI
+# AWS EC2 Instance - Restrict Instance Image to local AMI
 
 ## Use case
 
@@ -8,7 +8,7 @@ Use this policy if you would like to restrict the usage of EC2 Instance Images t
 
 Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
 Approval policy that will limit running EC2 Instances to only use local EC2 Instance Images.
-If an EC2 instance Image is not owned by the account that the Instance is running on, then the approved usage
+If an EC2 Instance Image is not owned by the account that the Instance is running on, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
@@ -56,7 +56,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example

@@ -9,6 +9,6 @@ variable "target_resource" {
 }
 
 variable "approved_account_ami_list" {
-  type    = list(string)
+  type        = list(string)
   description = "Enter a list of approved AWS account to own trusted AMIs."
 }

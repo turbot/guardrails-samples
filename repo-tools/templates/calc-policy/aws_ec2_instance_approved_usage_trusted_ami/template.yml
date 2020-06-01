@@ -7,7 +7,7 @@ details: |
   policy will be set to `Not approved` otherwise it will be set to `Approved`.
 templateInput:
   details: |
-    GraphQL query that will get the Instance image.
+    GraphQL query that will get the Instance Image.
   query: |
     {
       resource {
