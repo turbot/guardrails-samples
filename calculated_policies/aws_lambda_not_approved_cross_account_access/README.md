@@ -33,7 +33,6 @@ Approval logic for Lambda Function cross-account access.
 If no external account is found in Principal.AWS, Condition.'AWS:SourceAccount' or Condition.'AWS:SourceArn'
 then there are no cross-account access
 
-
 ```nunjucks
 {% set has_cross_account = false -%}
 {% for iamPolicy in $.resource.iamPolicies -%}

@@ -26,7 +26,6 @@ GraphQL query that will check if the Detector membership.
 
 Approval logic for GuardDuty Detector membership restriction.
 
-
 ```nunjucks
 {% if $.resource.masterAccount %}
 {%   if $.resource.masterAccount == "${var.detector_master_account}" %}

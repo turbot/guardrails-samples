@@ -9,20 +9,36 @@
 ### Template Input (GraphQL)
 
 {{ configuration.templateInput.details | safe }}
-```graphql
-{{ configuration.templateInput.query | safe -}}
-```
 
+{%- if configuration.templateInput.query | isString %}
+```graphql
+{{ configuration.templateInput.query | trim | safe }}
+```
+{% elif configuration.templateInput.query | isArray %}
+{%- for query in configuration.templateInput.query %}
+```graphql
+{{ query | safe | trim }}
+```
+{% endfor %}
+{%- endif %}
 ### Template (Nunjucks)
 {%- if configuration.template.details %}
 
-{{ configuration.template.details | safe }}
+{{ configuration.template.details | safe | trim }}
 {%- endif %}
 
-```nunjucks
-{{ configuration.template.source | safe -}}
-```
+{%- if configuration.template.source | isString %}
 
+```nunjucks
+{{ configuration.template.source | trim | safe }}
+```
+{% elif configuration.template.source | isArray %}
+{% for source in configuration.template.source %}
+```nunjucks
+{{ source | safe | trim }}
+```
+{% endfor %}
+{%- endif %}
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
 
 ## Prerequisites

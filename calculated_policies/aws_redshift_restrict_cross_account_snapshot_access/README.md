@@ -28,7 +28,6 @@ If the query returns an array of zero items, then there are no accounts with cro
 
 Approval logic for Redshift cross-account access.
 
-
 ```nunjucks
 {% if $.clusterSnapshotManual.AccountsWithRestoreAccess | length -%}
   Not approved

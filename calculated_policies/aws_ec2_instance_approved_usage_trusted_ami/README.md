@@ -27,7 +27,6 @@ GraphQL query that will get the Instance Image.
 Approval logic for EC2 Instance trusted AMI.
 If Instance Image is not in `approvedImageIds` list, then it will return `Not approved`.
 
-
 ```nunjucks
 {% set approvedImageIds = [
     "${join("\",\n      \"", var.trusted_ami_list)}"

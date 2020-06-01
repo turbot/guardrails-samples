@@ -30,9 +30,17 @@ templateInput:
       }
     }
 template:
-  source: |
-    {% if $.clusterSnapshotManual.AccountsWithRestoreAccess | length -%}
-      Not approved
-    {% else -%}
-      Approved
-    {% endif -%}
+  details: First source is for Azure and the following is for AWS.
+  source:
+    - |
+      {%- if $.storageAccount.turbot.tags.Environment == "Dev"%}
+        "Enforce: Cool"
+      {%- else -%}
+        "Enforce: Hot"
+      {%- endif -%}
+    - |
+      {% if $.resource.tags.Environment == "Dev" %}
+        "Enforce: Disabled"
+      {% else %}
+        "Enforce: Enabled"
+      {% endif %}

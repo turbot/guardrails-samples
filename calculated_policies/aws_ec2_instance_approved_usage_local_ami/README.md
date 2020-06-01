@@ -40,7 +40,6 @@ If the query returns an array of zero items, then the Instance Image is not a lo
 
 Approval logic for EC2 Instance Image local AMI.
 
-
 ```nunjucks
 {% if $.resources.metadata.stats.total %}
   Approved

@@ -39,11 +39,21 @@ async function harvestedVariables(calcPolicyName) {
   return variables;
 }
 
+function isString(variable) {
+  return typeof variable === "string";
+}
+
+function isArray(variable) {
+  return variable instanceof Array;
+}
+
 async function main() {
   console.log(chalk.gray(`Generate Documentation: Calculated Policies\nStart time: ${moment().format()}`));
 
   let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
   calcPolicies = calcPolicies.filter((v) => v.isDirectory());
+
+  const template = await readFile(`${__dirname}/templates/calc-policy/template.njk`, "utf8");
 
   for (const calcPolicy of calcPolicies) {
     try {
@@ -52,7 +62,13 @@ async function main() {
       const configuration = await loadConfiguration(calcPolicyName);
       const renderContext = { variables, configuration };
 
-      const renderResult = nunjucks.render(`${__dirname}/templates/calc-policy/template.njk`, renderContext);
+      //const renderResultOld = nunjucks.render(`${__dirname}/templates/calc-policy/template.njk`, renderContext);
+
+      var env = new nunjucks.Environment();
+
+      env.addFilter("isString", isString);
+      env.addFilter("isArray", isArray);
+      const renderResult = env.renderString(template, renderContext);
 
       const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
       await writeFile(destination, renderResult);
