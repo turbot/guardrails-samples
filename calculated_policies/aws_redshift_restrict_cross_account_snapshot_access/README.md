@@ -32,9 +32,9 @@ Approval logic for Redshift cross-account access.
 
 ```nunjucks
 {% if $.clusterSnapshotManual.AccountsWithRestoreAccess | length -%}
-  Not approved
+  "Not approved"
 {% else -%}
-  Approved
+  "Approved"
 {% endif -%}
 ```
 

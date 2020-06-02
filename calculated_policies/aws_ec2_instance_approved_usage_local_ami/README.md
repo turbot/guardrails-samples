@@ -44,9 +44,9 @@ Approval logic for EC2 Instance Image local AMI.
 
 ```nunjucks
 {% if $.resources.metadata.stats.total %}
-  Approved
+  "Approved"
 {% else %}
-  Not approved
+  "Not approved"
 {% endif %}
 ```
 

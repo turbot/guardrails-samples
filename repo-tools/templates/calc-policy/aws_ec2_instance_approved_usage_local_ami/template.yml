@@ -33,7 +33,7 @@ template:
     Approval logic for EC2 Instance Image local AMI.
   source: |
     {% if $.resources.metadata.stats.total %}
-      Approved
+      "Approved"
     {% else %}
-      Not approved
+      "Not approved"
     {% endif %}

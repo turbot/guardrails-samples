@@ -1,7 +1,7 @@
 resource "turbot_smart_folder" "aws_ec2_instance_approved_usage_local_ami" {
-  title          = var.smart_folder_title
-  description    = "Restrict AWS EC2 Instance to local images"
-  parent         = "tmod:@turbot/turbot#/"
+  title       = var.smart_folder_title
+  description = "Restrict AWS EC2 Instance to local images"
+  parent      = "tmod:@turbot/turbot#/"
 }
 
 resource "turbot_smart_folder_attachment" "aws_ec2_instance_approved_usage_local_ami" {
@@ -12,14 +12,14 @@ resource "turbot_smart_folder_attachment" "aws_ec2_instance_approved_usage_local
 # AWS > EC2 > Instance > Approved
 resource "turbot_policy_setting" "aws_ec2_instance_approved_local_ami" {
   resource = turbot_smart_folder.aws_ec2_instance_approved_usage_local_ami.id
-  type = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-  value = "Check: Approved"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
+  value    = "Check: Approved"
 }
 
 # AWS > EC2 > Instance > Approved > Usage
 resource "turbot_policy_setting" "aws_ec2_instance_approved_usage_local_ami" {
-  resource       = turbot_smart_folder.aws_ec2_instance_approved_usage_local_ami.id
-  type           = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedUsage"
+  resource = turbot_smart_folder.aws_ec2_instance_approved_usage_local_ami.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedUsage"
   # GraphQL to pull function metadata
   template_input = <<EOT
   - {
@@ -41,11 +41,11 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_usage_local_ami" {
   }
   EOT
   # Nunjucks Template Nunjucks Comments are formatted: {# comment #}
-  template       = <<EOT
+  template = <<EOT
   {% if $.resources.metadata.stats.total %}
-    Approved
+    "Approved"
   {% else %}
-    Not approved
+    "Not approved"
   {% endif %}
   EOT
 }
