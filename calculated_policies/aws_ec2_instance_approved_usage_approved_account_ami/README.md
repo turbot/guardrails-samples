@@ -1,18 +1,20 @@
-# AWS EC2 Instance - restrict instance images to trusted AWS accounts AMIs
+# AWS EC2 Instance - Restrict Instance images to trusted AWS accounts AMIs
 
 ## Use case
 
-Use this policy if you would like to restrict the usage of EC2 instance images to AMIs owned by AWS accounts that are trusted.
+Use this policy if you would like to restrict the usage of EC2 Instance images to AMIs owned by AWS accounts that are trusted.
 
 ## Implementation Details
 
 Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-If a EC2 instance image is not owned by an account in the approved accounts list, then the approved usage
+If a EC2 Instance Image is not owned by an account in the approved accounts list, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
-GraphQL query that will get the instance image.
+The template input to a calculated policy is a GraphQL query.
+
+GraphQL query that will get the Instance Image.
 
 ```graphql
 - {
@@ -34,9 +36,8 @@ GraphQL query that will get the instance image.
 
 ### Template (Nunjucks)
 
-Approval logic for EC2 instance trusted AWS accounts AMIs.
-If instance image ownerId is not in `approvedAccounts` list, then it will return `Not approved`.
-
+Approval logic for EC2 Instance trusted AWS accounts AMIs.
+If Instance Image ownerId is not in `approvedAccounts` list, then it will return `Not approved`.
 
 ```nunjucks
 {% set approvedAccounts = [
@@ -57,7 +58,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example

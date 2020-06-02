@@ -13,6 +13,8 @@ it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 GraphQL query that will check if a function policy has cross-account access.
 If the query returns an array of zero items, then there are no function with cross-account access.
 
@@ -32,7 +34,6 @@ If the query returns an array of zero items, then there are no function with cro
 Approval logic for Lambda Function cross-account access.
 If no external account is found in Principal.AWS, Condition.'AWS:SourceAccount' or Condition.'AWS:SourceArn'
 then there are no cross-account access
-
 
 ```nunjucks
 {% set has_cross_account = false -%}
@@ -61,7 +62,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example

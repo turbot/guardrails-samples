@@ -7,10 +7,12 @@ Use this policy if you would like to restrict the usage of EC2 Instance Images t
 ## Implementation Details
 
 Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-If a EC2 instance image is not in the trusted AMI list, then the approved usage
+If a EC2 Instance Image is not in the trusted AMI list, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
+
+The template input to a calculated policy is a GraphQL query.
 
 GraphQL query that will get the Instance Image.
 
@@ -46,7 +48,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example

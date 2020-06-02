@@ -1,0 +1,41 @@
+title: AWS EC2 - Instance Not Approved if Public Subnet
+useCase: |
+  There is an organizational requirement that in specific accounts, no EC2 instance can be booted within a subnet with 
+  an associated route table which has routes pointing to an Internet Gateway (IGW).
+details: |
+  This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using 
+  `AWS > EC2 > Instance > Approved > Usage` policy and then setting `AWS > EC2 > Instance > Approved` to check.
+templateInput:
+  details: |
+    This query is two-fold. First, it finds the subnet ID contained within the EC2 instance metadata. 
+    Second, all route tables in the account are found, and the associated subnet ID as well as the collection of routes.
+  query: |
+    {
+      resource {
+        subnetId: get(path: "SubnetId")
+      }
+      resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable'") {
+        items {
+          associations: get(path: "Associations.[0].SubnetId")
+          routes: get(path: "Routes")
+        }
+      }
+    }
+template:
+  source: |
+    {%- set hasIGW = false -%}
+    {%- for item in $.resources.items -%}
+      {%- if item.associations == $.resource.subnetId -%}
+        {%- for gateway in item.routes -%}
+          {%- if 'igw' in gateway.GatewayId -%}
+            {%- if hasIGW == false -%}
+              "Not approved"
+              {%- set hasIGW = true -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if hasIGW == false -%}
+      "Approved if AWS > EC2 > Enabled"
+    {%- endif -%}

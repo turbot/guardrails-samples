@@ -1,4 +1,4 @@
-title: AWS EC2 Instance - restrict Instance Image to local AMI
+title: AWS EC2 Instance - Restrict Instance Image to local AMI
 useCase: |
   Use this policy if you would like to restrict the usage of EC2 Instance Images to local account AMI Images only.
 details: |
@@ -33,7 +33,7 @@ template:
     Approval logic for EC2 Instance Image local AMI.
   source: |
     {% if $.resources.metadata.stats.total %}
-      Approved
+      "Approved"
     {% else %}
-      Not approved
+      "Not approved"
     {% endif %}

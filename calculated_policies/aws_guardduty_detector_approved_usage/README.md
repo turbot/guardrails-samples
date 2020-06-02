@@ -1,4 +1,4 @@
-# AWS GuardDuty - restrict detector membership to a given master account
+# AWS GuardDuty - Restrict detector membership to a given master account
 
 ## Use case
 
@@ -11,6 +11,8 @@ If a Detector is the master or member of a given master account then the approve
 to `Approved` otherwise it will be set to `Not approved`.
 
 ### Template Input (GraphQL)
+
+The template input to a calculated policy is a GraphQL query.
 
 GraphQL query that will check if the Detector membership.
 
@@ -25,7 +27,6 @@ GraphQL query that will check if the Detector membership.
 ### Template (Nunjucks)
 
 Approval logic for GuardDuty Detector membership restriction.
-
 
 ```nunjucks
 {% if $.resource.masterAccount %}
@@ -46,7 +47,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example

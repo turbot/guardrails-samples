@@ -1,4 +1,4 @@
-# AWS SQS Queue Approved Usage / Alarm if SQS policy violates org restrictions
+# AWS SQS Queue Approved Usage - Alarm if SQS policy violates org restrictions
 
 ## Use case
 
@@ -12,6 +12,8 @@ Provides a Terraform configuration for creating a smart folder and applying a ca
 The Calculated policy creates a template that will alarm if a queue policy contains "Action: SQS:*".
 
 ### Template Input (GraphQL)
+
+The template input to a calculated policy is a GraphQL query.
 
 The GraphQL query selects policy metadata on an SQS queue.
 
@@ -54,7 +56,10 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
+- target_resource
 - smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 

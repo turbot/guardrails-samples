@@ -8,21 +8,39 @@
 {{ configuration.details | safe }}
 ### Template Input (GraphQL)
 
-{{ configuration.templateInput.details | safe }}
-```graphql
-{{ configuration.templateInput.query | safe -}}
-```
+The template input to a calculated policy is a GraphQL query.
 
+{{ configuration.templateInput.details | safe }}
+
+{%- if configuration.templateInput.query | isString %}
+```graphql
+{{ configuration.templateInput.query | trim | safe }}
+```
+{% elif configuration.templateInput.query | isArray %}
+{%- for query in configuration.templateInput.query %}
+```graphql
+{{ query | safe | trim }}
+```
+{% endfor %}
+{%- endif %}
 ### Template (Nunjucks)
 {%- if configuration.template.details %}
 
-{{ configuration.template.details | safe }}
+{{ configuration.template.details | safe | trim }}
 {%- endif %}
 
-```nunjucks
-{{ configuration.template.source | safe -}}
-```
+{%- if configuration.template.source | isString %}
 
+```nunjucks
+{{ configuration.template.source | trim | safe }}
+```
+{% elif configuration.template.source | isArray %}
+{% for source in configuration.template.source %}
+```nunjucks
+{{ source | safe | trim }}
+```
+{% endfor %}
+{%- endif %}
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
 
 ## Prerequisites
@@ -30,7 +48,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example
