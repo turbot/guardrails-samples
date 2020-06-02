@@ -20,7 +20,7 @@ resource "turbot_policy_setting" "rds_approved_usage_policy_setting" {
   {#- To add an item to the whitelist, add an entry to the whitelist array -#}
   {#- set whitelist = ["1111111111111", "2222222222222"] -#}
   {#- Initially the whitelist is set to empty -#}
-  {%- set whitelist = ["1", "2", "3" ] -%}
+  {%- set whitelist = [] -%}
   {%- set approvalCount = 0 -%}
 
   {%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}

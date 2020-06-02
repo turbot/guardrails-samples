@@ -41,19 +41,21 @@ for the snapshot to be valid, otherwise it will be invalid and set to `Not appro
 {#- set whitelist = ["1111111111111", "2222222222222"] -#}
 {#- Initially the whitelist is set to empty -#}
 {%- set whitelist = [] -%}
-{%- set approvalResult = "Not approved" -%}
+{%- set approvalCount = 0 -%}
 
 {%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}
   {%- for validAccount in whitelist | sort -%}
     {%- if validAccount == sharedAccount -%}
-      {%- set approvalResult = "Approved" -%}
+      {%- set approvalCount = approvalCount + 1 -%}
     {%- endif -%}
   {%- endfor -%}
-{% else %}
-  {%- set approvalResult = "Approved" -%}
 {%- endfor -%}
 
-"{{ approvalResult }}"
+{%- if approvalCount ==  $.dbClusterSnapshotManual.sharedAccounts | length -%}
+  "Approved"
+{%- else -%}
+  "Not approved"
+{%- endif -%}
 ```
 
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
