@@ -8,6 +8,8 @@
 {{ configuration.details | safe }}
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 {{ configuration.templateInput.details | safe }}
 
 {%- if configuration.templateInput.query | isString %}

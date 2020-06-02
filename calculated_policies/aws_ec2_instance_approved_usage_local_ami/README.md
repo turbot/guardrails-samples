@@ -13,6 +13,8 @@ policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 GraphQL query that will check if a Instance has accounts with restore access.
 If the query returns an array of zero items, then the Instance Image is not a local AMI.
 

@@ -15,6 +15,8 @@ The Calculated policy sets the active age threshold to 30 days when a tag is pre
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 In this case the query selects all tags from the instance.
 
 ```graphql

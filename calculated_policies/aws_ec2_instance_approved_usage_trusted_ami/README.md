@@ -12,6 +12,8 @@ policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 GraphQL query that will get the Instance Image.
 
 ```graphql

@@ -12,6 +12,8 @@ to `Approved` otherwise it will be set to `Not approved`.
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 GraphQL query that will check if the Detector membership.
 
 ```graphql

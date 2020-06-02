@@ -13,6 +13,8 @@ The Calculated policy creates a template that will alarm if a queue policy conta
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 The GraphQL query selects policy metadata on an SQS queue.
 
 ```graphql

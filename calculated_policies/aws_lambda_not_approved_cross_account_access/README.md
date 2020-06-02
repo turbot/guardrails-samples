@@ -13,6 +13,8 @@ it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 GraphQL query that will check if a function policy has cross-account access.
 If the query returns an array of zero items, then there are no function with cross-account access.
 

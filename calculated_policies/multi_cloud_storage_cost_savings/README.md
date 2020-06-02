@@ -24,7 +24,7 @@ S3 bucket resource.
 
 ### Template Input (GraphQL)
 
-The template input to a calculated policy is a GraphQL query.  
+The template input to a calculated policy is a GraphQL query.
 
 In this case the query selects all tags from the storage account which will be used to determine if the resource
 should be managed by this business rule.
