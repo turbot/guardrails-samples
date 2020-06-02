@@ -1,5 +1,5 @@
 # Required - Target resource to attach to smart folder
-target_resource = "<resource_id_or_aka>"
+target_resource = "193516025874368"
 # Examples for target_resource
 # target_resource = "tmod:@turbot/turbot#/"
 # target_resource = "191238958290468"

@@ -6,7 +6,7 @@ resource "turbot_smart_folder" "rds_smart_folder" {
 
 resource "turbot_policy_setting" "rds_approved_usage_policy_setting" {
   resource       = turbot_smart_folder.rds_smart_folder.id
-  type           = "tmod:@turbot/aws-rds#/policy/types/dbSnapshotManualApprovedUsage"
+  type           = "tmod:@turbot/aws-rds#/policy/types/dbClusterSnapshotManualApprovedUsage"
   template_input = <<EOF
   {
     dbClusterSnapshotManual 
@@ -20,20 +20,22 @@ resource "turbot_policy_setting" "rds_approved_usage_policy_setting" {
   {#- To add an item to the whitelist, add an entry to the whitelist array -#}
   {#- set whitelist = ["1111111111111", "2222222222222"] -#}
   {#- Initially the whitelist is set to empty -#}
-  {%- set whitelist = [] -%}
-  {%- set approvalResult = "Not approved" -%}
+  {%- set whitelist = ["1", "2", "3" ] -%}
+  {%- set approvalCount = 0 -%}
 
-  {%- for validAccount in whitelist | sort -%}
-    {%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}
+  {%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}
+    {%- for validAccount in whitelist | sort -%}
       {%- if validAccount == sharedAccount -%}
-        {%- set approvalResult = "Approved" -%}
+        {%- set approvalCount = approvalCount + 1 -%}
       {%- endif -%}
     {%- endfor -%}
-  {% else %}
-    {%- set approvalResult = "Approved" -%}
   {%- endfor -%}
 
-  "{{ approvalResult }}"
+  {%- if approvalCount ==  $.dbClusterSnapshotManual.sharedAccounts | length -%}
+    "Approved"
+  {%- else -%}
+    "Not approved"
+  {%- endif -%}
   EOF
   precedence     = "REQUIRED"
 }
