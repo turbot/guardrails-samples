@@ -1,4 +1,4 @@
-title: AWS EC2 - Set maximum age of specially tagged EC2 instances.
+title: AWS EC2 - Set maximum age of specially tagged EC2 instances
 useCase: |
   The business owner of the AWS Lab environment wants to ensure that all EC2 Lab instances 
   (instances tagged Environment:=Lab) are not being used for extended periods of time. 

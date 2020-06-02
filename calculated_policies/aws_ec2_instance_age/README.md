@@ -1,4 +1,4 @@
-# AWS EC2 - Set maximum age of specially tagged EC2 instances.
+# AWS EC2 - Set maximum age of specially tagged EC2 instances
 
 ## Use case
 
