@@ -1,3 +1,8 @@
+variable "approved_accounts" {
+  description = "Enter the accounts numbers that are approved to use cross-account snapshots"
+  type        = list(string)
+}
+
 variable "target_resource" {
   description = "Enter the resource ID or AKA for the resource to apply the calculated policy"
   type        = string

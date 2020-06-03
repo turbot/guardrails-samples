@@ -8,7 +8,7 @@ Cluster Snapshot set to `Not approved` if cross account access exists to an acco
 
 Use the AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage policy.
 Calculated policy for policy `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage` policy.
-If the account that the snapshot is shared with, given by the property ``
+If the account that the snapshot is shared with, given by the property `DBClusterSnapshotAttributes.AttributeValues`
 
 ### Template Input (GraphQL)
 
@@ -32,15 +32,32 @@ Add items to the currently empty `whitelist` collection as detailed in inline ex
 The Nunjucks script will then check if all the accounts that are shared with the snapshot are valid by comparing 
 entries from a whitelist of accounts.
 
+To add entries to the whitelist can be done in two different ways:
+- Using `defaults.tf`
+- Amending the list in Turbot UI
+
+#### Using `defaults.tf`
+**Recommended**
+Add the entries into the file as a list of accounts. 
+When running the script it will add these entries into the Calculated Policy automatically and allow the end 
+user to control the accounts centrally.
+
+#### Amending the list in Turbot UI
+If the company workflow is to modify the Calculated Policy directly in Turbot. 
+Navigate to the policy and amend the template value by adding entries into the `whitelist` Nunjucks array. 
+For example, suppose two accounts should be added, "012345678901", "109876543210", this can be added by setting
+the variable by:
+
+```nunjucks
+{#- set whitelist = ["012345678901", "109876543210"] -#}
+```
+
 **Note:** All the accounts that are being shared by the snapshot need to have an entry in the whitelist in order
 for the snapshot to be valid, otherwise it will be invalid and set to `Not approved`.
 
 ```nunjucks
 {#- Whitelist of account that are approved for snapshot usage -#}
-{#- To add an item to the whitelist, add an entry to the whitelist array -#}
-{#- set whitelist = ["1111111111111", "2222222222222"] -#}
-{#- Initially the whitelist is set to empty -#}
-{%- set whitelist = [] -%}
+{%- set whitelist = ["${join("\" ,\"", var.approved_accounts)}"] -%}
 {%- set approvalCount = 0 -%}
 
 {%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}
@@ -78,6 +95,7 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
+- approved_accounts
 - target_resource
 - smart_folder_title (Optional)
 - smart_folder_description (Optional)

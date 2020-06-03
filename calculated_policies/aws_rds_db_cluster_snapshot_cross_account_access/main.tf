@@ -17,10 +17,7 @@ resource "turbot_policy_setting" "rds_approved_usage_policy_setting" {
   EOF
   template       = <<EOF
   {#- Whitelist of account that are approved for snapshot usage -#}
-  {#- To add an item to the whitelist, add an entry to the whitelist array -#}
-  {#- set whitelist = ["1111111111111", "2222222222222"] -#}
-  {#- Initially the whitelist is set to empty -#}
-  {%- set whitelist = [] -%}
+  {%- set whitelist = ["${join("\" ,\"", var.approved_accounts)}"] -%}
   {%- set approvalCount = 0 -%}
 
   {%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}

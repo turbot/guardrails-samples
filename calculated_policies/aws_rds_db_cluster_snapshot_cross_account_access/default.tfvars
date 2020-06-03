@@ -1,3 +1,8 @@
+# Required - Target the accounts numbers that are approved to use cross-account snapshots
+approved_accounts = []
+# Examples for approved_accounts
+# ["012345678901", "109876543210"]
+
 # Required - Target resource to attach to smart folder
 target_resource = "<resource_id or aka>"
 # Examples for target_resource
