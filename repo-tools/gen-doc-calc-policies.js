@@ -53,29 +53,41 @@ async function main() {
   let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
   calcPolicies = calcPolicies.filter((v) => v.isDirectory());
 
+  var env = new nunjucks.Environment();
+  env.addFilter("isString", isString);
+  env.addFilter("isArray", isArray);
+
   for (const calcPolicy of calcPolicies) {
     try {
       const calcPolicyName = calcPolicy.name;
 
       const variables = await harvestedVariables(calcPolicyName);
       const template = await loadTemplate(calcPolicyName);
-      const renderContext = { variables, configuration: template };
-
-      var env = new nunjucks.Environment();
-      env.addFilter("isString", isString);
-      env.addFilter("isArray", isArray);
-
       const documentTemplate = await readFile(`${__dirname}/templates/calc-policy/document.njk`, "utf8");
-      const renderedDocument = env.renderString(documentTemplate, renderContext);
 
-      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
-      await writeFile(destination, renderedDocument);
+      const documentRenderContext = { variables, configuration: template };
+
+      const renderedDocument = env.renderString(documentTemplate, documentRenderContext);
+      const documentDestination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
+
+      await writeFile(documentDestination, renderedDocument);
+
       console.log(chalk.white(`Generated Document: ${calcPolicyName}`));
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${calcPolicy.name}\nOriginal Error:\n`, e));
     }
   }
 
+  const indexDocumentTemplate = await readFile(`${__dirname}/templates/calc-policy/index-document.njk`, "utf8");
+
+  const indexDocumentRenderContext = { configuration: { calcPolicies } };
+
+  const renderedIndexDocument = env.renderString(indexDocumentTemplate, indexDocumentRenderContext);
+  const indexDocumentDestination = path.resolve(`${__dirname}/../calculated_policies/README.md`);
+
+  await writeFile(indexDocumentDestination, renderedIndexDocument);
+
+  console.log(chalk.white(`Generated Index Document`));
   console.log(chalk.gray(`Generate Documentation Complete\nEnd time: ${moment().format()}`));
 }
 
