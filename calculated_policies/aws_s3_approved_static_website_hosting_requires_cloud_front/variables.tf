@@ -6,7 +6,7 @@ variable "target_resource" {
 variable "smart_folder_title" {
   description = "Enter a title for the smart folder"
   type        = string
-  default     = "S3 Approved Usage - Associate CloudFront"
+  default     = "AWS S3 - Approved Usage - Associate CloudFront"
 }
 
 variable "smart_folder_description" {
