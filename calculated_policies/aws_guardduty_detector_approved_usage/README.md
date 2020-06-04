@@ -1,24 +1,43 @@
-# {{ configuration.title | safe }}
+# AWS GuardDuty - Restrict detector membership to a given master account
 
 ## Use case
 
-{{ configuration.useCase | safe }}
+Use this policy if you would like to restrict GuardDuty Detector membership to a given master account.
+
 ## Implementation Details
 
-{{ configuration.details | safe }}
+Calculated policy for policy `AWS > GuardDuty > Detector > Approved > Usage`.
+If a Detector is the master or member of a given master account then the approved usage policy will be set
+to `Approved` otherwise it will be set to `Not approved`.
+
 ### Template Input (GraphQL)
 
-{{ configuration.templateInput.details | safe }}
+The template input to a calculated policy is a GraphQL query.
+
+GraphQL query that will check if the Detector membership.
+
 ```graphql
-{{ configuration.templateInput.query | safe -}}
+{
+  resource {
+    masterAccount: get(path: "Master.AccountId")
+  }
+}
 ```
 
 ### Template (Nunjucks)
 
-{{ configuration.template.details | safe }}
+Approval logic for GuardDuty Detector membership restriction.
 
 ```nunjucks
-{{ configuration.template.source | safe -}}
+{% if $.resource.masterAccount %}
+{%   if $.resource.masterAccount == "${var.detector_master_account}" %}
+        "Approved"
+{%   else %}
+        "Not approved"
+{%   endif %}
+{% else %}
+  "Approved"
+{% endif %}
 ```
 
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
@@ -28,7 +47,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example
@@ -41,9 +60,10 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-{% for variable in variables -%}
-- {{ variable.name }}{% if variable.mandatory == false %} (Optional){% endif %}
-{% endfor %}
+- smart_folder_title
+- target_resource
+- detector_master_account
+
 Open the file [variables.tf](variables.tf) for further details.
 
 ### Initialize Terraform

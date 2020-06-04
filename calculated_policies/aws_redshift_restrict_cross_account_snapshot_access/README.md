@@ -1,4 +1,4 @@
-# AWS RedShift - restrict cross-account access to Redshift manual snapshots
+# AWS RedShift - Restrict cross-account access to Redshift manual snapshots
 
 ## Use case
 
@@ -12,6 +12,8 @@ If a manual snapshot is configured to allow access from external accounts restor
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
+
+The template input to a calculated policy is a GraphQL query.
 
 GraphQL query that will check if a manual cluster snapshot has accounts with restore access.
 If the query returns an array of zero items, then there are no accounts with cross-account access.
@@ -28,12 +30,11 @@ If the query returns an array of zero items, then there are no accounts with cro
 
 Approval logic for Redshift cross-account access.
 
-
 ```nunjucks
 {% if $.clusterSnapshotManual.AccountsWithRestoreAccess | length -%}
-  Not approved
+  "Not approved"
 {% else -%}
-  Approved
+  "Approved"
 {% endif -%}
 ```
 
@@ -44,7 +45,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example
@@ -58,9 +59,9 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 Variables that are exposed by this script are:
 
 - target_resource
-- smart_folder_parent_resource (Optional)
 - smart_folder_title (Optional)
 - smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 

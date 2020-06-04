@@ -1,0 +1,30 @@
+title: AWS EC2 Instance - Restrict Instance Images to trusted AMI
+useCase: |
+  Use this policy if you would like to restrict the usage of EC2 Instance Images to a list of trusted AMIs.
+details: |
+  Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
+  If a EC2 Instance Image is not in the trusted AMI list, then the approved usage
+  policy will be set to `Not approved` otherwise it will be set to `Approved`.
+templateInput:
+  details: |
+    GraphQL query that will get the Instance Image.
+  query: |
+    {
+      resource {
+        imageId: get(path: "ImageId")
+      }
+    }
+template:
+  details: |
+    Approval logic for EC2 Instance trusted AMI.
+    If Instance Image is not in `approvedImageIds` list, then it will return `Not approved`.
+  source: |
+    {% set approvedImageIds = [
+        "${join("\",\n      \"", var.trusted_ami_list)}"
+      ]
+    %}
+    {% if $.resource.imageId in approvedImageIds %}
+      "Approved"
+    {% else %}
+      "Not approved"
+    {% endif %}

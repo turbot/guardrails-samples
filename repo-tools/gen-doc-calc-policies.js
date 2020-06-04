@@ -1,7 +1,6 @@
 const yaml = require("js-yaml");
 const fs = require("fs");
 const util = require("util");
-const hclParser = require("js-hcl-parser");
 const path = require("path");
 const nunjucks = require("nunjucks");
 const moment = require("moment");
@@ -11,61 +10,71 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const readdir = util.promisify(fs.readdir);
 
-async function loadVariables(calcPolicy) {
-  const resolved = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/variables.tf`);
-  let contents = await readFile(resolved, "utf8");
-  contents = contents.match(/.*\n/g);
-
-  for (let index in contents) {
-    contents[index] = contents[index].replace(/\s+/g, " ");
-    contents[index] = contents[index].replace("= string", '= "string"');
-    contents[index] = contents[index].trimEnd();
-  }
-
-  contents = contents.join("\n");
-  contents = hclParser.parse(contents);
-  contents = JSON.parse(contents);
-
-  return contents.variable;
-}
-
-async function loadConfiguration(configuration) {
-  const fileContents = await readFile(`${__dirname}/templates/calc-policy/${configuration}/template.yml`, "utf8");
+async function loadConfiguration(calcPolicyName) {
+  const fileContents = await readFile(`${__dirname}/templates/calc-policy/${calcPolicyName}/template.yml`, "utf8");
   return yaml.safeLoad(fileContents);
 }
 
-async function harvestedVariables(configuration) {
-  const harvestedVariables = [];
-  const variables = await loadVariables(configuration);
+async function harvestedVariables(calcPolicyName) {
+  const resolved = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/variables.tf`);
+  let contents = await readFile(resolved, "utf8");
+  contents = contents.split("\n\n");
 
-  for (const variable of variables) {
-    const name = Object.keys(variable)[0];
-    const mandatory = !variable[name][0].default;
+  const variables = [];
 
-    harvestedVariables.push({ name, mandatory });
+  for (const line of contents) {
+    const result = line.match(/variable "(\w+)"/);
+
+    if (result.length === 1) {
+      console.log(chalk.red(`Error finding variable name for block\n${line}`));
+      continue;
+    }
+
+    const mandatoryTest = RegExp("default\\s*=");
+    const mandatory = !mandatoryTest.test(line);
+
+    variables.push({ name: result[1], mandatory });
   }
 
-  return harvestedVariables;
+  return variables;
+}
+
+function isString(variable) {
+  return typeof variable === "string";
+}
+
+function isArray(variable) {
+  return variable instanceof Array;
 }
 
 async function main() {
   console.log(chalk.gray(`Generate Documentation: Calculated Policies\nStart time: ${moment().format()}`));
 
-  const calcPolicies = await readdir(`${__dirname}/templates/calc-policy`);
+  let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
+  calcPolicies = calcPolicies.filter((v) => v.isDirectory());
+
+  const template = await readFile(`${__dirname}/templates/calc-policy/template.njk`, "utf8");
 
   for (const calcPolicy of calcPolicies) {
     try {
-      const variables = await harvestedVariables(calcPolicy);
-      const configuration = await loadConfiguration(calcPolicy);
+      const calcPolicyName = calcPolicy.name;
+      const variables = await harvestedVariables(calcPolicyName);
+      const configuration = await loadConfiguration(calcPolicyName);
       const renderContext = { variables, configuration };
 
-      const renderResult = nunjucks.render(`${__dirname}/templates/calc-policy-template.njk`, renderContext);
+      //const renderResultOld = nunjucks.render(`${__dirname}/templates/calc-policy/template.njk`, renderContext);
 
-      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicy}/README.md`);
+      var env = new nunjucks.Environment();
+
+      env.addFilter("isString", isString);
+      env.addFilter("isArray", isArray);
+      const renderResult = env.renderString(template, renderContext);
+
+      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
       await writeFile(destination, renderResult);
-      console.log(chalk.white(`Generated Document: ${calcPolicy}`));
+      console.log(chalk.white(`Generated Document: ${calcPolicyName}`));
     } catch (e) {
-      console.error(chalk.red(`Error generating calculated policy: ${calcPolicy}`, e));
+      console.error(chalk.red(`Error generating calculated policy ${calcPolicy.name}\nOriginal Error:\n`, e));
     }
   }
 

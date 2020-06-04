@@ -16,9 +16,9 @@ resource "turbot_policy_setting" "redshift_approved_usage_policy_setting" {
   EOF
   template       = <<EOF
   {% if $.clusterSnapshotManual.AccountsWithRestoreAccess | length -%}
-    Not approved
+    "Not approved"
   {% else -%}
-    Approved
+    "Approved"
   {% endif -%}
   EOF
   precedence     = "REQUIRED"
