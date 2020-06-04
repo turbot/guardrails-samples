@@ -10,7 +10,7 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const readdir = util.promisify(fs.readdir);
 
-async function loadConfiguration(calcPolicyName) {
+async function loadTemplate(calcPolicyName) {
   const fileContents = await readFile(`${__dirname}/templates/calc-policy/${calcPolicyName}/template.yml`, "utf8");
   return yaml.safeLoad(fileContents);
 }
@@ -53,25 +53,23 @@ async function main() {
   let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
   calcPolicies = calcPolicies.filter((v) => v.isDirectory());
 
-  const template = await readFile(`${__dirname}/templates/calc-policy/template.njk`, "utf8");
-
   for (const calcPolicy of calcPolicies) {
     try {
       const calcPolicyName = calcPolicy.name;
-      const variables = await harvestedVariables(calcPolicyName);
-      const configuration = await loadConfiguration(calcPolicyName);
-      const renderContext = { variables, configuration };
 
-      //const renderResultOld = nunjucks.render(`${__dirname}/templates/calc-policy/template.njk`, renderContext);
+      const variables = await harvestedVariables(calcPolicyName);
+      const template = await loadTemplate(calcPolicyName);
+      const renderContext = { variables, configuration: template };
 
       var env = new nunjucks.Environment();
-
       env.addFilter("isString", isString);
       env.addFilter("isArray", isArray);
-      const renderResult = env.renderString(template, renderContext);
+
+      const documentTemplate = await readFile(`${__dirname}/templates/calc-policy/document.njk`, "utf8");
+      const renderedDocument = env.renderString(documentTemplate, renderContext);
 
       const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
-      await writeFile(destination, renderResult);
+      await writeFile(destination, renderedDocument);
       console.log(chalk.white(`Generated Document: ${calcPolicyName}`));
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${calcPolicy.name}\nOriginal Error:\n`, e));

@@ -12,6 +12,8 @@ it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
+The template input to a calculated policy is a GraphQL query.
+
 GraphQL query that will get the instance image.
 
 ```graphql
@@ -27,18 +29,15 @@ GraphQL query that will get the instance image.
 Approval logic for S3 Bucket trusted AWS accounts AMIs.
 If S3 Bucket name does not match DNS compliant regular expression, then it will return `Not approved`.
 
-
 ```nunjucks
-{# Defined at http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html #}
-{# Implemented based on http://stackoverflow.com/a/106223 #}
-{% set dnsNameRegExp = r/^(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])$/g %}
-{% if $.resource.name | length >= 3 and
-      $.resource.name | length <= 63 and
-      dnsNameRegExp.test($.resource.name) %}
-  Approved
-{% else %}
-  Not approved
-{% endif %}
+{#- Defined at http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html -#}
+{#- Implemented based on http://stackoverflow.com/a/106223 -#}
+{%- set dnsNameRegExp = r/^(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])$/g -%}
+{%- if $.resource.name | length >= 3 and $.resource.name | length <= 63 and dnsNameRegExp.test($.resource.name) -%}
+  "Approved"
+{%- else -%}
+  "Not approved"
+{%- endif -%}
 ```
 
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
@@ -48,7 +47,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 To create the smart folder, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
 - Credentials Configured to connect to your Turbot workspace
 
 ## Running the Example
@@ -61,8 +60,10 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
 - target_resource
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 
