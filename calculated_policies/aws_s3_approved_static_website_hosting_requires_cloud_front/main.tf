@@ -5,11 +5,17 @@ resource "turbot_smart_folder" "s3_approved_usage_smart_folder" {
   parent      = var.smart_folder_parent_resource
 }
 
+resource "turbot_policy_setting" "s3_approved_policy_setting" {
+  resource = turbot_smart_folder.s3_approved_usage_smart_folder.id
+  type = "tmod:@turbot/aws-s3#/policy/types/bucketApproved"
+  value = "Check: Approved"
+}
+
 resource "turbot_policy_setting" "s3_approved_usage_policy_setting" {
   resource       = turbot_smart_folder.s3_approved_usage_smart_folder.id
   type           = "tmod:@turbot/aws-s3#/policy/types/bucketApprovedUsage"
   template_input = <<EOF
-  - | 
+  - |
     {
       item: bucket {
         Name
@@ -32,7 +38,7 @@ resource "turbot_policy_setting" "s3_approved_usage_policy_setting" {
   template       = <<EOF
   {#- Always approved if static website hosting is disabled -#}
   {%- set policyValue = "Approved" -%}
-  
+
   {#- Is static website hosting is enabled -#}
   {%- if $.item.Website -%}
 
