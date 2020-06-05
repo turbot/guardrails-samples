@@ -139,8 +139,8 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 **Example**: [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md)
 
 **Details**: This Terraform template creates a smart folder and applies a calculated policies on the policies:
-         - `Azure > Storage > Storage Account > Access Tier`
-         - `AWS > S3 > Bucket > Versioning`
+           - `Azure > Storage > Storage Account > Access Tier`
+           - `AWS > S3 > Bucket > Versioning`
          
          For Azure, the calculated policy sets the storage tier to "Cool" when an Azure label matching {Environment:=Dev} is 
          present on a storage account resource
