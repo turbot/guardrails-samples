@@ -8,6 +8,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 
 ### TDK examples
 {% for calcPolicy in configuration.calcPolicies -%}
-Example: [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md)
-Details: {{ calcPolicy.details | safe | indent(9) }}
+**Example**: [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md)
+
+**Details**: {{ calcPolicy.details | safe | indent(9) }}
 {%- endfor %}
