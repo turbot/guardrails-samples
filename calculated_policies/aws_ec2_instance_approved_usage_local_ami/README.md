@@ -1,4 +1,4 @@
-# AWS EC2 Instance - Restrict Instance Image to local AMI
+# AWS EC2 - Restrict Instance Image to local AMI
 
 ## Use case
 
@@ -6,7 +6,11 @@ Use this policy if you would like to restrict the usage of EC2 Instance Images t
 
 ## Implementation Details
 
-Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > EC2 > Instance > Approved`
+- `AWS > EC2 > Instance > Approved > Usage`
+
 Approval policy that will limit running EC2 Instances to only use local EC2 Instance Images.
 If an EC2 Instance Image is not owned by the account that the Instance is running on, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.

@@ -7,6 +7,11 @@ function policy has cross-account access.
 
 ## Implementation Details
 
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Lambda > Function > Approved`
+- `AWS > Lambda > Function > Approved > Usage`
+
 Calculated policy for policy `AWS > Lambda > Function > Approved > Usage`.
 If a function policy has cross-account access then the approved usage policy will be set to `Not approved` otherwise
 it will be set to `Approved`.

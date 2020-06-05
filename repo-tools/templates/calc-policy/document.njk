@@ -1,9 +1,18 @@
-# {{ configuration.title | safe }}
+# {{ configuration.resource }} - {{ configuration.description }}
 
 ## Use case
 
 {{ configuration.useCase | safe }}
 ## Implementation Details
+{% if configuration.policies | length > 1 %}
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+{% else %}
+This Terraform template creates a smart folder and applies the calculated policy on the policy:
+{% endif %}
+
+{%- for policy in configuration.policies %}
+- `{{ policy | safe }}`
+{%- endfor %}
 
 {{ configuration.details | safe }}
 ### Template Input (GraphQL)

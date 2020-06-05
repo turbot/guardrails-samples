@@ -8,11 +8,9 @@ storage resources are optimized for cost savings in development accounts.
 By setting the tag or label as {Environment:=Dev} on storage resources will allow Turbot to the manage the resource 
 under the governance of this business rule.
 
-NOTE: Rule currently manages Azure and AWS resources only.
-
 ## Implementation Details
 
-This Terraform template creates a smart folder and applies a calculated policies on the policies:
+This Terraform template creates a smart folder and applies calculated policies on the policies:
 
 - `Azure > Storage > Storage Account > Access Tier`
 - `AWS > S3 > Bucket > Versioning`
@@ -22,6 +20,8 @@ present on a storage account resource
 
 For AWS, the calculated policy disables S3 versioning when an AWS tag matching {Environment:=Dev} is present on an 
 S3 bucket resource.
+
+**NOTE:** Rule currently manages Azure and AWS resources only.
 
 ### Template Input (GraphQL)
 
@@ -40,7 +40,11 @@ should be managed by this business rule.
 
 ### Template (Nunjucks)
 
-First source is for Azure and the following is for AWS.
+First Nunjucks snippet determines if the storage account resource is deployed in a development environment. 
+If it is then it will set the Storage Access Tier to `Enforce: Cool` otherwise it will remain `Enforce: Hot`.
+
+Second Nunjucks snippet determines if the S3 Bucket account resource is deployed in a development environment.
+If it is then it will set Versioning to `Enforce: Disabled` otherwise it will remain `Enforce: Enabled`.
 
 ```nunjucks
 {%- if $.storageAccount.turbot.tags.Environment == "Dev"%}

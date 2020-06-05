@@ -1,8 +1,11 @@
-title: AWS GuardDuty - Restrict detector membership to a given master account
+resource: AWS GuardDuty
+description: Restrict detector membership to a given master account
+policies:
+  - AWS > GuardDuty > Detector > Approved
+  - AWS > GuardDuty > Detector > Approved > Usage
 useCase: |
   Use this policy if you would like to restrict GuardDuty Detector membership to a given master account.
 details: |
-  Calculated policy for policy `AWS > GuardDuty > Detector > Approved > Usage`.
   If a Detector is the master or member of a given master account then the approved usage policy will be set
   to `Approved` otherwise it will be set to `Not approved`.
 templateInput:

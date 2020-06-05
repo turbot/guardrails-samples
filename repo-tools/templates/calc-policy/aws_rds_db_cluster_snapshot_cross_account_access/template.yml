@@ -1,4 +1,8 @@
-title: AWS RDS DB Cluster - Restrict Cross Account Snapshots by user defined Whitelist
+resource: AWS RDS
+description: Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots
+policies:
+  - AWS > RDS > DB Cluster Snapshot [Manual] > Approved
+  - AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage
 useCase: |
   Cluster Snapshot set to `Not approved` if cross account access exists to an account not in a whitelist.
 details: |

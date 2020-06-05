@@ -1,4 +1,4 @@
-# AWS S3 - Approved Usage - Enforce static website hosting is associated with CloudFront
+# AWS S3 Bucket - Enforce static website hosting is associated with CloudFront
 
 ## Use case
 
@@ -9,6 +9,11 @@ In addition, that CloudFront distribution needs to enforce that access to the we
 only.
 
 ## Implementation Details
+
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Region > Bucket > Approved`
+- `AWS > Region > Bucket > Approved > Usage`
 
 Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
 `AWS> S3> Bucket> Tags> Template`.

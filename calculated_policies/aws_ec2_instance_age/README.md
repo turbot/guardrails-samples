@@ -8,8 +8,11 @@ The business rule designed states that lab instances must be less than 30 days o
 
 ## Implementation Details
 
-This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS > EC2 > Instance > Active > Age` policy.  
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > EC2 > Instance > Active`
+- `AWS > EC2 > Instance > Active > Age`
+
 The Calculated policy sets the active age threshold to 30 days when a tag is present on the instance matching 
 {Environment:=Lab} and to skip if it is not present or set to an alternate value.
 

@@ -1,4 +1,4 @@
-# AWS S3 Bucket - restrict name to DNS compliant.
+# AWS S3 Bucket - Restrict name that are not DNS compliant
 
 ## Use case
 
@@ -6,7 +6,11 @@ Use this policy if you would like to restrict the name of S3 Bucket images to DN
 
 ## Implementation Details
 
-Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage`.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Region > Bucket > Approved`
+- `AWS > Region > Bucket > Approved > Usage`
+
 If a S3 Bucket name is not DNS compliant, then the approved usage policy will be set to `Not approved` otherwise
 it will be set to `Approved`.
 

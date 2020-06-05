@@ -1,4 +1,4 @@
-# AWS RedShift - Restrict cross-account access to Redshift manual snapshots
+# AWS RedShift - Restrict RedShift Manual Cluster access to cross account Manual Clusters Snapshots
 
 ## Use case
 
@@ -6,6 +6,11 @@ Use this policy if you would like to restrict the usage of allowing an external 
 Redshift manual snapshots of the current account.
 
 ## Implementation Details
+
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Redshift > Manual Cluster Snapshot > Approved`
+- `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`
 
 Calculated policy for policy `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`.
 If a manual snapshot is configured to allow access from external accounts restore access then the approved usage 

@@ -7,6 +7,11 @@ AWS network.
 
 ## Implementation Details
 
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Lambda > Function > Approved`
+- `AWS > Lambda > Function > Approved > Usage`
+
 This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
 `AWS > Lambda > Function > Approved > Usage` policy.  
 The Calculated policy checks the Lambda metadata for existence of the attribute VpcConfig and can be expanded to check

@@ -1,3 +1,4 @@
+# Smart Folder Definition
 resource "turbot_smart_folder" "aws_s3_bucket_approved_usage_name_dns_compliant" {
   title       = var.smart_folder_title
   description = var.smart_folder_description
@@ -36,6 +37,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_usage_name_dns_complian
   EOT
 }
 
+# Attach Smart Folder
 resource "turbot_smart_folder_attachment" "aws_s3_bucket_approved_usage_name_dns_compliant" {
   resource     = var.target_resource
   smart_folder = turbot_smart_folder.aws_s3_bucket_approved_usage_name_dns_compliant.id

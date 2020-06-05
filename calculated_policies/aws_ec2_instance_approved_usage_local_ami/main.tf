@@ -1,12 +1,8 @@
+# Smart Folder Definition
 resource "turbot_smart_folder" "aws_ec2_instance_approved_usage_local_ami" {
   title       = var.smart_folder_title
   description = "Restrict AWS EC2 Instance to local images"
   parent      = "tmod:@turbot/turbot#/"
-}
-
-resource "turbot_smart_folder_attachment" "aws_ec2_instance_approved_usage_local_ami" {
-  resource     = var.target_resource
-  smart_folder = turbot_smart_folder.aws_ec2_instance_approved_usage_local_ami.id
 }
 
 # AWS > EC2 > Instance > Approved
@@ -50,4 +46,10 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_usage_local_ami" {
     "Not approved"
   {% endif %}
   EOT
+}
+
+# Attach Smart Folder
+resource "turbot_smart_folder_attachment" "aws_ec2_instance_approved_usage_local_ami" {
+  resource     = var.target_resource
+  smart_folder = turbot_smart_folder.aws_ec2_instance_approved_usage_local_ami.id
 }

@@ -1,4 +1,4 @@
-# AWS SQS Queue Approved Usage - Alarm if SQS policy violates org restrictions
+# AWS SQS Queue - Alarm if SQS policy violates org restrictions
 
 ## Use case
 
@@ -7,8 +7,11 @@ policy contains "Action: SQS:*"
 
 ## Implementation Details
 
-Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS > SQS > Queue > Approved > Usage` policy.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Region > Bucket > Approved`
+- `AWS > Region > Bucket > Approved > Usage`
+
 The Calculated policy creates a template that will alarm if a queue policy contains "Action: SQS:*".
 
 ### Template Input (GraphQL)

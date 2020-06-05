@@ -6,7 +6,11 @@ Use this policy if you would like to restrict GuardDuty Detector membership to a
 
 ## Implementation Details
 
-Calculated policy for policy `AWS > GuardDuty > Detector > Approved > Usage`.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > GuardDuty > Detector > Approved`
+- `AWS > GuardDuty > Detector > Approved > Usage`
+
 If a Detector is the master or member of a given master account then the approved usage policy will be set
 to `Approved` otherwise it will be set to `Not approved`.
 

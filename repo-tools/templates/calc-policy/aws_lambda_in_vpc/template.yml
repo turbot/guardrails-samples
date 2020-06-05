@@ -1,4 +1,8 @@
-title: AWS Lambda - Approve a Lambda function only if it is within a particular VPC
+resource: AWS Lambda
+description: Approve a Lambda function only if it is within a particular VPC
+policies:
+  - AWS > Lambda > Function > Approved
+  - AWS > Lambda > Function > Approved > Usage
 useCase: |
   The business owner of the AWS environment wants to ensure that a Lambda is only ran from within a VPC, not within the
   AWS network.

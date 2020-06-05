@@ -7,8 +7,10 @@ standards and ensure supportability and cost transparency.
 
 ## Implementation Details
 
-Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS> S3> Bucket> Tags> Template`.
+This Terraform template creates a smart folder and applies the calculated policy on the policy:
+
+- `AWS > Region > Bucket > Tags > Template`
+
 The Calculated policy creates a tag template.
 The template shows creating static and dynamic values.
 It also shows how to control the values of tags on a bucket.

@@ -7,9 +7,11 @@ communication on known non-encrypted ports (e.g. FTP/21, HTTP/80 and SMTP/25).
 
 ## Implementation Details
 
-This Terraform configuration for creating a smart folder and applying the 
-`Azure > Load Balancer > Load Balancer > Approved` to "Check: Approved" and a calculated policy on 
-`Azure > Load Balancer > Load Balancer > Approved > Usage`.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `Azure > Load Balancer > Load Balancer > Approved`
+- `Azure > Load Balancer > Load Balancer > Approved > Usage`
+
 The Calculated policy sets the value to "Unapproved" when one of the specified ports are present in the NAT or Load 
 Balancer front end or back end rules and sets the value "Approved" otherwise.
 

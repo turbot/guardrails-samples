@@ -1,10 +1,15 @@
-# AWS RDS DB Cluster - Restrict Cross Account Snapshots by user defined Whitelist
+# AWS RDS - Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots
 
 ## Use case
 
 Cluster Snapshot set to `Not approved` if cross account access exists to an account not in a whitelist.
 
 ## Implementation Details
+
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > RDS > DB Cluster Snapshot [Manual] > Approved`
+- `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage`
 
 Use the AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage policy.
 Calculated policy for policy `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage` policy.

@@ -1,4 +1,8 @@
-title: AWS Lambda - Alarm if function policy has cross-account access
+resource: AWS Lambda
+description: Alarm if function policy has cross-account access
+policies:
+  - AWS > Lambda > Function > Approved
+  - AWS > Lambda > Function > Approved > Usage
 useCase: |
   The business owner of the AWS platform wants to use Lambda within the environment but would like to get alarms if a
   function policy has cross-account access.

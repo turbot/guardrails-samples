@@ -7,8 +7,12 @@ an associated route table which has routes pointing to an Internet Gateway (IGW)
 
 ## Implementation Details
 
-This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using 
-`AWS > EC2 > Instance > Approved > Usage` policy and then setting `AWS > EC2 > Instance > Approved` to check.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > EC2 > Instance > Approved`
+- `AWS > EC2 > Instance > Approved > Usage`
+
+Approval policy that restrict usage of EC Instances if the Subnet associated with the Instance has a Route to an IGW.
 
 ### Template Input (GraphQL)
 
@@ -32,6 +36,10 @@ Second, all route tables in the account are found, and the associated subnet ID 
 ```
 
 ### Template (Nunjucks)
+
+Checks each returned Route Table entry and compares it against the Subnet Id of the EC2 Instance. 
+When the Route Table entry is found then check each Route to find the Route with the id of `igw`.
+If a Route with this id is found then the usage will be set as `Not approved`.
 
 ```nunjucks
 {%- set hasIGW = false -%}

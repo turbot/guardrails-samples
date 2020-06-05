@@ -1,12 +1,14 @@
+# Smart Folder Definition
 resource "turbot_smart_folder" "s3_tagging_template" {
-  title          = var.smart_folder_title
-  description    = "Enables bucket versioning for all buckets tagged with {Environment:=Prod}"
-  parent         = "tmod:@turbot/turbot#/"
+  title       = var.smart_folder_title
+  description = "Enables bucket versioning for all buckets tagged with {Environment:=Prod}"
+  parent      = "tmod:@turbot/turbot#/"
 }
 
+# AWS > Region > Bucket > Tags > Template
 resource "turbot_policy_setting" "s3_tag_template" {
-  resource       = "turbot_smart_folder.s3_tagging_template.id"
-  type           = "tmod:@turbot/aws-s3#/policy/types/bucketTagsTemplate"
+  resource = "turbot_smart_folder.s3_tagging_template.id"
+  type     = "tmod:@turbot/aws-s3#/policy/types/bucketTagsTemplate"
   # GraphQL to pull bucket metadata
   template_input = <<EOT
   {
@@ -41,7 +43,7 @@ resource "turbot_policy_setting" "s3_tag_template" {
   }
   EOT
   # Nunjucks Template Nunjucks Comments are formatted: {# comment #}
-  template       = <<EOT
+  template = <<EOT
   {# Pull down tags from folder level #}
   Cost Center: "{{ $.folder.turbot.tags.Cost_Center }}"
 

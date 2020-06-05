@@ -9,10 +9,10 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 
 ### Current Calculated Policies
 
-| Path | Description |
-| ---- | ----------- |
+| Path | Resource | Description |
+| ---- | -------- | ----------- |
 {%- for calcPolicy in configuration.calcPolicies %}
-| [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md) | {{ calcPolicy.title }} | 
+| [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md) | {{ calcPolicy.resource }} | {{ calcPolicy.description }} |
 {%- endfor %}
 
 ### Current Calculated Policies Details
@@ -21,7 +21,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 
 ---
 
-**Title:** {{ calcPolicy.title }}
+**Title:** {{ calcPolicy.resource }}
 
 **Example**: [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md)
 

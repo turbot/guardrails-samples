@@ -6,8 +6,11 @@ Bucket set to `Not approved` if cross-account access exists to an account not in
 
 ## Implementation Details
 
-Use the AWS > S3 > Bucket > Approved > Usage policy.
-Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage` policy.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Region > Bucket > Approved`
+- `AWS > Region > Bucket > Approved > Usage`
+
 If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
 is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
 

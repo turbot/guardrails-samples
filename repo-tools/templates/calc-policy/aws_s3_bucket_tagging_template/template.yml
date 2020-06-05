@@ -1,10 +1,11 @@
-title: AWS S3 - Set default tags on buckets with dynamic metadata
+resource: AWS S3
+description: Set default tags on buckets with dynamic metadata
+policies:
+  - AWS > Region > Bucket > Tags > Template
 useCase: |
   The business owner of the AWS platform wants to consistently tag all resources with business metadata to meet company
   standards and ensure supportability and cost transparency.
 details: |
-  Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-  `AWS> S3> Bucket> Tags> Template`.
   The Calculated policy creates a tag template.
   The template shows creating static and dynamic values.
   It also shows how to control the values of tags on a bucket.
