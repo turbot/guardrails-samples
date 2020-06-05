@@ -4,6 +4,12 @@ resource "turbot_smart_folder" "lambda_vpc_check" {
   parent         = "178326157417316"
 }
 
+resource "turbot_policy_setting" "aws_lambda_function_approved" {
+  resource = turbot_smart_folder.lambda_vpc_check.id
+  type = "tmod:@turbot/aws-lambda#/policy/types/functionApproved"
+  value = "Check: Approved"
+}
+
 resource "turbot_policy_setting" "lambda_in_vpc" {
   resource       = turbot_smart_folder.lambda_vpc_check.id
   type           = "tmod:@turbot/aws-lambda#/policy/types/functionApprovedUsage"

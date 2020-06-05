@@ -4,6 +4,12 @@ resource "turbot_smart_folder" "sqs_usage_approved" {
   parent      = "tmod:@turbot/turbot#/"
 }
 
+resource "turbot_policy_setting" "sqs_approved" {
+  resource = turbot_smart_folder.sqs_usage_approved.id
+  type = "tmod:@turbot/aws-s3#/policy/types/bucketApproved"
+  value = "Check: Approved"
+}
+
 resource "turbot_policy_setting" "sqs_usage_approved" {
   resource = turbot_smart_folder.sqs_usage_approved.id
   type     = "tmod:@turbot/aws-sqs#/policy/types/queueApprovedUsage"
