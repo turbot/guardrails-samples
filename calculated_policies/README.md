@@ -130,8 +130,7 @@ To maintain consistency between files and modules, we recommend adopting the bel
 
   - it should be called `target_resource`
   - it should have no default value in `variables.tfvars`
-  - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
-  
+
   ```terraform
   # Required - Target resource to attach to smart folder
   target_resource = "<resource_id_or_aka>"
@@ -139,7 +138,9 @@ To maintain consistency between files and modules, we recommend adopting the bel
   # target_resource = "tmod:@turbot/turbot#/"
   # target_resource = "191238958290468"
   ```
-  
+
+  - it should have a comment that states that it may be changes or overridden in the `default.tfvars` 
+ 
 - The parent resource for the Smart Folder should use a variable for the target resource
 
   ```terraform
@@ -152,9 +153,11 @@ To maintain consistency between files and modules, we recommend adopting the bel
 
   - it should be called `smart_folder_parent_resource`
   - it should have the default value in `tmod:@turbot/turbot#/`
-  - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
-  
+
   ```terraform
   # Optional - Default value: tmod:@turbot/turbot#/
   # smart_folder_parent_resource = "<resource_id_or_aka>"
   ``` 
+
+  - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
+  
