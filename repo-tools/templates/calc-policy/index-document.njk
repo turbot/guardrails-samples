@@ -54,7 +54,7 @@ Baseline
 ├── README.md
 ├── main.tf
 ├── variables.tf
-├── default.tfvar
+└── default.tfvar
 ```
 
 ### Style Guide
@@ -68,8 +68,9 @@ like:
 
 To maintain consistency between files and modules, we recommend adopting the below added styling conventions:
 
-- For each Calculated Policy, include the variable definitions in the variables.tf file, the resources in main.tf file, 
-  and the output in outputs.tf file.
+- Include the variable definitions in the `variables.tf` file
+- Resources in the `main.tf` file, 
+- Values to output in `outputs.tf` file.
 - For `turbot_policy_setting` and `turbot_policy_value` resources, include the policy type hierarchy in a comment 
   before the resource. For example:
 
@@ -102,19 +103,46 @@ To maintain consistency between files and modules, we recommend adopting the bel
   ```
 
 - All variables should have a description, and as a result should not require individual comments
-
 - Most variables should have a reasonable default
+- Calculated Policies should be always children of a Smart Folder resource
+- The resource to associate with the Smart Folder should use a variable for the target resource
 
-- Where Calculated Policies apply policies, they generally should use a variable for the target resource
-  
-  - it should be called target_resource
-  - it should default to "tmod:@turbot/turbot#/"
-  - it should have a comment that states that it may be changes or overridden
-  
+  - it should be called `target_resource`
+  - it should have no default value in `variables.tfvars`
+
   ```terraform
   variable "target_resource" {
-      type    = "string"
-      description = "Enter the target resource id or aka"
-      default = "tmod:@turbot/turbot#/"
+    description = "Enter the resource ID or AKA for the resource to apply the calculated policy"
+    type        = string
   }
   ```
+
+  - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
+  
+  ```terraform
+  # Required - Target resource to attach to smart folder
+  target_resource = "<resource_id_or_aka>"
+  # Examples for target_resource
+  # target_resource = "tmod:@turbot/turbot#/"
+  # target_resource = "191238958290468"
+  ```
+  
+- The parent resource for the Smart Folder should use a variable for the target resource
+
+  - it should be called `smart_folder_parent_resource`
+  - it should have the default value in `tmod:@turbot/turbot#/`
+
+  ```terraform
+  variable "smart_folder_parent_resource" {
+    description = "Enter the resource ID or AKA for the parent of the smart folder"
+    type        = string
+    default     = "tmod:@turbot/turbot#/"
+  }
+  ```
+
+  - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
+  
+  ```terraform
+  # Optional - Default value: tmod:@turbot/turbot#/
+  # smart_folder_parent_resource = "<resource_id_or_aka>"
+  ``` 
