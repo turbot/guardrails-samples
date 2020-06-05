@@ -22,21 +22,23 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_usage_approved_accou
   type           = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedUsage"
   # GraphQL to pull function metadata
   template_input = <<EOT
-  - {
-    item: resource {
-      imageId: get(path: "ImageId")
-      turbot {
-        custom
+  - |
+    {
+      item: resource {
+        imageId: get(path: "ImageId")
+        turbot {
+          custom
+        }
       }
     }
-  }
-  - {
-    resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}'") {
-      items {
-        ownerId: get(path:"OwnerId")
+  - |
+    {
+      resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}'") {
+        items {
+          ownerId: get(path:"OwnerId")
+        }
       }
     }
-  }
   EOT
   # Nunjucks Template Nunjucks Comments are formatted: {# comment #}
   template       = <<EOT
