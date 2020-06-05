@@ -32,21 +32,28 @@ Add items to the currently empty `whitelist` collection as detailed in inline ex
 The Nunjucks script will then check if all the accounts in the Bucket replication are valid by comparing
 entries from a whitelist of accounts.
 To add entries to the whitelist can be done in two different ways:
+
 - Using `defaults.tf`
 - Amending the list in Turbot UI
+
 #### Using `defaults.tf`
+
 **Recommended**
 Add the entries into the file as a list of accounts.
 When running the script it will add these entries into the Calculated Policy automatically and allow the end
 user to control the accounts centrally.
+
 #### Amending the list in Turbot UI
+
 If the company workflow is to modify the Calculated Policy directly in Turbot.
 Navigate to the policy and amend the template value by adding entries into the `whitelist` Nunjucks array.
 For example, suppose two accounts should be added, "012345678901", "109876543210", this can be added by setting
 the variable by:
+
 ```nunjucks
 {#- set whitelist = ["012345678901", "109876543210"] -#}
 ```
+
 **Note:** All the accounts in Bucket replication need to have an entry in the whitelist in order
 for the Bucket to be valid, otherwise it will be invalid and set to `Not approved`.
 

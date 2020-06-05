@@ -114,6 +114,16 @@ It also shows how to control the values of tags on a bucket.
 
 ---
 
+**Example**: [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md)
+
+**Details**
+Use the AWS > S3 > Bucket > Approved > Usage policy.
+Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage` policy.
+If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
+is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
+
+---
+
 **Example**: [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md)
 
 **Details**

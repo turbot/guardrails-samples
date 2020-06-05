@@ -19,8 +19,7 @@ snapshot is valid.
 
 ```graphql
 {
-  dbClusterSnapshotManual 
-  {
+  dbClusterSnapshotManual {
     sharedAccounts: get(path:"DBClusterSnapshotAttributes.AttributeValues")
   }
 }
@@ -33,16 +32,19 @@ The Nunjucks script will then check if all the accounts that are shared with the
 entries from a whitelist of accounts.
 
 To add entries to the whitelist can be done in two different ways:
+
 - Using `defaults.tf`
 - Amending the list in Turbot UI
 
 #### Using `defaults.tf`
+
 **Recommended**
 Add the entries into the file as a list of accounts. 
 When running the script it will add these entries into the Calculated Policy automatically and allow the end 
 user to control the accounts centrally.
 
 #### Amending the list in Turbot UI
+
 If the company workflow is to modify the Calculated Policy directly in Turbot. 
 Navigate to the policy and amend the template value by adding entries into the `whitelist` Nunjucks array. 
 For example, suppose two accounts should be added, "012345678901", "109876543210", this can be added by setting
