@@ -17,6 +17,12 @@ This Terraform template creates a smart folder and applies a calculated policies
 - `Azure > Storage > Storage Account > Access Tier`
 - `AWS > S3 > Bucket > Versioning`
 
+For Azure, the calculated policy sets the storage tier to "Cool" when an Azure label matching {Environment:=Dev} is
+present on a storage account resource
+
+For AWS, the calculated policy disables S3 versioning when an AWS tag matching {Environment:=Dev} is present on an
+S3 bucket resource.
+
 ### Template Input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
