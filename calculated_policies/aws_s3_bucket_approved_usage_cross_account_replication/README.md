@@ -1,26 +1,27 @@
-# AWS RDS DB Cluster - Restrict Cross Account Snapshots by user defined Whitelist
+# AWS S3 Bucket - Restrict Cross Account Replication by user defined Whitelist
 
 ## Use case
 
-Cluster Snapshot set to `Not approved` if cross account access exists to an account not in a whitelist.
+Bucket set to `Not approved` if cross-account access exists to an account not in a whitelist.
 
 ## Implementation Details
 
-Use the AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage policy.
-Calculated policy for policy `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage` policy.
-If the account that the snapshot is shared with, given by the property `DBClusterSnapshotAttributes.AttributeValues`
+Use the AWS > S3 > Bucket > Approved > Usage policy.
+Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage` policy.
+If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
+is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template Input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
-GraphQL query that will return all the shared account details to compare against a whitelist to ensure that the
-snapshot is valid.
+GraphQL query that will return all the cross-account replication rules to compare against an account whitelist
+to ensure that the replication is valid.
 
 ```graphql
 {
-  dbClusterSnapshotManual {
-    sharedAccounts: get(path:"DBClusterSnapshotAttributes.AttributeValues")
+  resource {
+    replicationRules: get(path:"Replication.Rules")
   }
 }
 ```
@@ -28,9 +29,8 @@ snapshot is valid.
 ### Template (Nunjucks)
 
 Add items to the currently empty `whitelist` collection as detailed in inline example comments.
-The Nunjucks script will then check if all the accounts that are shared with the snapshot are valid by comparing 
+The Nunjucks script will then check if all the accounts in the Bucket replication are valid by comparing
 entries from a whitelist of accounts.
-
 To add entries to the whitelist can be done in two different ways:
 
 - Using `defaults.tf`
@@ -39,14 +39,14 @@ To add entries to the whitelist can be done in two different ways:
 #### Using `defaults.tf`
 
 **Recommended**
-Add the entries into the file as a list of accounts. 
-When running the script it will add these entries into the Calculated Policy automatically and allow the end 
+Add the entries into the file as a list of accounts.
+When running the script it will add these entries into the Calculated Policy automatically and allow the end
 user to control the accounts centrally.
 
 #### Amending the list in Turbot UI
 
-If the company workflow is to modify the Calculated Policy directly in Turbot. 
-Navigate to the policy and amend the template value by adding entries into the `whitelist` Nunjucks array. 
+If the company workflow is to modify the Calculated Policy directly in Turbot.
+Navigate to the policy and amend the template value by adding entries into the `whitelist` Nunjucks array.
 For example, suppose two accounts should be added, "012345678901", "109876543210", this can be added by setting
 the variable by:
 
@@ -54,23 +54,21 @@ the variable by:
 {#- set whitelist = ["012345678901", "109876543210"] -#}
 ```
 
-**Note:** All the accounts that are being shared by the snapshot need to have an entry in the whitelist in order
-for the snapshot to be valid, otherwise it will be invalid and set to `Not approved`.
+**Note:** All the accounts in Bucket replication need to have an entry in the whitelist in order
+for the Bucket to be valid, otherwise it will be invalid and set to `Not approved`.
 
 ```nunjucks
-{#- Whitelist of account that are approved for snapshot usage -#}
-{%- set whitelist = ["${join("\" ,\"", var.approved_accounts)}"] -%}
-{%- set approvalCount = 0 -%}
+{#- Whitelist of accounts that are approved for replication -#}
+{%- set approvedAccounts = ["${join("\",\n      \"", var.approved_accounts)}"] -%}
+{%- set hasUnapprovedAccount = false -%}
 
-{%- for sharedAccount in $.dbClusterSnapshotManual.sharedAccounts | sort -%}
-  {%- for validAccount in whitelist | sort -%}
-    {%- if validAccount == sharedAccount -%}
-      {%- set approvalCount = approvalCount + 1 -%}
-    {%- endif -%}
-  {%- endfor -%}
+{%- for rule in $.resource.replicationRules -%}
+  {%- if rule.Status == "Enabled" and rule.Destination.Account not in approvedAccounts -%}
+    {%- set hasUnapprovedAccount = true -%}
+  {%- endif -%}
 {%- endfor -%}
 
-{%- if approvalCount ==  $.dbClusterSnapshotManual.sharedAccounts | length -%}
+{%- if not hasUnapprovedAccount -%}
   "Approved"
 {%- else -%}
   "Not approved"
