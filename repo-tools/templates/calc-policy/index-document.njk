@@ -14,19 +14,3 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 {%- for calcPolicy in configuration.calcPolicies %}
 | [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md) | {{ calcPolicy.resource }} | {{ calcPolicy.description }} |
 {%- endfor %}
-
-### Current Calculated Policies Details
-
-{%- for calcPolicy in configuration.calcPolicies %}
-
----
-
-**Title:** {{ calcPolicy.resource }}
-
-**Example**: [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md)
-
-**Details**
-{{ calcPolicy.details | safe | trim }}
-{%- endfor %}
-
----
