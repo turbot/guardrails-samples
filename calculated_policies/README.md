@@ -28,3 +28,16 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 | [aws_sqs_approved](./aws_sqs_approved/README.md) | AWS SQS Queue | Alarm if SQS policy violates org restrictions |
 | [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md) | Azure Networking | Prevent unapproved network configuration for load balancers |
 | [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md) | Multi-Cloud Storage | Set least expensive storage options for development environments |
+
+## Prerequisites
+
+To run Turbot Calculated Policies, you must install:
+
+- [Terraform](https://www.terraform.io) Version 12
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
