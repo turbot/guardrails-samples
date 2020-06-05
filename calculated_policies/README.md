@@ -121,9 +121,6 @@ To maintain consistency between files and modules, we recommend adopting the bel
 - Calculated Policies should be always children of a Smart Folder resource
 - The resource to associate with the Smart Folder should use a variable for the target resource
 
-  - it should be called `target_resource`
-  - it should have no default value in `variables.tfvars`
-
   ```terraform
   variable "target_resource" {
     description = "Enter the resource ID or AKA for the resource to apply the calculated policy"
@@ -131,6 +128,8 @@ To maintain consistency between files and modules, we recommend adopting the bel
   }
   ```
 
+  - it should be called `target_resource`
+  - it should have no default value in `variables.tfvars`
   - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
   
   ```terraform
@@ -143,9 +142,6 @@ To maintain consistency between files and modules, we recommend adopting the bel
   
 - The parent resource for the Smart Folder should use a variable for the target resource
 
-  - it should be called `smart_folder_parent_resource`
-  - it should have the default value in `tmod:@turbot/turbot#/`
-
   ```terraform
   variable "smart_folder_parent_resource" {
     description = "Enter the resource ID or AKA for the parent of the smart folder"
@@ -154,6 +150,8 @@ To maintain consistency between files and modules, we recommend adopting the bel
   }
   ```
 
+  - it should be called `smart_folder_parent_resource`
+  - it should have the default value in `tmod:@turbot/turbot#/`
   - it should have a comment that states that it may be changes or overridden in the `default.tfvars`
   
   ```terraform
