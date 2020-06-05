@@ -1,9 +1,11 @@
-title: AWS S3 Bucket - Restrict Cross Account Replication by user defined Whitelist
+resource: AWS S3 Bucket
+description: Restrict Cross Account Replication by user defined Whitelist
+policies:
+  - AWS > Region > Bucket > Approved
+  - AWS > Region > Bucket > Approved > Usage
 useCase: |
   Bucket set to `Not approved` if cross-account access exists to an account not in a whitelist.
 details: |
-  Use the AWS > S3 > Bucket > Approved > Usage policy.
-  Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage` policy.
   If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
   is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
 templateInput:

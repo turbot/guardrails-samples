@@ -7,175 +7,156 @@ Calculated policies allow Turbot administrators to modify or extend the default 
 The calculated policy examples are implemented with [Terraform](https://www.terraform.io) allowing you to manage and 
 provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
-### TDK examples
+### Current Calculated Policies
 
----
+| Path | Resource | Description |
+| ---- | -------- | ----------- |
+| [aws_ec2_instance_age](./aws_ec2_instance_age/README.md) | AWS EC2 | Set maximum age of specially tagged EC2 instances |
+| [aws_ec2_instance_approved_usage_approved_account_ami](./aws_ec2_instance_approved_usage_approved_account_ami/README.md) | AWS EC2 | Restrict Instance images to trusted AWS accounts AMIs |
+| [aws_ec2_instance_approved_usage_local_ami](./aws_ec2_instance_approved_usage_local_ami/README.md) | AWS EC2 | Restrict Instance Image to local AMI |
+| [aws_ec2_instance_approved_usage_trusted_ami](./aws_ec2_instance_approved_usage_trusted_ami/README.md) | AWS EC2 | Restrict Instance Images to trusted AMI |
+| [aws_ec2_public_subnet](./aws_ec2_public_subnet/README.md) | AWS EC2 | Instance Not Approved if Public Subnet |
+| [aws_guardduty_detector_approved_usage](./aws_guardduty_detector_approved_usage/README.md) | AWS GuardDuty | Restrict detector membership to a given master account |
+| [aws_lambda_in_vpc](./aws_lambda_in_vpc/README.md) | AWS Lambda | Approve a Lambda function only if it is within a particular VPC |
+| [aws_lambda_not_approved_cross_account_access](./aws_lambda_not_approved_cross_account_access/README.md) | AWS Lambda | Alarm if function policy has cross-account access |
+| [aws_rds_db_cluster_snapshot_cross_account_access](./aws_rds_db_cluster_snapshot_cross_account_access/README.md) | AWS RDS | Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots |
+| [aws_redshift_restrict_cross_account_snapshot_access](./aws_redshift_restrict_cross_account_snapshot_access/README.md) | AWS RedShift | Restrict RedShift Manual Cluster access to cross account Manual Clusters Snapshots |
+| [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md) | AWS S3 Bucket | Enforce static website hosting is associated with CloudFront |
+| [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md) | AWS S3 Bucket | Restrict Cross Account Replication by user defined Whitelist |
+| [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md) | AWS S3 Bucket | Restrict name that are not DNS compliant |
+| [aws_s3_bucket_tagging_template](./aws_s3_bucket_tagging_template/README.md) | AWS S3 | Set default tags on buckets with dynamic metadata |
+| [aws_sqs_approved](./aws_sqs_approved/README.md) | AWS SQS Queue | Alarm if SQS policy violates org restrictions |
+| [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md) | Azure Networking | Prevent unapproved network configuration for load balancers |
+| [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md) | Multi-Cloud Storage | Set least expensive storage options for development environments |
 
-**Example**: [aws_ec2_instance_age](./aws_ec2_instance_age/README.md)
+## Prerequisites
 
-**Details**
-This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS > EC2 > Instance > Active > Age` policy.  
-The Calculated policy sets the active age threshold to 30 days when a tag is present on the instance matching 
-{Environment:=Lab} and to skip if it is not present or set to an alternate value.
+To run Turbot Calculated Policies, you must install:
 
----
+- [Terraform](https://www.terraform.io) Version 12
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
 
-**Example**: [aws_ec2_instance_approved_usage_approved_account_ami](./aws_ec2_instance_approved_usage_approved_account_ami/README.md)
+### Configuring Credentials
 
-**Details**
-Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-If a EC2 Instance Image is not owned by an account in the approved accounts list, then the approved usage
-policy will be set to `Not approved` otherwise it will be set to `Approved`.
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
----
+## Contributing
 
-**Example**: [aws_ec2_instance_approved_usage_local_ami](./aws_ec2_instance_approved_usage_local_ami/README.md)
+### Structure
 
-**Details**
-Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-Approval policy that will limit running EC2 Instances to only use local EC2 Instance Images.
-If an EC2 Instance Image is not owned by the account that the Instance is running on, then the approved usage
-policy will be set to `Not approved` otherwise it will be set to `Approved`.
+Calculated Polices are implemented as independently deployable terraform configurations and are organised as 
+sub-directories within this repository.
 
----
+Commonly changed parameters are implemented using variables. 
+Most variables have default values, but these values assigned to these variables can be overwritten by the end user. 
 
-**Example**: [aws_ec2_instance_approved_usage_trusted_ami](./aws_ec2_instance_approved_usage_trusted_ami/README.md)
+Each Calculated Policy folder contains:
 
-**Details**
-Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
-If a EC2 Instance Image is not in the trusted AMI list, then the approved usage
-policy will be set to `Not approved` otherwise it will be set to `Approved`.
+- `variables.tf` containing the variable definitions
 
----
+- `main.tf` containing the terraform resources that creates the objects
 
-**Example**: [aws_ec2_public_subnet](./aws_ec2_public_subnet/README.md)
+- `default.tfvars` containing the defaults for the variables
 
-**Details**
-This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using 
-`AWS > EC2 > Instance > Approved > Usage` policy and then setting `AWS > EC2 > Instance > Approved` to check.
+- `README.md` detailing the Calculated Policy and usage information
 
----
+```
+Baseline
+.
+├── README.md
+├── main.tf
+├── variables.tf
+└── default.tfvar
+```
 
-**Example**: [aws_guardduty_detector_approved_usage](./aws_guardduty_detector_approved_usage/README.md)
+### Style Guide
 
-**Details**
-Calculated policy for policy `AWS > GuardDuty > Detector > Approved > Usage`.
-If a Detector is the master or member of a given master account then the approved usage policy will be set
-to `Approved` otherwise it will be set to `Not approved`.
+Our Calculate Policies adopts styling conventions provided by [Terraform](https://www.terraform.io/docs/configuration/style.html) 
+like:
 
----
+- Align the equal to signs for arguments appearing on consecutive lines with values.
+- Variables should use snake case: `this_is_an_example`
+- Use empty lines to separate logical groups of arguments within a block.
 
-**Example**: [aws_lambda_in_vpc](./aws_lambda_in_vpc/README.md)
+To maintain consistency between files and modules, we recommend adopting the below added styling conventions:
 
-**Details**
-This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS > Lambda > Function > Approved > Usage` policy.  
-The Calculated policy checks the Lambda metadata for existence of the attribute VpcConfig and can be expanded to check
-for a specific VPC Id or Subnet Ids.
+- Include the variable definitions in the `variables.tf` file
+- Resources in the `main.tf` file, 
+- Values to output in `outputs.tf` file.
+- For `turbot_policy_setting` and `turbot_policy_value` resources, include the policy type hierarchy in a comment 
+  before the resource. For example:
 
----
+  ```terraform
+  # AWS > Account > Turbot IAM Role > External ID
+  resource "turbot_policy_setting" "turbotIamRoleExternalId" {
+    resource    = turbot_resource.account_resource.id
+    type        = "tmod:@turbot/aws#/policy/types/turbotIamRoleExternalId"
+    value       = var.turbot_external_id
+  }
+  ```
 
-**Example**: [aws_lambda_not_approved_cross_account_access](./aws_lambda_not_approved_cross_account_access/README.md)
+- Use a single hash for comments that refer only to a single resource, immediately before the resource, for example:
 
-**Details**
-Calculated policy for policy `AWS > Lambda > Function > Approved > Usage`.
-If a function policy has cross-account access then the approved usage policy will be set to `Not approved` otherwise
-it will be set to `Approved`.
+  ```terraform
+  # 1.4 Ensure access keys are rotated every 90 days or less (Scored)
+  # AWS > IAM > Access Key > Active > Age
+  # Setting value to "Force inactive if age > 90" days to meet remediation
+  resource "turbot_policy_setting" "AWS_IAM_AccessKey_Active_Age" {
+    resource    = var.target_resource
+    type        = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveAge"
+    value       = "Force inactive if age > 90 days"
+  }
+  ```
 
----
+- Use 4 hashes for comments that describe a group of resources, or general behavior:
 
-**Example**: [aws_rds_db_cluster_snapshot_cross_account_access](./aws_rds_db_cluster_snapshot_cross_account_access/README.md)
+  ```terraform
+  #### Set the credentials (Role, external id) for the account via Turbot policies
+  ```
 
-**Details**
-Use the AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage policy.
-Calculated policy for policy `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage` policy.
-If the account that the snapshot is shared with, given by the property `DBClusterSnapshotAttributes.AttributeValues`
+- All variables should have a description, and as a result should not require individual comments
+- Most variables should have a reasonable default
+- Calculated Policies should be always children of a Smart Folder resource
+- The resource to associate with the Smart Folder should use a variable for the target resource
 
----
+  ```terraform
+  variable "target_resource" {
+    description = "Enter the resource ID or AKA for the resource to apply the calculated policy"
+    type        = string
+  }
+  ```
 
-**Example**: [aws_redshift_restrict_cross_account_snapshot_access](./aws_redshift_restrict_cross_account_snapshot_access/README.md)
+  - it should be called `target_resource`
+  - it should have no default value in `variables.tfvars`
 
-**Details**
-Calculated policy for policy `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`.
-If a manual snapshot is configured to allow access from external accounts restore access then the approved usage 
-policy will be set to `Not approved` otherwise it will be set to `Approved`.
+  It should have a comment that states that it may be changes or overridden in the `default.tfvars` 
 
----
+  ```terraform
+  # Required - Target resource to attach to smart folder
+  target_resource = "<resource_id_or_aka>"
+  # Examples for target_resource
+  # target_resource = "tmod:@turbot/turbot#/"
+  # target_resource = "191238958290468"
+  ```
 
-**Example**: [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md)
+- The parent resource for the Smart Folder should use a variable for the target resource
 
-**Details**
-Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS> S3> Bucket> Tags> Template`.
-The Calculated policy creates a tag template.
-The template shows creating static and dynamic values.
-It also shows how to control the values of tags on a bucket.
+  ```terraform
+  variable "smart_folder_parent_resource" {
+    description = "Enter the resource ID or AKA for the parent of the smart folder"
+    type        = string
+    default     = "tmod:@turbot/turbot#/"
+  }
+  ```
 
----
+  - it should be called `smart_folder_parent_resource`
+  - it should have the default value in `tmod:@turbot/turbot#/`
 
-**Example**: [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md)
+  It should have a comment that states that it may be changes or overridden in the `default.tfvars`.
 
-**Details**
-Use the AWS > S3 > Bucket > Approved > Usage policy.
-Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage` policy.
-If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
-is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
-
----
-
-**Example**: [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md)
-
-**Details**
-Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage`.
-If a S3 Bucket name is not DNS compliant, then the approved usage policy will be set to `Not approved` otherwise
-it will be set to `Approved`.
-
----
-
-**Example**: [aws_s3_bucket_tagging_template](./aws_s3_bucket_tagging_template/README.md)
-
-**Details**
-Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS> S3> Bucket> Tags> Template`.
-The Calculated policy creates a tag template.
-The template shows creating static and dynamic values.
-It also shows how to control the values of tags on a bucket.
-
----
-
-**Example**: [aws_sqs_approved](./aws_sqs_approved/README.md)
-
-**Details**
-Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS > SQS > Queue > Approved > Usage` policy.
-The Calculated policy creates a template that will alarm if a queue policy contains "Action: SQS:*".
-
----
-
-**Example**: [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md)
-
-**Details**
-This Terraform configuration for creating a smart folder and applying the 
-`Azure > Load Balancer > Load Balancer > Approved` to "Check: Approved" and a calculated policy on 
-`Azure > Load Balancer > Load Balancer > Approved > Usage`.
-The Calculated policy sets the value to "Unapproved" when one of the specified ports are present in the NAT or Load 
-Balancer front end or back end rules and sets the value "Approved" otherwise.
-
----
-
-**Example**: [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md)
-
-**Details**
-This Terraform template creates a smart folder and applies a calculated policies on the policies:
-
-- `Azure > Storage > Storage Account > Access Tier`
-- `AWS > S3 > Bucket > Versioning`
-
-For Azure, the calculated policy sets the storage tier to "Cool" when an Azure label matching {Environment:=Dev} is 
-present on a storage account resource
-
-For AWS, the calculated policy disables S3 versioning when an AWS tag matching {Environment:=Dev} is present on an 
-S3 bucket resource.
-
----
+  ```terraform
+  # Optional - Default value: tmod:@turbot/turbot#/
+  # smart_folder_parent_resource = "<resource_id_or_aka>"
+  ```   

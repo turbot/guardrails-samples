@@ -1,8 +1,11 @@
-title: AWS S3 Bucket - restrict name to DNS compliant.
+resource: AWS S3 Bucket
+description: Restrict name that are not DNS compliant
+policies:
+  - AWS > Region > Bucket > Approved
+  - AWS > Region > Bucket > Approved > Usage
 useCase: |
   Use this policy if you would like to restrict the name of S3 Bucket images to DNS compliant
 details: |
-  Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage`.
   If a S3 Bucket name is not DNS compliant, then the approved usage policy will be set to `Not approved` otherwise
   it will be set to `Approved`.
 templateInput:

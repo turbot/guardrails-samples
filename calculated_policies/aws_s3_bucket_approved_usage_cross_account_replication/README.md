@@ -6,8 +6,11 @@ Bucket set to `Not approved` if cross-account access exists to an account not in
 
 ## Implementation Details
 
-Use the AWS > S3 > Bucket > Approved > Usage policy.
-Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage` policy.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > Region > Bucket > Approved`
+- `AWS > Region > Bucket > Approved > Usage`
+
 If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
 is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
@@ -79,11 +82,16 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 

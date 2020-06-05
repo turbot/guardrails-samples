@@ -1,4 +1,4 @@
-# AWS RDS DB Cluster - Restrict Cross Account Snapshots by user defined Whitelist
+# AWS RDS - Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots
 
 ## Use case
 
@@ -6,8 +6,11 @@ Cluster Snapshot set to `Not approved` if cross account access exists to an acco
 
 ## Implementation Details
 
-Use the AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage policy.
-Calculated policy for policy `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage` policy.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > RDS > DB Cluster Snapshot [Manual] > Approved`
+- `AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage`
+
 If the account that the snapshot is shared with, given by the property `DBClusterSnapshotAttributes.AttributeValues`
 
 ### Template Input (GraphQL)
@@ -81,11 +84,16 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 

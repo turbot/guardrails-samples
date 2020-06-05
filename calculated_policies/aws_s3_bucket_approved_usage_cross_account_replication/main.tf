@@ -1,3 +1,4 @@
+# Smart Folder Definition
 resource "turbot_smart_folder" "aws_b3_bucket_approved_usage_approved_cross_account_replication" {
   title       = var.smart_folder_title
   description = var.smart_folder_description
@@ -7,8 +8,8 @@ resource "turbot_smart_folder" "aws_b3_bucket_approved_usage_approved_cross_acco
 # AWS > S3 > Bucket > Approved
 resource "turbot_policy_setting" "aws_b3_bucket_approved_approved_cross_account_replication" {
   resource = turbot_smart_folder.aws_b3_bucket_approved_usage_approved_cross_account_replication.id
-  type = "tmod:@turbot/aws-s3#/policy/types/bucketApproved"
-  value = "Check: Approved"
+  type     = "tmod:@turbot/aws-s3#/policy/types/bucketApproved"
+  value    = "Check: Approved"
 }
 
 # AWS > S3 > Bucket > Approved > Usage
@@ -41,6 +42,7 @@ resource "turbot_policy_setting" "aws_b3_bucket_approved_usage_approved_cross_ac
   EOT
 }
 
+# Attach Smart Folder
 resource "turbot_smart_folder_attachment" "aws_b3_bucket_approved_usage_approved_cross_account_replication" {
   resource     = var.target_resource
   smart_folder = turbot_smart_folder.aws_b3_bucket_approved_usage_approved_cross_account_replication.id

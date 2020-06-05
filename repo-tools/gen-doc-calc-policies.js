@@ -74,6 +74,8 @@ async function main() {
 
       console.log(chalk.white(`Generated Document: ${calcPolicyName}`));
 
+      calcPolicy.resource = template.resource;
+      calcPolicy.description = template.description;
       calcPolicy.details = template.details;
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${calcPolicy.name}\nOriginal Error:\n`, e));
