@@ -89,8 +89,8 @@ async function main() {
 
   await writeFile(indexDocumentDestination, renderedIndexDocument);
 
-  console.log(chalk.white(`Generated Index Document`));
-  console.log(chalk.gray(`Generate Documentation Complete\nEnd time: ${moment().format()}`));
+  console.log(chalk.white(`Generated Index Document: Calculated Policies`));
+  console.log(chalk.gray(`Generate Documentation: Calculated Policies Complete\nEnd time: ${moment().format()}`));
 }
 
 main();
