@@ -119,7 +119,7 @@ To maintain consistency between files and modules, we recommend adopting the bel
 
 - Most variables should have a reasonable default
 
-- Where baselines apply policies, they generally should use a variable for the target resource
+- Where Calculated Policies apply policies, they generally should use a variable for the target resource
   
   - it should be called target_resource
   - it should default to "tmod:@turbot/turbot#/"
