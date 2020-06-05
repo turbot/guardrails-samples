@@ -2,10 +2,10 @@
 
 ## Use case
 
-The business owner of the AWS and Azure cloud platforms who wants to save cost by ensuring that the configuration of 
-storage resources are optimized for cost savings in development accounts. 
+The business owner of the AWS and Azure cloud platforms who wants to save cost by ensuring that the configuration of
+storage resources are optimized for cost savings in development accounts.
 
-By setting the tag or label as {Environment:=Dev} on storage resources will allow Turbot to the manage the resource 
+By setting the tag or label as {Environment:=Dev} on storage resources will allow Turbot to the manage the resource
 under the governance of this business rule.
 
 NOTE: Rule currently manages Azure and AWS resources only.
@@ -13,15 +13,9 @@ NOTE: Rule currently manages Azure and AWS resources only.
 ## Implementation Details
 
 This Terraform template creates a smart folder and applies a calculated policies on the policies:
-  
-  - `Azure > Storage > Storage Account > Access Tier`
-  - `AWS > S3 > Bucket > Versioning`
 
-For Azure, the calculated policy sets the storage tier to "Cool" when an Azure label matching {Environment:=Dev} is 
-present on a storage account resource
-
-For AWS, the calculated policy disables S3 versioning when an AWS tag matching {Environment:=Dev} is present on an 
-S3 bucket resource.
+- `Azure > Storage > Storage Account > Access Tier`
+- `AWS > S3 > Bucket > Versioning`
 
 ### Template Input (GraphQL)
 
@@ -31,7 +25,7 @@ In this case the query selects all tags from the storage account which will be u
 should be managed by this business rule.
 
 ```graphql
-{ 
+{
   resource {
     tags
   }
