@@ -11,6 +11,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 
 | Path | Description |
 | ---- | ----------- |
+|<img width=200/>|<img width=500/>|
 | [aws_ec2_instance_age](./aws_ec2_instance_age/README.md) | AWS EC2 - Set maximum age of specially tagged EC2 instances |
 | [aws_ec2_instance_approved_usage_approved_account_ami](./aws_ec2_instance_approved_usage_approved_account_ami/README.md) | AWS EC2 Instance - Restrict Instance images to trusted AWS accounts AMIs |
 | [aws_ec2_instance_approved_usage_local_ami](./aws_ec2_instance_approved_usage_local_ami/README.md) | AWS EC2 Instance - Restrict Instance Image to local AMI |
