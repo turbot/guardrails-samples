@@ -7,7 +7,7 @@ The calculated policy examples are implemented with [Terraform](https://www.terr
 provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
 ### TDK examples
-
+---
 **Example**: [aws_ec2_instance_age](./aws_ec2_instance_age/README.md)
 
 **Details**: This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
@@ -16,7 +16,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          {Environment:=Lab} and to skip if it is not present or set to an alternate value.
          
 
-
+------
 **Example**: [aws_ec2_instance_approved_usage_approved_account_ami](./aws_ec2_instance_approved_usage_approved_account_ami/README.md)
 
 **Details**: Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
@@ -24,7 +24,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          policy will be set to `Not approved` otherwise it will be set to `Approved`.
          
 
-
+------
 **Example**: [aws_ec2_instance_approved_usage_local_ami](./aws_ec2_instance_approved_usage_local_ami/README.md)
 
 **Details**: Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
@@ -33,7 +33,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          policy will be set to `Not approved` otherwise it will be set to `Approved`.
          
 
-
+------
 **Example**: [aws_ec2_instance_approved_usage_trusted_ami](./aws_ec2_instance_approved_usage_trusted_ami/README.md)
 
 **Details**: Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
@@ -41,14 +41,14 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          policy will be set to `Not approved` otherwise it will be set to `Approved`.
          
 
-
+------
 **Example**: [aws_ec2_public_subnet](./aws_ec2_public_subnet/README.md)
 
 **Details**: This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using 
          `AWS > EC2 > Instance > Approved > Usage` policy and then setting `AWS > EC2 > Instance > Approved` to check.
          
 
-
+------
 **Example**: [aws_guardduty_detector_approved_usage](./aws_guardduty_detector_approved_usage/README.md)
 
 **Details**: Calculated policy for policy `AWS > GuardDuty > Detector > Approved > Usage`.
@@ -56,7 +56,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          to `Approved` otherwise it will be set to `Not approved`.
          
 
-
+------
 **Example**: [aws_lambda_in_vpc](./aws_lambda_in_vpc/README.md)
 
 **Details**: This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
@@ -65,7 +65,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          for a specific VPC Id or Subnet Ids.
          
 
-
+------
 **Example**: [aws_lambda_not_approved_cross_account_access](./aws_lambda_not_approved_cross_account_access/README.md)
 
 **Details**: Calculated policy for policy `AWS > Lambda > Function > Approved > Usage`.
@@ -73,7 +73,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          it will be set to `Approved`.
          
 
-
+------
 **Example**: [aws_rds_db_cluster_snapshot_cross_account_access](./aws_rds_db_cluster_snapshot_cross_account_access/README.md)
 
 **Details**: Use the AWS > RDS > DB Cluster Snapshot [Manual] > Approved > Usage policy.
@@ -81,7 +81,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          If the account that the snapshot is shared with, given by the property `DBClusterSnapshotAttributes.AttributeValues`
          
 
-
+------
 **Example**: [aws_redshift_restrict_cross_account_snapshot_access](./aws_redshift_restrict_cross_account_snapshot_access/README.md)
 
 **Details**: Calculated policy for policy `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`.
@@ -89,7 +89,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          policy will be set to `Not approved` otherwise it will be set to `Approved`.
          
 
-
+------
 **Example**: [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md)
 
 **Details**: Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
@@ -99,7 +99,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          It also shows how to control the values of tags on a bucket.
          
 
-
+------
 **Example**: [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md)
 
 **Details**: Calculated policy for policy `AWS > S3 > Bucket > Approved > Usage`.
@@ -107,7 +107,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          it will be set to `Approved`.
          
 
-
+------
 **Example**: [aws_s3_bucket_tagging_template](./aws_s3_bucket_tagging_template/README.md)
 
 **Details**: Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
@@ -117,7 +117,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          It also shows how to control the values of tags on a bucket.
          
 
-
+------
 **Example**: [aws_sqs_approved](./aws_sqs_approved/README.md)
 
 **Details**: Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
@@ -125,7 +125,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          The Calculated policy creates a template that will alarm if a queue policy contains "Action: SQS:*".
          
 
-
+------
 **Example**: [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md)
 
 **Details**: This Terraform configuration for creating a smart folder and applying the 
@@ -135,7 +135,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          Balancer front end or back end rules and sets the value "Approved" otherwise.
          
 
-
+------
 **Example**: [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md)
 
 **Details**: This Terraform template creates a smart folder and applies a calculated policies on the policies:
@@ -148,3 +148,5 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
          For AWS, the calculated policy disables S3 versioning when an AWS tag matching {Environment:=Dev} is present on an 
          S3 bucket resource.
          
+
+---
