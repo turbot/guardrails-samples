@@ -13,6 +13,7 @@ NOTE: Rule currently manages Azure and AWS resources only.
 ## Implementation Details
 
 This Terraform template creates a smart folder and applies a calculated policies on the policies:
+
 - `Azure > Storage > Storage Account > Access Tier`
 - `AWS > S3 > Bucket > Versioning`
 
