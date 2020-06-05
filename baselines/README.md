@@ -33,7 +33,7 @@ To run a baseline:
 1. Install and configure the [pre-requisites](#pre-requisites)
 1. At the command line, go to the directory for the baseline, for example: `cd mod_install`
 1. Run `terraform init` to initialize terraform in the directory
-1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/configuration-0-11/variables.html#environment-variables) or [variable files](https://www.terraform.io/docs/configuration-0-11/variables.html#variable-files)
+1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or [variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
 1. Run `terraform plan -var-file="<fileName>.tfvars"` and inspect the changes
 1. Run `terraform apply -var-file="<fileName>.tfvars"` to apply the configuration
 
