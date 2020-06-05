@@ -42,6 +42,17 @@ To run Turbot Calculated Policies, you must install:
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
+## Running a Calculated Policies
+
+To run a Calculated Policies:
+
+1. Install and configure the [pre-requisites](#pre-requisites)
+1. At the command line, go to the directory for the Calculated Policies, for example: `cd aws-s3-reject-example`
+1. Run `terraform init` to initialize terraform in the directory
+1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or [variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
+1. Run `terraform plan -var-file="<fileName>.tfvars"` and inspect the changes
+1. Run `terraform apply -var-file="<fileName>.tfvars"` to apply the configuration
+
 ## Contributing
 
 ### Structure
