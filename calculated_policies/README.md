@@ -84,7 +84,7 @@ To maintain consistency between files and modules, we recommend adopting the bel
 
 - For each Calculated Policy, include the variable definitions in the variables.tf file, the resources in main.tf file, 
   and the output in outputs.tf file.
-- For `turbot_policy_setting` and `turbot_policy_value` resources , include the policy type hierarchy in a comment 
+- For `turbot_policy_setting` and `turbot_policy_value` resources, include the policy type hierarchy in a comment 
   before the resource. For example:
 
   ```terraform
@@ -120,13 +120,15 @@ To maintain consistency between files and modules, we recommend adopting the bel
 - Most variables should have a reasonable default
 
 - Where baselines apply policies, they generally should use a variable for the target resource
+  
   - it should be called target_resource
   - it should default to "tmod:@turbot/turbot#/"
   - it should have a comment that states that it may be changes or overridden
+  
   ```terraform
   variable "target_resource" {
       type    = "string"
       description = "Enter the target resource id or aka"
-      default = "tmod:@turbot/turbot#/" # You may change/override this value to the id of target folder or resource
+      default = "tmod:@turbot/turbot#/"
   }
   ```
