@@ -7,10 +7,21 @@ Calculated policies allow Turbot administrators to modify or extend the default 
 The calculated policy examples are implemented with [Terraform](https://www.terraform.io) allowing you to manage and 
 provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
-### TDK examples
+### Current Calculated Policies
+
+| Path | Description |
+| ---- | ----------- |
+{%- for calcPolicy in configuration.calcPolicies %}
+| [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md) | {{ calcPolicy.title }} | 
+{%- endfor %}
+
+### Current Calculated Policies Details
+
 {%- for calcPolicy in configuration.calcPolicies %}
 
 ---
+
+**Title:** {{ calcPolicy.title }}
 
 **Example**: [{{ calcPolicy.name }}](./{{ calcPolicy.name }}/README.md)
 
