@@ -1,0 +1,34 @@
+# Purpose:
+# Get a dump of policies and policy values attached to the target resource.
+# Input
+# resource ID: Get the resource ID of the folder you want to query.  Insert it in the resource filter.
+query PolicySettings($filter: [String!], $paging: String) {
+  policySettings(filter: "resource:167864299703842 limit:25", paging: "null") {
+    paging {
+      next
+    }
+    items {
+      isCalculated
+      exception
+      orphan
+      precedence
+      value
+      type {
+        uri
+        secret
+        title
+        description
+      }
+      template
+      templateInput
+    }
+  }
+}
+
+# If using variables
+# replace `policySettings(fitler: ...) {` with
+# `policySettings(filter: $filter, paging: $paging) {`
+#{
+#  "filter": "resource:167864299703842 limit:25",
+#  "paging": null
+#}
