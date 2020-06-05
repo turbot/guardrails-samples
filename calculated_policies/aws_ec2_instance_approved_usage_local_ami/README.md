@@ -19,23 +19,25 @@ GraphQL query that will check if a Instance has accounts with restore access.
 If the query returns an array of zero items, then the Instance Image is not a local AMI.
 
 ```graphql
-- {
-  item: resource {
-    imageId: get(path: "ImageId")
-    turbot {
-      custom
-    }
-  }
-}
-- {
-  resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
-    metadata {
-      stats {
-        total
+- |
+  {
+    item: resource {
+      imageId: get(path: "ImageId")
+      turbot {
+        custom
       }
     }
   }
-}
+- |
+  {
+    resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
+      metadata {
+        stats {
+          total
+        }
+      }
+    }
+  }
 ```
 
 ### Template (Nunjucks)

@@ -22,23 +22,25 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_usage_local_ami" {
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedUsage"
   # GraphQL to pull function metadata
   template_input = <<EOT
-  - {
-    item: resource {
-      imageId: get(path: "ImageId")
-      turbot {
-        custom
-      }
-    }
-  }
-  - {
-    resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
-      metadata {
-        stats {
-          total
+  - |
+    {
+      item: resource {
+        imageId: get(path: "ImageId")
+        turbot {
+          custom
         }
       }
     }
-  }
+  - |
+    {
+      resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
+    }
   EOT
   # Nunjucks Template Nunjucks Comments are formatted: {# comment #}
   template = <<EOT

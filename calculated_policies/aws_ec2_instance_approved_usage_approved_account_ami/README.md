@@ -17,21 +17,23 @@ The template input to a calculated policy is a GraphQL query.
 GraphQL query that will get the Instance Image.
 
 ```graphql
-- {
-  item: resource {
-    imageId: get(path: "ImageId")
-    turbot {
-      custom
+- |
+  {
+    item: resource {
+      imageId: get(path: "ImageId")
+      turbot {
+        custom
+      }
     }
   }
-}
-- {
-  resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}'") {
-    items {
-      ownerId: get(path:"OwnerId")
+- |
+  {
+    resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}'") {
+      items {
+        ownerId: get(path:"OwnerId")
+      }
     }
   }
-}
 ```
 
 ### Template (Nunjucks)
