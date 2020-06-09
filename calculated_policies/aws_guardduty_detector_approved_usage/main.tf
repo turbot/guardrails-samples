@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "aws_guardduty_detector_approved_usage" {
   title       = var.smart_folder_title
-  description = "Restrict AWS GuardDuty Detector Master Account"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > GuardDuty > Detector > Approved

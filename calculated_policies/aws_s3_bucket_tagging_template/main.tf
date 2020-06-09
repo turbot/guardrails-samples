@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "s3_tagging_template" {
   title       = var.smart_folder_title
-  description = "Enables bucket versioning for all buckets tagged with {Environment:=Prod}"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > Region > Bucket > Tags > Template
@@ -56,13 +56,13 @@ resource "turbot_policy_setting" "s3_tag_template" {
 
   {# Allow any value except null, set to "Non-Compliant" if out of bounds #}
   Description: "{% if $.bucket.turbot.tags['Description'] %}{{ $.bucket.turbot.tags['Description'] }}{% else %}Non-Compliant Tag{% endif %}"
-  
+
   {# Enforce selection of values, set to "Non-Compliant" if out of bounds #}
   Environment: "{% if $.bucket.turbot.tags['Environment'] in ['Dev', 'QA', 'Prod', 'Temp'] %}{{ $.bucket.turbot.tags['Environment'] }}{% else %}Non-Compliant Tag{% endif %}"
-  
+
   {# Actor who created the bucket #}
   CreatedByActor: "{{ $.bucket.creator.items[0].actor.identity.turbot.title }}"
-  
+
   {# Creation Timestamp #}
   CreatedByTime: "{{ $.bucket.creator.items[0].turbot.createTimestamp }}"
   EOT

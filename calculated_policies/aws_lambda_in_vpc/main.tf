@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "lambda_vpc_check" {
   title       = var.smart_folder_title
-  description = "Lambda VPC check"
-  parent      = "178326157417316"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > Lambda > Function > Approved

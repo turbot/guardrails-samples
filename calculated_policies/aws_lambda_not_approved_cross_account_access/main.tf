@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "aws_lambda_not_approved_cross_account_access" {
   title       = var.smart_folder_title
-  description = "Restrict AWS Lambda Cross Account Access"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > Lambda > Function > Approved
