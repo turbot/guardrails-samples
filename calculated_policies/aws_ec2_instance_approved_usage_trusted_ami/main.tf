@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "aws_ec2_instance_approved_usage_trusted_ami" {
   title       = var.smart_folder_title
-  description = "Restrict AWS EC2 Instance image to trusted AMIs"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > EC2 > Instance > Approved

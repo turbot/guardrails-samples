@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "sqs_usage_approved" {
   title       = var.smart_folder_title
-  description = "Alarms if an SQS queue policy allows SQS:*"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > Region > Bucket > Approved
