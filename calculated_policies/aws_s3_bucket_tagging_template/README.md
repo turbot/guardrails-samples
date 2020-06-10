@@ -105,7 +105,9 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 
