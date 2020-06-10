@@ -1,0 +1,1 @@
+smart_folder_title = "RDS Encryption at Rest"
