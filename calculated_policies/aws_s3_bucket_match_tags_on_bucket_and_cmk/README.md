@@ -2,11 +2,11 @@
 
 ## Use case
 
-The business owner may have different classifications of data (PII, Health, Proprietary, etc).
-Where, S3 buckets are designated to hold specific classes of data. For each classification, a corresponding
+The business owner may have different classifications of data (PII, Health, Proprietary, etc) where,
+S3 buckets are designated to hold specific classes of data. For each classification, a corresponding
 Customer Managed Key should exist.
 To ensure that the right CMK is attached to the right bucket, a comparison needs to be made between the tags
-on the bucket and on the CMK.
+on the bucket and on CMK.
 
 ## Implementation Details
 
