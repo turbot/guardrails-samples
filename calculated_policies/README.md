@@ -20,6 +20,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 | [aws_lambda_in_vpc](./aws_lambda_in_vpc/README.md) | AWS Lambda | Approve a Lambda function only if it is within a particular VPC |
 | [aws_lambda_not_approved_cross_account_access](./aws_lambda_not_approved_cross_account_access/README.md) | AWS Lambda | Alarm if function policy has cross-account access |
 | [aws_rds_db_cluster_snapshot_cross_account_access](./aws_rds_db_cluster_snapshot_cross_account_access/README.md) | AWS RDS | Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots |
+| [aws_redshift_cluster_require_ssl](./aws_redshift_cluster_require_ssl/README.md) | AWS RedShift | Approve cluster if encryption in transit is required |
 | [aws_redshift_restrict_cross_account_snapshot_access](./aws_redshift_restrict_cross_account_snapshot_access/README.md) | AWS RedShift | Restrict RedShift Manual Cluster access to cross account Manual Clusters Snapshots |
 | [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md) | AWS S3 Bucket | Enforce static website hosting is associated with CloudFront |
 | [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md) | AWS S3 Bucket | Restrict Cross Account Replication by user defined Whitelist |
