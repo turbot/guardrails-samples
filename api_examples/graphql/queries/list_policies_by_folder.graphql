@@ -28,7 +28,7 @@ query PolicySettings($filter: [String!], $paging: String) {
 # If using variables
 # replace `policySettings(fitler: ...) {` with
 # `policySettings(filter: $filter, paging: $paging) {`
-#{
-#  "filter": "resource:167864299703842 limit:25",
-#  "paging": null
-#}
+# {
+#   "filter": "resource:167864299703842 limit:25",
+#   "paging": null
+# }
