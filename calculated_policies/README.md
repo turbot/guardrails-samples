@@ -24,6 +24,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 | [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md) | AWS S3 Bucket | Enforce static website hosting is associated with CloudFront |
 | [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md) | AWS S3 Bucket | Restrict Cross Account Replication by user defined Whitelist |
 | [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md) | AWS S3 Bucket | Restrict name that are not DNS compliant |
+| [aws_s3_bucket_match_tags_on_bucket_and_cmk](./aws_s3_bucket_match_tags_on_bucket_and_cmk/README.md) | AWS S3 | Match tags on Bucket and corresponding Key Management Service. |
 | [aws_s3_bucket_tagging_template](./aws_s3_bucket_tagging_template/README.md) | AWS S3 | Set default tags on buckets with dynamic metadata |
 | [aws_sqs_approved](./aws_sqs_approved/README.md) | AWS SQS Queue | Alarm if SQS policy violates org restrictions |
 | [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md) | Azure Networking | Prevent unapproved network configuration for load balancers |
