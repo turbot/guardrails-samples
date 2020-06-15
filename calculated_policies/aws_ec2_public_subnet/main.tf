@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "ec2_public_subnet" {
   title       = var.smart_folder_title
-  description = "Set any instance to 'Not Approved' if the instance is in a public subnet"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > EC2 > Instance > Approved

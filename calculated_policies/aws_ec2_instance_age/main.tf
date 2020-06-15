@@ -1,8 +1,8 @@
 # Smart Folder Definition
 resource "turbot_smart_folder" "ec2_instance_age" {
   title       = var.smart_folder_title
-  description = "Enables bucket versioning for all buckets tagged with {Environment:=Prod}"
-  parent      = "tmod:@turbot/turbot#/"
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
 # AWS > EC2 > Instance > Active
