@@ -10,7 +10,7 @@ const btoa = require("btoa");
 // Run any controls in any bad state
 //const filter = "state:tbd,error,alarm";
 
-// Re-run control installed
+// Re-run installed control installed
 // const filter = "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'";
 
 // Re-run all discovery controls
@@ -19,7 +19,6 @@ const filter = "Discovery controlCategory:'tmod:@turbot/turbot#/control/categori
 // Re-run all Event Handler controls
 //const filter = "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'";
 
-
 async function main() {
   const endpoint = process.env.TURBOT_GRAPHQL_ENDPOINT;
   const accessKeyId = process.env.TURBOT_ACCESS_KEY_ID;
@@ -27,8 +26,8 @@ async function main() {
 
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
-      authorization: "Basic " + btoa(`${accessKeyId}:${secretAccessKey}`)
-    }
+      authorization: "Basic " + btoa(`${accessKeyId}:${secretAccessKey}`),
+    },
   });
 
   const query = `
@@ -78,4 +77,4 @@ async function main() {
   }
 }
 
-main().catch(error => console.error(error));
+main().catch((error) => console.error(error));
