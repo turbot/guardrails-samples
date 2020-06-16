@@ -1,6 +1,11 @@
 # Run Policies
 
-Run this script to run policies in a state that the end user selects.
+Run this script to run all policies using the states of the policy as a filter to select the policies to run.
+
+The variable `filter` is used by the script to configure the policies to run that match the specified policy state(s).
+
+The default state for the variable `filter` is `state:tbd`.
+
 States for policies in Turbot can be:
 
 - ok
@@ -8,7 +13,11 @@ States for policies in Turbot can be:
 - error
 - invalid
 
-For further reference see (filtering policy values)[https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values]
+For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values)
+
+Multiple states can be added by separating each state using a comma.
+For example when the variable `filter` is set to `state:tbd,error` the script will run all policies that are
+in either the state of `tdb` or `error`.
 
 ## Running Script
 

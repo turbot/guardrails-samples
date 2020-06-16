@@ -5,7 +5,7 @@ const btoa = require("btoa");
 // ---------------
 // Run policies in TBD (Default):     "state:tbd"
 // Run policies in error state:       "state:error"
-// Run policies in multiple states:   "state:tbd,error,alarm"
+// Run policies in multiple states:   "state:tbd,error,invalid"
 
 async function main() {
   // Default filter
