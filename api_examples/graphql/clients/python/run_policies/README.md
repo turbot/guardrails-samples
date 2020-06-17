@@ -93,11 +93,11 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 And run the example:
 
 ```shell
-python3 run_controls.py --help
+python3 run_policies.py --help
 
-python3 run_controls.py --filter "state:error"
+python3 run_policies.py --state "error"
 
-python3 run_controls.py --filter "state:tbd" --execute
+python3 run_policies.py --filter "tbd,invalid" --execute
 ```
 
 ### Virtual environments deactivation

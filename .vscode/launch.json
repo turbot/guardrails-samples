@@ -5,6 +5,27 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/omerosaienni/git-source/omerosaienni/tdk/api_examples/graphql/clients/python/run_policies/run_policies.py",
+      "console": "integratedTerminal"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${file}",
+      "env": {
+        "TURBOT_GRAPHQL_ENDPOINT": "https://punisher-turbot.cloud.turbot-dev.com/api/latest/graphql",
+        "TURBOT_ACCESS_KEY_ID": "b05ada1d-cc58-4265-a08b-ff6048d35f39",
+        "TURBOT_SECRET_ACCESS_KEY": "45225734-007d-47f1-b1b8-70fa1ae66ab8"
+      },
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    {
       "type": "node",
       "request": "launch",
       "name": "Gen Doc: Calculated Policies",

@@ -3,5 +3,6 @@
     "creds",
     "graphql",
     "nunjucks"
-  ]
+  ],
+  "python.pythonPath": "/home/omerosaienni/.virtualenvs/export_v3_environment/bin/python"
 }
