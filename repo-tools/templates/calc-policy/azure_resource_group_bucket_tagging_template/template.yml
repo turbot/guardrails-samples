@@ -1,0 +1,24 @@
+resource: Azure Resource Group
+description: Set default tags on resource group
+policies:
+  - Azure > Resource Group > Tags > Template
+useCase: |
+  This policy is intended to make sure a tag exist and set a default value when the tag value is empty
+details: |
+  It looks at current resource tags to check if the tag key defined at [variables.ft](variables.ft) exists.
+  If it does not, then it creates the tag with default value, also defined at [variables.ft](variables.ft)
+  If the tag already exist, then enforce the default value in case it's currently empty
+templateInput:
+  details: |
+    Query current resource tags
+  query: |
+    {
+      resource {
+        tags
+      }
+    }
+template:
+  details: |
+    If current tag does not exist or have an empty value, then set the default value to the tag
+  source: |
+    "${var.tag_key}": "{% if $.resource.tags['${var.tag_key}'] %}{{ $.resource.tags['${var.tag_key}'] }}{% else %}${var.tag_default_value}{% endif %}"
