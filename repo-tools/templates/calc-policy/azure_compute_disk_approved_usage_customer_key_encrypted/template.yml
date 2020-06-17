@@ -1,0 +1,29 @@
+resource: Azure Compute
+description: Disk approved if encrypted with customer key
+policies:
+  - Azure > Compute > Disk > Approved
+  - Azure > Compute > Disk > Approved > Usage
+useCase: |
+  There is an organizational requirement that in specific accounts, disks should be encrypted using customer key.
+details: |
+  Approval policy that restrict usage of disks if they are not customer key encrypted.
+templateInput:
+  details: |
+    The query selects `encryption` property from the disk which will be used to determine
+    if the resource should be `Approved` or `Not approved`
+  query: |
+    {
+      resource {
+        encryption: get(path: "encryption")
+      }
+    }
+template:
+  details: |
+    If `encryption.type` property is `EncryptionAtRestWithCustomerKey` then the policy is set to `Approved`
+    otherwise `Not approved`
+  source: |
+    {%- if $.resource.encryption and $.resource.encryption.type == "EncryptionAtRestWithCustomerKey" -%}
+      Approved
+    {%- else -%}
+      Not approved
+    {%- endif -%}
