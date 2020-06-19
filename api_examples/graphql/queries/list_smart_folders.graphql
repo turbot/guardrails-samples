@@ -1,0 +1,10 @@
+query ListSmartFolders {
+  resourceList(filter: "resourceType:'tmod:@turbot/turbot#/resource/types/smartFolder'") {
+    items {
+      title
+      turbot {
+        id
+      }
+    }
+  }
+}
