@@ -1,10 +1,13 @@
-title: AWS EC2 - Instance Not Approved if Public Subnet
+resource: AWS EC2
+description: Instance Not Approved if Public Subnet
+policies:
+  - AWS > EC2 > Instance > Approved
+  - AWS > EC2 > Instance > Approved > Usage
 useCase: |
   There is an organizational requirement that in specific accounts, no EC2 instance can be booted within a subnet with 
   an associated route table which has routes pointing to an Internet Gateway (IGW).
 details: |
-  This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using 
-  `AWS > EC2 > Instance > Approved > Usage` policy and then setting `AWS > EC2 > Instance > Approved` to check.
+  Approval policy that restrict usage of EC Instances if the Subnet associated with the Instance has a Route to an IGW.
 templateInput:
   details: |
     This query is two-fold. First, it finds the subnet ID contained within the EC2 instance metadata. 
@@ -22,6 +25,10 @@ templateInput:
       }
     }
 template:
+  details: |
+    Checks each returned Route Table entry and compares it against the Subnet Id of the EC2 Instance. 
+    When the Route Table entry is found then check each Route to find the Route with the id of `igw`.
+    If a Route with this id is found then the usage will be set as `Not approved`.
   source: |
     {%- set hasIGW = false -%}
     {%- for item in $.resources.items -%}

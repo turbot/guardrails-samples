@@ -10,7 +10,7 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const readdir = util.promisify(fs.readdir);
 
-async function loadConfiguration(calcPolicyName) {
+async function loadTemplate(calcPolicyName) {
   const fileContents = await readFile(`${__dirname}/templates/calc-policy/${calcPolicyName}/template.yml`, "utf8");
   return yaml.safeLoad(fileContents);
 }
@@ -53,32 +53,46 @@ async function main() {
   let calcPolicies = await readdir(`${__dirname}/templates/calc-policy`, { withFileTypes: true });
   calcPolicies = calcPolicies.filter((v) => v.isDirectory());
 
-  const template = await readFile(`${__dirname}/templates/calc-policy/template.njk`, "utf8");
+  var env = new nunjucks.Environment();
+  env.addFilter("isString", isString);
+  env.addFilter("isArray", isArray);
 
   for (const calcPolicy of calcPolicies) {
     try {
       const calcPolicyName = calcPolicy.name;
+
       const variables = await harvestedVariables(calcPolicyName);
-      const configuration = await loadConfiguration(calcPolicyName);
-      const renderContext = { variables, configuration };
+      const template = await loadTemplate(calcPolicyName);
+      const documentTemplate = await readFile(`${__dirname}/templates/calc-policy/document.njk`, "utf8");
 
-      //const renderResultOld = nunjucks.render(`${__dirname}/templates/calc-policy/template.njk`, renderContext);
+      const documentRenderContext = { variables, configuration: template };
 
-      var env = new nunjucks.Environment();
+      const renderedDocument = env.renderString(documentTemplate, documentRenderContext);
+      const documentDestination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
 
-      env.addFilter("isString", isString);
-      env.addFilter("isArray", isArray);
-      const renderResult = env.renderString(template, renderContext);
+      await writeFile(documentDestination, renderedDocument);
 
-      const destination = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/README.md`);
-      await writeFile(destination, renderResult);
       console.log(chalk.white(`Generated Document: ${calcPolicyName}`));
+
+      calcPolicy.resource = template.resource;
+      calcPolicy.description = template.description;
+      calcPolicy.details = template.details;
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${calcPolicy.name}\nOriginal Error:\n`, e));
     }
   }
 
-  console.log(chalk.gray(`Generate Documentation Complete\nEnd time: ${moment().format()}`));
+  const indexDocumentTemplate = await readFile(`${__dirname}/templates/calc-policy/index-document.njk`, "utf8");
+
+  const indexDocumentRenderContext = { configuration: { calcPolicies } };
+
+  const renderedIndexDocument = env.renderString(indexDocumentTemplate, indexDocumentRenderContext);
+  const indexDocumentDestination = path.resolve(`${__dirname}/../calculated_policies/README.md`);
+
+  await writeFile(indexDocumentDestination, renderedIndexDocument);
+
+  console.log(chalk.white(`Generated Index Document: Calculated Policies`));
+  console.log(chalk.gray(`Generate Documentation: Calculated Policies Complete\nEnd time: ${moment().format()}`));
 }
 
 main();

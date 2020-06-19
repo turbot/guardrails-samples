@@ -1,10 +1,12 @@
-title: AWS Lambda - Approve a Lambda function only if it is within a particular VPC
+resource: AWS Lambda
+description: Approve a Lambda function only if it is within a particular VPC
+policies:
+  - AWS > Lambda > Function > Approved
+  - AWS > Lambda > Function > Approved > Usage
 useCase: |
   The business owner of the AWS environment wants to ensure that a Lambda is only ran from within a VPC, not within the
   AWS network.
 details: |
-  This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-  `AWS > Lambda > Function > Approved > Usage` policy.  
   The Calculated policy checks the Lambda metadata for existence of the attribute VpcConfig and can be expanded to check
   for a specific VPC Id or Subnet Ids.
 templateInput:

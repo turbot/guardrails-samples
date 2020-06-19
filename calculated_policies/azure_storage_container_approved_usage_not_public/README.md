@@ -1,55 +1,59 @@
-# {{ configuration.title | safe }}
+# Azure Storage - Container approved if not public
 
 ## Use case
 
-{{ configuration.useCase | safe }}
+There is an organizational requirement that in specific accounts, storage containers should not be public.
+
 ## Implementation Details
 
-{{ configuration.details | safe }}
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `Azure > Storage > Container > Approved`
+- `Azure > Storage > Container > Approved > Usage`
+
+Approval policy that restrict usage of storage containers if they are not public.
+
 ### Template Input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
-{{ configuration.templateInput.details | safe }}
+In this case the query selects `publicAccess` property from the storage container which will be used to determine
+if the resource should be `Approved` or `Not approved`
 
-{%- if configuration.templateInput.query | isString %}
 ```graphql
-{{ configuration.templateInput.query | trim | safe }}
+{
+  resource {
+    publicAccess: get(path: "publicAccess")
+  }
+}
 ```
-{% elif configuration.templateInput.query | isArray %}
-{%- for query in configuration.templateInput.query %}
-```graphql
-{{ query | safe | trim }}
-```
-{% endfor %}
-{%- endif %}
+
 ### Template (Nunjucks)
-{%- if configuration.template.details %}
 
-{{ configuration.template.details | safe | trim }}
-{%- endif %}
-
-{%- if configuration.template.source | isString %}
+If `publicAccess` property is `None` then the policy is set to `Approved` otherwise `Not approved`
 
 ```nunjucks
-{{ configuration.template.source | trim | safe }}
+{%- if $.resource.publicAccess == "None" -%}
+  "Approved"
+{%- else -%}
+  "Not approved"
+{%- endif -%}
 ```
-{% elif configuration.template.source | isArray %}
-{% for source in configuration.template.source %}
-```nunjucks
-{{ source | safe | trim }}
-```
-{% endfor %}
-{%- endif %}
+
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 
@@ -61,9 +65,11 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-{% for variable in variables -%}
-- {{ variable.name }}{% if variable.mandatory == false %} (Optional){% endif %}
-{% endfor %}
+- target_resource
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
+
 Open the file [variables.tf](variables.tf) for further details.
 
 ### Initialize Terraform

@@ -1,0 +1,28 @@
+resource: Azure Storage
+description: Container approved if not public
+policies:
+  - Azure > Storage > Container > Approved
+  - Azure > Storage > Container > Approved > Usage
+useCase: |
+  There is an organizational requirement that in specific accounts, storage containers should not be public.
+details: |
+  Approval policy that restrict usage of storage containers if they are not public.
+templateInput:
+  details: |
+    In this case the query selects `publicAccess` property from the storage container which will be used to determine
+    if the resource should be `Approved` or `Not approved`
+  query: |
+    {
+      resource {
+        publicAccess: get(path: "publicAccess")
+      }
+    }
+template:
+  details: |
+    If `publicAccess` property is `None` then the policy is set to `Approved` otherwise `Not approved`
+  source: |
+    {%- if $.resource.publicAccess == "None" -%}
+      "Approved"
+    {%- else -%}
+      "Not approved"
+    {%- endif -%}

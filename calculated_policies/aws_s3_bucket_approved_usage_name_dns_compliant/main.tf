@@ -1,3 +1,4 @@
+# Smart Folder Definition
 resource "turbot_smart_folder" "aws_s3_bucket_approved_usage_name_dns_compliant" {
   title       = var.smart_folder_title
   description = var.smart_folder_description
@@ -5,7 +6,7 @@ resource "turbot_smart_folder" "aws_s3_bucket_approved_usage_name_dns_compliant"
 }
 
 # AWS > S3 > Bucket > Approved
-resource "turbot_policy_setting" "aws_s3_bucket_approved_local_ami" {
+resource "turbot_policy_setting" "aws_s3_bucket_approved_name_dns_compliant" {
   resource = turbot_smart_folder.aws_s3_bucket_approved_usage_name_dns_compliant.id
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketApproved"
   value    = "Check: Approved"
@@ -36,6 +37,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_usage_name_dns_complian
   EOT
 }
 
+# Attach Smart Folder
 resource "turbot_smart_folder_attachment" "aws_s3_bucket_approved_usage_name_dns_compliant" {
   resource     = var.target_resource
   smart_folder = turbot_smart_folder.aws_s3_bucket_approved_usage_name_dns_compliant.id

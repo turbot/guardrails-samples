@@ -1,29 +1,34 @@
-title: AWS EC2 Instance - Restrict Instance images to trusted AWS accounts AMIs
+resource: AWS EC2
+description: Restrict Instance images to trusted AWS accounts AMIs
+policies:
+  - AWS > EC2 > Instance > Approved
+  - AWS > EC2 > Instance > Approved > Usage
 useCase: |
   Use this policy if you would like to restrict the usage of EC2 Instance images to AMIs owned by AWS accounts that are trusted.
 details: |
-  Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
   If a EC2 Instance Image is not owned by an account in the approved accounts list, then the approved usage
   policy will be set to `Not approved` otherwise it will be set to `Approved`.
 templateInput:
   details: |
     GraphQL query that will get the Instance Image.
   query: |
-    - {
-      item: resource {
-        imageId: get(path: "ImageId")
-        turbot {
-          custom
+    - |
+      {
+        item: resource {
+          imageId: get(path: "ImageId")
+          turbot {
+            custom
+          }
         }
       }
-    }
-    - {
-      resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}'") {
-        items {
-          ownerId: get(path:"OwnerId")
+    - |
+      {
+        resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}'") {
+          items {
+            ownerId: get(path:"OwnerId")
+          }
         }
       }
-    }
 template:
   details: |
     Approval logic for EC2 Instance trusted AWS accounts AMIs.

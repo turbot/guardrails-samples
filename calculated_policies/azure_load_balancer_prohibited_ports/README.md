@@ -7,9 +7,11 @@ communication on known non-encrypted ports (e.g. FTP/21, HTTP/80 and SMTP/25).
 
 ## Implementation Details
 
-This Terraform configuration for creating a smart folder and applying the 
-`Azure > Load Balancer > Load Balancer > Approved` to "Check: Approved" and a calculated policy on 
-`Azure > Load Balancer > Load Balancer > Approved > Usage`.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `Azure > Load Balancer > Load Balancer > Approved`
+- `Azure > Load Balancer > Load Balancer > Approved > Usage`
+
 The Calculated policy sets the value to "Unapproved" when one of the specified ports are present in the NAT or Load 
 Balancer front end or back end rules and sets the value "Approved" otherwise.
 
@@ -54,11 +56,16 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 
@@ -70,7 +77,9 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 

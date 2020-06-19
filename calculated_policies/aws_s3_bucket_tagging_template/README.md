@@ -7,8 +7,10 @@ standards and ensure supportability and cost transparency.
 
 ## Implementation Details
 
-Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-`AWS> S3> Bucket> Tags> Template`.
+This Terraform template creates a smart folder and applies the calculated policy on the policy:
+
+- `AWS > Region > Bucket > Tags > Template`
+
 The Calculated policy creates a tag template.
 The template shows creating static and dynamic values.
 It also shows how to control the values of tags on a bucket.
@@ -82,11 +84,16 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 
@@ -98,7 +105,9 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 

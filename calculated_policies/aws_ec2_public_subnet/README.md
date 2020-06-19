@@ -7,8 +7,12 @@ an associated route table which has routes pointing to an Internet Gateway (IGW)
 
 ## Implementation Details
 
-This script provides a Terraform configuration for creating a smart folder and applying a calculated policy using 
-`AWS > EC2 > Instance > Approved > Usage` policy and then setting `AWS > EC2 > Instance > Approved` to check.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > EC2 > Instance > Approved`
+- `AWS > EC2 > Instance > Approved > Usage`
+
+Approval policy that restrict usage of EC Instances if the Subnet associated with the Instance has a Route to an IGW.
 
 ### Template Input (GraphQL)
 
@@ -33,6 +37,10 @@ Second, all route tables in the account are found, and the associated subnet ID 
 
 ### Template (Nunjucks)
 
+Checks each returned Route Table entry and compares it against the Subnet Id of the EC2 Instance. 
+When the Route Table entry is found then check each Route to find the Route with the id of `igw`.
+If a Route with this id is found then the usage will be set as `Not approved`.
+
 ```nunjucks
 {%- set hasIGW = false -%}
 {%- for item in $.resources.items -%}
@@ -56,11 +64,16 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 
@@ -73,6 +86,8 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 Variables that are exposed by this script are:
 
 - smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 
