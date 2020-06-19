@@ -1,18 +1,21 @@
+# Smart Folder Definition
 resource "turbot_smart_folder" "ec2_public_subnet" {
-  title         = var.smart_folder_title
-  description   = "Set any instance to 'Not Approved' if the instance is in a public subnet"
-  parent        = "tmod:@turbot/turbot#/"
+  title       = var.smart_folder_title
+  description = var.smart_folder_description
+  parent      = var.smart_folder_parent_resource
 }
 
+# AWS > EC2 > Instance > Approved
 resource "turbot_policy_setting" "instance_approved" {
-  resource   = turbot_smart_folder.ec2_public_subnet.id
-  type       = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-  value      = "Check: Approved"
+  resource = turbot_smart_folder.ec2_public_subnet.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
+  value    = "Check: Approved"
 }
 
+# AWS > EC2 > Instance > Approved > Usage
 resource "turbot_policy_setting" "instance_subnet_" {
-  resource   = turbot_smart_folder.ec2_public_subnet.id
-  type       = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedUsage"
+  resource = turbot_smart_folder.ec2_public_subnet.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedUsage"
   # GraphQL to pull instance tags
   template_input = <<EOT
   {
@@ -27,9 +30,9 @@ resource "turbot_policy_setting" "instance_subnet_" {
     }
   }
   EOT
-  
+
   # Nunjucks Template
-  template      = <<EOT
+  template = <<EOT
   {%- set hasIGW = false -%}
   {%- for item in $.resources.items -%}
     {%- if item.associations == $.resource.subnetId -%}

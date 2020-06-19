@@ -14,12 +14,12 @@ def run_controls(config_file, profile, filter, execute):
     """
         Example Filters
         ---------------
-        Run controls in TBD (Default):   "state:tbd"
-        Run controls in error state:     "state:error"
-        Run controls in multiple states: "state:tbd,error,alarm"
-        Re-run control installed:        "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
-        Re-run Event Handler controls:   "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
-        Re-run discovery controls:       "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+        Run controls in TBD (Default):      "state:tbd"
+        Run controls in error state:        "state:error"
+        Run controls in multiple states:    "state:tbd,error,alarm"
+        Re-run installed controls:          "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
+        Re-run AWS Event Handler controls:  "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
+        Re-run Discovery controls:          "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
     """
 
     config = turbot.Config(config_file, profile)

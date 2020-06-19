@@ -1,11 +1,13 @@
-title: AWS EC2 - Set maximum age of specially tagged EC2 instances
+resource: AWS EC2
+description: Set maximum age of specially tagged EC2 instances
+policies:
+  - AWS > EC2 > Instance > Active
+  - AWS > EC2 > Instance > Active > Age
 useCase: |
   The business owner of the AWS Lab environment wants to ensure that all EC2 Lab instances 
   (instances tagged Environment:=Lab) are not being used for extended periods of time. 
   The business rule designed states that lab instances must be less than 30 days old.
 details: |
-  This script provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-  `AWS > EC2 > Instance > Active > Age` policy.  
   The Calculated policy sets the active age threshold to 30 days when a tag is present on the instance matching 
   {Environment:=Lab} and to skip if it is not present or set to an alternate value.
 templateInput:

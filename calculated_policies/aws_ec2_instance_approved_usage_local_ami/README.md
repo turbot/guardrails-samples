@@ -1,4 +1,4 @@
-# AWS EC2 Instance - Restrict Instance Image to local AMI
+# AWS EC2 - Restrict Instance Image to local AMI
 
 ## Use case
 
@@ -6,7 +6,11 @@ Use this policy if you would like to restrict the usage of EC2 Instance Images t
 
 ## Implementation Details
 
-Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
+This Terraform template creates a smart folder and applies calculated policies on the policies:
+
+- `AWS > EC2 > Instance > Approved`
+- `AWS > EC2 > Instance > Approved > Usage`
+
 Approval policy that will limit running EC2 Instances to only use local EC2 Instance Images.
 If an EC2 Instance Image is not owned by the account that the Instance is running on, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
@@ -19,23 +23,25 @@ GraphQL query that will check if a Instance has accounts with restore access.
 If the query returns an array of zero items, then the Instance Image is not a local AMI.
 
 ```graphql
-- {
-  item: resource {
-    imageId: get(path: "ImageId")
-    turbot {
-      custom
-    }
-  }
-}
-- {
-  resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
-    metadata {
-      stats {
-        total
+- |
+  {
+    item: resource {
+      imageId: get(path: "ImageId")
+      turbot {
+        custom
       }
     }
   }
-}
+- |
+  {
+    resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
+      metadata {
+        stats {
+          total
+        }
+      }
+    }
+  }
 ```
 
 ### Template (Nunjucks)
@@ -54,11 +60,16 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 ## Prerequisites
 
-To create the smart folder, you must have:
+To run Turbot Calculated Policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform)
-- Credentials Configured to connect to your Turbot workspace
+- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- Configured credentials to connect to your Turbot workspace
+
+### Configuring Credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
 ## Running the Example
 
@@ -70,8 +81,10 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
 - target_resource
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 

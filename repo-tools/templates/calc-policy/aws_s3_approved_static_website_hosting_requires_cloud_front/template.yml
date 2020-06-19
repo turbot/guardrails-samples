@@ -1,4 +1,8 @@
-title: AWS S3 - Approved Usage - Enforce static website hosting is associated with CloudFront
+resource: AWS S3 Bucket
+description: Enforce static website hosting is associated with CloudFront
+policies:
+  - AWS > Region > Bucket > Approved
+  - AWS > Region > Bucket > Approved > Usage
 useCase: |
   This control is specifically for the Static Website Buckets. 
   End-users should not be able to directly access the S3 bucket endpoint.

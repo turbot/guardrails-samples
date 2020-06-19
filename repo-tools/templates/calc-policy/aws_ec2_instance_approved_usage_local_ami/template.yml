@@ -1,8 +1,11 @@
-title: AWS EC2 Instance - Restrict Instance Image to local AMI
+resource: AWS EC2
+description: Restrict Instance Image to local AMI
+policies:
+  - AWS > EC2 > Instance > Approved
+  - AWS > EC2 > Instance > Approved > Usage
 useCase: |
   Use this policy if you would like to restrict the usage of EC2 Instance Images to local account AMI Images only.
 details: |
-  Calculated policy for policy `AWS > EC2 > Instance > Approved > Usage`.
   Approval policy that will limit running EC2 Instances to only use local EC2 Instance Images.
   If an EC2 Instance Image is not owned by the account that the Instance is running on, then the approved usage
   policy will be set to `Not approved` otherwise it will be set to `Approved`.
@@ -11,23 +14,25 @@ templateInput:
     GraphQL query that will check if a Instance has accounts with restore access.
     If the query returns an array of zero items, then the Instance Image is not a local AMI.
   query: |
-    - {
-      item: resource {
-        imageId: get(path: "ImageId")
-        turbot {
-          custom
-        }
-      }
-    }
-    - {
-      resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
-        metadata {
-          stats {
-            total
+    - |
+      {
+        item: resource {
+          imageId: get(path: "ImageId")
+          turbot {
+            custom
           }
         }
       }
-    }
+    - |
+      {
+        resources (filter: "resourceType:'tmod:@turbot/aws-ec2#/resource/types/Ami' $.ImageId:'{{$.item.imageId}}' $.OwnerId:'{{$.item.turbot.custom.aws.accountId}}'") {
+          metadata {
+            stats {
+              total
+            }
+          }
+        }
+      }
 template:
   details: |
     Approval logic for EC2 Instance Image local AMI.

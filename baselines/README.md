@@ -13,7 +13,7 @@ Turbot Baselines provide best-practice configurations and examples for setting T
 | GCP Setup                   | [gcp_setup](./gcp/gcp_setup)                                       | Common quickstart setup for GCP - prepare your environment to import GCP Projects                       |
 | GCP Services                | [gcp_services](./gcp/gcp_services)                                 | Enable/Disable GCP Services in Turbot & also enforce api enabled policy based on service Enable/Disable |
 | Azure Subscription Import   | [azure_sub_import](./azure/azure_sub_import)                       | Import an Azure subscription into Turbot                                                                |
-| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)                    | Import an Azure subscription into Turbot with event handler and readonly mode                           |
+| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)     | Import an Azure subscription into Turbot with event handler and readonly mode                           |
 | Azure Services              | [azure_services](./azure/azure_services)                           | Enable/Disable Azure Services in Turbot                                                                 |
 | Azure Provider Registration | [azure_provider_registration](./azure/azure_provider_registration) | Set the policy for Azure provider registration                                                          |
 
@@ -33,7 +33,7 @@ To run a baseline:
 1. Install and configure the [pre-requisites](#pre-requisites)
 1. At the command line, go to the directory for the baseline, for example: `cd mod_install`
 1. Run `terraform init` to initialize terraform in the directory
-1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/configuration-0-11/variables.html#environment-variables) or [variable files](https://www.terraform.io/docs/configuration-0-11/variables.html#variable-files)
+1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or [variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
 1. Run `terraform plan -var-file="<fileName>.tfvars"` and inspect the changes
 1. Run `terraform apply -var-file="<fileName>.tfvars"` to apply the configuration
 
@@ -62,7 +62,7 @@ Baseline
 ├── main.tf
 ├── variables.tf
 ├── outputs.tf
-├── default.tfvar
+└── default.tfvar
 ```
 
 ### Style Guide
@@ -70,15 +70,12 @@ Baseline
 Our baselines adopts styling conventions provided by [Terraform](https://www.terraform.io/docs/configuration/style.html) like:
 
 - Align the equal to signs for arguments appearing on consecutive lines with values.
-
 - Variables should use snake case: `this_is_an_example`
-
 - Use empty lines to separate logical groups of arguments within a block.
 
 To maintain consistency between files and modules, we recommend adopting the below added styling conventions:
 
 - For each baseline, include the variable definitions in the variables.tf file, the resources in main.tf file, and the output in outputs.tf file.
-
 - For `turbot_policy_setting` and `turbot_policy_value` resources , include the policy type hierarchy in a comment before the resource. For example:
 
   ```terraform
@@ -110,13 +107,13 @@ To maintain consistency between files and modules, we recommend adopting the bel
   ```
 
 - All variables should have a description, and as a result should not require individual comments
-
 - Most variables should have a reasonable default
-
 - Where baselines apply policies, they generally should use a variable for the target resource
+
   - it should be called target_resource
   - it should default to "tmod:@turbot/turbot#/"
   - it should have a comment that states that it may be changes or overridden
+
   ```terraform
   variable "target_resource" {
       type    = "string"

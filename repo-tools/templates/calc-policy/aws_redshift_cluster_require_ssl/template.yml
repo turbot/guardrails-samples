@@ -1,0 +1,60 @@
+resource: AWS RedShift
+description: Approve cluster if encryption in transit is required
+policies:
+  - AWS > Redshift > Cluster > Approved
+  - AWS > Redshift > Cluster > Approved > Usage
+useCase: |
+  This policy is intended to approve only clusters where encryption in transit is required
+details: |
+  Cluster comes with a default parameter group assigned to it which doesn't requires SSL by default.
+  In order to require encryption in transit, cluster must use a custom parameter group with the
+  parameter `'require_ssl': 'true'`
+templateInput:
+  details: |
+    Queries cluster and parameter group assigned to it, if any
+  query: |
+    - |
+      {
+        item: resource {
+          parameterGroupName: get(path: "ClusterParameterGroups[0].ParameterGroupName")
+          turbot {
+            custom
+          }
+        }
+      }
+    - |
+      {
+        cluster: resource {
+          parameterGroup: get(path: "ClusterParameterGroups[0]")
+        }
+        parameterGroup: resource (id: "arn:aws:redshift:{{ $.item.turbot.custom.aws.regionName }}:{{ $.item.turbot.custom.aws.accountId }}:parametergroup:{{ $.item.parameterGroupName }}") {
+          parameters: get(path:"Parameters")
+        }
+      }
+template:
+  details: |
+    If cluster has a parameter group assigned which has the parameter `'require_ssl': 'true'`
+    and the parameter is in-sync with the cluster, then Usage policy is set to `Approved`, otherwise `Not approved`
+  source: |
+    {%- set requireSslParameter = {} -%}
+    {%- for parameter in $.parameterGroup.parameters -%}
+      {%- if parameter.ParameterName == 'require_ssl' -%}
+        {%- set requireSslParameter = parameter -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- set requireSslParameterStatus = {} -%}
+    {%- for parameterGroup in $.cluster.parameterGroup.ClusterParameterStatusList -%}
+      {%- if parameterGroup.ParameterName == 'require_ssl' -%}
+        {%- set requireSslParameterStatus = parameterGroup -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if requireSslParameter
+          and requireSslParameter.ParameterValue == 'true'
+          and requireSslParameterStatus
+          and requireSslParameterStatus.ParameterApplyStatus == 'in-sync' -%}
+      Approved
+    {%- else -%}
+      Not approved
+    {%- endif -%}

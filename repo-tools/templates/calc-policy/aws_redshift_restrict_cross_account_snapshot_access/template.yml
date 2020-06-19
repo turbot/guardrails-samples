@@ -1,9 +1,12 @@
-title: AWS RedShift - Restrict cross-account access to Redshift manual snapshots
+resource: AWS RedShift
+description: Restrict RedShift Manual Cluster access to cross account Manual Clusters Snapshots
+policies:
+  - AWS > Redshift > Manual Cluster Snapshot > Approved
+  - AWS > Redshift > Manual Cluster Snapshot > Approved > Usage
 useCase: |
   Use this policy if you would like to restrict the usage of allowing an external account getting access to the
   Redshift manual snapshots of the current account.
 details: |
-  Calculated policy for policy `AWS > Redshift > Manual Cluster Snapshot > Approved > Usage`.
   If a manual snapshot is configured to allow access from external accounts restore access then the approved usage 
   policy will be set to `Not approved` otherwise it will be set to `Approved`.
 templateInput:

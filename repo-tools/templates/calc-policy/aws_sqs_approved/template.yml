@@ -1,11 +1,13 @@
-title: AWS SQS Queue Approved Usage - Alarm if SQS policy violates org restrictions
+resource: AWS SQS Queue
+description: Alarm if SQS policy violates org restrictions
+policies:
+  - AWS > Region > Bucket > Approved
+  - AWS > Region > Bucket > Approved > Usage
 useCase: |
   The business owner of the AWS platform wants to use SQS within the environment and would like to get alarms if a queue
   policy contains "Action: SQS:*"
 
 details: |
-  Provides a Terraform configuration for creating a smart folder and applying a calculated policy on the 
-  `AWS > SQS > Queue > Approved > Usage` policy.
   The Calculated policy creates a template that will alarm if a queue policy contains "Action: SQS:*".
 templateInput:
   details: |
