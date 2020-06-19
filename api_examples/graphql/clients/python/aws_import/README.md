@@ -104,19 +104,19 @@ The following arguments are required in order to run the example:
 
 --parent
 
-> The resource id for the parent folder of this subscription
+> The resource id for the parent folder of this subscription.
 
 --account
 
-> The AWS account ID
+> The AWS account ID.
 
 --role_arn
 
-> IAM Role used by Turbot for access to the AWS account
+> IAM Role used by Turbot for access to the AWS account.
 
 --external_id
 
-> External ID for secure access to the Turbot IAM Role
+> External ID for secure access to the Turbot IAM Role.
 
 --help
 
@@ -124,8 +124,24 @@ The following arguments are required in order to run the example:
 
 #### Example usage
 
+##### Example 1
+
+General usage.
+
 ```shell
 python3 aws_import.py --parent <parent_id> --account <aws_account_id> --role_arn <access_role_arn> --external_id <external_id>
+```
+
+##### Example 2
+
+Import using profile `env` from the configuration file `.config/turbot/credentials.yml`.
+The parent resource to install under is `100000000000000`.
+Importing the account `900000000000`.
+Using the role ARN `arn:aws:iam::900000000000:role/turbot_service_role`.
+Using the external id to granting access to your AWS resources to a third party of `50000000`.
+
+```shell
+python3 aws_import.py -c .config/turbot/credentials.yml --profile env --parent 100000000000000 --account 900000000000 --role_arn arn:aws:iam::900000000000:role/turbot_service_role --external_id 50000000
 ```
 
 ## Virtual environments deactivation

@@ -10,16 +10,7 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const readdir = util.promisify(fs.readdir);
 
-function isString(variable) {
-  return typeof variable === "string";
-}
-
-function isArray(variable) {
-  return variable instanceof Array;
-}
-
 async function harvestedOptions(calcPolicyName) {
-  // "/home/omerosaienni/git-source/omerosaienni/tdk/api_examples/graphql/clients/python/aws_import/aws_import.py";
   const resolved = path.resolve(
     `${__dirname}/../api_examples/graphql/clients/python/${calcPolicyName}/${calcPolicyName}.py`
   );
@@ -68,54 +59,28 @@ async function loadPythonTemplate(name) {
 
 async function main() {
   console.log(chalk.gray(`Generate Documentation: Api Examples\nStart time: ${moment().format()}`));
-
   console.log(chalk.gray(`Generate Documentation: Python Examples`));
 
   const pythonTemplates = await listTemplates("templates/api-examples/clients/python");
-  // const nodeTemplates = await listTemplates("templates/api-examples/clients/node");
-
-  var env = new nunjucks.Environment();
-  env.addFilter("isString", isString);
-  env.addFilter("isArray", isArray);
 
   for (const pythonTemplate of pythonTemplates) {
     try {
-      const pythonTemplateName = pythonTemplate.name;
+      const definitionTemplate = await loadPythonTemplate(pythonTemplate.name);
 
-      const options = await harvestedOptions(pythonTemplateName);
-
-      //const variables = await harvestedVariables(pythonTemplateName);
-      const definitionTemplate = await loadPythonTemplate(pythonTemplateName);
-      definitionTemplate.name = pythonTemplateName;
-
+      definitionTemplate.name = pythonTemplate.name;
+      const options = await harvestedOptions(pythonTemplate.name);
+      const renderContext = { configuration: definitionTemplate, options };
       const masterTemplate = await loadMasterTemplate("templates/api-examples/python-template.njk");
 
-      const renderContext = { configuration: definitionTemplate, options };
-      const renderedDocument = env.renderString(masterTemplate, renderContext);
+      const renderedDocument = nunjucks.renderString(masterTemplate, renderContext);
 
-      await saveDocument(`api_examples/graphql/clients/python/${pythonTemplateName}/README.md`, renderedDocument);
+      await saveDocument(`api_examples/graphql/clients/python/${pythonTemplate.name}/README.md`, renderedDocument);
 
-      console.log(chalk.white(`Generated Document: ${pythonTemplateName}`));
-
-      // calcPolicy.resource = definitionTemplate.resource;
-      // calcPolicy.description = definitionTemplate.description;
-      // calcPolicy.details = definitionTemplate.details;
+      console.log(chalk.white(`Generated Document: ${pythonTemplate.name}`));
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${pythonTemplate.name}\nOriginal Error:\n`, e));
     }
   }
-
-  // const indexDocumentTemplate = await readFile(`${__dirname}/templates/calc-policy/index-document.njk`, "utf8");
-
-  // const indexDocumentRenderContext = { configuration: { calcPolicies } };
-
-  // const renderedIndexDocument = env.renderString(indexDocumentTemplate, indexDocumentRenderContext);
-  // const indexDocumentDestination = path.resolve(`${__dirname}/../calculated_policies/README.md`);
-
-  // await writeFile(indexDocumentDestination, renderedIndexDocument);
-
-  // console.log(chalk.white(`Generated Index Document: Calculated Policies`));
-  // console.log(chalk.gray(`Generate Documentation: Calculated Policies Complete\nEnd time: ${moment().format()}`));
 }
 
 main();

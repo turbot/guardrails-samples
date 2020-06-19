@@ -103,11 +103,15 @@ The following arguments are required in order to run the example:
 > Lists all the options and their usages.
 
 #### Example usage
+{% for example in configuration.examples %}
+##### Example {{ loop.index }}
+
+{{ example.description | trim}}
 
 ```shell
-{{ configuration.example | safe }}
+{{ example.command | safe }}
 ```
-
+{% endfor %}
 ## Virtual environments deactivation
 
 Once the script has been run, it is advised to deactivate the virtual environment if a virtual environment was used
