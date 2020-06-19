@@ -7,6 +7,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Gen Doc: API Examples",
+      "program": "${workspaceFolder}/repo-tools/gen-doc-api-examples.js",
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Gen Doc: Calculated Policies",
       "program": "${workspaceFolder}/repo-tools/gen-doc-calc-policies.js",
       "skipFiles": ["<node_internals>/**"]
