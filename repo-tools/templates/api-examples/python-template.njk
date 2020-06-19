@@ -1,6 +1,6 @@
-# AWS Account Import
+# {{ configuration.title }}
 
-A fully functioning example in Python which is used for importing an existing AWS account into Turbot.
+{{ configuration.description }}
 
 ## Prerequisites
 
@@ -78,7 +78,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 ### Synopsis
 
 ```shell
-python3 aws_import.py [options]
+python3 {{ configuration.name }}.py [options]
 ```
 
 ### Options
@@ -86,38 +86,18 @@ python3 aws_import.py [options]
 #### Required options
 
 The following arguments are required in order to run the example: 
-
-- parent
-- account
-- role_arn
-- external_id
+{% for option in options %}
+{%- if option.mandatory %}
+- {{ option.name }}
+{%- endif %}
+{%- endfor %}
 
 #### Details
+{% for option in options %}
+--{{ option.name }}
 
---config-file
-
-> Pass an optional yaml config file.
-
---profile
-
-> Profile to be used from config file.
-
---parent
-
-> The resource id for the parent folder of this subscription
-
---account
-
-> The AWS account ID
-
---role_arn
-
-> IAM Role used by Turbot for access to the AWS account
-
---external_id
-
-> External ID for secure access to the Turbot IAM Role
-
+> {{ option.help }}
+{% endfor %}
 --help
 
 > Lists all the options and their usages.
@@ -125,7 +105,7 @@ The following arguments are required in order to run the example:
 #### Example usage
 
 ```shell
-python3 aws_import.py --parent <parent_id> --account <aws_account_id> --role_arn <access_role_arn> --external_id <external_id>
+{{ configuration.example | safe }}
 ```
 
 ## Virtual environments deactivation
