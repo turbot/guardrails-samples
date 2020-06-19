@@ -1,0 +1,10 @@
+query ListSubscriptions {
+  resourceList(filter: "resourceType:'tmod:@turbot/azure#/resource/types/subscription'") {
+    items {
+      akas
+      turbot {
+        id
+      }
+    }
+  }
+}

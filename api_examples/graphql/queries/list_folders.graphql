@@ -1,0 +1,10 @@
+query ListFolders {
+  resourceList(filter: "resourceType:'tmod:@turbot/turbot#/resource/types/folder'") {
+    items {
+      turbot {
+        id
+      }
+      title
+    }
+  }
+}
