@@ -27,6 +27,7 @@ resource "turbot_policy_setting" "aws_cis" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/cis"
   value = "Skip"
+  count      = var.full_cis ? 0 : 1
   //  Skip
   //Check: Level 1 (Scored)
   //Check: Level 1 (Scored & Not Scored)
@@ -38,90 +39,105 @@ resource "turbot_policy_setting" "aws_cis_r0101" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0101"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0102" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0102"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0103" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0103"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0104" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0104"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0105" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0105"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0106" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0106"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0107" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0107"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0108" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0108"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0109" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0109"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0110" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0110"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0111" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0111"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0112" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0112"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0113" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0113"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0114" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0114"
   value = "Check: Level 2 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0115" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0115"
   value = "Check: Level 1 (Not Scored) using attestation"
+  count      = var.full_cis ? 1 : 0
 }
 
 // https://turbot.com/v5/mods/turbot/aws-cisv1/inspect#/policy/types/r0115Attestation
@@ -130,18 +146,21 @@ resource "turbot_policy_setting" "aws_cis_r0115" {
 //   resource = turbot_smart_folder.aws_cis_enumerated.id
 //   type = "tmod:@turbot/aws-cisv1#/policy/types/r0115Attestation"
 //   value = ""
+//   count      = var.full_cis ? 1 : 0
 // }
 
 resource "turbot_policy_setting" "aws_cis_r0116" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0116"
   value = "Check: Level 1 (Scored)"
+  count      = var.full_cis ? 1 : 0
 }
 
 resource "turbot_policy_setting" "aws_cis_r0117" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0117"
   value = "Check: Level 1 (Not Scored) using attestation"
+  count      = var.full_cis ? 1 : 0
 }
 
 // The format should be a date-time.  As the data cannot be programmatically verified, this should be done manually.
@@ -154,6 +173,7 @@ resource "turbot_policy_setting" "aws_cis_r0118" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0118"
   value = "Check: Level 1 (Not Scored) using attestation"
+  count      = var.full_cis ? 1 : 0
 }
 
 // The format should be a date-time.  As the data cannot be programmatically verified, this should be done manually.
@@ -354,3 +374,4 @@ resource "turbot_policy_setting" "aws_cis_r0404" {
 //   type = "tmod:@turbot/aws-cisv1#/policy/types/r0404Attestation"
 //   value = ""
 // }
+//
