@@ -10,7 +10,7 @@ details: |
 templateInput:
   details: |
     The query selects `encryption` property from the disk which will be used to determine
-    if the resource should be `Approved` or `Not approved`
+    if the resource should be `Approved` or `Not approved`.
   query: |
     {
       resource {
@@ -20,7 +20,7 @@ templateInput:
 template:
   details: |
     If `encryption.type` property is `EncryptionAtRestWithCustomerKey` then the policy is set to `Approved`
-    otherwise `Not approved`
+    otherwise `Not approved`.
   source: |
     {%- if $.resource.encryption and $.resource.encryption.type == "EncryptionAtRestWithCustomerKey" -%}
       Approved
