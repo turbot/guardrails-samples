@@ -81,6 +81,8 @@ async function main() {
       console.error(chalk.red(`Error generating calculated policy ${pythonTemplate.name}\nOriginal Error:\n`, e));
     }
   }
+
+  console.log(chalk.gray(`Generate Documentation: Api Examples Complete\nEnd time: ${moment().format()}`));
 }
 
 main();
