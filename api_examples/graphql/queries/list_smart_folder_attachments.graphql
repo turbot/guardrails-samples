@@ -1,0 +1,21 @@
+#replace the resource ID with one valid
+query ListSmartFolders {
+  resource(id: "205750312569568") {
+    availableSmartFolders {
+      items {
+        title
+        turbot {
+          id
+        }
+      }
+    }
+    attachedSmartFolders {
+      items {
+        title
+        turbot {
+          id
+        }
+      }
+    }
+  }
+}
