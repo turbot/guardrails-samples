@@ -97,7 +97,7 @@ python3 run_policies.py --help
 
 python3 run_policies.py --state "error"
 
-python3 run_policies.py --filter "tbd,invalid" --execute
+python3 run_policies.py --state "tbd,invalid" --execute
 ```
 
 ### Virtual environments deactivation
