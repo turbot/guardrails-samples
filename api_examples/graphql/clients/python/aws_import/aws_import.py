@@ -4,12 +4,12 @@ from sgqlc.endpoint.http import HTTPEndpoint
 
 
 @click.command()
-@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="Pass an optional yaml config file.")
-@click.option('-p', '--profile', default="default", help="Profile to be used from config file.")
-@click.option('--parent', required=True, help="The resource id for the parent folder of this subscription.")
-@click.option('--account', required=True, help="The AWS account ID.")
-@click.option('--role_arn', required=True, help="IAM Role used by Turbot for access to the AWS account.")
-@click.option('--external_id', required=True, help="External ID for secure access to the Turbot IAM Role.")
+@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
+@click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
+@click.option('--parent', required=True, help="[String] The resource id for the parent folder of this subscription.")
+@click.option('--account', required=True, help="[String] The AWS account ID.")
+@click.option('--role_arn', required=True, help="[String] IAM Role used by Turbot for access to the AWS account.")
+@click.option('--external_id', required=True, help="[String] External ID for secure access to the Turbot IAM Role.")
 def run_controls(config_file, profile, parent, account, role_arn, external_id):
     """Import an AWS Account"""
 

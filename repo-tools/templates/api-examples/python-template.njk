@@ -1,6 +1,6 @@
 # {{ configuration.title }}
 
-{{ configuration.description }}
+{{ configuration.description | trim }}
 
 ## Prerequisites
 
@@ -82,19 +82,19 @@ python3 {{ configuration.name }}.py [options]
 ```
 
 ### Options
-
+{% if options.hasMandatory %}
 #### Required options
 
 The following arguments are required in order to run the example: 
 {% for option in options %}
 {%- if option.mandatory %}
-- {{ option.name }}
+- {{ option.names[0] }}
 {%- endif %}
 {%- endfor %}
-
+{% endif %}
 #### Details
 {% for option in options %}
---{{ option.name }}
+{{ option.names | join(", ") }}
 
 > {{ option.help }}
 {% endfor %}
@@ -109,7 +109,7 @@ The following arguments are required in order to run the example:
 {{ example.description | trim}}
 
 ```shell
-{{ example.command | safe }}
+python3 {{ configuration.name }}.py {{ example.options | safe }}
 ```
 {% endfor %}
 ## Virtual environments deactivation

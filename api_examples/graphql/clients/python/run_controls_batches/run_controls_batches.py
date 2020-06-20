@@ -6,25 +6,25 @@ import time
 
 
 @click.command()
-@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="Pass an optional yaml config file.")
-@click.option('-p', '--profile', default="default", help="Profile to be used from config file.")
-@click.option('-f', '--filter', default="state:tbd", help="Filter to run.")
-@click.option('-b', '--batch', default=100, help="The number of controls to run before cooldown per cycle")
-@click.option('-s', '--start-index', default=0, help="Sets the starting point in the returned control collection. All controls starting at the starting point will be run.")
-@click.option('-d', '--cooldown', default=120, help="Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.")
-@click.option('-m', '--max-batch', default=-1, help="The maximum number of batches to run. The value `-1` will run all the return controls from the starting point.")
+@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
+@click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
+@click.option('-f', '--filter', default="state:tbd", help="[String] Filter to run.")
+@click.option('-b', '--batch', default=100, help="[Int] The number of controls to run before cooldown per cycle")
+@click.option('-s', '--start-index', default=0, help="[Int] Sets the starting point in the returned control collection. All controls starting at the starting point will be run.")
+@click.option('-d', '--cooldown', default=120, help="[Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.")
+@click.option('-m', '--max-batch', default=-1, help="[Int] The maximum number of batches to run. The value `-1` will run all the return controls from the starting point.")
 @click.option('-e', '--execute', is_flag=True, help="Will re-run controls when found.")
 def run_controls(config_file, profile, filter, batch, start_index, cooldown, max_batch, execute):
     """ Finds all controls matching the provided filter, then re-runs them if --execute is set."""
     """
         Example Filters
         ---------------
-        Run controls in TBD (Default):      "state:tbd"
-        Run controls in error state:        "state:error"
-        Run controls in multiple states:    "state:tbd,error,alarm"
-        Re-run installed controls:          "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
-        Re-run AWS Event Handler controls:  "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
-        Re-run Discovery controls:          "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+        Run controls in TBD state (Default):  "state:tbd"
+        Run controls in error state:          "state:error"
+        Run controls in multiple states:      "state:tbd,error,alarm"
+        Re-run installed controls:            "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
+        Re-run AWS Event Handler controls:    "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
+        Re-run Discovery controls:            "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
     """
 
     config = turbot.Config(config_file, profile)

@@ -18,16 +18,29 @@ async function harvestedOptions(calcPolicyName) {
   contents = contents.split("\n");
 
   const options = [];
+  options.hasMandatory = false;
 
   for (const line of contents) {
     const isClickOption = line.search(/@click.option/) !== -1;
     if (!isClickOption) continue;
 
-    const name = line.match(/'--([a-zA-Z-_]*)'/)[1];
+    const names = [];
+
+    const longName = line.match(/'(--[a-zA-Z-_]*)'/);
+    if (longName && longName.length === 2) {
+      names.push(longName[1]);
+    }
+    const shortName = line.match(/'(-[a-zA-Z][a-zA-Z-_]*)'/);
+    if (shortName && shortName.length === 2) {
+      names.push(shortName[1]);
+    }
     const help = line.match(/help="(.*)"/)[1];
     const mandatory = line.search(/required=True/) !== -1;
+    if (mandatory) {
+      options.hasMandatory = true;
+    }
 
-    options.push({ name, help, mandatory });
+    options.push({ names, help, mandatory });
   }
 
   return options;

@@ -87,36 +87,36 @@ python3 aws_import.py [options]
 
 The following arguments are required in order to run the example: 
 
-- parent
-- account
-- role_arn
-- external_id
+- --parent
+- --account
+- --role_arn
+- --external_id
 
 #### Details
 
---config-file
+--config-file, -c
 
-> Pass an optional yaml config file.
+> [String] Pass an optional yaml config file.
 
---profile
+--profile, -p
 
-> Profile to be used from config file.
+> [String] Profile to be used from config file.
 
 --parent
 
-> The resource id for the parent folder of this subscription.
+> [String] The resource id for the parent folder of this subscription.
 
 --account
 
-> The AWS account ID.
+> [String] The AWS account ID.
 
 --role_arn
 
-> IAM Role used by Turbot for access to the AWS account.
+> [String] IAM Role used by Turbot for access to the AWS account.
 
 --external_id
 
-> External ID for secure access to the Turbot IAM Role.
+> [String] External ID for secure access to the Turbot IAM Role.
 
 --help
 

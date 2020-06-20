@@ -1,6 +1,8 @@
-# Run Controls
+# Run Controls In Batches
 
 Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
+After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
+next batch of controls.
 
 ## Prerequisites
 
@@ -78,7 +80,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 ### Synopsis
 
 ```shell
-python3 run_controls.py [options]
+python3 run_controls_batches.py [options]
 ```
 
 ### Options
@@ -97,6 +99,22 @@ python3 run_controls.py [options]
 
 > [String] Filter to run.
 
+--batch, -b
+
+> [Int] The number of controls to run before cooldown per cycle
+
+--start-index, -s
+
+> [Int] Sets the starting point in the returned control collection. All controls starting at the starting point will be run.
+
+--cooldown, -d
+
+> [Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.
+
+--max-batch, -m
+
+> [Int] The maximum number of batches to run. The value `-1` will run all the return controls from the starting point.
+
 --execute, -e
 
 > Will re-run controls when found.
@@ -112,7 +130,7 @@ python3 run_controls.py [options]
 The return the number of controls found that will be run by the script without re-running the control.
 
 ```shell
-python3 run_controls.py 
+python3 run_controls_batches.py 
 ```
 
 ##### Example 2
@@ -120,7 +138,7 @@ python3 run_controls.py
 Re-runs all the controls found.
 
 ```shell
-python3 run_controls.py --execute
+python3 run_controls_batches.py --execute
 ```
 
 ##### Example 3
@@ -128,7 +146,7 @@ python3 run_controls.py --execute
 Re-run controls in TBD state - default behavior.
 
 ```shell
-python3 run_controls.py -f "state:tbd"
+python3 run_controls_batches.py -f "state:tbd"
 ```
 
 ##### Example 4
@@ -136,7 +154,7 @@ python3 run_controls.py -f "state:tbd"
 Re-run controls in error state.
 
 ```shell
-python3 run_controls.py -f "state:error"
+python3 run_controls_batches.py -f "state:error"
 ```
 
 ##### Example 5
@@ -144,7 +162,7 @@ python3 run_controls.py -f "state:error"
 Re-run controls in multiple states.
 
 ```shell
-python3 run_controls.py -f "state:tbd,error,alarm"
+python3 run_controls_batches.py -f "state:tbd,error,alarm"
 ```
 
 ##### Example 6
@@ -152,7 +170,7 @@ python3 run_controls.py -f "state:tbd,error,alarm"
 Re-run installed controls.
 
 ```shell
-python3 run_controls.py -f "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
+python3 run_controls_batches.py -f "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
 ```
 
 ##### Example 7
@@ -160,7 +178,7 @@ python3 run_controls.py -f "state:tbd,error controlType:'tmod:@turbot/turbot#/co
 Re-run AWS Event Handler controls.
 
 ```shell
-python3 run_controls.py -f "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
+python3 run_controls_batches.py -f "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
 ```
 
 ##### Example 8
@@ -168,7 +186,23 @@ python3 run_controls.py -f "controlType:'tmod:@turbot/aws#/control/types/eventHa
 Re-run Discovery controls
 
 ```shell
-python3 run_controls.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+python3 run_controls_batches.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+```
+
+##### Example 9
+
+Re-run Discovery controls in batches of 200
+
+```shell
+python3 run_controls_batches.py -b 200
+```
+
+##### Example 10
+
+Re-run Discovery controls with no cooldown
+
+```shell
+python3 run_controls_batches.py -d 0
 ```
 
 ## Virtual environments deactivation
