@@ -6,8 +6,8 @@ Finds all controls matching the provided filter, then re-runs them in batches if
 
 To run the scripts, you must have:
 
-- [Python](https://www.python.org/) version 3 or above
-- [Pip](https://pip.pypa.io/)
+- [Python 3.\*.*](https://www.python.org/downloads/)
+- [Pip](https://pip.pypa.io/en/stable/installing/)
 
 ## Setup
 
