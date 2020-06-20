@@ -47,7 +47,7 @@ def run_policies(config_file, profile, state, execute):
         variables = {'filter': filter, 'paging': paging}
         result = endpoint(query, variables)
 
-        if result['errors']:
+        if "errors" in result:
             for error in result['errors']:
                 print(error)
             break

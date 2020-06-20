@@ -1,6 +1,8 @@
-# AWS Account Import
+# Run Controls In Batches
 
-A fully functioning example in Python which is used for importing an existing AWS account into Turbot.
+Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
+After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
+next batch of controls.
 
 ## Prerequisites
 
@@ -78,19 +80,10 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 ### Synopsis
 
 ```shell
-python3 aws_import.py [options]
+python3 run_controls_batches.py [options]
 ```
 
 ### Options
-
-#### Required options
-
-The following arguments are required in order to run the example: 
-
-- --parent
-- --account
-- --role_arn
-- --external_id
 
 #### Details
 
@@ -102,21 +95,29 @@ The following arguments are required in order to run the example:
 
 > [String] Profile to be used from config file.
 
---parent
+-f, --filter
 
-> [String] The resource id for the parent folder of this subscription.
+> [String] Filter to run.
 
---account
+-b, --batch
 
-> [String] The AWS account ID.
+> [Int] The number of controls to run before cooldown per cycle
 
---role_arn
+-s, --start-index
 
-> [String] IAM Role used by Turbot for access to the AWS account.
+> [Int] Sets the starting point in the returned control collection. All controls starting at the starting point will be run.
 
---external_id
+-d, --cooldown
 
-> [String] External ID for secure access to the Turbot IAM Role.
+> [Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.
+
+-m, --max-batch
+
+> [Int] The maximum number of batches to run. The value `-1` will run all the return controls from the starting point.
+
+-e, --execute
+
+> Will re-run controls when found.
 
 --help
 
@@ -126,22 +127,82 @@ The following arguments are required in order to run the example:
 
 ##### Example 1
 
-General usage.
+The return the number of controls found that will be run by the script without re-running the control.
 
 ```shell
-python3 aws_import.py --parent <parent_id> --account <aws_account_id> --role_arn <access_role_arn> --external_id <external_id>
+python3 run_controls_batches.py 
 ```
 
 ##### Example 2
 
-Import using profile `env` from the configuration file `.config/turbot/credentials.yml`.
-The parent resource to install under is `100000000000000`.
-Importing the account `900000000000`.
-Using the role ARN `arn:aws:iam::900000000000:role/turbot_service_role`.
-Using the external id to granting access to your AWS resources to a third party of `50000000`.
+Re-runs all the controls found.
 
 ```shell
-python3 aws_import.py -c .config/turbot/credentials.yml --profile env --parent 100000000000000 --account 900000000000 --role_arn arn:aws:iam::900000000000:role/turbot_service_role --external_id 50000000
+python3 run_controls_batches.py --execute
+```
+
+##### Example 3
+
+Re-run controls in TBD state - default behavior.
+
+```shell
+python3 run_controls_batches.py -f "state:tbd"
+```
+
+##### Example 4
+
+Re-run controls in error state.
+
+```shell
+python3 run_controls_batches.py -f "state:error"
+```
+
+##### Example 5
+
+Re-run controls in multiple states.
+
+```shell
+python3 run_controls_batches.py -f "state:tbd,error,alarm"
+```
+
+##### Example 6
+
+Re-run installed controls.
+
+```shell
+python3 run_controls_batches.py -f "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
+```
+
+##### Example 7
+
+Re-run AWS Event Handler controls.
+
+```shell
+python3 run_controls_batches.py -f "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
+```
+
+##### Example 8
+
+Re-run Discovery controls
+
+```shell
+python3 run_controls_batches.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+```
+
+##### Example 9
+
+Re-run Discovery controls in batches of 200
+
+```shell
+python3 run_controls_batches.py -b 200
+```
+
+##### Example 10
+
+Re-run Discovery controls with no cooldown
+
+```shell
+python3 run_controls_batches.py -d 0
 ```
 
 ## Virtual environments deactivation
