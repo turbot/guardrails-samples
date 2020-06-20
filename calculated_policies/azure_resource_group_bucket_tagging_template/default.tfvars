@@ -8,6 +8,12 @@ tag_default_value = "<default value in case value is empty>"
 # Examples for tag_default_value
 # tag_default_value = "Unknown"
 
+# Required - Target resource to attach to smart folder
+target_resource = "<resource_id or aka>"
+# Examples for target_resource
+# target_resource = "tmod:@turbot/turbot#/"
+# target_resource = "191926035367605"
+
 # Optional - Default value: "Azure Resource Group Tags Template"
 # smart_folder_title = "Custom Smart Folder Title"
 

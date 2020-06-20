@@ -63,6 +63,7 @@ Variables that are exposed by this script are:
 
 - tag_key
 - tag_default_value
+- target_resource
 - smart_folder_title (Optional)
 - smart_folder_description (Optional)
 - smart_folder_parent_resource (Optional)

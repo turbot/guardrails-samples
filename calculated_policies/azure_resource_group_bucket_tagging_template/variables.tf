@@ -8,6 +8,11 @@ variable "tag_default_value" {
   type        = string
 }
 
+variable "target_resource" {
+  description = "Enter the resource ID or AKA for the resource to apply the calculated policy"
+  type        = string
+}
+
 variable "smart_folder_title" {
   description = "Enter a title for the smart folder"
   type        = string
