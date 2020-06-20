@@ -94,7 +94,7 @@ The following arguments are required in order to run the example:
 {% endif %}
 #### Details
 {% for option in options %}
-{{ option.names | join(", ") }}
+{{ option.names | reverse | join(", ") }}
 
 > {{ option.help }}
 {% endfor %}

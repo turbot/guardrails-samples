@@ -87,35 +87,35 @@ python3 run_controls_batches.py [options]
 
 #### Details
 
---config-file, -c
+-c, --config-file
 
 > [String] Pass an optional yaml config file.
 
---profile, -p
+-p, --profile
 
 > [String] Profile to be used from config file.
 
---filter, -f
+-f, --filter
 
 > [String] Filter to run.
 
---batch, -b
+-b, --batch
 
 > [Int] The number of controls to run before cooldown per cycle
 
---start-index, -s
+-s, --start-index
 
 > [Int] Sets the starting point in the returned control collection. All controls starting at the starting point will be run.
 
---cooldown, -d
+-d, --cooldown
 
 > [Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.
 
---max-batch, -m
+-m, --max-batch
 
 > [Int] The maximum number of batches to run. The value `-1` will run all the return controls from the starting point.
 
---execute, -e
+-e, --execute
 
 > Will re-run controls when found.
 

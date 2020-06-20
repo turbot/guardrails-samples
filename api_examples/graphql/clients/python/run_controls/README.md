@@ -85,19 +85,19 @@ python3 run_controls.py [options]
 
 #### Details
 
---config-file, -c
+-c, --config-file
 
 > [String] Pass an optional yaml config file.
 
---profile, -p
+-p, --profile
 
 > [String] Profile to be used from config file.
 
---filter, -f
+-f, --filter
 
 > [String] Filter to run.
 
---execute, -e
+-e, --execute
 
 > Will re-run controls when found.
 

@@ -94,11 +94,11 @@ The following arguments are required in order to run the example:
 
 #### Details
 
---config-file, -c
+-c, --config-file
 
 > [String] Pass an optional yaml config file.
 
---profile, -p
+-p, --profile
 
 > [String] Profile to be used from config file.
 
