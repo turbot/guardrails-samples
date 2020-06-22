@@ -79,8 +79,9 @@ async function main() {
   for (const pythonTemplate of pythonTemplates) {
     try {
       const definitionTemplate = await loadPythonTemplate(pythonTemplate.name);
-
+      definitionTemplate.library = definitionTemplate.library ? definitionTemplate.library : false;
       definitionTemplate.name = pythonTemplate.name;
+
       const options = await harvestedOptions(pythonTemplate.name);
       const renderContext = { configuration: definitionTemplate, options };
       const masterTemplate = await loadMasterTemplate("templates/api-examples/python.njk");
