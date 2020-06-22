@@ -1,8 +1,10 @@
 title: Run policies
-description: |
-  Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
+description:
+  short: Runs all policies that match the end user provided filter.
+  full: |
+    Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
 
-  For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
+    For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
 examples:
   - description: The return the number of policies found that will be run by the script without re-running the control.
     options: null

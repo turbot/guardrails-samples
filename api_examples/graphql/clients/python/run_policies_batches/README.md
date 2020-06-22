@@ -79,6 +79,15 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 
 ## Executing the script
 
+To run a the python script:
+
+1. Install and configure the [pre-requisites](#pre-requisites)
+1. Using the command line, navigate to the directory for the Python script
+1. Create and activate the Python virtual environment
+1. Install dependencies
+1. Run the Python script using the command line
+1. Deactivate the Python virtual environment
+
 ### Synopsis
 
 ```shell

@@ -1,27 +1,29 @@
 title: Get notifications by notification type
-description: |
-  This script will return a filtered collection of notifications the notification class to filter results.
+description:
+  short: Return a filtered collection of notifications for end user provided notification types to filter results.
+  full: |
+    This script will return a filtered collection of notifications the notification class to filter results.
 
-  The example has returns more data than is necessary as different fields are populated in GraphQL when using differing
-  notification class values.
+    The example has returns more data than is necessary as different fields are populated in GraphQL when using differing
+    notification class values.
 
-  | Notification type  | Fields returned         |
-  |--------------------|-------------------------|
-  | resource_*         | resource                |
-  | policy_value_*     | resource, policyValue   |
-  | policy_setting_*   | resource, policySetting |
-  | control_*          | resource, control       |
-  | grant-*            | resource, grant         |
-  | active_grants_*    | resource                |
+    | Notification type  | Fields returned         |
+    |--------------------|-------------------------|
+    | resource_*         | resource                |
+    | policy_value_*     | resource, policyValue   |
+    | policy_setting_*   | resource, policySetting |
+    | control_*          | resource, control       |
+    | grant-*            | resource, grant         |
+    | active_grants_*    | resource                |
 
-  By default the script will return all notifications that were returned over the last 10 days.
-  For more information on how to use [datetime filters](https://turbot.com/v5/docs/reference/filter#datetime-filters).
+    By default the script will return all notifications that were returned over the last 10 days.
+    For more information on how to use [datetime filters](https://turbot.com/v5/docs/reference/filter#datetime-filters).
 
-  By default the script will sort the notifications displaying most recent first.
-  For more information on how to use [sorting](https://turbot.com/v5/docs/reference/filter#sorting).
+    By default the script will sort the notifications displaying most recent first.
+    For more information on how to use [sorting](https://turbot.com/v5/docs/reference/filter#sorting).
 
-  This script will return a filtered collection of notifications using the notification type to filter results.
-  For more information on [notifications types](https://turbot.com/v5/docs/concepts/notifications#notification-types).
+    This script will return a filtered collection of notifications using the notification type to filter results.
+    For more information on [notifications types](https://turbot.com/v5/docs/concepts/notifications#notification-types).
 examples:
   - description: Returns all `resource` notifications for the last 10 days returning latest first.
     options: null
