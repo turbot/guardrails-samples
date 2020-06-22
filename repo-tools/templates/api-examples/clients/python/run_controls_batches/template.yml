@@ -18,12 +18,9 @@ examples:
     options: -f "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
   - description: Re-run AWS Event Handler controls.
     options: -f "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
-  - description: |
-      Re-run Discovery controls
+  - description: Re-run Discovery controls.
     options: -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
-  - description: |
-      Re-run Discovery controls in batches of 200
+  - description: Re-run controls in batches of 200.
     options: -b 200
-  - description: |
-      Re-run Discovery controls with no cooldown
+  - description: Re-run controls with no cool down.
     options: -d 0

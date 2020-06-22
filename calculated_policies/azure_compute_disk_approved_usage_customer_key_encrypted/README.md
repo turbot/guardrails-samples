@@ -18,7 +18,7 @@ Approval policy that restrict usage of disks if they are not customer key encryp
 The template input to a calculated policy is a GraphQL query.
 
 The query selects `encryption` property from the disk which will be used to determine
-if the resource should be `Approved` or `Not approved`
+if the resource should be `Approved` or `Not approved`.
 
 ```graphql
 {
@@ -31,7 +31,7 @@ if the resource should be `Approved` or `Not approved`
 ### Template (Nunjucks)
 
 If `encryption.type` property is `EncryptionAtRestWithCustomerKey` then the policy is set to `Approved`
-otherwise `Not approved`
+otherwise `Not approved`.
 
 ```nunjucks
 {%- if $.resource.encryption and $.resource.encryption.type == "EncryptionAtRestWithCustomerKey" -%}

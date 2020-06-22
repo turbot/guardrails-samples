@@ -1,3 +1,8 @@
 {
-  "cSpell.words": ["creds", "graphql", "nunjucks"]
+  "cSpell.words": [
+    "creds",
+    "graphql",
+    "nunjucks"
+  ],
+  "python.pythonPath": "/home/omerosaienni/.virtualenvs/export_v3_environment/bin/python"
 }

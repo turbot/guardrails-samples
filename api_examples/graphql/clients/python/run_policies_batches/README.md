@@ -1,6 +1,8 @@
-# Run Controls
+# Run Policies In Batches
 
 Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
+After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
+next batch of policies.
 
 ## Prerequisites
 
@@ -78,7 +80,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 ### Synopsis
 
 ```shell
-python3 run_controls.py [options]
+python3 run_policies_batches.py [options]
 ```
 
 ### Options
@@ -97,9 +99,25 @@ python3 run_controls.py [options]
 
 > [String] Filter to run.
 
+-b, --batch
+
+> [Int] The number of policies to run before cooldown per cycle
+
+-s, --start-index
+
+> [Int] Sets the starting point in the returned control collection. All policies starting at the starting point will be run.
+
+-d, --cooldown
+
+> [Int] Number of seconds to pause before the next batch of policies are run. Setting this value to `0` will disable cooldown.
+
+-m, --max-batch
+
+> [Int] The maximum number of batches to run. The value `-1` will run all the returned policies from the starting point.
+
 -e, --execute
 
-> Will re-run controls when found.
+> Will re-run policies when found.
 
 --help
 
@@ -109,66 +127,74 @@ python3 run_controls.py [options]
 
 ##### Example 1
 
-The return the number of controls found that will be run by the script without re-running the control.
+The return the number of policies found that will be run by the script without re-running the control.
 
 ```shell
-python3 run_controls.py 
+python3 run_policies_batches.py 
 ```
 
 ##### Example 2
 
-Re-runs all the controls found.
+Re-runs all the policies found.
 
 ```shell
-python3 run_controls.py --execute
+python3 run_policies_batches.py --execute
 ```
 
 ##### Example 3
 
-Re-run controls in TBD state - default behavior.
+Re-run policies in TBD state - default behavior.
 
 ```shell
-python3 run_controls.py -f "state:tbd"
+python3 run_policies_batches.py -f "state:tbd"
 ```
 
 ##### Example 4
 
-Re-run controls in error state.
+Re-run policies in error state.
 
 ```shell
-python3 run_controls.py -f "state:error"
+python3 run_policies_batches.py -f "state:error"
 ```
 
 ##### Example 5
 
-Re-run controls in multiple states.
+Re-run policies in multiple states.
 
 ```shell
-python3 run_controls.py -f "state:tbd,error,alarm"
+python3 run_policies_batches.py -f "state:tbd,error,alarm"
 ```
 
 ##### Example 6
 
-Re-run installed controls.
+Re-run all policies in categorized as CMDB polices.
 
 ```shell
-python3 run_controls.py -f "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
+python3 run_policies_batches.py -f "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
 ```
 
 ##### Example 7
 
-Re-run AWS Event Handler controls.
+Re-run policies that match a specific policy type.
 
 ```shell
-python3 run_controls.py -f "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
+python3 run_policies_batches.py -f "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
 ```
 
 ##### Example 8
 
-Re-run Discovery controls.
+Re-run policies in batches of 200.
 
 ```shell
-python3 run_controls.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+python3 run_policies_batches.py -b 200
+```
+
+##### Example 9
+
+Re-run policies with no cool down.
+
+```shell
+python3 run_policies_batches.py -d 0
 ```
 
 ## Virtual environments deactivation

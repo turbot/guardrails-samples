@@ -9,22 +9,21 @@ import time
 @click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
 @click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
 @click.option('-f', '--filter', default="state:tbd", help="[String] Filter to run.")
-@click.option('-b', '--batch', default=100, help="[Int] The number of controls to run before cooldown per cycle")
-@click.option('-s', '--start-index', default=0, help="[Int] Sets the starting point in the returned control collection. All controls starting at the starting point will be run.")
-@click.option('-d', '--cooldown', default=120, help="[Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.")
-@click.option('-m', '--max-batch', default=-1, help="[Int] The maximum number of batches to run. The value `-1` will run all the returned controls from the starting point.")
-@click.option('-e', '--execute', is_flag=True, help="Will re-run controls when found.")
-def run_controls(config_file, profile, filter, batch, start_index, cooldown, max_batch, execute):
-    """ Finds all controls matching the provided filter, then re-runs them if --execute is set."""
+@click.option('-b', '--batch', default=100, help="[Int] The number of policies to run before cooldown per cycle")
+@click.option('-s', '--start-index', default=0, help="[Int] Sets the starting point in the returned control collection. All policies starting at the starting point will be run.")
+@click.option('-d', '--cooldown', default=120, help="[Int] Number of seconds to pause before the next batch of policies are run. Setting this value to `0` will disable cooldown.")
+@click.option('-m', '--max-batch', default=-1, help="[Int] The maximum number of batches to run. The value `-1` will run all the returned policies from the starting point.")
+@click.option('-e', '--execute', is_flag=True, help="Will re-run policies when found.")
+def run_policies(config_file, profile, filter, batch, start_index, cooldown, max_batch, execute):
+    """ Finds all policies matching the provided filter, then re-runs them if --execute is set."""
     """
         Example Filters
         ---------------
-        Run controls in TBD state (Default):  "state:tbd"
-        Run controls in error state:          "state:error"
-        Run controls in multiple states:      "state:tbd,error,alarm"
-        Re-run installed controls:            "state:tbd,error controlType:'tmod:@turbot/turbot#/control/types/controlInstalled'"
-        Re-run AWS Event Handler controls:    "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
-        Re-run Discovery controls:            "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+        Run policies in TBD (Default):          "state:tbd"
+        Run policies in error state:            "state:error"
+        Run policies in multiple states:        "state:tbd,error,invalid"
+        Re-run CMDB policies:                   "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
+        Re-run policies that match policy type: "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
     """
 
     config = turbot.Config(config_file, profile)
@@ -33,10 +32,11 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
 
     query = '''
       query Targets($filter: [String!]!, $paging: String) {
-        targets: controls(filter: $filter, paging: $paging) {
+        targets: policyValues(filter: $filter, paging: $paging) {
           items {
-            turbot { id }
-            state
+            turbot {
+              id
+            }
           }
           paging {
             next
@@ -72,8 +72,8 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
         print("\n --execute flag not set... exiting.")
     else:
         mutation = '''
-          mutation RunControl($input: RunControlInput!) {
-            runControl(input: $input) {
+          mutation RunPolicy($input: RunPolicyInput!) {
+            runPolicy(input: $input) {
               turbot {
                 id
               }
@@ -100,4 +100,4 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
 
 
 if __name__ == "__main__":
-    run_controls()
+    run_policies()
