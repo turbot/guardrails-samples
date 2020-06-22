@@ -3,19 +3,19 @@
 Provides Python scripts that show how an end user can run controls, query data and make decisions based on resource data
 which is returned from Turbot.
 
-### Current Calculated Policies
+### Available scripts
 
-| Path | Description |
-| ---- | ----------- |
+| Title | Description |
+| ----- | ----------- |
 {%- for pythonTemplate in configuration.pythonTemplates %}
-| [{{ pythonTemplate.name }}](./{{ pythonTemplate.name }}/README.md) | {{ pythonTemplate.description }} |
+| [{{ pythonTemplate.title }}](./{{ pythonTemplate.name }}/README.md) | {{ pythonTemplate.description }} |
 {%- endfor %}
 
 ## Prerequisites
 
 To run the scripts, you must have:
 
-- [Python 3.\*.*](https://www.python.org/downloads/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
 ### Configuring credentials
