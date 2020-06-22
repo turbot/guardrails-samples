@@ -1,5 +1,7 @@
 title: AWS Account Import
-description: A fully functioning example in Python which is used for importing an existing AWS account into Turbot.
+description:
+  short: Import an existing AWS account into Turbot.
+  full: A fully functioning example in Python which is used for importing an existing AWS account into Turbot.
 examples:
   - description: General usage.
     options: --parent <parent_id> --account <aws_account_id> --role_arn <access_role_arn> --external_id <external_id>

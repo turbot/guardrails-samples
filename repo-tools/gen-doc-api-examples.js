@@ -83,18 +83,30 @@ async function main() {
       definitionTemplate.name = pythonTemplate.name;
       const options = await harvestedOptions(pythonTemplate.name);
       const renderContext = { configuration: definitionTemplate, options };
-      const masterTemplate = await loadMasterTemplate("templates/api-examples/python-template.njk");
+      const masterTemplate = await loadMasterTemplate("templates/api-examples/python.njk");
 
       const renderedDocument = nunjucks.renderString(masterTemplate, renderContext);
 
       await saveDocument(`api_examples/graphql/clients/python/${pythonTemplate.name}/README.md`, renderedDocument);
 
       console.log(chalk.white(`Generated Document: ${pythonTemplate.name}`));
+
+      pythonTemplate.description = definitionTemplate.description.short;
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${pythonTemplate.name}\nOriginal Error:\n`, e));
     }
   }
 
+  const indexDocumentTemplate = await readFile(`${__dirname}/templates/api-examples/index-python.njk`, "utf8");
+
+  const indexDocumentRenderContext = { configuration: { pythonTemplates } };
+
+  const renderedIndexDocument = nunjucks.renderString(indexDocumentTemplate, indexDocumentRenderContext);
+  const indexDocumentDestination = path.resolve(`${__dirname}/../api_examples/graphql/clients/python/README.md`);
+
+  await writeFile(indexDocumentDestination, renderedIndexDocument);
+
+  console.log(chalk.white(`Generated Index Document: Python Example`));
   console.log(chalk.gray(`Generate Documentation: Api Examples Complete\nEnd time: ${moment().format()}`));
 }
 

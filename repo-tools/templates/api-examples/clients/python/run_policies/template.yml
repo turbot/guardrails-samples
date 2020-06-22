@@ -1,8 +1,10 @@
-title: Run Policies
-description: |
-  Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
+title: Run policies
+description:
+  short: Runs all policies that match the end user provided filter.
+  full: |
+    Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
 
-  For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
+    For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
 examples:
   - description: The return the number of policies found that will be run by the script without re-running the control.
     options: null
@@ -18,3 +20,7 @@ examples:
     options: -f "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
   - description: Re-run policies that match a specific policy type.
     options: -f "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
+  - description: Run the script using credentials given in a credential file `credentials.yml`.
+    options: -c .config/turbot/credentials.yml
+  - description: Run the script using a credentials file and using the credential details using the profile `env`.
+    options: -c .config/turbot/credentials.yml -p env --notification_class resource

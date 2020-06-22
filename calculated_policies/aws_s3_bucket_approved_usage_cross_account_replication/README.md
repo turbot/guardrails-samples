@@ -4,7 +4,7 @@
 
 Bucket set to `Not approved` if cross-account access exists to an account not in a whitelist.
 
-## Implementation Details
+## Implementation details
 
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 
@@ -14,7 +14,7 @@ This Terraform template creates a smart folder and applies calculated policies o
 If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
 is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
-### Template Input (GraphQL)
+### Template input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
@@ -88,12 +88,12 @@ To run Turbot Calculated Policies, you must install:
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
-## Running the Example
+## Running the example
 
 Scripts can be run in the folder that contains the script.
 

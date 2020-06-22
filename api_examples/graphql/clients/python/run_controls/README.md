@@ -1,4 +1,4 @@
-# Run Controls
+# Run controls
 
 Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
 
@@ -76,6 +76,15 @@ default:
 This script will automatically search for a `credentials.yml` file in `~/.config/turbot/` or you can save the yaml configuration file anywhere and provide the `--config /path/to/config.yml --profile default` as a command line option.
 
 ## Executing the script
+
+To run a the python script:
+
+1. Install and configure the [pre-requisites](#pre-requisites)
+1. Using the command line, navigate to the directory for the Python script
+1. Create and activate the Python virtual environment
+1. Install dependencies
+1. Run the Python script using the command line
+1. Deactivate the Python virtual environment
 
 ### Synopsis
 
@@ -171,6 +180,22 @@ Re-run Discovery controls.
 
 ```shell
 python3 run_controls.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+```
+
+##### Example 9
+
+Run the script using credentials given in a credential file `credentials.yml`.
+
+```shell
+python3 run_controls.py -c .config/turbot/credentials.yml
+```
+
+##### Example 10
+
+Run the script using a credentials file and using the credential details using the profile `env`.
+
+```shell
+python3 run_controls.py -c .config/turbot/credentials.yml -p env --notification_class resource
 ```
 
 ## Virtual environments deactivation

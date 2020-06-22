@@ -1,10 +1,12 @@
-title: Run Policies In Batches
-description: |
-  Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
-  After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
-  next batch of policies.
+title: Run policies in batches
+description:
+  short: Runs all policies in batches with a cool down period that match the end user provided filter.
+  full: |
+    Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
+    After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
+    next batch of policies.
 
-  For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
+    For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
 examples:
   - description: The return the number of policies found that will be run by the script without re-running the control.
     options: null
@@ -24,3 +26,7 @@ examples:
     options: -b 200
   - description: Re-run policies with no cool down.
     options: -d 0
+  - description: Run the script using credentials given in a credential file `credentials.yml`.
+    options: -c .config/turbot/credentials.yml
+  - description: Run the script using a credentials file and using the credential details using the profile `env`.
+    options: -c .config/turbot/credentials.yml -p env --notification_class resource
