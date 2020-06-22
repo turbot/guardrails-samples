@@ -113,15 +113,15 @@ python3 get-notifications-by-class.py [options]
 
 > [String] Profile to be used from config file.
 
---notification_class
+-c, --notification_class
 
 > [String] Set the notification class, for more information see https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications.
 
---datetime_filter
+-d, --datetime_filter
 
 > [String] Configures the date range to filter the result, for more information see https://turbot.com/v5/docs/reference/filter#datetime-filters.
 
---sort
+-s, --sort
 
 > [String] The field to use for sorting the results, for more information see https://turbot.com/v5/docs/reference/filter#sorting.
 
@@ -144,7 +144,7 @@ python3 get-notifications-by-class.py
 Using a different notification class.
 
 ```shell
-python3 get-notifications-by-class.py -n "policyValue"
+python3 get-notifications-by-class.py -c "policyValue"
 ```
 
 ##### Example 3
