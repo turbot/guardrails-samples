@@ -1,8 +1,12 @@
-# Run policies
+# Get notifications for resource
 
-Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
+The script will return the last notification for the found resource if it exists and will return the
+notifications with the latest notification as the initial entry.
 
-For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
+The script allows the user to configure the number of notifications and allows for targeting specific resources.
+
+By default the script is configured to return the last notification only for the resource `tmod:@turbot/turbot#/`.
+For more information on how to [limit results](https://turbot.com/v5/docs/reference/filter#limiting-results).
 
 ## Prerequisites
 
@@ -80,7 +84,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 ### Synopsis
 
 ```shell
-python3 run_policies.py [options]
+python3 get-notifications-for-resource.py [options]
 ```
 
 ### Options
@@ -95,13 +99,13 @@ python3 run_policies.py [options]
 
 > [String] Profile to be used from config file.
 
--f, --filter
+-l, --limit
 
-> [String] Used to filter out matching policies.
+> [Int] Set to returns the last n notifications, for more information see https://turbot.com/v5/docs/reference/filter#limiting-results.
 
--e, --execute
+-i, --id
 
-> Will re-run policies when found.
+> [String] Find the notification for a resource based on its AKA or ID.
 
 --help
 
@@ -111,74 +115,43 @@ python3 run_policies.py [options]
 
 ##### Example 1
 
-The return the number of policies found that will be run by the script without re-running the control.
+Returns the last notification for the resource `tmod:@turbot/turbot#/`.
 
 ```shell
-python3 run_policies.py 
+python3 get-notifications-for-resource.py 
 ```
 
 ##### Example 2
 
-Re-runs all the policies found.
+Returns the last notification for a different resource 
+`tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved`.
 
 ```shell
-python3 run_policies.py --execute
+python3 get-notifications-for-resource.py -i "tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved"
 ```
 
 ##### Example 3
 
-Re-run policies in TBD state - default behavior.
+Run returning the latest 10 notification
 
 ```shell
-python3 run_policies.py -f "state:tbd"
+python3 get-notifications-for-resource.py -l 10
 ```
 
 ##### Example 4
 
-Re-run policies in error state.
+Run the script using credentials given in a credential file `credentials.yml`.
 
 ```shell
-python3 run_policies.py -f "state:error"
+python3 get-notifications-for-resource.py -c .config/turbot/credentials.yml
 ```
 
 ##### Example 5
 
-Re-run policies in multiple states.
-
-```shell
-python3 run_policies.py -f "state:tbd,error,alarm"
-```
-
-##### Example 6
-
-Re-run all policies in categorized as CMDB polices.
-
-```shell
-python3 run_policies.py -f "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
-```
-
-##### Example 7
-
-Re-run policies that match a specific policy type.
-
-```shell
-python3 run_policies.py -f "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
-```
-
-##### Example 8
-
-Run the script using credentials given in a credential file `credentials.yml`.
-
-```shell
-python3 run_policies.py -c .config/turbot/credentials.yml
-```
-
-##### Example 9
-
 Run the script using a credentials file and using the credential details using the profile `env`.
 
 ```shell
-python3 run_policies.py -c .config/turbot/credentials.yml -p env --notification_class resource
+python3 get-notifications-for-resource.py -c .config/turbot/credentials.yml -p env --notification_class resource
 ```
 
 ## Virtual environments deactivation

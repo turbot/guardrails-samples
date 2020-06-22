@@ -173,6 +173,22 @@ Re-run Discovery controls.
 python3 run_controls.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
 ```
 
+##### Example 9
+
+Run the script using credentials given in a credential file `credentials.yml`.
+
+```shell
+python3 run_controls.py -c .config/turbot/credentials.yml
+```
+
+##### Example 10
+
+Run the script using a credentials file and using the credential details using the profile `env`.
+
+```shell
+python3 run_controls.py -c .config/turbot/credentials.yml -p env --notification_class resource
+```
+
 ## Virtual environments deactivation
 
 Once the script has been run, it is advised to deactivate the virtual environment if a virtual environment was used

@@ -199,6 +199,22 @@ Re-run policies with no cool down.
 python3 run_policies_batches.py -d 0
 ```
 
+##### Example 10
+
+Run the script using credentials given in a credential file `credentials.yml`.
+
+```shell
+python3 run_policies_batches.py -c .config/turbot/credentials.yml
+```
+
+##### Example 11
+
+Run the script using a credentials file and using the credential details using the profile `env`.
+
+```shell
+python3 run_policies_batches.py -c .config/turbot/credentials.yml -p env --notification_class resource
+```
+
 ## Virtual environments deactivation
 
 Once the script has been run, it is advised to deactivate the virtual environment if a virtual environment was used

@@ -171,6 +171,22 @@ Return entries withing the last two hours.
 python3 get-notifications-by-class.py -d <>T-2h
 ```
 
+##### Example 6
+
+Run the script using credentials given in a credential file `credentials.yml`.
+
+```shell
+python3 get-notifications-by-class.py -c .config/turbot/credentials.yml
+```
+
+##### Example 7
+
+Run the script using a credentials file and using the credential details using the profile `env`.
+
+```shell
+python3 get-notifications-by-class.py -c .config/turbot/credentials.yml -p env --notification_class resource
+```
+
 ## Virtual environments deactivation
 
 Once the script has been run, it is advised to deactivate the virtual environment if a virtual environment was used

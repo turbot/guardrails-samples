@@ -24,3 +24,7 @@ examples:
     options: -b 200
   - description: Re-run policies with no cool down.
     options: -d 0
+  - description: Run the script using credentials given in a credential file `credentials.yml`.
+    options: -c .config/turbot/credentials.yml
+  - description: Run the script using a credentials file and using the credential details using the profile `env`.
+    options: -c .config/turbot/credentials.yml -p env --notification_class resource

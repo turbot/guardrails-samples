@@ -20,3 +20,7 @@ examples:
     options: -f "controlType:'tmod:@turbot/aws#/control/types/eventHandlers'"
   - description: Re-run Discovery controls.
     options: -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
+  - description: Run the script using credentials given in a credential file `credentials.yml`.
+    options: -c .config/turbot/credentials.yml
+  - description: Run the script using a credentials file and using the credential details using the profile `env`.
+    options: -c .config/turbot/credentials.yml -p env --notification_class resource
