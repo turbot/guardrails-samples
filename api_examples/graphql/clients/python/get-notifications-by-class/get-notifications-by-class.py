@@ -5,12 +5,12 @@ from sgqlc.endpoint.http import HTTPEndpoint
 
 # -c .config/turbot/credentials.yml --profile env --notification_class resource
 @click.command()
-@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="Pass an optional yaml config file.")
-@click.option('-p', '--profile', default="default", help="Profile to be used from config file.")
+@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
+@click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
 # Possible values allowed are: [ "resource", "policyValue", "policySetting", "control", "grant", "activeGrant" ]
-@click.option('--notification_class', default="resource", help="Set the notification class, for more information see https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications")
-@click.option('--datetime_filter', default="<T-10d", help="Configures the date range to filter the result, for more information see https://turbot.com/v5/docs/reference/filter#datetime-filters")
-@click.option('--sort', default="-timestamp", help="The field to use for sorting the results, for more information see https://turbot.com/v5/docs/reference/filter#sorting")
+@click.option('--notification_class', default="resource", help="[String] Set the notification class, for more information see https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications.")
+@click.option('--datetime_filter', default="<T-10d", help="[String] Configures the date range to filter the result, for more information see https://turbot.com/v5/docs/reference/filter#datetime-filters.")
+@click.option('--sort', default="-timestamp", help="[String] The field to use for sorting the results, for more information see https://turbot.com/v5/docs/reference/filter#sorting.")
 def run_controls(config_file, profile, notification_class, datetime_filter, sort):
     config = turbot.Config(config_file, profile)
     headers = {'Authorization': 'Basic {}'.format(config.auth_token)}

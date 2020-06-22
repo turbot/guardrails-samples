@@ -1,4 +1,4 @@
-# Run Policies
+# Run policies
 
 Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
 

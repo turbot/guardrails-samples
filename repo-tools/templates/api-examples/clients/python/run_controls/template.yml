@@ -1,4 +1,4 @@
-title: Run Controls
+title: Run controls
 description: |
   Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
 

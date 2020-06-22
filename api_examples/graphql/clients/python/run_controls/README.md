@@ -1,4 +1,4 @@
-# Run Controls
+# Run controls
 
 Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
 

@@ -1,4 +1,4 @@
-# Run Policies In Batches
+# Run policies in batches
 
 Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
 After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
