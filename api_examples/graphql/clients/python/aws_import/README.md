@@ -6,7 +6,7 @@ A fully functioning example in Python which is used for importing an existing AW
 
 To run the scripts, you must have:
 
-- [Python 3.\*.*](https://www.python.org/downloads/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
 ## Setup

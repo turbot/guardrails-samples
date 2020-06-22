@@ -10,7 +10,7 @@ For further reference see [filtering controls](https://turbot.com/v5/docs/refere
 
 To run the scripts, you must have:
 
-- [Python 3.\*.*](https://www.python.org/downloads/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
 ## Setup

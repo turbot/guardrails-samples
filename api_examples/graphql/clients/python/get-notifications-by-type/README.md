@@ -27,7 +27,7 @@ For more information on [notifications types](https://turbot.com/v5/docs/concept
 
 To run the scripts, you must have:
 
-- [Python 3.\*.*](https://www.python.org/downloads/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
 ## Setup

@@ -91,6 +91,7 @@ async function main() {
 
       console.log(chalk.white(`Generated Document: ${pythonTemplate.name}`));
 
+      pythonTemplate.title = definitionTemplate.title;
       pythonTemplate.description = definitionTemplate.description.short;
     } catch (e) {
       console.error(chalk.red(`Error generating calculated policy ${pythonTemplate.name}\nOriginal Error:\n`, e));

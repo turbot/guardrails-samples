@@ -3,24 +3,24 @@
 Provides Python scripts that show how an end user can run controls, query data and make decisions based on resource data
 which is returned from Turbot.
 
-### Current Calculated Policies
+### Available scripts
 
-| Path | Description |
-| ---- | ----------- |
-| [aws_import](./aws_import/README.md) | Import an existing AWS account into Turbot. |
-| [get-notifications-by-class](./get-notifications-by-class/README.md) | Return a filtered collection of notifications for end user provided notification classes to filter results. |
-| [get-notifications-by-type](./get-notifications-by-type/README.md) | Return a filtered collection of notifications for end user provided notification types to filter results. |
-| [get-notifications-for-resource](./get-notifications-for-resource/README.md) | Return notifications for an end user specified to filter results. |
-| [run_controls](./run_controls/README.md) | Runs all controls that match the end user provided filter. |
-| [run_controls_batches](./run_controls_batches/README.md) | Runs all controls in batches with a cool down period that match the end user provided filter. |
-| [run_policies](./run_policies/README.md) | Runs all policies that match the end user provided filter. |
-| [run_policies_batches](./run_policies_batches/README.md) | Runs all policies in batches with a cool down period that match the end user provided filter. |
+| Title | Description |
+| ----- | ----------- |
+| [AWS Account Import](./aws_import/README.md) | Import an existing AWS account into Turbot. |
+| [Get notifications by notification class](./get-notifications-by-class/README.md) | Return a filtered collection of notifications for end user provided notification classes to filter results. |
+| [Get notifications by notification type](./get-notifications-by-type/README.md) | Return a filtered collection of notifications for end user provided notification types to filter results. |
+| [Get notifications for resource](./get-notifications-for-resource/README.md) | Return notifications for an end user specified to filter results. |
+| [Run controls](./run_controls/README.md) | Runs all controls that match the end user provided filter. |
+| [Run controls in batches](./run_controls_batches/README.md) | Runs all controls in batches with a cool down period that match the end user provided filter. |
+| [Run policies](./run_policies/README.md) | Runs all policies that match the end user provided filter. |
+| [Run policies in batches](./run_policies_batches/README.md) | Runs all policies in batches with a cool down period that match the end user provided filter. |
 
 ## Prerequisites
 
 To run the scripts, you must have:
 
-- [Python 3.\*.*](https://www.python.org/downloads/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
 ### Configuring credentials
