@@ -5,18 +5,20 @@ import pprint
 
 
 @click.command()
-@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="Pass an optional YAML configuration file.")
-@click.option('-p', '--profile', default="default", help="Profile to be used from configuration file.")
-@click.option('-s', '--state', default="tbd", help="Used to filter the policies that match a specified state.")
-@click.option('--execute', is_flag=True, help="Will re-run policies when found.")
-def run_policies(config_file, profile, state, execute):
+@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
+@click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
+@click.option('-f', '--filter', default="state:tbd", help="[String] Used to filter out matching policies.")
+@click.option('-e', '--execute', is_flag=True, help="Will re-run policies when found.")
+def run_policies(config_file, profile, filter, execute):
     """ Finds all policies matching the provided filter, then re-runs them if --execute is set."""
     """
         Example Filters
         ---------------
-        Run policies in TBD (Default):      "state:tbd"
-        Run policies in error state:        "state:error"
-        Run policies in multiple states:    "state:tbd,error,invalid"
+        Run policies in TBD (Default):          "state:tbd"
+        Run policies in error state:            "state:error"
+        Run policies in multiple states:        "state:tbd,error,invalid"
+        Re-run CMDB policies:                   "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
+        Re-run policies that match policy type: "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
     """
 
     config = turbot.Config(config_file, profile)
@@ -38,7 +40,6 @@ def run_policies(config_file, profile, state, execute):
       }
     '''
 
-    filter = 'state:{}'.format(state)
     targets = []
     paging = None
     print("Looking for targets...")

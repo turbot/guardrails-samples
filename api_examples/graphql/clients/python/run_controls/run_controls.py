@@ -7,7 +7,7 @@ import pprint
 @click.command()
 @click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
 @click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
-@click.option('-f', '--filter', default="state:tbd", help="[String] Filter to run.")
+@click.option('-f', '--filter', default="state:tbd", help="[String] Used to filter out matching controls.")
 @click.option('-e', '--execute', is_flag=True, help="Will re-run controls when found.")
 def run_controls(config_file, profile, filter, execute):
     """ Finds all controls matching the provided filter, then re-runs them if --execute is set."""
@@ -87,4 +87,7 @@ def run_controls(config_file, profile, filter, execute):
 
 
 if __name__ == "__main__":
-    run_controls()
+    try:
+        run_controls()
+    except Exception as e:
+        print(e)

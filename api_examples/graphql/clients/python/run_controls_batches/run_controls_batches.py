@@ -8,7 +8,7 @@ import time
 @click.command()
 @click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
 @click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
-@click.option('-f', '--filter', default="state:tbd", help="[String] Filter to run.")
+@click.option('-f', '--filter', default="state:tbd", help="[String] Used to filter out matching controls.")
 @click.option('-b', '--batch', default=100, help="[Int] The number of controls to run before cooldown per cycle")
 @click.option('-s', '--start-index', default=0, help="[Int] Sets the starting point in the returned control collection. All controls starting at the starting point will be run.")
 @click.option('-d', '--cooldown', default=120, help="[Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.")
@@ -100,4 +100,7 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
 
 
 if __name__ == "__main__":
-    run_controls()
+    try:
+        run_controls()
+    except Exception as e:
+        print(e)
