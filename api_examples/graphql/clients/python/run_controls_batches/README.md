@@ -113,7 +113,7 @@ python3 run_controls_batches.py [options]
 
 -m, --max-batch
 
-> [Int] The maximum number of batches to run. The value `-1` will run all the return controls from the starting point.
+> [Int] The maximum number of batches to run. The value `-1` will run all the returned controls from the starting point.
 
 -e, --execute
 
@@ -183,7 +183,7 @@ python3 run_controls_batches.py -f "controlType:'tmod:@turbot/aws#/control/types
 
 ##### Example 8
 
-Re-run Discovery controls
+Re-run Discovery controls.
 
 ```shell
 python3 run_controls_batches.py -f "Discovery controlCategory:'tmod:@turbot/turbot#/control/categories/cmdb'"
@@ -191,7 +191,7 @@ python3 run_controls_batches.py -f "Discovery controlCategory:'tmod:@turbot/turb
 
 ##### Example 9
 
-Re-run Discovery controls in batches of 200
+Re-run controls in batches of 200.
 
 ```shell
 python3 run_controls_batches.py -b 200
@@ -199,7 +199,7 @@ python3 run_controls_batches.py -b 200
 
 ##### Example 10
 
-Re-run Discovery controls with no cooldown
+Re-run controls with no cool down.
 
 ```shell
 python3 run_controls_batches.py -d 0
