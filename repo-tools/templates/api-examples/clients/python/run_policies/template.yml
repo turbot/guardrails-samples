@@ -1,8 +1,6 @@
-title: Run Policies In Batches
+title: Run Policies
 description: |
-  Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
-  After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
-  next batch of policies.
+  Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
 
   For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
 examples:
@@ -20,7 +18,3 @@ examples:
     options: -f "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
   - description: Re-run policies that match a specific policy type.
     options: -f "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
-  - description: Re-run policies in batches of 200.
-    options: -b 200
-  - description: Re-run policies with no cool down.
-    options: -d 0

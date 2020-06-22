@@ -2,6 +2,8 @@
 
 Finds all controls matching the provided filter, then re-runs them in batches if `--execute` is set.
 
+For further reference see [filtering controls](https://turbot.com/v5/docs/reference/filter/controls#filtering-controls).
+
 ## Prerequisites
 
 To run the scripts, you must have:
@@ -95,7 +97,7 @@ python3 run_controls.py [options]
 
 -f, --filter
 
-> [String] Filter to run.
+> [String] Used to filter out matching controls.
 
 -e, --execute
 

@@ -4,6 +4,8 @@ Finds all controls matching the provided filter, then re-runs them in batches if
 After each batch the script will then enter cool down mode which will wait a number of seconds before running the 
 next batch of policies.
 
+For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
+
 ## Prerequisites
 
 To run the scripts, you must have:
@@ -97,7 +99,7 @@ python3 run_policies_batches.py [options]
 
 -f, --filter
 
-> [String] Filter to run.
+> Used to filter out matching policies.
 
 -b, --batch
 
