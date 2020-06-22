@@ -83,7 +83,7 @@ async function main() {
       definitionTemplate.name = pythonTemplate.name;
       const options = await harvestedOptions(pythonTemplate.name);
       const renderContext = { configuration: definitionTemplate, options };
-      const masterTemplate = await loadMasterTemplate("templates/api-examples/python-template.njk");
+      const masterTemplate = await loadMasterTemplate("templates/api-examples/python.njk");
 
       const renderedDocument = nunjucks.renderString(masterTemplate, renderContext);
 
