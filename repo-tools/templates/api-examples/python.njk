@@ -9,6 +9,35 @@ To run the scripts, you must have:
 - [Python 3.\*.\*](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
+{% if configuration.library -%}
+## Using library
+
+To use the library, you will need to include this to your **requirements.txt** file or copy the file in directly.
+
+### Requirements file
+
+To referencing the library can be done by adding relative paths to the **requirements.txt**
+
+```
+../turbot
+```
+
+### Referencing from script
+
+Add the line
+
+```python
+import turbot
+```
+
+And for turbot to read the configuration details, the callee will need to send in a configuration file location and profile information.
+Both this variables can be set to _None_
+
+```python
+config = turbot.Config(None, None)
+config = turbot.Config(config_file, profile)
+```
+{% else -%}
 ## Setup
 
 This sections details how to set up an environment in order to run the script.
@@ -31,7 +60,7 @@ source .venv/bin/activate
 
 ### Dependencies
 
-Then install python library dependencies:
+Then install Python library dependencies:
 
 ```shell
 pip3 install -r requirements.txt
@@ -75,7 +104,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 
 ## Executing the script
 
-To run a the python script:
+To run a the Python script:
 
 1. Install and configure the [pre-requisites](#pre-requisites)
 1. Using the command line, navigate to the directory for the Python script
@@ -131,3 +160,4 @@ This is accomplished by running the command:
 ```shell
 deactivate
 ```
+{% endif -%}

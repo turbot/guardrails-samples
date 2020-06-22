@@ -31,7 +31,7 @@ source .venv/bin/activate
 
 ### Dependencies
 
-Then install python library dependencies:
+Then install Python library dependencies:
 
 ```shell
 pip3 install -r requirements.txt
@@ -75,7 +75,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 
 ## Executing the script
 
-To run a the python script:
+To run a the Python script:
 
 1. Install and configure the [pre-requisites](#pre-requisites)
 1. Using the command line, navigate to the directory for the Python script
