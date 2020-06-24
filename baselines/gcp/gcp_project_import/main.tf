@@ -13,13 +13,13 @@ resource "turbot_resource" "project_resource" {
 }
 
 resource "turbot_policy_setting" "clientEmail" {
-  resource = var.parent_resource
+  resource = var.project_resource.id
   type     = "tmod:@turbot/gcp#/policy/types/clientEmail"
   value    = var.client_email
 }
 
 resource "turbot_policy_setting" "privateKey" {
-  resource = var.parent_resource
+  resource = var.project_resource.id
   type     = "tmod:@turbot/gcp#/policy/types/privateKey"
   value    = var.private_key
 }
