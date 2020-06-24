@@ -1,9 +1,10 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
+
 Parameters: 
   RoleName: 
     Type: String
-    Default: turbot-service-superuser
+    Default: turbot_service_superadmin
     Description: The role that Turbot uses to connect to this account
 
   TurbotAccountId: 
@@ -12,7 +13,6 @@ Parameters:
     Description: |
       The AWS Account ID where Turbot is installed.  
       This will be added to the trust policy of the role to allow access for Turbot
-
   TurbotExternalId: 
     Type: String
     NoEcho: True 
@@ -43,6 +43,7 @@ Resources:
       RoleName: !Ref RoleName
       
 Outputs:
-  Role ARN:
+
+  RoleARN:
     Description: Turbot Role ARN for Import
-    Value: !Ref: TurbotSuperuserRole.Arn
+    Value: !GetAtt TurbotSuperuserRole.Arn
