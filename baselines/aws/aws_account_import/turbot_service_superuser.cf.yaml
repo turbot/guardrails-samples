@@ -4,7 +4,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 Parameters: 
   RoleName: 
     Type: String
-    Default: turbot_service_superadmin
+    Default: turbot_service_superuser
     Description: The role that Turbot uses to connect to this account
 
   TurbotAccountId: 
