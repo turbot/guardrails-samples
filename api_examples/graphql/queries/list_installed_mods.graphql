@@ -1,0 +1,10 @@
+query InstalledMods {
+  mods: resources(filter: "resource:tmod:@turbot/turbot#/ resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:300") {
+    items {
+      modId: get(path: "$id")
+      version: get(path: "version")
+      __typename
+    }
+    __typename
+  }
+}
