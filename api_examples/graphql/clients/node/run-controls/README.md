@@ -28,5 +28,5 @@ export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 And run the example:
 
 ```shell
-node run-controls-for-filter.js
+node run-controls.js
 ```
