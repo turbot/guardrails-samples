@@ -1,0 +1,40 @@
+title: Get notifications by notification class
+description:
+  short: Return a filtered collection of notifications for end user provided notification classes to filter results.
+  full: |
+    This script will return a filtered collection of notifications the notification class to filter results.
+
+    The example has returns more data than is necessary as different fields are populated in GraphQL when using differing
+    notification class values.
+
+    | Notification class type  | Fields returned         |
+    |--------------------------|-------------------------|
+    | resource                 | resource                |
+    | policyValue              | resource, policyValue   |
+    | policySetting            | resource, policySetting |
+    | control                  | resource, control       |
+    | grant                    | resource, grant         |
+    | activeGrant              | resource                |
+
+    By default the script will return all notifications that were returned over the last 10 days.
+    For more information on how to use [datetime filters](https://turbot.com/v5/docs/reference/filter#datetime-filters).
+
+    By default the script will sort the notifications displaying most recent first.
+    For more information on how to use [sorting](https://turbot.com/v5/docs/reference/filter#sorting).
+
+    For more information on [filtering notifications](https://turbot.com/v5/docs/reference/filter/notifications#filtering-notifications).
+examples:
+  - description: Returns all `resource` notifications for the last 10 days returning latest first.
+    options: null
+  - description: Using a different notification class.
+    options: -c "policyValue"
+  - description: Run returning oldest entries first.
+    options: -s "timestamp"
+  - description: Return entries older than 5 days.
+    options: -d >T-5d
+  - description: Return entries withing the last two hours.
+    options: -d <>T-2h
+  - description: Run the script using credentials given in a credential file `credentials.yml`.
+    options: -c .config/turbot/credentials.yml
+  - description: Run the script using a credentials file and using the credential details using the profile `env`.
+    options: -c .config/turbot/credentials.yml -p env --notification_class resource

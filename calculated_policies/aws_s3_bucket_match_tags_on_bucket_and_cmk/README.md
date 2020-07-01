@@ -8,7 +8,7 @@ For each classification, a corresponding Customer Managed Key should exist.
 A comparison needs to be made between the tags on the S3 Bucket and on that on the Key Management Service to ensure
 that the right Key Management Service is attached to the right S3 Bucket.
 
-## Implementation Details
+## Implementation details
 
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 
@@ -21,7 +21,7 @@ If they match, the S3 Bucket is `Approved` otherwise `Not approved`.
 Depending on the value set in `AWS > S3 > Bucket > Encryption at Rest`, a customer may choose to raise an alarm or
 remediate the Key Management Service attached to the S3 Bucket.
 
-### Template Input (GraphQL)
+### Template input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
@@ -85,12 +85,12 @@ To run Turbot Calculated Policies, you must install:
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
-## Running the Example
+## Running the example
 
 Scripts can be run in the folder that contains the script.
 

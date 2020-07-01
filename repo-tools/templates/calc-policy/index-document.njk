@@ -1,4 +1,4 @@
-## Calculated Policies
+## Calculated policies
 
 Provides templates for implementing calculated policies. 
 
@@ -7,7 +7,7 @@ Calculated policies allow Turbot administrators to modify or extend the default 
 The calculated policy examples are implemented with [Terraform](https://www.terraform.io) allowing you to manage and 
 provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
-### Current Calculated Policies
+### Current calculated policies
 
 | Path | Resource | Description |
 | ---- | -------- | ----------- |
@@ -17,23 +17,23 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 
 ## Prerequisites
 
-To run Turbot Calculated Policies, you must install:
+To run Turbot calculated policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
-## Running a Calculated Policies
+## Running a calculated policies
 
-To run a Calculated Policies:
+To run a calculated policies:
 
 1. Install and configure the [pre-requisites](#pre-requisites)
-1. Using the command line, navigate to the directory for the Calculated Policies
+1. Using the command line, navigate to the directory for the calculated policies
 1. Run `terraform init` to initialize terraform in the directory
 1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or [variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
 1. Run `terraform plan -var-file="<fileName>.tfvars"` and inspect the changes
@@ -68,7 +68,7 @@ Baseline
 └── default.tfvar
 ```
 
-### Style Guide
+### Style guide
 
 Our Calculate Policies adopts styling conventions provided by [Terraform](https://www.terraform.io/docs/configuration/style.html) 
 like:
@@ -115,7 +115,7 @@ To maintain consistency between files and modules, we recommend adopting the bel
 
 - All variables should have a description, and as a result should not require individual comments
 - Most variables should have a reasonable default
-- Calculated Policies should be always children of a Smart Folder resource
+- Calculated policies should be always children of a Smart Folder resource
 - The resource to associate with the Smart Folder should use a variable for the target resource
 
   ```terraform

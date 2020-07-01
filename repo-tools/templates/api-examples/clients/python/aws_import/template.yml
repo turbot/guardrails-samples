@@ -1,0 +1,14 @@
+title: AWS Account Import
+description:
+  short: Import an existing AWS account into Turbot.
+  full: A fully functioning example in Python which is used for importing an existing AWS account into Turbot.
+examples:
+  - description: General usage.
+    options: --parent <parent_id> --account <aws_account_id> --role_arn <access_role_arn> --external_id <external_id>
+  - description: |
+      Import using profile `env` from the configuration file `.config/turbot/credentials.yml`.
+      The parent resource to install under is `100000000000000`.
+      Importing the account `900000000000`.
+      Using the role ARN `arn:aws:iam::900000000000:role/turbot_service_role`.
+      Using the external id to granting access to your AWS resources to a third party of `50000000`.
+    options: -c .config/turbot/credentials.yml --profile env --parent 100000000000000 --account 900000000000 --role_arn arn:aws:iam::900000000000:role/turbot_service_role --external_id 50000000

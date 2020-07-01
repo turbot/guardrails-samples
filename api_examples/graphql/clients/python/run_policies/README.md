@@ -1,32 +1,19 @@
-# Run Policies
+# Run policies
 
-Run this script to run all policies using the states of the policy as a filter to select the policies to run.
+Finds all policies matching the provided filter, then re-runs them in batches if `--execute` is set.
 
-The command line argument `state` is used by the script to configure the policies to run that match the specified policy state(s).
-
-The default `state` is `tbd`.
-
-States for policies in Turbot can be:
-
-- ok
-- tbd
-- error
-- invalid
-
-For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values)
-
-Multiple states can be added by separating each state using a comma.
-For example when setting `state` to `tbd,error` the script will run all policies that are
-in either the state of `tdb` or `error`.
+For further reference see [filtering policy values](https://turbot.com/v5/docs/reference/filter/policies#filtering-policy-values).
 
 ## Prerequisites
 
 To run the scripts, you must have:
 
-- [Python](https://www.python.org/) version 3 or above
-- [Pip](https://pip.pypa.io/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
+- [Pip](https://pip.pypa.io/en/stable/installing/)
 
-## Example
+## Setup
+
+This sections details how to set up an environment in order to run the script.
 
 ### Virtual environments activation
 
@@ -46,15 +33,15 @@ source .venv/bin/activate
 
 ### Dependencies
 
-Then install python library dependencies:
+Then install Python library dependencies:
 
 ```shell
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### Turbot configuration
 
-Credentials and end point details need to be configure before being able to connect to a Turbot installation
+Credentials and end point details need to be configure before being able to connect to a Turbot installation.
 This configuration can be entered either using environment variables or a configuration file.
 
 #### Environment variables
@@ -88,21 +75,127 @@ default:
 
 This script will automatically search for a `credentials.yml` file in `~/.config/turbot/` or you can save the yaml configuration file anywhere and provide the `--config /path/to/config.yml --profile default` as a command line option.
 
-### Running the example
+## Executing the script
 
-And run the example:
+To run a the Python script:
+
+1. Install and configure the [pre-requisites](#pre-requisites)
+1. Using the command line, navigate to the directory for the Python script
+1. Create and activate the Python virtual environment
+1. Install dependencies
+1. Run the Python script using the command line
+1. Deactivate the Python virtual environment
+
+### Synopsis
 
 ```shell
-python3 run_controls.py --help
-
-python3 run_controls.py --filter "state:error"
-
-python3 run_controls.py --filter "state:tbd" --execute
+python3 run_policies.py [options]
 ```
 
-### Virtual environments deactivation
+### Options
 
-When you are done, deactivate the virtualenv:
+#### Details
+
+-c, --config-file
+
+> [String] Pass an optional yaml config file.
+
+-p, --profile
+
+> [String] Profile to be used from config file.
+
+-f, --filter
+
+> [String] Used to filter out matching policies.
+
+-e, --execute
+
+> Will re-run policies when found.
+
+--help
+
+> Lists all the options and their usages.
+
+#### Example usage
+
+##### Example 1
+
+The return the number of policies found that will be run by the script without re-running the control.
+
+```shell
+python3 run_policies.py 
+```
+
+##### Example 2
+
+Re-runs all the policies found.
+
+```shell
+python3 run_policies.py --execute
+```
+
+##### Example 3
+
+Re-run policies in TBD state - default behavior.
+
+```shell
+python3 run_policies.py -f "state:tbd"
+```
+
+##### Example 4
+
+Re-run policies in error state.
+
+```shell
+python3 run_policies.py -f "state:error"
+```
+
+##### Example 5
+
+Re-run policies in multiple states.
+
+```shell
+python3 run_policies.py -f "state:tbd,error,alarm"
+```
+
+##### Example 6
+
+Re-run all policies in categorized as CMDB polices.
+
+```shell
+python3 run_policies.py -f "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
+```
+
+##### Example 7
+
+Re-run policies that match a specific policy type.
+
+```shell
+python3 run_policies.py -f "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
+```
+
+##### Example 8
+
+Run the script using credentials given in a credential file `credentials.yml`.
+
+```shell
+python3 run_policies.py -c .config/turbot/credentials.yml
+```
+
+##### Example 9
+
+Run the script using a credentials file and using the credential details using the profile `env`.
+
+```shell
+python3 run_policies.py -c .config/turbot/credentials.yml -p env --notification_class resource
+```
+
+## Virtual environments deactivation
+
+Once the script has been run, it is advised to deactivate the virtual environment if a virtual environment was used
+to install the script dependencies.
+
+This is accomplished by running the command:
 
 ```shell
 deactivate
