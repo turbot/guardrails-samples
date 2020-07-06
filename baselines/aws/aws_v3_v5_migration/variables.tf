@@ -27,3 +27,8 @@ variable "logging_bucket_prefix" {
   description = "Prefix for the Turbot Logging Buckets. Defaults to 'turbot-'.  Applies to buckets and cloudtrails."
   type = string
 }
+
+variable "turbot_cloudtrails_prefix" {
+  description = "Prefix for the Turbot-managed CloudTrail. Defaults to 'turbot-'.  Applies to buckets and cloudtrails."
+  type = string
+}
