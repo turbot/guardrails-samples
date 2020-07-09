@@ -1,6 +1,6 @@
 # With the proper 'resourceType' filter, you can get a breakdown by most platform or service.  The default looks for all AWS resourceTypes.
 query ListResourceTypeSummaries {
-  resourceSummariesByResourceType(filter:  "sort:-total resourceType:'tmod:@turbot/aws#/resource/types/aws' resourceId:'tmod:@turbot/turbot#/'") {
+  resourceSummariesByResourceType(filter:  "limit:30 sort:-total resourceType:'tmod:@turbot/aws#/resource/types/aws' resourceId:'tmod:@turbot/turbot#/'") {
     items {
       summary {
         resource {
