@@ -28,6 +28,15 @@ variable "logging_bucket_prefix" {
   type = string
 }
 
+variable "aws_approved_regions" {
+  description = "YAML list of approved AWS regions."
+  type        = string
+  default     = <<EOT
+  - us-east-1
+  - us-east-2
+  EOT
+}
+
 variable "turbot_cloudtrails_prefix" {
   description = "Prefix for the Turbot-managed CloudTrail. Defaults to 'turbot-'.  Applies to buckets and cloudtrails."
   type = string

@@ -4,6 +4,12 @@ resource "turbot_smart_folder" "turbot_event_handlers_folder" {
   parent = "tmod:@turbot/turbot#/"
 }
 
+resource "turbot_policy_setting" "aws_approved_regions" {
+  resource = turbot_smart_folder.turbot_event_handlers_folder.id
+  type = "tmod:@turbot/aws#/policy/types/approvedRegionsDefault"
+  value = var.aws_approved_regions
+}
+
 // https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/eventHandlers
 resource "turbot_policy_setting" "turbot_event_handlers_enabled" {
   resource = turbot_smart_folder.turbot_event_handlers_folder.id

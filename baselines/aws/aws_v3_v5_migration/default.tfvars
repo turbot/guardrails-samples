@@ -16,3 +16,21 @@ turbot_cloudtrails_prefix = "turbot_"
 # By default, there will be name collisions between the v3 and v5 event handlers. The provided prefix avoids this problem.
 event_handlers_enabled = true
 event_handlers_prefix = "turbot5_"
+
+aws_regions = yamlencode(["us-east-2",
+                          "us-east-1",
+                          "us-west-1",
+                          "us-west-2",
+                          "ap-south-1",
+                          "ap-northeast-3",
+                          "ap-northeast-2",
+                          "ap-southeast-1",
+                          "ap-southeast-2",
+                          "ap-northeast-1",
+                          "ca-central-1",
+                          "eu-central-1",
+                          "eu-west-1",
+                          "eu-west-2",
+                          "eu-west-3",
+                          "eu-north-1",
+                          "sa-east-1" ])
