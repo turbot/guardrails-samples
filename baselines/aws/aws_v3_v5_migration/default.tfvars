@@ -34,3 +34,4 @@ aws_regions = yamlencode(["us-east-2",
                           "eu-west-3",
                           "eu-north-1",
                           "sa-east-1" ])
+
