@@ -24,7 +24,7 @@ variable "event_handlers_prefix" {
 }
 
 variable "logging_bucket_prefix" {
-  description = "Prefix for the Turbot Logging Buckets. Defaults to 'turbot-'.  Applies to buckets and cloudtrails."
+  description = "Prefix for the Turbot Logging Buckets. Defaults value out of the box from Turbot V5 to 'turbot-'.  Applies to buckets and cloudtrails."
   type = string
 }
 
@@ -38,6 +38,6 @@ variable "aws_approved_regions" {
 }
 
 variable "turbot_cloudtrails_prefix" {
-  description = "Prefix for the Turbot-managed CloudTrail. Defaults to 'turbot-'.  Applies to buckets and cloudtrails."
+  description = "Prefix for the Turbot-managed CloudTrail. Defaults value out of the box from Turbot V5 to 'turbot-'.  Applies to buckets and cloudtrails."
   type = string
 }
