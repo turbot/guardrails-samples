@@ -1,0 +1,19 @@
+query ListResourceTypeSummariesGCP {
+  resourceSummariesByResourceType(filter:  "sort:-total resourceType:'tmod:@turbot/gcp#/resource/types/gcp' resourceId:'tmod:@turbot/turbot#/'") {
+    items {
+      summary {
+        resource {
+          total
+        }
+      }
+      type {
+        uri
+        title
+      }
+    }
+    paging {
+      next
+      previous
+    }
+  }
+}

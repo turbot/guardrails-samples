@@ -1,0 +1,20 @@
+query ListResourceTypeSummariesAzure {
+  resourceSummariesByResourceType(filter:  "sort:-total resourceType:'tmod:@turbot/azure#/resource/types/azure' resourceId:'tmod:@turbot/turbot#/'") {
+    items {
+      summary {
+        resource {
+          total
+        }
+      }
+      type {
+        uri
+        title
+      }
+    }
+    paging {
+      next
+      previous
+    }
+  }
+}
+
