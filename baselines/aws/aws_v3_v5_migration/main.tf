@@ -56,7 +56,7 @@ resource "turbot_policy_setting" "turbot_cloudtrail_enabled" {
 resource "turbot_policy_setting" "turbot_cloudtrail_prefix" {
   resource = turbot_smart_folder.turbot_event_handlers_folder.id
   type = "tmod:@turbot/aws#/policy/types/auditTrailTrailNamePrefix"
-  value = var.logging_bucket_prefix
+  value = var.turbot_cloudtrails_prefix
   count = var.turbot_cloudtrails ? 1 : 0
 }
 
