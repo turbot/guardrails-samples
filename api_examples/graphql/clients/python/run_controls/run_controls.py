@@ -1,7 +1,7 @@
-import click
 import turbot
-from sgqlc.endpoint.http import HTTPEndpoint
-import pprint
+import click
+import requests
+import sys
 
 
 @click.command()
@@ -24,7 +24,7 @@ def run_controls(config_file, profile, filter, execute):
 
     config = turbot.Config(config_file, profile)
     headers = {'Authorization': 'Basic {}'.format(config.auth_token)}
-    endpoint = HTTPEndpoint(config.graphql_endpoint, headers)
+    endpoint = config.graphql_endpoint
 
     query = '''
       query Targets($filter: [String!]!, $paging: String) {
@@ -46,7 +46,7 @@ def run_controls(config_file, profile, filter, execute):
 
     while True:
         variables = {'filter': filter, 'paging': paging}
-        result = endpoint(query, variables)
+        result = run_query(endpoint, headers, query, variables)
 
         if "errors" in result:
             for error in result['errors']:
@@ -80,14 +80,36 @@ def run_controls(config_file, profile, filter, execute):
             vars = {'input': {'id': control['turbot']['id']}}
             print(vars)
             try:
-                run = endpoint(mutation, vars)
+                run = run_query(endpoint, headers, mutation, vars)
                 print(run)
             except Exception as e:
                 print(e)
 
 
+def run_query(endpoint, headers, query, variables):
+    request = requests.post(
+        endpoint,
+        headers=headers,
+        json={'query': query, 'variables': variables}
+    )
+    if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception("Query failed to run by returning code of {}. {}".format(
+            request.status_code, query))
+
+
 if __name__ == "__main__":
-    try:
-        run_controls()
-    except Exception as e:
-        print(e)
+    if (sys.version_info > (3, 4)):
+        try:
+            run_controls()
+        except Exception as e:
+            print(e)
+    else:
+        print("This script requires Python v3.7+")
+        print("Your Python version is: {}.{}.{}".format(
+            sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
+        if (sys.version_info < (3, 0)):
+            hint = ["Maybe try: `python3"] + sys.argv
+            hint[len(sys.argv)] = hint[len(sys.argv)] + "`"
+            print(*hint)
