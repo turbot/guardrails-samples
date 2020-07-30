@@ -107,7 +107,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
     else:
-        print("This script requires Python v3.7+")
+        print("This script requires Python v3.5+")
         print("Your Python version is: {}.{}.{}".format(
             sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
         if (sys.version_info < (3, 0)):
