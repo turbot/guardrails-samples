@@ -30,7 +30,7 @@ resource "turbot_policy_setting" "loggingBucket" {
 }
 
 # Create AWS CloudTrail using AuditTrail stack
-# AWS > Turbot > Audit Trail > CloudTrail > Trail >
+# AWS > Turbot > Audit Trail
 resource "turbot_policy_setting" "auditTrail" {
   resource    = turbot_smart_folder.aws_folder.id
   type        = "tmod:@turbot/aws#/policy/types/auditTrail"

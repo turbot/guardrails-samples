@@ -1,8 +1,8 @@
 {
-  "name": "set-enabled-policies-for-gcp-services",
+  "name": "set-api-enabled-policies-for-gcp",
   "dependencies": {
     "btoa": "^1.2.1",
     "graphql-request": "^1.8.2",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   }
 }
