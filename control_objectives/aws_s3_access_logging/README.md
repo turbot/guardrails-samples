@@ -13,7 +13,7 @@ To create the smart folder, you must have:
 
 ## Running the Example
 
-To run the S3 encryption example:
+To run the S3 Access Logging example:
 - Navigate to the directory on the command line `cd aws_s3_access_logging`.
 - Run `terraform plan -var-file="default.tfvars"` and review the changes to be applied.
 - Run `terraform apply -var-file="default.tfvars"` to execute and apply the policy settings.
