@@ -45,6 +45,22 @@ resource "turbot_policy_setting" "turbot_logging_buckets_prefix" {
   count = var.logging_buckets ? 1 : 0
 }
 
+# Create the Trail type
+# AWS > Turbot > Audit Trail > CloudTrail > Trail > Type
+resource "turbot_policy_setting" "trailType" {
+  resource    = turbot_smart_folder.turbot_event_handlers_folder.id
+  type        = "tmod:@turbot/aws#/policy/types/trailType"
+  value       = "A multi-region trail in the `Trail > Global Region` in each account"
+  count       = var.turbot_cloudtrails ? 1 : 0
+}
+
+resource "turbot_policy_setting" "globalTrailRegion" {
+  resource    = turbot_smart_folder.turbot_event_handlers_folder.id
+  type        = "tmod:@turbot/aws#/policy/types/trailGlobalRegion"
+  value       = yamlencode("us-east-1")
+  count       = var.turbot_cloudtrails ? 1 : 0
+}
+
 resource "turbot_policy_setting" "turbot_cloudtrail_enabled" {
   resource = turbot_smart_folder.turbot_event_handlers_folder.id
   type = "tmod:@turbot/aws#/policy/types/auditTrail"
