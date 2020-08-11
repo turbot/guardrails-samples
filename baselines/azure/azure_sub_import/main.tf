@@ -24,7 +24,6 @@ resource "turbot_resource" "subscription_resource" {
 }
 
 # Set the credentials for the subscription via Turbot policies
-# Azure > Environment
 resource "turbot_policy_setting" "environment" {
   resource = turbot_resource.subscription_resource.id
   type     = "tmod:@turbot/azure#/policy/types/environment"
