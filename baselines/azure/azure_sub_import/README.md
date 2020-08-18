@@ -2,9 +2,7 @@
 
 The Azure subscription import baseline terraform configuration lets you import an Azure subscription into your turbot environment, with the necessary roles and permissions.
 
-- It is recommended that you import accounts into Turbot Folders, as it provides greater flexibility and ease of management.
-- Give the role a purposeful name such as `turbot-readonly` (read only) or `turbot-superuser` (for full access).
-- By default, Turbot is installed with administrator access to enable full functionality. However, You may change this if required.
+- It is recommended that you import subscriptions into Turbot Folders, as it provides greater flexibility and ease of management.
 
 ## Prerequisites
 
