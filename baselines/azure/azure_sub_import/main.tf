@@ -24,24 +24,25 @@ resource "turbot_resource" "subscription_resource" {
 }
 
 # Set the credentials for the subscription via Turbot policies
+# Azure > Environment
 resource "turbot_policy_setting" "environment" {
   resource = turbot_resource.subscription_resource.id
   type     = "tmod:@turbot/azure#/policy/types/environment"
   value    = var.azure_environment_type
 }
-
+# Azure > Client Key
 resource "turbot_policy_setting" "clientKey" {
   resource = turbot_resource.subscription_resource.id
   type     = "tmod:@turbot/azure#/policy/types/clientKey"
   value    = var.azure_client_secret
 }
-
+# Azure > Client ID
 resource "turbot_policy_setting" "clientId" {
   resource = turbot_resource.subscription_resource.id
   type     = "tmod:@turbot/azure#/policy/types/clientId"
   value    = var.azure_client_id
 }
-
+# Azure > Tenant ID
 resource "turbot_policy_setting" "tenantId" {
   resource = turbot_resource.subscription_resource.id
   type     = "tmod:@turbot/azure#/policy/types/tenantId"
