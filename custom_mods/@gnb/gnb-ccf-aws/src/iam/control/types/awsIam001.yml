@@ -46,50 +46,48 @@ awsIam001:
 
   # This is the logic block of the Control
   # Currently pre-loaded available packages are: later, lodash, mm, moment, ocl, semver, tacl
-  inline:
-    +string:
-      - +raw: |
-          turbot.log.debug("Input:", $);
+  inline: |
+    turbot.log.debug("Input:", $);
 
-          // First of all, control needs to check whether to run or skip, based on policies gnbccfAws and awsIam001
-          if ($.ccfItemPolicy === "Skip") {
-            return turbot.skipped("Policy AWS.IAM.001 is set to skip");
-          }
+    // First of all, control needs to check whether to run or skip, based on policies gnbccfAws and awsIam001
+    if ($.ccfItemPolicy === "Skip") {
+      return turbot.skipped("Policy AWS.IAM.001 is set to skip");
+    }
 
-          if ($.ccfItemPolicy === "Per Goliath > AWS") {
-            if ($.ccfPolicy === "Skip") {
-              return turbot.skipped("Report level Goliath > AWS policy set to skip");
-            }
+    if ($.ccfItemPolicy === "Per Goliath > AWS") {
+      if ($.ccfPolicy === "Skip") {
+        return turbot.skipped("Report level Goliath > AWS policy set to skip");
+      }
 
-            const checkable = [
-              "Check"
-            ];
+      const checkable = [
+        "Check"
+      ];
 
-            if (!checkable.includes($.ccfPolicy)) {
-              return turbot.skipped("Report level Goliath > AWS check criteria not met");
-            }
-          }
+      if (!checkable.includes($.ccfPolicy)) {
+        return turbot.skipped("Report level Goliath > AWS check criteria not met");
+      }
+    }
 
-          // Control works on data available on CMDB. So it needs to check the state of CMDB, if it's ready for use
-          let state = _.get($.cmdbState, "state")
-            ? _.get($.cmdbState, "state").toLowerCase()
-            : _.get($.cmdbState, "state");
+    // Control works on data available on CMDB. So it needs to check the state of CMDB, if it's ready for use
+    let state = _.get($.cmdbState, "state")
+      ? _.get($.cmdbState, "state").toLowerCase()
+      : _.get($.cmdbState, "state");
 
-          if (["tbd", "skipped"].includes(state) || !state) {
-            return turbot.tbd(`CMDB control is in ${state}`);
-          }
+    if (["tbd", "skipped"].includes(state) || !state) {
+      return turbot.tbd(`CMDB control is in ${state}`);
+    }
 
-          if (state != "ok") {
-            turbot.log.warning(`CMDB control is in ${state}`);
-          }
+    if (state != "ok") {
+      turbot.log.warning(`CMDB control is in ${state}`);
+    }
 
-          if ( _.isEqual($.item.data, $.passwordPolicy) ) {
-            turbot.log.info("Details", "Password policy meets complexity requirements per `Account Password Policy` policy");
-            return turbot.ok("Recommendation met");
-          }
+    if ( _.isEqual($.item.data, $.passwordPolicy) ) {
+      turbot.log.info("Details", "Password policy meets complexity requirements per `Account Password Policy` policy");
+      return turbot.ok("Recommendation met");
+    }
 
-          turbot.log.info("Details", "Password policy does not meet complexity requirements per `Account Password Policy` policy");
-          return turbot.alarm("Recommendation not met");
+    turbot.log.info("Details", "Password policy does not meet complexity requirements per `Account Password Policy` policy");
+    return turbot.alarm("Recommendation not met");
 
 # Here we define our control's unit tests
 #
