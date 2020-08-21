@@ -1,0 +1,41 @@
+# This file contains control category definitions
+#
+# As other mod objects, Control Categories works in hierarchy. Each category linked to a parent category.
+# The default parent category is Turbot, which is the highest level.
+# Hierarchy offers a good visualization and navigation through control categories
+# Please refer to https://turbot.com/v5/docs/concepts/controls#control-categories for details
+
+# Hierarchy level: Goliath
+gnbccf:
+  title: Goliath
+  icon: fal-shield
+
+# Hierarchy level: Goliath > Authentication & Access Control
+gnbccfAac:
+  title: Authentication & Access Control
+  icon: fal-shield
+  parent: "#/control/categories/gnbccf"
+
+# Hierarchy level: Goliath > Data Security & Encryption
+gnbccfData:
+  title: Data Security & Encryption
+  icon: fal-shield
+  parent: "#/control/categories/gnbccf"
+
+# Hierarchy level: Goliath > Network Security
+gnbccfNet:
+  title: Network Security
+  icon: fal-shield
+  parent: "#/control/categories/gnbccf"
+
+# Hierarchy level: Goliath > Logging & Auditing
+gnbccfAud:
+  title: Logging & Auditing
+  icon: fal-shield
+  parent: "#/control/categories/gnbccf"
+
+# Hierarchy level: Goliath > Data Protection & Business Continuity
+gnbccfDpc:
+  title: Data Protection & Business Continuity
+  icon: fal-shield
+  parent: "#/control/categories/gnbccf"

@@ -1,0 +1,249 @@
+# This is a control type definition file
+#
+# Controls are responsible for enforcing one or more policies
+# While Policies define the desired settings for Resources, Controls are responsible for implementing them
+# Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
+
+# Here we are defining the `Goliath > AWS > IAM > AWS.IAM.002 - Require MFA for console users` control type
+awsIam002:
+
+  # The control's title as it will be shown on Turbot UI console
+  title: AWS.IAM.002 - Require MFA for console users
+
+  # Here we pick a good icon to represent control's action. Usually the same icon as the respective policy
+  # It helps quickly identifying the control on Turbot UI console
+  icon: fal-shield-check
+
+  # Control type will be placed under: `Goliath > AWS > IAM`
+  parent: "#/control/types/gnbccfAwsIam"
+
+  # Control will be under category hierarchy level: `Goliath > Authentication & Access Control`
+  category: "gnb-ccf#/control/categories/gnbccfAac"
+
+  # Control will run against the resource types listed bellow
+  targets:
+    - "tmod:@turbot/aws-iam#/resource/types/credentialReport"
+
+  # A short explanation of what this control does. Text here will be shown on Turbot UI console
+  description: |
+    Check console users have MFA enabled
+
+  # Input block is where it's defined which data the control will use
+  # For that, Turbot offers a query engine based on GraphQL
+  # For filtering features, please check out https://turbot.com/v5/docs/reference/filter
+  input: |
+    {
+      item: credentialReport {
+        credentialInfo: get(path:"credentialInfo")
+      }
+      cmdbState: control(uri:"tmod:@turbot/aws-iam#/control/types/credentialReportCmdb") {
+        state
+      }
+      ccfPolicy: policy(uri: "#/policy/types/gnbccfAws")
+      ccfItemPolicy: policy(uri: "#/policy/types/awsIam002")
+    }
+
+  # This is the logic block of the Control
+  # Currently pre-loaded available packages are: later, lodash, mm, moment, ocl, semver, tacl
+  inline:
+    +string:
+      - +raw: |
+          turbot.log.debug("Input:", $);
+
+          // First of all, control needs to check whether to run or skip, based on policies gnbccfAws and awsIam002
+          if ($.ccfItemPolicy === "Skip") {
+            return turbot.skipped("Policy AWS.IAM.002 is set to skip");
+          }
+
+          if ($.ccfItemPolicy === "Per Goliath > AWS") {
+            if ($.ccfPolicy === "Skip") {
+              return turbot.skipped("Report level Goliath > AWS policy set to skip");
+            }
+
+            const checkable = [
+              "Check"
+            ];
+
+            if (!checkable.includes($.ccfPolicy)) {
+              return turbot.skipped("Report level Goliath > AWS check criteria not met");
+            }
+          }
+
+          // Control works on data available on CMDB. So it needs to check the state of CMDB, if it's ready for use
+          let state = _.get($.cmdbState, "state")
+            ? _.get($.cmdbState, "state").toLowerCase()
+            : _.get($.cmdbState, "state");
+
+          if (["tbd", "skipped"].includes(state) || !state) {
+            return turbot.tbd(`CMDB control is in ${state}`);
+          }
+
+          if (state != "ok") {
+            turbot.log.warning(`CMDB control is in ${state}`);
+          }
+
+          let consoleUsersWithoutMfa = _.filter($.item.credentialInfo, (info) => {
+            if (info.password_enabled === "true" && info.mfa_active === "false") {
+              turbot.log.warning(`MFA is not enabled for the IAM user ${info.user} using console password for aws login`);
+              return info.user;
+            }
+          });
+
+          if(_.isEmpty(consoleUsersWithoutMfa)) {
+            turbot.log.info("Details", "No console users without MFA enabled were found");
+            return turbot.ok("Recommendation met");
+          }
+
+          turbot.log.info("Details", "There is at least one console user without MFA enabled");
+          return turbot.alarm("Recommendation not met");
+
+# Here we define our control's unit tests
+#
+# To run all unit test in this control:
+# turbot test --control awsIam002
+#
+# To run a specific unit test:
+# turbot test --control awsIam002 --test "Skip if item policy is set to skip"
+#
+# In case you want to see debug logs, add the following arguments:
+# --verbose --control-log-level debug
+  tests:
+    - description: Skip if item policy is set to skip
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          credentialInfo:
+            '<root_account>':
+              user: '<root_account>'
+              password_enabled: not_supported
+              mfa_active: 'false'
+            luis:
+              user: luis
+              password_enabled: 'true'
+              mfa_active: 'true'
+        cmdbState:
+          state: ok
+        ccfPolicy: Check
+        ccfItemPolicy: Skip
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: skipped
+          reason: Policy AWS.IAM.002 is set to skip
+
+    - description: Return tbd if cmdb state is in tbd
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          credentialInfo:
+            '<root_account>':
+              user: '<root_account>'
+              password_enabled: not_supported
+              mfa_active: 'false'
+            luis:
+              user: luis
+              password_enabled: 'true'
+              mfa_active: 'true'
+        cmdbState:
+          state: tbd
+        ccfPolicy: "Check"
+        ccfItemPolicy: "Check"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: tbd
+          reason: CMDB control is in tbd
+
+    - description: Skip if report level policy is set to skip
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          credentialInfo:
+            '<root_account>':
+              user: '<root_account>'
+              password_enabled: not_supported
+              mfa_active: 'false'
+            luis:
+              user: luis
+              password_enabled: 'true'
+              mfa_active: 'true'
+        cmdbState:
+          state: ok
+        ccfPolicy: "Skip"
+        ccfItemPolicy: "Per Goliath > AWS"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: skipped
+          reason: Report level Goliath > AWS policy set to skip
+
+    - description: Returns ok if recommendation is met and the local level policy is set to check
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          data:item:
+          credentialInfo:
+            '<root_account>':
+              user: '<root_account>'
+              password_enabled: not_supported
+              mfa_active: 'false'
+            luis:
+              user: luis
+              password_enabled: 'true'
+              mfa_active: 'true'
+            RequireUppercaseCharacters: true
+        cmdbState:
+          state: ok
+        ccfPolicy: "Skip"
+        ccfItemPolicy: "Check"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: ok
+          reason: Recommendation met
+
+    - description: Returns ok if recommendation is met and Goliath > AWS policy set to check
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          credentialInfo:
+            '<root_account>':
+              user: '<root_account>'
+              password_enabled: not_supported
+              mfa_active: 'false'
+            luis:
+              user: luis
+              password_enabled: 'true'
+              mfa_active: 'true'
+        cmdbState:
+          state: ok
+        ccfPolicy: "Check"
+        ccfItemPolicy: "Per Goliath > AWS"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: ok
+          reason: Recommendation met
+
+    - description: Returns alarm if recommendation is not met
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          credentialInfo:
+            '<root_account>':
+              user: '<root_account>'
+              password_enabled: not_supported
+              mfa_active: 'false'
+            luis:
+              user: luis
+              password_enabled: 'true'
+              mfa_active: 'false'
+        cmdbState:
+          state: ok
+        ccfPolicy: "Skip"
+        ccfItemPolicy: "Check"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: alarm
+          reason: "Recommendation not met"

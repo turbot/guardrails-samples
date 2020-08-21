@@ -1,0 +1,20 @@
+# This file contains control type definitions
+# Controls defined here are not intended to execute any action but to build a hierarchy of control types
+#
+# Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
+
+# Here we are defining the `Goliath > AWS > CloudTrail` control type
+gnbccfAwsCloudTrail:
+
+  # The control's title as it will be shown on Turbot UI console
+  title: CloudTrail
+
+  # Here we pick a good icon to represent control's action. Usually the same icon as the respective policy
+  # It helps quickly identifying the control on Turbot UI console
+  icon: fal-shield-check
+
+  # Control type will be placed under: `Goliath > AWS`
+  parent: "#/control/types/gnbccfAws"
+
+  # Control will be under category hierarchy level: `Goliath > Logging & CloudTrailiting`
+  category: "gnb-ccf#/control/categories/gnbccfAud"

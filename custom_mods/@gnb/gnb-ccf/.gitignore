@@ -1,0 +1,52 @@
+# Ignore file types
+*.tgz
+*.bak
+*.zip
+.*.swp
+.*.swo
+.vscode/launch.json
+
+# Ignore Apple custom attributes file
+.DS_Store
+
+# Ignore Lerna debug files
+lerna-debug.log
+
+# Ignore Resharper user workspace setings
+.idea
+
+# Ignore code coverage interum data
+.nyc_output
+
+# Ignore node dependencies
+node_modules
+
+# Ignore local scripts
+local_scripts/
+
+# Ignore symbollically linked core folders
+packages/fn
+packages/kit
+packages/turbot
+packages/turbot-iam
+
+# Ignore coverage generated files
+coverage/
+
+# Ignore build files except for GitHub action build files and integration test
+# runner
+**/dist/*
+!.github/**/dist/*
+!integration-tests/dist/*
+
+# Ignore generated inline unit tests
+packages/turbot-common/*/test/*.js
+
+# TEMP - Ignore mod definitions
+**/turbot.json
+**/turbot.dist.json
+**/turbot.head.json
+
+# Ignore template build-data files
+**/turbot_templates/build-data/**
+.vscode/tasks.json

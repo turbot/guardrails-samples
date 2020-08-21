@@ -1,0 +1,23 @@
+# This is a policy type definition
+#
+# Automated controls require a large number of configuration settings from the biggest decisions (e.g. allowed services)
+# right down to small, but critical, details (e.g. automated tags for cost management).
+# In Turbot, Policies are used to manage these settings.
+# Please refer to https://turbot.com/v5/docs/concepts/policies for details
+
+# Here we are defining the top level policy type of this mod
+gnbccf:
+
+  # The policy's title as it will be shown on Turbot UI console
+  title: Goliath
+
+  # Here we pick a good icon to represent what the policy is about. Usually the same icon as the respective control
+  # It helps quickly identifying the policy on Turbot UI console
+  icon: fal-shield-check
+
+  # A short explanation of what the policy refers to
+  # Text here will be shown on Turbot UI console
+  description: Configures a default auditing level against the GNB Controls Framework.
+
+  # Policy will be under category hierarchy level: `Goliath`
+  category: "gnb-ccf#/control/categories/gnbccf"

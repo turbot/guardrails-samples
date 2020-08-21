@@ -1,0 +1,20 @@
+# This file contains policy type definitions
+# Policies defined here are not intended to hold any data but to build a hierarchy of policy types
+#
+# Please refer to https://turbot.com/v5/docs/concepts/policies/hierarchy for details
+
+# Here we are defining the `Goliath > AWS > CloudTrail` policy type
+gnbccfAwsCloudTrail:
+
+  # The policy's title as it will be shown on Turbot UI console
+  title: CloudTrail
+
+  # Here we pick a good icon to represent what the policy is about. Usually the same icon as the respective control
+  # It helps quickly identifying the policy on Turbot UI console
+  icon: fal-shield-check
+
+  # Policy type will be placed under: `Goliath > AWS`
+  parent: "#/policy/types/gnbccfAws"
+
+  # Policy will be under category hierarchy level: `Goliath > Logging & Auditing`
+  category: "gnb-ccf#/control/categories/gnbccfAud"

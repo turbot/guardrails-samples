@@ -1,0 +1,198 @@
+# This is a control type definition file
+#
+# Controls are responsible for enforcing one or more policies
+# While Policies define the desired settings for Resources, Controls are responsible for implementing them
+# Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
+
+# Here we are defining the `Goliath > AWS > S3 > AWS.S3.001 - Set Default Encryption on S3 Buckets` control type
+awsS3001:
+
+  # The control's title as it will be shown on Turbot UI console
+  title: AWS.S3.001 - Set Default Encryption on S3 Buckets
+
+  # Here we pick a good icon to represent control's action. Usually the same icon as the respective policy
+  # It helps quickly identifying the control on Turbot UI console
+  icon: fal-shield-check
+
+  # Control type will be placed under: `Goliath > AWS > S3`
+  parent: "#/control/types/gnbccfAwsS3"
+
+  # Control will be under category hierarchy level: `Goliath > S3 Security & Encryption`
+  category: "gnb-ccf#/control/categories/gnbccfData"
+
+  # Control will run against the resource types listed bellow
+  targets:
+    - "tmod:@turbot/aws-s3#/resource/types/bucket"
+
+  # A short explanation of what this control does. Text here will be shown on Turbot UI console
+  description: |
+    Check if bucket default encryption is set
+
+  # Input block is where it's defined which data the control will use
+  # For that, Turbot offers a query engine based on GraphQL
+  # For filtering features, please check out https://turbot.com/v5/docs/reference/filter
+  input: |
+    {
+      item: bucket {
+        serverSideEncryptionRules: get(path:"Encryption.ServerSideEncryptionConfiguration.Rules")
+      }
+      cmdbState: control(uri:"tmod:@turbot/aws-s3#/control/types/bucketCmdb") {
+        state
+      }
+      ccfPolicy: policy(uri: "#/policy/types/gnbccfAws")
+      ccfItemPolicy: policy(uri: "#/policy/types/awsS3001")
+    }
+
+  # This is the logic block of the Control
+  # Currently pre-loaded available packages are: later, lodash, mm, moment, ocl, semver, tacl
+  inline:
+    +string:
+      - +raw: |
+          turbot.log.debug("Input:", $);
+
+          // First of all, control needs to check whether to run or skip, based on policies gnbccfAws and awsS3001
+          if ($.ccfItemPolicy === "Skip") {
+            return turbot.skipped("Policy AWS.S3.001 is set to skip");
+          }
+
+          if ($.ccfItemPolicy === "Per Goliath > AWS") {
+            if ($.ccfPolicy === "Skip") {
+              return turbot.skipped("Report level Goliath > AWS policy set to skip");
+            }
+
+            const checkable = [
+              "Check"
+            ];
+
+            if (!checkable.includes($.ccfPolicy)) {
+              return turbot.skipped("Report level Goliath > AWS check criteria not met");
+            }
+          }
+
+          // Control works on data available on CMDB. So it needs to check the state of CMDB, if it's ready for use
+          let state = _.get($.cmdbState, "state")
+            ? _.get($.cmdbState, "state").toLowerCase()
+            : _.get($.cmdbState, "state");
+
+          if (["tbd", "skipped"].includes(state) || !state) {
+            return turbot.tbd(`CMDB control is in ${state}`);
+          }
+
+          if (state != "ok") {
+            turbot.log.warning(`CMDB control is in ${state}`);
+          }
+
+          if(_.find($.item.serverSideEncryptionRules, (r) => {return _.get(r, "ApplyServerSideEncryptionByDefault") })) {
+            turbot.log.info("Details", "Default encryption is set");
+            return turbot.ok("Recommendation met");
+          }
+
+          turbot.log.info("Details", "Default encryption is not set");
+          return turbot.alarm("Recommendation not met");
+
+# Here we define our control's unit tests
+#
+# To run all unit test in this control:
+# turbot test --control bcAws01
+#
+# To run a specific unit test:
+# turbot test --control bcAws01 --test "Skip if item policy is set to skip"
+#
+# In case you want to see debug logs, add the following arguments:
+# --verbose --control-log-level debug
+  tests:
+    - description: Skip if item policy is set to skip
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          serverSideEncryptionRules: null
+        cmdbState:
+          state: ok
+        ccfPolicy: Check
+        ccfItemPolicy: Skip
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: skipped
+          reason: Policy AWS.S3.001 is set to skip
+
+    - description: Return tbd if cmdb state is in tbd
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          serverSideEncryptionRules: null
+        cmdbState:
+          state: tbd
+        ccfPolicy: "Check"
+        ccfItemPolicy: "Check"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: tbd
+          reason: CMDB control is in tbd
+
+    - description: Skip if report level policy is set to skip
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          serverSideEncryptionRules: null
+        cmdbState:
+          state: ok
+        ccfPolicy: "Skip"
+        ccfItemPolicy: "Per Goliath > AWS"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: skipped
+          reason: Report level Goliath > AWS policy set to skip
+
+    - description: Returns ok if recommendation is met and the local level policy is set to check
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          serverSideEncryptionRules:
+            - ApplyServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        cmdbState:
+          state: ok
+        ccfPolicy: "Skip"
+        ccfItemPolicy: "Check"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: ok
+          reason: Recommendation met
+
+    - description: Returns ok if recommendation is met and Goliath > AWS policy set to check
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          serverSideEncryptionRules:
+            - ApplyServerSideEncryptionByDefault:
+                KMSMasterKeyID: >-
+                  arn:aws:kms:us-east-2:235268162285:key/b6925312-7758-49ac-b560-fe0fc0c0de0b
+                SSEAlgorithm: 'aws:kms'
+        cmdbState:
+          state: ok
+        ccfPolicy: "Check"
+        ccfItemPolicy: "Per Goliath > AWS"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: ok
+          reason: Recommendation met
+
+    - description: Returns alarm if recommendation is not met
+      # Here we mock the data for the input query, which will be processed by the control
+      input:
+        item:
+          serverSideEncryptionRules: null
+        cmdbState:
+          state: ok
+        ccfPolicy: "Skip"
+        ccfItemPolicy: "Check"
+      # Here it's defined the expected control output
+      expect:
+        control:
+          state: alarm
+          reason: "Recommendation not met"

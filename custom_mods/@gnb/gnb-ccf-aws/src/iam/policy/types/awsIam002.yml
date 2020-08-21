@@ -1,0 +1,16 @@
+awsIam002:
+  title: AWS.IAM.002 - Require MFA for console users
+  icon: fal-shield-check
+  parent: "#/policy/types/gnbccfAwsIam"
+  category: "gnb-ccf#/control/categories/gnbccfAac"
+  targets:
+    - "tmod:@turbot/aws-iam#/resource/types/credentialReport"
+  description: |
+    Check console users have MFA enabled
+  schema:
+    type: string
+    enum:
+      - Skip
+      - Check
+      - Per Goliath > AWS
+    default: Per Goliath > AWS

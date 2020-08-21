@@ -1,0 +1,16 @@
+awsS3001:
+  title: AWS.S3.001 - Set Default Encryption on S3 Buckets
+  icon: fal-shield-check
+  parent: "#/policy/types/gnbccfAwsS3"
+  category: "gnb-ccf#/control/categories/gnbccfData"
+  targets:
+    - "tmod:@turbot/aws-s3#/resource/types/bucket"
+  description: |
+    Check if bucket default encryption is set
+  schema:
+    type: string
+    enum:
+      - Skip
+      - Check
+      - Per Goliath > AWS
+    default: Per Goliath > AWS

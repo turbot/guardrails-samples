@@ -1,0 +1,35 @@
+awsVpc001:
+  title: AWS.VPC.001 - Disallow access to management ports from 0.0.0.0/0
+  icon: fal-shield-check
+  parent: "#/policy/types/gnbccfAwsVpc"
+  category: "gnb-ccf#/control/categories/gnbccfNet"
+  targets:
+    - "tmod:@turbot/aws-vpc-security#/resource/types/securityGroup"
+  description: |
+    Check Security Group disallow access from 0.0.0.0/0 to ports per `Management Ports` policy
+  schema:
+    type: string
+    enum:
+      - Skip
+      - Check
+      - Per Goliath > AWS
+    default: Per Goliath > AWS
+
+awsVpc001ManagementPorts:
+  title: Management Ports
+  icon: fal-badge-check
+  parent: "#/policy/types/awsVpc001"
+  category: "gnb-ccf#/control/categories/gnbccfNet"
+  targets:
+    - "tmod:@turbot/aws-vpc-security#/resource/types/securityGroup"
+  description: |
+    List of commonly used ports for management
+  schema:
+    type: array
+    item:
+      type: string
+    default:
+      # SSH default port
+      - 22
+      # RDS default port
+      - 3389

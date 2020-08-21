@@ -1,0 +1,39 @@
+awsIam001:
+  title: AWS.IAM.001 - Password policy meets complexity requirements
+  icon: fal-shield-check
+  parent: "#/policy/types/gnbccfAwsIam"
+  category: "gnb-ccf#/control/categories/gnbccfAac"
+  targets:
+    - "tmod:@turbot/aws-iam#/resource/types/accountPasswordPolicy"
+  description: |
+    Check Password policy meets complexity requirements per `Account Password Policy` policy
+  schema:
+    type: string
+    enum:
+      - Skip
+      - Check
+      - Per Goliath > AWS
+    default: Per Goliath > AWS
+
+awsIam001AccountPasswordPolicy:
+  title: Account Password Policy
+  icon: fal-badge-check
+  parent: "#/policy/types/awsIam001"
+  category: "gnb-ccf#/control/categories/gnbccfAac"
+  targets:
+    - "tmod:@turbot/aws-iam#/resource/types/accountPasswordPolicy"
+  description: |
+    Expected Account Password Policy
+  schema:
+    type: object
+    default:
+      AllowUsersToChangePassword: false
+      ExpirePasswords: true
+      HardExpiry: false
+      MaxPasswordAge: 90
+      MinimumPasswordLength: 14
+      PasswordReusePrevention: 24
+      RequireLowercaseCharacters: true
+      RequireNumbers: true
+      RequireSymbols: true
+      RequireUppercaseCharacters: true

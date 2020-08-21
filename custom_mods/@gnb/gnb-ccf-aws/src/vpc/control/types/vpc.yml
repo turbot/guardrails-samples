@@ -1,0 +1,5 @@
+gnbccfAwsVpc:
+  title: VPC
+  icon: fal-shield-check
+  parent: "#/control/types/gnbccfAws"
+  category: "gnb-ccf#/control/categories/gnbccfNet"
