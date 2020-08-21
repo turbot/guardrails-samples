@@ -11,14 +11,14 @@ title: "@gnb/gnb-ccf-aws"
 author: Goliath National Bank (GNB), Inc
 
 # https://turbot.com/v5/docs/mods#versioning
-version: 0.1.0-alpha.1
+version: 1.0.0
 
 license: "For LICENSE see https://turbot.com/license"
 
 # https://turbot.com/v5/docs/mods#mod-dependencies
 peerDependencies:
   # GNB CCF categories dependency:
-  "@gnb/gnb-ccf": "0.1.0-alpha.1"
+  "@gnb/gnb-ccf": ">=1.0.0"
 
   # Mod base dependencies:
   "@turbot/turbot": ">=5.15.0"

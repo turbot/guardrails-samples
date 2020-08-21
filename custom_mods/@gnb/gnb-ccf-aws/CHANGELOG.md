@@ -1,6 +1,6 @@
 # CHANGELOG for @gnb/gnb-ccf-aws
 
-## v0.1.0-alpha.1 [2020-08-18]
+## v1.0.0 [2020-08-18]
 
 **Policy types**
 * Added: Goliath > AWS
