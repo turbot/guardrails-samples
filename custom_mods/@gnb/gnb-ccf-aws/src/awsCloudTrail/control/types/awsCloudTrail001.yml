@@ -60,7 +60,9 @@ awsCloudTrail001:
         #   - $.IsMultiRegionTrail:'true' -> Only multi-regional trails
         # Only the total of found trails is fine for this control, so, we get metadata.stats.total of the result
 
-        trails: resources (filter:"resourceType:'tmod:@turbot/aws-cloudtrail#/resource/types/trail' $.turbot.custom.aws.accountId:{{ $.item.accountId }} $.IsMultiRegionTrail:'true'") {
+        trails: resources (filter:"resourceType:'tmod:@turbot/aws-cloudtrail#/resource/types/trail'
+            $.turbot.custom.aws.accountId:{{ $.item.accountId }}
+            $.IsMultiRegionTrail:'true'") {
           metadata {
             stats {
               total
