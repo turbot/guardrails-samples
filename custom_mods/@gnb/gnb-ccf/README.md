@@ -27,12 +27,11 @@ Categories provide an alternate, vendor agnostic view of controls and policies. 
 Install and configure Turbot CLI by following [this guide](https://turbot.com/v5/docs/reference/cli/installation)
 
 
-## Installing the mod
-
-The turbot [install command](https://turbot.com/v5/docs/reference/cli/commands/install) installs a mod and all of its dependencies locally
+## Composing the mod
+The [turbot compose](https://turbot.com/v5/docs/reference/cli/commands/compose) command resolve all inclusion directives starting from 'src/turbot.yml'
 
 ``` bash
-turbot install
+turbot compose
 ```
 
 
@@ -57,11 +56,7 @@ turbot test
 
 ## Uploading
 
-Before deploying the mod, you first need to install its dependencies on the workspace.
-
-First check mod dependencies at [src/turbot.yml](src/turbot.yml) file, then follow [this guide](https://turbot.com/v5/docs/guides/managing-mods/install-mods) to install them on the workspace.
-
-After that, run the following command to upload the mod into the workspace defined in the local [Turbot CLI configuration file](https://turbot.com/v5/docs/reference/cli/installation#named-profiles), usually located at `[user home]/.turbot/config.yml`
+Run the following command to upload the mod into the workspace defined in the local [Turbot CLI configuration file](https://turbot.com/v5/docs/reference/cli/installation#named-profiles), usually located at `[user home]/.turbot/config.yml`
 
 ``` bash
 turbot up --profile=[target workspace profile]
