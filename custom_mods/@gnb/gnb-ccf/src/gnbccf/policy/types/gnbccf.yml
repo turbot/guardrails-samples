@@ -6,10 +6,10 @@
 # Please refer to https://turbot.com/v5/docs/concepts/policies for details
 
 # Here we are defining the top level policy type of this mod
-gnbccf:
+dmiccf:
 
   # The policy's title as it will be shown on Turbot UI console
-  title: Goliath
+  title: Dunder Mifflin
 
   # Here we pick a good icon to represent what the policy is about. Usually the same icon as the respective control
   # It helps quickly identifying the policy on Turbot UI console
@@ -17,7 +17,7 @@ gnbccf:
 
   # A short explanation of what the policy refers to
   # Text here will be shown on Turbot UI console
-  description: Configures a default auditing level against the GNB Controls Framework.
+  description: Configures a default auditing level against the DMI Controls Framework.
 
-  # Policy will be under category hierarchy level: `Goliath`
-  category: "gnb-ccf#/control/categories/gnbccf"
+  # Policy will be under category hierarchy level: `Dunder Mifflin`
+  category: "dmi-ccf#/control/categories/dmiccf"

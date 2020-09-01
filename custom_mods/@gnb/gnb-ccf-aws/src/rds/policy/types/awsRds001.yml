@@ -1,30 +1,30 @@
 awsRds001:
   title: AWS.RDS.001 - Enable RDS Backups with standard DB retention
   icon: fal-shield-check
-  parent: "#/policy/types/gnbccfAwsRds"
-  category: "gnb-ccf#/control/categories/gnbccfDpc"
+  parent: "#/policy/types/dmiccfAwsRds"
+  category: "dmi-ccf#/control/categories/dmiccfDpc"
   targets:
     - "tmod:@turbot/aws-rds#/resource/types/dbInstance"
   description: |
-    Check RDS Backups Retention meets GNB standards per `Retention Days` policy
+    Check RDS Backups Retention meets DMI standards per `Retention Days` policy
   schema:
     type: string
     enum:
       - Skip
       - Check
-      - Per Goliath > AWS
-    default: Per Goliath > AWS
+      - Per Dunder Mifflin > AWS
+    default: Per Dunder Mifflin > AWS
 
 awsRds001RetentionDays:
   title: Retention Days
   icon: fal-badge-check
   parent: "#/policy/types/awsRds001"
-  category: "gnb-ccf#/control/categories/gnbccfDpc"
+  category: "dmi-ccf#/control/categories/dmiccfDpc"
   targets:
     - "tmod:@turbot/aws-rds#/resource/types/dbInstance"
   description: |
     Number of days a RDS DB Instance should retain backups.
-    Current GNB standard is 30 days retention.
+    Current DMI standard is 30 days retention.
   schema:
     type: integer
     minimum: 0

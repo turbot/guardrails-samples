@@ -5,7 +5,7 @@
 # In Turbot, Policies are used to manage these settings.
 # Please refer to https://turbot.com/v5/docs/concepts/policies for details
 
-# Here we are defining the `Goliath > AWS > CloudTrail > AWS.CloudTrail.001 - Enable Cloudtrail in All Regions` policy type
+# Here we are defining the `Dunder Mifflin > AWS > CloudTrail > AWS.CloudTrail.001 - Enable Cloudtrail in All Regions` policy type
 awsCloudTrail001:
 
   # The policy's title as it will be shown on Turbot UI console
@@ -15,11 +15,11 @@ awsCloudTrail001:
   # It helps quickly identifying the policy on Turbot UI console
   icon: fal-shield-check
 
-  # Policy type will be placed under: `Goliath > AWS > CloudTrail`
-  parent: "#/policy/types/gnbccfAwsCloudTrail"
+  # Policy type will be placed under: `Dunder Mifflin > AWS > CloudTrail`
+  parent: "#/policy/types/dmiccfAwsCloudTrail"
 
-  # Policy will be under category hierarchy level: `Goliath > Logging & Auditing`
-  category: "gnb-ccf#/control/categories/gnbccfAud"
+  # Policy will be under category hierarchy level: `Dunder Mifflin > Logging & Auditing`
+  category: "dmi-ccf#/control/categories/dmiccfAud"
 
   # This policy refers to resource types listed bellow
   targets:
@@ -37,6 +37,6 @@ awsCloudTrail001:
     enum:
       - Skip
       - Check
-      - Per Goliath > AWS
-    # `Per Goliath > AWS` means whatever is set on `Goliath > AWS` policy, the mod's top level policy
-    default: Per Goliath > AWS
+      - Per Dunder Mifflin > AWS
+    # `Per Dunder Mifflin > AWS` means whatever is set on `Dunder Mifflin > AWS` policy, the mod's top level policy
+    default: Per Dunder Mifflin > AWS

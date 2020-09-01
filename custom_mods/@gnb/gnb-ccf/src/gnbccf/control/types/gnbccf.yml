@@ -5,17 +5,17 @@
 # Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
 
 # Here we are defining the top level control type of this mod
-gnbccf:
+dmiccf:
 
   # The control's title as it will be shown on Turbot UI console
-  title: Goliath
+  title: Dunder Mifflin
 
   # Here we pick a good icon to represent control's action. Usually the same icon as the respective policy
   # It helps quickly identifying the control on Turbot UI console
   icon: fal-shield-check
 
   # A short explanation of what this control does. Text here will be shown on Turbot UI console
-  description: Configures a default auditing level against the GNB Controls Framework.
+  description: Configures a default auditing level against the DMI Controls Framework.
 
-  # Control will be under category hierarchy level: `Goliath`
-  category: "#/control/categories/gnbccf"
+  # Control will be under category hierarchy level: `Dunder Mifflin`
+  category: "#/control/categories/dmiccf"

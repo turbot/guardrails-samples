@@ -1,5 +1,5 @@
-gnbccfAwsRds:
+dmiccfAwsRds:
   title: RDS
   icon: fal-shield-check
-  parent: "#/policy/types/gnbccfAws"
-  category: "gnb-ccf#/control/categories/gnbccfDpc"
+  parent: "#/policy/types/dmiccfAws"
+  category: "dmi-ccf#/control/categories/dmiccfDpc"

@@ -4,7 +4,7 @@
 # While Policies define the desired settings for Resources, Controls are responsible for implementing them
 # Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
 
-# Here we are defining the `Goliath > AWS > IAM > AWS.IAM.002 - Require MFA for console users` control type
+# Here we are defining the `Dunder Mifflin > AWS > IAM > AWS.IAM.002 - Require MFA for console users` control type
 awsIam002:
 
   # The control's title as it will be shown on Turbot UI console
@@ -14,11 +14,11 @@ awsIam002:
   # It helps quickly identifying the control on Turbot UI console
   icon: fal-shield-check
 
-  # Control type will be placed under: `Goliath > AWS > IAM`
-  parent: "#/control/types/gnbccfAwsIam"
+  # Control type will be placed under: `Dunder Mifflin > AWS > IAM`
+  parent: "#/control/types/dmiccfAwsIam"
 
-  # Control will be under category hierarchy level: `Goliath > Authentication & Access Control`
-  category: "gnb-ccf#/control/categories/gnbccfAac"
+  # Control will be under category hierarchy level: `Dunder Mifflin > Authentication & Access Control`
+  category: "dmi-ccf#/control/categories/dmiccfAac"
 
   # Control will run against the resource types listed bellow
   targets:
@@ -39,7 +39,7 @@ awsIam002:
       cmdbState: control(uri:"tmod:@turbot/aws-iam#/control/types/credentialReportCmdb") {
         state
       }
-      ccfPolicy: policy(uri: "#/policy/types/gnbccfAws")
+      ccfPolicy: policy(uri: "#/policy/types/dmiccfAws")
       ccfItemPolicy: policy(uri: "#/policy/types/awsIam002")
     }
 
@@ -48,14 +48,14 @@ awsIam002:
   inline: |
     turbot.log.debug("Input:", $);
 
-    // First of all, control needs to check whether to run or skip, based on policies gnbccfAws and awsIam002
+    // First of all, control needs to check whether to run or skip, based on policies dmiccfAws and awsIam002
     if ($.ccfItemPolicy === "Skip") {
       return turbot.skipped("Policy AWS.IAM.002 is set to skip");
     }
 
-    if ($.ccfItemPolicy === "Per Goliath > AWS") {
+    if ($.ccfItemPolicy === "Per Dunder Mifflin > AWS") {
       if ($.ccfPolicy === "Skip") {
-        return turbot.skipped("Report level Goliath > AWS policy set to skip");
+        return turbot.skipped("Report level Dunder Mifflin > AWS policy set to skip");
       }
 
       const checkable = [
@@ -63,7 +63,7 @@ awsIam002:
       ];
 
       if (!checkable.includes($.ccfPolicy)) {
-        return turbot.skipped("Report level Goliath > AWS check criteria not met");
+        return turbot.skipped("Report level Dunder Mifflin > AWS check criteria not met");
       }
     }
 
@@ -168,12 +168,12 @@ awsIam002:
         cmdbState:
           state: ok
         ccfPolicy: "Skip"
-        ccfItemPolicy: "Per Goliath > AWS"
+        ccfItemPolicy: "Per Dunder Mifflin > AWS"
       # Here it's defined the expected control output
       expect:
         control:
           state: skipped
-          reason: Report level Goliath > AWS policy set to skip
+          reason: Report level Dunder Mifflin > AWS policy set to skip
 
     - description: Returns ok if recommendation is met and the local level policy is set to check
       # Here we mock the data for the input query, which will be processed by the control
@@ -200,7 +200,7 @@ awsIam002:
           state: ok
           reason: Recommendation met
 
-    - description: Returns ok if recommendation is met and Goliath > AWS policy set to check
+    - description: Returns ok if recommendation is met and Dunder Mifflin > AWS policy set to check
       # Here we mock the data for the input query, which will be processed by the control
       input:
         item:
@@ -216,7 +216,7 @@ awsIam002:
         cmdbState:
           state: ok
         ccfPolicy: "Check"
-        ccfItemPolicy: "Per Goliath > AWS"
+        ccfItemPolicy: "Per Dunder Mifflin > AWS"
       # Here it's defined the expected control output
       expect:
         control:

@@ -1,17 +1,17 @@
-# CHANGELOG for @gnb/gnb-ccf
+# CHANGELOG for @dmi/dmi-ccf
 
 ## v1.0.0 [2020-08-18]
 
 **Policy types**
-* Added: Goliath
+* Added: Dunder Mifflin
 
 **Control categories**
-* Added: Goliath
-* Added: Goliath > Authentication & Access Control
-* Added: Goliath > Data Protection & Business Continuity
-* Added: Goliath > Data Security & Encryption
-* Added: Goliath > Logging & Auditing
-* Added: Goliath > Network Security
+* Added: Dunder Mifflin
+* Added: Dunder Mifflin > Authentication & Access Control
+* Added: Dunder Mifflin > Data Protection & Business Continuity
+* Added: Dunder Mifflin > Data Security & Encryption
+* Added: Dunder Mifflin > Logging & Auditing
+* Added: Dunder Mifflin > Network Security
 
 **Control types**
-* Added: Goliath
+* Added: Dunder Mifflin

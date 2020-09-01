@@ -3,8 +3,8 @@
 #
 # Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
 
-# Here we are defining the `Goliath > AWS > CloudTrail` control type
-gnbccfAwsCloudTrail:
+# Here we are defining the `Dunder Mifflin > AWS > CloudTrail` control type
+dmiccfAwsCloudTrail:
 
   # The control's title as it will be shown on Turbot UI console
   title: CloudTrail
@@ -13,8 +13,8 @@ gnbccfAwsCloudTrail:
   # It helps quickly identifying the control on Turbot UI console
   icon: fal-shield-check
 
-  # Control type will be placed under: `Goliath > AWS`
-  parent: "#/control/types/gnbccfAws"
+  # Control type will be placed under: `Dunder Mifflin > AWS`
+  parent: "#/control/types/dmiccfAws"
 
-  # Control will be under category hierarchy level: `Goliath > Logging & CloudTrailiting`
-  category: "gnb-ccf#/control/categories/gnbccfAud"
+  # Control will be under category hierarchy level: `Dunder Mifflin > Logging & CloudTrailiting`
+  category: "dmi-ccf#/control/categories/dmiccfAud"

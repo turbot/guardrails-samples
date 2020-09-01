@@ -5,37 +5,37 @@
 # Hierarchy offers a good visualization and navigation through control categories
 # Please refer to https://turbot.com/v5/docs/concepts/controls#control-categories for details
 
-# Hierarchy level: Goliath
-gnbccf:
-  title: Goliath
+# Hierarchy level: Dunder Mifflin
+dmiccf:
+  title: Dunder Mifflin
   icon: fal-shield
 
-# Hierarchy level: Goliath > Authentication & Access Control
-gnbccfAac:
+# Hierarchy level: Dunder Mifflin > Authentication & Access Control
+dmiccfAac:
   title: 1. Authentication & Access Control
   icon: fal-shield
-  parent: "#/control/categories/gnbccf"
+  parent: "#/control/categories/dmiccf"
 
-# Hierarchy level: Goliath > Data Security & Encryption
-gnbccfData:
+# Hierarchy level: Dunder Mifflin > Data Security & Encryption
+dmiccfData:
   title: 2. Data Security & Encryption
   icon: fal-shield
-  parent: "#/control/categories/gnbccf"
+  parent: "#/control/categories/dmiccf"
 
-# Hierarchy level: Goliath > Network Security
-gnbccfNet:
+# Hierarchy level: Dunder Mifflin > Network Security
+dmiccfNet:
   title: 3. Network Security
   icon: fal-shield
-  parent: "#/control/categories/gnbccf"
+  parent: "#/control/categories/dmiccf"
 
-# Hierarchy level: Goliath > Logging & Auditing
-gnbccfAud:
+# Hierarchy level: Dunder Mifflin > Logging & Auditing
+dmiccfAud:
   title: 4. Logging & Auditing
   icon: fal-shield
-  parent: "#/control/categories/gnbccf"
+  parent: "#/control/categories/dmiccf"
 
-# Hierarchy level: Goliath > Data Protection & Business Continuity
-gnbccfDpc:
+# Hierarchy level: Dunder Mifflin > Data Protection & Business Continuity
+dmiccfDpc:
   title: 5. Data Protection & Business Continuity
   icon: fal-shield
-  parent: "#/control/categories/gnbccf"
+  parent: "#/control/categories/dmiccf"

@@ -1,8 +1,8 @@
 awsVpc001:
   title: AWS.VPC.001 - Disallow access to management ports from 0.0.0.0/0
   icon: fal-shield-check
-  parent: "#/policy/types/gnbccfAwsVpc"
-  category: "gnb-ccf#/control/categories/gnbccfNet"
+  parent: "#/policy/types/dmiccfAwsVpc"
+  category: "dmi-ccf#/control/categories/dmiccfNet"
   targets:
     - "tmod:@turbot/aws-vpc-security#/resource/types/securityGroup"
   description: |
@@ -12,14 +12,14 @@ awsVpc001:
     enum:
       - Skip
       - Check
-      - Per Goliath > AWS
-    default: Per Goliath > AWS
+      - Per Dunder Mifflin > AWS
+    default: Per Dunder Mifflin > AWS
 
 awsVpc001ManagementPorts:
   title: Management Ports
   icon: fal-badge-check
   parent: "#/policy/types/awsVpc001"
-  category: "gnb-ccf#/control/categories/gnbccfNet"
+  category: "dmi-ccf#/control/categories/dmiccfNet"
   targets:
     - "tmod:@turbot/aws-vpc-security#/resource/types/securityGroup"
   description: |

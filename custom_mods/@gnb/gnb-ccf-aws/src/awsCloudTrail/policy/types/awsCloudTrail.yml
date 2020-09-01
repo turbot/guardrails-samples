@@ -3,8 +3,8 @@
 #
 # Please refer to https://turbot.com/v5/docs/concepts/policies/hierarchy for details
 
-# Here we are defining the `Goliath > AWS > CloudTrail` policy type
-gnbccfAwsCloudTrail:
+# Here we are defining the `Dunder Mifflin > AWS > CloudTrail` policy type
+dmiccfAwsCloudTrail:
 
   # The policy's title as it will be shown on Turbot UI console
   title: CloudTrail
@@ -13,8 +13,8 @@ gnbccfAwsCloudTrail:
   # It helps quickly identifying the policy on Turbot UI console
   icon: fal-shield-check
 
-  # Policy type will be placed under: `Goliath > AWS`
-  parent: "#/policy/types/gnbccfAws"
+  # Policy type will be placed under: `Dunder Mifflin > AWS`
+  parent: "#/policy/types/dmiccfAws"
 
-  # Policy will be under category hierarchy level: `Goliath > Logging & Auditing`
-  category: "gnb-ccf#/control/categories/gnbccfAud"
+  # Policy will be under category hierarchy level: `Dunder Mifflin > Logging & Auditing`
+  category: "dmi-ccf#/control/categories/dmiccfAud"

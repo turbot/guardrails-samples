@@ -3,12 +3,12 @@
 
 # Here we define a unique id for the mod
 # Pattern is `tmod:@[company name or abbreviation]/[mod name]`
-$id: "tmod:@gnb/gnb-ccf-aws"
+$id: "tmod:@dmi/dmi-ccf-aws"
 
 # The title will be shown on Turbot console mods list
-title: "@gnb/gnb-ccf-aws"
+title: "@dmi/dmi-ccf-aws"
 
-author: Goliath National Bank (GNB), Inc
+author: Dunder Mifflin Paper Company, Inc
 
 # https://turbot.com/v5/docs/mods#versioning
 version: 1.0.0
@@ -17,8 +17,8 @@ license: "For LICENSE see https://turbot.com/license"
 
 # https://turbot.com/v5/docs/mods#mod-dependencies
 peerDependencies:
-  # GNB CCF categories dependency:
-  "@gnb/gnb-ccf": ">=1.0.0"
+  # DMI CCF categories dependency:
+  "@dmi/dmi-ccf": ">=1.0.0"
 
   # Mod base dependencies:
   "@turbot/turbot": ">=5.15.0"
@@ -46,5 +46,5 @@ peerDependencies:
   - awsCloudTrail/**
   - s3/**
   - rds/**
-  - gnbccfAws/**
+  - dmiccfAws/**
   - vpc/**

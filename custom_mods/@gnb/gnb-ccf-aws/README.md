@@ -1,13 +1,13 @@
 # Controls Framework
 
-This mod implements set of benchmark controls on the AWS platform to meet GNB Controls Framework standards
+This mod implements set of benchmark controls on the AWS platform to meet DMI Controls Framework standards
 
 This mod is mainly comprised of [policies](https://turbot.com/v5/docs/concepts/policies) and [controls](https://turbot.com/v5/docs/concepts/controls), as the resources are defined, discovered, and updated by other Turbot mods.
 
-This mod has dependencies, which are defined at [src/turbot.yml](src/turbot.yml) file. One of the dependencies is the common mod [gnb-ccf](../gnb-ccf) which should be installed first.
+This mod has dependencies, which are defined at [src/turbot.yml](src/turbot.yml) file. One of the dependencies is the common mod [dmi-ccf](../dmi-ccf) which should be installed first.
 
 
-> The turbot-cli argument `--peer-path ../..` will be used here to map all the custom mods under the [@gnb](../README.md) folder
+> The turbot-cli argument `--peer-path ../..` will be used here to map all the custom mods under the [@dmi](../README.md) folder
 
 ## Setting up local environment
 

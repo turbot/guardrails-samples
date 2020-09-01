@@ -3,8 +3,8 @@
 #
 # Please refer to https://turbot.com/v5/docs/concepts/controls#control-types for details
 
-# Here we are defining the `Goliath > AWS > IAM` control type
-gnbccfAwsIam:
+# Here we are defining the `Dunder Mifflin > AWS > IAM` control type
+dmiccfAwsIam:
   # The control's title as it will be shown on Turbot UI console
   title: IAM
 
@@ -12,8 +12,8 @@ gnbccfAwsIam:
   # It helps quickly identifying the control on Turbot UI console
   icon: fal-shield-check
 
-  # Control type will be placed under: `Goliath > AWS`
-  parent: "#/control/types/gnbccfAws"
+  # Control type will be placed under: `Dunder Mifflin > AWS`
+  parent: "#/control/types/dmiccfAws"
 
-  # Control will be under category hierarchy level: `Goliath > Authentication & Access Control`
-  category: "gnb-ccf#/control/categories/gnbccfAac"
+  # Control will be under category hierarchy level: `Dunder Mifflin > Authentication & Access Control`
+  category: "dmi-ccf#/control/categories/dmiccfAac"

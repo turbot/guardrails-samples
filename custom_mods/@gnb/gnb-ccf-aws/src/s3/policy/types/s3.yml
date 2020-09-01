@@ -1,5 +1,5 @@
-gnbccfAwsS3:
+dmiccfAwsS3:
   title: S3
   icon: fal-shield-check
-  parent: "#/policy/types/gnbccfAws"
-  category: "gnb-ccf#/control/categories/gnbccfData"
+  parent: "#/policy/types/dmiccfAws"
+  category: "dmi-ccf#/control/categories/dmiccfData"

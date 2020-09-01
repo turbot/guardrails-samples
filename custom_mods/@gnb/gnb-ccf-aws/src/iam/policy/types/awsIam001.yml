@@ -1,8 +1,8 @@
 awsIam001:
   title: AWS.IAM.001 - Password policy meets complexity requirements
   icon: fal-shield-check
-  parent: "#/policy/types/gnbccfAwsIam"
-  category: "gnb-ccf#/control/categories/gnbccfAac"
+  parent: "#/policy/types/dmiccfAwsIam"
+  category: "dmi-ccf#/control/categories/dmiccfAac"
   targets:
     - "tmod:@turbot/aws-iam#/resource/types/accountPasswordPolicy"
   description: |
@@ -12,14 +12,14 @@ awsIam001:
     enum:
       - Skip
       - Check
-      - Per Goliath > AWS
-    default: Per Goliath > AWS
+      - Per Dunder Mifflin > AWS
+    default: Per Dunder Mifflin > AWS
 
 awsIam001AccountPasswordPolicy:
   title: Account Password Policy
   icon: fal-badge-check
   parent: "#/policy/types/awsIam001"
-  category: "gnb-ccf#/control/categories/gnbccfAac"
+  category: "dmi-ccf#/control/categories/dmiccfAac"
   targets:
     - "tmod:@turbot/aws-iam#/resource/types/accountPasswordPolicy"
   description: |

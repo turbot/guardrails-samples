@@ -3,12 +3,12 @@
 
 # Here we define a unique id for the mod
 # Pattern is `tmod:@[company name or abbreviation]/[mod name]`
-$id: "tmod:@gnb/gnb-ccf"
+$id: "tmod:@dmi/dmi-ccf"
 
 # The title will be shown on Turbot console mods list
-title: "@gnb/gnb-ccf"
+title: "@dmi/dmi-ccf"
 
-author: Goliath National Bank (GNB), Inc
+author: Dunder Mifflin Paper Company, Inc
 
 # https://turbot.com/v5/docs/mods#versioning
 version: 1.0.0
@@ -19,4 +19,4 @@ license: "For LICENSE see https://turbot.com/license"
 # Usually each folder in src is one entry on the list
 # Important: If a folder or file is not listed here then it will be ignored
 +object:
-  - gnbccf/**
+  - dmiccf/**

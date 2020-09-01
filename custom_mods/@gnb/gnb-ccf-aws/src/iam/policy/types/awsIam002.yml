@@ -1,8 +1,8 @@
 awsIam002:
   title: AWS.IAM.002 - Require MFA for console users
   icon: fal-shield-check
-  parent: "#/policy/types/gnbccfAwsIam"
-  category: "gnb-ccf#/control/categories/gnbccfAac"
+  parent: "#/policy/types/dmiccfAwsIam"
+  category: "dmi-ccf#/control/categories/dmiccfAac"
   targets:
     - "tmod:@turbot/aws-iam#/resource/types/credentialReport"
   description: |
@@ -12,5 +12,5 @@ awsIam002:
     enum:
       - Skip
       - Check
-      - Per Goliath > AWS
-    default: Per Goliath > AWS
+      - Per Dunder Mifflin > AWS
+    default: Per Dunder Mifflin > AWS
