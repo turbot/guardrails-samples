@@ -1,6 +1,6 @@
 # Turbot Firehose AWS SNS Example
 
-The Firehose AWS SNS mod [@turbot/firehose-aws-sns](https://turbot.com/v5/mods/) provides capabilities to send notifications to AWS SNS. It is highly recommended to go through the README section of the mod before proceeding further. This setup will create the below listed entities.
+The Firehose AWS SNS mod [@turbot/firehose-aws-sns](https://turbot.com/v5/mods/turbot/firehose-aws-sns) provides capabilities to send notifications to AWS SNS. It is highly recommended to go through the README section of the mod before proceeding further. This setup will create the below listed entities.
 
   - **AWS SNS Topic**: Notifications are sent to this Topic.
   - **AWS IAM User with inline Policy**: An IAM user with "sns:Publish" permission to the above SNS Topic only.
