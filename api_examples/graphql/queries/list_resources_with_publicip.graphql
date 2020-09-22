@@ -1,0 +1,88 @@
+# Description
+# -----------
+#
+# The query filters the AWS Resources that have a publicIp.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_with_publicip.graphql
+#
+
+
+
+# Filter
+# ------
+#
+# resourceTypeId:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' (aka for s3 bucket) are returned.
+#
+# limit:
+#   Number of data returned.
+#   In example, 'limit:5' 5 buckets are returned.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+{
+  EC2InstanceResourcesWithPublicIP: resources(filter: "resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/instance' $.PublicIpAddress:!null") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      trunk {
+        title
+      }
+      type {
+        trunk {
+          title
+        }
+      }
+      data
+      Title: get(path: "turbot.title")
+      PublicIp: get(path: "PublicIpAddress")
+      InVpcId: get(path: "VpcId")
+      AssociatedSG: get(path: "SecurityGroups")
+      AWSAccount: get(path: "turbot.custom.aws.accountId")
+      AWSRegion: get(path: "turbot.custom.aws.regionName")
+      CreatedTimestamp: get(path: "turbot.createTimestamp")
+      UpdatedTimestamp: get(path: "turbot.updateTimestamp")
+    }
+  }
+  EC2NetworkInterfaceResourcesWithPublicIP: resources(filter: "resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/networkInterface' $.Association.PublicIp:!null") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      trunk {
+        title
+      }
+      type {
+        trunk {
+          title
+        }
+      }
+      Title: get(path: "turbot.title")
+      PublicIp: get(path: "Association.PublicIp")
+      InstanceId: get(path: "Attachment.InstanceId")
+      InVpcId: get(path: "VpcId")
+      AssociatedSG: get(path: "Groups")
+      AWSAccount: get(path: "turbot.custom.aws.accountId")
+      AWSRegion: get(path: "turbot.custom.aws.regionName")
+      CreatedTimestamp: get(path: "turbot.createTimestamp")
+      UpdatedTimestamp: get(path: "turbot.updateTimestamp")
+    }
+  }
+}
