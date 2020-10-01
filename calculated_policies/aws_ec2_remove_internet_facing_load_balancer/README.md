@@ -56,7 +56,7 @@ Notice the difference is only the resource name that is initializes the request.
 
 ### Template (Nunjucks)
 
-Similar to the query, each Load Balancer type will have a slighly different calculated policy, but in each case Turbot checks the `Scheme` attribute, and if that attribute is defined as `internet-facing`, the Load Balancer is not approved.
+Similar to the query, each Load Balancer type will have a slightly different calculated policy, but in each case Turbot checks the `Scheme` attribute, and if that attribute is defined as `internet-facing`, the Load Balancer is not approved.
 Below is the query for the Network Load Balancer. Simply swap the `networkLoadBalancer` with either `classicLoadBalancer` or `applicationLoadBalancer` for remaining two LB types.
 
 ```nunjucks
