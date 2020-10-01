@@ -17,7 +17,7 @@ This Terraform template creates a smart folder and applies the following calcula
 - `AWS > EC2 > Network Load Balancer > Approved`
 - `AWS > EC2 > Network Load Balancer > Approved > Usage`
 
-First, Turbot checks the load balancer to see if it is internet facing, and if it is, an alarm is generated.
+First, Turbot checks the load balancer to see if it is internet facing. If it is, an alarm is generated.
 
 ### Template input (GraphQL)
 
