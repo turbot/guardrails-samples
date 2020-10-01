@@ -9,7 +9,7 @@ resource "turbot_smart_folder" "ec2_load_balancer" {
 
 # Application Load Balancer (ALB) Public Facing
 resource "turbot_policy_setting" "ec2_application_load_balancer_approved_usage"{
-  resource = turbot_smart_folder.va_networking.id
+  resource = turbot_smart_folder.ec2_load_balancer.id
   type = "tmod:@turbot/aws-ec2#/policy/types/applicationLoadBalancerApprovedUsage"
   template_input = <<EOT
 {
@@ -28,14 +28,14 @@ EOT
 }
 
 resource "turbot_policy_setting" "ec2_application_load_balancer_approved"{
-  resource = turbot_smart_folder.va_networking.id
+  resource = turbot_smart_folder.ec2_load_balancerid
   type = "tmod:@turbot/aws-ec2#/policy/types/applicationLoadBalancerApproved"
   value = "Check: Approved"
 }
 
 # Network Load Balancer (NLB) Public Facing
 resource "turbot_policy_setting" "ec2_network_load_balancer_approved_usage"{
-  resource = turbot_smart_folder.va_networking.id
+  resource = turbot_smart_folder.ec2_load_balancer.id
   type = "tmod:@turbot/aws-ec2#/policy/types/networkLoadBalancerApprovedUsage"
   template_input = <<EOT
 {
@@ -54,7 +54,7 @@ EOT
 }
 
 resource "turbot_policy_setting" "ec2_network_load_balancer_approved"{
-  resource = turbot_smart_folder.va_networking.id
+  resource = turbot_smart_folder.ec2_load_balancer.id
   type = "tmod:@turbot/aws-ec2#/policy/types/networkLoadBalancerApproved"
   value = "Check: Approved"
 }
@@ -62,7 +62,7 @@ resource "turbot_policy_setting" "ec2_network_load_balancer_approved"{
 
 # Classic Load Balancer Public Facing
 resource "turbot_policy_setting" "ec2_classic_load_balancer_approved_usage"{
-  resource = turbot_smart_folder.va_networking.id
+  resource = turbot_smart_folder.ec2_load_balancer.id
   type = "tmod:@turbot/aws-ec2#/policy/types/classicLoadBalancerApprovedUsage"
   template_input = <<EOT
 {
@@ -81,7 +81,7 @@ EOT
 }
 
 resource "turbot_policy_setting" "ec2_classic_load_balancer_approved"{
-  resource = turbot_smart_folder.va_networking.id
+  resource = turbot_smart_folder.ec2_load_balancer.id
   type = "tmod:@turbot/aws-ec2#/policy/types/classicLoadBalancerApproved"
   value = "Check: Approved"
 }
