@@ -1,17 +1,15 @@
-# Azure Subscription Import Baseline
+# Azure Tenant Import Baseline
 
-The Azure subscription import baseline terraform configuration lets you import an Azure subscription into your turbot environment, with the necessary roles and permissions.
-
-- It is recommended that you import subscriptions into Turbot Folders, as it provides greater flexibility and ease of management.
+The Azure tenant import baseline terraform configuration lets you import an Azure tenant into your turbot environment, with the necessary roles and permissions.
 
 ## Prerequisites
 
-To run the Azure subscription import baseline, you must have:
+To run the Azure tenant import baseline, you must have:
 
 - [Terraform](https://www.terraform.io) Version 12
 - Terraform [Azure Provider](https://www.terraform.io/docs/providers/azurerm/index.html)
 - [Turbot Terraform Provider](https://github.com/turbotio/terraform-provider-turbot)
-- [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace and AWS account
+- [Credentials](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials) Configured to connect to your Turbot workspace
 
 ## Running the Baseline
 
@@ -24,7 +22,6 @@ Update default.tfvars or create a new Terraform configuration file.
 Variables that are exposed by this script are:
 
 - azure_environment_type
-- azure_subscription_id
 - parent_resource
 - azure_client_id
 - azure_tenant_id
