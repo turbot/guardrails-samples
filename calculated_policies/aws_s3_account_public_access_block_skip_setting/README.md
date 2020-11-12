@@ -1,4 +1,4 @@
-# AWS S3 Account - Public Access Block allow to skip a setting value
+# AWS S3 Account - Allows Public Access Block to skip a setting value
 
 ## Use case
 
@@ -9,11 +9,9 @@ This calculated policy reintroduces that behaviour.
 
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 
-- `AWS > Region > Bucket > Approved`
-- `AWS > Region > Bucket > Approved > Usage`
+- `AWS > S3 > Account > Public Access Block`
+- `AWS > S3 > Account > Public Access Block > Settings`
 
-If the account that the replication is shared with, given by the property `Replication.Rules[].Destination.Account`
-is not whitelisted, then the policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
 ### Template input (GraphQL)
 
@@ -46,8 +44,8 @@ user to control the accounts centrally.
 
 If the company workflow is to modify the Calculated Policy directly in Turbot.
 Navigate to the policy and amend the template value by adding settings into the Nunjucks array.
-For example, suppose two accounts should be added, "check_block_public_acls", "uncheck_block_public_bucket_policies",
-this can be added by setting the variable by:
+For example, suppose two settings should be added, "check_block_public_acls", "uncheck_block_public_bucket_policies",
+this can be added by setting the variable to:
 
 ```nunjucks
 {%- set settings = ["check_block_public_acls", "uncheck_block_public_bucket_policies"] -#}
@@ -140,8 +138,10 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- approved_accounts
+- turbot_profile
 - target_resource
+- public_access_block_settings_skip_list (Optional)
+- public_access_block_settings (Optional)
 - smart_folder_title (Optional)
 - smart_folder_description (Optional)
 - smart_folder_parent_resource (Optional)

@@ -18,7 +18,7 @@ async function loadTemplate(calcPolicyName) {
 async function harvestedVariables(calcPolicyName) {
   const resolved = path.resolve(`${__dirname}/../calculated_policies/${calcPolicyName}/variables.tf`);
   let contents = await readFile(resolved, "utf8");
-  contents = contents.split("\n\n");
+  contents = contents.split(/(?=variable)/);
 
   const variables = [];
 
