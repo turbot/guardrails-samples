@@ -32,6 +32,21 @@ Resources:
           FromPort: 80
           ToPort: 80
           IpProtocol: tcp
+        - Description: Outbound TCP DNS access.
+          CidrIp: 0.0.0.0/0
+          FromPort: 53
+          ToPort: 53
+          IpProtocol: tcp
+        - Description: Outbound UDP DNS Access.
+          CidrIp: 0.0.0.0/0
+          FromPort: 53
+          ToPort: 53
+          IpProtocol: udp
+        - Description: Outbound NTP access.
+          CidrIp: 0.0.0.0/0
+          FromPort: 123
+          ToPort: 123
+          IpProtocol: tcp
 
   LoadBalancerSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
