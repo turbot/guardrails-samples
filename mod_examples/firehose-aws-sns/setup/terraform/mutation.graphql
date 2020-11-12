@@ -1,0 +1,10 @@
+mutation ActionNotifyWatch($inputForActionNotify: CreateWatchInput!) {
+  createWatch(input: $inputForActionNotify) {
+    filters
+    handler
+    turbot {
+      id
+      resourceId
+    }
+  }
+}
