@@ -29,7 +29,7 @@ Parameters:
   Version:
     Type: String
     Description: Version
-    Default: '5.0.0'
+    Default: "5.0.0"
 
   Hive:
     Type: String
@@ -51,14 +51,14 @@ Parameters:
 
   InstallationDomainSsmValue:
     Description: >
-      Name of the SSM Param that holds the installation domain name, 
+      Name of the SSM Param that holds the installation domain name,
       which is exported from the TEF foundation stack.
-    Type : 'AWS::SSM::Parameter::Value<String>'
-    Default: '/turbot/enterprise/installation_domain'
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/turbot/enterprise/installation_domain"
 
 Conditions:
   UseRoute53DnsManagement: !Equals [true, !Ref UseRoute53]
-  CreateAlternateUrl: !Not [ !Equals ["", !Ref AlternateURL]]
+  CreateAlternateUrl: !Not [!Equals ["", !Ref AlternateURL]]
 
 Resources:
   Workspace:
@@ -73,7 +73,6 @@ Resources:
       Options:
         FoundationStackOutputPrefix: !Sub "${FoundationStackOutputPrefix}"
 
-
   #
   # Example how to use Route 53 to manage workspace DNS
   #
@@ -85,7 +84,7 @@ Resources:
     Type: AWS::Route53::RecordSet
     Condition: UseRoute53DnsManagement
     Properties:
-      HostedZoneName: 
+      HostedZoneName:
         Fn::Sub:
           - "${hostedZone}."
           - hostedZone: !Ref InstallationDomainSsmValue
@@ -99,7 +98,7 @@ Resources:
       ResourceRecords:
         - Fn::Sub:
             - "${FoundationStackOutputPrefix}-${version}.${hostedZone}."
-            - version: !Join [ "-", !Split [ ".", !Ref Version ] ]
+            - version: !Join ["-", !Split [".", !Ref Version]]
               hostedZone: !Ref InstallationDomainSsmValue
 
   #
@@ -110,13 +109,13 @@ Resources:
     Condition: CreateAlternateUrl
     Properties:
       Description: SSM Parameter the matching a workspace to a url
-      Name: !Sub "/turbot/tenant/${AlternateURL}"
+      Name: !Sub "/${FoundationStackOutputPrefix}/tenant/${AlternateURL}"
       Type: String
       Value:
         Fn::Sub:
           - '{"hive":"${Hive}","id":"${Name}.${hostedZone}","name":"${Name}","version":"${Version}","schema":"${Name}","log_level":"debug","trace":"true"}'
           - hostedZone: !Ref InstallationDomainSsmValue
-      
+
   #
   # Minute tick per workspace.
   #
@@ -141,7 +140,7 @@ Resources:
         - Arn:
             Fn::Sub:
               - "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:${FoundationStackOutputPrefix}_${VersionSafe}_events"
-              - VersionSafe: !Join [ "_", !Split [ ".", !Join [ "_", !Split [ "-", !Ref Version ] ] ] ]
+              - VersionSafe: !Join ["_", !Split [".", !Join ["_", !Split ["-", !Ref Version]]]]
           Id:
             Fn::Sub:
               - "${WorkspaceId}_minute_tick"
