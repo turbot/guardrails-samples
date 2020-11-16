@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Dscription: Turbot required AWS Security groups for TEF 1.6.0+
+Description: Turbot required AWS Security groups for TEF 1.6.0+
 
 Parameters:
   TurbotVpc:
