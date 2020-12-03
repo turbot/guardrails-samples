@@ -4,6 +4,14 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "run-controls.sh",
+      "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/",
+      "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
+      "args": ["--filter", "controlType:tmod:@turbot/aws-events#/control/types/targetCmdb"]
+    },
     // {
     //   "name": "Python: run_controls",
     //   "type": "python",
