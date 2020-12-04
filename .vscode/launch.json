@@ -10,7 +10,14 @@
       "name": "run-controls.sh",
       "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/",
       "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
-      "args": ["--filter", "controlType:tmod:@turbot/aws-events#/control/types/targetCmdb"]
+      "args": [
+        "--filter",
+        "controlType:tmod:@turbot/aws-events#/control/types/targetCmdb resource:210125595713",
+        "--batch-size",
+        "200",
+        "--dry-run",
+        "true"
+      ]
     },
     // {
     //   "name": "Python: run_controls",
