@@ -12,7 +12,7 @@
       "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
       "args": [
         "--filter",
-        "controlType:tmod:@turbot/aws-events#/control/types/targetCmdb resource:210125595713",
+        "controlTypeId:tmod:@turbot/aws-sns#/control/types/topicCmdb resourceId:210132739022188",
         "--batch-size",
         "200",
         "--dry-run",

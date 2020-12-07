@@ -68,9 +68,14 @@ function runControl {
 EOM
     local RUN_CONTROL_VARIABLES="{ \"input\": { \"id\": ${ID} } }"
     
-    local MUTATION_RESULT=$(turbot graphql --format json --query "${RUN_CONTROL_MUTATION}" --variables "${RUN_CONTROL_VARIABLES}")
-    local PROCESS_ID=$(echo ${MUTATION_RESULT} | jq '.runControl.turbot.id')
+    if [[ -z ${PROFILE} ]]
+    then
+        local MUTATION_RESULT=$(turbot graphql --format json --query "${RUN_CONTROL_MUTATION}" --variables "${RUN_CONTROL_VARIABLES}")
+    else
+        local MUTATION_RESULT=$(turbot graphql --format json --query "${RUN_CONTROL_MUTATION}" --variables "${RUN_CONTROL_VARIABLES}" --profile "${PROFILE}")
+    fi
     
+    local PROCESS_ID=$(echo ${MUTATION_RESULT} | jq '.runControl.turbot.id')
     echo "[INFO] Process ${PROCESS_ID} assigned to re-run control ${ID}"
 }
 
@@ -231,7 +236,6 @@ function main {
         fi
     done
     
-    # This is a function
     local TOTAL_QUERY_RESULT=""
     local TOTAL_QUERY=$(createTotalQuery "${FILTER}")
     
