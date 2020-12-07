@@ -3,6 +3,6 @@
   "dependencies": {
     "btoa": "^1.2.1",
     "graphql-request": "^3.3.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   }
 }
