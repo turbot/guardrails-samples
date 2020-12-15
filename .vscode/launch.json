@@ -4,23 +4,14 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    // {
-    //   "name": "Python: run_controls",
-    //   "type": "python",
-    //   "request": "launch",
-    //   "program": "/home/omerosaienni/git-source/omerosaienni/tdk/api_examples/graphql/clients/python/run_controls/run_controls.py",
-    //   "console": "integratedTerminal",
-    //   "args": ["-e", "-f state:error"]
-    // },
-    // {
-    //   "name": "Python: run_policies_batches",
-    //   "type": "python",
-    //   "request": "launch",
-    //   "program": "/home/omerosaienni/git-source/omerosaienni/tdk/api_examples/graphql/clients/python/run_policies_batches/run_policies_batches.py",
-    //   "console": "integratedTerminal",
-    //   "args": ["-e", "-f state:error", "-s 0", "-b 1", "-m 1", "-d 0"],
-    //   "args1": ["-e", "-f state:error"]
-    // },
+    {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "run-controls.sh",
+      "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/",
+      "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
+      "args": ["--filter", "state:error"]
+    },
     {
       "type": "node",
       "request": "launch",
