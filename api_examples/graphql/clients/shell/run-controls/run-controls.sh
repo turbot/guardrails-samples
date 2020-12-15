@@ -1,6 +1,12 @@
 #!/bin/bash
 
-function totalTime {
+function displayTotalItems {
+    local TOTAL_ITEMS=$1
+    
+    echo "[INFO] Total amount of controls re-run: ${TOTAL_ITEMS}"
+}
+
+function displayEstimatedTime {
     local TOTAL_ITEMS=$1
     local BATCH_SIZE=$2
     local TIME_SLEEP=$3
@@ -9,19 +15,11 @@ function totalTime {
     
     let "BATCH_SIZE = BATCH_SIZE < TOTAL_ITEMS ? BATCH_SIZE : TOTAL_ITEMS"
     
-    let "TOTAL_ITEM_TIME = (BATCH_SIZE * TIME_PER_CALL + TIME_SLEEP + TIME_QUERY) * TOTAL_ITEMS / BATCH_SIZE / 1000"
-    
-    echo ${TOTAL_ITEM_TIME}
-}
-
-function displayTotalItems {
-    local TOTAL_ITEMS=$1
-    
-    echo "[INFO] Total amount of controls re-run: ${TOTAL_ITEMS}"
-}
-
-function displayTime {
-    local TOTAL_TIME=$1
+    local TOTAL_TIME=0
+    if (( ${BATCH_SIZE} > 0 ))
+    then
+        let "TOTAL_TIME = (BATCH_SIZE * TIME_PER_CALL + TIME_SLEEP + TIME_QUERY) * TOTAL_ITEMS / BATCH_SIZE / 1000"
+    fi
     
     if [[ ${TOTAL_TIME} -gt 60 ]]
     then
@@ -45,7 +43,7 @@ function displayHelp {
     echo "  --profile: controls the profile to run when using the AWS cli (blank)"
     echo "  --sleep-time: time to back off between run batches in seconds (10)"
     echo "  --batch-size: the maximum size of the batch to run next (20)"
-    echo "  --dry-run:  the controls in batcheswhen set to true (false)"
+    echo "  --dry-run: controls if the actual controls should be run (false)"
     echo "Remarks"
     echo "  To list the controls to be re-run quicker then increase the batch size but note that the estimation time"
     echo "  will be calculated based on the larger batch size."
@@ -179,10 +177,11 @@ function main {
                     exit 1
                 fi
             ;;
+            # TODO: Fix seconds to milliseconds
             --sleep-time)
                 if [[ -n "$2" ]] && [[ ${2:0:1} != "-" ]]
                 then
-                    TIME_SLEEP=$2
+                    TIME_SLEEP=$(($2 * 1000))
                     shift 2
                 else
                     echo "[ERROR] Argument for $1 is missing" >&2
@@ -246,14 +245,22 @@ function main {
         TOTAL_QUERY_RESULT=$(turbot graphql --format json --query "${TOTAL_QUERY}" --profile "${PROFILE}")
     fi
     
-    local TOTAL_RETURNED=0
     local TOTAL_CONTROLS=$(echo ${TOTAL_QUERY_RESULT} | jq '.controls.metadata.stats.total')
     
-    TOTAL_TIME=$(totalTime ${TOTAL_CONTROLS} ${BATCH_SIZE} ${TIME_SLEEP})
-    displayTime ${TOTAL_TIME}
+    if ! [[ $TOTAL_CONTROLS =~ ^[0-9]+$ ]]
+    then
+        echo '[ERROR] GraphQL returned from server did not match expected results' >&2
+        echo '[ERROR] Server returned:' >&2
+        echo -e ${TOTAL_QUERY_RESULT}
+        exit 3
+    fi
     
+    displayEstimatedTime ${TOTAL_CONTROLS} ${BATCH_SIZE} ${TIME_SLEEP}
+    
+    local TOTAL_RETURNED=0
     local PAGING=""
-    while [ ${TOTAL_RETURNED} -lt ${TOTAL_CONTROLS} ]
+    
+    while (( ${TOTAL_RETURNED} < ${TOTAL_CONTROLS} ))
     do
         local CONTROLS_QUERY_RESULT=""
         let "OPTIMISED_BATCH_SIZE = TOTAL_CONTROLS - TOTAL_RETURNED < BATCH_SIZE ? TOTAL_CONTROLS - TOTAL_RETURNED : BATCH_SIZE "
@@ -289,17 +296,18 @@ function main {
             fi
         done
         
-        if [[ ${DRY_RUN} == false ]]
+        let "TOTAL_RETURNED += TOTAL_ITEMS"
+        
+        if [[ ${DRY_RUN} == false ]] && (( ${TOTAL_RETURNED} != ${TOTAL_ITEMS} ))
         then
             echo "[INFO] Backing off for" $((TIME_SLEEP / 1000)) "second(s)"
             sleep $((TIME_SLEEP / 1000))
         fi
         
         PAGING=$(echo ${CONTROLS_QUERY_RESULT} | jq ".controls.paging.next")
-        let "TOTAL_RETURNED += TOTAL_ITEMS"
     done
     
-    displayTotalItems ${TOTAL_CONTROLS}
+    displayTotalItems
     
     END=`date +%s`
     RUNTIME=$((END - START))

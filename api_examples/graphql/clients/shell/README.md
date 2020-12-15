@@ -14,3 +14,8 @@ And run the example:
 ./index.sh
 ```
 
+### Available scripts
+
+| Title                                          | Description                                         |
+| ---------------------------------------------- | --------------------------------------------------- |
+| [AWS Account Import](./run-controls/README.md) | Run controls based on some filter using BASH shell. |
