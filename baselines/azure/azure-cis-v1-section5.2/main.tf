@@ -9,12 +9,11 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_1" {
   scopes              = var.scopes
   description         = "This alert will monitor all policy attachments"
 
-
   criteria {
-    operation_name = "Microsoft.Authorization/policyassignments/write"
-    resource_type  = "microsoft.authorization/policyassignments"
+    operation_name    = "Microsoft.Authorization/policyassignments/write"
+    resource_type     = "microsoft.authorization/policyassignments"
     resource_provider = "microsoft.authorization/policyassignments"
-    category       = "Administrative"
+    category          = "Administrative"
   }
 }
 
@@ -24,7 +23,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_2" {
   resource_group_name = var.resource_group_name
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
-
 
   criteria {
     operation_name = "Microsoft.Network/networkSecurityGroups/write"
@@ -40,7 +38,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_3" {
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
 
-
   criteria {
     operation_name = "Microsoft.Network/networkSecurityGroups/delete"
     resource_type  = "microsoft.network/networksecuritygroups"
@@ -54,7 +51,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_4" {
   resource_group_name = var.resource_group_name
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
-
 
   criteria {
     operation_name = "Microsoft.Network/networkSecurityGroups/securityRules/write"
@@ -70,7 +66,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_5" {
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
 
-
   criteria {
     operation_name = "Microsoft.Network/networkSecurityGroups/securityRules/delete"
     resource_type  = "microsoft.network/networkSecurityGroups/securityRules"
@@ -84,7 +79,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_6" {
   resource_group_name = var.resource_group_name
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
-
 
   criteria {
     operation_name = "Microsoft.Security/securitySolutions/write"
@@ -100,7 +94,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_7" {
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
 
-
   criteria {
     operation_name = "Microsoft.Security/securitySolutions/delete"
     resource_type  = "microsoft.security/securitySolutions"
@@ -115,7 +108,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_8" {
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
 
-
   criteria {
     operation_name = "Microsoft.Sql/servers/firewallRules/write"
     resource_type  = "microsoft.sql/servers/firewallRules"
@@ -129,7 +121,6 @@ resource "azurerm_monitor_activity_log_alert" "setting_5_2_9" {
   resource_group_name = var.resource_group_name
   scopes              = var.scopes
   description         = "This alert will monitor all nsgs"
-
 
   criteria {
     operation_name = "Microsoft.Security/policies/write"
