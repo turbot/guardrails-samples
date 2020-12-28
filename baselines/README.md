@@ -13,11 +13,7 @@ Turbot Baselines provide best-practice configurations and examples for setting T
 | GCP Setup                   | [gcp_setup](./gcp/gcp_setup)                                       | Common quickstart setup for GCP - prepare your environment to import GCP Projects                       |
 | GCP Services                | [gcp_services](./gcp/gcp_services)                                 | Enable/Disable GCP Services in Turbot & also enforce api enabled policy based on service Enable/Disable |
 | Azure Subscription Import   | [azure_sub_import](./azure/azure_sub_import)                       | Import an Azure subscription into Turbot                                                                |
-<<<<<<< HEAD
-| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)                    | Import an Azure subscription into Turbot with event handler and readonly mode                           |
-=======
 | Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)     | Import an Azure subscription into Turbot with event handler and readonly mode                           |
->>>>>>> upstream/master
 | Azure Services              | [azure_services](./azure/azure_services)                           | Enable/Disable Azure Services in Turbot                                                                 |
 | Azure Provider Registration | [azure_provider_registration](./azure/azure_provider_registration) | Set the policy for Azure provider registration                                                          |
 
