@@ -1,4 +1,4 @@
-# Turbot
+# Turbot configuration library
 
 Library that handles configuration management.
 It will check for credentials in the following order
@@ -13,10 +13,10 @@ The library will also test to see if the end point is valid and will stop the sc
 
 To run the scripts, you must have:
 
-- [Python](https://www.python.org/) version 3 or above
-- [Pip](https://pip.pypa.io/)
+- [Python 3.\*.\*](https://www.python.org/downloads/)
+- [Pip](https://pip.pypa.io/en/stable/installing/)
 
-## Example
+## Using library
 
 To use the library, you will need to include this to your **requirements.txt** file or copy the file in directly.
 

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Document generation scripts to keep documentation uniformity for differing TDK example types.",
   "scripts": {
-    "gen-doc:calc-policies": "node gen-doc-calc-policies.js"
+    "gen-doc": "npm run gen-doc:calc-policies && npm run gen-doc:api-examples",
+    "gen-doc:calc-policies": "node gen-doc-calc-policies.js",
+    "gen-doc:api-examples": "node gen-doc-api-examples.js"
   },
   "author": "Turbot HQ, Inc",
   "license": "ISC",

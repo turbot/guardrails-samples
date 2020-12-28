@@ -1,0 +1,10 @@
+query ListAccounts {
+  resourceList(filter: "resourceType:'tmod:@turbot/aws#/resource/types/account'") {
+    items {
+      akas
+      turbot {
+        id
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+title: Get notifications for resource
+description:
+  short: Return notifications for an end user specified to filter results.
+  full: |
+    The script will return the last notification for the found resource if it exists and will return the
+    notifications with the latest notification as the initial entry.
+
+    The script allows the user to configure the number of notifications and allows for targeting specific resources.
+
+    By default the script is configured to return the last notification only for the resource `tmod:@turbot/turbot#/`.
+    For more information on how to [limit results](https://turbot.com/v5/docs/reference/filter#limiting-results).
+examples:
+  - description: Returns the last notification for the resource `tmod:@turbot/turbot#/`.
+    options: null
+  - description: |
+      Returns the last notification for a different resource 
+      `tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved`.
+    options: -i "tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved"
+  - description: Run returning the latest 10 notification
+    options: -l 10
+  - description: Run the script using credentials given in a credential file `credentials.yml`.
+    options: -c .config/turbot/credentials.yml
+  - description: Run the script using a credentials file and using the credential details using the profile `env`.
+    options: -c .config/turbot/credentials.yml -p env --notification_class resource

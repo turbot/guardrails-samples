@@ -3,7 +3,7 @@
 ## Use case
 
 {{ configuration.useCase | safe }}
-## Implementation Details
+## Implementation details
 {% if configuration.policies | length > 1 %}
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 {% else %}
@@ -15,7 +15,7 @@ This Terraform template creates a smart folder and applies the calculated policy
 {%- endfor %}
 
 {{ configuration.details | safe }}
-### Template Input (GraphQL)
+### Template input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
@@ -60,12 +60,12 @@ To run Turbot Calculated Policies, you must install:
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
-## Running the Example
+## Running the example
 
 Scripts can be run in the folder that contains the script.
 

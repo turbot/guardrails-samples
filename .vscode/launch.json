@@ -5,6 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "run-controls.sh",
+      "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/",
+      "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
+      "args": ["--filter", "state:error"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Gen Doc: API Examples",
+      "program": "${workspaceFolder}/repo-tools/gen-doc-api-examples.js",
+      "skipFiles": ["<node_internals>/**"]
+    },
+
+    {
       "type": "node",
       "request": "launch",
       "name": "Gen Doc: Calculated Policies",

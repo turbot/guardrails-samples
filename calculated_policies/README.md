@@ -1,4 +1,4 @@
-## Calculated Policies
+## Calculated policies
 
 Provides templates for implementing calculated policies. 
 
@@ -7,7 +7,7 @@ Calculated policies allow Turbot administrators to modify or extend the default 
 The calculated policy examples are implemented with [Terraform](https://www.terraform.io) allowing you to manage and 
 provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
-### Current Calculated Policies
+### Current calculated policies
 
 | Path | Resource | Description |
 | ---- | -------- | ----------- |
@@ -20,41 +20,45 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 | [aws_lambda_in_vpc](./aws_lambda_in_vpc/README.md) | AWS Lambda | Approve a Lambda function only if it is within a particular VPC |
 | [aws_lambda_not_approved_cross_account_access](./aws_lambda_not_approved_cross_account_access/README.md) | AWS Lambda | Alarm if function policy has cross-account access |
 | [aws_rds_db_cluster_snapshot_cross_account_access](./aws_rds_db_cluster_snapshot_cross_account_access/README.md) | AWS RDS | Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots |
+| [aws_redshift_cluster_require_ssl](./aws_redshift_cluster_require_ssl/README.md) | AWS RedShift | Approve cluster if encryption in transit is required |
 | [aws_redshift_restrict_cross_account_snapshot_access](./aws_redshift_restrict_cross_account_snapshot_access/README.md) | AWS RedShift | Restrict RedShift Manual Cluster access to cross account Manual Clusters Snapshots |
+| [aws_s3_account_public_access_block_skip_setting](./aws_s3_account_public_access_block_skip_setting/README.md) | AWS S3 Account | Allows Public Access Block to skip a setting value |
 | [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md) | AWS S3 Bucket | Enforce static website hosting is associated with CloudFront |
+| [aws_s3_bucket_approved_usage_acl_cross_account_access](./aws_s3_bucket_approved_usage_acl_cross_account_access/README.md) | AWS S3 Bucket | Restrict ACL Cross Account Access by user defined Whitelist |
 | [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md) | AWS S3 Bucket | Restrict Cross Account Replication by user defined Whitelist |
 | [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md) | AWS S3 Bucket | Restrict name that are not DNS compliant |
+| [aws_s3_bucket_match_tags_on_bucket_and_cmk](./aws_s3_bucket_match_tags_on_bucket_and_cmk/README.md) | AWS S3 | Match tags on Bucket and corresponding Key Management Service. |
+| [aws_s3_bucket_public_access_block_skip_setting](./aws_s3_bucket_public_access_block_skip_setting/README.md) | AWS S3 Bucket | Allows Public Access Block to skip a setting value |
 | [aws_s3_bucket_tagging_template](./aws_s3_bucket_tagging_template/README.md) | AWS S3 | Set default tags on buckets with dynamic metadata |
 | [aws_sqs_approved](./aws_sqs_approved/README.md) | AWS SQS Queue | Alarm if SQS policy violates org restrictions |
+| [azure_compute_disk_approved_usage_customer_key_encrypted](./azure_compute_disk_approved_usage_customer_key_encrypted/README.md) | Azure Compute | Disk approved if encrypted with customer key |
 | [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md) | Azure Networking | Prevent unapproved network configuration for load balancers |
 | [azure_storage_container_approved_usage_not_public](./azure_storage_container_approved_usage_not_public/README.md) | Azure Storage | Container approved if not public |
 | [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md) | Multi-Cloud Storage | Set least expensive storage options for development environments |
 
 ## Prerequisites
 
-To run Turbot Calculated Policies, you must install:
+To run Turbot calculated policies, you must install:
 
 - [Terraform](https://www.terraform.io) Version 12
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-## Running a Calculated Policies
-
-To run a Calculated Policies:
-
-1. Install and configure the [pre-requisites](#pre-requisites)
-1. At the command line, go to the directory for the Calculated Policies, for example: `cd mod_install`
-1. Run `terraform init` to initialize terraform in the directory
-1. Edit any variables in the .tf file that you wish to change, or override with 
-[environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or 
-[variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
-1. Run `terraform plan -var-file="<fileName>.tfvars"` and inspect the changes
-1. Run `terraform apply -var-file="<fileName>.tfvars"` to apply the configuration
-
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
+
+## Running a calculated policies
+
+To run a calculated policies:
+
+1. Install and configure the [pre-requisites](#pre-requisites)
+1. Using the command line, navigate to the directory for the calculated policies
+1. Run `terraform init` to initialize terraform in the directory
+1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or [variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
+1. Run `terraform plan -var-file="<fileName>.tfvars"` and inspect the changes
+1. Run `terraform apply -var-file="<fileName>.tfvars"` to apply the configuration
 
 ## Contributing
 
@@ -85,7 +89,7 @@ Baseline
 └── default.tfvar
 ```
 
-### Style Guide
+### Style guide
 
 Our Calculate Policies adopts styling conventions provided by [Terraform](https://www.terraform.io/docs/configuration/style.html) 
 like:
@@ -132,7 +136,7 @@ To maintain consistency between files and modules, we recommend adopting the bel
 
 - All variables should have a description, and as a result should not require individual comments
 - Most variables should have a reasonable default
-- Calculated Policies should be always children of a Smart Folder resource
+- Calculated policies should be always children of a Smart Folder resource
 - The resource to associate with the Smart Folder should use a variable for the target resource
 
   ```terraform

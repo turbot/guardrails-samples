@@ -1,0 +1,39 @@
+## Python examples
+
+Provides Python scripts that show how an end user can run controls, query data and make decisions based on resource data
+which is returned from Turbot.
+
+### Available scripts
+
+| Title | Description |
+| ----- | ----------- |
+{%- for pythonTemplate in configuration.pythonTemplates %}
+| [{{ pythonTemplate.title }}](./{{ pythonTemplate.name }}/README.md) | {{ pythonTemplate.description }} |
+{%- endfor %}
+
+## Prerequisites
+
+To run the scripts, you must have:
+
+- [Python 3.\*.\*](https://www.python.org/downloads/)
+- [Pip](https://pip.pypa.io/en/stable/installing/)
+
+### Configuring credentials
+
+You must set your `config.tf` or environment variables to connect to your Turbot workspace.
+Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
+
+## Executing the script
+
+To run a the python script:
+
+1. Install and configure the [pre-requisites](#pre-requisites)
+1. Using the command line, navigate to the directory for the Python script
+1. Create and activate the Python virtual environment
+1. Install dependencies
+1. Run the Python script using the command line
+1. Deactivate the Python virtual environment
+
+## Contributing
+
+Section to be completed at a later stage

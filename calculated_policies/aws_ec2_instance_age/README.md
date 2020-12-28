@@ -6,7 +6,7 @@ The business owner of the AWS Lab environment wants to ensure that all EC2 Lab i
 (instances tagged Environment:=Lab) are not being used for extended periods of time. 
 The business rule designed states that lab instances must be less than 30 days old.
 
-## Implementation Details
+## Implementation details
 
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 
@@ -16,7 +16,7 @@ This Terraform template creates a smart folder and applies calculated policies o
 The Calculated policy sets the active age threshold to 30 days when a tag is present on the instance matching 
 {Environment:=Lab} and to skip if it is not present or set to an alternate value.
 
-### Template Input (GraphQL)
+### Template input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
@@ -55,12 +55,12 @@ To run Turbot Calculated Policies, you must install:
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
-## Running the Example
+## Running the example
 
 Scripts can be run in the folder that contains the script.
 
@@ -70,7 +70,9 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 

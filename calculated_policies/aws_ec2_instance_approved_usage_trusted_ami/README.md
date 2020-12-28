@@ -4,7 +4,7 @@
 
 Use this policy if you would like to restrict the usage of EC2 Instance Images to a list of trusted AMIs.
 
-## Implementation Details
+## Implementation details
 
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 
@@ -14,7 +14,7 @@ This Terraform template creates a smart folder and applies calculated policies o
 If a EC2 Instance Image is not in the trusted AMI list, then the approved usage
 policy will be set to `Not approved` otherwise it will be set to `Approved`.
 
-### Template Input (GraphQL)
+### Template input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
 
@@ -55,12 +55,12 @@ To run Turbot Calculated Policies, you must install:
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
-### Configuring Credentials
+### Configuring credentials
 
 You must set your `config.tf` or environment variables to connect to your Turbot workspace.
 Further information can be found in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider).
 
-## Running the Example
+## Running the example
 
 Scripts can be run in the folder that contains the script.
 
@@ -70,9 +70,11 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- smart_folder_title
 - target_resource
 - trusted_ami_list
+- smart_folder_title (Optional)
+- smart_folder_description (Optional)
+- smart_folder_parent_resource (Optional)
 
 Open the file [variables.tf](variables.tf) for further details.
 
