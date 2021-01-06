@@ -1,0 +1,25 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "TrimBot",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "args": ["-c", "${workspaceFolder}/example_config.yaml", "-p", "rex-aac"],
+      "console": "integratedTerminal",
+      "program": "${workspaceFolder}/main.py"
+    },
+    {
+      "name": "TrimBot2",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "program": "${workspaceFolder}/main.py"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+recipe:
+  name: V3 child account recipe
+  resources:
+    - name: "Turbot IAM Policies"
+      service: iam
+      resource: policy
+      regions:
+        - us-east-1
+      filters:
+        - type: path_matches
+          value: "/turbot"
+      actions:
+        - delete
+
+    - name: "Turbot IAM Groups"
+      service: iam
+      resource: group
+      regions:
+        - us-east-1
+      filters:
+        - type: path_matches
+          value: "/turbot/"
+      actions:
+        - delete
+
+    - name: "Turbot IAM Roles"
+      service: iam
+      resource: role
+      regions:
+        - us-east-1
+      filters:
+        - type: path_matches
+          value: "/turbot/" ## v5 turbot_vpc_flow_logging, turbot_ssm_notifications_role, etc.
+        # -
+        #   type: path_matches
+        #   value: '/turbot/core/'  ## v3 turbot_superuser, turbot_vpc_flow_logs, etc.
+        #                           ## Commented out to prevent deleting turbot_superuser
+      actions:
+        - delete
+
+    - name: "Turbot IAM Users"
+      service: iam
+      resource: user
+      regions:
+        - us-east-1
+      filters:
+        - type: path_matches
+          value: "/turbot"
+      actions:
+        - delete
+
+    - name: "Turbot CloudFormation Stacks"
+      service: cloudformation
+      resource: stack
+      regions:
+        - all
+      filters:
+        - type: name_matches
+          value: aab
+        - type: name_matches
+          value: TurbotAWSHandlerSubscriptions
+        - type: name_matches
+          value: TurbotVPCFlowLogs
+      actions:
+        - delete
+
+    - name: "Turbot SNS Topics"
+      service: sns
+      resource: topic
+      regions:
+        - all
+      filters:
+        - type: name_prefix
+          value: turbot_aws_
+      actions:
+        - delete
+
+    - name: "Turbot Cloudwatch Event Rules"
+      service: events
+      resource: rule
+      regions:
+        - all
+      filters:
+        - type: name_prefix
+          value: "turbot_aws_"
+      actions:
+        - delete
+
+    - name: "Turbot Logging Buckets"
+      service: s3
+      resource: bucket
+      regions:
+        - us-east-1 # Buckets will process all regions,
+          # but just need default region here.
+          # don't use 'all'
+      filters:
+        - type: name_prefix
+          value: aab-
+      actions:
+        - disable
+        - clear
+        - delete
