@@ -131,14 +131,14 @@ Parameters:
     Default: ""
     Description:
       Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group.
-      If Cloudwatch Logging is enabled, then enter the "CloudWatch log group" name from AWS Systems Manager > Session Manager > Preferences. (e.g., my-loggroup-for-sessionmanager-logs).
+      If Cloudwatch Logging is enabled, then enter the "CloudWatch log group" name from AWS Systems Manager > Session Manager > Preferences. (e.g., my-sessionmanager-loggroup).
       Leave empty if CloudWatch Logging is disabled.
     Type: String
   S3BucketWithPrefix:
     Default: ""
     Description:
       Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group.
-      If S3 Logging is enabled, then enter the "S3 bucket" followed by "S3 prefix" from AWS Systems Manager > Session Manager > Preferences. (e.g., my-s3bucket-for-sessionmanager-logs/dev-env/).
+      If S3 Logging is enabled, then enter the "S3 bucket" followed by "S3 prefix" from AWS Systems Manager > Session Manager > Preferences. (e.g., my-sessionmanager-logs-bucket/my-sub-folder/).
       Leave empty if S3 Logging is disabled.
     Type: String
 
@@ -236,6 +236,7 @@ Resources:
             - UseKMSEncryption
             - Action:
                 - "kms:Decrypt"
+                - "kms:GenerateDataKey"
               Effect: Allow
               Resource:
                 - !Ref KMSEncryptionKeyArn
@@ -267,6 +268,7 @@ Resources:
                   [
                     !Sub "arn:${AWS::Partition}:s3:::",
                     !Ref "S3BucketWithPrefix",
+                    "*",
                   ],
                 ]
             - !Ref "AWS::NoValue"
