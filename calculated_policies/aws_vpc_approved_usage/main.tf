@@ -1,3 +1,13 @@
+
+terraform {
+  required_providers {
+    turbot = {
+      source = "terraform-providers/turbot"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
 # Smart Folder Definition
 resource "turbot_smart_folder" "aws_vpc_approved" {
   title       = var.smart_folder_title
