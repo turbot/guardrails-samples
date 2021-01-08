@@ -18,16 +18,16 @@ resource "turbot_policy_setting" "aws_vpc_approved_usage" {
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcApprovedUsage"
   # GraphQL to pull function metadata
   template_input = <<EOT
-    {
-      resource {
-        VpcId: get(path: "VpcId")
-                    descendants(filter: "resourceTypeId:tmod:@turbot/aws-vpc-connect#/resource/types/transitGatewayAttachment level:self,descendant") {
-          items {
-            VpcId: get(path: "VpcId")
-          }
+  {
+    resource {
+      VpcId: get(path: "VpcId")
+      descendants(filter: "resourceTypeId:tmod:@turbot/aws-vpc-connect#/resource/types/transitGatewayAttachment level:self,descendant") {
+        items {
+          VpcId: get(path: "VpcId")
         }
       }
     }
+  }
   EOT
   # Nunjucks Template Nunjucks Comments are formatted: {# comment #}
   template = <<EOT

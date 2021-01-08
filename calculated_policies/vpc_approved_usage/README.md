@@ -1,4 +1,4 @@
-# AWS VPC - Allow only the usage through Transit Gateway.
+# AWS VPC - Only allow usage of VPC through Transit Gateway
 
 ## Use case
 
@@ -20,25 +20,26 @@ disapprove the VPC.
 
 The template input to a calculated policy is a GraphQL query.
 
-In this query it fetches the VPC Ids and checks its descendant, to check for if it has a transit gateway attachment as  its descendant.
+In this query it fetches the VPC Ids and checks its descendant, to check for if it has a transit gateway attachment as its descendant.
 
 ```graphql
-    {
-      resource {
+{
+  resource {
+    VpcId: get(path: "VpcId")
+    descendants(
+      filter: "resourceTypeId:tmod:@turbot/aws-vpc-connect#/resource/types/transitGatewayAttachment level:self,descendant"
+    ) {
+      items {
         VpcId: get(path: "VpcId")
-                    descendants(filter: "resourceTypeId:tmod:@turbot/aws-vpc-connect#/resource/types/transitGatewayAttachment level:self,descendant") {
-          items {
-            VpcId: get(path: "VpcId")
-          }
-        }
       }
     }
+  }
+}
 ```
 
 ### Template (Nunjucks)
 
 Approval logic for VPCs. If the VPC has transit gateway attachments as its descendant then it will return Approved, else it will return Not Approved.
-
 
 ```nunjucks
   {%- if $.resource.descendants.items | length == 0 %}
@@ -73,9 +74,7 @@ Update [default.tfvars](default.tfvars) or create a new Terraform configuration 
 
 Variables that are exposed by this script are:
 
-- cross_resource_tag_key
-- target_resource
-- smart_folder_title (Optional)
+- smart_folder_title (Required)
 - smart_folder_description (Optional)
 - smart_folder_parent_resource (Optional)
 
