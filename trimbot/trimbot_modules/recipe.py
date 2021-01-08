@@ -5,19 +5,17 @@ from os import path
 import os
 
 
-class BaseRecipe:
-    def __init__(self, logger=logging.getLogger("Trimbot")) -> None:
-        self.logger = logger
+class Recipe:
+    def __init__(self, location) -> None:
+        self.logger = logging.getLogger(__name__)
+        self.location = location
 
         self.resources = []
         super().__init__()
 
-    def get_file_name(self):
-        pass
-
     def load(self):
         try:
-            recipe_location = path.join(os.getcwd(), f'./recipes/{self.get_file_name()}')
+            recipe_location = path.join(os.getcwd(), self.location)
             self.logger.info(f'Loading recipe at location: {recipe_location}')
             recipe_stream = open(recipe_location, 'r')
             recipe = yaml.safe_load(recipe_stream)
@@ -33,107 +31,99 @@ class BaseRecipe:
 
     def get_config_schema(self):
         schema = {
-            '$schema': 'http://json-schema.org/schema#',
-            'type': 'object',
-            'properties': {
-                'recipe': {
-                    'type': 'object',
-                    'properties': {
-                        'name': {
-                            'type': 'string'
+            "$schema": "http://json-schema.org/schema#",
+            "type": "object",
+            "properties": {
+                "recipe": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
                         },
-                        'resources': {
-                            'type': 'array',
-                            'items': [
+                        "resources": {
+                            "type": "array",
+                            "items": [
                                 {
-                                    'type': 'object',
-                                    'properties': {
-                                        'name': {
-                                            'type': 'string'
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
                                         },
-                                        'service': {
-                                            'type': 'string'
+                                        "service": {
+                                            "type": "string"
                                         },
-                                        'resource': {
-                                            'type': 'string'
+                                        "resource": {
+                                            "type": "string"
                                         },
-                                        'regions': {
-                                            'type': 'array',
-                                            'items': [
+                                        "verifySsl": {
+                                            "type": "boolean"
+                                        },
+                                        "filters": {
+                                            "type": "array",
+                                            "items": [
                                                 {
-                                                    'type': 'string'
-                                                }
-                                            ]
-                                        },
-                                        'filters': {
-                                            'type': 'array',
-                                            'items': [
-                                                {
-                                                    'type': 'object',
-                                                    'properties': {
-                                                        'type': {
-                                                            'type': 'string'
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "field": {
+                                                            "type": "string"
                                                         },
-                                                        'value': {
-                                                            'type': 'string'
-                                                        }
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                            "type": ["array", "string"],
+                                                            "items": [
+                                                                {
+                                                                    "type": "string"
+                                                                }
+                                                            ]
+                                                        },
                                                     },
-                                                    'required': [
-                                                        'type',
-                                                        'value'
+                                                    "oneOf": [
+                                                        {
+                                                            "required": [
+                                                                "field",
+                                                                "value"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "required": [
+                                                                "type",
+                                                                "value"
+                                                            ]
+                                                        },
                                                     ]
                                                 }
                                             ]
                                         },
-                                        'actions': {
-                                            'type': 'array',
-                                            'items': [
+                                        "actions": {
+                                            "type": "array",
+                                            "items": [
                                                 {
-                                                    'type': 'string'
+                                                    "type": "string"
                                                 }
                                             ]
                                         }
                                     },
-                                    'required': [
-                                        'name',
-                                        'service',
-                                        'resource',
-                                        'filters'
+                                    "required": [
+                                        "name",
+                                        "service",
+                                        "resource",
+                                        "actions"
                                     ]
                                 }
                             ]
                         }
                     },
-                    'required': [
-                        'name',
-                        'resources'
+                    "required": [
+                        "name",
+                        "resources"
                     ]
                 }
             },
-            'required': [
-                'recipe'
+            "required": [
+                "recipe"
             ]
         }
 
         return schema
-
-
-class ManagedRecipe(BaseRecipe):
-    def get_file_name(self):
-        return 'managed_recipe.yaml'
-
-
-class MasterRecipe(BaseRecipe):
-    def get_file_name(self):
-        return 'master_recipe.yaml'
-
-
-def load_recipe(managed_account):
-    if managed_account:
-        recipe = ManagedRecipe()
-    else:
-        recipe = MasterRecipe()
-
-    recipe.load()
-
-    return recipe

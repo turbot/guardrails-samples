@@ -5,19 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "TrimBot",
+      "name": "TrimBot - Siemens",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "args": ["-c", "${workspaceFolder}/example_config.yaml", "-p", "rex-aac"],
+      "args": ["-f", "${workspaceFolder}/siemens_config.yaml", "--trace"],
       "console": "integratedTerminal",
       "program": "${workspaceFolder}/main.py"
     },
     {
-      "name": "TrimBot2",
+      "name": "TrimBot",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceFolder}",
+      "args": ["-f", "${workspaceFolder}/example_config.yaml", "--trace"],
       "console": "integratedTerminal",
       "program": "${workspaceFolder}/main.py"
     }

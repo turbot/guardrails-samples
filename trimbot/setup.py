@@ -14,7 +14,9 @@ setup(
         'click',
         'jsonschema',
         'PyYAML',
-        'boto3'
+        'boto3',
+        "requests",
+        "urllib3"
     ],
     packages=['trimbot_modules'],
     entry_points='''

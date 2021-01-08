@@ -4,8 +4,6 @@ recipe:
     - name: "Turbot Console Stacks"
       service: cloudformation
       resource: stack
-      regions:
-        - us-east-1
       filters:
         - type: name_matches
           value: turbot-console
@@ -15,8 +13,6 @@ recipe:
     - name: "Turbot DB Stacks"
       service: cloudformation
       resource: stack
-      regions:
-        - us-east-1
       filters:
         - type: name_prefix
           value: Turbot-DB
@@ -26,8 +22,6 @@ recipe:
     - name: "Turbot Q Stack"
       service: cloudformation
       resource: stack
-      regions:
-        - us-east-1
       filters:
         - type: name_prefix
           value: Turbot-Q
@@ -37,8 +31,6 @@ recipe:
     - name: "Turbot CloudFormation Account Stacks"
       service: cloudformation
       resource: stack
-      regions:
-        - all
       filters:
         - type: name_matches
           value: aaa # Set to Turbot Account ID
@@ -48,8 +40,6 @@ recipe:
     - name: "Turbot CloudFormation SNS Stacks"
       service: cloudformation
       resource: stack
-      regions:
-        - all
       filters:
         - type: name_matches
           value: TurbotAWSHandlerSubscriptions
@@ -59,8 +49,6 @@ recipe:
     - name: "Turbot IAM Policies"
       service: iam
       resource: policy
-      regions:
-        - us-east-1
       filters:
         - type: path_matches
           value: "/turbot/"
@@ -70,8 +58,6 @@ recipe:
     - name: "Turbot IAM Groups"
       service: iam
       resource: group
-      regions:
-        - us-east-1
       filters:
         - type: path_matches
           value: "/turbot/"
@@ -81,8 +67,6 @@ recipe:
     - name: "Turbot IAM Roles"
       service: iam
       resource: role
-      regions:
-        - us-east-1
       filters:
         - type: path_matches
           value: "/turbot/" ## v5 turbot_vpc_flow_logging, turbot_ssm_notifications_role, etc.
@@ -94,8 +78,6 @@ recipe:
     - name: "Turbot IAM Users"
       service: iam
       resource: user
-      regions:
-        - us-east-1
       filters:
         - type: path_matches
           value: "/turbot/"
@@ -105,8 +87,6 @@ recipe:
     - name: "Turbot CodeCommit Repos"
       service: codecommit
       resource: repo
-      regions:
-        - us-east-1
       filters:
         - type: name_prefix
           value: "turbot-"
@@ -116,8 +96,6 @@ recipe:
     - name: "Turbot SQS Queues"
       service: sqs
       resource: queue
-      regions:
-        - us-east-1
       filters:
         - type: name_prefix
           value: Turbot-Q-
@@ -125,8 +103,6 @@ recipe:
     - name: "Turbot DynamoDB Tables"
       service: dynamodb
       resource: table
-      regions:
-        - us-east-1
       filters:
         - type: name_prefix
           value: "Turbot"
@@ -136,8 +112,6 @@ recipe:
     - name: "Turbot Cloudwatch Event Rules"
       service: events
       resource: rule
-      regions:
-        - all
       filters:
         - type: name_prefix
           value: "turbot_aws_"
@@ -147,10 +121,6 @@ recipe:
     - name: "Turbot Logging Buckets"
       service: s3
       resource: bucket
-      regions:
-        - us-east-1 # Buckets will process all regions,
-          # but just need default region here.
-          # don't use 'all'
       filters:
         - type: name_prefix
           value: aaa-
@@ -161,10 +131,6 @@ recipe:
     - name: "Turbot License Bucket"
       service: s3
       resource: bucket
-      regions:
-        - us-east-1 # Buckets will process all regions,
-          # but just need default region here.
-          # don't use 'all'
       filters:
         - type: name_prefix
           value: "turbot-"

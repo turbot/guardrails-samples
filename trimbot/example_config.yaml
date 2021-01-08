@@ -1,4 +1,0 @@
-workspaces:
-  - account: "034519905315"
-  - account: "210125595713"
-    roleArn: "arn:aws:iam::210125595713:role/omero-service-role"
