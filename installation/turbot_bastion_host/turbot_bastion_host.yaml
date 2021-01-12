@@ -57,11 +57,11 @@ Metadata:
       OSImageOverride:
         default: Custom AMI
       AlternativeIAMRole:
-        default: Alternative IAM role
+        default: IAM role
 
 Parameters:
   BastionHostName:
-    Default: "turbot Bastion Host"
+    Default: "Turbot Bastion Host"
     Description: Name of the bastion host
     Type: String
   TimeToLive:
