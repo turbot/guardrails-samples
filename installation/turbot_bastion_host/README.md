@@ -68,3 +68,56 @@ In addition to the above, it also compliments the Session Manager capabilities s
 - Where can I see the session activity logs?
 
   Please refer to https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-logging.html
+
+- Are the sessions encrypted?
+
+  Session Manager exchanges data between a client and a managed instance over a secure channel that is encrypted using TLS 1.2
+  Please follow this [link](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html#what-is-a-session) for more details.
+
+- How can I enable AWS KMS CMK encryption of the session data ?
+
+  Please follow the steps included in this [link](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-preferences-enable-encryption.html).
+
+- I have enabled the KMS Encryption for the Session Manager and I get this error when I am trying to connect to the Turbot Bastion Host?
+
+  Error: `"Encountered error while initiating handshake. Fetching data key failed"`.
+
+  Update the CFN template parameter `KMSEncryptionKeyArn` under the CFN label "Session Manager Preferences" with the KMS Key ARN used in the Session Manager KMS encryption.
+  After which you should be able to login to the session and should see a welcome message that says `This session is encrypted using AWS KMS`.
+
+- I want to manage the keys for my CloudWatch LogGroup used for Session Manager.
+  Please refer to this [link](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html).
+
+  NOTE: CloudWatch Logs supports only symmetric CMKs. Do not use an associate an asymmetric CMK with your log group. For more information, see [Using Symmetric and Asymmetric Keys](https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html).
+
+- While associating the KMS CMK Key to the CloudWatch Loggroup, I get the error:
+  `The specified KMS key does not exist or is not allowed to be used with LogGroup 'arn:<partition>:logs:<region>:<account_id>:log-group:<log_group_name>'`
+
+  The CloudWatch Log Group should be able to access the KMS CMK. Use can refer to the below Policy.
+
+```json
+{
+  "Sid": "Allow CloudWatch Log Group for Session Manager to access the Key",
+  "Effect": "Allow",
+  "Principal": {
+    "Service": "logs.<aws_region_like_us-east-1>.amazonaws.com"
+  },
+  "Action": [
+    "kms:Encrypt*",
+    "kms:Decrypt*",
+    "kms:ReEncrypt*",
+    "kms:GenerateDataKey*",
+    "kms:Describe*"
+  ],
+  "Resource": "*",
+  "Condition": {
+    "ArnEquals": {
+      "kms:EncryptionContext:aws:logs:arn": "arn:<partition>:logs:<aws_region>:<aws_account_id>:log-group:<loggroup_name_used>"
+    }
+  }
+}
+```
+
+- Where can I get more Troubleshooting steps for Session Manager.
+
+  https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-troubleshooting.html
