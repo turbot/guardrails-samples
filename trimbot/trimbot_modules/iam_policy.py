@@ -7,6 +7,8 @@ class IamPolicy(Resource):
     def __init__(self, session, region, policy) -> None:
         self.policy = policy
         self.region = region
+        self.logger = logging.getLogger(__name__)
+        self.iam_client = session.create_client('iam', self.region)
 
         super().__init__(session)
 
@@ -14,77 +16,74 @@ class IamPolicy(Resource):
         return f'iam/policy {self.policy["PolicyName"]}'
 
     def delete(self, dry_run):
-        logger = logging.getLogger(__name__)
-        iam_client = self.session.create_client('iam', self.region)
-
-        response = iam_client.list_entities_for_policy(
+        response = self.iam_client.list_entities_for_policy(
             PolicyArn=self.policy["Arn"]
         )
 
         for policy_group in response["PolicyGroups"]:
             if not dry_run:
-                iam_client.detach_group_policy(
+                self.iam_client.detach_group_policy(
                     GroupName=policy_group["GroupName"],
                     PolicyArn=self.policy["Arn"]
                 )
 
-                logger.info(
+                self.logger.info(
                     f"Detached group policy {policy_group['GroupName']} from policy {self.policy['PolicyName']}")
             else:
-                logger.info(
+                self.logger.info(
                     f"Would detach group policy {policy_group['GroupName']} from policy {self.policy['PolicyName']}")
 
         for policy_users in response["PolicyUsers"]:
             if not dry_run:
-                iam_client.detach_user_policy(
+                self.iam_client.detach_user_policy(
                     UserName=policy_users["UserName"],
                     PolicyArn=self.policy["Arn"]
                 )
 
-                logger.info(
+                self.logger.info(
                     f"Detached group policy {policy_users['UserName']} from policy {self.policy['PolicyName']}")
             else:
-                logger.info(
+                self.logger.info(
                     f"Would detach group policy {policy_users['UserName']} from policy {self.policy['PolicyName']}")
 
         for policy_roles in response["PolicyRoles"]:
             if not dry_run:
-                iam_client.detach_role_policy(
+                self.iam_client.detach_role_policy(
                     RoleName=policy_roles["RoleName"],
                     PolicyArn=self.policy["Arn"]
                 )
 
-                logger.info(
+                self.logger.info(
                     f"Detached group policy {policy_roles['RoleName']} from policy {self.policy['PolicyName']}")
             else:
-                logger.info(
+                self.logger.info(
                     f"Would detach group policy {policy_roles['RoleName']} from policy {self.policy['PolicyName']}")
 
-        response = iam_client.list_policy_versions(
+        response = self.iam_client.list_policy_versions(
             PolicyArn=self.policy["Arn"]
         )
 
         for version in response['Versions']:
             if not version['IsDefaultVersion']:
                 if not dry_run:
-                    response = iam_client.delete_policy_version(
+                    response = self.iam_client.delete_policy_version(
                         PolicyArn=self.policy["Arn"],
                         VersionId=version['VersionId']
                     )
-                    logger.info(
+                    self.logger.info(
                         f"Deleting policy version {version['VersionId']} from policy {self.policy['PolicyName']}")
                 else:
-                    logger.info(
+                    self.logger.info(
                         f"Would delete policy version {version['VersionId']} from policy {self.policy['PolicyName']}")
 
         if not dry_run:
-            response = iam_client.delete_policy(
+            response = self.iam_client.delete_policy(
                 PolicyArn=self.policy["Arn"]
             )
 
-            logger.info(f"Deleted policy {self.policy['PolicyName']}")
+            self.logger.info(f"Deleted policy {self.policy['PolicyName']}")
         else:
-            logger.info(f"Would delete policy {self.policy['PolicyName']}")
+            self.logger.info(f"Would delete policy {self.policy['PolicyName']}")
 
 
 class IamPolicyResourceService(ResourceService):
@@ -107,6 +106,7 @@ class IamPolicyResourceService(ResourceService):
 
         resources = []
         for policy in response["Policies"]:
-            resources.append(IamPolicy(self.session, region, policy))
+            if policy["Path"] == path_prefix:
+                resources.append(IamPolicy(self.session, region, policy))
 
         return resources

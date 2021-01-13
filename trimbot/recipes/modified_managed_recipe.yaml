@@ -54,33 +54,33 @@ recipe:
     #   actions:
     #     - delete
 
-    - name: "Turbot CloudFormation Stacks - Delete"
-      service: cloudformation
-      resource: stack
-      filters:
-        - field: StackStatusFilter
-          value:
-            - CREATE_IN_PROGRESS
-            - CREATE_FAILED
-            - CREATE_COMPLETE
-            - ROLLBACK_IN_PROGRESS
-            - ROLLBACK_FAILED
-            - ROLLBACK_COMPLETE
-            - DELETE_FAILED
-            - UPDATE_IN_PROGRESS
-            - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
-            - UPDATE_COMPLETE
-            - UPDATE_ROLLBACK_IN_PROGRESS
-            - UPDATE_ROLLBACK_FAILED
-            - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
-            - UPDATE_ROLLBACK_COMPLETE
-            - REVIEW_IN_PROGRESS
-        - type: startswith
-          value: TurbotAWS
-        - type: startswith
-          value: TurbotVPC
-      actions:
-        - delete
+    # - name: "Turbot CloudFormation Stacks - Delete"
+    #   service: cloudformation
+    #   resource: stack
+    #   filters:
+    #     - field: StackStatusFilter
+    #       value:
+    #         - CREATE_IN_PROGRESS
+    #         - CREATE_FAILED
+    #         - CREATE_COMPLETE
+    #         - ROLLBACK_IN_PROGRESS
+    #         - ROLLBACK_FAILED
+    #         - ROLLBACK_COMPLETE
+    #         - DELETE_FAILED
+    #         - UPDATE_IN_PROGRESS
+    #         - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
+    #         - UPDATE_COMPLETE
+    #         - UPDATE_ROLLBACK_IN_PROGRESS
+    #         - UPDATE_ROLLBACK_FAILED
+    #         - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
+    #         - UPDATE_ROLLBACK_COMPLETE
+    #         - REVIEW_IN_PROGRESS
+    #     - type: startswith
+    #       value: TurbotAWS
+    #     - type: startswith
+    #       value: TurbotVPC
+    #   actions:
+    #     - delete
 
     # - name: "Turbot Logging Buckets - Disable"
     #   service: s3
@@ -88,41 +88,43 @@ recipe:
     #   actions:
     #     - disable
 
-    # - name: "Turbot IAM Policies - Delete"
-    #   service: iam
-    #   resource: policy
-    #   filters:
-    #     - field: PathPrefix
-    #       value: /turbot/
-    #   actions:
-    #     - delete
+    - name: "Turbot IAM Policies - Delete"
+      service: iam
+      resource: policy
+      filters:
+        - field: PathPrefix
+          value: /turbot/
+      actions:
+        - delete
 
-    # - name: "Turbot IAM Groups - Delete"
-    #   service: iam
-    #   resource: group
-    #   filters:
-    #     - field: PathPrefix
-    #       value: "/turbot/"
-    #   actions:
-    #     - delete
+    - name: "Turbot IAM Groups - Delete"
+      service: iam
+      resource: group
+      filters:
+        - field: PathPrefix
+          value: "/turbot/"
+      actions:
+        - delete
 
-    # - name: "Turbot IAM Users - Delete"
-    #   service: iam
-    #   resource: user
-    #   filters:
-    #     - field: PathPrefix
-    #       value: /turbot/
-    #   actions:
-    #     - delete
+    - name: "Turbot IAM Users - Delete"
+      service: iam
+      resource: user
+      filters:
+        - field: PathPrefix
+          value: /turbot/
+        - field: PathPrefix
+          value: /turbot/account/federated/
+      actions:
+        - delete
 
-    # - name: "Turbot IAM Roles - Delete"
-    #   service: iam
-    #   resource: role
-    #   filters:
-    #     - field: PathPrefix
-    #       value: /turbot/
-    #   actions:
-    #     - delete
+    - name: "Turbot IAM Roles - Delete"
+      service: iam
+      resource: role
+      filters:
+        - field: PathPrefix
+          value: /turbot/
+      actions:
+        - delete
 
     # - name: "Turbot Logging Buckets - Delete"
     #   service: s3

@@ -7,6 +7,8 @@ class IamUser(Resource):
     def __init__(self, session, region, user) -> None:
         self.user = user
         self.region = region
+        self.logger = logging.getLogger(__name__)
+        self.iam_client = session.create_client('iam', self.region)
 
         super().__init__(session)
 
@@ -14,99 +16,100 @@ class IamUser(Resource):
         return f'iam/user {self.user["UserName"]}'
 
     def delete(self, dry_run):
-        logger = logging.getLogger(__name__)
-        iam_client = self.session.create_client('iam', self.region)
-
-        response = iam_client.list_access_keys(
+        response = self.iam_client.list_access_keys(
             UserName=self.user["UserName"],
         )
         for access_key in response["AccessKeyMetadata"]:
             if not dry_run:
-                iam_client.delete_access_key(
+                self.iam_client.delete_access_key(
                     UserName=self.user["UserName"],
                     AccessKeyId=access_key["AccessKeyId"]
                 )
-                logger.info(f"Removed access key {access_key['AccessKeyId']} for user {self.user['UserName']}")
+                self.logger.info(f"Removed access key {access_key['AccessKeyId']} for user {self.user['UserName']}")
             else:
-                logger.info(f"Would remove access key {access_key['AccessKeyId']} for user {self.user['UserName']}")
+                self.logger.info(
+                    f"Would remove access key {access_key['AccessKeyId']} for user {self.user['UserName']}")
 
-        response = iam_client.list_attached_user_policies(
+        response = self.iam_client.list_attached_user_policies(
             UserName=self.user["UserName"]
         )
         for attached_policy in response["AttachedPolicies"]:
             if not dry_run:
-                iam_client.detach_user_policy(
+                self.iam_client.detach_user_policy(
                     UserName=self.user["UserName"],
                     PolicyArn=attached_policy["PolicyArn"]
                 )
-                logger.info(f"Removed inline policy {attached_policy['PolicyName']} for user {self.user['UserName']}")
+                self.logger.info(
+                    f"Detached user policy {attached_policy['PolicyName']} for user {self.user['UserName']}")
             else:
-                logger.info(
-                    f"Would remove inline policy {attached_policy['PolicyName']} for user {self.user['UserName']}")
+                self.logger.info(
+                    f"Would detach user policy {attached_policy['PolicyName']} for user {self.user['UserName']}")
 
-        response = iam_client.list_groups_for_user(
+        response = self.iam_client.list_groups_for_user(
             UserName=self.user["UserName"],
         )
         for user_group in response["Groups"]:
             if not dry_run:
-                iam_client.detach_group_policy(
+                self.iam_client.remove_user_from_group(
                     UserName=self.user["UserName"],
-                    PolicyArn=user_group["Arn"]
+                    GroupName=user_group["GroupName"]
                 )
-                logger.info(f"Detached group {user_group['GroupName']} for user {self.user['UserName']}")
+                self.logger.info(f"Removing user {self.user['UserName']} from group {user_group['GroupName']}")
             else:
-                logger.info(f"Would detach group {user_group['GroupName']} for user {self.user['UserName']}")
+                self.logger.info(f"Would remove user {self.user['UserName']} from group {user_group['GroupName']}")
 
-        response = iam_client.list_signing_certificates(
+        response = self.iam_client.list_signing_certificates(
             UserName=self.user["UserName"],
         )
         for certificate in response["Certificates"]:
             if not dry_run:
-                iam_client.delete_signing_certificate(
+                self.iam_client.delete_signing_certificate(
                     UserName=self.user["UserName"],
                     CertificateId=certificate["CertificateId"]
                 )
-                logger.info(f"Detached group {certificate['CertificateId']} for user {self.user['UserName']}")
+                self.logger.info(
+                    f"Deleting signing certificate {certificate['CertificateId']} for user {self.user['UserName']}")
             else:
-                logger.info(f"Would detach group {certificate['CertificateId']} for user {self.user['UserName']}")
+                self.logger.info(
+                    f"Would delete signing certificate {certificate['CertificateId']} for user {self.user['UserName']}")
 
-        response = iam_client.list_mfa_devices(
+        response = self.iam_client.list_mfa_devices(
             UserName=self.user["UserName"],
         )
         for mfa_device in response["MFADevices"]:
             if not dry_run:
-                iam_client.deactivate_mfa_device(
+                self.iam_client.deactivate_mfa_device(
                     UserName=self.user["UserName"],
                     SerialNumber=mfa_device["SerialNumber"]
                 )
-                logger.info(f"Deactivated {mfa_device['SerialNumber']} for user {self.user['UserName']}")
+                self.logger.info(f"Deactivated {mfa_device['SerialNumber']} for user {self.user['UserName']}")
             else:
-                logger.info(f"Would deactivate {mfa_device['SerialNumber']} for user {self.user['UserName']}")
+                self.logger.info(f"Would deactivate {mfa_device['SerialNumber']} for user {self.user['UserName']}")
 
         try:
-            response = iam_client.get_login_profile(
+            response = self.iam_client.get_login_profile(
                 UserName=self.user["UserName"],
             )
             login_profile = response["LoginProfile"]
             if login_profile:
                 if not dry_run:
-                    iam_client.delete_login_profile(
+                    self.iam_client.delete_login_profile(
                         UserName=self.user["UserName"]
                     )
-                    logger.info(f"Deleted login profile for user {self.user['UserName']}")
+                    self.logger.info(f"Deleted login profile for user {self.user['UserName']}")
                 else:
-                    logger.info(f"Would delete login profile for user {self.user['UserName']}")
+                    self.logger.info(f"Would delete login profile for user {self.user['UserName']}")
         except Exception as e:
             if e.response["Error"]["Code"] != "NoSuchEntity":
                 raise
 
         if not dry_run:
-            iam_client.delete_user(
+            self.iam_client.delete_user(
                 UserName=self.user["UserName"]
             )
-            logger.info(f"Deleted user {self.user['UserName']}")
+            self.logger.info(f"Deleted user {self.user['UserName']}")
         else:
-            logger.info(f"Would delete user {self.user['UserName']}")
+            self.logger.info(f"Would delete user {self.user['UserName']}")
 
 
 class IamUserResourceService(ResourceService):
@@ -117,16 +120,18 @@ class IamUserResourceService(ResourceService):
         iam_client = self.session.create_client('iam', region)
 
         path_prefix = "/"
+
+        resources = []
         for filter in self.recipe["filters"]:
             if filter["field"] == "PathPrefix":
                 path_prefix = filter["value"]
 
-        response = iam_client.list_users(
-            PathPrefix=path_prefix
-        )
+                response = iam_client.list_users(
+                    PathPrefix=path_prefix
+                )
 
-        resources = []
-        for user in response["Users"]:
-            resources.append(IamUser(self.session, region, user))
+                for user in response["Users"]:
+                    if user["Path"] == path_prefix:
+                        resources.append(IamUser(self.session, region, user))
 
         return resources
