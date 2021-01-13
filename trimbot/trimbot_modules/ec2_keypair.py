@@ -7,6 +7,7 @@ class Ec2KeyPair(Resource):
     def __init__(self, session, region, key_pair) -> None:
         self.key_pair = key_pair
         self.region = region
+        self.logger = logging.getLogger(__name__)
 
         super().__init__(session)
 
@@ -14,21 +15,16 @@ class Ec2KeyPair(Resource):
         return f'ec2/keypair {self.key_pair["KeyName"]}'
 
     def delete(self, dry_run):
-        logger = logging.getLogger(__name__)
-        try:
-            ec2_client = self.session.create_client('ec2', self.region)
+        ec2_client = self.session.create_client('ec2', self.region)
 
+        if not dry_run:
             ec2_client.delete_key_pair(
-                KeyName=self.key_pair["KeyName"],
                 KeyPairId=self.key_pair["KeyPairId"],
-                DryRun=dry_run
             )
-            logger.info(f"Removed keypair {self.key_pair['KeyName']}")
-        except Exception as e:
-            if e.response["Error"]["Code"] == "DryRunOperation":
-                logger.info(f"Would remove keypair {self.key_pair['KeyName']}")
-            else:
-                raise
+
+            self.logger.info(f"Removed keypair {self.key_pair['KeyName']}")
+        else:
+            self.logger.info(f"Would remove keypair {self.key_pair['KeyName']}")
 
 
 class Ec2KeyPairResourceService(ResourceService):

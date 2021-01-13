@@ -30,6 +30,15 @@
       "args": ["-f", "${workspaceFolder}/config/example_config.yaml", "--trace", "--check"],
       "console": "integratedTerminal",
       "program": "${workspaceFolder}/main.py"
+    },
+    {
+      "name": "TrimBot - Approve",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "args": ["-f", "${workspaceFolder}/config/example_config.yaml", "--trace", "--approve"],
+      "console": "integratedTerminal",
+      "program": "${workspaceFolder}/main.py"
     }
   ]
 }

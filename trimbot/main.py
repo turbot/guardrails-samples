@@ -90,11 +90,12 @@ def resolve_account(configuration, workspace):
 
 @ click.command()
 @ click.option('-f', '--config-file', type=click.File('r'), required=True, help='/path/to/a/configuration/file.yml')
-@ click.option('-d', '--dry-run', is_flag=True, default=True, help='If set, do not make destructive changes')
+@ click.option('-a', '--approve', is_flag=True, default=False, help='If set, destructive changes will be applied')
 @ click.option('-t', '--trace', is_flag=True, default=False, help='Adds more detailed logging')
 @ click.option('-c', '--check', is_flag=True, default=False, help='Runs action check only')
-def cli(config_file, dry_run, trace, check):
+def cli(config_file, approve, trace, check):
     try:
+        dry_run = not approve
         configure_logging(trace)
         logging.info(f'Started TrimBot')
 
