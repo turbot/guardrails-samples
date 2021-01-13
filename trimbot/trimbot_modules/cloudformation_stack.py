@@ -7,6 +7,8 @@ class CloudFormationStack(Resource):
     def __init__(self, session, stack, region) -> None:
         self.stack = stack
         self.region = region
+        self.logger = logging.getLogger(__name__)
+        self.cloudformation_client = session.create_client('cloudformation', self.region)
 
         super().__init__(session)
 
@@ -14,18 +16,15 @@ class CloudFormationStack(Resource):
         return f'cloudformation/stack {self.stack["StackName"]}'
 
     def delete(self, dry_run):
-        logger = logging.getLogger(__name__)
-        cloudformation_client = self.session.create_client('cloudformation', self.region)
-
         if not dry_run:
-            cloudformation_client.delete_stack(
+            self.cloudformation_client.delete_stack(
                 StackName=self.stack["StackName"]
             )
 
-            logger.info(
+            self.logger.info(
                 f"Deleted stack {self.stack['StackName']}")
         else:
-            logger.info(f"Would delete stack {self.stack['StackName']}")
+            self.logger.info(f"Would delete stack {self.stack['StackName']}")
 
 
 class CloudFormationStackResourceService(ResourceService):
@@ -34,8 +33,6 @@ class CloudFormationStackResourceService(ResourceService):
         super().__init__(session, recipe, "cloudformation", "stack")
 
     def get_all(self, region):
-        resources = []
-
         cloudformation_client = self.session.create_client('cloudformation', region)
 
         stack_status_filter = []
@@ -47,6 +44,7 @@ class CloudFormationStackResourceService(ResourceService):
             StackStatusFilter=stack_status_filter
         )
 
+        resources = []
         for stack in response["StackSummaries"]:
             for filter in self.recipe["filters"]:
                 if "type" in filter and filter["type"] == "startswith":
