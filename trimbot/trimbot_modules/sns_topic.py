@@ -7,6 +7,8 @@ class SnsTopic(Resource):
     def __init__(self, session, region, topic) -> None:
         self.topic = topic
         self.region = region
+        self.sns_client = session.create_client('sns', self.region)
+        self.logger = logging.getLogger(__name__)
 
         super().__init__(session)
 
@@ -14,14 +16,11 @@ class SnsTopic(Resource):
         return f'sns/topic {self.topic["TopicArn"]}'
 
     def delete(self, dry_run):
-        logger = logging.getLogger(__name__)
-        sns_client = self.session.create_client('sns', self.region)
-
         if not dry_run:
-            sns_client.delete_topic(self.topic["TopicArn"])
-            logger.info(f"Removed topic {self.topic['TopicArn']}")
+            self.sns_client.delete_topic(TopicArn=self.topic["TopicArn"])
+            self.logger.info(f"Removed topic {self.topic['TopicArn']}")
         else:
-            logger.info(f"Would remove topic {self.topic['TopicArn']}")
+            self.logger.info(f"Would remove topic {self.topic['TopicArn']}")
 
 
 class SnsTopicResourceService(ResourceService):

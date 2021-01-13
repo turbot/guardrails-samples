@@ -8,6 +8,7 @@ class Ec2KeyPair(Resource):
         self.key_pair = key_pair
         self.region = region
         self.logger = logging.getLogger(__name__)
+        self.ec2_client = session.create_client('ec2', self.region)
 
         super().__init__(session)
 
@@ -15,10 +16,8 @@ class Ec2KeyPair(Resource):
         return f'ec2/keypair {self.key_pair["KeyName"]}'
 
     def delete(self, dry_run):
-        ec2_client = self.session.create_client('ec2', self.region)
-
         if not dry_run:
-            ec2_client.delete_key_pair(
+            self.ec2_client.delete_key_pair(
                 KeyPairId=self.key_pair["KeyPairId"],
             )
 
