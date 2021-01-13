@@ -26,7 +26,7 @@ class CheckAction:
         return "check" in actions
 
 
-class AllActions:
+class NoCheckAction:
     def __init__(self, dry_run) -> None:
         self.dry_run = dry_run
         self.logger = logging.getLogger(__name__)
@@ -48,9 +48,6 @@ class AllActions:
                     elif action == "rename":
                         self.logger.debug(f"Running rename action for resource {resource.details()}")
                         resource.rename(self.dry_run)
-                    elif action == "check":
-                        self.logger.debug(f"Running check action for resource {resource.details()}")
-                        resource.check()
 
                 self.logger.debug(f'Completed actions for resource {resource.details()}')
             except Exception as e:
@@ -58,4 +55,4 @@ class AllActions:
                 self.logger.error(e)
 
     def should_process(self, actions):
-        return True
+        return False if "check" in actions and len(actions) == 1 else True

@@ -1,7 +1,7 @@
 import sys
 import click
 import logging
-from trimbot_modules import Configuration, Session, Recipe, V3Api, ResourceServiceFactory, CheckAction, AllActions
+from trimbot_modules import Configuration, Session, Recipe, V3Api, ResourceServiceFactory, CheckAction, NoCheckAction
 
 
 def configure_logging(trace):
@@ -98,7 +98,7 @@ def cli(config_file, dry_run, trace, check):
         configure_logging(trace)
         logging.info(f'Started TrimBot')
 
-        action = CheckAction() if check else AllActions(dry_run)
+        action = CheckAction() if check else NoCheckAction(dry_run)
         configuration = Configuration(config_file)
 
         for workspace in configuration.workspaces:

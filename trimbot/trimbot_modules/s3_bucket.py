@@ -2,6 +2,7 @@ import re
 from .resource_service import ResourceService
 from .resource import Resource
 import logging
+import botocore
 
 
 class S3Bucket(Resource):
@@ -102,6 +103,16 @@ class S3BucketResourceService(ResourceService):
         resources = []
         for bucket in response["Buckets"]:
             if re.match(regex, bucket["Name"]):
-                resources.append(S3Bucket(self.session, region, bucket))
+                try:
+                    bucket_name = bucket["Name"]
+                    response = s3_client.get_bucket_tagging(Bucket=bucket_name)
+
+                    for tag in response["TagSet"]:
+                        if tag["Key"] == "aws:cloudformation:stack-id" and self.account_id in tag["Value"]:
+                            resources.append(S3Bucket(self.session, region, bucket))
+                            break
+                except botocore.exceptions.ClientError as e:
+                    if e.response['Error']['Code'] != 'NoSuchTagSet':
+                        raise
 
         return resources
