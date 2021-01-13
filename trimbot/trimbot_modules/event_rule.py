@@ -28,8 +28,6 @@ class EventRule(Resource):
             else:
                 logger.info(f"Would remove event targets {target['Id']} for rule {self.event_rule['Name']}")
 
-            targets.append(target['Id'])
-
         if not dry_run:
             event_client.remove_targets(
                 Rule=self.event_rule["Name"],
@@ -38,9 +36,9 @@ class EventRule(Resource):
             logger.info(f"Removed event targets {targets} for rule {self.event_rule['Name']}")
 
             event_client.delete_rule(Name=self.event_rule["Name"])
-            logger.info(f"Removed rule {self.event_rule['Name']}")
+            logger.info(f"Deleted rule {self.event_rule['Name']}")
         else:
-            logger.info(f"Would remove rule {self.event_rule['Name']}")
+            logger.info(f"Would delete rule {self.event_rule['Name']}")
 
 
 class EventsRuleResourceService(ResourceService):
@@ -48,18 +46,13 @@ class EventsRuleResourceService(ResourceService):
         super().__init__(session, recipe, "event", "rule")
 
     def get_all(self, region):
-        resources = []
-
-        event_client = self.session.create_client('events', region)
-
         name_prefix = []
         for filter in self.recipe["filters"]:
             if filter["field"] == "NamePrefix":
                 name_prefix = filter["value"]
 
+        event_client = self.session.create_client('events', region)
+
         response = event_client.list_rules(NamePrefix=name_prefix)
 
-        for rule in response["Rules"]:
-            resources.append(EventRule(self.session, region, rule))
-
-        return resources
+        return [EventRule(self.session, region, rule) for rule in response["Rules"]]
