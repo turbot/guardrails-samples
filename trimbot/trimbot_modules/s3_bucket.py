@@ -104,13 +104,18 @@ class S3BucketResourceService(ResourceService):
         for bucket in response["Buckets"]:
             if re.match(regex, bucket["Name"]):
                 try:
-                    bucket_name = bucket["Name"]
-                    response = s3_client.get_bucket_tagging(Bucket=bucket_name)
-
-                    for tag in response["TagSet"]:
-                        if tag["Key"] == "aws:cloudformation:stack-id" and self.account_id in tag["Value"]:
-                            resources.append(S3Bucket(self.session, region, bucket))
-                            break
+                    # TODO: Found a race condition, if we delete the CloudFormation stacks, then the tags are removed
+                    #       from the buckets and can no longer be used as an identifier
+                    #       Could be resolved with an action that tags the resource
+                    #
+                    # bucket_name = bucket["Name"]
+                    # response = s3_client.get_bucket_tagging(Bucket=bucket_name)
+                    #
+                    # for tag in response["TagSet"]:
+                    #     if tag["Key"] == "aws:cloudformation:stack-id" and self.account_id in tag["Value"]:
+                    #         resources.append(S3Bucket(self.session, region, bucket))
+                    #         break
+                    resources.append(S3Bucket(self.session, region, bucket))
                 except botocore.exceptions.ClientError as e:
                     if e.response['Error']['Code'] != 'NoSuchTagSet':
                         raise
