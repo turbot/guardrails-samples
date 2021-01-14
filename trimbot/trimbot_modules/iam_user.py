@@ -119,8 +119,6 @@ class IamUserResourceService(ResourceService):
     def get_all(self, region):
         iam_client = self.session.create_client('iam', region)
 
-        path_prefix = "/"
-
         resources = []
         for filter in self.recipe["filters"]:
             if filter["field"] == "PathPrefix":
