@@ -40,6 +40,7 @@ class Session:
             self.logger.info(f'Created connection to profile: {profile_name}')
         except Exception:
             self.logger.error(f'Unable to create connection to profile: {profile_name}')
+            raise
 
         if not role_arn:
             return session

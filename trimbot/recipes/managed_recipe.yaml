@@ -7,6 +7,12 @@ recipe:
       actions:
         - disable
 
+    - name: "Turbot Account - Rename"
+      service: turbot
+      resource: account
+      actions:
+        - rename
+
     - name: "Turbot Database - Delete"
       service: turbot
       resource: database
@@ -18,12 +24,6 @@ recipe:
       resource: repository
       actions:
         - delete
-
-    - name: "Turbot Account - Rename"
-      service: turbot
-      resource: account
-      actions:
-        - rename
 
     - name: "Turbot Key Pairs - Delete"
       service: ec2
@@ -82,6 +82,12 @@ recipe:
       actions:
         - delete
 
+    - name: "Turbot CloudTrail Trials - Delete"
+      service: cloudtrail
+      resource: trail
+      actions:
+        - delete
+
     - name: "Turbot Logging Buckets - Disable"
       service: s3
       resource: bucket
@@ -112,6 +118,8 @@ recipe:
       filters:
         - field: PathPrefix
           value: /turbot/
+        - field: PathPrefix
+          value: /turbot/account/federated/
       actions:
         - delete
 
@@ -135,3 +143,12 @@ recipe:
       resource: bucket
       actions:
         - check
+
+    # - name: "Turbot Core IAM Roles - Delete"
+    #   service: iam
+    #   resource: role
+    #   filters:
+    #     - field: PathPrefix
+    #       value: /turbot/core/
+    #   actions:
+    #     - delete

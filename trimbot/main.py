@@ -1,6 +1,7 @@
 import sys
 import click
 import logging
+from datetime import datetime
 from trimbot_modules import Configuration, Session, Recipe, V3Api, ResourceServiceFactory, CheckAction, NoCheckAction
 
 
@@ -10,8 +11,10 @@ def configure_logging(trace):
     else:
         logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
 
-    # TODO: filename
-    fileHandler = logging.FileHandler("test.log")
+    today = datetime.now()
+
+    timestamp = today.strftime("%Y%m%d%H%M%S")
+    fileHandler = logging.FileHandler(f"trimbot_{timestamp}.log")
     fileHandler.setFormatter(logFormatter)
 
     consoleHandler = logging.StreamHandler(sys.stdout)
@@ -31,7 +34,7 @@ def create_child_session(profile, workspace):
     caller_account_id = child_session.get_connected_account_id()
     if workspace.get_account() != caller_account_id:
         raise RuntimeError(
-            f'Connected account id {caller_account_id} differs from turbot expected account id {account_details["awsAccountId"]}')
+            f'Connected account id {caller_account_id} differs from turbot expected account id {caller_account_id}')
 
     return child_session
 
@@ -81,13 +84,6 @@ def resolve_profile(configuration, workspace):
     return workspace_profile if workspace_profile else configuration_profile
 
 
-def resolve_account(configuration, workspace):
-    configuration_account = configuration.get_turbot_account()
-    workspace_account = workspace.get_turbot_account()
-
-    return workspace_account if workspace_account else configuration_account
-
-
 @ click.command()
 @ click.option('-f', '--config-file', type=click.File('r'), required=True, help='/path/to/a/configuration/file.yml')
 @ click.option('-a', '--approve', is_flag=True, default=False, help='If set, destructive changes will be applied')
@@ -104,14 +100,17 @@ def cli(config_file, approve, trace, check):
 
         for workspace in configuration.workspaces:
             try:
-                account_id = resolve_account(configuration, workspace)
+                account_id = workspace.get_turbot_account()
+                cluster_id = workspace.get_turbot_cluster()
+
+                logging.info(f"Processing account {account_id} for cluster {cluster_id}")
                 profile = resolve_profile(configuration, workspace)
                 v3_api = create_v3_api(configuration, workspace)
 
                 child_session = create_child_session(profile, workspace)
                 master_session = Session(profile)
 
-                factory = ResourceServiceFactory(master_session, child_session, v3_api, account_id)
+                factory = ResourceServiceFactory(master_session, child_session, v3_api, account_id, cluster_id)
 
                 recipe = load_recipe(configuration, workspace)
                 for recipe_resource in recipe.resources:
@@ -142,14 +141,14 @@ def cli(config_file, approve, trace, check):
                         logging.info(
                             f"Completed - Processing resource named '{service.get_user_defined_name()}' for service {service.get_service_name()} and resource {service.get_resource_name()}")
 
+                logging.info(f"Completed - Processing account {account_id} for cluster {cluster_id}")
             except Exception as e:
                 logging.error(f'Ignoring workspace for account {workspace.get_account()}')
-                logging.error(f'Exception reported:')
                 logging.error(e)
 
         logging.info(f'TrimBot completed')
     except Exception as e:
-        logging.error(f'Exception reported:')
+        logging.error(f'Unexpected exception:')
         logging.error(e)
 
 

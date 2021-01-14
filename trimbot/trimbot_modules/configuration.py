@@ -54,6 +54,13 @@ class Workspace:
 
         return account
 
+    def get_turbot_cluster(self):
+        cluster = ""
+        if "turbot" in self.workspace and "cluster" in self.workspace["turbot"]:
+            cluster = self.workspace["turbot"]["cluster"]
+
+        return cluster
+
 
 class Configuration:
     def __init__(self, config_file) -> None:
@@ -111,13 +118,6 @@ class Configuration:
 
         return secret_access_key
 
-    def get_turbot_account(self):
-        account = ""
-        if "turbot" in self.config and "account" in self.config["turbot"]:
-            account = self.config["turbot"]["account"]
-
-        return account
-
     def get_config_schema(self):
         schema = {
             "$schema": "http://json-schema.org/schema#",
@@ -126,19 +126,41 @@ class Configuration:
                 "recipe": {
                     "type": "string"
                 },
+                "profile": {
+                    "type": "string"
+                },
+                "verifySll": {
+                    "type": "boolean"
+                },
+                "turbot": {
+                    "type": "object",
+                    "properties": {
+                        "host": {
+                            "type": "string"
+                        },
+                        "accessKey": {
+                            "type": "string"
+                        },
+                        "secretAccessKey": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "host",
+                        "accessKey",
+                        "secretAccessKey"
+                    ]
+                },
                 "workspaces": {
                     "type": "array",
                     "items": [
                         {
                             "type": "object",
                             "properties": {
-                                "verifySsl": {
-                                    "type": "boolean"
-                                },
-                                "account": {
+                                "recipe": {
                                     "type": "string"
                                 },
-                                "turbotAccount": {
+                                "account": {
                                     "type": "string"
                                 },
                                 "roleArn": {
@@ -146,42 +168,38 @@ class Configuration:
                                 },
                                 "externalId": {
                                     "type": "string"
+                                },
+                                "profile": {
+                                    "type": "string"
+                                },
+                                "turbot": {
+                                    "type": "object",
+                                    "properties": {
+                                        "account": {
+                                            "type": "string"
+                                        },
+                                        "cluster": {
+                                            "type": "string"
+                                        },
+                                        "host": {
+                                            "type": "string"
+                                        },
+                                        "accessKey": {
+                                            "type": "string"
+                                        },
+                                        "secretAccessKey": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "account",
+                                        "cluster"
+                                    ]
                                 }
                             },
-                            "anyOf": [
-                                {
-                                    "required": [
-                                        "account",
-                                        "externalId",
-                                        "roleArn",
-                                        "turbotAccount",
-                                    ]
-                                },
-                                {
-                                    "required": [
-                                        "account",
-                                        "turbotAccount",
-                                        "roleArn"
-                                    ],
-                                    "not": {
-                                        "required": [
-                                            "externalId"
-                                        ]
-                                    }
-                                },
-                                {
-                                    "required": [
-                                        "account"
-                                    ],
-                                    "not": {
-                                        "required": [
-                                            "turbotAccount",
-                                            "roleArn",
-                                            "externalId"
-                                        ]
-                                    }
-                                },
-
+                            "required": [
+                                "account",
+                                "turbot"
                             ]
                         }
                     ]

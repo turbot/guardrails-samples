@@ -1,3 +1,4 @@
+import time
 from .resource_service import ResourceService
 from .resource import Resource
 import logging
@@ -15,6 +16,8 @@ class TurbotAccount(Resource):
 
     def rename(self, dry_run):
         self.v3_api.set_account_name_deleted(self.account_id, dry_run)
+        if not dry_run:
+            time.sleep(5)
 
 
 class TurbotAccountResourceService(ResourceService):

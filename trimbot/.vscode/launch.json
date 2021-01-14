@@ -14,11 +14,20 @@
       "program": "${workspaceFolder}/main.py"
     },
     {
-      "name": "TrimBot",
+      "name": "TrimBot 1",
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "args": ["-f", "${workspaceFolder}/config/example_config.yaml", "--trace"],
+      "console": "integratedTerminal",
+      "program": "${workspaceFolder}/main.py"
+    },
+    {
+      "name": "TrimBot Multiple",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "args": ["-f", "${workspaceFolder}/config/mulitple_config.yaml", "--trace"],
       "console": "integratedTerminal",
       "program": "${workspaceFolder}/main.py"
     },
