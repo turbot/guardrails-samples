@@ -40,7 +40,8 @@ class V3Api:
         r.close()
         if not r.ok:
             if r.status_code == 404:
-                raise RuntimeError(f"Resource Not Found {account_id} on host {self.host}")
+                self.logger.warning(f"Resource Not Found {account_id} on host {self.host}")
+                return
             else:
                 error = json.loads(r.text)
                 raise RuntimeError(

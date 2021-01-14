@@ -15,7 +15,6 @@ class TurbotAccount(Resource):
 
     def rename(self, dry_run):
         self.v3_api.set_account_name_deleted(self.account_id, dry_run)
-        return super().rename(dry_run)
 
 
 class TurbotAccountResourceService(ResourceService):
