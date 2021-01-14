@@ -1,6 +1,7 @@
 import sys
 import click
 import logging
+import os
 from datetime import datetime
 from trimbot_modules import Configuration, Session, Recipe, V3Api, ResourceServiceFactory, CheckAction, NoCheckAction
 
@@ -14,7 +15,10 @@ def configure_logging(trace):
     today = datetime.now()
 
     timestamp = today.strftime("%Y%m%d%H%M%S")
-    fileHandler = logging.FileHandler(f"trimbot_{timestamp}.log")
+    if not os.path.exists('./logs'):
+        os.makedirs('./logs')
+
+    fileHandler = logging.FileHandler(f"./logs/trimbot_{timestamp}.log")
     fileHandler.setFormatter(logFormatter)
 
     consoleHandler = logging.StreamHandler(sys.stdout)

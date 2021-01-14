@@ -45,7 +45,7 @@
       "type": "python",
       "request": "launch",
       "cwd": "${workspaceFolder}",
-      "args": ["-f", "${workspaceFolder}/config/example_config.yaml", "--trace", "--approve"],
+      "args": ["-f", "${workspaceFolder}/config/approved_config.yaml", "--trace", "--approve"],
       "console": "integratedTerminal",
       "program": "${workspaceFolder}/main.py"
     }

@@ -144,11 +144,11 @@ recipe:
       actions:
         - check
 
-    # - name: "Turbot Core IAM Roles - Delete"
-    #   service: iam
-    #   resource: role
-    #   filters:
-    #     - field: PathPrefix
-    #       value: /turbot/core/
-    #   actions:
-    #     - delete
+    - name: "Turbot Core IAM Roles - Delete"
+      service: iam
+      resource: role
+      filters:
+        - field: PathPrefix
+          value: /turbot/core/
+      actions:
+        - delete
