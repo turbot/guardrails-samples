@@ -1,0 +1,12 @@
+recipe: "./recipes/managed_recipe.yaml"
+workspaces:
+  - account: "333322221111"
+    profile: v3-master
+    roleArn: arn:aws:iam::333322221111:role/turbot-service-role
+    externalId: keyphrase
+    turbot:
+      account: aab
+      cluster: awscluster
+      host: https://test.turbot.com/
+      accessKey: "11112222-fac3-424e-94fb-325db1d65503"
+      secretAccessKey: 424e94fb-1b3c-4681-944d-cb27d3a325db

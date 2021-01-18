@@ -295,3 +295,9 @@ $RECYCLE.BIN/
 # Testing configuration
 *.tfvars
 !default.tfvars
+
+# trimbot virtual environment
+.venv
+
+
+trimbot/.vscode/launch.json
