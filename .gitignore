@@ -299,6 +299,4 @@ $RECYCLE.BIN/
 # trimbot virtual environment
 .venv
 
-# trimbot working files
-trimbot/my-commands.sh
 
