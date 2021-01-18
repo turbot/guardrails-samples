@@ -301,4 +301,4 @@ $RECYCLE.BIN/
 
 # trimbot working files
 trimbot/my-commands.sh
-trimbot/config/*.yaml
+

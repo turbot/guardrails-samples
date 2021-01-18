@@ -1,0 +1,10 @@
+recipe: "./recipes/managed_recipe.yaml"
+workspaces:
+  - account: "111122223333"
+    profile: v3-master
+    turbot:
+      account: aaa
+      cluster: maincluster
+      host: https://test.turbot.com/
+      accessKey: "11112222-fac3-424e-94fb-325db1d65503"
+      secretAccessKey: 424e94fb-1b3c-4681-944d-cb27d3a325db

@@ -138,17 +138,19 @@ recipe:
       actions:
         - delete
 
+    # Only remove this if you want to remove Core IAM roles
+    # - name: "Turbot Core IAM Roles - Delete"
+    #   service: iam
+    #   resource: role
+    #   filters:
+    #     - field: PathPrefix
+    #       value: /turbot/core/
+    #   actions:
+    #     - delete
+
+    # This ingredient will only run in --check mode
     - name: "Turbot Logging Buckets - Check"
       service: s3
       resource: bucket
       actions:
         - check
-
-    - name: "Turbot Core IAM Roles - Delete"
-      service: iam
-      resource: role
-      filters:
-        - field: PathPrefix
-          value: /turbot/core/
-      actions:
-        - delete
