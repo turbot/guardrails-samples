@@ -17,19 +17,48 @@ class S3Bucket(Resource):
     def details(self):
         return f's3/bucket {self.bucket["Name"]}'
 
-    def check(self):
+    def check_bucket_empty(self, bucket_name):
         response = self.s3_client.list_objects_v2(
             Bucket=self.bucket['Name'],
             MaxKeys=1
         )
-        empty = "Contents" not in response
+        if "Contents"  in response:
+            return False
+
+        response = self.s3_client.list_object_versions(
+            Bucket=self.bucket['Name'],
+            MaxKeys=1
+        )
+
+        if "DeleteMarkers" in response or "Versions" in response:
+            return False
+
+        return True
+
+
+    def check(self):
+        empty = self.check_bucket_empty(self.bucket['Name'])
         if empty:
             self.logger.info(f"Bucket {self.bucket['Name']} is empty and can be deleted")
         else:
             self.logger.info(f"Bucket {self.bucket['Name']} is NOT empty and cannot be deleted")
+    
+    
+    def delete(self, dry_run):
+        empty = self.check_bucket_empty(self.bucket['Name'])
 
-        return super().check()
-    # TODO Write delete
+        if empty:
+            if not dry_run:
+                self.s3_client.delete_bucket(Bucket=self.bucket['Name'])
+
+                self.logger.info(f"Deleted bucket {self.bucket['Name']}")
+                pass
+            else:
+                self.logger.info(f"Would delete bucket {self.bucket['Name']}")
+            pass
+        else:
+            self.logger.warning(f"Bucket {self.bucket['Name']} is NOT empty and cannot be deleted")
+        pass
 
     def disable(self, dry_run):
         if not dry_run:
