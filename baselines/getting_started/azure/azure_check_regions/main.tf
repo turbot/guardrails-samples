@@ -1,0 +1,17 @@
+# Azure Approved Region Policies
+# More Info: https://turbot.com/v5/docs/guides/regions#approved-regions
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+}
+
+provider "turbot" {
+  profile = var.turbot_profile
+}
+
+## Create Smart Folder
+
+resource "turbot_smart_folder" "azure_regions" {
+  parent = "tmod:@turbot/turbot#/"
+  title  = "Azure Check Regions Policies"
+}
