@@ -13,6 +13,14 @@
       "args": ["--filter", "state:error"]
     },
     {
+      "type": "bashdb",
+      "request": "launch",
+      "name": "run-policies.sh",
+      "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-policies/",
+      "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-policies/run-policies.sh",
+      "args": ["--filter", "state:ok"]
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Gen Doc: API Examples",
