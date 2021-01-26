@@ -1,5 +1,5 @@
 resource "aws_iam_role" "example_role" {
-  name = "example_role"
+  name               = "example_role"
   assume_role_policy = <<-EOF
     {
       "Version": "2012-10-17",
@@ -22,7 +22,7 @@ resource "aws_iam_role" "example_role" {
 }
 
 resource "aws_iam_policy" "example_policy" {
-  name = "example_policy"
+  name   = "example_policy"
   policy = <<-EOF
     {
       "Version": "2012-10-17",
@@ -30,7 +30,7 @@ resource "aws_iam_policy" "example_policy" {
         {
           "Action": [
             "logs:CreateLogGroup",
-            "logs:CreateLogStream",,
+            "logs:CreateLogStream",
             "logs:DescribeLogGroups",
             "logs:DescribeLogStreams"
           ],
@@ -43,6 +43,6 @@ resource "aws_iam_policy" "example_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "example_role_policy_attach" {
-  role       = "${aws_iam_role.example_role.name}"
-  policy_arn = "${aws_iam_policy.example_policy.arn}"
+  role       = aws_iam_role.example_role.name
+  policy_arn = aws_iam_policy.example_policy.arn
 }
