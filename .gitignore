@@ -293,8 +293,9 @@ $RECYCLE.BIN/
 *.lnk
 
 # Testing configuration
-# *.tfvars
-# !default.tfvars
+*.tfvars
+!default.tfvars
+!demo.tfvars
 
 # trimbot virtual environment
 .venv
