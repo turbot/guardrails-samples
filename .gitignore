@@ -238,7 +238,7 @@ dmypy.json
 
 ### Terraform ###
 # Local .terraform directories
-**/.terraform/*
+.terraform*
 
 # .tfstate files
 *.tfstate
@@ -295,9 +295,10 @@ $RECYCLE.BIN/
 # Testing configuration
 *.tfvars
 !default.tfvars
+!demo.tfvars
 
 # trimbot virtual environment
 .venv
 
-
-trimbot/.vscode/launch.json
+# debuggers
+.vscode
