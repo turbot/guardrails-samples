@@ -4,8 +4,9 @@ AWS Check S3 Policies focuses on an example of a deeper baseline for a specific 
 
 Some of these policies overlap with other baselines.
 
-The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings created by other
-baselines.
+The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings created by other baselines.
+
+This baseline will not attach to a resource and will need to be done manually using the Turbot UI.
 
 ## Requirements
 
