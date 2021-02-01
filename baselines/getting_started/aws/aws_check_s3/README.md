@@ -38,7 +38,7 @@ Input variable files allow for the user to configure configuration definitions f
 
 It will be used to define which parts of the baseline to apply and which to ignore.
 
-The variables that can be overwritten by the input variable file are defined in the [variables.tf](variables.tf) file.
+The variables that can be overwritten by the input variable files are defined in the [variables.tf](variables.tf) file.
 
 This baseline comes with an example input variable file called [demo.tfvars](demo.tfvars).
 
