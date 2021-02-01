@@ -1,21 +1,105 @@
-# Baseline -
+# Baseline - AWS Check S3 Policies
 
-The what
+AWS Check S3 Policies focuses on an example of a deeper baseline for a specific service.
+
+Some of these policies overlap with other baselines.
+
+The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings created by other
+baselines.
 
 ## Requirements
 
 - Terraform v0.13 or greater installed
+- Valid Turbot configuration credentials
 
-```hcl
-terraform {
-  required_providers {
-    turbot = {
-      source = "turbot/turbot"
-    }
-  }
-  required_version = ">= 0.13"
-}
+For further information on configuring Turbot credentials can be found [here](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials).
+
+## Applying baseline
+
+The baseline is defined by a set of files which together define the configuration of the baseline.
+
+### Deploying demo example
+
+1. Navigate to the folder of the baseline
+2. Initialise Terraform
+3. Apply the baseline using the demo input variable file [demo.tfvars](demo.tfvars)
+
+On the terminal this will look like:
+
+```shell
+cd <baseline_folder>
+terraform init
+terraform apply --var-file demo.tfvars
 ```
+
+### Input variable files
+
+Input variable files allow for the user to configure configuration definitions for multiple environments in different files.
+
+It will tersely define which parts of the baseline to apply and which to ignore.
+
+The variables that can be overwritten by the input variable file are defined in the [variables.tf](variables.tf) file.
+
+This baseline comes with an example input variable file called [demo.tfvars](demo.tfvars).
+
+Further details found in official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
+
+### Initialise baseline
+
+If not previously run, initialise Terraform to get all necessary providers for the baseline.
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform init
+   ```
+
+### Apply baseline without input variable file
+
+The baseline can be applied without an input variable file.
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform apply
+   ```
+
+This may prompt the user applying the baseline to enter values for variables that do not have default values.
+
+### Apply baseline using input variable files
+
+If seeking to apply the baseline using an input variable file such as [demo.tfvars](demo.tfvars).
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform apply --var-file=demo.tfvars
+   ```
+
+### Destroy baseline without input variable file
+
+If seeking to apply the baseline without using an input variable file.
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform destroy
+   ```
+
+### Destroy using input variable files
+
+If seeking to destoy the baseline configuration using an input variable file such as [demo.tfvars](demo.tfvars).
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform destroy --var-file=demo.tfvars
+   ```
 
 ## Commenting strategy
 

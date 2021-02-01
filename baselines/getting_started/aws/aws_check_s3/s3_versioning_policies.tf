@@ -1,9 +1,27 @@
-#### TODO: This section could be behind a variable
+# Simple Policy setting for bucket versioning. 
+
+# This is the default version policy that will be created when applying the Terraform configuration as
+# use_simple_s3_bucket_versioning defaults to true.
+
+# AWS > S3 > Bucket > Versioning
+# https://turbot.com/v5/mods/turbot/aws-s3/inspect#/policy/types/bucketVersioning
+resource "turbot_policy_setting" "aws_s3_bucket_versioning_simple" {
+  count    = var.use_simple_s3_bucket_versioning ? 1 : 0
+  resource = turbot_smart_folder.aws_all_s3.id
+  type     = "tmod:@turbot/aws-s3#/policy/types/bucketVersioning"
+  value    = "Check: Enabled"
+}
+
 # Using a calculated policy here as an example for getting started with calculated policies
-# Shows an example of setting different Checks based on naming syntax and tag key:value pair
+# Shows an example of setting different checks based on naming syntax and tag key:value pair
+
+# To enable this policy set the variable use_simple_s3_bucket_versioning to false which will not apply the simple
+# versioning version.
+
 # AWS > S3 > Bucket > Versioning
 # https://turbot.com/v5/mods/turbot/aws-s3/inspect#/policy/types/bucketVersioning
 resource "turbot_policy_setting" "aws_s3_bucket_versioning" {
+  count          = var.use_simple_s3_bucket_versioning ? 0 : 1
   resource       = turbot_smart_folder.aws_all_s3.id
   type           = "tmod:@turbot/aws-s3#/policy/types/bucketVersioning"
   template_input = <<-QUERY
@@ -29,18 +47,3 @@ resource "turbot_policy_setting" "aws_s3_bucket_versioning" {
     {{ result }}
   TEMPLATE
 }
-
-#### TODO: This section could be behind a variable
-# Simple Policy setting for Bucket Versioning, using the Calculated Policy below as an example for a calc policy
-# AWS > S3 > Bucket > Versioning
-# https://turbot.com/v5/mods/turbot/aws-s3/inspect#/policy/types/bucketVersioning
-# resource "turbot_policy_setting" "aws_s3_bucket_versioning_simple" {
-#   resource = turbot_smart_folder.aws_all_s3.id
-#   type     = "tmod:@turbot/aws-s3#/policy/types/bucketVersioning"
-#   value    = "Check: Enabled"
-#         # "Skip"
-#         # "Check: Disabled"
-#         # "Check: Enabled"
-#         # "Enforce: Disabled"
-#         # "Enforce: Enabled"
-# }
