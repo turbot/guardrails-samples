@@ -4,22 +4,22 @@
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
+  default     = "default"
 }
-
-provider "turbot" {
-  profile = var.turbot_profile
-}
-
-## Create Smart Folder
-
-resource "turbot_smart_folder" "aws_all_s3" {
-  parent = "tmod:@turbot/turbot#/"
-  title  = "AWS Check S3 Policies"
-}
-
-
-## Vars
 
 variable "trusted_accounts" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }
+
+variable "smart_folder_name" {
+  type    = string
+  default = "AWS Check S3 Policies"
+}
+
+variable "enable_rds" {
+  type        = string
+  description = "Do you have RDS"
+}
+
+
