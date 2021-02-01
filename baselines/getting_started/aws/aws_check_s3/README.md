@@ -36,7 +36,7 @@ terraform apply --var-file demo.tfvars
 
 Input variable files allow for the user to configure configuration definitions for multiple environments in different files.
 
-It will tersely define which parts of the baseline to apply and which to ignore.
+It will be used to define which parts of the baseline to apply and which to ignore.
 
 The variables that can be overwritten by the input variable file are defined in the [variables.tf](variables.tf) file.
 
