@@ -23,15 +23,15 @@ Second, all route tables in the account are found, and the associated subnet ID 
 
 ```graphql
 {
-  resource {
-    subnetId: get(path: "SubnetId")
-  }
-  resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable'") {
-    items {
-      associations: get(path: "Associations.[0].SubnetId")
-      routes: get(path: "Routes")
+    resource {
+        subnetId: get(path: "SubnetId")
     }
-  }
+    resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable'") {
+        items {
+            associations: get(path: "Associations")
+            routes: get(path: "Routes")
+        }
+    }
 }
 ```
 
@@ -42,21 +42,24 @@ When the Route Table entry is found then check each Route to find the Route with
 If a Route with this id is found then the usage will be set as `Not approved`.
 
 ```nunjucks
+{%- set regExp = r/^igw/g %}
 {%- set hasIGW = false -%}
 {%- for item in $.resources.items -%}
-  {%- if item.associations == $.resource.subnetId -%}
-    {%- for gateway in item.routes -%}
-      {%- if 'igw' in gateway.GatewayId -%}
-        {%- if hasIGW == false -%}
-          "Not approved"
-          {%- set hasIGW = true -%}
-        {%- endif -%}
+    {% for subnetid in item.associations %}
+      {%- if subnetid.SubnetId == $.resource.subnetId -%}
+          {%- for gateway in item.routes -%}
+              {%- if regExp.test(gateway.GatewayId) -%}
+                  {%- if hasIGW == false -%}
+                      "Not approved"
+                      {%- set hasIGW = true -%}
+                  {%- endif -%}
+              {%- endif -%}
+          {%- endfor -%}
       {%- endif -%}
-    {%- endfor -%}
-  {%- endif -%}
+    {% endfor %}
 {%- endfor -%}
 {%- if hasIGW == false -%}
-  "Approved if AWS > EC2 > Enabled"
+    "Approved if AWS > EC2 > Enabled"
 {%- endif -%}
 ```
 

@@ -19,35 +19,38 @@ resource "turbot_policy_setting" "instance_subnet_" {
   # GraphQL to pull instance tags
   template_input = <<EOT
   {
-    resource {
-      subnetId: get(path: "SubnetId")
-    }
-    resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable'") {
-      items {
-        associations: get(path: "Associations.[0].SubnetId")
-        routes: get(path: "Routes")
+      resource {
+          subnetId: get(path: "SubnetId")
       }
-    }
+      resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable'") {
+          items {
+              associations: get(path: "Associations")
+              routes: get(path: "Routes")
+          }
+      }
   }
   EOT
 
   # Nunjucks Template
   template = <<EOT
+  {%- set regExp = r/^igw/g %}
   {%- set hasIGW = false -%}
   {%- for item in $.resources.items -%}
-    {%- if item.associations == $.resource.subnetId -%}
-      {%- for gateway in item.routes -%}
-        {%- if 'igw' in gateway.GatewayId -%}
-          {%- if hasIGW == false -%}
-            "Not approved"
-            {%- set hasIGW = true -%}
-          {%- endif -%}
+      {% for subnetid in item.associations %}
+        {%- if subnetid.SubnetId == $.resource.subnetId -%}
+            {%- for gateway in item.routes -%}
+                {%- if regExp.test(gateway.GatewayId) -%}
+                    {%- if hasIGW == false -%}
+                        "Not approved"
+                        {%- set hasIGW = true -%}
+                    {%- endif -%}
+                {%- endif -%}
+            {%- endfor -%}
         {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+      {% endfor %}
   {%- endfor -%}
   {%- if hasIGW == false -%}
-    "Approved if AWS > EC2 > Enabled"
+      "Approved if AWS > EC2 > Enabled"
   {%- endif -%}
   EOT
 }
