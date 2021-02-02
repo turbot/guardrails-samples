@@ -38,5 +38,13 @@ class SnsTopicResourceService(ResourceService):
                     for value in filter["value"]:
                         if topic["TopicArn"].endswith(value):
                             resources.append(SnsTopic(self.session, region, topic))
+                elif filter["type"] == "startswith":
+                    if "key" in filter and filter["key"] == "name":
+                        # strip out the name
+                        parts = topic["TopicArn"].split(':')
+                        name = parts[len(parts) - 1]
+                        for value in filter["value"]:
+                            if name.startswith(value):
+                                resources.append(SnsTopic(self.session, region, topic))
 
         return resources

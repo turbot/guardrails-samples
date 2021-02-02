@@ -1,0 +1,149 @@
+recipe:
+  name: Alex recipe
+  resources:
+    # verify prefixes!!
+    - name: "Alex SNS Subscriptions - Delete"
+      service: sns
+      resource: topic
+      filters:
+        - type: startswith
+          key: name
+          value:
+            - turbot_ban
+      actions:
+        - delete
+    ############################################################
+
+    # - name: "Turbot Cloudwatch Event Rules - Delete"
+    #   service: events
+    #   resource: rule
+    #   filters:
+    #     - field: NamePrefix
+    #       value: turbot_aws_api_events
+    #   actions:
+    #     - delete
+
+    # #############################################################
+    # # verify prefixes!!
+    # # - name: "Cloudwatch Log Groups - Delete"
+    # #   service: cloudwatch
+    # #   resource: LogGroups
+    # #   filters:
+    # #     - field: NamePrefix
+    # #       value: turbot*
+    # #   actions:
+    # #     - delete
+    # #############################################################
+
+    # - name: "Turbot CloudFormation Stacks - Delete"
+    #   service: cloudformation
+    #   resource: stack
+    #   filters:
+    #     - field: StackStatusFilter
+    #       value:
+    #         - CREATE_IN_PROGRESS
+    #         - CREATE_FAILED
+    #         - CREATE_COMPLETE
+    #         - ROLLBACK_IN_PROGRESS
+    #         - ROLLBACK_FAILED
+    #         - ROLLBACK_COMPLETE
+    #         - DELETE_FAILED
+    #         - UPDATE_IN_PROGRESS
+    #         - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS
+    #         - UPDATE_COMPLETE
+    #         - UPDATE_ROLLBACK_IN_PROGRESS
+    #         - UPDATE_ROLLBACK_FAILED
+    #         - UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS
+    #         - UPDATE_ROLLBACK_COMPLETE
+    #         - REVIEW_IN_PROGRESS
+    #     - type: startswith
+    #       value: TurbotAWS
+    #     - type: startswith
+    #       value: TurbotVPC
+    #   actions:
+    #     - delete
+
+    # - name: "Turbot CloudTrail Trials - Delete"
+    #   service: cloudtrail
+    #   resource: trail
+    #   actions:
+    #     - delete
+
+    # - name: "Turbot Logging Buckets - Disable"
+    #   service: s3
+    #   resource: bucket
+    #   actions:
+    #     - disable
+
+    # - name: "Turbot IAM Policies - Delete"
+    #   service: iam
+    #   resource: policy
+    #   filters:
+    #     - field: PathPrefix
+    #       value: /turbot/
+    #   actions:
+    #     - delete
+
+    # - name: "Turbot IAM Groups - Delete"
+    #   service: iam
+    #   resource: group
+    #   filters:
+    #     - field: PathPrefix
+    #       value: "/turbot/"
+    #   actions:
+    #     - delete
+
+    # - name: "Turbot IAM Users - Delete"
+    #   service: iam
+    #   resource: user
+    #   filters:
+    #     - field: PathPrefix
+    #       value: /turbot/
+    #     - field: PathPrefix
+    #       value: /turbot/account/federated/
+    #   actions:
+    #     - delete
+
+    # - name: "Turbot IAM Roles - Delete"
+    #   service: iam
+    #   resource: role
+    #   filters:
+    #     - field: PathPrefix
+    #       value: /turbot/
+    #   actions:
+    #     - delete
+
+    # - name: "Turbot Logging Buckets - Delete"
+    #   service: s3
+    #   resource: bucket
+    #   actions:
+    #     - delete
+
+    # #############################################################
+    # # verify prefixes!!
+    # # - name: "Lambda Functions - Delete"
+    # #   service: lambda
+    # #   resource: function
+    # #   filters:
+    # #     - field: NamePrefix
+    # #       value: turbot_
+    # #   actions:
+    # #     - delete
+    # #############################################################
+
+    # # Only remove this if you want to remove Core IAM roles
+    # # - name: "Turbot Core IAM Roles - Delete"
+    # #   service: iam
+    # #   resource: role
+    # #   filters:
+    # #     - field: PathPrefix
+    # #       value: /turbot/core/
+    # #   actions:
+    # #     - delete
+
+    # # This ingredient will only run in --check mode
+    # - name: "Turbot Logging Buckets - Check"
+    #   service: s3
+    #   resource: bucket
+    #   actions:
+    #     - check
