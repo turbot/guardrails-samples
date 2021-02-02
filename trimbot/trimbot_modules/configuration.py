@@ -191,15 +191,10 @@ class Configuration:
                                             "type": "string"
                                         }
                                     },
-                                    "required": [
-                                        "account",
-                                        "cluster"
-                                    ]
                                 }
                             },
                             "required": [
                                 "account",
-                                "turbot"
                             ]
                         }
                     ]

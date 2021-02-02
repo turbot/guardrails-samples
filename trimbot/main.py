@@ -59,14 +59,15 @@ def create_v3_api(configuration, workspace):
     secret_access_key = workspace_secret_access_key if workspace_secret_access_key else configuration_secret_access_key
     verify_ssl = workspace_verify_ssl if workspace_verify_ssl != None else configuration_verify_ssl
 
-    v3_api = V3Api(
+    if not host or not access_key or not secret_access_key:
+        return None
+
+    return V3Api(
         host,
         access_key,
         secret_access_key,
         verify_ssl
     )
-
-    return v3_api
 
 
 def load_recipe(configuration, workspace):
@@ -104,17 +105,28 @@ def cli(config_file, approve, trace, check):
 
         for workspace in configuration.workspaces:
             try:
-                account_id = workspace.get_turbot_account()
-                cluster_id = workspace.get_turbot_cluster()
+                # Note, these two values may be empty
+                turbot_account_id = workspace.get_turbot_account()
+                turbot_cluster_id = workspace.get_turbot_cluster()
 
-                logging.info(f"Processing account {account_id} for cluster {cluster_id}")
+                if turbot_account_id and turbot_cluster_id:
+                    logging.info(f"Processing account {turbot_account_id} for cluster {turbot_cluster_id}")
+                else:
+                    logging.info(f"Processing account {workspace.get_account()}")
+
                 profile = resolve_profile(configuration, workspace)
                 v3_api = create_v3_api(configuration, workspace)
 
                 child_session = create_child_session(profile, workspace)
                 master_session = Session(profile)
 
-                factory = ResourceServiceFactory(master_session, child_session, v3_api, account_id, cluster_id)
+                factory = ResourceServiceFactory(
+                    master_session,
+                    child_session,
+                    v3_api,
+                    turbot_account_id,
+                    turbot_cluster_id
+                )
 
                 recipe = load_recipe(configuration, workspace)
                 for recipe_resource in recipe.resources:
@@ -145,7 +157,11 @@ def cli(config_file, approve, trace, check):
                         logging.info(
                             f"Completed - Processing resource named '{service.get_user_defined_name()}' for service {service.get_service_name()} and resource {service.get_resource_name()}")
 
-                logging.info(f"Completed - Processing account {account_id} for cluster {cluster_id}")
+                if turbot_account_id and turbot_cluster_id:
+                    logging.info(f"Completed - Processing account {turbot_account_id} for cluster {turbot_cluster_id}")
+                else:
+                    logging.info(f"Completed - Processing account {workspace.get_account()}")
+
             except Exception as e:
                 logging.error(f'Ignoring workspace for account {workspace.get_account()}')
                 logging.error(e)
