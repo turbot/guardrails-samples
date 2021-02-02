@@ -26,7 +26,7 @@ Second, all route tables in the account are found, and the associated subnet ID 
     resource {
         subnetId: get(path: "SubnetId")
     }
-    resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable'") {
+    resources(filter:"resourceType:'tmod:@turbot/aws-vpc-core#/resource/types/routeTable' limit:5000") {
         items {
             associations: get(path: "Associations")
             routes: get(path: "Routes")
