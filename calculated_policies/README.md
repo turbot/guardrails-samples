@@ -22,16 +22,20 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 | [aws_rds_db_cluster_snapshot_cross_account_access](./aws_rds_db_cluster_snapshot_cross_account_access/README.md) | AWS RDS | Restrict RDS DB Clusters access to cross account Manual DB Clusters Snapshots |
 | [aws_redshift_cluster_require_ssl](./aws_redshift_cluster_require_ssl/README.md) | AWS RedShift | Approve cluster if encryption in transit is required |
 | [aws_redshift_restrict_cross_account_snapshot_access](./aws_redshift_restrict_cross_account_snapshot_access/README.md) | AWS RedShift | Restrict RedShift Manual Cluster access to cross account Manual Clusters Snapshots |
+| [aws_s3_account_public_access_block_skip_setting](./aws_s3_account_public_access_block_skip_setting/README.md) | AWS S3 Account | Allows Public Access Block to skip a setting value |
 | [aws_s3_approved_static_website_hosting_requires_cloud_front](./aws_s3_approved_static_website_hosting_requires_cloud_front/README.md) | AWS S3 Bucket | Enforce static website hosting is associated with CloudFront |
+| [aws_s3_bucket_approved_usage_acl_cross_account_access](./aws_s3_bucket_approved_usage_acl_cross_account_access/README.md) | AWS S3 Bucket | Restrict ACL Cross Account Access by user defined Whitelist |
 | [aws_s3_bucket_approved_usage_cross_account_replication](./aws_s3_bucket_approved_usage_cross_account_replication/README.md) | AWS S3 Bucket | Restrict Cross Account Replication by user defined Whitelist |
 | [aws_s3_bucket_approved_usage_name_dns_compliant](./aws_s3_bucket_approved_usage_name_dns_compliant/README.md) | AWS S3 Bucket | Restrict name that are not DNS compliant |
 | [aws_s3_bucket_match_tags_on_bucket_and_cmk](./aws_s3_bucket_match_tags_on_bucket_and_cmk/README.md) | AWS S3 | Match tags on Bucket and corresponding Key Management Service. |
+| [aws_s3_bucket_public_access_block_skip_setting](./aws_s3_bucket_public_access_block_skip_setting/README.md) | AWS S3 Bucket | Allows Public Access Block to skip a setting value |
 | [aws_s3_bucket_tagging_template](./aws_s3_bucket_tagging_template/README.md) | AWS S3 | Set default tags on buckets with dynamic metadata |
 | [aws_sqs_approved](./aws_sqs_approved/README.md) | AWS SQS Queue | Alarm if SQS policy violates org restrictions |
 | [azure_compute_disk_approved_usage_customer_key_encrypted](./azure_compute_disk_approved_usage_customer_key_encrypted/README.md) | Azure Compute | Disk approved if encrypted with customer key |
 | [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md) | Azure Networking | Prevent unapproved network configuration for load balancers |
 | [azure_storage_container_approved_usage_not_public](./azure_storage_container_approved_usage_not_public/README.md) | Azure Storage | Container approved if not public |
 | [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md) | Multi-Cloud Storage | Set least expensive storage options for development environments |
+| [multi_cloud_resource_owner_tags](./multi_cloud_resource_owner_tags/README.md) | Multi-Cloud Resource Owner Tags | Set default tags on who created a resource and when it was created |
 
 ## Prerequisites
 
