@@ -15,3 +15,14 @@ resource "turbot_smart_folder" "azure_regions" {
   parent = "tmod:@turbot/turbot#/"
   title  = "Azure Check Regions Policies"
 }
+
+## Vars to Map resources to tag
+variable "resource_approved_regions" {
+  description = "Map of the list of approved regions controls. Update in terraform.tfvars:"
+  type        = map
+}
+
+variable "policy_map" {
+  description = "This is a map of Turbot policy types to service names."
+  type        = map
+}
