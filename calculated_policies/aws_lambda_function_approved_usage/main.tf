@@ -44,13 +44,12 @@ resource "turbot_policy_setting" "aws_lambda_function_approved_usage" {
   EOT
   # Nunjucks Template Nunjucks Comments are formatted: {# comment #}
   template = <<EOT
-  {% set current_time = now | date("constructor") | date("getTime") %}
-  {% set lastmodified_time = $.resource.data.Configuration.LastModified | date("getTime") %}
-  {% if "ApplicationID" not in $.resource.turbot.tags and duration > 300000 %}
-  Not approved
-  {% else %}
-  Approved
-  {% endif %}
-  {% endif %}
+  {%- set result = "Approved" -%}
+  {%- set current_time = now | date("constructor") | date("getTime") -%}
+  {%- set lastmodified_time = $.resource.data.Configuration.LastModified | date("getTime") -%}
+  {%- if "ApplicationID" not in $.resource.turbot.tags and duration > 300000 -%}
+    {%- set result = "Not approved" -%}
+  {%- endif -%}
+  {{ result }}
   EOT
 }

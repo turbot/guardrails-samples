@@ -39,14 +39,13 @@ In this case the query finds the Lambda function's attribute in the Lambda metad
 ### Template (Nunjucks)
 
 ```nunjucks
-{% set current_time = now | date("constructor") | date("getTime") %}
-{% set lastmodified_time = $.resource.data.Configuration.LastModified | date("getTime") %}
-{% if "ApplicationID" not in $.resource.turbot.tags and duration > 300000 %}
-Not approved
-{% else %}
-Approved
-{% endif %}
-{% endif %}
+{%- set result = "Approved" -%}
+{%- set current_time = now | date("constructor") | date("getTime") -%}
+{%- set lastmodified_time = $.resource.data.Configuration.LastModified | date("getTime") -%}
+{%- if "ApplicationID" not in $.resource.turbot.tags and duration > 300000 -%}
+  {%- set result = "Not approved" -%}
+{%- endif -%}
+{{ result }}
 ```
 
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
