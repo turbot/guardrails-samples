@@ -28,6 +28,7 @@ variable "resource_approved_regions_region_list" {
   type        = list(string)
 }
 
+# Optional
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."

@@ -38,10 +38,13 @@ The baseline is defined by a set of files which together define the configuratio
 
 The demo baseline expects that the following mods are installed:
 
-- AWS Lambda
-- AWS EC2
-- AWS S3
-- AWS VPC
+- aws_lambda
+- aws_ec2
+- aws_s3
+- aws-vpc-core
+- aws-vpc-connect
+- aws-vpc-internet
+- aws-vpc-security
 
 To run the baseline:
 
