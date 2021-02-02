@@ -1,0 +1,4 @@
+recipe: "./recipes/managed_recipe.yaml"
+workspaces:
+  - account: "333322221111"
+    profile: aws-profile

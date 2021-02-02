@@ -1,7 +1,7 @@
 recipe: "./recipes/managed_recipe.yaml"
 workspaces:
   - account: "333322221111"
-    profile: v3-master
+    profile: aws-profile
     roleArn: arn:aws:iam::333322221111:role/turbot-service-role
     externalId: keyphrase
     turbot:
