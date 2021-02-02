@@ -1,7 +1,6 @@
 recipe:
   name: Alex recipe
   resources:
-    # verify prefixes!!
     - name: "Alex SNS Subscriptions - Delete"
       service: sns
       resource: topic
@@ -12,8 +11,8 @@ recipe:
             - turbot_ban
       actions:
         - delete
-    ############################################################
 
+  
     # - name: "Turbot Cloudwatch Event Rules - Delete"
     #   service: events
     #   resource: rule
@@ -23,17 +22,16 @@ recipe:
     #   actions:
     #     - delete
 
-    # #############################################################
-    # # verify prefixes!!
-    # # - name: "Cloudwatch Log Groups - Delete"
-    # #   service: cloudwatch
-    # #   resource: LogGroups
-    # #   filters:
-    # #     - field: NamePrefix
-    # #       value: turbot*
-    # #   actions:
-    # #     - delete
-    # #############################################################
+    - name: "Alex Cloudwatch Log Groups - Delete"
+      service: cloudwatch
+      resource: LogGroups
+      filters:
+        - type: startswith
+          value: 
+            - /aws/lambda/turbot_ban
+            - /turbot/ban
+      actions:
+        - delete
 
     # - name: "Turbot CloudFormation Stacks - Delete"
     #   service: cloudformation

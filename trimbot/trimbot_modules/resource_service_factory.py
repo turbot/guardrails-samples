@@ -12,6 +12,7 @@ from .turbot_database import TurbotDatabaseResourceService
 from .turbot_policies import TurbotPoliciesResourceService
 from .turbot_account import TurbotAccountResourceService
 from .cloudtrail_trial import CloudTrailTrailResourceService
+from .cloudwatch_logs import CloudWatchLogsResourceService
 
 
 class ResourceServiceFactory:
@@ -61,4 +62,5 @@ class ResourceServiceFactory:
             "codecommit_repository": CodeCommitRepositoryResourceService,
             "turbot_account": TurbotAccountResourceService,
             "cloudtrail_trail": CloudTrailTrailResourceService
+            "cloudwatch_loggroup": CloudWatchLogsResourceService
         }
