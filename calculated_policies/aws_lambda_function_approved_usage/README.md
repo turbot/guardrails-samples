@@ -54,7 +54,7 @@ The template itself is a [Nunjucks formatted template](https://mozilla.github.io
 
 To run Turbot Calculated Policies, you must install:
 
-- [Terraform](https://www.terraform.io) Version 12
+- [Terraform](https://www.terraform.io) Version 13
 - [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
 - Configured credentials to connect to your Turbot workspace
 
