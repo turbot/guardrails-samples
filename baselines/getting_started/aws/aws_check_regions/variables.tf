@@ -17,17 +17,6 @@ variable "resource_approved_regions" {
   type        = map(string)
 }
 
-# variable "resource_approved_regions_region_list" {
-#   description = <<DESC
-#   The expected format is an array of regions names. You may use the '*' and '?' wildcard characters.
-#   Example of values:
-#     - us-east-1
-#     - ap-northeast-1
-#     - ca-central-1
-#   DESC
-#   type        = list(string)
-# }
-
 variable "resource_approved_regions_region_list" {
   description = <<DESC
   The expected format is an array of regions names. You may use the '*' and '?' wildcard characters.
