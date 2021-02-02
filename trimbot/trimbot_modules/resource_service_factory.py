@@ -15,14 +15,14 @@ from .cloudtrail_trial import CloudTrailTrailResourceService
 
 
 class ResourceServiceFactory:
-    def __init__(self, master_session, client_session, v3_api, account_id, cluster_id) -> None:
+    def __init__(self, master_session, client_session, v3_api, turbot_account_id, turbot_cluster_id) -> None:
         self.client_map = self.create_resource_service_map()
         self.client_session = client_session
         self.master_session = master_session
         self.v3_api = v3_api
-        self.account_id = account_id
-        self.cluster_id = cluster_id
-        self.account_urn = f"urn:turbot:{cluster_id}:{account_id}"
+        self.turbot_account_id = turbot_account_id
+        self.turbot_cluster_id = turbot_cluster_id
+        self.turbot_account_urn = f"urn:turbot:{turbot_cluster_id}:{turbot_account_id}"
         super().__init__()
 
     def create_resource_service(self, recipe):
@@ -33,15 +33,15 @@ class ResourceServiceFactory:
             raise RuntimeError(message)
 
         if key == "turbot_policies":
-            return self.client_map[key](self.master_session, self.v3_api, recipe, self.account_id, self.account_urn)
+            return self.client_map[key](self.master_session, self.v3_api, recipe, self.turbot_account_id, self.turbot_account_urn)
         elif key == "turbot_account":
-            return self.client_map[key](self.master_session, self.v3_api, recipe,  self.account_id)
+            return self.client_map[key](self.master_session, self.v3_api, recipe,  self.turbot_account_id)
         elif key == "codecommit_repository":
-            return self.client_map[key](self.master_session, recipe,  self.account_id)
+            return self.client_map[key](self.master_session, recipe,  self.turbot_account_id)
         elif key == "turbot_database":
-            return self.client_map[key](self.master_session, recipe, self.account_urn)
+            return self.client_map[key](self.master_session, recipe, self.turbot_account_urn)
         elif key == "s3_bucket" or key == "cloudformation_stack":
-            return self.client_map[key](self.client_session, recipe, self.account_id)
+            return self.client_map[key](self.client_session, recipe, self.turbot_account_id)
 
         return self.client_map[key](self.client_session, recipe)
 
