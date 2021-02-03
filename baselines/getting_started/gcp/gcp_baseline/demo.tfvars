@@ -26,39 +26,10 @@ service_status = {
   gcp-monitoring       = "Enabled"
   gcp-network          = "Enabled"
   gcp-notebooks        = "Enabled"
+  gcp-pubsub           = "Enabled" ### Enabled in Real-Time events if turned on
+  gcp-scheduler        = "Enabled"
+  gcp-spanner          = "Enabled"
+  gcp-sql              = "Enabled"
+  gcp-storage          = "Enabled"
   ##gcp-orgpolicy        = ""  ## Note: OrgPolicy does not have an Enabled
-  gcp-pubsub    = "Enabled" ### Enabled in Real-Time events if turned on
-  gcp-scheduler = "Enabled"
-  gcp-spanner   = "Enabled"
-  gcp-sql       = "Enabled"
-  gcp-storage   = "Enabled"
-}
-
-# This is a map of Turbot policy types to service names. It is advised not to modify the below list.
-policy_map = {
-  gcp-appengine        = "appEngineEnabled"
-  gcp-bigquery         = "bigQueryEnabled"
-  gcp-bigtable         = "bigtableEnabled"
-  gcp-build            = "buildServiceEnabled"
-  gcp-composer         = "composerEnabled"
-  gcp-computeengine    = "computeEngineEnabled"
-  gcp-datacatalog      = "dataCatalogEnabled"
-  gcp-dataflow         = "dataflowEnabled"
-  gcp-dataproc         = "dataprocEnabled"
-  gcp-dns              = "dnsEnabled"
-  gcp-functions        = "functionsEnabled"
-  gcp-iam              = "iamEnabled"
-  gcp-kms              = "kmsEnabled"
-  gcp-kubernetesengine = "kubernetesEngineEnabled"
-  gcp-logging          = "loggingEnabled"
-  gcp-memorystore      = "memorystoreEnabled"
-  gcp-monitoring       = "monitoringEnabled"
-  gcp-network          = "networkServiceEnabled"
-  gcp-notebooks        = "notebooksEnabled"
-  ##gcp-orgpolicy        = ""  ## Note: OrgPolicy does not have an Enabled
-  gcp-pubsub    = "pubsubEnabled"
-  gcp-scheduler = "schedulerEnabled"
-  gcp-spanner   = "spannerEnabled"
-  gcp-sql       = "sqlEnabled"
-  gcp-storage   = "storageEnabled"
 }

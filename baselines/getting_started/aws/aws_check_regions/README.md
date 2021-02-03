@@ -23,6 +23,11 @@ created by other baselines.
 
 This baseline will not attach to a resource and will need to be done manually using the Turbot UI.
 
+## Important
+
+Running the baseline without an input variable file assumes that you have **ALL** aws mods installed.
+To limit the baseline, look at the example input variable file [demo.tfvars](demo.tfvars).
+
 ## Requirements
 
 - Terraform v0.13 or greater installed
