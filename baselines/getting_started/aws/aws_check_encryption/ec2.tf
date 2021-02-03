@@ -1,12 +1,13 @@
-## Ensure encryption on EC2 Resources
+# Encryption at Rest Guardrails - https://turbot.com/v5/docs/concepts/guardrails/encryption-at-rest
 
-###  EC2 Instances with Unencrypted Root Volume 
+# AWS > EC2 > Instance > Approved 
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/control/types/instanceApproved
 resource "turbot_policy_setting" "ec2_instance_approved" {
     resource        = turbot_smart_folder.aws_encryption.id
     type            = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
     value           = "Check: Approved"
 }
-
+# AWS > EC2 > Instance > Approved > Root Volume Encryption at Rest
 resource "turbot_policy_setting" "ec2_instance_root_volume_encryption" {
     resource        = turbot_smart_folder.aws_encryption.id
     type            = "tmod:@turbot/aws-ec2#/policy/types/rootVolumeEncryptionAtRest"
@@ -21,13 +22,14 @@ resource "turbot_policy_setting" "ec2_instance_root_volume_encryption" {
 #     value           = "arn:aws:kms:us-east-1:000000000000:alias/aws/ebs"  ### key id, alias name or full ARN of alias/key
 # }
 
-## EBS Volumes
+# AWS > EC2 > Volume > Approved 
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/control/types/volumeApproved
 resource "turbot_policy_setting" "ec2_volume_approved" {
     resource        = turbot_smart_folder.aws_encryption.id
     type            = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
     value           = "Check: Approved"
 }
-
+# AWS > EC2 > Volume > Approved > Encryption at Rest
 resource "turbot_policy_setting" "ec2_volume_encryption" {
     resource        = turbot_smart_folder.aws_encryption.id
     type            = "tmod:@turbot/aws-ec2#/policy/types/volumeEncryptionAtRest"
@@ -42,13 +44,14 @@ resource "turbot_policy_setting" "ec2_volume_encryption" {
 #     value           = "arn:aws:kms:us-east-1:000000000000:alias/aws/ebs"  ### key id, alias name or full ARN of alias/key
 # }
 
-# Snapshots
+# AWS > EC2 > Snapshot > Approved 
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/control/types/snapshotApproved
 resource "turbot_policy_setting" "ec2_snapshot_approved" {
     resource        = turbot_smart_folder.aws_encryption.id
     type            = "tmod:@turbot/aws-ec2#/policy/types/snapshotApproved"
     value           = "Check: Approved"
 }
-
+# AWS > EC2 > Snapshot > Approved > Encryption at Rest
 resource "turbot_policy_setting" "ec2_snapshot_approved_encryption" {
     resource        = turbot_smart_folder.aws_encryption.id
     type            = "tmod:@turbot/aws-ec2#/policy/types/snapshotEncryptionAtRest"
