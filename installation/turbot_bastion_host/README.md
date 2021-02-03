@@ -29,6 +29,9 @@ In addition to the above, it also compliments the Session Manager capabilities s
 - **LatestAmiId:** The AWS SSM Parameter Store [namespace](https://aws.amazon.com/blogs/compute/query-for-the-latest-amazon-linux-ami-ids-using-aws-systems-manager-parameter-store/) of the AMI. Defaults to Amazon Linux 2 distribution. Leave it as it is, incase if you want to use your golden AMIs.
 - **BastionInstanceType:** AWS EC2 instance type for the bastion host.
 - **RootVolumeSize:** The root volume size in GB for the bastion host. Should always be greater than the size of the AMI used. Is encrypted and makes use of gp3 volume type.
+- **OSImageOverride:** In case if you want to use a custom golden AMI instead of the default Amazon Linux 2 AMIs, please enter the AMI ID (e.g., ami-1a2b3c4d or ami-1234567890abcdef0). Leave empty if no alternative configuration is needed.
+- **AlternativeIAMRole:** The CloudFormation stack creates an IAM role with required permissions, in case if you want to attach an existing IAM role to the bastion host then please enter the IAM Role Name. (e.g., my_ssm_role). Leave empty if no alternative configuration is needed.
+- **Environment variables:** A comma-separated list of environment variables for use in bootstrapping. Variables must be in the format KEY=VALUE. VALUE cannot contain commas. Use the variables RDSHOST, REDISHOST, REDISREPLICAHOST for RDS and Redis respectively. RDSPASSWORD is set by default. You need to run `source /etc/profile.d/environment` after the bastion boots up for these variables to reflect.
 - **KMSEncryptionKeyArn:** Session Manager can be configured to use AWS Key Management Service (AWS KMS) key encryption to provide additional protection to the data transmitted between client machines and managed instances. Please check your `AWS Systems Manager > Session Manager > Preferences` settings to check if KMS encryption is enabled or disabled.
   If KMS Encryption is enabled then enter the KMS Key full ARN used in your AWS Systems Manager > Session Manager > Preferences. (e.g., "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab").
   Leave empty if KMS Encryption is disabled.
@@ -38,8 +41,6 @@ In addition to the above, it also compliments the Session Manager capabilities s
 - **S3BucketWithPrefix:** Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group. Please check your `AWS Systems Manager > Session Manager > Preferences` settings to check if S3 Logging is enabled or disabled.
   If S3 Logging is enabled, then enter the "S3 bucket" followed by "S3 prefix" from AWS Systems Manager > Session Manager > Preferences. (e.g., my-s3bucket-for-sessionmanager-logs/dev-env/).
   Leave empty if S3 Logging is disabled.
-- **OSImageOverride:** In case if you want to use a custom golden AMI instead of the default Amazon Linux 2 AMIs, please enter the AMI ID (e.g., ami-1a2b3c4d or ami-1234567890abcdef0). Leave empty if no alternative configuration is needed.
-- **AlternativeIAMRole:** The CloudFormation stack creates an IAM role with required permissions, in case if you want to attach an existing IAM role to the bastion host then please enter the IAM Role Name. (e.g., my_ssm_role). Leave empty if no alternative configuration is needed.
 
 4. Click through to review your changes and then launch the stack.
 5. Verify that the stack completes successfully.
@@ -49,13 +50,41 @@ In addition to the above, it also compliments the Session Manager capabilities s
 
 - How do I connect to my RDS Instance?
 
-  Execute the below steps in order to connect to the RDS.
+  - If the environment variables are passed to the CFN template, then run the below commands.
 
-```shell
-  export RDSHOST=<Enter the RDS endpoint, should be something like turbot-boltzman.cpnkkknwkny9.us-east-2.rds.amazonaws.com>
-  export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region <AWS region of the DB, like us-east-1> --username turbot )"
-  psql -h $RDSHOST  -d turbot -U turbot
-```
+    ```shell
+      source /etc/profile.d/environment
+      psql -h $RDSHOST  -d turbot -U turbot
+    ```
+
+  - If the environment variables are not passed to the CFN template or if you would like to update them, execute below commands.
+
+    ```shell
+      export RDSHOST=<Enter the RDS endpoint, should be something like turbot-boltzman.cpnkkknwkny9.us-east-2.rds.amazonaws.com>
+      export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region <AWS region of the DB, like us-east-1> --username turbot )"
+      psql -h $RDSHOST  -d turbot -U turbot
+    ```
+
+- How do I connect to my Redis Cluster?
+
+  <!-- - Capture the Redis user password from AWS SSM Parameters Store with parameter name /<prefix>/hive/<hive_name>/redisUser -->
+
+  - If the environment variables are passed to the CFN template, then run the below commands.
+
+    ```shell
+      source /etc/profile.d/environment
+      sudo netstat -tulnp | grep -i stunnel # Confirm that the tunnels started
+      redis-cli -h localhost -p 6379 -a <password>
+    ```
+
+  - If the environment variables are not passed to the CFN template or if you would like to update them, execute below commands.
+
+    ```shell
+      sudo vi /etc/stunnel/redis-cli.conf # Update the connection string for master and replica
+      sudo stunnel /etc/stunnel/redis-cli.conf # Start stunnel.
+      sudo netstat -tulnp | grep -i stunnel # Confirm that the tunnels started
+      redis-cli -h localhost -p 6379 -a <password>
+    ```
 
 - Why does my session timeout every 20 min?
 
