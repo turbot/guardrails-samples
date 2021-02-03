@@ -1,6 +1,10 @@
 # Baseline - AWS Check Encryption Policies
 
-AWS Check Encryption Policies focuses on an example of a deeper baseline for a specific service resources.
+AWS Check Encryption Policies focuses on an example of a deeper baseline for a specific service.
+
+Encryption at Rest refers specifically to the encryption of data when written to an underlying storage system.
+
+Encryption in Transit refers specifically to the encryption of data while data moves between your site and the cloud provider or between two services.
 
 Some of these policies overlap with other baselines.
 
