@@ -1,0 +1,26 @@
+recipe: "./recipes/managed_recipe.yaml"
+turbot:
+  host: https://test.turbot.com/
+  accessKey: "11112222-fac3-424e-94fb-325db1d65503"
+  secretAccessKey: 424e94fb-1b3c-4681-944d-cb27d3a325db
+workspaces:
+  - account: "111122223333"
+    profile: v3-master
+    turbot:
+      account: aaa
+      cluster: maincluster
+  - account: "333322221111"
+    profile: v3-master
+    roleArn: arn:aws:iam::333322221111:role/turbot-service-role
+    externalId: keyphrase
+    turbot:
+      account: aab
+      cluster: awscluster
+  - account: "222233331111"
+    roleArn: arn:aws:iam::222233331111:role/turbot-service-role
+    turbot:
+      account: rex
+      cluster: awsaccount
+      host: https://production.turbot.com/
+      accessKey: "11112222-aaaa-bbbb-cccc-325db1d65503"
+      secretAccessKey: 424e94fb-bbbb-aaaa-dddd-cb27d3a325db
