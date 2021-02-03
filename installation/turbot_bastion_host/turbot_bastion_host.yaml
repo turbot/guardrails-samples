@@ -25,6 +25,7 @@ Metadata:
         Parameters:
           - OSImageOverride
           - AlternativeIAMRole
+          - EnvironmentVariables
       - Label:
           default: Session Manager Preferences
         Parameters:
@@ -48,6 +49,8 @@ Metadata:
         default: Bastion instance type
       RootVolumeSize:
         default: Root volume size
+      EnvironmentVariables:
+        default: Environment Variables
       KMSEncryptionKeyArn:
         default: KMS Encryption
       CloudWatchLogGroupName:
@@ -119,6 +122,10 @@ Parameters:
     Description: The root EBS volume size in GB
     Type: Number
     Default: "10"
+  EnvironmentVariables:
+    Description: A comma-separated list of environment variables for use in bootstrapping. Variables must be in the format KEY=VALUE. VALUE cannot contain commas. Use the variables RDSHOST, REDISHOST, REDISREPLICAHOST for RDS and Redis respectively. RDSPASSWORD is set by default. Example, RDSHOST=turbot-hive.ab3defg51jkl.us-east-2.rds.amazonaws.com,REDISHOST=master.turbot-redis-cache-cluster.ab7xyz.use2.cache.amazonaws.com:6379,REDISREPLICAHOST=replica.turbot-redis-cache-cluster.ab7xyz.use2.cache.amazonaws.com:6379 You need to run "source /etc/profile.d/environment" after you login to the bastion for these variables to reflect.
+    Type: String
+    Default: ""
   KMSEncryptionKeyArn:
     Default: ""
     Description:
@@ -126,7 +133,6 @@ Parameters:
       If KMS Encryption is configured then enter the KMS Key full ARN used in your AWS Systems Manager > Session Manager > Preferences. (e.g., "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"). Please make sure the user with which you logged into the console is listed as "Key Users" for it.
       Leave empty if KMS Encryption is disabled.
     Type: String
-
   CloudWatchLogGroupName:
     Default: ""
     Description:
@@ -147,8 +153,7 @@ Parameters:
     Type: String
     Default: ""
   AlternativeIAMRole:
-    Description:
-      An existing IAM Role Name to attach (e.g., my_ssm_role).
+    Description: An existing IAM Role Name to attach (e.g., my_ssm_role).
       If left empty, a new role will be created.
     Default: ""
     Type: String
@@ -209,6 +214,11 @@ Resources:
       Tags:
         - Key: cfn_stack_name
           Value: !Ref AWS::StackName
+        - Key: Vendor
+          Value: "Turbot HQ Inc"
+        - Key: Product
+          Value: "Turbot Bastion Host"
+
   BastionHostPolicy:
     Type: "AWS::IAM::Policy"
     Properties:
@@ -364,10 +374,10 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            sudo amazon-linux-extras install -y postgresql11
+            # Script to delete the stack after x hours
             touch /etc/profile.d/load_env.log
             cat > /etc/profile.d/load_env.sh << 'EOF'
-
+            #!/bin/bash
             export ACCOUNT_ID=${AWS::AccountId}
             export REGION=${AWS::Region}
             export CFN_STACK_NAME=${AWS::StackName}
@@ -381,11 +391,64 @@ Resources:
             fi
             EOF
             nohup sh /etc/profile.d/load_env.sh >> /etc/profile.d/load_env.log 2>&1 &
+
+            # Installing packages for RDS
+            sudo amazon-linux-extras install -y postgresql11
+
+            # Installing packages for ElastiCache Redis
+            sudo yum install gcc -y
+            cd /tmp
+            wget http://download.redis.io/redis-stable.tar.gz
+            tar xvzf redis-stable.tar.gz
+            cd redis-stable
+            make
+            sudo cp src/redis-cli /usr/local/bin/
+            sudo chmod 755 /usr/local/bin/redis-cli
+            sudo yum install stunnel -y
+            sudo yum install telnet -y
+
+            # Set the environment variables
+            # export PATH=$PATH:/usr/local/bin
+            sudo cat > /tmp/temp-cli.conf << 'EOF'
+            fips = no
+            setuid = root
+            setgid = root
+            pid = /var/run/stunnel.pid
+            debug = 7
+            delay = yes
+            options = NO_SSLv2
+            options = NO_SSLv3
+            [redis-cli]
+              client = yes
+              accept = 127.0.0.1:6379
+              connect = $REDISHOST
+            [redis-cli-replica]
+              client = yes
+              accept = 127.0.0.1:6380
+              connect = $REDISREPLICAHOST
+              # If you are updating the endpoints, don't forget to restart the stunnel service by running the command,
+              # sudo stunnel /etc/stunnel/redis-cli.conf
+            EOF
+            set -x
+            for e in $(echo ${EnvironmentVariables} | tr ',' '\n'); do
+              echo export $e >> /etc/profile.d/environment
+            done
+            echo "export PGPASSWORD=\$(aws rds generate-db-auth-token --hostname \$RDSHOST --port 5432 --region ${AWS::Region} --username turbot)" >> /etc/profile.d/environment
+            echo "sudo touch /etc/stunnel/redis-cli.conf" >> /etc/profile.d/environment
+            echo "sudo chmod 757 /etc/stunnel/redis-cli.conf" >> /etc/profile.d/environment
+            echo "envsubst < /tmp/temp-cli.conf > /etc/stunnel/redis-cli.conf"  >> /etc/profile.d/environment
+            echo "sudo chmod 755 /etc/stunnel/redis-cli.conf"  >> /etc/profile.d/environment
+            echo "sudo stunnel /etc/stunnel/redis-cli.conf" >> /etc/profile.d/environment
+
       Tags:
         - Key: Name
           Value: !Ref BastionHostName
         - Key: cfn_stack_name
           Value: !Ref AWS::StackName
+        - Key: Vendor
+          Value: "Turbot HQ Inc"
+        - Key: Product
+          Value: "Turbot Bastion Host"
 
 Outputs:
   BastionHostRole:
