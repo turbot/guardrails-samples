@@ -61,6 +61,6 @@ class ResourceServiceFactory:
             "turbot_policies": TurbotPoliciesResourceService,
             "codecommit_repository": CodeCommitRepositoryResourceService,
             "turbot_account": TurbotAccountResourceService,
-            "cloudtrail_trail": CloudTrailTrailResourceService
+            "cloudtrail_trail": CloudTrailTrailResourceService,
             "cloudwatch_loggroup": CloudWatchLogsResourceService
         }
