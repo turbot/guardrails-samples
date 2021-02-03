@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "gcp_enable" {
 }
 
 resource "turbot_policy_setting" "gcp_api_enable" {
-  for_each = var.api_policy_map
+  for_each = local.api_policy_map
   resource = turbot_smart_folder.gcp_baseline.id
   type     = "tmod:@turbot/${each.key}#/policy/types/${each.value}"
   value    = "Enforce: ${var.service_status[each.key]}"

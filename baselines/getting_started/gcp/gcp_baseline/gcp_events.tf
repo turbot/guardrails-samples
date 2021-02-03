@@ -6,21 +6,23 @@
 # More Info: https://turbot.com/v5/docs/integrations/gcp/real-time-events/event-handlerss
 
 resource "turbot_policy_setting" "gcp_event_polling" {
-    resource       = turbot_smart_folder.gcp_baseline.id
-    type           = "tmod:@turbot/gcp#/policy/types/eventPoller"
-    value          = "Enabled"
+  resource = turbot_smart_folder.gcp_baseline.id
+  type     = "tmod:@turbot/gcp#/policy/types/eventPoller"
+  value    = "Enabled"
 }
 
 resource "turbot_policy_setting" "gcp_event_polling_interval" {
-    resource       = turbot_smart_folder.gcp_baseline.id
-    type           = "tmod:@turbot/gcp#/policy/types/eventPollerInterval"
-    value          = "Every 1 minute"
+  resource = turbot_smart_folder.gcp_baseline.id
+  type     = "tmod:@turbot/gcp#/policy/types/eventPollerInterval"
+  value    = "Every 1 minute"
 }
 
+# GCP > Turbot > Event Poller > Window
+# https://turbot.com/v5/mods/turbot/gcp/inspect#/policy/types/eventPollerWindow
 resource "turbot_policy_setting" "gcp_event_pollin_window" {
-    resource       = turbot_smart_folder.gcp_baseline.id
-    type           = "tmod:@turbot/gcp#/policy/types/eventPollerWindow"
-    value          = "10 minutes"
+  resource = turbot_smart_folder.gcp_baseline.id
+  type     = "tmod:@turbot/gcp#/policy/types/eventPollerWindow"
+  value    = "10 minutes"
 }
 
 
