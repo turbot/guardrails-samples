@@ -1,18 +1,19 @@
 recipe:
   name: Alex recipe
   resources:
-    - name: "Alex SNS Subscriptions - Delete"
-      service: sns
-      resource: topic
-      filters:
-        - type: startswith
-          key: name
-          value:
-            - turbot_ban
-      actions:
-        - delete
+    # NOTE: I know this works, turning off for now
+    # - name: "Alex SNS Subscriptions - Delete"
+    #   service: sns
+    #   resource: topic
+    #   filters:
+    #     - type: startswith
+    #       key: name
+    #       value:
+    #         - turbot_ban
+    #   actions:
+    #     - delete
+    # NOTE: End of - I know this works, turning off for now
 
-  
     # - name: "Turbot Cloudwatch Event Rules - Delete"
     #   service: events
     #   resource: rule
@@ -24,10 +25,10 @@ recipe:
 
     - name: "Alex Cloudwatch Log Groups - Delete"
       service: cloudwatch
-      resource: LogGroups
+      resource: LogGroup
       filters:
         - type: startswith
-          value: 
+          value:
             - /aws/lambda/turbot_ban
             - /turbot/ban
       actions:
