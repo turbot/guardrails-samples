@@ -1,4 +1,5 @@
-# Trusted Access Guardrails - https://turbot.com/v5/docs/concepts/guardrails/trusted-access
+# Trusted Access Guardrails
+#   https://turbot.com/v5/docs/concepts/guardrails/trusted-access
 
 # Trusted Accounts Access controls
 # Will inherit the trusted accounts from Public Access baseline or from what is set in this baseline

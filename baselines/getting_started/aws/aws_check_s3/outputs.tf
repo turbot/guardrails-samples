@@ -1,13 +1,5 @@
-output "turbot_profile" {
-  value = var.turbot_profile
-}
-
 output "trusted_accounts" {
   value = var.trusted_accounts
-}
-
-output "smart_folder_name" {
-  value = var.smart_folder_name
 }
 
 output "enable_s3_access_logging_policies" {
@@ -48,4 +40,20 @@ output "enable_s3_trusted_access_policies" {
 
 output "use_simple_s3_bucket_versioning" {
   value = var.use_simple_s3_bucket_versioning
+}
+
+output "turbot_profile" {
+  value = var.turbot_profile
+}
+
+output "smart_folder_name" {
+  value = var.smart_folder_name
+}
+
+output "smart_folder_description" {
+  value = var.smart_folder_description
+}
+
+output "smart_folder_parent_resource" {
+  value = var.smart_folder_parent_resource
 }

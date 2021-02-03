@@ -7,7 +7,7 @@ variable "service_status" {
 
 variable "use_event_polling" {
   description = "GCP events will be retrieved by polling set to true or using an event handler if set to false."
-  default     = "default"
+  default     = true
 }
 
 

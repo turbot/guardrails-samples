@@ -25,7 +25,7 @@ This baseline will not attach to a resource and will need to be done manually us
 
 ## Important
 
-Running the baseline without an input variable file assumes that you have **ALL** aws mods installed.
+Running the baseline without an input variable file assumes that you have **ALL** AWS mods installed.
 To limit the baseline, look at the example input variable file [demo.tfvars](demo.tfvars).
 
 ## Requirements
