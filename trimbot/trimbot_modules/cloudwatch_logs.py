@@ -3,37 +3,25 @@ from .resource import Resource
 import logging
 
 
-class CloudwatchLogGroup(Resource):
-    def __init__(self, session, region, logs) -> None:
-        self.logs = logs
+class CloudWatchLogGroup(Resource):
+    def __init__(self, session, region, log_groups) -> None:
+        self.log_groups = log_groups
         self.region = region
+        self.logger = logging.getLogger(__name__)
+        self.log_client = session.create_client('logs', self.region)
 
         super().__init__(session)
 # what does this do?
 
     def details(self):
-        return f'cloudwatch/log {self.logs["Name"]}'
+        return f'cloudwatch/log {self.log_groups["logGroupName"]}'
 
     def delete(self, dry_run):
-        pass
-#         logger = logging.getLogger(__name__)
-#         log_client = self.session.create_client('logs', self.region)
-
-#         response = log_client.describe_log_groups()
-
-# # adds list of groups from response to array and deletes/prints log groups to window
-#         groups = []
-#         for group in response['logGroups']:
-#             if not dry_run:
-#                 groups.append(group['logGroupName'])
-#             else:
-#                 logger.info(f"Would remove log group {group['logGroupName']})
-
-#         if not dry_run:
-#             log_client.delete_log_group(logGroupName=self.logs["Name"])
-#             logger.info(f"Deleted log group {self.logs['Name']}")
-#         else:
-#             logger.info(f"Would delete log group {self.logs['Name']}")
+        if not dry_run:
+            self.log_client.delete_log_group(logGroupName=self.log_groups["logGroupName"])
+            self.logger.info(f"Deleted log group {self.log_groups['logGroupName']}")
+        else:
+            self.logger.info(f"Would delete log group {self.log_groups['logGroupName']}")
 
 
 class CloudWatchLogsResourceService(ResourceService):
@@ -41,27 +29,21 @@ class CloudWatchLogsResourceService(ResourceService):
         super().__init__(session, recipe, "event", "rule")
 
     def get_all(self, region):
+        log_client = self.session.create_client('logs', region)
 
-        return []
-        # name_prefix = []
-        # for filter in self.recipe["filters"]:
-        #     if filter["type"] == "startswith":
-        #         name_prefix = filter["value"]
+        resources = []
 
-        # log_client = self.session.create_client('logs', region)
+        if not self.recipe["filters"]:
+            for filter in self.recipe["filters"]:
+                if filter["type"] == "startswith":
+                    for name_prefix in filter["value"]:
+                        response = log_client.describe_log_groups(logGroupNamePrefix=name_prefix)
+                        for log_group in response["logGroups"]:
+                            resources.append(CloudWatchLogGroup(self.session, region, log_group))
+            pass
+        else:
+            response = log_client.describe_log_groups()
+            for log_group in response["logGroups"]:
+                resources.append(CloudWatchLogGroup(self.session, region, log_group))
 
-        # response = log_client.list_rules(NamePrefix=name_prefix)
-
-        # return [CloudwatchLogGroup(self.session, region, rule) for rule in response["Rules"]]
-
-
-#    - name: "Cloudwatch Log Groups - Delete"
-#       service: cloudwatch
-#       resource: LogGroups
-#       filters:
-#         - type: startswith
-#           value:
-#             - /aws/lambda/turbot_ban
-#             - /turbot/ban
-#       actions:
-#         - delete
+        return resources

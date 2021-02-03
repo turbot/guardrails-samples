@@ -27,7 +27,7 @@ class ResourceServiceFactory:
         super().__init__()
 
     def create_resource_service(self, recipe):
-        key = f"{recipe['service']}_{recipe['resource']}"
+        key = f"{recipe['service'].lower()}_{recipe['resource'].lower()}"
 
         if key not in self.client_map:
             message = f"Resource factory unable to create a resource instance for service {recipe['service']} and resource {recipe['resource']}"

@@ -1,4 +1,4 @@
-recipe: "./recipes/alex_recipe.yaml"
+recipe: "./recipes/aws_account_only.yaml"
 workspaces:
-  - account: "834477492924"
+  - account: "111122223333"
     profile: default
