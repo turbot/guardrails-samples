@@ -1,22 +1,21 @@
-# Baseline - AWS Check Regions
+GCP Baseline policies:
+Sevice Enablement
+Service API Enablement
+Event Polling
+Enable CIS
 
-This baseline will allow you to discover resources in multiple regions and not approve usage of resource that are not
-in an allowable region.
+# Baseline - GCP Baseline
 
-This baseline is only effective when the account regions policies have multiple regions set.
+This baseline turns on GCP services that are provided by an input variable file.
+If none are provided then all services will be enabled.
+Enabling / disabling a service consists of enabling / disabling the service and API access to that service.
+The variable to use is `service_status`.
 
-The account approved regions `AWS > Account > Approved Regions [Default]` policy contains a list of AWS regions in which
-cloud resources are approved for use.
+The baseline will configure GCP to use polling unless specified to use event handling in the input variable file.
+The variable to use is `use_event_polling`.
 
-The policy `AWS > Account > Regions` contains a list of AWS region where a resource can be recorded (discovered).
-
-If the [AWS Baseline](../aws_baseline/) has only one region enabled then the approving regions policy will not be
-effective as Turbot will only discovers resources for that one region.
-
-This baseline needs to be considered carefully in conjunction with the `AWS > Account > Regions` policy set in
-the [AWS Baseline](../aws_baseline/).
-
-Turbot also supports AWS Lockdown / Boundary policies to limit access to regions which are not part of this baseline.
+Additionally the baseline will enable CIS and set attestation of CIS to be a year.
+Currently there is no variable to control this behaviour.
 
 The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings
 created by other baselines.
@@ -25,7 +24,7 @@ This baseline will not attach to a resource and will need to be done manually us
 
 ## Important
 
-Running the baseline without an input variable file assumes that you have **ALL** AWS mods installed.
+Running the baseline without an input variable file assumes that you have **ALL** GCP mods installed.
 To limit the baseline, look at the example input variable file [demo.tfvars](demo.tfvars).
 
 ## Requirements
@@ -43,13 +42,10 @@ The baseline is defined by a set of files which together define the configuratio
 
 The demo baseline expects that the following mods are installed:
 
-- aws_lambda
-- aws_ec2
-- aws_s3
-- aws-vpc-core
-- aws-vpc-connect
-- aws-vpc-internet
-- aws-vpc-security
+- gcp-iam
+- gcp-pubsub
+- gcp-storage
+- gcp-logging
 
 To run the baseline:
 
