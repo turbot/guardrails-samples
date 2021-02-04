@@ -15,6 +15,7 @@
   # "Enforce: Delete inactive with 180 days warning"
   # "Enforce: Delete inactive with 365 days warning"
 
+
 resource_active = { 
     # aws-acm-certificate                           = "Check: Active"
     # aws-mq-broker                                 = "Check: Active"
@@ -58,8 +59,8 @@ resource_active = {
     # aws-dynamodb-backup                           = "Check: Active"
     # aws-dynamodb-globalTable                      = "Check: Active"
     # aws-dynamodb-table                            = "Check: Active"
-    # aws-ec2-ami                                   = "Check: Active"
-    # aws-ec2-applicationLoadBalancer               = "Check: Active"f
+    aws-ec2-ami                                   = "Check: Active"
+    # aws-ec2-applicationLoadBalancer               = "Check: Active"
     # aws-ec2-autoScalingGroup                      = "Check: Active"
     # aws-ec2-classicLoadBalancer                   = "Check: Active"
     aws-ec2-instance                              = "Check: Active"
@@ -71,9 +72,9 @@ resource_active = {
     # aws-ec2-loadBalancerListener                  = "Check: Active"
     # aws-ec2-networkInterface                      = "Check: Active"
     # aws-ec2-networkLoadBalancer                   = "Check: Active"
-    # aws-ec2-snapshot                              = "Check: Active"
+    aws-ec2-snapshot                              = "Check: Active"
     # aws-ec2-targetGroup                           = "Check: Active"
-    aws-ec2-volume                                = "Check: Active"
+    ##Have Unattached Policy Set instead## aws-ec2-volume                                = "Check: Active"
     # aws-ecr-repository                            = "Check: Active"
     # aws-ecs-cluster                               = "Check: Active"
     # aws-ecs-containerInstance                     = "Check: Active"
@@ -110,7 +111,7 @@ resource_active = {
     # aws-kinesis-consumer                          = "Check: Active"
     # aws-kinesis-stream                            = "Check: Active"
     # aws-kms-key                                   = "Check: Active"
-    # aws-lambda-function                           = "Check: Active"
+    aws-lambda-function                           = "Check: Active"
     # aws-logs-logGroup                             = "Check: Active"
     # aws-logs-logStream                            = "Check: Active"
     # aws-logs-metricFilter                         = "Check: Active"
@@ -136,7 +137,7 @@ resource_active = {
     # aws-route53-hostedZone                        = "Check: Active"
     # aws-route53resolver-resolverEndpoint          = "Check: Active"
     # aws-route53resolver-resolverRule              = "Check: Active"
-    # aws-s3-bucket                                 = "Check: Active"
+    aws-s3-bucket                                 = "Check: Active"
     # aws-secretsmanager-secret                     = "Check: Active"
     # aws-shield-protection                         = "Check: Active"
     # aws-sns-subscription                          = "Check: Active"
@@ -181,5 +182,4 @@ resource_active = {
     # aws-waf-webAclV2Regional                      = "Check: Active"
     # aws-wafregional-rule                          = "Check: Active"
     # aws-wellarchitected-workload                  = "Check: Active"
-    # aws-workspaces-workspace                      = "check: Active"
 }
