@@ -11,8 +11,7 @@ assignees: ''
 - [ ] Add outputs.tf (If applicable)
 - [ ] Add variables.tf (Required)
 - [ ] Add providers.tf (Required)
-- [ ] Add smart_folder.tf
-- [ ] Categories polices
+- [ ] Add smart_folder.tf (Required)
 
 **Workspace Reference URL**
 Refer the workspace URL link, where the policy is reproduced or required to be placed in (If any). 
