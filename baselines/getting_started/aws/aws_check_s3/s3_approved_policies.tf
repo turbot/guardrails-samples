@@ -1,4 +1,5 @@
-# Approved Guardrails - https://turbot.com/v5/docs/concepts/guardrails/approved
+# Approved Guardrails
+#   https://turbot.com/v5/docs/concepts/guardrails/approved
 
 # Simple policy to check if S3 is Approved for Usage -- can adjust for testing per bucket
 # Will inherit the Approved Regions list if using the Approved Regions baseline or can keep the Regions setting below.
