@@ -1,15 +1,15 @@
 # Encryption at Rest Guardrails - https://turbot.com/v5/docs/concepts/guardrails/encryption-at-rest
 
 # AWS > CloudTrail > Trail > Encryption at Rest
-# https://turbot.com/v5/mods/turbot/aws-cloudtrail/inspect#/control/types/trailEncryptionAtRest
+# https://turbot.com/v5/mods/turbot/aws-cloudtrail/inspect#/policy/types/trailEncryptionAtRest
 resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
   resource = turbot_smart_folder.aws_encryption.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRest"
   value    = "Check: Customer managed key"
-# Note: no Check: AWS managed key or higher available at the moment
+  # Note: no Check: AWS managed key or higher available at the moment
 }
 # AWS > Lambda > Function > Encryption at Rest
-# https://turbot.com/v5/mods/turbot/aws-lambda/inspect#/control/types/functionEncryptionAtRest
+# https://turbot.com/v5/mods/turbot/aws-lambda/inspect#/policy/types/functionEncryptionAtRest
 resource "turbot_policy_setting" "lambda_function_ennvar_encryption_at_rest" {
   resource = turbot_smart_folder.aws_encryption.id
   type     = "tmod:@turbot/aws-lambda#/policy/types/functionEncryptionAtRest"
@@ -17,7 +17,7 @@ resource "turbot_policy_setting" "lambda_function_ennvar_encryption_at_rest" {
 }
 
 # AWS > Logs > Log Group > Encryption at Rest
-# https://turbot.com/v5/mods/turbot/aws-logs/inspect#/control/types/logGroupEncryptionAtRest
+# https://turbot.com/v5/mods/turbot/aws-logs/inspect#/policy/types/logGroupEncryptionAtRest
 resource "turbot_policy_setting" "cloudwatch_logs_encryption_at_rest" {
   resource = turbot_smart_folder.aws_encryption.id
   type     = "tmod:@turbot/aws-logs#/policy/types/logGroupEncryptionAtRest"
@@ -25,7 +25,7 @@ resource "turbot_policy_setting" "cloudwatch_logs_encryption_at_rest" {
 }
 
 # AWS > SNS > Topic > Encryption at Rest
-# https://turbot.com/v5/mods/turbot/aws-sns/inspect#/control/types/topicEncryptionAtRest
+# https://turbot.com/v5/mods/turbot/aws-sns/inspect#/policy/types/topicEncryptionAtRest
 resource "turbot_policy_setting" "aws_sns_topic_encrypted" {
   resource = turbot_smart_folder.aws_encryption.id
   type     = "tmod:@turbot/aws-sns#/policy/types/topicEncryptionAtRest"

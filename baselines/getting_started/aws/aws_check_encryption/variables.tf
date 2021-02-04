@@ -1,8 +1,13 @@
-# Required
+# Baseline Configuration
+
+variable "enable_backup_vault_policies" {
+  description = "Enabling will ensure encryption on Backup Vault Resources, by default this is disabled"
+  default     = false
+}
 
 # None
 
-# Optional
+# Optional Common Baseline Configuration
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
