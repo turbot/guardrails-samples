@@ -57,10 +57,11 @@ To run the baseline:
 2. Initialise Terraform
 3. Apply the baseline using the demo input variable file [demo.tfvars](demo.tfvars)
 
-On the terminal this will look like:
+TODO: Omero clean up
+From the workspace root folder using the the terminal, to apply the install the demo run the following commands:
 
 ```shell
-cd <baseline_folder>
+cd ./baselines/getting_started/aws/aws_check_encryption
 terraform init
 terraform apply --var-file demo.tfvars
 ```
