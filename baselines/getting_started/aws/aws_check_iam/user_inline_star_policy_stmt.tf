@@ -1,4 +1,6 @@
 # Check IAM User inline policy for AdministratorAccess
+# AWS > IAM > User > Inline Policy > Statements > Approved
+# https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/userInlinePolicyStatementsApproved
 
 resource "turbot_policy_setting" "iam_user_inline_policy_approved" {
   resource        = turbot_smart_folder.aws_iam.id
@@ -7,6 +9,9 @@ resource "turbot_policy_setting" "iam_user_inline_policy_approved" {
                     ## "Enforce: Delete Unapproved"
 }
 
+
+# AWS > IAM > Role > Policy Attachments > Approved > Administrator Access
+# https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/userInlinePolicyStatementsApprovedAdminAccess
 resource "turbot_policy_setting" "iam_user_inline_policy_approved_admin_access" {
   resource        = turbot_smart_folder.aws_iam.id
   type            = "tmod:@turbot/aws-iam#/policy/types/userInlinePolicyStatementsApprovedAdminAccess"

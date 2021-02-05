@@ -1,6 +1,8 @@
 # Check unapproved IAM User policy attachments based on name (e.g. FullAccess)
 
 ## Set policy to check unapproved policy attachments
+# AWS > IAM > User > Policy Attachments > Approved
+# https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/userPolicyAttachmentsApproved
 resource "turbot_policy_setting" "aws_iam_user_policy_attachement_approved" {
     resource        = turbot_smart_folder.aws_iam.id
     type            = "tmod:@turbot/aws-iam#/policy/types/userPolicyAttachmentsApproved"
@@ -9,6 +11,8 @@ resource "turbot_policy_setting" "aws_iam_user_policy_attachement_approved" {
 }
 
 # Identify policy names that are unapproved
+# AWS > IAM > User > Policy Attachments > Approved > Rules
+# https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/userPolicyAttachmentsApprovedRules
 resource "turbot_policy_setting" "aws_iam_user_policy_attachement_rules" {
     resource        = turbot_smart_folder.aws_iam.id
     type            = "tmod:@turbot/aws-iam#/policy/types/userPolicyAttachmentsApprovedRules"
