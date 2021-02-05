@@ -1,4 +1,4 @@
-# GCP Project Stack with an  Example
+# GCP Project Stack with a PubSub Example
 # Also a good example of how to include a TF file in a Turbot TF
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/configured
 
@@ -13,7 +13,7 @@ provider "turbot" {
 
 ## Create Smart Folder at the Turbot level
 
-resource "turbot_smart_folder" "azure_stack" {
+resource "turbot_smart_folder" "gcp_stack" {
   parent = "tmod:@turbot/turbot#/"
   title  = "GCP Stack Example Policies"
 }
