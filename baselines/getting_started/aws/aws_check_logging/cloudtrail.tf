@@ -1,5 +1,6 @@
 # CloudTrail Best Practices:
 # Related to AWS CIS 2.02 Ensure CloudTrail log file validation is enabled (Scored)
+# https://turbot.com/v5/mods/turbot/aws-cloudtrail/inspect#/policy/types/trailLogFileValidation
 resource "turbot_policy_setting" "aws_cloudtrail_trail_log_validation" {
   resource = turbot_smart_folder.aws_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailLogFileValidation"
@@ -7,6 +8,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_log_validation" {
 }
 
 # Trail Status Check
+# https://turbot.com/v5/mods/turbot/aws-cloudtrail/inspect#/policy/types/trailStatus
 resource "turbot_policy_setting" "aws_cloudtrail_trail_status" {
   resource = turbot_smart_folder.aws_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailStatus"
@@ -14,6 +16,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_status" {
 }
 
 # Trail Encryption
+# https://turbot.com/v5/mods/turbot/aws-cloudtrail/inspect#/policy/types/trailEncryptionAtRest
 resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
   resource = turbot_smart_folder.aws_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRest"
