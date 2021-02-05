@@ -48,9 +48,27 @@ variable "enable_rds_instance_encryption_policies" {
   default     = false
 }
 
+variable "enable_rds_manualsnapshot_approved_policies" {
+  type        = bool
+  description = "Enable the RDS Instance approved policies for baseline"
+  default     = false
+}
+
+variable "enable_rds_manualsnapshot_encryption_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption on RDS Manual Snapshot, by default this is disabled"
+  default     = false
+}
+
 variable "enable_efs_filesystem_approved_policies" {
   type        = bool
   description = "Enable the EFS Filesystem approved policies for baseline"
+  default     = false
+}
+
+variable "enable_sqs_queue_encryption_policies" {
+  type        = bool
+  description = "Enable the SQS Queue approved policies for baseline"
   default     = false
 }
 

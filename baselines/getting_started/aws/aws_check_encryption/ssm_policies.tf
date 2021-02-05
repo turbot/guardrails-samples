@@ -3,15 +3,8 @@
 # AWS > SSM > Parameter > Encryption at Rest
 # https://turbot.com/v5/mods/turbot/aws-ssm/inspect#/policy/types/ssmParameterEncryptionAtRest
 resource "turbot_policy_setting" "aws_ssm_param_encryption_at_rest" {
-  count    = enable_ssm_parameter_encryption_policies ? 1 : 0
+  count    = var.enable_ssm_parameter_encryption_policies ? 1 : 0
   resource = turbot_smart_folder.aws_encryption.id
   type     = "tmod:@turbot/aws-ssm#/policy/types/ssmParameterEncryptionAtRest"
   value    = "Check: AWS managed key or higher"
 }
-
-# ## SSM Parameters
-# resource "turbot_policy_setting" "aws_ssm_param_encryption_at_rest" {
-#   resource = turbot_smart_folder.aws_encryption.id
-#   type     = "tmod:@turbot/aws-ssm#/policy/types/ssmParameterEncryptionAtRest"
-#   value    = "Check: AWS managed key or higher"
-# }
