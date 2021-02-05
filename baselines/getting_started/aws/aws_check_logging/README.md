@@ -23,14 +23,14 @@ The baseline is defined by a set of files which together define the configuratio
 
 1. Navigate to the folder of the baseline
 2. Initialize Terraform
-3. Apply the baseline
+3. Apply the baseline using the demo input variable file [demo.tfvars](demo.tfvars)
 
 On the terminal this will look like:
 
 ```shell
 cd <baseline_folder>
 terraform init
-terraform apply
+terraform apply --var-file demo.tfvars
 ```
 
 ### Input variable files
@@ -41,7 +41,7 @@ It will be used to define which parts of the baseline to apply and which to igno
 
 The variables that can be overwritten by the input variable files are defined in the [variables.tf](variables.tf) file.
 
-<!-- This baseline comes with an example input variable file called [demo.tfvars](demo.tfvars). -->
+This baseline comes with an example input variable file called [demo.tfvars](demo.tfvars).
 
 Further details found in official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
 

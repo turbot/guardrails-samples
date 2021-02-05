@@ -1,4 +1,50 @@
+variable "enable_cloudtrail_trail_log_validation" {
+  type        = bool
+  description = "Enable the Cloudtrail logfile validation policies for baseline"
+  default     = true
+}
 
+variable "enable_cloudtrail_trail_status" {
+  type        = bool
+  description = "Enable the Cloudtrail status policies for baseline"
+  default     = true
+}
+
+variable "enable_cloudtrail_trail_encryption" {
+  type        = bool
+  description = "Enable the Cloudtrail trail encryption policies for baseline"
+  default     = true
+}
+
+variable "enable_alb_access_logging" {
+  type        = bool
+  description = "Enable the Application loadbalancer access logging policies for baseline"
+  default     = true
+}
+
+variable "enable_elb_access_logging" {
+  type        = bool
+  description = "Enable the Classic loadbalancer access logging policies for baseline"
+  default     = true
+}
+
+variable "enable_nlb_access_logging" {
+  type        = bool
+  description = "Enable the Network loadbalancer access logging policies for baseline"
+  default     = true
+}
+
+variable "enable_redshift_cluster_access_logging" {
+  type        = bool
+  description = "Enable the Redshift cluster access logging policies for baseline"
+  default     = false
+}
+
+variable "enable_redshift_cluster_user_logging" {
+  type        = bool
+  description = "Enable the Redshift cluster access logging policies for baseline"
+  default     = false
+}
 
 # Optional Common Baseline Configuration
 
