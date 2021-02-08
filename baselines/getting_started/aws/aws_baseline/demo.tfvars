@@ -1,7 +1,7 @@
 # List of services to set as Enabled  
 # Note: there is no aws-neptune enabled policy
 # Note: smaller subset to start with, enable more overtime
-
+# See file, aws_service_enable.tf
 enabled_policy_map = {
   # aws-acm                             = "acmEnabled"
   # aws-amplify                         = "amplifyEnabled"
@@ -119,6 +119,7 @@ enabled_policy_map = {
 # NOTE: For full list of values, which can be enabled for more than the default region. 
 # Look in variables.tf at the default value. 
 # This deafult value can be overridden. Uncomment the respective region list to enable Turbot Event Handlers. 
+# See this file, regions.tf
 aws_account_default_regions = [
   "us-east-1",
   "us-east-2",
