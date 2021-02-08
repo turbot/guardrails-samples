@@ -1,6 +1,6 @@
-# Baseline - AWS Check S3 Policies
+# Baseline - Azure Check Encryption Policies
 
-AWS Check S3 Policies focuses on an example of a deeper baseline for a specific service.
+Azure Check Encryption focuses on an example of a deeper baseline for a specific service.
 
 Some of these policies overlap with other baselines.
 

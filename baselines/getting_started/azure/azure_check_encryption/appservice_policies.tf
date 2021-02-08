@@ -1,4 +1,7 @@
-## App Services Function App
+# Note: App Service Approved > Usage is validated for httpsOnly for securing the custom domain.
+
+# Azure > App Service > Function App > Approved > Usage
+# https://turbot.com/v5/mods/turbot/azure-appservice/inspect#/policy/types/functionAppApprovedUsage
 resource "turbot_policy_setting" "azure_appservice_function_app_approved_usage" {
   resource       = turbot_smart_folder.azure_encryption.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/functionAppApprovedUsage"
@@ -17,8 +20,8 @@ Approved
 {%- endif -%}
 EOT
 }
-
-## App Services Web App
+# Azure > App Service > Web App > Approved > Usage
+# https://turbot.com/v5/mods/turbot/azure-appservice/inspect#/policy/types/webAppApprovedUsage
 resource "turbot_policy_setting" "azure_appservice_web_app_approved_usage" {
   resource       = turbot_smart_folder.azure_encryption.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/webAppApprovedUsage"
