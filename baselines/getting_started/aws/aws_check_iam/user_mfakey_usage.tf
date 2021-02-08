@@ -2,16 +2,18 @@
 # AWS > IAM > User > Approved
 # https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/userApproved
 resource "turbot_policy_setting" "iam_user_mfa_approved" {
-  resource        = turbot_smart_folder.aws_iam.id
-  type            = "tmod:@turbot/aws-iam#/policy/types/userApproved"
-  value           = "Check: Approved"
+  count      = var.enable_iam_user_mfa_approved ? 1 : 0
+  resource   = turbot_smart_folder.aws_iam.id
+  type       = "tmod:@turbot/aws-iam#/policy/types/userApproved"
+  value      = "Check: Approved"
 }
 
 # AWS > IAM > User > Approved > Usage
 # https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/userApprovedUsage
 resource "turbot_policy_setting" "iam_user_mfa_approved_usage" {
-  resource        = turbot_smart_folder.aws_iam.id
-  type            = "tmod:@turbot/aws-iam#/policy/types/userApprovedUsage"
+  count      = var.enable_iam_user_mfa_approved_usage ? 1 : 0
+  resource   = turbot_smart_folder.aws_iam.id
+  type       = "tmod:@turbot/aws-iam#/policy/types/userApprovedUsage"
   # GraphQL to pull info from IAM User and MFA virtual keys
   template_input  = <<-QUERY
 	{

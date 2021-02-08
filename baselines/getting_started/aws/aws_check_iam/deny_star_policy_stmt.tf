@@ -3,17 +3,19 @@
 # AWS > IAM > Policy > Approved
 # https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/iamPolicyApproved
 resource "turbot_policy_setting" "iam_policy_approved" {
-  resource        = turbot_smart_folder.aws_iam.id
-  type            = "tmod:@turbot/aws-iam#/policy/types/iamPolicyApproved"
-  value           = "Check: Approved"
-                    ## "Enforce: Delete unapproved if new"
+  count     = var.enable_iam_policy_approved ? 1 : 0
+  resource  = turbot_smart_folder.aws_iam.id
+  type      = "tmod:@turbot/aws-iam#/policy/types/iamPolicyApproved"
+  value     = "Check: Approved"
+           ## "Enforce: Delete unapproved if new"
 }
 
 # AWS > IAM > Policy > Approved > Usage
 # https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/iamPolicyApprovedUsage
 resource "turbot_policy_setting" "iam_policy_approved_statements" {
-  resource        = turbot_smart_folder.aws_iam.id
-  type            = "tmod:@turbot/aws-iam#/policy/types/iamPolicyApprovedUsage"
+  count     = var.enable_iam_policy_approved_statements ? 1 : 0
+  resource  = turbot_smart_folder.aws_iam.id
+  type      = "tmod:@turbot/aws-iam#/policy/types/iamPolicyApprovedUsage"
   # GraphQL to pull policy Statements
   template_input  = <<-QUERY
     {

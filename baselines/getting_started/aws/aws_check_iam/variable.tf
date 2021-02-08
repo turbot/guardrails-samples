@@ -1,24 +1,171 @@
 
-variable "enable_cloudtrail_trail_log_validation" {
+variable "enable_iam_user_access_key_active" {
   type        = bool
-  description = "Enable the Cloudtrail logfile validation policies for baseline"
+  description = "Enable the IAM user access key policies for baseline"
   default     = true
 }
 
+variable "enable_iam_user_access_key_active_age" {
+  type        = bool
+  description = "Enable the IAM user access key age policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings" {
+  type        = bool
+  description = "Enable the IAM user account password policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_RequireUppercaseCharacters" {
+  type        = bool
+  description = "Enable the IAM user account password uppercase character policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_RequireLowercaseCharacters" {
+  type        = bool
+  description = "Enable the IAM user account password uppercase character policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_RequireSymbols" {
+  type        = bool
+  description = "Enable the IAM user account password symbol setting policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_RequireNumbers" {
+  type        = bool
+  description = "Enable the IAM user account password number setting policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_MinimumLength" {
+  type        = bool
+  description = "Enable the IAM user account password number setting policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_ReusePrevention" {
+  type        = bool
+  description = "Enable the IAM user account password reuse setting policies for baseline"
+  default     = true
+}
 
+variable "enable_account_Password_PolicySettings_MaxAge" {
+  type        = bool
+  description = "Enable the IAM user account password maximum age setting policies for baseline"
+  default     = true
+}
 
+variable "enable_iam_policy_approved" {
+  type        = bool
+  description = "Enable the IAM approved policies for baseline"
+  default     = true
+}
 
+variable "enable_iam_policy_approved_statements" {
+  type        = bool
+  description = "Enable the IAM approved statement policies for baseline"
+  default     = true
+}
 
+variable "enable_iam_group_inline_policy_approved" {
+  type        = bool
+  description = "Enable the IAM group inline policies for baseline"
+  default     = true
+}
 
+variable "enable_iam_group_inline_policy_approved_admin_access" {
+  type        = bool
+  description = "Enable the IAM group inline admin access policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_iam_group_policy_attachement_approved" {
+  type        = bool
+  description = "Enable the IAM group attachment policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_iam_group_policy_attachement_rules" {
+  type        = bool
+  description = "Enable the IAM group attachment rules policies for baseline"
+  default     = true
+}
+
+variable "enable_iam_role_inline_policy_approved" {
+  type        = bool
+  description = "Enable the IAM role inline policies for baseline"
+  default     = true
+}
+
+variable "enable_iam_role_inline_policy_approved_admin_access" {
+  type        = bool
+  description = "Enable the IAM approved statement policies for baseline"
+  default     = true
+}
+
+variable "enable_iam_role_policy_attachement_approved" {
+  type        = bool
+  description = "Enable the IAM role policy attachment for baseline"
+  default     = true
+}
+
+variable "enable_iam_role_policy_attachement_rules" {
+  type        = bool
+  description = "Enable the IAM role policy attachment rules for baseline"
+  default     = true
+}
+
+variable "enable_iam_role_policy_trusted_access" {
+  type        = bool
+  description = "Enable the IAM role policy trusted access for baseline"
+  default     = false
+}
+
+variable "enable_iam_role_trusted_accounts" {
+  type        = bool
+  description = "Enable the IAM role policy trusted account for baseline"
+  default     = false
+}
+
+variable "enable_iam_user_inline_policy_approved" {
+  type        = bool
+  description = "Enable the IAM user inline policy for baseline"
+  default     = true
+}
+
+variable "enable_iam_user_inline_policy_approved_admin_access" {
+  type        = bool
+  description = "Enable the IAM user inline policy admin access for baseline"
+  default     = true
+}
+
+variable "enable_iam_user_mfa_approved" {
+  type        = bool
+  description = "Enable the IAM user mfa approved policy for baseline"
+  default     = true
+}
+
+variable "enable_iam_user_mfa_approved_usage" {
+  type        = bool
+  description = "Enable the IAM user mfa approved usage policy for baseline"
+  default     = true
+}
+
+variable "enable_aws_iam_user_policy_attachement_approved" {
+  type        = bool
+  description = "Enable the IAM user approved policy attachment for baseline"
+  default     = true
+}
+
+variable "enable_aws_iam_user_policy_attachement_rules" {
+  type        = bool
+  description = "Enable the IAM user policy attachment for baseline"
+  default     = true
+}
 
 # Optional Common Baseline Configuration
 
