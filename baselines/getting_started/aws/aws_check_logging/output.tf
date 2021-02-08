@@ -30,6 +30,11 @@ output "enable_redshift_cluster_user_logging" {
   value = var.enable_redshift_cluster_user_logging
 }
 
+output "enable_aws_s3_bucket_access_logging" {
+  value = var.enable_aws_s3_bucket_access_logging
+}
+
+
 # Turbot profile and smart folder
 
 output "turbot_profile" {
