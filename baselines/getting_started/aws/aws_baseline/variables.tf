@@ -118,6 +118,23 @@ variable "enabled_policy_map" {
   }
 }
 
+# More Info: https://turbot.com/v5/docs/guides/regions#discovering-regions
+variable "aws_account_default_regions" {
+  description = <<DESC
+  The expected format is an array of regions names. You may use the '*' and '?' wildcard characters.
+  Example of values:
+    - us-east-1
+    - ap-northeast-1
+    - ca-central-1
+
+  NOTE: Limiting Turbot Event Handlers to specific regions. Default to us-east-1 only
+  DESC
+  type        = list(string)
+  default = [
+    "us-east-1",
+  ]
+}
+
 # Optional Common Baseline Configuration
 
 variable "turbot_profile" {

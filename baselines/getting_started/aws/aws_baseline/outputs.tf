@@ -17,3 +17,7 @@ output "smart_folder_parent_resource" {
 output "enabled_policy_map" {
   value = var.enabled_policy_map
 }
+
+output "aws_account_default_regions" {
+  value = var.aws_account_default_regions
+}
