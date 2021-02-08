@@ -1,4 +1,24 @@
 
+variable "enable_cloudtrail_trail_log_validation" {
+  type        = bool
+  description = "Enable the Cloudtrail logfile validation policies for baseline"
+  default     = true
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Optional Common Baseline Configuration
 
