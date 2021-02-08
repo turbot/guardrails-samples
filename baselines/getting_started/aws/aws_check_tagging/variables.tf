@@ -1,4 +1,28 @@
-resource_tags = {
+variable "resource_tags" {
+description = <<DESC
+
+List of services and resources to be checked if its Tags are correct.
+
+These tags must exist for Missing Tag use case if enabled
+required_tags = [
+  "Owner",
+  "Contact",
+  "Cost Center",
+  "Project ID",
+  "Department",
+]
+
+The value of the map is one of these possible values:
+Acceptable Values:
+  "Skip"
+  "Check: Tags are correct"
+  "Enforce: Set tags"
+
+Check demo.tfvars for an example of how to set this value.
+DESC
+
+type          =map(string)
+default = {
     # aws-acm-certificate                                  = "Check: Tags are correct"
     # aws-mq-broker                                        = "Check: Tags are correct"
     # aws-mq-configuration                                 = "Check: Tags are correct"
@@ -128,4 +152,31 @@ resource_tags = {
     # aws-waf-webacl                                       = "Check: Tags are correct"
     # aws-waf-webAclV2Global                               = "Check: Tags are correct"
     # aws-waf-webAclV2Regional                             = "Check: Tags are correct"
+  }
+}
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+}
+
+provider "turbot" {
+  profile = var.turbot_profile
+}
+
+variable "smart_folder_name" {
+  description = "Smart folder name for the baseline"
+  type        = string
+  default     = "AWS Check Tagging Policies"
+}
+
+variable "smart_folder_description" {
+  description = "Enter a description for the smart folder"
+  type        = string
+  default     = "Defines sets of policies for the AWS Check Tagging Policies"
+}
+
+variable "smart_folder_parent_resource" {
+  description = "Enter the resource ID or AKA for the parent of the smart folder"
+  type        = string
+  default     = "tmod:@turbot/turbot#/"
 }
