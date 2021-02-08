@@ -14,9 +14,9 @@ class CloudWatchLogGroup(Resource):
 # what does this do?
 
     def details(self):
-        return f'cloudwatch/log {self.log_groups["logGroupName"]}'
+        return f'cloudwatch/loggroup {self.log_groups[" "]}'
 
-    def delete(self, dry_run):
+    def delete(self, dry_run):  
         if not dry_run:
             self.log_client.delete_log_group(logGroupName=self.log_groups["logGroupName"])
             self.logger.info(f"Deleted log group {self.log_groups['logGroupName']}")
@@ -33,7 +33,7 @@ class CloudWatchLogsResourceService(ResourceService):
 
         resources = []
 
-        if not self.recipe["filters"]:
+        if self.recipe["filters"]:
             for filter in self.recipe["filters"]:
                 if filter["type"] == "startswith":
                     for name_prefix in filter["value"]:
