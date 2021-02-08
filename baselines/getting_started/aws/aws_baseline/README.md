@@ -1,4 +1,4 @@
-# Baseline - AWS Check S3 Policies
+# Baseline - AWS Baseline Policies
 
 AWS baseline Policies focuses on base minimum set of example policies & services to start with.
 
