@@ -115,7 +115,7 @@ variable "enabled_policy_map" {
   # aws-workdocs                        = "workDocsEnabled"
   # aws-workspaces                      = "workSpacesEnabled"
   # aws-xray                            = "xrayEnabled"
-}
+  }
 }
 
 # Optional Common Baseline Configuration
