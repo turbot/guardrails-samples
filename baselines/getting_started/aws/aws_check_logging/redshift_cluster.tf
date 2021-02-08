@@ -30,13 +30,3 @@ resource "turbot_policy_setting" "aws_redshift_cluster_user_activity_logging" {
   type     = "tmod:@turbot/aws-redshift#/policy/types/clusterAuditLoggingUserActivityLogging"
   value    = "Enabled"
 }
-
-
-
-# S3 Bucket Access Logging Check
-# Commenting out here as this policy is being set under aws_check_s3
-# resource "turbot_policy_setting" "aws_s3_bucket_access_logging" {
-#   resource = turbot_smart_folder.aws_logging.id
-#   type     = "tmod:@turbot/aws-s3#/policy/types/bucketAccessLogging"
-#   value    = "Check: Enabled"
-# }

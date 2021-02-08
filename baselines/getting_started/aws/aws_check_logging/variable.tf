@@ -46,6 +46,12 @@ variable "enable_redshift_cluster_user_logging" {
   default     = false
 }
 
+variable "enable_aws_s3_bucket_access_logging" {
+  type        = bool
+  description = "Enable the Redshift cluster access logging policies for baseline"
+  default     = false
+}
+
 # Optional Common Baseline Configuration
 
 variable "turbot_profile" {
