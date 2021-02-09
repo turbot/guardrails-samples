@@ -6,3 +6,18 @@ trusted_accounts  = [
   "287590803701", # Turbot SaaS US Prod
   "255798382450", # Turbot SaaS EU Account
 ]
+
+# See file, sqs_trusted_access.tf
+# enable_aws_sqs_queue_trusted_access = true
+
+# See file, database_public.tf
+# enable_aws_rds_db_cluster_snapshot_manual_trusted_access = true
+# enable_aws_rds_db_instance_public = true
+# enable_aws_rds_db_snapshot_manual_trusted_access = true
+# enable_aws_redshift_cluster_public = true
+# enable_aws_redshift_cluster_snapshot_manual_trusted_access = true
+
+# See file, route53.tf
+# enable_aws_route53_hostedzone_approved = true
+# enable_aws_route53_hostedzone_approved_usage = true
+
