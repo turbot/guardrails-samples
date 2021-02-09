@@ -1,20 +1,25 @@
 # Create Event Pollers per subscription
-# Azure > Turbot > Event Pollers
-# Note: could consider event handlers, however for getting started, event pollers are the simplest setup
+# Note: You can consider event handlers, however for getting started, event pollers are the simplest setup
 # More Info: https://turbot.com/v5/docs/integrations/azure/real-time-events/event-pollers
 
+# Azure > Turbot > Event Poller
+# https://turbot.com/v5/mods/turbot/azure/inspect#/policy/types/eventPoller
 resource "turbot_policy_setting" "azure_event_polling" {
   resource = turbot_smart_folder.azure_baseline.id
   type     = "tmod:@turbot/azure#/policy/types/eventPoller"
   value    = "Enabled"
 }
 
+# Azure > Turbot > Event Poller > Interval
+# https://turbot.com/v5/mods/turbot/azure/inspect#/policy/types/eventPollerInterval
 resource "turbot_policy_setting" "azure_event_polling_interval" {
   resource = turbot_smart_folder.azure_baseline.id
   type     = "tmod:@turbot/azure#/policy/types/eventPollerInterval"
   value    = "Every 1 minute"
 }
 
+# Azure > Turbot > Event Poller > Window
+# https://turbot.com/v5/mods/turbot/azure/inspect#/policy/types/eventPollerWindow
 resource "turbot_policy_setting" "azure_event_pollin_window" {
   resource = turbot_smart_folder.azure_baseline.id
   type     = "tmod:@turbot/azure#/policy/types/eventPollerWindow"

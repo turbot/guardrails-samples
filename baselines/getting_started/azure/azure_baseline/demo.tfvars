@@ -9,7 +9,6 @@
   # "Enforce: Not Registered"
   # "Enforce: Registered"
 
-
 provider_status = {
     ApiManagement       = "Enforce: Registered"
     Compute             = "Enforce: Registered"
