@@ -38,7 +38,9 @@ recipe:
       service: lambda
       resource: function
       filters:
-        - field: startswith
-          value: turbot_ban
+        - type: startswith
+          value: 
+            - turbot_ban
+            - turbot-ban
       actions:
         - delete
