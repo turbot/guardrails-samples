@@ -5,7 +5,6 @@
 # Set policy to check public access block settings
 # AWS > S3 > Account > Public Access Block
 # https://turbot.com/v5/mods/turbot/aws-s3/inspect#/policy/types/s3AccountPublicAccessBlock
-
 resource "turbot_policy_setting" "aws_s3_account_public_access_block" {
   count    = var.enable_aws_s3_account_public_access_block ? 1 : 0
   resource = turbot_smart_folder.aws_public_access.id

@@ -4,6 +4,12 @@ variable "trusted_accounts" {
   default = []
 }
 
+variable "enable_aws_ec2_ami_trusted_access" {
+  type        = bool
+  description = "Enable the EC2 ami trusted access policies for baseline"
+  default     = true
+}
+
 variable "enable_aws_apigateway_api_approved" {
   type        = bool
   description = "Enable the API Gateway API approved policies for baseline"
@@ -142,48 +148,95 @@ variable "enable_aws_s3_account_public_access_block" {
   default     = true
 }
 
-
 variable "enable_aws_s3_account_public_access_block_settings" {
   type        = bool
   description = "Enable the S3 account public access block setting policies for baseline"
   default     = true
 }
 
+variable "enable_aws_s3_public_access_block" {
+  type        = bool
+  description = "Enable the S3 bucket public access block setting policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_s3_public_access_block_settings" {
+  type        = bool
+  description = "Enable the S3 bucket public access block setting policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_vpc_security_group_ingress_rule_approved" {
+  type        = bool
+  description = "Enable the VPC security group ingress rule approved policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_vpc_security_group_ingress_rule_approved_cidr_ranges" {
+  type        = bool
+  description = "Enable the VPC security group ingress rule approved cidr ranges policies for baseline"
+  default     = true
+}
 
+variable "enable_security_Group_IngressRules_ApprovedRules" {
+  type        = bool
+  description = "Enable the VPC security group ingress rule approved rules policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_sns_topic_trusted_access" {
+  type        = bool
+  description = "Enable the SNS topic trusted access policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_sqs_queue_trusted_access" {
+  type        = bool
+  description = "Enable the SQS queue trusted access policies for baseline"
+  default     = false
+}
 
+variable "enable_aws_vpc_subnet_approved" {
+  type        = bool
+  description = "Enable the VPC subnet approved policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_vpc_subnet_approved_usage" {
+  type        = bool
+  description = "Enable the VPC subnet approved usage policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_trusted_accounts_template" {
+  type        = bool
+  description = "Enable the AWS trusted account policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_vpc_elastic_ip_approved" {
+  type        = bool
+  description = "Enable the VPC elastic ip approved policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_vpc_elastic_ip_approved_usage" {
+  type        = bool
+  description = "Enable the VPC elastic ip approved usage policies for baseline"
+  default     = true
+}
 
+variable "enable_aws_vpc_igw_approved" {
+  type        = bool
+  description = "Enable the VPC internet gateway approved policies for baseline"
+  default     = true
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+variable "enable_aws_vpc_igw_approved_usage" {
+  type        = bool
+  description = "Enable the VPC internet gateway approved usage policies for baseline"
+  default     = true
+}
 
 
 # Optional Common Baseline Configuration

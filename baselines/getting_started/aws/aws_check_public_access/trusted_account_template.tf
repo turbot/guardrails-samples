@@ -3,10 +3,13 @@
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/trusted-access
 
 
+# AWS > Account > Trusted Accounts [Default]
+# https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/trustedAccounts
 resource "turbot_policy_setting" "aws_trusted_accounts_template" {
-    resource        = turbot_smart_folder.aws_public_access.id
-    type            = "tmod:@turbot/aws#/policy/types/trustedAccounts"
-    template_input    = <<-QUERY
+  count          = var.enable_aws_trusted_accounts_template ? 1 : 0
+  resource       = turbot_smart_folder.aws_public_access.id
+  type           = "tmod:@turbot/aws#/policy/types/trustedAccounts"
+  template_input = <<-QUERY
     {
     account{
      Id
@@ -14,8 +17,8 @@ resource "turbot_policy_setting" "aws_trusted_accounts_template" {
     }
     QUERY
 
-  # set trustedAccounts from terraform.tfvars
-    template          = <<-TEMPLATE
+  # set trustedAccounts from demo.tfvars
+  template = <<-TEMPLATE
     ${yamlencode([for account in var.trusted_accounts : account])}
     TEMPLATE
 }

@@ -1,5 +1,5 @@
 # List of trusted accounts for cross account access
-# More Info: https://turbot.com/v5/docs/concepts/guardrails/trusted-access
+# More Info: https://turbot.com/v5/docs/concepts/guardrails/public-access
 
 trusted_accounts  = [
   "{{ $.account.Id }}", # Self - current AWS Account

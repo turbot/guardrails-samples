@@ -2,6 +2,10 @@ output "trusted_accounts" {
   value = var.trusted_accounts
 }
 
+output "enable_aws_ec2_ami_trusted_access" {
+  value = var.enable_aws_ec2_ami_trusted_access
+}
+
 output "enable_aws_apigateway_api_approved" {
   value = var.enable_aws_apigateway_api_approved
 }
@@ -55,7 +59,7 @@ output "enable_aws_lambda_function_approved" {
 }
 
 output "enable_aws_lambda_function_approved_usage" {
-  value = var.enable_aws_function_approved_usage
+  value = var.enable_aws_lambda_function_approved_usage
 }
 
 output "enable_aws_ec2_alb_approved" {
@@ -96,6 +100,71 @@ output "enable_aws_s3_account_public_access_block" {
 output "enable_aws_s3_account_public_access_block_settings" {
   value = var.enable_aws_s3_account_public_access_block_settings
 }
+
+output "enable_aws_s3_public_access_block" {
+  value = var.enable_aws_s3_public_access_block
+}
+
+output "enable_aws_s3_public_access_block_settings" {
+  value = var.enable_aws_s3_public_access_block_settings
+}
+
+output "enable_aws_vpc_security_group_ingress_rule_approved" {
+  value = var.enable_aws_vpc_security_group_ingress_rule_approved
+}
+
+output "enable_aws_vpc_security_group_ingress_rule_approved_cidr_ranges" {
+  value = var.enable_aws_vpc_security_group_ingress_rule_approved_cidr_ranges
+}
+
+output "enable_security_Group_IngressRules_ApprovedRules" {
+  value = var.enable_security_Group_IngressRules_ApprovedRules
+}
+
+output "enable_aws_sns_topic_trusted_access" {
+  value = var.enable_aws_sns_topic_trusted_access
+}
+
+output "enable_aws_sqs_queue_trusted_access" {
+  value = var.enable_aws_sqs_queue_trusted_access
+}
+
+output "enable_aws_vpc_subnet_approved" {
+  value = var.enable_aws_vpc_subnet_approved
+}
+
+output "enable_aws_vpc_subnet_approved_usage" {
+  value = var.enable_aws_vpc_subnet_approved_usage
+}
+
+output "enable_aws_trusted_accounts_template" {
+  value = var.enable_aws_trusted_accounts_template
+}
+
+output "enable_aws_vpc_elastic_ip_approved" {
+  value = var.enable_aws_vpc_elastic_ip_approved
+}
+
+output "enable_aws_vpc_elastic_ip_approved_usage" {
+  value = var.enable_aws_vpc_elastic_ip_approved_usage
+}
+
+output "enable_aws_vpc_igw_approved" {
+  value = var.enable_aws_vpc_igw_approved
+}
+
+output "enable_aws_vpc_igw_approved_usage" {
+  value = var.enable_aws_vpc_igw_approved_usage
+}
+
+
+
+
+
+
+
+
+
 
 
 

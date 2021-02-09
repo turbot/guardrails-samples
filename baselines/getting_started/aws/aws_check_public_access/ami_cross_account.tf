@@ -1,11 +1,14 @@
 # Restrict Public and Cross Account AMI Sharing
 
 # Check on shared AMI to untrusted AWS Account; Account Trust set in variables
+# AWS > EC2 > AMI > Trusted Access
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/policy/types/amiTrustedAccess
 resource "turbot_policy_setting" "aws_ec2_ami_trusted_access" {
-    resource        = turbot_smart_folder.aws_public_access.id
-    type            = "tmod:@turbot/aws-ec2#/policy/types/amiTrustedAccess"
-    value           = "Check: Trusted Access > Accounts"
-    #value           = "Enforce: Trusted Access > Accounts"
+  count    = var.enable_aws_ec2_ami_trusted_access ? 1 : 0
+  resource = turbot_smart_folder.aws_public_access.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/amiTrustedAccess"
+  value    = "Check: Trusted Access > Accounts"
+  #value   = "Enforce: Trusted Access > Accounts"
 }
 
 # ### Original Calc Policy on LaunchPermissions and Public
@@ -21,7 +24,7 @@ resource "turbot_policy_setting" "aws_ec2_ami_trusted_access" {
 #         }
 #     }
 #     QUERY
-#   
+#
 #   # Nunjucks template to set usage approval based on if the resource is shared to approved accounts.
 #   # set trustedAccounts in terraform.tfvars
 #   template          = <<-TEMPLATE
