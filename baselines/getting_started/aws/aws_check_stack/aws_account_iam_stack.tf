@@ -1,4 +1,5 @@
-## Set policy to deploy example AWS Account IAM Stack
+# AWS > Account > Stack
+# https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/accountStack
 resource "turbot_policy_setting" "aws_account_iam_stack" {
   resource = turbot_smart_folder.aws_stack.id
   type     = "tmod:@turbot/aws#/policy/types/accountStack"
@@ -6,14 +7,16 @@ resource "turbot_policy_setting" "aws_account_iam_stack" {
   #value    = "Enforce: Configured"
 }
 
-# Sets the Terraform version for your Source
+# AWS > Account > Stack > Terraform Version
+# https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/accountStackTerraformVersion
 resource "turbot_policy_setting" "aws_account_iam_stack_tfversion" {
   resource = turbot_smart_folder.aws_stack.id
   type     = "tmod:@turbot/aws#/policy/types/accountStackTerraformVersion"
-  value    = "0.12.*"
+  value    = "0.13.*"
 }
 
-## Set policy to apply the Stack Source policy, the TF file source
+# AWS > Account > Stack > Source
+# https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/accountStackSource
 resource "turbot_policy_setting" "aws_account_iam_stack_source" {
   resource       = turbot_smart_folder.aws_stack.id
   type           = "tmod:@turbot/aws#/policy/types/accountStackSource"
@@ -22,10 +25,8 @@ resource "turbot_policy_setting" "aws_account_iam_stack_source" {
     SOURCE
 }
 
-# This is part of the Turbot RBAC use case if you are creating an IAM Role through Turbot
-# And associating that as a custom role for Turbot to manage to grant time based access
-# Can comment out if not using Turbot RBAC / AWS Permissions through Turbot.
-# This just sets the condition in your environment, no changes will action unless using Turbot AWS RBAC
+# AWS > Turbot > Permissions > Custom Levels [Account]
+# https://turbot.com/v5/mods/turbot/aws-iam/inspect#/policy/types/permissionsCustomLevelsAccount
 resource "turbot_policy_setting" "aws_iam_permissions_custom_levels_account" {
   resource = turbot_smart_folder.aws_stack.id
   type     = "tmod:@turbot/aws-iam#/policy/types/permissionsCustomLevelsAccount"
