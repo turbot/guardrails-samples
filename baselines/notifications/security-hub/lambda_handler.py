@@ -186,7 +186,7 @@ def lambda_handler(event, context):
                 notification = records[key]
 
                 # A notification that has resolved but not been recorded
-                if notification["control"]["state"] in ["ok", "skipped"]:
+                if notification["control"]["state"] in ["ok", "skipped", "tbd"]:
                     continue
 
                 print(f"Adding finding: {key}")
@@ -205,9 +205,3 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f'Exception: {str(e)}')
         raise
-
-
-class Context:
-    def __init__(self) -> None:
-        self.invoked_function_arn = "arn:aws:lambda:eu-west-2:210125595713:function:LambdaFunctionName"
-        pass
