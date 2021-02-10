@@ -82,3 +82,10 @@ resource "turbot_policy_setting" "firehose_aws_sns_notification_topic" {
   type     = "tmod:@turbot/firehose-aws-sns#/policy/types/notificationTopic"
   value    = aws_sns_topic.turbot_firehose_user_sns_topic.arn
 }
+
+resource "null_resource" "turbot_mutation_example" {
+  # Get notified on all the actions taken by Turbot for the resources at Turbot Root level and its descendant, which have turbot.tag as `Environment:Development`.
+  provisioner "local-exec" {
+    command = "turbot graphql --query create-watch-mutation.graphql --variables create-watch-mutation-input.json --profile ${var.turbot_profile}"
+  }
+}
