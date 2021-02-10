@@ -35,6 +35,7 @@ provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code
 | [azure_load_balancer_prohibited_ports](./azure_load_balancer_prohibited_ports/README.md) | Azure Networking | Prevent unapproved network configuration for load balancers |
 | [azure_storage_container_approved_usage_not_public](./azure_storage_container_approved_usage_not_public/README.md) | Azure Storage | Container approved if not public |
 | [multi_cloud_storage_cost_savings](./multi_cloud_storage_cost_savings/README.md) | Multi-Cloud Storage | Set least expensive storage options for development environments |
+| [multi_cloud_resource_owner_tags](./multi_cloud_resource_owner_tags/README.md) | Multi-Cloud Resource Owner Tags | Set default tags on who created a resource and when it was created |
 
 ## Prerequisites
 
