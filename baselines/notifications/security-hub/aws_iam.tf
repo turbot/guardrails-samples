@@ -85,8 +85,15 @@ resource "aws_iam_role_policy" "turbot_firehose_lamdba_role_security_hub_permiss
     "Statement": [
       {
         "Effect": "Allow",
-        "Action": ["securityhub:GetFindings", "securityhub:BatchUpdateFindings", "securityhub:BatchImportFindings"],
-        "Resource": "arn:aws:securityhub:${var.aws_region}:${local.account_id}:product/${local.account_id}/default"
+        "Action": [
+          "securityhub:GetFindings",
+          "securityhub:BatchUpdateFindings",
+          "securityhub:BatchImportFindings"
+        ],
+        "Resource": [
+          "arn:aws:securityhub:${var.aws_region}:${local.account_id}:hub/default",
+          "arn:aws:securityhub:${var.aws_region}:${local.account_id}:product/${local.account_id}/default"
+        ]
       }
     ]
   }
@@ -120,9 +127,4 @@ resource "aws_iam_role_policy" "turbot_firehose_lamdba_role_cloudwatch_permissio
 
 resource "aws_iam_access_key" "turbot_firehose_user_access_key" {
   user = aws_iam_user.turbot_firehose_user.name
-}
-
-locals {
-  account_id    = data.aws_caller_identity.current_identity.account_id
-  function_name = aws_lambda_function.lambda_function.function_name
 }

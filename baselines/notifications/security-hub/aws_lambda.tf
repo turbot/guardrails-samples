@@ -7,6 +7,12 @@ resource "aws_lambda_function" "lambda_function" {
   source_code_hash = base64sha256("lambda_handler.zip")
   description      = "Transform notifications from Turbot to finding for SecurityHub"
 
+  environment {
+    variables = {
+      SECURITY_HUB_PRODUCT_ARN = "arn:aws:securityhub:${var.aws_region}:${local.account_id}:product/${local.account_id}/default"
+    }
+  }
+
   tags = {
     "Company" = "Turbot"
     "Product" = "SecurityHubNotifier"
