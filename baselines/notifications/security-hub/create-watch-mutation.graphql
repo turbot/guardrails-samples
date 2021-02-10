@@ -1,0 +1,10 @@
+mutation CreateWatch($input: CreateWatchInput!) {
+  createWatch(input: $input) {
+    filters
+    handler
+    turbot {
+      id
+      resourceId
+    }
+  }
+}
