@@ -16,7 +16,6 @@ resource "turbot_policy_setting" "ec2_instance_root_volume_encryption" {
 }
 
 # Enable if you want to check for existence of a specific KMS key
-
 # resource "turbot_policy_setting" "ec2_root_volume_encryption_kms_key" {
 #     resource        = turbot_smart_folder.aws_encryption.id
 #     type            = "tmod:@turbot/aws-ec2#/policy/types/rootVolumeEncryptionAtRestCustomerManagedKey"
@@ -40,7 +39,6 @@ resource "turbot_policy_setting" "ec2_volume_encryption" {
 }
 
 # Enable if you want to check for existence of a specific kms key
-
 # resource "turbot_policy_setting" "ec2_volume_encryption_kms_key" {
 #     resource        = turbot_smart_folder.aws_encryption.id
 #     type            = "tmod:@turbot/aws-ec2#/policy/types/volumeEncryptionAtRestCustomerManagedKey"
