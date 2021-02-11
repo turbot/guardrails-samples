@@ -1,12 +1,14 @@
 # Baseline - AWS Check Stack
 
-AAWS Check Stack will allow you to set policy to deploy AWS Account IAM Stack , Terraform version for you source and also to apply the Stack Source policy.
+AWS Check Stack will allow you to set policy to deploy AWS Account IAM Stack , Terraform version for you source and also to apply the Stack Source policy.
 
 This also creates the policy for Custom Level Accounts as part of the Turbot RBAC use case if you are creating an IAM Role through Turbot and associating that as a custom role for Turbot to manage to grant time based access.
 
 The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings created by other baselines.
 
 This baseline will not attach to a resource and will need to be done manually using the Turbot UI.
+
+
 
 ## Requirements
 
