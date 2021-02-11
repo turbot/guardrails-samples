@@ -226,9 +226,6 @@ def lambda_handler(event, context):
                 existing_finding_dt = dt.datetime.fromisoformat(existing_finding_update_timestamp[:-1])
                 notification_dt = dt.datetime.fromisoformat(notification_update_timestamp[:-1])
 
-                print(f"existing_finding_dt: {key} - {existing_finding_dt}")
-                print(f"notification_dt: {key} - {notification_dt}")
-
                 if notification_dt <= existing_finding_dt:
                     print(f"More recent finding for: {key} - ignoring update")
                     continue
