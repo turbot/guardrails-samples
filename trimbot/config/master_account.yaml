@@ -1,7 +1,7 @@
 recipe: "./recipes/managed_recipe.yaml"
 workspaces:
   - account: "111122223333"
-    profile: v3-master
+    profile: aws-profile
     turbot:
       account: aaa
       cluster: maincluster

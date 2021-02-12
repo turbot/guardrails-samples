@@ -7,10 +7,11 @@
 # Remove the comment next to the region to include additional regions to the scope  
 # Note: us-east-1 is required since it is an AWS global region for specific services
 
+# https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/regionsDefault
 resource "turbot_policy_setting" "aws_account_available_regions" {
-  resource        = turbot_smart_folder.aws_baseline.id
-  type            = "tmod:@turbot/aws#/policy/types/regionsDefault"
-  value           = <<-REGIONS
+  resource = turbot_smart_folder.aws_baseline.id
+  type     = "tmod:@turbot/aws#/policy/types/regionsDefault"
+  value    = <<-REGIONS
     - us-east-1
     # - us-east-2
     # - us-west-1
