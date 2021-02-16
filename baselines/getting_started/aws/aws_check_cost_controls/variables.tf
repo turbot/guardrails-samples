@@ -192,8 +192,57 @@ variable "resource_active" {
   }
 }
 
+variable "enable_rds_db_cluster_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Cluster start/stop scheduling, by default this is disabled"
+  default     = false
+}
+
+variable "enable_rds_cluster_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Cluster start/stop tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_rds_db_instance_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Instance schedule policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_rds_db_instance_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Instance schedule tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_redshift_cluster_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Redshift Cluster schedule policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_redshift_cluster_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Redshift Cluster schedule tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_workspace_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Workspace schedule policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_workspace_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Workspace schedule tag policies, by default this is disabled"
+  default     = false
+}
+
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
+  default     = "default"
 }
 
 variable "smart_folder_name" {
@@ -205,7 +254,7 @@ variable "smart_folder_name" {
 variable "smart_folder_description" {
   description = "Enter a description for the smart folder"
   type        = string
-  default     = "Defines sets of policies for the AWS check regions baseline"
+  default     = "Defines sets of policies for the AWS cost control baseline"
 }
 
 variable "smart_folder_parent_resource" {

@@ -183,3 +183,12 @@ resource_active = {
     # aws-wafregional-rule                          = "Check: Active"
     # aws-wellarchitected-workload                  = "Check: Active"
 }
+# See file schedules.tf
+enable_rds_db_cluster_schedule_policies =  false
+enable_rds_cluster_schedule_tag_policies = false
+enable_rds_db_instance_schedule_policies = false
+enable_rds_db_instance_schedule_tag_policies = false
+enable_redshift_cluster_schedule_policies = false
+enable_redshift_cluster_schedule_tag_policies = false
+enable_workspace_schedule_policies = false
+enable_workspace_schedule_tag_policies = false
