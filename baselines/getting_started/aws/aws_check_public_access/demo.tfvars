@@ -18,5 +18,5 @@ enable_aws_redshift_cluster_public = false
 enable_aws_redshift_cluster_snapshot_manual_trusted_access = false
 
 # See file, route53.tf
-enable_aws_route53_hostedzone_approved = true
-enable_aws_route53_hostedzone_approved_usage = true
+enable_aws_route53_hostedzone_approved = false
+enable_aws_route53_hostedzone_approved_usage = false
