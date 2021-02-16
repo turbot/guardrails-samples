@@ -1,22 +1,29 @@
-# List of services and resources to be Check: Active.
-# Started with a few resource types to get started aligned with the initial mods installed
-# You can remove the comment per row to include the resource type.  Make sure you have the related service mod installed
+variable "resource_active" {
+  description = <<DESC
+  Map of the list of approved regions controls.
 
-# Acceptable Values:
-  # "Skip"
-  # "Check: Active"
-  # "Enforce: Delete inactive with 1 day warning"
-  # "Enforce: Delete inactive with 3 days warning"
-  # "Enforce: Delete inactive with 7 days warning"
-  # "Enforce: Delete inactive with 14 days warning"
-  # "Enforce: Delete inactive with 30 days warning"
-  # "Enforce: Delete inactive with 60 days warning"
-  # "Enforce: Delete inactive with 90 days warning"
-  # "Enforce: Delete inactive with 180 days warning"
-  # "Enforce: Delete inactive with 365 days warning"
+  Possible values for the key of this map is found in locals.tf defined in the local variable policy_map.
+  For example `aws-ec2 : "tmod:@turbot/aws-ec2#/policy/types/instanceActive"
 
+  The value of the map is one of these possible values:
+      "Skip"
+      "Check: Active"
+      "Enforce: Delete inactive with 1 day warning"
+      "Enforce: Delete inactive with 3 days warning"
+      "Enforce: Delete inactive with 7 days warning"
+      "Enforce: Delete inactive with 14 days warning"
+      "Enforce: Delete inactive with 30 days warning"
+      "Enforce: Delete inactive with 60 days warning"
+      "Enforce: Delete inactive with 90 days warning"
+      "Enforce: Delete inactive with 180 days warning"
+      "Enforce: Delete inactive with 365 days warning"
 
-resource_active = { 
+  Check demo.tfvars for an example of how to set this value.
+
+  NOTE: Default behaviour is to approve all services which means expecting all mods to be installed
+  DESC
+  type        = map(string)
+  default = { 
     # aws-acm-certificate                           = "Check: Active"
     # aws-mq-broker                                 = "Check: Active"
     # aws-mq-configuration                          = "Check: Active"
@@ -182,13 +189,76 @@ resource_active = {
     # aws-waf-webAclV2Regional                      = "Check: Active"
     # aws-wafregional-rule                          = "Check: Active"
     # aws-wellarchitected-workload                  = "Check: Active"
+  }
 }
-# See file schedules.tf
-enable_rds_db_cluster_schedule_policies =  false
-enable_rds_cluster_schedule_tag_policies = false
-enable_rds_db_instance_schedule_policies = false
-enable_rds_db_instance_schedule_tag_policies = false
-enable_redshift_cluster_schedule_policies = false
-enable_redshift_cluster_schedule_tag_policies = false
-enable_workspace_schedule_policies = false
-enable_workspace_schedule_tag_policies = false
+
+variable "enable_rds_db_cluster_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Cluster start/stop scheduling, by default this is disabled"
+  default     = false
+}
+
+variable "enable_rds_cluster_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Cluster start/stop tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_rds_db_instance_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Instance schedule policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_rds_db_instance_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  RDS DB Instance schedule tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_redshift_cluster_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Redshift Cluster schedule policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_redshift_cluster_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Redshift Cluster schedule tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_workspace_schedule_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Workspace schedule policies, by default this is disabled"
+  default     = false
+}
+
+variable "enable_workspace_schedule_tag_policies" {
+  type        = bool
+  description = "Enabling will ensure encryption  Workspace schedule tag policies, by default this is disabled"
+  default     = false
+}
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+  default     = "default"
+}
+
+variable "smart_folder_name" {
+  description = "Smart folder name for the baseline"
+  type        = string
+  default     = "AWS Check Cost Control Policies"
+}
+
+variable "smart_folder_description" {
+  description = "Enter a description for the smart folder"
+  type        = string
+  default     = "Defines sets of policies for the AWS cost control baseline"
+}
+
+variable "smart_folder_parent_resource" {
+  description = "Enter the resource ID or AKA for the parent of the smart folder"
+  type        = string
+  default     = "tmod:@turbot/turbot#/"
+}
