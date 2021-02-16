@@ -1,21 +1,25 @@
-# List of services and resources to be Check: Approved.
-# Started with a few resource types to get started aligned with the initial mods installed
-# You can remove the comment per row to include the resource type.  Make sure you have the related service mod installed
-
-# Acceptable Values:
-  # "Skip"
-  # "Check: Active"
-  # "Enforce: Delete inactive with 1 day warning"
-  # "Enforce: Delete inactive with 3 days warning"
-  # "Enforce: Delete inactive with 7 days warning"
-  # "Enforce: Delete inactive with 14 days warning"
-  # "Enforce: Delete inactive with 30 days warning"
-  # "Enforce: Delete inactive with 60 days warning"
-  # "Enforce: Delete inactive with 90 days warning"
-  # "Enforce: Delete inactive with 180 days warning"
-  # "Enforce: Delete inactive with 365 days warning"
-
-resource_active = { 
+variable "resource_active" {
+  description = <<DESC
+  Map of the list of approved regions controls.
+  Possible values for the key of this map is found in locals.tf defined in the local variable policy_map.
+  For example `aws-ec2 : "tmod:@turbot/aws-ec2#/policy/types/instanceActive"
+  The value of the map is one of these possible values:
+      "Skip"
+      "Check: Active"
+      "Enforce: Delete inactive with 1 day warning"
+      "Enforce: Delete inactive with 3 days warning"
+      "Enforce: Delete inactive with 7 days warning"
+      "Enforce: Delete inactive with 14 days warning"
+      "Enforce: Delete inactive with 30 days warning"
+      "Enforce: Delete inactive with 60 days warning"
+      "Enforce: Delete inactive with 90 days warning"
+      "Enforce: Delete inactive with 180 days warning"
+      "Enforce: Delete inactive with 365 days warning"
+  Check demo.tfvars for an example of how to set this value.
+  NOTE: Default behaviour is to approve all services which means expecting all mods to be installed
+  DESC
+  type        = map(string)
+  default = { 
     # gcp-bigquery-dataset                = "Check: Active"
     # gcp-bigquery-table                  = "Check: Active"
     # gcp-bigtable-cluster                = "Check: Active"
@@ -90,4 +94,28 @@ resource_active = {
     gcp-sql-instance                    = "Check: Active"
     gcp-storage-bucket                  = "Check: Active"
     # gcp-storage-object                  = "Check: Active" # turned off by default to reduce noise
+  }
 }
+
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+}
+
+variable "smart_folder_name" {
+  description = "Smart folder name for the baseline"
+  type        = string
+  default     = "GCP Check Cost Control Policies"
+}
+
+variable "smart_folder_description" {
+  description = "Enter a description for the smart folder"
+  type        = string
+  default     = "Defines sets of policies for the AWS cost control baseline"
+}
+
+variable "smart_folder_parent_resource" {
+  description = "Enter the resource ID or AKA for the parent of the smart folder"
+  type        = string
+  default     = "tmod:@turbot/turbot#/"
+} 

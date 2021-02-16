@@ -2,7 +2,8 @@
 # Note: GCP Address Approved may already be set by another baseline
 # Since the baselines are set in seperate Smart Folders there will not be a conflict
 
-
+# GCP > Network > Address > Approved
+# https://turbot.com/v5/mods/turbot/gcp-network/inspect#/policy/types/addressApproved
 resource "turbot_policy_setting" "gcp_address_approved" {
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-network#/policy/types/addressApproved"
@@ -12,6 +13,8 @@ resource "turbot_policy_setting" "gcp_address_approved" {
           # Enforce: Delete unapproved if new
 }
 
+# GCP > Network > Address > Approved > Network Tier
+# https://turbot.com/v5/mods/turbot/gcp-network/inspect#/policy/types/addressApprovedNetworkTier
 resource "turbot_policy_setting" "gcp_address_approved_network_tier" {
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-network#/policy/types/addressApprovedNetworkTier"

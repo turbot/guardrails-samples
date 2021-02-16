@@ -11,12 +11,16 @@
 # Enforce: Stop for weekend (stop at 10:00pm on Friday)
 
 ## Compute Engine Instance Instances
+# GCP > Compute Engine > Instance > Schedule
+# https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceSchedule
 resource "turbot_policy_setting" "gcp_computeengine_instance_schedule" {
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceSchedule"
   value    = "Skip"
 }
 
+# GCP > Compute Engine > Instance > Schedule > Tag
+# https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceScheduleTag
 # # Schedule Tag Option, more information https://turbot.com/v5/docs/concepts/guardrails/scheduling#scheduling-with-a-tag
 # resource "turbot_policy_setting" "gcp_computeengine_instance_schedule_tag" {
 # resource = turbot_smart_folder.gcp_cost_controls.id
