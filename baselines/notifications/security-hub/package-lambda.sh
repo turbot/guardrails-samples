@@ -6,7 +6,7 @@ pip3 install pymemcache
 deactivate
 
 cd .packaging/lib/python3.8/site-packages
-zip -r ../../../../my-deployment-package.zip .
+zip -r ../../../../deployment-package.zip .
 cd -
-zip -g my-deployment-package.zip lambda_function.py
+zip -g deployment-package.zip lambda_function.py
 rm -rf .packaging

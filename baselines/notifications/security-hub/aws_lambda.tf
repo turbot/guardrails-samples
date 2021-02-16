@@ -6,18 +6,27 @@ resource "null_resource" "create_package" {
 }
 
 resource "aws_lambda_function" "lambda_function" {
-  depends_on       = [null_resource.create_package]
+  depends_on = [
+    null_resource.create_package
+  ]
   role             = aws_iam_role.turbot_firehose_lamdba_role.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.7"
-  filename         = "my-deployment-package.zip"
+  filename         = "deployment-package.zip"
   function_name    = "turbot-firehose-to-sec-hub-write-to-security-hub"
-  source_code_hash = base64sha256("my-deployment-package.zip")
+  source_code_hash = base64sha256("deployment-package.zip")
   description      = "Transform notifications from Turbot to finding for SecurityHub"
+
+  vpc_config {
+    # Every subnet should be able to reach an EFS mount target in the same Availability Zone. Cross-AZ mounts are not permitted.
+    subnet_ids         = [local.subnet.id]
+    security_group_ids = [local.security_group.id]
+  }
 
   environment {
     variables = {
       SECURITY_HUB_PRODUCT_ARN = "arn:aws:securityhub:${var.aws_region}:${local.account_id}:product/${local.account_id}/default"
+      # MEMCACHED_CONFIGURATION_ENDPOINT = "${aws_elasticache_cluster.latest_notification_cache[0].configuration_endpoint}"
     }
   }
 
