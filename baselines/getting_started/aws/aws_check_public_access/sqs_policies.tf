@@ -1,8 +1,6 @@
 # Restrict Public and Cross Account SQS Queues
 # Assumes the default set of Trusted Accounts already set in this baseline.
-# Commented out since these services are not associated to the initial mod install list
 
-# Check on cross access SQS Queues
 # AWS > SQS > Queue > Policy > Trusted Access
 # https://turbot.com/v5/mods/turbot/aws-sqs/inspect#/policy/types/queuePolicyTrustedAccess
 resource "turbot_policy_setting" "aws_sqs_queue_trusted_access" {

@@ -1,11 +1,11 @@
+# Trusted Access Guardrails - https://turbot.com/v5/docs/concepts/guardrails/trusted-access
+
 # Restrict Public and Cross Account SNS Topics
 # Assumes the default set of Trusted Accounts already set in this baseline.
 
-# Check on cross acess SNS Topics
 # AWS > SNS > Topic > Policy > Trusted Access
 # https://turbot.com/v5/mods/turbot/aws-sns/inspect#/policy/types/topicPolicyTrustedAccess
 resource "turbot_policy_setting" "aws_sns_topic_trusted_access" {
-  count    = var.enable_aws_sns_topic_trusted_access ? 1 : 0
   resource = turbot_smart_folder.aws_public_access.id
   type     = "tmod:@turbot/aws-sns#/policy/types/topicPolicyTrustedAccess"
   value    = "Check: Trusted Access"

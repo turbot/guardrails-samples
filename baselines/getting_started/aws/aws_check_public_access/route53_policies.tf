@@ -13,7 +13,6 @@ resource "turbot_policy_setting" "aws_route53_hostedzone_approved" {
   #value   = "Enforce: Delete unapproved if new"
 }
 
-
 # AWS > Route 53 > Hosted Zone > Approved > Usage
 # https://turbot.com/v5/mods/turbot/aws-route53/inspect#/policy/types/hostedZoneApprovedUsage
 resource "turbot_policy_setting" "aws_route53_hostedzone_approved_usage" {
