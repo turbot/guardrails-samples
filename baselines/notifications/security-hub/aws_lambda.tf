@@ -11,7 +11,7 @@ resource "aws_lambda_function" "lambda_function" {
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.7"
   filename         = "my-deployment-package.zip"
-  function_name    = "turbot-firehose-write-to-security-hub"
+  function_name    = "turbot-firehose-to-sec-hub-write-to-security-hub"
   source_code_hash = base64sha256("my-deployment-package.zip")
   description      = "Transform notifications from Turbot to finding for SecurityHub"
 
