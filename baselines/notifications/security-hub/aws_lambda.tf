@@ -1,10 +1,18 @@
+resource "null_resource" "create_package" {
+  # Get notified on all the actions taken by Turbot for the resources at Turbot Root level and its descendant, which have turbot.tag as `Environment:Development`.
+  provisioner "local-exec" {
+    command = "./package-lambda.sh"
+  }
+}
+
 resource "aws_lambda_function" "lambda_function" {
+  depends_on       = [null_resource.create_package]
   role             = aws_iam_role.turbot_firehose_lamdba_role.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.7"
-  filename         = "lambda_handler.zip"
+  filename         = "my-deployment-package.zip"
   function_name    = "turbot-firehose-write-to-security-hub"
-  source_code_hash = base64sha256("lambda_handler.zip")
+  source_code_hash = base64sha256("my-deployment-package.zip")
   description      = "Transform notifications from Turbot to finding for SecurityHub"
 
   environment {

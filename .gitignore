@@ -299,6 +299,7 @@ $RECYCLE.BIN/
 
 # trimbot virtual environment
 .venv
+.packaging
 
 # debuggers
 .vscode
