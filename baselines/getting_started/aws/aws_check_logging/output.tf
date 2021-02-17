@@ -34,6 +34,13 @@ output "enable_aws_s3_bucket_access_logging" {
   value = var.enable_aws_s3_bucket_access_logging
 }
 
+output "enable_configuration_recording" {
+  value = var.enable_configuration_recording
+}
+
+output "enable_aws_vpc_flowlogging" {
+  value = var.enable_aws_vpc_flowlogging
+}
 
 # Turbot profile and smart folder
 

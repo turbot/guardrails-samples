@@ -1,3 +1,15 @@
+variable "enable_configuration_recording" {
+  type        = bool
+  description = "Enable the Configuration Recording policies for baseline"
+  default     = false
+}
+
+variable "enable_aws_vpc_flowlogging" {
+  type        = bool
+  description = "Enable the Configuration Recording policies for baseline"
+  default     = false
+}
+
 variable "enable_cloudtrail_trail_log_validation" {
   type        = bool
   description = "Enable the Cloudtrail logfile validation policies for baseline"
