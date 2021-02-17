@@ -1,12 +1,24 @@
-# Simple tagging controls to check for adhernece to the tagging template example
-# Tag template should be updated per your specific use case
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/tagging
 
-## Sets tagging policy for each resource type in the resource_tags map.
+# AWS > EC2 > Instance > Tags
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/policy/types/instanceTags
+# AWS > EC2 > Snapshot > Tags
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/policy/types/snapshotTags
+# AWS > EC2 > Volume > Tags
+# https://turbot.com/v5/mods/turbot/aws-ec2/inspect#/policy/types/volumeTags
+# AWS > Lambda > Function > Tags
+# https://turbot.com/v5/mods/turbot/aws-lambda/inspect#/policy/types/functionTags
+# AWS > S3 > Bucket > Tags
+# https://turbot.com/v5/mods/turbot/aws-s3/inspect#/policy/types/bucketTags
+# AWS > VPC > Security Group > Tags
+# https://turbot.com/v5/mods/turbot/aws-vpc-security/inspect#/policy/types/securityGroupTags
+# AWS > VPC > VPC > Tags
+# https://turbot.com/v5/mods/turbot/aws-vpc-core/inspect#/policy/types/vpcTags
+
 resource "turbot_policy_setting" "set_resource_tag_policies" {
   for_each = var.resource_tags
   resource = turbot_smart_folder.aws_tagging.id
-  type     = var.policy_map[each.key]
+  type     = local.policy_map[each.key]
   value    = each.value
 }
 
@@ -14,7 +26,7 @@ resource "turbot_policy_setting" "set_resource_tag_policies" {
 resource "turbot_policy_setting" "default_tag_template" {
   for_each = var.resource_tags
   resource = turbot_smart_folder.aws_tagging.id
-  type     = var.policy_map_template[each.key]
+  type     = local.policy_map_template[each.key]
   # GraphQL to pull metadata
   template_input = <<-QUERY
   {
