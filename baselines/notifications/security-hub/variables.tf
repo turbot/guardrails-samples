@@ -1,3 +1,8 @@
+variable "aws_profile" {
+  description = "AWS profile used to install the SecurityHub baseline on the account managed by the profile"
+  type        = string
+}
+
 variable "aws_region" {
   description = "Configures which AWS region SecurityHub baseline resources are created"
   type        = string
@@ -8,6 +13,16 @@ variable "vpc_id" {
     This setting is only used if the variable enabled_caching is set to true.
     When he VPC id is not empty, the script will attempt to install the Lamdba and memcached resources onto this VPC.
     If this value is empty then the script will create a new VPC.
+  DESC
+  type        = string
+  default     = ""
+}
+
+variable "subnet_id" {
+  description = <<-DESC
+    This setting assumes that the setting vpc_id is also set is only used if the variable enabled_caching is set to true.
+    When he VPC id is not empty, the script will attempt to install the Lamdba and memcached resources onto this VPC.
+    If this value is empty then the script will create a new VPC and subnet.
   DESC
   type        = string
   default     = ""
@@ -39,8 +54,3 @@ variable "turbot_profile" {
   default     = "default"
 }
 
-variable "aws_profile" {
-  description = "AWS profile used to install the SecurityHub baseline on the account managed by the profile"
-  type        = string
-  default     = "default"
-}

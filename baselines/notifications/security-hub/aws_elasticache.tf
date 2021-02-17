@@ -9,7 +9,7 @@ resource "aws_elasticache_cluster" "latest_notification_cache" {
   parameter_group_name = "default.memcached1.6"
   port                 = 11211
   subnet_group_name    = aws_elasticache_subnet_group.latest_notification_cache.name
-  security_group_ids   = [local.security_group.id]
+  security_group_ids   = [local.security_group_id]
 
   tags = {
     "Company" = "Turbot"
@@ -20,6 +20,6 @@ resource "aws_elasticache_cluster" "latest_notification_cache" {
 resource "aws_elasticache_subnet_group" "latest_notification_cache" {
   name = "turbot-firehose-to-sec-hub-subnet-group"
   subnet_ids = [
-    local.subnet.id
+    local.subnet_id
   ]
 }

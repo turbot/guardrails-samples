@@ -1,15 +1,15 @@
 data "aws_vpc" "main_vpc" {
-  count = var.enabled_caching && var.vpc_id == "" ? 0 : 1
+  count = local.create_vpc == 1 ? 0 : 1
   id    = var.vpc_id
 }
 
 data "aws_subnet" "main_vpc" {
-  count = var.enabled_caching && var.vpc_id == "" ? 0 : 1
-  id    = var.vpc_id
+  count = local.create_vpc == 1 ? 0 : 1
+  id    = var.subnet_id
 }
 
 resource "aws_vpc" "main_vpc" {
-  count      = var.enabled_caching && var.vpc_id == "" ? 1 : 0
+  count      = local.create_vpc
   cidr_block = "192.0.0.0/28"
 
   tags = {
@@ -20,7 +20,7 @@ resource "aws_vpc" "main_vpc" {
 }
 
 resource "aws_subnet" "main_vpc" {
-  count      = var.enabled_caching && var.vpc_id == "" ? 1 : 0
+  count      = local.create_vpc
   vpc_id     = aws_vpc.main_vpc[0].id
   cidr_block = "192.0.0.0/28"
 
@@ -31,12 +31,8 @@ resource "aws_subnet" "main_vpc" {
   }
 }
 
-output "name" {
-  value = local.vpc
-}
-
 resource "aws_security_group" "allow_memcached_to_lambda" {
-  count       = var.enabled_caching && var.vpc_id == "" ? 0 : 1
+  count       = local.create_vpc == 1 ? 0 : 1
   name        = "turbot-firehose-to-sec-hub-allow-memcached"
   description = "Allows communication to memcached from Lambda"
   vpc_id      = local.vpc.id
@@ -68,7 +64,7 @@ resource "aws_security_group" "allow_memcached_to_lambda" {
 }
 
 resource "aws_default_security_group" "allow_memcached_to_lambda" {
-  count  = var.enabled_caching ? 1 : 0
+  count  = local.create_vpc
   vpc_id = local.vpc.id
 
   ingress {
