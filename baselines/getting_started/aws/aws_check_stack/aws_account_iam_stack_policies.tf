@@ -18,10 +18,10 @@ resource "turbot_policy_setting" "aws_account_iam_stack_tfversion" {
 # AWS > Account > Stack > Source
 # https://turbot.com/v5/mods/turbot/aws/inspect#/policy/types/accountStackSource
 resource "turbot_policy_setting" "aws_account_iam_stack_source" {
-  resource       = turbot_smart_folder.aws_stack.id
-  type           = "tmod:@turbot/aws#/policy/types/accountStackSource"
-  value           = <<-SOURCE
-    ${file("./tf_includes/sourcestack.tf")}
+  resource = turbot_smart_folder.aws_stack.id
+  type     = "tmod:@turbot/aws#/policy/types/accountStackSource"
+  value    = <<-SOURCE
+    ${file("./tf_includes/sourcestack_policies.tf")}
     SOURCE
 }
 
