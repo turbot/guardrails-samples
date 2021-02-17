@@ -6,36 +6,36 @@ output "enable_iam_user_access_key_active_age" {
   value = var.enable_iam_user_access_key_active_age
 }
 
-output "enable_account_Password_PolicySettings" {
-  value = var.enable_account_Password_PolicySettings
+output "enable_account_password_policysettings" {
+  value = var.enable_account_password_policysettings
 }
 
-output "enable_account_Password_PolicySettings_RequireUppercaseCharacters" {
-  value = var.enable_account_Password_PolicySettings_RequireUppercaseCharacters
+output "enable_account_password_policysettings_require_uppercasecharacters" {
+  value = var.enable_account_password_policysettings_require_uppercasecharacters
 }
 
-output "enable_account_Password_PolicySettings_RequireLowercaseCharacters" {
-  value = var.enable_account_Password_PolicySettings_RequireLowercaseCharacters
+output "enable_account_password_policysettings_require_lowercasecharacters" {
+  value = var.enable_account_password_policysettings_require_lowercasecharacters
 }
 
-output "enable_account_Password_PolicySettings_RequireSymbols" {
-  value = var.enable_account_Password_PolicySettings_RequireSymbols
+output "enable_account_password_policysettings_requiresymbols" {
+  value = var.enable_account_password_policysettings_requiresymbols
 }
 
-output "enable_account_Password_PolicySettings_RequireNumbers" {
-  value = var.enable_account_Password_PolicySettings_RequireNumbers
+output "enable_account_password_policysettings_requireNumbers" {
+  value = var.enable_account_password_policysettings_requireNumbers
 }
 
-output "enable_account_Password_PolicySettings_MinimumLength" {
-  value = var.enable_account_Password_PolicySettings_MinimumLength
+output "enable_account_password_policysettings_minimumLength" {
+  value = var.enable_account_password_policysettings_minimumLength
 }
 
-output "enable_account_Password_PolicySettings_ReusePrevention" {
-  value = var.enable_account_Password_PolicySettings_ReusePrevention
+output "enable_account_password_policysettings_reuseprevention" {
+  value = var.enable_account_password_policysettings_reuseprevention
 }
 
-output "enable_account_Password_PolicySettings_MaxAge" {
-  value = var.enable_account_Password_PolicySettings_MaxAge
+output "enable_account_password_policysettings_maxage" {
+  value = var.enable_account_password_policysettings_maxage
 }
 
 output "enable_iam_policy_approved" {

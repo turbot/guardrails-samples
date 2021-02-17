@@ -1,4 +1,10 @@
 
+# Baseline Configuration
+variable "trusted_accounts" {
+  type    = list(string)
+  default = []
+}
+
 variable "enable_iam_user_access_key_active" {
   type        = bool
   description = "Enable the IAM user access key policies for baseline"
@@ -11,49 +17,49 @@ variable "enable_iam_user_access_key_active_age" {
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings" {
+variable "enable_account_password_policysettings" {
   type        = bool
   description = "Enable the IAM user account password policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_RequireUppercaseCharacters" {
+variable "enable_account_password_policysettings_require_uppercasecharacters" {
   type        = bool
   description = "Enable the IAM user account password uppercase character policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_RequireLowercaseCharacters" {
+variable "enable_account_password_policysettings_require_lowercasecharacters" {
   type        = bool
-  description = "Enable the IAM user account password uppercase character policies for baseline"
+  description = "Enable the IAM user account password lowercase character policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_RequireSymbols" {
+variable "enable_account_password_policysettings_requiresymbols" {
   type        = bool
   description = "Enable the IAM user account password symbol setting policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_RequireNumbers" {
+variable "enable_account_password_policysettings_requireNumbers" {
   type        = bool
   description = "Enable the IAM user account password number setting policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_MinimumLength" {
+variable "enable_account_password_policysettings_minimumLength" {
   type        = bool
   description = "Enable the IAM user account password number setting policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_ReusePrevention" {
+variable "enable_account_password_policysettings_reuseprevention" {
   type        = bool
   description = "Enable the IAM user account password reuse setting policies for baseline"
   default     = true
 }
 
-variable "enable_account_Password_PolicySettings_MaxAge" {
+variable "enable_account_password_policysettings_maxage" {
   type        = bool
   description = "Enable the IAM user account password maximum age setting policies for baseline"
   default     = true
@@ -171,7 +177,6 @@ variable "enable_aws_iam_user_policy_attachement_rules" {
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {
