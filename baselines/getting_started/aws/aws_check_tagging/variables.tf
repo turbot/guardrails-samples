@@ -1,3 +1,5 @@
+# Baseline Configuration
+
 variable "resource_tags" {
 description = <<DESC
 
@@ -155,12 +157,10 @@ default = {
   }
 }
 
+# Optional Common Baseline Configuration
+
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-}
-
-provider "turbot" {
-  profile = var.turbot_profile
 }
 
 variable "smart_folder_name" {
