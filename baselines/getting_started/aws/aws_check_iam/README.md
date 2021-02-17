@@ -1,6 +1,6 @@
 # Baseline - AWS Check IAM Policies
 
-AWS Check IAM Policies focuses on enabling all IAM resources baseline policies. Some of these policies are enabled with industry standard best practices and some are enabled with check mode to validate.
+AWS Check IAM Policies focuses on enabling all IAM resources baseline policies. Some policies are enabled with industry standard best practices and some are enabled with check mode to validate.
 
 ## Overview
 
