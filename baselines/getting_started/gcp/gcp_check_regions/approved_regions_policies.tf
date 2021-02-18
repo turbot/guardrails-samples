@@ -1,5 +1,6 @@
 # Approved Regions cloud resources are allowed to reside in. Starting with us regions and global
-
+# GCP > Project > Approved Regions [Default]P
+# https://turbot.com/v5/mods/turbot/gcp/inspect#/policy/types/approvedRegionsDefault
 resource "turbot_policy_setting" "gcp_project_approved_regions" {
   resource        = turbot_smart_folder.gcp_regions.id
   type            = "tmod:@turbot/gcp#/policy/types/approvedRegionsDefault"
@@ -44,6 +45,6 @@ resource "turbot_policy_setting" "gcp_project_approved_regions" {
 resource "turbot_policy_setting" "set_resource_approved_regions_policies" {
   for_each = var.resource_approved_regions
   resource = turbot_smart_folder.gcp_regions.id
-  type     = var.policy_map[each.key]
+  type     = local.policy_map[each.key]
   value    = each.value
 }
