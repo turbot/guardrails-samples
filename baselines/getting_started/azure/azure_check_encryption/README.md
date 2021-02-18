@@ -1,7 +1,15 @@
-# Baseline - AWS Check S3 Policies
+# Baseline - Azure Check Encryption Policies
 
-AWS Check S3 Policies focuses on setting up various industry standard S3 control policies enablement.
+Azure Check Encryption Policies focuses enabling some commonly used AWS resource encryption status. 
 
+Encryption at Rest refers specifically to the encryption of data when written to an underlying storage system.
+
+Encryption in Transit refers specifically to the encryption of data while data moves between your site and the cloud provider or between two services.
+
+More details on 
+
+- [Encryption Guardrails](https://turbot.com/v5/docs/concepts/guardrails/encryption-at-rest)
+- [Encryption in Transit Guardrails](https://turbot.com/v5/docs/concepts/guardrails/encryption-in-transit)
 
 ## Overview
 

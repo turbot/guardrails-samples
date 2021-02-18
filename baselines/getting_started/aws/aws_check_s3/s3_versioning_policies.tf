@@ -21,7 +21,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_versioning_simple" {
 # AWS > S3 > Bucket > Versioning
 # https://turbot.com/v5/mods/turbot/aws-s3/inspect#/policy/types/bucketVersioning
 resource "turbot_policy_setting" "aws_s3_bucket_versioning" {
-  count          = var.use_simple_s3_bucket_versioning ? 0 : 1
+  count          = var.use_simple_s3_bucket_versioning ? 1 : 0
   resource       = turbot_smart_folder.aws_all_s3.id
   type           = "tmod:@turbot/aws-s3#/policy/types/bucketVersioning"
   template_input = <<-QUERY
