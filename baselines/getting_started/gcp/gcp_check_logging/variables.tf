@@ -33,7 +33,7 @@ variable "turbot_profile" {
 variable "smart_folder_name" {
   description = "Smart folder name for the baseline"
   type        = string
-  default     = "Azure Check Logging Policies"
+  default     = "GCP Check Logging Policies"
 }
 
 variable "smart_folder_description" {

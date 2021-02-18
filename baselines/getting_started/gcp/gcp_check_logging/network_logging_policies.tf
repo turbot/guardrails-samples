@@ -11,7 +11,6 @@ resource "turbot_policy_setting" "gcp_network_firewall_logging" {
   # "Enforce: Enabled"
 }
 
-
 # GCP > Network > Backend Service > Logging
 # https://turbot.com/v5/mods/turbot/gcp-network/inspect#/policy/types/regionBackendServiceLogging
 resource "turbot_policy_setting" "gcp_network_backend_service_logging" {
@@ -35,7 +34,6 @@ resource "turbot_policy_setting" "gcp_network_backend_service_logging_sammple_ra
   type     = "tmod:@turbot/gcp-network#/policy/types/backendServiceLoggingSampleRate"
   value    = "1"
 }
-
 
 # GCP > Network > Region Backend Service > Logging
 # https://turbot.com/v5/mods/turbot/gcp-network/inspect#/policy/types/regionBackendServiceLogging
