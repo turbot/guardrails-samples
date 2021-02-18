@@ -20,7 +20,7 @@ variable "smart_folder_parent_resource" {
   description = "Enter the resource ID or AKA for the parent of the smart folder"
   type        = string
   default     = "tmod:@turbot/turbot#/"
-} 
+}
 
 # Baseline configuration
 variable "gcp_project_pubsub_stack_policies" {

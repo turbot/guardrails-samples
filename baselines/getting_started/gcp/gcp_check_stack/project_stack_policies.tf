@@ -6,7 +6,7 @@ resource "turbot_policy_setting" "gcp_project_pubsub_stack" {
   resource = turbot_smart_folder.gcp_stack.id
   type     = "tmod:@turbot/gcp#/policy/types/projectStack"
   value    = "Check: Configured"
-  #value    = "Enforce: Configured"
+            # "Enforce: Configured"
 }
 
 # Sets the Terraform version for your Source
@@ -24,9 +24,9 @@ resource "turbot_policy_setting" "gcp_project_pubsub_stack_tfversion" {
 # https://turbot.com/v5/mods/turbot/gcp/inspect#/policy/types/projectStackSource
 resource "turbot_policy_setting" "gcp_project_pubsub_stack_source" {
   count    = var.gcp_project_pubsub_stack_source_policies ? 1 : 0
-  resource       = turbot_smart_folder.gcp_stack.id
-  type           = "tmod:@turbot/gcp#/policy/types/projectStackSource"
-  value           = <<-SOURCE
+  resource = turbot_smart_folder.gcp_stack.id
+  type     = "tmod:@turbot/gcp#/policy/types/projectStackSource"
+  value    = <<-SOURCE
     ${file("./tf_includes/sourcestack_policies.tf")}
     SOURCE
 }
