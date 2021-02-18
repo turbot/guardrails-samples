@@ -39,7 +39,6 @@ variable "enable_azure_storage_container_public_access_policies" {
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {
