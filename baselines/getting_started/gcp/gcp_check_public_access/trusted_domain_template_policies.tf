@@ -17,7 +17,7 @@ EOT
 
 #Loop through var.service_status and set enable policies
 resource "turbot_policy_setting" "gcp_service_trusted_access" {
-  for_each = var.policy_map
+  for_each = local.policy_map
   resource = turbot_smart_folder.gcp_public_access.id
   type     = each.value
   value    = "Check: Trusted Access > *"
