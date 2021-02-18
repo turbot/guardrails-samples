@@ -20,9 +20,9 @@ output "enable_service_account_policy_trusted_access_policies" {
   value = var.enable_service_account_policy_trusted_access_policies
 }
 
-# output "enable_service_account_policy_trusted_domains_policies" {
-#   value = var.enable_service_account_policy_trusted_domains_policies
-# }
+output "enable_service_account_policy_trusted_domains_policies" {
+  value = var.enable_service_account_policy_trusted_domains_policies
+}
 
 # Turbot profile and smart folder
 
