@@ -1,5 +1,7 @@
+# Baseline Configuration
+
 variable "resource_tags" {
-description = <<DESC
+  description = <<DESC
 List of services and resources to be checked if its Tags are correct.
 These tags must exist for Missing Tag use case if enabled
 required_tags = [
@@ -16,18 +18,18 @@ Acceptable Values:
   "Enforce: Set tags"
 Check demo.tfvars for an example of how to set this value.
 DESC
-type          =map(string)
-default = {
+  type        = map(string)
+  default = {
     # gcp-project                        = "Check: Labels are correct"
     # gcp-bigquery-dataset               = "Check: Labels are correct"
-    gcp-bigquery-table                 = "Check: Labels are correct"
+      gcp-bigquery-table = "Check: Labels are correct"
     # gcp-bigtable-instance              = "Check: Labels are correct"
     # gcp-composer-environment           = "Check: Labels are correct"
-    gcp-computeengine-disk             = "Check: Labels are correct"
+      gcp-computeengine-disk = "Check: Labels are correct"
     # gcp-computeengine-image            = "Check: Labels are correct"
-    gcp-computeengine-instance         = "Check: Labels are correct"
+      gcp-computeengine-instance = "Check: Labels are correct"
     # gcp-computeengine-regionDisk       = "Check: Labels are correct"
-    gcp-computeengine-snapshot         = "Check: Labels are correct"
+      gcp-computeengine-snapshot = "Check: Labels are correct"
     # gcp-dataproc-cluster               = "Check: Labels are correct"
     # gcp-dataproc-job                   = "Check: Labels are correct"
     # gcp-dataproc-workflowTemplate      = "Check: Labels are correct"
@@ -41,10 +43,12 @@ default = {
     # gcp-pubsub-snapshot                = "Check: Labels are correct"
     # gcp-pubsub-subscription            = "Check: Labels are correct"
     # gcp-spanner-instance               = "Check: Labels are correct"
-    gcp-sql-instance                   = "Check: Labels are correct"
-    gcp-storage-bucket                 = "Check: Labels are correct"
+      gcp-sql-instance   = "Check: Labels are correct"
+      gcp-storage-bucket = "Check: Labels are correct"
   }
 }
+
+# Optional Common Baseline Configuration
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
