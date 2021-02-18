@@ -1,6 +1,9 @@
 # Service Account Keys must every 90 days
 
+# GCP > IAM > Service Account Key > Active
+# https://turbot.com/v5/mods/turbot/gcp-iam/inspect#/policy/types/serviceAccountKeyActive
 resource "turbot_policy_setting" "service_account_key_active" {
+  count    = var.enable_service_account_key_active_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_iam.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
   value    = "Check: Active"
@@ -17,7 +20,10 @@ resource "turbot_policy_setting" "service_account_key_active" {
           # "Enforce: Delete inactive with 365 days warning"
 }
 
+# GCP > IAM > Service Account Key > Active > Age
+# https://turbot.com/v5/mods/turbot/gcp-iam/inspect#/policy/types/serviceAccountKeyActiveAge
 resource "turbot_policy_setting" "service_account_key_active_age" {
+  count    = var.enable_service_account_key_active_age_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_iam.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActiveAge"
   value    = "Force inactive if age > 90 days"
@@ -33,9 +39,11 @@ resource "turbot_policy_setting" "service_account_key_active_age" {
           # "Force inactive if age > 365 days"
 }
 
-
+## GCP > IAM > Service Account Key > Approved
+## https://turbot.com/v5/mods/turbot/gcp-iam/inspect#/policy/types/serviceAccountKeyApproved
 # # Alternative is to mark Service Account Keys unapproved
 # resource "turbot_policy_setting" "service_account_key_approved" {
+#   count    = var.service_account_key_approved_policies ? 1 : 0
 #   resource = turbot_smart_folder.gcp_iam.id
 #   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyApproved"
 #   value    = "Check: Approved"
@@ -44,7 +52,10 @@ resource "turbot_policy_setting" "service_account_key_active_age" {
 #           # "Enforce: Delete unapproved if new"
 # }
 
+## GCP > IAM > Service Account Key > Approved > Usage
+## https://turbot.com/v5/mods/turbot/gcp-iam/inspect#/policy/types/serviceAccountKeyApprovedUsage
 # resource "turbot_policy_setting" "service_account_key_approved_usage" {
+#   count    = var.service_account_key_approved_usage_policies ? 1 : 0
 #   resource = turbot_smart_folder.gcp_iam.id
 #   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyApprovedUsage"
 #   value    = "Not approved"
