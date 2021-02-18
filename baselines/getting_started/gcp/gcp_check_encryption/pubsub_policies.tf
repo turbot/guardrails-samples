@@ -1,4 +1,4 @@
-###  Pub/Sub Topic Unencrypted 
+###  Pub/Sub Topic Unencrypted
 # GCP > Pub/Sub > Topic > Approved
 # https://turbot.com/v5/mods/turbot/gcp-pubsub/inspect#/policy/types/topicApproved
 resource "turbot_policy_setting" "gcp_pubsub_topic_approved" {

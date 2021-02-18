@@ -1,4 +1,5 @@
-###  Dataproc Cluster Unencrypted 
+#  Dataproc Cluster Unencrypted
+
 # GCP > Dataproc > Cluster > Approved
 # https://turbot.com/v5/mods/turbot/gcp-dataproc/inspect#/policy/types/clusterApproved
 resource "turbot_policy_setting" "gcp_dataproc_cluster_approved" {

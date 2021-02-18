@@ -1,4 +1,5 @@
-###  Dataflow Jobs Unencrypted 
+#  Dataflow Jobs Unencrypted
+
 # GCP > Dataflow > Job > Approved
 # https://turbot.com/v5/mods/turbot/gcp-dataflow/inspect#/policy/types/jobApproved
 resource "turbot_policy_setting" "gcp_dataflow_job_approved" {

@@ -37,21 +37,56 @@ If not previously run, Initialize Terraform to get all necessary providers for t
    ```shell
    terraform init
    ```
+### Profile name as input
+
+The baseline example set requires you to provide `turbot_profile` name as input. This is to help in case you are having more profiles than only `default`. In case it's default, specify name as default.
+
+```shell
+var.turbot_profile
+  Enter profile matching your turbot cli credentials.
+  Enter a value: <Enter name of the profile>
+```
 
 ### Deploying demo example
 
 1. Navigate to the folder of the baseline
 2. Initialize Terraform
-3. Apply the baseline.
+3. Apply the baseline using the demo input variable file [demo.tfvars](demo.tfvars)
 
 On the terminal this will look like:
 
 ```shell
 cd <baseline_folder>
 terraform init
-terraform apply
+terraform apply --var-file demo.tfvars
 ```
+**Note** 
+- Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
 
+- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
+
+### Input variable files
+
+Input variable files allow for the user to configure configuration definitions for multiple environments in different files.
+
+This baseline comes with an example input variable file called [demo.tfvars](demo.tfvars).
+
+It will be used to define which parts of the baseline to apply and which to ignore.
+
+The variables that can be overwritten by the input variable files i.e. [demo.tfvars](demo.tfvars) are defined in the [variables.tf](variables.tf) file.
+
+Further details found in official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
+
+### Apply baseline using input variable files
+
+If seeking to apply the baseline using an input variable file such as [demo.tfvars](demo.tfvars).
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform apply --var-file=demo.tfvars
+   ```
 ### Apply baseline without input variable file
 
 The baseline can be applied without an input variable file.
@@ -78,6 +113,17 @@ If seeking to apply the baseline without using an input variable file.
 
    ```shell
    terraform destroy
+   ```
+
+### Destroy using input variable files
+
+If seeking to destoy the baseline configuration using an input variable file such as [demo.tfvars](demo.tfvars).
+
+1. Navigate to the folder containing the baseline configuration.
+2. Run the command:
+
+   ```shell
+   terraform destroy --var-file=demo.tfvars
    ```
 
 ## Commenting strategy

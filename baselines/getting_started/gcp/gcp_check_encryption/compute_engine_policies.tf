@@ -1,4 +1,5 @@
-###  Compute Engine Disk Unencrypted 
+# Compute Engine Disk Unencrypted 
+
 # GCP > Compute Engine > Disk > Approved
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/diskApproved
 resource "turbot_policy_setting" "gcp_computeengine_disk_approved" {
@@ -23,7 +24,6 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_approved_encryption_at_
 
 # GCP > Compute Engine > Image > Approved
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/imageApproved
-###  Compute Engine Image Unencrypted 
 resource "turbot_policy_setting" "gcp_computeengine_image_approved" {
   count    = var.enable_computeengine_image_approved_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_encryption.id
