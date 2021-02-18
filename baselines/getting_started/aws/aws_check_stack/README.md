@@ -2,7 +2,9 @@
 
 AWS Check Stack will allow you to set policy to deploy AWS Account IAM Stack , Terraform version for you source and also to apply the Stack Source policy.
 
-This also creates the policy for Custom Level Accounts as part of the Turbot RBAC use case if you are creating an IAM Role through Turbot and associating that as a custom role for Turbot to manage to grant time based access.
+More info 
+
+- [Stacks and the Configured Guardrails](https://turbot.com/v5/docs/concepts/guardrails/configured)
 
 ## Overview
 
