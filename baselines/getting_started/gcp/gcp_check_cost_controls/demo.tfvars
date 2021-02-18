@@ -91,3 +91,6 @@ resource_active = {
     gcp-storage-bucket                  = "Check: Active"
     # gcp-storage-object                  = "Check: Active" # turned off by default to reduce noise
 }
+
+# See file schedules_policies.tf
+gcp_computeengine_instance_schedule_tag_policies = false

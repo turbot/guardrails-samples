@@ -17,3 +17,19 @@ output "smart_folder_parent_resource" {
 output "resource_active" {
   value = var.resource_active
 }
+
+output "gcp_computeengine_disk_active_attached_policies" {
+  value = var.gcp_computeengine_disk_active_attached_policies
+}
+
+output "gcp_computeengine_disk_active_policies" {
+  value = var.gcp_computeengine_disk_active_policies
+}
+
+output "gcp_network_address_approved_policies" {
+  value = var.gcp_network_address_approved_policies
+}
+
+output "gcp_address_approved_network_tier_policies" {
+  value = var.gcp_address_approved_network_tier_policies
+}

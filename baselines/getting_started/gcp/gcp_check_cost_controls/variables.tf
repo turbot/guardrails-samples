@@ -97,6 +97,41 @@ variable "resource_active" {
   }
 }
 
+variable "gcp_computeengine_disk_active_policies" {
+  type        = bool
+  description = "Enable the Compute Engine Disk Active policies for baseline"
+  default     = true
+}
+
+variable "gcp_computeengine_disk_active_attached_policies" {
+  type        = bool
+  description = "Enable the Compute Engine Disk Active Attached policies for baseline"
+  default     = true
+}
+
+variable "gcp_network_address_approved_policies" {
+  type        = bool
+  description = "Enable the GCP Network address approved policies for baseline"
+  default     = true
+}
+
+variable "gcp_address_approved_network_tier_policies" {
+  type        = bool
+  description = "Enable the GCP Network address Network Tier policies for baseline"
+  default     = true
+}
+
+variable "gcp_computeengine_instance_schedule_policies" {
+  type        = bool
+  description = "Enable the GCP Compute Engine Instance Schedule policies for baseline"
+  default     = true
+}
+
+variable "gcp_computeengine_instance_schedule_tag_policies" {
+  type        = bool
+  description = "Enable the GCP Compute Engine Instance Schedule Tag policies for baseline"
+  default     = false
+}
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."

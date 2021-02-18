@@ -6,43 +6,27 @@
 # GCP > Compute Engine > Instance > Active
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceActive
 resource "turbot_policy_setting" "set_resource_active_policies" {
-  for_each        = var.resource_active
-  resource        = turbot_smart_folder.gcp_cost_controls.id
-  type            = local.policy_map[each.key]
-  value           = each.value
+  for_each = var.resource_active
+  resource = turbot_smart_folder.gcp_cost_controls.id
+  type     = local.policy_map[each.key]
+  value    = each.value
 }
 
 # GCP > Compute Engine > Instance > Active > Age
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceActiveAge
 resource "turbot_policy_setting" "set_resource_age_policies" {
-  for_each        = var.resource_active
-  resource        = turbot_smart_folder.gcp_cost_controls.id
-  type            = local.policy_map_age[each.key]
-  value           = "Force inactive if age > 60 days"
-                    # Skip
-                    # Force inactive if age > 1 day
-                    # Force inactive if age > 3 days
-                    # Force inactive if age > 7 days
-                    # Force inactive if age > 14 days
-                    # Force inactive if age > 30 days
-                    # Force inactive if age > 60 days
-                    # Force inactive if age > 90 days
-                    # Force inactive if age > 180 days
-                    # Force inactive if age > 365 days
-}
-
-# GCP > Compute Engine > Disk > Active
-# https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/diskActive
-resource "turbot_policy_setting" "gcp_computeengine_disk_active" {
+  for_each = var.resource_active
   resource = turbot_smart_folder.gcp_cost_controls.id
-  type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskActive"
-  value    = "Check: Active"
-}
-
-# GCP > Compute Engine > Disk > Active > Attached
-# https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/diskActiveAttached
-resource "turbot_policy_setting" "gcp_computeengine_disk_active_attached" {
-  resource = turbot_smart_folder.gcp_cost_controls.id
-  type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskActiveAttached"
-  value    = "Force inactive if unattached"
-}
+  type     = local.policy_map_age[each.key]
+  value    = "Force inactive if age > 60 days"
+            # Skip
+            # Force inactive if age > 1 day
+            # Force inactive if age > 3 days
+            # Force inactive if age > 7 days
+            # Force inactive if age > 14 days
+            # Force inactive if age > 30 days
+            # Force inactive if age > 60 days
+            # Force inactive if age > 90 days
+            # Force inactive if age > 180 days
+            # Force inactive if age > 365 days
+          }
