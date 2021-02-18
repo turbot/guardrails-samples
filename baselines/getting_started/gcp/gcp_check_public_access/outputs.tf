@@ -8,7 +8,27 @@ output "gcp_network_firewall_ingress_rules_approved" {
 }
 
 output "gcp_service_trusted_access" {
-  value =  var.gcp_service_trusted_access
+  value = var.gcp_service_trusted_access
+}
+
+output "enable_instance_block_project_wide_ssh_keys_policies" {
+  value = var.enable_instance_block_project_wide_ssh_keys_policies
+}
+
+output "enable_instance_external_ip_addresses_policies" {
+  value = var.enable_instance_external_ip_addresses_policies
+}
+
+output "enable_instance_serial_port_access_policies" {
+  value = var.enable_instance_serial_port_access_policies
+}
+
+output "enable_gcp_network_firewall_ingress_rules_approved_policies" {
+  value = var.enable_gcp_network_firewall_ingress_rules_approved_policies
+}
+
+output "enable_gcp_network_firewall_ingress_rules_approved_rules_policies" {
+  value = var.enable_gcp_network_firewall_ingress_rules_approved_rules_policies
 }
 
 # Smart folder 

@@ -2,7 +2,6 @@
 # Individual services can have their own set of trusted accounts as well
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/trusted-access
 
-
 # List of Trusted Domains
 # Could also consider Trusted Groups, Projects, Service Accounts, and Users
 
