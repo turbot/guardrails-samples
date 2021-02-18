@@ -6,6 +6,7 @@
 
 ## GCP > Network > Firewall > Ingress Rules > Approved
 resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
+  count    = var.enable_network_region_backend_service_logging_sammple_rate_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_public_access.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
   value    = "Check: Approved"
