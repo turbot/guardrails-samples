@@ -7,13 +7,13 @@ variable "turbot_profile" {
 variable "smart_folder_name" {
   description = "Smart folder name for the baseline"
   type        = string
-  default     = "AWS Stack Example Policies"
+  default     = "GCP Stack Example Policies"
 }
 
 variable "smart_folder_description" {
   description = "Enter a description for the smart folder"
   type        = string
-  default     = "Defines sets of policies for the AWS Stack baseline"
+  default     = "Defines sets of policies for the GCP Stack baseline"
 }
 
 variable "smart_folder_parent_resource" {
