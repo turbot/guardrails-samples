@@ -1,8 +1,9 @@
-# Baseline - GCP Check Public Access 
+# Baseline - Azure Check Public Access Policies
 
-GCP Check Public Access Policies focuses enabling some commonly used GCP resource public access status. 
+Azure Check Public Access Policies focuses enabling some commonly used Azure resource public access status. 
 
-More details on 
+More info
+
 - [Public Access Guardrails](https://turbot.com/v5/docs/concepts/guardrails/public-access)
 
 - [Trusted Access Guardrails](https://turbot.com/v5/docs/concepts/guardrails/trusted-access)
