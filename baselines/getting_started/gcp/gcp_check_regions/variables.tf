@@ -55,6 +55,8 @@ variable "resource_approved_regions" {
   }
 }
 
+# Optional Common Baseline Configuration
+
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
 }

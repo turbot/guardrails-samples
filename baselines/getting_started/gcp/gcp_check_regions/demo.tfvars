@@ -45,7 +45,6 @@ resource_approved_regions = {
   # gcp-storage-object                   = "Check: Approved"  # turned off by default to reduce noise
 }
 
-
 # For reference, resources that do not reside in a specific region, therefore cannot limit which regions the resource resides in:
   # gcp-appengine
   # gcp-bigquery-dataset
@@ -70,4 +69,5 @@ resource_approved_regions = {
   # gcp-orgpolicy
   # gcp-pubsub-snapshot
   # gcp-pubsub-subscription 
-  # gcp-pubsub-topic
+  # gcp-pubsub-
+  
