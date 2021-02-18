@@ -6,6 +6,13 @@ variable "aws_profile" {
 variable "aws_region" {
   description = "Configures which AWS region SecurityHub baseline resources are created"
   type        = string
+  default     = "us-east-1"
+}
+
+variable "aws_availability_zone" {
+  description = "Configures which AWS region SecurityHub baseline resources are created"
+  type        = string
+  default     = "us-east-1a"
 }
 
 variable "vpc_id" {
@@ -18,11 +25,17 @@ variable "vpc_id" {
   default     = ""
 }
 
-variable "subnet_id" {
+variable "public_subnet_id" {
   description = <<-DESC
-    This setting assumes that the setting vpc_id is also set is only used if the variable enabled_caching is set to true.
-    When he VPC id is not empty, the script will attempt to install the Lamdba and memcached resources onto this VPC.
-    If this value is empty then the script will create a new VPC and subnet.
+  TODO
+  DESC
+  type        = string
+  default     = ""
+}
+
+variable "private_subnet_id" {
+  description = <<-DESC
+  TODO
   DESC
   type        = string
   default     = ""
@@ -31,9 +44,9 @@ variable "subnet_id" {
 variable "enabled_caching" {
   type        = bool
   description = <<-DESC
-    If the variable is set to false then the script installs the notification queue only and Lambda handler only.
-    If the variable is set to trye then the script installs the notification queue, Lambda handler only and memcache to 
-    cache the last results to manage network race conditions.
+  If the variable is set to false then the script installs the notification queue only and Lambda handler only.
+  If the variable is set to trye then the script installs the notification queue, Lambda handler only and memcache to 
+  cache the last results to manage network race conditions.
   DESC
   default     = true
 }
@@ -53,4 +66,3 @@ variable "turbot_profile" {
   type        = string
   default     = "default"
 }
-
