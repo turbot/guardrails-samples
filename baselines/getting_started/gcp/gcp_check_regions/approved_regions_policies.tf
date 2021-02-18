@@ -2,9 +2,9 @@
 # GCP > Project > Approved Regions [Default]P
 # https://turbot.com/v5/mods/turbot/gcp/inspect#/policy/types/approvedRegionsDefault
 resource "turbot_policy_setting" "gcp_project_approved_regions" {
-  resource        = turbot_smart_folder.gcp_regions.id
-  type            = "tmod:@turbot/gcp#/policy/types/approvedRegionsDefault"
-  value           = <<-ALLOWEDREGIONS
+  resource = turbot_smart_folder.gcp_regions.id
+  type     = "tmod:@turbot/gcp#/policy/types/approvedRegionsDefault"
+  value    = <<-ALLOWEDREGIONS
     # - asia-east1
     # - asia-east2
     # - asia-northeast1
