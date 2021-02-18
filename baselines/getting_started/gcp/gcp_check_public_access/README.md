@@ -7,7 +7,7 @@ More details on
 
 - [Trusted Access Guardrails](https://turbot.com/v5/docs/concepts/guardrails/trusted-access)
 
-- [Sample OCL Implementaion Example](https://turbot.com/v5/docs/guides/managing-policies/OCL)
+- [Sample OCL Implementation Example](https://turbot.com/v5/docs/guides/managing-policies/OCL)
 
 - [Object Control List (OCL)](https://turbot.com/v5/docs/reference/ocl)
 

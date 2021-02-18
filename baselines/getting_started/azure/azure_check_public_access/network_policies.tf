@@ -10,9 +10,9 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
   resource = turbot_smart_folder.azure_public_access.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
   value    = "Check: Approved"
-              # "Skip"
-              # "Check: Approved"
-              # "Enforce: Delete unapproved"
+            # "Skip"
+            # "Check: Approved"
+            # "Enforce: Delete unapproved"
 }
 
 # Azure > Network > Network Security Group > Ingress Rules > Approved > Rules
