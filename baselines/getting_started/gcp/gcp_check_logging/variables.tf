@@ -39,7 +39,7 @@ variable "smart_folder_name" {
 variable "smart_folder_description" {
   description = "Enter a description for the smart folder"
   type        = string
-  default     = "Defines sets of policies for the Azure check logging baseline"
+  default     = "Defines sets of policies for the GCP check logging baseline"
 }
 
 variable "smart_folder_parent_resource" {
