@@ -1,6 +1,6 @@
-# Baseline - AWS Check Stack
+# Baseline - GCP Check Stack
 
-AWS Check Stack will allow you to set policy to deploy AWS Account IAM Stack , Terraform version for you source and also to apply the Stack Source policy.
+GCP Check Stack will allow you to set policy to deploy GCP Account IAM Stack , Terraform version for you source and also to apply the Stack Source policy.
 
 More info 
 
