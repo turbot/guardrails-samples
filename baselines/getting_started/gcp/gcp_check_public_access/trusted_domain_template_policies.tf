@@ -2,7 +2,6 @@
 # Individual services can have their own set of trusted accounts as well
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/trusted-access
 
-
 # List of Trusted Domains
 # Could also consider Trusted Groups, Projects, Service Accounts, and Users
 
@@ -17,7 +16,7 @@ EOT
 
 #Loop through var.service_status and set enable policies
 resource "turbot_policy_setting" "gcp_service_trusted_access" {
-  for_each = var.policy_map
+  for_each = local.policy_map
   resource = turbot_smart_folder.gcp_public_access.id
   type     = each.value
   value    = "Check: Trusted Access > *"
