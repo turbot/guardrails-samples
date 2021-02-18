@@ -15,13 +15,13 @@ variable "enable_service_account_key_active_age_policies" {
 variable "service_account_key_approved_policies" {
   type        = bool
   description = "Enable the IAM Service Account password policies for baseline"
-  default     = true
+  default     = false
 }
 
 variable "service_account_key_approved_usage_policies" {
   type        = bool
   description = "Enable the IAM Service Account Key approved policies for baseline"
-  default     = true
+  default     = false
 }
 
 variable "enable_service_account_policy_trusted_access_policies" {
@@ -33,7 +33,7 @@ variable "enable_service_account_policy_trusted_access_policies" {
 variable "enable_service_account_policy_trusted_domains_policies" {
   type        = bool
   description = "Enable the IAM Service Account Trusted Domain policies for baseline"
-  default     = true
+  default     = false
 }
 
 # Optional Common Baseline Configuration
