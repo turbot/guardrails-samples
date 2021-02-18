@@ -1,5 +1,3 @@
-# Optional Common Baseline Configuration
-
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
 }
@@ -20,4 +18,19 @@ variable "smart_folder_parent_resource" {
   description = "Enter the resource ID or AKA for the parent of the smart folder"
   type        = string
   default     = "tmod:@turbot/turbot#/"
+}
+
+variable "instance_serial_port_access" {
+  type        = string
+  default = "Check: Enabled"
+}
+
+variable "gcp_network_firewall_ingress_rules_approved" {
+  type        = string
+  default = "Check: Approved"
+}
+
+variable "gcp_service_trusted_access" {
+  type        = string
+  default = "Check: Trusted Access > *"
 }
