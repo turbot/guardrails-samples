@@ -1,6 +1,22 @@
-# Baseline - AWS Baseline Policies
+# Baseline - Azure Baseline Policies
 
-AWS Baseline Policies focuses on base minimum set of example policies & services to start with.
+Azure Baseline Policies focuses on base minimum set of example policies & services to start with.
+
+This baseline turns on Azure services that are provided by an input variable file.
+If none are provided then all services will be enabled.
+Enabling / disabling a service consists of enabling / disabling the service and API access to that service.
+The variable to use is `service_status`.
+
+The baseline will configure GCP to use polling unless specified to use event handling in the input variable file.
+The variable to use is `use_event_polling`.
+
+Additionally the baseline will enable CIS and set attestation of CIS to be a year.
+Currently there is no variable to control this behavior.
+
+## Important
+
+Running the baseline without an input variable file assumes that you have **ALL** GCP mods installed.
+To limit the baseline, look at the example input variable file [demo.tfvars](demo.tfvars).
 
 ## Overview
 
@@ -54,6 +70,8 @@ cd <baseline_folder>
 terraform init
 terraform apply --var-file demo.tfvars
 ```
+`Prefer this baseline script to run with demo.tfvar file to avoid providing provider_status, provider_registration_map, enabled_policy_map`
+
 **Note** 
 - Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
 
