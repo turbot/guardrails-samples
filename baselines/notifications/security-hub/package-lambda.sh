@@ -5,6 +5,7 @@ source .packaging/bin/activate
 pip3 install pymemcache
 deactivate
 
+rm deployment-package.zip
 cd .packaging/lib/python3.8/site-packages
 zip -r ../../../../deployment-package.zip .
 cd -

@@ -169,7 +169,7 @@ resource "aws_iam_role_policy" "turbot_firehose_lamdba_role_cloudwatch_permissio
       {
         "Effect": "Allow",
         "Action": "logs:CreateLogGroup",
-        "Resource": "arn:aws:logs:eu-west-2:210125595713:*"
+        "Resource": "arn:aws:logs:${var.aws_region}:${local.account_id}:*"
       },
       {
         "Effect": "Allow",

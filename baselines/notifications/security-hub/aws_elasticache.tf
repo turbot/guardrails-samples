@@ -1,4 +1,5 @@
 resource "aws_elasticache_cluster" "latest_notification_cache" {
+  depends_on           = [aws_vpc.main_vpc]
   count                = var.enabled_caching ? 1 : 0
   cluster_id           = "turbot-firehose-to-sec-hub-latest-cache"
   az_mode              = "single-az"
@@ -8,11 +9,12 @@ resource "aws_elasticache_cluster" "latest_notification_cache" {
   parameter_group_name = "default.memcached1.6"
   port                 = 11211
   subnet_group_name    = aws_elasticache_subnet_group.latest_notification_cache[0].name
-  security_group_ids   = [local.security_group_id]
+  security_group_ids   = [aws_security_group.allow_memcached_to_lambda[0].id]
 
   tags = {
     "Company" = "Turbot"
     "Product" = "SecurityHubNotifier"
+    "Name"    = "turbot-firehose-to-sec-hub-latest-cache"
   }
 }
 

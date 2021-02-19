@@ -1,3 +1,5 @@
-# aws_region            = "eu-west-2"
-# aws_availability_zone = "eu-west-2a"
 aws_profile = "default"
+# TODO
+# aws_region      = "us-east-1"
+aws_region = "eu-west-2"
+rebuild    = true

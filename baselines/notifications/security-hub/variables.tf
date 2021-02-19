@@ -6,13 +6,6 @@ variable "aws_profile" {
 variable "aws_region" {
   description = "Configures which AWS region SecurityHub baseline resources are created"
   type        = string
-  default     = "us-east-1"
-}
-
-variable "aws_availability_zone" {
-  description = "Configures which AWS region SecurityHub baseline resources are created"
-  type        = string
-  default     = "us-east-1a"
 }
 
 variable "vpc_id" {
@@ -65,4 +58,14 @@ variable "turbot_profile" {
   description = "Turbot profile used to install policies for a workspace managed by the profile"
   type        = string
   default     = "default"
+}
+
+variable "rebuild" {
+  description = <<-DESC
+  This setting will rebuild the deployment package to be uploaded to lambda and requires bash.
+
+  Useful in development phase.
+  DESC
+  type        = bool
+  default     = false
 }
