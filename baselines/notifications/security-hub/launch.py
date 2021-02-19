@@ -1,5 +1,27 @@
 import lambda_function
 
+# event = {
+#     "Records": [
+#         {
+#             "messageId": "1f6fd4df-5b11-4d11-acf6-957b6e99fa6e",
+#             "receiptHandle": "AQEBfcsRZ9mv0NoPLwd2Jdhtok3Kf1Dae0jzYo9k1lu0wRlZUZJ7siZt6ffv3/+xA5gH70/8GvOzYLHwNtbmPdt5mcT/mXIXvb2rAH1AYZAIfkI0iVEfGHEOxhaxHhbKNQk2KBHY1cJNojTzhMJi5DDiY0twE3/1cN+tOJZr0OKl2Ai8Hw51UzmV4cWrGqI1Hijsuz05rTfOGWUY4IN8Olw9WI44Nu/qeNrNJHwJlbGV6AKv55/JzDDUxkiCuXEZSPVnSVvWFJZnDpkwudvMC6gJ80G6DCJfOIU4QiqwootN1C0tvvqslO0yhr9BdXzxzZlyMpSbq33ObJLqFR2pKbDw/ftZAkPsRQlXtXXI+EapImMA494WIkYM4467dPIZInfXmaZnloTQNBhZuejqGazRB8fskGU5ynRsi5o8Zvsla08=",
+#             "body": "{\n  \"Type\" : \"Notification\",\n  \"MessageId\" : \"cb145d6d-93e3-55d0-943a-05f3edaeaa77\",\n  \"TopicArn\" : \"arn:aws:sns:eu-west-2:210125595713:turbot-firehose-user-sns-topic\",\n  \"Subject\" : \"[punisher-turbot] Control Approved updated by Turbot Identity\",\n  \"Message\" : \"{\\\"notificationType\\\":\\\"control_updated\\\",\\\"actor\\\":{\\\"identity\\\":{\\\"picture\\\":\\\"https://www.gravatar.com/avatar/cb9ff8606c24daf9cda1d82615bd7a8e\\\",\\\"turbot\\\":{\\\"title\\\":\\\"Turbot Identity\\\",\\\"id\\\":\\\"173249891011852\\\"}}},\\\"turbot\\\":{\\\"type\\\":null,\\\"controlId\\\":\\\"1000000\\\",\\\"controlOldVersionId\\\":\\\"216036333047576\\\",\\\"controlNewVersionId\\\":\\\"216036336629722\\\",\\\"createTimestamp\\\":\\\"2021-02-11T00:36:24.987Z\\\"},\\\"control\\\":{\\\"state\\\":\\\"alarm\\\",\\\"reason\\\":\\\"Approved\\\",\\\"details\\\":[{\\\"key\\\":\\\"Usage\\\",\\\"value\\\":\\\"Approved\\\"},{\\\"key\\\":\\\"Regions\\\",\\\"value\\\":\\\"Approved\\\"},{\\\"key\\\":\\\"Budget\\\",\\\"value\\\":\\\"Skipped\\\"},{\\\"key\\\":\\\"RESULT\\\",\\\"value\\\":\\\"Approved\\\"}],\\\"type\\\":{\\\"trunk\\\":{\\\"title\\\":\\\"AWS > S3 > Bucket > Approved\\\"}},\\\"turbot\\\":{\\\"id\\\":\\\"1\\\"},\\\"resource\\\":{\\\"akas\\\":[\\\"arn:aws:s3:::raj-switch-role-bucket\\\"],\\\"metadata\\\":{\\\"aws\\\":{\\\"accountId\\\":\\\"688720832404\\\",\\\"partition\\\":\\\"aws\\\",\\\"regionName\\\":\\\"us-east-2\\\"},\\\"createTimestamp\\\":\\\"2021-01-18T16:35:52.000Z\\\"},\\\"title\\\":null,\\\"turbot\\\":{\\\"id\\\":\\\"213971924734526\\\"}}},\\\"oldControl\\\":{\\\"state\\\":\\\"alarm\\\",\\\"turbot\\\":{\\\"id\\\":\\\"1000000\\\"}}}\",\n  \"Timestamp\" : \"2021-02-11T00:36:29.844Z\",\n  \"SignatureVersion\" : \"1\",\n  \"Signature\" : \"tXPOjoPlElJtiKWX5EIXMwLs7JRXKnj+xj1n4KL19w2tbgqbzmvV+ncRAogYoxdhI72oFvo1vaz2edOBB8O/9l9+8TvlLwx3MXw3fJidwOA6cXJMpux9ah+Fs/D137ebg7W24ibChWb+4CLDDAIyQUn5b1dtwdkN9ayein6uwIF7Bxr+N9M35homuEkDAZyVjvAPGd5TIn/EB+5WdLxa9UxpVHaTvJDXMvfjopdV37YzYgjYqupIhGmjRfE7JjXPqgnrONdoVQdbPxulQTKe1L4B0DsH1xORMSl+ZjLa2WacMLRIMJfFxM5qRcK/QJ6uhLpt+XUuDdqZSqirq4/0WQ==\",\n  \"SigningCertURL\" : \"https://sns.eu-west-2.amazonaws.com/SimpleNotificationService-010a507c1833636cd94bdb98bd93083a.pem\",\n  \"UnsubscribeURL\" : \"https://sns.eu-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-west-2:210125595713:turbot-firehose-user-sns-topic:a036479e-e982-4824-ad26-96f36636a384\"\n}",
+#             "attributes": {
+#                 "ApproximateReceiveCount": "1",
+#                 "SentTimestamp": "1613003789875",
+#                 "SenderId": "AIDAIVEA3AGEU7NF6DRAG",
+#                 "ApproximateFirstReceiveTimestamp": "1613003789876"
+#             },
+#             "messageAttributes": {},
+#             "md5OfMessageAttributes": None,
+#             "md5OfBody": "2e8279f5dd14f0c58de655e94a1ab551",
+#             "eventSource": "aws:sqs",
+#             "eventSourceARN": "arn:aws:sqs:eu-west-2:210125595713:turbot-firehose-notification-queue",
+#             "awsRegion": "eu-west-2"
+#         }
+#     ]
+# }
+
 event = {
     "Records": [
         {

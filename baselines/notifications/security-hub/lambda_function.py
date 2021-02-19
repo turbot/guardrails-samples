@@ -43,7 +43,10 @@ def create_insert_finding(id, product_arn, notification):
     finding["AwsAccountId"] = aws_metadata["accountId"]
     finding["CreatedAt"] = notification["turbot"]["createTimestamp"]
     finding["UpdatedAt"] = notification["turbot"]["createTimestamp"]
-    finding["Description"] = control["reason"]
+
+    finding["Description"] = "None reason given"
+    if control["reason"] != None:
+        finding["Description"] = control["reason"]
 
     resources = []
 
@@ -98,6 +101,17 @@ def get_records(raw_records, region, account_id):
         control = notification["control"]
         control_id = control["turbot"]["id"]
         finding_id = create_finding_id(region, account_id, control_id)
+
+        notification_type = notification["notificationType"]
+        if notification_type != "control_updated":
+            print(f"Record ignored - {notification_type} - is not handled currently")
+            continue
+
+        resource_metadata = control["resource"]["metadata"]
+        if "aws" not in resource_metadata:
+            print("Record ignored - cloud provider not AWS")
+            continue
+
         new_record_timestamp = notification["turbot"]["createTimestamp"]
 
         print(f"Raw record - {finding_id} - {new_record_timestamp}")
@@ -174,6 +188,7 @@ def is_more_recent_or_same(date, reference_date):
     return reference <= current
 
 
+# TODO: Code duplication with below function
 def batch_resolve_findings(client, cache_client, findings, product_arn):
     workflow = {"Status": "RESOLVED"}
 
@@ -199,12 +214,23 @@ def batch_resolve_findings(client, cache_client, findings, product_arn):
 
     if len(batch):
         response = client.batch_update_findings(FindingIdentifiers=batch,  Workflow=workflow)
-        if len(response["UnprocessedFindings"]) > 0:
-            print("Errors in processing resolve findings")
-            print(response)
+
+        failed_count = len(response["UnprocessedFindings"])
+        handled_count = 0
+
+        # Is this an account that is not managed by Sec Hub?
+        for unprocessed_finding in response["UnprocessedFindings"]:
+            if unprocessed_finding["ErrorCode"] == "FindingNotFound":
+                print(f"No finding to resolve - {unprocessed_finding['ErrorMessage']}")
+                handled_count += 1
+            else:
+                print(f"Finding failed - will retry - {unprocessed_finding}")
+
+        if failed_count - handled_count > 0:
+            print("Batch resolve findings - Completed with errors")
             return True
 
-    print("Success processing resolve findings")
+    print("Batch resolve findings - Completed successfully")
     return False
 
 
@@ -233,12 +259,23 @@ def batch_reopen_findings(client, cache_client, findings, product_arn):
 
     if len(batch):
         response = client.batch_update_findings(FindingIdentifiers=batch,  Workflow=workflow)
-        if len(response["UnprocessedFindings"]) > 0:
-            print("Errors in processing reopen findings")
-            print(response)
+
+        failed_count = len(response["UnprocessedFindings"])
+        handled_count = 0
+
+        # Is this an account that is not managed by Sec Hub?
+        for unprocessed_finding in response["UnprocessedFindings"]:
+            if unprocessed_finding["ErrorCode"] == "FindingNotFound":
+                print(f"No finding to reopen - {unprocessed_finding['ErrorMessage']}")
+                handled_count += 1
+            else:
+                print(f"Finding failed - will retry - {unprocessed_finding}")
+
+        if failed_count - handled_count > 0:
+            print("Batch reopen findings - Completed with errors")
             return True
 
-    print("Success processing reopen findings")
+    print("Batch reopen findings - Completed successfully")
     return False
 
 
@@ -251,12 +288,22 @@ def batch_import_findings(client, cache_client, findings):
         print(f"Cache update - {finding['Id']} - {finding['UpdatedAt']}")
         pass
 
-    if response["FailedCount"] > 0:
-        print("Errors in processing import findings")
-        print(response)
+    failed_count = response["FailedCount"]
+    handled_count = 0
+
+    # Is this an account that is not managed by Sec Hub?
+    for failed_finding in response["FailedFindings"]:
+        if failed_finding["ErrorCode"] == "InvalidAccess":
+            print(f"Finding will not be processed - {failed_finding['ErrorMessage']}")
+            handled_count += 1
+        else:
+            print(f"Finding failed - will retry - {failed_finding}")
+
+    if failed_count - handled_count > 0:
+        print("Batch import findings - Completed with errors")
         return True
 
-    print("Success processing import findings")
+    print("Batch import findings - Completed successfully")
     return False
 
 
@@ -291,6 +338,7 @@ def lambda_handler(event, context):
             notification = records[key]
 
             notification_update_timestamp = notification["turbot"]["createTimestamp"]
+
             if key in existing_findings:
                 # Check if findings is more recent, if so, ignore
                 existing_finding_update_timestamp = existing_findings[key]
@@ -304,6 +352,10 @@ def lambda_handler(event, context):
 
                 # Create an insert finding to update the update time
                 insert_finding = create_insert_finding(key, product_arn, notification)
+                if insert_finding == None:
+                    print("[ERROR] Cloud provider of notification was not for AWS")
+                    continue
+
                 insert_findings.append(insert_finding)
 
                 if notification["control"]["state"] == "alarm":
@@ -315,7 +367,7 @@ def lambda_handler(event, context):
             else:
                 # A notification that has resolved but not been recorded
                 if notification["control"]["state"] in ["ok", "skipped", "tbd"]:
-                    print(f"Ignoring record - healthy and not in security hub - {key}")
+                    print(f"Ignoring record - record is in a healthy state - {key}")
                     continue
 
                 print(f"Create record - {key} - {notification_update_timestamp}")
