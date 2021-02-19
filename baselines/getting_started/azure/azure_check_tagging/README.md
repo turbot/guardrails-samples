@@ -35,6 +35,15 @@ If not previously run, Initialize Terraform to get all necessary providers for t
    ```shell
    terraform init
    ```
+### Profile name as input
+
+The baseline example set requires you to provide `turbot_profile` name as input. This is to help in case you are having more profiles than only `default`. In case it's default, specify name as default.
+
+```shell
+var.turbot_profile
+  Enter profile matching your turbot cli credentials.
+  Enter a value: <Enter name of the profile>
+```
 
 ### Deploying demo example
 
@@ -49,6 +58,10 @@ cd <baseline_folder>
 terraform init
 terraform apply --var-file demo.tfvars
 ```
+**Note** 
+- Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
+
+- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
 
 ### Input variable files
 
