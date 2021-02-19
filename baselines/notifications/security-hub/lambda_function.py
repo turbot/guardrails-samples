@@ -108,7 +108,7 @@ def get_records(raw_records, region, account_id):
             exist_record_dt = dt.datetime.fromisoformat(exist_record_timestamp[:-1])
             new_record_dt = dt.datetime.fromisoformat(new_record_timestamp[:-1])
 
-            if exist_record_dt < new_record_dt:
+            if exist_record_dt <= new_record_dt:
                 print(f"Update record (record collection) - {finding_id} - {new_record_timestamp}")
                 print(f"Notification: {notification}")
                 records[finding_id] = notification
@@ -298,7 +298,7 @@ def lambda_handler(event, context):
                 existing_finding_dt = dt.datetime.fromisoformat(existing_finding_update_timestamp[:-1])
                 notification_dt = dt.datetime.fromisoformat(notification_update_timestamp[:-1])
 
-                if notification_dt <= existing_finding_dt:
+                if notification_dt < existing_finding_dt:
                     print(f"Ingoring record - More recent update - {key} - {notification_update_timestamp}")
                     continue
 
