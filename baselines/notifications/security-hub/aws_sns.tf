@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "turbot_firehose_user_sns_topic" {
-  name         = "turbot-firehose-user-sns-topic"
+  name         = "turbot-firehose-to-sec-hub-user-sns-topic"
   display_name = "Turbot to Security Hub"
   tags = {
     "Company" = "Turbot"
