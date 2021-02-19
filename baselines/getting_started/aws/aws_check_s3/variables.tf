@@ -69,7 +69,6 @@ variable "use_simple_s3_bucket_versioning" {
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {
