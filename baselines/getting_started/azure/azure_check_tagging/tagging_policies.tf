@@ -2,11 +2,13 @@
 # Tag template should be updated per your specific use case
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/tagging
 
+
+# 
 ## Sets tagging policy for each resource type in the resource_tags map.
 resource "turbot_policy_setting" "set_resource_tag_policies" {
   for_each = var.resource_tags
   resource = turbot_smart_folder.azure_tagging.id
-  type     = var.policy_map[each.key]
+  type     = local.policy_map[each.key]
   value    = each.value
 }
 
@@ -14,7 +16,7 @@ resource "turbot_policy_setting" "set_resource_tag_policies" {
 resource "turbot_policy_setting" "default_tag_template" {
   for_each = var.resource_tags
   resource = turbot_smart_folder.azure_tagging.id
-  type     = var.policy_map_template[each.key]
+  type     = local.policy_map_template[each.key]
   # GraphQL to pull metadata
   template_input = <<-QUERY
   {
