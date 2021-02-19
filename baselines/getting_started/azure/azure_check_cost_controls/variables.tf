@@ -28,7 +28,7 @@ variable "resource_active" {
     # azure-appservice-functionApp                 = "Check: Active"
     # azure-appservice-webApp                      = "Check: Active"
     # azure-compute-availabilitySet                = "Check: Active"
-    ##Have Unattached Policy Set instead##azure-compute-disk                           = "Check: Active"
+    #Have Unattached Policy Set instead##azure-compute-disk                           = "Check: Active"
     # azure-compute-diskEncryptionSet              = "Check: Active"
     azure-compute-image                          = "Check: Active"
     azure-compute-snapshot                       = "Check: Active"
@@ -79,6 +79,18 @@ variable "resource_active" {
     # azure-synapseanalytics-sqlPool               = "Check: Active"
     azure-synapseanalytics-synapseWorkspace      = "Check: Active"
   }
+}
+
+variable "azure_vm_instance_schedule_policies" {
+  type        = bool
+  description = "Enable the Azure VM Schedule policies for baseline"
+  default     = true
+}
+
+variable "azure_vm_instance_schedule_tag_policies" {
+  type        = bool
+  description = "Enable the Azure VM Schedule Schedule Tag policies for baseline"
+  default     = false
 }
 
 variable "turbot_profile" {

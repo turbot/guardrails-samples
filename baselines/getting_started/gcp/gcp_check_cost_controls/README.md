@@ -63,7 +63,7 @@ terraform apply --var-file demo.tfvars
 **Note** 
 - Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
 
-- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
+- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default variable file.
 
 ### Input variable files
 
@@ -117,7 +117,7 @@ If seeking to apply the baseline without using an input variable file.
 
 ### Destroy using input variable files
 
-If seeking to destoy the baseline configuration using an input variable file such as [demo.tfvars](demo.tfvars).
+If seeking to destroy the baseline configuration using an input variable file such as [demo.tfvars](demo.tfvars).
 
 1. Navigate to the folder containing the baseline configuration.
 2. Run the command:

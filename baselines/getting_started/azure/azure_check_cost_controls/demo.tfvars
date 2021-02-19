@@ -74,3 +74,8 @@ resource_active = {
     # azure-synapseanalytics-sqlPool               = "Check: Active"
     azure-synapseanalytics-synapseWorkspace      = "Check: Active"
 }
+
+# See file schedules_policies.tf
+# The variable with value false, as this is not part of initial recommended policy. 
+# You can enable it by changing the value to true.
+azure_vm_instance_schedule_tag_policies = false
