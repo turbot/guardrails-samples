@@ -90,7 +90,6 @@ variable "azure_storage_queue_service_logging_properties_retention_days_polices"
   default     = true
 }
 
-
 # Optional Common Baseline Configuration
 
 variable "turbot_profile" {

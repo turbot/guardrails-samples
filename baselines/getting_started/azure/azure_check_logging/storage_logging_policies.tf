@@ -1,4 +1,3 @@
-## Azure Storage Queue
 # Azure > Storage > Storage Account > Queue > Logging
 # https://turbot.com/v5/mods/turbot/azure-storage/inspect#/policy/types/queueServiceLogging
 resource "turbot_policy_setting" "azure_storage_queue_service_logging" {
