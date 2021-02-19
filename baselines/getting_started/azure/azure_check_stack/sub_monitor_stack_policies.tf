@@ -3,6 +3,7 @@
 # Azure > Subscription > Stack
 # https://turbot.com/v5/mods/turbot/azure/inspect#/policy/types/subscriptionStack
 resource "turbot_policy_setting" "azure_subscription_monitor_stack" {
+  count    = var.azure_subscription_monitor_stack_policies ? 1 : 0
   resource = turbot_smart_folder.azure_stack.id
   type     = "tmod:@turbot/azure#/policy/types/subscriptionStack"
   value    = "Check: Configured"
@@ -13,6 +14,7 @@ resource "turbot_policy_setting" "azure_subscription_monitor_stack" {
 # https://turbot.com/v5/mods/turbot/azure/inspect#/policy/types/subscriptionStackTerraformVersion
 # Sets the Terraform version for your Source
 resource "turbot_policy_setting" "azure_subscription_monitor_stack_tfversion" {
+  count    = var.azure_subscription_monitor_stack_tfversion_policies ? 1 : 0
   resource = turbot_smart_folder.azure_stack.id
   type     = "tmod:@turbot/azure#/policy/types/subscriptionStackTerraformVersion"
   value    = "0.13.*"
@@ -22,6 +24,7 @@ resource "turbot_policy_setting" "azure_subscription_monitor_stack_tfversion" {
 # https://turbot.com/v5/mods/turbot/azure/inspect#/policy/types/subscriptionStackSource
 ## Set policy to apply the Stack Source policy, the TF file source
 resource "turbot_policy_setting" "azure_subscription_monitor_stack_source" {
+  count    = var.azure_subscription_monitor_stack_source_policies ? 1 : 0
   resource       = turbot_smart_folder.azure_stack.id
   type           = "tmod:@turbot/azure#/policy/types/subscriptionStackSource"
   value           = <<-SOURCE

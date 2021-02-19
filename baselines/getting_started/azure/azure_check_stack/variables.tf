@@ -1,3 +1,25 @@
+# Baseline configuration
+
+variable "azure_subscription_monitor_stack_policies" {
+  type        = bool
+  description = "Azure subscription monitor stack policies for baseline"
+  default     = true
+}
+
+variable "azure_subscription_monitor_stack_tfversion_policies" {
+  type        = bool
+  description = "Azure subscription monitor stack TFversion policies for baseline"
+  default     = true
+}
+
+variable "azure_subscription_monitor_stack_source_policies" {
+  type        = bool
+  description = "Azure subscription monitor stack source policies for baseline"
+  default     = true
+}
+
+# Smartfolder configuration
+
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
 }
