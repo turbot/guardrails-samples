@@ -1,10 +1,11 @@
-GCP Baseline policies:
-Sevice Enablement
-Service API Enablement
-Event Polling
-Enable CIS
-
 # Baseline - GCP Baseline
+
+GCP baseline Policies focuses on base minimum set of example policies & services to start with such as 
+
+- Sevice Enablement
+- Service API Enablement
+- Event Polling
+- Enable CIS
 
 This baseline turns on GCP services that are provided by an input variable file.
 If none are provided then all services will be enabled.
@@ -15,17 +16,20 @@ The baseline will configure GCP to use polling unless specified to use event han
 The variable to use is `use_event_polling`.
 
 Additionally the baseline will enable CIS and set attestation of CIS to be a year.
-Currently there is no variable to control this behaviour.
-
-The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings
-created by other baselines.
-
-This baseline will not attach to a resource and will need to be done manually using the Turbot UI.
+Currently there is no variable to control this behavior.
 
 ## Important
 
 Running the baseline without an input variable file assumes that you have **ALL** GCP mods installed.
 To limit the baseline, look at the example input variable file [demo.tfvars](demo.tfvars).
+
+## Overview
+
+Baseline policies are initial set of policies recommended to start with while using Turbot. These policies mostly focuses on enabling services, frequently used policies to run in check mode & enabling security features such as various encryption standards. Baseline TF scripts allows you to toggle the value to apply or ignore. See the below sections for more information.
+
+Some of these policies overlap with other set of baselines. Hence Turbot provided set of baseline TF files are executed in separate [Smart Folder](https://turbot.com/v5/docs/getting-started/smart_folder). The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings created by other baseline scripts.
+
+This baseline will not attach to a resource by default. This needs to be done manually using the Turbot UI.
 
 ## Requirements
 
@@ -60,6 +64,11 @@ cd <baseline_folder>
 terraform init
 terraform apply --var-file demo.tfvars
 ```
+
+**Note** 
+- Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
+
+- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
 
 ### Input variable files
 

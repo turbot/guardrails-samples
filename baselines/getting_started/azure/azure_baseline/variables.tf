@@ -15,11 +15,40 @@ variable "enabled_policy_map" {
   type        = map
 }
 
+variable "enable_cis_checks_policies" {
+  type        = bool
+  description = "Enable the Azure CIS check policies for baseline"
+  default     = true
+}
+
+variable "enable_azure_cis_max_attestation_period_policies" {
+  type        = bool
+  description = "Enable the Azure CIS Max Attestation policies for baseline"
+  default     = true
+}
+
+variable "enable_azure_event_polling" {
+  type        = bool
+  description = "Enable the Azure Event polling policies for baseline"
+  default     = true
+}
+
+variable "enable_azure_event_polling_interval" {
+  type        = bool
+  description = "Enable the Azure Event polling interval policies for baseline"
+  default     = true
+}
+
+variable "enable_azure_event_polling_window" {
+  type        = bool
+  description = "Enable the Azure Event polling windows policies for baseline"
+  default     = true
+}
+
 # Optional Common Baseline Configuration
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {
