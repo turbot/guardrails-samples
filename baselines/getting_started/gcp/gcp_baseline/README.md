@@ -1,6 +1,6 @@
 # Baseline - GCP Baseline
 
-GCP baseline Policies focuses on base minimum set of example policies & services to start with such as 
+GCP Baseline Policies focuses on base minimum set of example policies & services to start with such as 
 
 - Sevice Enablement
 - Service API Enablement

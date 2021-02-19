@@ -1,6 +1,6 @@
 # Baseline - AWS Baseline Policies
 
-AWS baseline Policies focuses on base minimum set of example policies & services to start with.
+AWS Baseline Policies focuses on base minimum set of example policies & services to start with.
 
 ## Overview
 
