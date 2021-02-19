@@ -1,5 +1,5 @@
 # Baseline - Azure Baseline Policies
---- REVIEW REQUIRED ---
+
 Azure baseline Policies focuses on base minimum set of example policies & services to start with.
 
 This baseline turns on Azure services that are provided by an input variable file.
