@@ -3,18 +3,21 @@
 # Other use cases can be used for Last Modified, Attached, etc.
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/active
 
-#Loop through var.service_status to enable the Age policies
+# Azure > Compute > Virtual Machine > Active
+# https://turbot.com/v5/mods/turbot/azure-compute/inspect#/policy/types/virtualMachineActive
 resource "turbot_policy_setting" "set_resource_active_policies" {
   for_each        = var.resource_active
   resource        = turbot_smart_folder.azure_cost_controls.id
-  type            = var.policy_map[each.key]
+  type            = local.policy_map[each.key]
   value           = each.value
 }
 
+# Azure > Compute > Virtual Machine > Active > Age
+# https://turbot.com/v5/mods/turbot/azure-compute/inspect#/policy/types/virtualMachineActiveAge
 resource "turbot_policy_setting" "set_resource_age_policies" {
   for_each        = var.resource_active
   resource        = turbot_smart_folder.azure_cost_controls.id
-  type            = var.policy_map_age[each.key]
+  type            = local.policy_map_age[each.key]
   value           = "Force inactive if age > 60 days"
                     # Skip
                     # Force inactive if age > 1 day
@@ -28,12 +31,16 @@ resource "turbot_policy_setting" "set_resource_age_policies" {
                     # Force inactive if age > 365 days
 }
 
+# Azure > Compute > Disk > Active
+# https://turbot.com/v5/mods/turbot/azure-compute/inspect#/policy/types/diskActive
 resource "turbot_policy_setting" "azure_disk_active" {
   resource = turbot_smart_folder.azure_cost_controls.id
   type     = "tmod:@turbot/azure-compute#/policy/types/diskActive"
   value    = "Check: Active"
 }
 
+# Azure > Compute > Disk > Active > Attached
+# https://turbot.com/v5/mods/turbot/azure-compute/inspect#/policy/types/diskActiveAttached
 resource "turbot_policy_setting" "azure_disk_active_attached" {
   resource = turbot_smart_folder.azure_cost_controls.id
   type     = "tmod:@turbot/azure-compute#/policy/types/diskActiveAttached"

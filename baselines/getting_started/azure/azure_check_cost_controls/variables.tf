@@ -1,20 +1,25 @@
-# List of services and resources to be Check: Approved.
-# You can remove the comment per row to include the resource type.  Make sure you have the related service mod installed
-
-# Acceptable Values:
-  # "Skip"
-  # "Check: Active"
-  # "Enforce: Delete inactive with 1 day warning"
-  # "Enforce: Delete inactive with 3 days warning"
-  # "Enforce: Delete inactive with 7 days warning"
-  # "Enforce: Delete inactive with 14 days warning"
-  # "Enforce: Delete inactive with 30 days warning"
-  # "Enforce: Delete inactive with 60 days warning"
-  # "Enforce: Delete inactive with 90 days warning"
-  # "Enforce: Delete inactive with 180 days warning"
-  # "Enforce: Delete inactive with 365 days warning"
-
-resource_active = { 
+variable "resource_active" {
+  description = <<DESC
+  Map of the list of resources to be active.
+  Possible values for the key of this map is found in locals.tf defined in the local variable policy_map.
+  For example `azure-compute-virtualMachine` : "tmod:@turbot/azure-compute#/policy/types/virtualMachineActive"
+  The value of the map is one of these possible values:
+      "Skip"
+      "Check: Active"
+      "Enforce: Delete inactive with 1 day warning"
+      "Enforce: Delete inactive with 3 days warning"
+      "Enforce: Delete inactive with 7 days warning"
+      "Enforce: Delete inactive with 14 days warning"
+      "Enforce: Delete inactive with 30 days warning"
+      "Enforce: Delete inactive with 60 days warning"
+      "Enforce: Delete inactive with 90 days warning"
+      "Enforce: Delete inactive with 180 days warning"
+      "Enforce: Delete inactive with 365 days warning"
+  Check demo.tfvars for an example of how to set this value.
+  NOTE: Default behaviour is to approve all services which means expecting all mods to be installed
+  DESC
+  type        = map(string)
+  default = {
     azure-aks-managedCluster                     = "Check: Active"
     # azure-applicationgateway-applicationGateway  = "Check: Active"
     # azure-applicationinsights-applicationInsight = "Check: Active"
@@ -23,7 +28,7 @@ resource_active = {
     # azure-appservice-functionApp                 = "Check: Active"
     # azure-appservice-webApp                      = "Check: Active"
     # azure-compute-availabilitySet                = "Check: Active"
-    ##Have Unattached Policy Set instead##azure-compute-disk                           = "Check: Active"
+    #Have Unattached Policy Set instead##azure-compute-disk                           = "Check: Active"
     # azure-compute-diskEncryptionSet              = "Check: Active"
     azure-compute-image                          = "Check: Active"
     azure-compute-snapshot                       = "Check: Active"
@@ -73,9 +78,39 @@ resource_active = {
     azure-storage-storageAccount                 = "Check: Active"
     # azure-synapseanalytics-sqlPool               = "Check: Active"
     azure-synapseanalytics-synapseWorkspace      = "Check: Active"
+  }
 }
 
-# See file schedules_policies.tf
-# The variable with value false, as this is not part of initial recommended policy. 
-# You can enable it by changing the value to true.
-azure_vm_instance_schedule_tag_policies = false
+variable "azure_vm_instance_schedule_policies" {
+  type        = bool
+  description = "Enable the Azure VM Schedule policies for baseline"
+  default     = true
+}
+
+variable "azure_vm_instance_schedule_tag_policies" {
+  type        = bool
+  description = "Enable the Azure VM Schedule Schedule Tag policies for baseline"
+  default     = false
+}
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+}
+
+variable "smart_folder_name" {
+  description = "Smart folder name for the baseline"
+  type        = string
+  default     = "Azure Check Cost Control Policies"
+}
+
+variable "smart_folder_description" {
+  description = "Enter a description for the smart folder"
+  type        = string
+  default     = "Defines sets of policies for Azure check regions baseline"
+}
+
+variable "smart_folder_parent_resource" {
+  description = "Enter the resource ID or AKA for the parent of the smart folder"
+  type        = string
+  default     = "tmod:@turbot/turbot#/"
+} 

@@ -1,4 +1,4 @@
-# Baseline - GCP Check Cost Controls
+# Baseline - Azure Check Cost Control Policies
 
 This baseline will allow you to check the infrastructure over X days/unattached volumes and to set resource scheduling and make it inactive to reduce the cost.
 
@@ -61,6 +61,7 @@ terraform init
 terraform apply --var-file demo.tfvars
 ```
 **Note** 
+
 - Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
 
 - Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default variable file.
