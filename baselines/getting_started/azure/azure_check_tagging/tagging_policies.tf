@@ -57,17 +57,17 @@ resource "turbot_policy_setting" "default_tag_template" {
     TEMPLATE
 }
 
-# Missing Tag on folder use case:
+## Missing Tag on folder use case:
 ##  {%- set missingTag = "__MissingTag__" -%}
-##  {%- set required_tags = ${jsonencode([for tag_name in var.required_tags : tag_name])} -%}
-##  # If Resource has a required tag, will accept the resource tag, else will tag with Folder tag value. 
-##  {%- for tag_name in required_tags %}
-##    {%- if tag_name in $.resource.turbot.tags %}
-##  {{tag_name}}: "{{ $.resource.turbot.tags[tag_name] }}"
-##    {%- elif tag_name in $.folder.turbot.tags %}
-##  {{tag_name}}: "{{ $.folder.turbot.tags[tag_name] }}"
-##    {%- else %}
-##  {{tag_name}}: {{missingTag}}
-##    {%- endif %}
-##  {%- endfor %}
+#  {%- set required_tags = ${jsonencode([for tag_name in var.required_tags : tag_name])} -%}
+#  # If Resource has a required tag, will accept the resource tag, else will tag with Folder tag value. 
+#  {%- for tag_name in required_tags %}
+#    {%- if tag_name in $.resource.turbot.tags %}
+#  {{tag_name}}: "{{ $.resource.turbot.tags[tag_name] }}"
+#    {%- elif tag_name in $.folder.turbot.tags %}
+#  {{tag_name}}: "{{ $.folder.turbot.tags[tag_name] }}"
+#    {%- else %}
+#  {{tag_name}}: {{missingTag}}
+#    {%- endif %}
+#  {%- endfor %}
 
