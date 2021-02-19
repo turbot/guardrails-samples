@@ -8,32 +8,6 @@ variable "aws_region" {
   type        = string
 }
 
-variable "vpc_id" {
-  description = <<-DESC
-    This setting is only used if the variable enabled_caching is set to true.
-    When he VPC id is not empty, the script will attempt to install the Lamdba and memcached resources onto this VPC.
-    If this value is empty then the script will create a new VPC.
-  DESC
-  type        = string
-  default     = ""
-}
-
-variable "public_subnet_id" {
-  description = <<-DESC
-  DO NOT USE - OBSOLETE
-  DESC
-  type        = string
-  default     = ""
-}
-
-variable "private_subnet_id" {
-  description = <<-DESC
-  DO NOT USE - OBSOLETE
-  DESC
-  type        = string
-  default     = ""
-}
-
 variable "enabled_caching" {
   type        = bool
   description = <<-DESC

@@ -21,5 +21,5 @@ resource "aws_elasticache_cluster" "latest_notification_cache" {
 resource "aws_elasticache_subnet_group" "latest_notification_cache" {
   count      = var.enabled_caching ? 1 : 0
   name       = "turbot-firehose-to-sec-hub-subnet-group"
-  subnet_ids = [local.private_subnet_id]
+  subnet_ids = [aws_subnet.private[0].id]
 }
