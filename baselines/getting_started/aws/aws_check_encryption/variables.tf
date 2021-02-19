@@ -96,7 +96,6 @@ variable "enable_elasticsearch_domain_encryption_policies" {
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {

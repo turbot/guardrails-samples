@@ -1,3 +1,19 @@
+output "aws_account_iam_stack" {
+  value = var.aws_account_iam_stack
+}
+
+output "aws_account_iam_stack_tfversion" {
+  value = var.aws_account_iam_stack_tfversion
+}
+
+output "aws_account_iam_stack_source" {
+  value = var.aws_account_iam_stack_source
+}
+
+output "aws_iam_permissions_custom_levels_account" {
+  value = var.aws_iam_permissions_custom_levels_account
+}
+
 output "turbot_profile" {
   value = var.turbot_profile
 }

@@ -1,3 +1,31 @@
+# Baseline Configuration
+
+variable "aws_account_iam_stack" {
+  type        = bool
+  description = "AWS IAM stack policies for baseline"
+  default     = true
+}
+
+variable "aws_account_iam_stack_tfversion" {
+  type        = bool
+  description = "AWS account IAM stack policies for baseline"
+  default     = true
+}
+
+variable "aws_account_iam_stack_source" {
+  type        = bool
+  description = "AWS account IAM stack source policies for baseline"
+  default     = true
+}
+
+variable "aws_iam_permissions_custom_levels_account" {
+  type        = bool
+  description = "AWS IAM permissions customer levels accounts policies for baseline"
+  default     = true
+}
+
+# Smartfolder Configuration
+
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
 }
