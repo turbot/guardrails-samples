@@ -242,7 +242,6 @@ variable "enable_workspace_schedule_tag_policies" {
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {
