@@ -137,33 +137,98 @@ def get_records(raw_records, region, account_id):
     print(f"Number of records to process: {len(records)}")
     return records
 
+    endpoint = os.getenv("MEMCACHED_CONFIGURATION_ENDPOINT")
+    if endpoint:
+        return base.Client(endpoint)
+
+    return None
+
+
+def create_cache():
+    client = None
+    endpoint = os.getenv("MEMCACHED_CONFIGURATION_ENDPOINT")
+    if endpoint:
+        client = base.Client(endpoint)
+
+    return Cache(client)
+
+
+class Cache:
+    def __init__(self, client) -> None:
+        self.client = client
+        pass
+
+    def get(self, key):
+        return self.client.get(key)
+
+    def set(self, key, value):
+        return self.client.set(key, value)
+
+    def get_cached_findings(self, ids):
+        cache_found_id_map = {}
+
+        if self.client == None:
+            return cache_found_id_map, ids
+
+        cache_missed_id_list = []
+
+        for id in ids:
+            last_updated_ts = self.client.get(id)
+            if last_updated_ts == None:
+                cache_missed_id_list.append(id)
+            else:
+                last_updated_ts = last_updated_ts.decode("UTF-8")
+                print(f"Cache hit - Adding id cache found id map - {id} - {last_updated_ts}")
+                cache_found_id_map[id] = last_updated_ts
+
+        return cache_found_id_map, cache_missed_id_list
+
+
+class SecurityHub:
+    def __init__(self, client) -> None:
+        self.client = client
+        pass
+
+    def get_findings(self, ids):
+        batch_size = 20
+
+        for index in range(0, len(ids), batch_size):
+            filter["Id"] = []
+            for id in ids[index:index+batch_size]:
+                entry = {
+                    "Value": f"{id}",
+                    "Comparison": "EQUALS"
+                }
+
+                filter["Id"].append(entry)
+
+            response = self.client.get_findings(Filters=filter)
+            findings = response["Findings"]
+            print(f"Get Findings API result: {findings}")
+
+            map_findings = {findings[i]["Id"]: findings[i]["UpdatedAt"] for i in range(0, len(findings))}
+            cache_found_id_map = {**cache_found_id_map, **map_findings}
+
 
 def find_existing_findings_map(aws_client, cache_client, records):
     ids = list(records.keys())
 
     # first look in the cache if there is one present
-    found_findings = {}
-    cache_missed_ids = []
+    cache_found_id_map = {}
+    cache_missed_id_list = []
 
-    # check to see if sec hub is installed
-    if cache_client == None:
-        cache_missed_ids = ids
-    else:
-        for id in ids:
-            last_updated_ts = cache_client.get(id)
-            if last_updated_ts == None:
-                cache_missed_ids.append(id)
-            else:
-                found_findings[id] = last_updated_ts.decode("UTF-8")
-                print(f"Cache hit - Adding to existing findings map - {id} - {found_findings[id]}")
+    cache_found_id_map, cache_missed_id_list = cache_client.get_cached_findings(ids)
+
+    security_hub = SecurityHub()
+    security_hub.get_findings(cache_missed_id_list)
 
     # check security hub for any missed
     finding_batch_size = 20
     filter = {"Id": []}
 
-    for id_batch in range(0, len(cache_missed_ids), finding_batch_size):
+    for id_batch in range(0, len(cache_missed_id_list), finding_batch_size):
         filter["Id"] = []
-        for id in cache_missed_ids[id_batch:id_batch+finding_batch_size]:
+        for id in cache_missed_id_list[id_batch:id_batch+finding_batch_size]:
             entry = {
                 "Value": f"{id}",
                 "Comparison": "EQUALS"
@@ -176,9 +241,9 @@ def find_existing_findings_map(aws_client, cache_client, records):
         print(f"Get Findings API result: {findings}")
 
         map_findings = {findings[i]["Id"]: findings[i]["UpdatedAt"] for i in range(0, len(findings))}
-        found_findings = {**found_findings, **map_findings}
+        cache_found_id_map = {**cache_found_id_map, **map_findings}
 
-    return found_findings
+    return cache_found_id_map
 
 
 def is_more_recent_or_same(date, reference_date):
@@ -315,18 +380,34 @@ def create_cache_client():
     return None
 
 
+def get_account_id_and_region(context):
+    lambda_function_arn = context.invoked_function_arn.split(":")
+    region = lambda_function_arn[3]
+    account_id = lambda_function_arn[4]
+    return account_id, region
+
+
+class RecordConsolidator:
+    def __init__(self, raw_records, account_id, region) -> None:
+        self.raw_records = raw_records
+        self.region = region
+        self.account_id = account_id
+        pass
+
+    def consolidate(self):
+        return get_records(self.raw_records, self.region, self.account_id)
+
+
 def lambda_handler(event, context):
     try:
-        lambda_function_arn = context.invoked_function_arn.split(":")
-        region = lambda_function_arn[3]
-        account_id = lambda_function_arn[4]
-        raw_records = event['Records']
+        account_id, region = get_account_id_and_region(context)
 
-        records = get_records(raw_records, region, account_id)
+        record_consolidator = RecordConsolidator(event['Records'], account_id, region)
+        cache = create_cache()
+        records = record_consolidator.consolidate()
 
         aws_client = boto3.client('securityhub')
-        cache_client = create_cache_client()
-        existing_findings = find_existing_findings_map(aws_client, cache_client, records)
+        existing_findings = find_existing_findings_map(aws_client, cache, records)
 
         product_arn = os.getenv("SECURITY_HUB_PRODUCT_ARN")
 
@@ -377,14 +458,14 @@ def lambda_handler(event, context):
         # We need to update when we want to resolve a resolved finding
         partial_failure = False
         if len(insert_findings):
-            partial_failure = partial_failure | batch_import_findings(aws_client, cache_client, insert_findings)
+            partial_failure = partial_failure | batch_import_findings(aws_client, cache, insert_findings)
 
         print(f"Updating {len(insert_findings)} findings")
 
         if len(reopen_findings):
             partial_failure = partial_failure | batch_reopen_findings(
                 aws_client,
-                cache_client,
+                cache,
                 reopen_findings,
                 product_arn
             )
@@ -394,7 +475,7 @@ def lambda_handler(event, context):
         if len(resolved_findings):
             partial_failure = partial_failure | batch_resolve_findings(
                 aws_client,
-                cache_client,
+                cache,
                 resolved_findings,
                 product_arn
             )
