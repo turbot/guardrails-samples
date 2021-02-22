@@ -11,7 +11,6 @@ class CloudWatchLogGroup(Resource):
         self.log_client = session.create_client('logs', self.region)
 
         super().__init__(session)
-# what does this do?
 
     def details(self):
         return f'cloudwatch/loggroup {self.log_groups[" "]}'
