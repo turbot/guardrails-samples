@@ -1,4 +1,4 @@
-git # AWS VPC ElasticIP - approve the usage based on the existence of association id
+# AWS VPC ElasticIP - approve the usage based on the existence of association id
 
 ## Use case
 
