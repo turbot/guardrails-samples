@@ -46,7 +46,7 @@ class EventsRuleResourceService(ResourceService):
         super().__init__(session, recipe, "event", "rule")
 
     def get_all(self, region):
-        name_prefix = []
+        name_prefix = ""
         for filter in self.recipe["filters"]:
             if filter["field"] == "NamePrefix":
                 name_prefix = filter["value"]
