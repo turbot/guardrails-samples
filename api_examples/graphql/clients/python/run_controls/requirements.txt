@@ -6,4 +6,4 @@ requests==2.24.0
 urllib3==1.25.10
 xdg==3.0.2
 PyYAML==5.3.1
-# ../turbot
+../turbot
