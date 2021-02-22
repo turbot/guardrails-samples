@@ -28,7 +28,7 @@ resource "turbot_policy_setting" "gcp_event_polling_interval" {
 
 # GCP > Turbot > Event Poller > Window
 # https://turbot.com/v5/mods/turbot/gcp/inspect#/policy/types/eventPollerWindow
-resource "turbot_policy_setting" "gcp_event_pollin_window" {
+resource "turbot_policy_setting" "gcp_event_polling_window" {
   count    = var.use_event_polling ? 1 : 0
   resource = turbot_smart_folder.gcp_baseline.id
   type     = "tmod:@turbot/gcp#/policy/types/eventPollerWindow"
