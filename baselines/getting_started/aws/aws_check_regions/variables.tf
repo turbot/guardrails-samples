@@ -203,7 +203,6 @@ variable "resource_approved_regions_region_list" {
 
 variable "turbot_profile" {
   description = "Enter profile matching your turbot cli credentials."
-  default     = "default"
 }
 
 variable "smart_folder_name" {

@@ -2,11 +2,13 @@
 # Tag template should be updated per your specific use case
 # More Info: https://turbot.com/v5/docs/concepts/guardrails/tagging
 
+
+# 
 ## Sets tagging policy for each resource type in the resource_tags map.
 resource "turbot_policy_setting" "set_resource_tag_policies" {
   for_each = var.resource_tags
   resource = turbot_smart_folder.azure_tagging.id
-  type     = var.policy_map[each.key]
+  type     = local.policy_map[each.key]
   value    = each.value
 }
 
@@ -14,7 +16,7 @@ resource "turbot_policy_setting" "set_resource_tag_policies" {
 resource "turbot_policy_setting" "default_tag_template" {
   for_each = var.resource_tags
   resource = turbot_smart_folder.azure_tagging.id
-  type     = var.policy_map_template[each.key]
+  type     = local.policy_map_template[each.key]
   # GraphQL to pull metadata
   template_input = <<-QUERY
   {
@@ -55,17 +57,17 @@ resource "turbot_policy_setting" "default_tag_template" {
     TEMPLATE
 }
 
-# Missing Tag on folder use case:
+## Missing Tag on folder use case:
 ##  {%- set missingTag = "__MissingTag__" -%}
-##  {%- set required_tags = ${jsonencode([for tag_name in var.required_tags : tag_name])} -%}
-##  # If Resource has a required tag, will accept the resource tag, else will tag with Folder tag value. 
-##  {%- for tag_name in required_tags %}
-##    {%- if tag_name in $.resource.turbot.tags %}
-##  {{tag_name}}: "{{ $.resource.turbot.tags[tag_name] }}"
-##    {%- elif tag_name in $.folder.turbot.tags %}
-##  {{tag_name}}: "{{ $.folder.turbot.tags[tag_name] }}"
-##    {%- else %}
-##  {{tag_name}}: {{missingTag}}
-##    {%- endif %}
-##  {%- endfor %}
+#  {%- set required_tags = ${jsonencode([for tag_name in var.required_tags : tag_name])} -%}
+#  # If Resource has a required tag, will accept the resource tag, else will tag with Folder tag value. 
+#  {%- for tag_name in required_tags %}
+#    {%- if tag_name in $.resource.turbot.tags %}
+#  {{tag_name}}: "{{ $.resource.turbot.tags[tag_name] }}"
+#    {%- elif tag_name in $.folder.turbot.tags %}
+#  {{tag_name}}: "{{ $.folder.turbot.tags[tag_name] }}"
+#    {%- else %}
+#  {{tag_name}}: {{missingTag}}
+#    {%- endif %}
+#  {%- endfor %}
 
