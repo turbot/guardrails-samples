@@ -1,5 +1,33 @@
+# Description
+# -----------
+#
+# The query return list of AWS Accounts.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_by_resource_type_in_specific_account.graphql
+#
+
+# Filter
+# ------
+#
+# resourceType:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/aws#/resource/types/account' list of aws accounts are returned.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
 query ListAccounts {
-  resourceList(filter: "resourceType:'tmod:@turbot/aws#/resource/types/account'") {
+  resources(filter: "resourceType:'tmod:@turbot/aws#/resource/types/account'") {
     items {
       akas
       turbot {

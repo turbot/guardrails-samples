@@ -1,9 +1,44 @@
-{
-  resources(filter:"resourceType:'tmod:@turbot/turbot-iam#/resource/types/profile'") {
+# Description
+# -----------
+#
+# The query return list of profiles available in turbot.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_by_resource_type_in_specific_account.graphql
+#
+
+# Filter
+# ------
+#
+# resourceType:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/turbot-iam#/resource/types/profile' returns all the profiles in turbot.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+query ListProfiles {
+  resources(filter: "resourceType:'tmod:@turbot/turbot-iam#/resource/types/profile'") {
     items {
-      trunk { title }
-      turbot { id akas }
-      type { uri }
+      trunk {
+        title
+      }
+      turbot {
+        id
+        akas
+      }
+      type {
+        uri
+      }
     }
   }
 }

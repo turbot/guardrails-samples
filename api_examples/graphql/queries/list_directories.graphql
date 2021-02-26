@@ -1,8 +1,41 @@
-{
-  resources(filter:"resourceType:directory") {
+# Description
+# -----------
+#
+# The query return list of Directories.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_by_resource_type_in_specific_account.graphql
+#
+
+# Filter
+# ------
+#
+# resourceType:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'resourceType:directory' list of directories are returned.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+query ListDirectories {
+  resources(filter: "resourceType:directory") {
     items {
-      trunk { title }
-      turbot { id akas }
+      trunk {
+        title
+      }
+      turbot {
+        id
+        akas
+      }
     }
   }
 }
