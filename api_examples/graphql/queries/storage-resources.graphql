@@ -43,7 +43,7 @@
 
 query storageBucketsInSpecificAccount {
   # Get statistics about all Storage bucket in the specific account
-  resourceList(filter: "resource:'175816468884383' resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:500") {
+  resources(filter: "resource:'175816468884383' resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:500") {
     metadata {
       stats {
         total
@@ -66,7 +66,7 @@ query allStorageBuckets {
   # Get statistics about all Storage buckets. 
   # This can give results across multiple AWS Accounts. 
   # Limit the results to 5 for convenience.
-  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:5") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:5") {
     metadata {
       stats {
         total
@@ -86,7 +86,7 @@ query allStorageBuckets {
 
 query allStorageBucketsWithSpecificTags {
   # Gives all the buckets which has new tag with value that starts with tes-
-  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {
     items {
       turbot {
         title
@@ -97,7 +97,7 @@ query allStorageBucketsWithSpecificTags {
 }
 
 query storageBucketsWithNoPolicyStatement {
-  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Versioning.Status:Enabled") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Versioning.Status:Enabled") {
     items {
       turbot {
         title
@@ -109,7 +109,7 @@ query storageBucketsWithNoPolicyStatement {
 
 query BucketsWithWriteACL {
   # Gives all the buckets with write ACL on the bucket policy
-  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Acl.Grants.*.Permission:WRITE_ACP,WRITE limit:300") {
     metadata {
       stats {
         total

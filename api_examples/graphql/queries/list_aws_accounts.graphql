@@ -13,7 +13,7 @@
 # Filter
 # ------
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/aws#/resource/types/account' list of aws accounts are returned.
 #
@@ -27,7 +27,7 @@
 #
 
 query ListAccounts {
-  resources(filter: "resourceType:'tmod:@turbot/aws#/resource/types/account'") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/account'") {
     items {
       akas
       turbot {

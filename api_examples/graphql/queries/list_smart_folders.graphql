@@ -13,7 +13,7 @@
 # Filter
 # ------
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/turbot#/resource/types/smartFolder' returns list of smart folders existing in turbot console.
 #
@@ -27,7 +27,7 @@
 #
 
 query ListSmartFolders {
-  resources(filter: "resourceType:'tmod:@turbot/turbot#/resource/types/smartFolder'") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/turbot#/resource/types/smartFolder'") {
     items {
       turbot {
         id

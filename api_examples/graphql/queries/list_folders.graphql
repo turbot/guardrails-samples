@@ -13,7 +13,7 @@
 # Filter
 # ------
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/turbot#/resource/types/folder' list of folders in turbot console are returned.
 #
@@ -27,7 +27,7 @@
 #
 
 query ListFolders {
-  resources(filter: "resourceType:'tmod:@turbot/turbot#/resource/types/folder'") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/turbot#/resource/types/folder'") {
     items {
       turbot {
         id

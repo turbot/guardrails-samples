@@ -13,7 +13,7 @@
 # Filter
 # ------
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'resourceType:directory' list of directories are returned.
 #
@@ -27,7 +27,7 @@
 #
 
 query ListDirectories {
-  resources(filter: "resourceType:directory") {
+  resources(filter: "resourceTypeId:directory") {
     items {
       trunk {
         title

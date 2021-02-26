@@ -13,7 +13,7 @@
 # Filter
 # ------
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/turbot-iam#/resource/types/profile' returns all the profiles in turbot.
 #
@@ -27,7 +27,7 @@
 #
 
 query ListProfiles {
-  resources(filter: "resourceType:'tmod:@turbot/turbot-iam#/resource/types/profile'") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/turbot-iam#/resource/types/profile'") {
     items {
       trunk {
         title

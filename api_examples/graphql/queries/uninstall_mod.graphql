@@ -10,7 +10,7 @@ mutation uninstallMod {
 #  Can get mod turbot id by updating $.title in the filter
 query modInfo {
   resources(
-    filter: "resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self $.title:'@turbot/aws'"
+    filter: "resourceTypeId:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self $.title:'@turbot/aws'"
   ) {
     items {
       turbot {
