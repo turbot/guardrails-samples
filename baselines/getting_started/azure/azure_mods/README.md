@@ -1,6 +1,6 @@
-# GCP - Mods install
+# Azure - Mods install
 
-Turbot provides dozens of GCP mods, covering hundreds of GCP resources, with thousands of policies and controls. By definition, mods are installed with the top Turbot resource as the parent. This means that administrators must be at the Turbot resource level with Turbot/Owner permissions to make modifications, installing, uninstalling, or updating, to mods in the environment.
+Turbot provides dozens of Azure mods, covering hundreds of Azure resources, with thousands of policies and controls. By definition, mods are installed with the top Turbot resource as the parent. This means that administrators must be at the Turbot resource level with Turbot/Owner permissions to make modifications, installing, uninstalling, or updating, to mods in the environment.
 
 More information can be found [here](https://turbot.com/v5/docs/mods)
 
@@ -13,7 +13,7 @@ For further information on configuring Turbot credentials can be found [here](ht
 
 ### Initialize
 
-1. Navigate to the gcp_mods folder.
+1. Navigate to the azure_mods folder.
 2. Run the command:
 
    ```shell
