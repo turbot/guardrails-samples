@@ -1,3 +1,4 @@
+# https://turbot.com/v5/mods/turbot/gcp
 resource "turbot_mod" "gcp" {
   parent  = "tmod:@turbot/turbot#/"
   org     = "turbot"
@@ -6,6 +7,7 @@ resource "turbot_mod" "gcp" {
   count   = contains(var.mod_list, "gcp") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-iam
 resource "turbot_mod" "gcp-iam" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp"]
@@ -15,6 +17,7 @@ resource "turbot_mod" "gcp-iam" {
   count      = contains(var.mod_list, "gcp-iam") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-appengine
 resource "turbot_mod" "gcp-appengine" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -24,6 +27,7 @@ resource "turbot_mod" "gcp-appengine" {
   count      = contains(var.mod_list, "gcp-appengine") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-bigquery
 resource "turbot_mod" "gcp-bigquery" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -33,6 +37,7 @@ resource "turbot_mod" "gcp-bigquery" {
   count      = contains(var.mod_list, "gcp-bigquery") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-bigtable
 resource "turbot_mod" "gcp-bigtable" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -42,6 +47,7 @@ resource "turbot_mod" "gcp-bigtable" {
   count      = contains(var.mod_list, "gcp-bigtable") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-build
 resource "turbot_mod" "gcp-build" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -51,6 +57,7 @@ resource "turbot_mod" "gcp-build" {
   count      = contains(var.mod_list, "gcp-build") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-composer
 resource "turbot_mod" "gcp-composer" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -60,6 +67,7 @@ resource "turbot_mod" "gcp-composer" {
   count      = contains(var.mod_list, "gcp-composer") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-computeengine
 resource "turbot_mod" "gcp-computeengine" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -69,6 +77,7 @@ resource "turbot_mod" "gcp-computeengine" {
   count      = contains(var.mod_list, "gcp-computeengine") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-datacatalog
 resource "turbot_mod" "gcp-datacatalog" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -78,6 +87,7 @@ resource "turbot_mod" "gcp-datacatalog" {
   count      = contains(var.mod_list, "gcp-datacatalog") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-dataflow
 resource "turbot_mod" "gcp-dataflow" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -87,7 +97,7 @@ resource "turbot_mod" "gcp-dataflow" {
   count      = contains(var.mod_list, "gcp-dataflow") ? 1 : 0
 }
 
-
+# https://turbot.com/v5/mods/turbot/gcp-dataproc
 resource "turbot_mod" "gcp-dataproc" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -97,6 +107,7 @@ resource "turbot_mod" "gcp-dataproc" {
   count      = contains(var.mod_list, "gcp-dataproc") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-dns
 resource "turbot_mod" "gcp-dns" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -106,6 +117,7 @@ resource "turbot_mod" "gcp-dns" {
   count      = contains(var.mod_list, "gcp-dns") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-functions
 resource "turbot_mod" "gcp-functions" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -115,6 +127,7 @@ resource "turbot_mod" "gcp-functions" {
   count      = contains(var.mod_list, "gcp-functions") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-kms
 resource "turbot_mod" "gcp-kms" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -124,6 +137,7 @@ resource "turbot_mod" "gcp-kms" {
   count      = contains(var.mod_list, "gcp-kms") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-kubernetesengine
 resource "turbot_mod" "gcp-kubernetesengine" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -133,6 +147,7 @@ resource "turbot_mod" "gcp-kubernetesengine" {
   count      = contains(var.mod_list, "gcp-kubernetesengine") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-logging
 resource "turbot_mod" "gcp-logging" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -142,6 +157,7 @@ resource "turbot_mod" "gcp-logging" {
   count      = contains(var.mod_list, "gcp-logging") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-memorystore
 resource "turbot_mod" "gcp-memorystore" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -151,6 +167,7 @@ resource "turbot_mod" "gcp-memorystore" {
   count      = contains(var.mod_list, "gcp-memorystore") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-monitoring
 resource "turbot_mod" "gcp-monitoring" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -160,6 +177,7 @@ resource "turbot_mod" "gcp-monitoring" {
   count      = contains(var.mod_list, "gcp-monitoring") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-network
 resource "turbot_mod" "gcp-network" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -169,6 +187,7 @@ resource "turbot_mod" "gcp-network" {
   count      = contains(var.mod_list, "gcp-network") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-notebooks
 resource "turbot_mod" "gcp-notebooks" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp"]
@@ -178,6 +197,7 @@ resource "turbot_mod" "gcp-notebooks" {
   count      = contains(var.mod_list, "gcp-notebooks") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-orgpolicy
 resource "turbot_mod" "gcp-orgpolicy" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -187,6 +207,7 @@ resource "turbot_mod" "gcp-orgpolicy" {
   count      = contains(var.mod_list, "gcp-orgpolicy") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-pubsub
 resource "turbot_mod" "gcp-pubsub" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -196,6 +217,7 @@ resource "turbot_mod" "gcp-pubsub" {
   count      = contains(var.mod_list, "gcp-pubsub") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-scheduler
 resource "turbot_mod" "gcp-scheduler" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -205,6 +227,7 @@ resource "turbot_mod" "gcp-scheduler" {
   count      = contains(var.mod_list, "gcp-scheduler") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-spanner
 resource "turbot_mod" "gcp-spanner" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -214,6 +237,7 @@ resource "turbot_mod" "gcp-spanner" {
   count      = contains(var.mod_list, "gcp-spanner") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-sql
 resource "turbot_mod" "gcp-sql" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -223,6 +247,7 @@ resource "turbot_mod" "gcp-sql" {
   count      = contains(var.mod_list, "gcp-sql") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-storage
 resource "turbot_mod" "gcp-storage" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam"]
@@ -232,6 +257,7 @@ resource "turbot_mod" "gcp-storage" {
   count      = contains(var.mod_list, "gcp-storage") ? 1 : 0
 }
 
+# https://turbot.com/v5/mods/turbot/gcp-cisv1
 resource "turbot_mod" "gcp-cisv1" {
   parent     = "tmod:@turbot/turbot#/"
   depends_on = ["turbot_mod.gcp", "turbot_mod.gcp-iam", "turbot_mod.cis", "turbot_mod.gcp-computeengine", "turbot_mod.gcp-dns", "turbot_mod.gcp-kms", "turbot_mod.gcp-logging", "turbot_mod.gcp-network", "turbot_mod.gcp-sql", "turbot_mod.gcp-storage"]
