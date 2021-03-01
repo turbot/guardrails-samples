@@ -1,4 +1,4 @@
-CIS - Mods install
+# CIS - Mods install
 
 Turbot provides CIS mod, covering CIS policies and controls definition, mods are installed with the top Turbot resource as the parent. This means that administrators must be at the Turbot resource level with Turbot/Owner permissions to make modifications, installing, uninstalling, or updating, to mods in the environment.
 
