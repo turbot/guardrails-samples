@@ -18,7 +18,7 @@
 #   The matching algorithm will perform a caseless compare of the akas from right to left.
 #   In example, filters the controls that are in either error, invalid or tbd state.
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' (the s3 bucket) are returned.
 #
@@ -40,7 +40,7 @@
 #
 
 query ListControlsTenOldestAlertsForS3 {
-  controls(filter: "state:error,invalid,tbd resource:'175816468884383' resourceType:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {
+  controls(filter: "state:error,invalid,tbd resource:'175816468884383' resourceTypeId:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {
     items {
       state
       reason
