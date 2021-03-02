@@ -19,9 +19,9 @@ resource "turbot_policy_setting" "iam_policy_approved_statements" {
   # GraphQL to pull policy Statements
   template_input = <<-QUERY
     {
-        policy: resource {
-            statements: get(path: "PolicyVersion.Statement")
-        }
+      policy: resource {
+        statements: get(path: "PolicyVersion.Document.Statement")
+      }
     }
 QUERY
 
@@ -31,7 +31,9 @@ QUERY
     {%- set goodStar = r/(Get|List)\*/g -%}
     {%- set approved = true -%}
     {%- for statement in $.policy.statements -%}
-        {%- for action in statement.Action -%}
+        {%- set actions_string = statement.Action | string -%}
+        {%- set actions = actions_string.split(",") -%}
+        {%- for action in actions -%}
             {%- if anyStar.test(action) -%}
                 {%- if not goodStar.test(action) -%}
                     {%- set approved = false -%}
