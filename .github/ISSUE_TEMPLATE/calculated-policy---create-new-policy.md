@@ -1,8 +1,8 @@
 ---
 name: Calculated Policy - Create new policy
-about: Request a new calculated policy
+about: Create a new calculated policy
 title: Calculated Policy - <Short description>
-labels: enhancement, calculated-policy
+labels: calculated-policy
 assignees: ''
 
 ---
