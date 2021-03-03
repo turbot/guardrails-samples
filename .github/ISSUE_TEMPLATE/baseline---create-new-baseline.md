@@ -2,7 +2,7 @@
 name: Baseline - Create new baseline
 about: Create a new baseline
 title: Baseline - <Short description>
-labels: enhancement, baseline
+labels: baseline, enhancement
 assignees: ''
 
 ---
