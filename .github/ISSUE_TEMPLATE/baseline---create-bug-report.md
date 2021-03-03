@@ -2,7 +2,7 @@
 name: Baseline - Create bug report
 about: Create a new bug report for a baseline
 title: Baseline - <Short description>
-labels: bug, baseline
+labels: baseline, bug
 assignees: ''
 
 ---
