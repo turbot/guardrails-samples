@@ -30,7 +30,7 @@ query modInfo {
 
 #  Get all Mod that are installed
 query InstalledMods {
-  resources(filter: "resource:'tmod:@turbot/turbot#/' resourceType:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {
+  resources(filter: "resource:'tmod:@turbot/turbot#/' resourceTypeId:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {
     items {
       akas
       version: get(path: "version")
