@@ -1,7 +1,7 @@
 ---
 name: Calculated Policy - Create new policy
 about: Request a new calculated policy
-title: "[Calculated Policy] _CloudPlatformName__shortDescription_"
+title: Calculated Policy - <Short description>
 labels: calculated-policy
 assignees: ''
 
