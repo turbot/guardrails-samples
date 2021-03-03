@@ -6,6 +6,7 @@ labels: calculated-policy
 assignees: ''
 
 ---
+
 **Workspace Reference URL**
 - [ ] Create README.md (Required)
 - [ ] Add outputs.tf (If applicable)
