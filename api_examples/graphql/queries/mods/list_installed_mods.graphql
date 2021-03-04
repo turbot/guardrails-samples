@@ -38,11 +38,12 @@
 # - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
 #
 
-query ListInstalledModsByResourceTypeId {
-  resources(filter: "resource:'tmod:@turbot/turbot#/' resourceTypeId:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {
+query ListInstalledMods {
+  resources(filter: "resourceTypeId:tmod:@turbot/turbot#/resource/types/mod resourceTypeLevel:self sort:title limit:200") {
     items {
-      akas
+      modId: akas
       version: get(path: "version")
     }
   }
 }
+
