@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Dscription: Turbot required AWS Security groups for TEF 1.6.0+
+Description: Turbot required AWS Security groups for TEF 1.6.0+
 
 Parameters:
   TurbotVpc:
@@ -31,6 +31,21 @@ Resources:
           CidrIp: 0.0.0.0/0
           FromPort: 80
           ToPort: 80
+          IpProtocol: tcp
+        - Description: Outbound TCP DNS access.
+          CidrIp: 0.0.0.0/0
+          FromPort: 53
+          ToPort: 53
+          IpProtocol: tcp
+        - Description: Outbound UDP DNS Access.
+          CidrIp: 0.0.0.0/0
+          FromPort: 53
+          ToPort: 53
+          IpProtocol: udp
+        - Description: Outbound NTP access.
+          CidrIp: 0.0.0.0/0
+          FromPort: 123
+          ToPort: 123
           IpProtocol: tcp
 
   LoadBalancerSecurityGroup:
