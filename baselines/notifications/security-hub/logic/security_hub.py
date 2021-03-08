@@ -32,7 +32,7 @@ class SecurityHub:
 
     def get_findings(self, ids):
         start_time = time.perf_counter()
-        print(f"Started - Get findings")
+        print(f"[INFO] Started - Get findings")
         batch_size = 20
         cache_found_id_map = {}
 
@@ -48,13 +48,13 @@ class SecurityHub:
 
             response = self.client.get_findings(Filters=filter)
             findings = response["Findings"]
-            print(f"Get Findings API result: {findings}")
+            print(f"[INFO] Get Findings API result: {findings}")
 
             map_findings = {findings[i]["Id"]: findings[i]["UpdatedAt"] for i in range(0, len(findings))}
             cache_found_id_map = {**cache_found_id_map, **map_findings}
 
         end_time = time.perf_counter()
-        print(f"Completed - Get findings - {end_time - start_time:0.4f} seconds")
+        print(f"[INFO] Completed - Get findings - {end_time - start_time:0.4f} seconds")
 
         return cache_found_id_map
 
@@ -64,17 +64,17 @@ class SecurityHub:
         if len(self.insert_findings):
             partial_failure = partial_failure | self.__batch_import_findings()
 
-            print(f"Importing {len(self.insert_findings)} findings")
+            print(f"[INFO] Importing {len(self.insert_findings)} findings")
 
         if len(self.reopen_findings):
             partial_failure = partial_failure | self.__batch_reopen_findings()
 
-            print(f"Reopened {len(self.reopen_findings)} findings")
+            print(f"[INFO] Reopened {len(self.reopen_findings)} findings")
 
         if len(self.resolve_findings):
             partial_failure = partial_failure | self.__batch_resolve_findings()
 
-            print(f"Resolved {len(self.resolve_findings)} findings")
+            print(f"[INFO] Resolved {len(self.resolve_findings)} findings")
 
         return partial_failure
 
@@ -83,7 +83,7 @@ class SecurityHub:
             raise ValueError("Parameter `record` for class `SecurityHub` is missing")
 
         self.reopen_findings[record.id] = record.updated_timestamp
-        print(f"Adding record to reopen findings queue - {record.id} - {record.updated_timestamp}")
+        print(f"[INFO] Adding record to reopen findings queue - {record.id} - {record.updated_timestamp}")
 
         self.insert_finding(record)
 
@@ -92,7 +92,7 @@ class SecurityHub:
             raise ValueError("Parameter `record` for class `SecurityHub` is missing")
 
         self.reopen_findings[record.id] = record.updated_timestamp
-        print(f"Adding record to resolved findings queue - {record.id} - {record.updated_timestamp}")
+        print(f"[INFO] Adding record to resolved findings queue - {record.id} - {record.updated_timestamp}")
 
         self.insert_finding(record)
 
@@ -103,7 +103,7 @@ class SecurityHub:
         finding = self.__create_insert_finding(record)
 
         self.insert_findings.append(finding)
-        print(f"Adding record to insert findings queue - {record.id} - {record.updated_timestamp}")
+        print(f"[INFO] Adding record to insert findings queue - {record.id} - {record.updated_timestamp}")
 
     def __create_update_finding(self, id):
         finding = {
@@ -114,7 +114,7 @@ class SecurityHub:
         return finding
 
     def __create_insert_finding(self, record):
-        print("Starting - Create finding")
+        print("[INFO] Starting - Create finding")
         # Common format
         finding = {
             "SchemaVersion": "2018-10-08",
@@ -167,19 +167,19 @@ class SecurityHub:
         generator_id = record.control_type.replace(" > ", "-").lower()
         finding["GeneratorId"] = f"arn:aws:securityhub:::ruleset/turbot/{generator_id}"
 
-        print(f"Completed - Create finding - {finding}")
+        print(f"[INFO] Completed - Create finding - {finding}")
 
         return finding
 
     def __batch_import_findings(self):
         start_time = time.perf_counter()
-        print(f"Started - Batch import findings")
+        print(f"[INFO] Started - Batch import findings")
         response = self.client.batch_import_findings(Findings=self.insert_findings)
 
         # update cache
         for finding in self.insert_findings:
             self.cache.set(finding["Id"], finding["UpdatedAt"])
-            print(f"Cache update - {finding['Id']} - {finding['UpdatedAt']}")
+            print(f"[INFO] Cache update - {finding['Id']} - {finding['UpdatedAt']}")
             pass
 
         failed_count = response["FailedCount"]
@@ -188,23 +188,23 @@ class SecurityHub:
         # Is this an account that is not managed by Sec Hub?
         for failed_finding in response["FailedFindings"]:
             if failed_finding["ErrorCode"] == "InvalidAccess":
-                print(f"Finding will not be processed - {failed_finding['ErrorMessage']}")
+                print(f"[WARN] Finding will not be processed - {failed_finding['ErrorMessage']}")
                 handled_count += 1
             else:
-                print(f"Finding failed - will retry - {failed_finding}")
+                print(f"[WARN] Finding failed - will retry - {failed_finding}")
 
         end_time = time.perf_counter()
         if failed_count - handled_count > 0:
-            print(f"Completed with errors - Batch import findings - {end_time - start_time:0.4f} seconds")
+            print(f"[WARN] Completed with errors - Batch import findings - {end_time - start_time:0.4f} seconds")
             return True
 
-        print(f"Completed - Batch import findings - {end_time - start_time:0.4f} seconds")
+        print(f"[INFO] Completed - Batch import findings - {end_time - start_time:0.4f} seconds")
         return False
 
     def __batch_update_findings(self, findings, status):
         start_time = time.perf_counter()
         status_lower = status.lower()
-        print(f"Started - Batch update findings with status {status_lower}")
+        print(f"[INFO] Started - Batch update findings with status {status_lower}")
 
         workflow = {"Status": status.upper()}
         batch = []
@@ -213,21 +213,19 @@ class SecurityHub:
             cached_date = self.cache.get(id)
             if cached_date == None:
                 batch.append(self.__create_update_finding(id))
-                print(f"Update finding with status {status_lower} - {id} - {findings[id]}")
+                print(f"[INFO] Update finding with status {status_lower} - {id} - {findings[id]}")
             else:
-                cache_iso_date = cached_date.decode("UTF-8")
-
-                print(f"Found cached entry - {id} - {cache_iso_date}")
+                print(f"[INFO] Found cached entry - {id} - {cached_date}")
 
                 findings_timestamp = dt.datetime.fromisoformat(findings[id][:-1])
-                cache_findings_timestamp = dt.datetime.fromisoformat(cache_iso_date[:-1])
+                cache_findings_timestamp = dt.datetime.fromisoformat(cached_date[:-1])
 
                 if cache_findings_timestamp <= findings_timestamp:
                     batch.append(self.__create_update_finding(id))
-                    print(f"Update finding with status {status_lower} - {id} - {findings[id]}")
+                    print(f"[INFO] Update finding with status {status_lower} - {id} - {findings[id]}")
                 else:
                     print(
-                        f"Ignore finding with status {status_lower} - {id} - Cache time {cache_iso_date} more recent than finding time {findings[id]}")
+                        f"[INFO] Ignore finding with status {status_lower} - {id} - Cache date {cached_date} is more recent than finding {findings[id]}")
 
         failed_count = 0
         handled_count = 0
@@ -241,18 +239,19 @@ class SecurityHub:
             for unprocessed_finding in response["UnprocessedFindings"]:
                 if unprocessed_finding["ErrorCode"] == "FindingNotFound":
                     print(
-                        f"Batch update failed - Finding not found - {unprocessed_finding} - {unprocessed_finding['ErrorMessage']}")
+                        f"[WARN] Batch update failed - Finding not found - {unprocessed_finding} - {unprocessed_finding['ErrorMessage']}")
                     handled_count += 1
                 else:
-                    print(f"Batch update failed - Will retry - {unprocessed_finding}")
+                    print(f"[WARN] Batch update failed - Will retry - {unprocessed_finding}")
 
         end_time = time.perf_counter()
         if failed_count - handled_count > 0:
             print(
-                f"Completed with errors - Batch update findings with status {status_lower} - {end_time - start_time:0.4f} seconds")
+                f"[WARN] Completed with errors - Batch update findings with status {status_lower} - {end_time - start_time:0.4f} seconds")
             return True
 
-        print(f"Completed - Batch update findings with status {status_lower} - {end_time - start_time:0.4f} seconds")
+        print(
+            f"[INFO] Completed - Batch update findings with status {status_lower} - {end_time - start_time:0.4f} seconds")
         return False
 
     def __batch_reopen_findings(self):

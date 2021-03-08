@@ -40,7 +40,11 @@ class Cache:
         return None
 
     def __get_cache_strategy(self, key):
-        return self.client.get(key)
+        value = self.client.get(key)
+        if value:
+            return value.decode("UTF-8")
+
+        return None
 
     def __set_cache_strategy(self, key, value):
         return self.client.set(key, value)
@@ -54,9 +58,8 @@ class Cache:
             if last_updated_ts == None:
                 cache_missed_id_list.append(id)
             else:
-                last_updated_ts = last_updated_ts.decode("UTF-8")
-                print(f"Cache hit - Adding id cache found id map - {id} - {last_updated_ts}")
-                cache_found_id_map[id] = last_updated_ts
+                print(f"[INFO] Cache found id - {id} - {last_updated_ts}")
+                cache_found_id_map[id] = last_updated_ts.decode("UTF-8")
 
         return cache_found_id_map, cache_missed_id_list
 

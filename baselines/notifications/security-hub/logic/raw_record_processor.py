@@ -14,8 +14,8 @@ class RawRecordProcessor:
         return f"arn:aws:securityhub:{self.region}:{self.account_id}:turbot/{control_id}"
 
     def process(self):
-        print("Started - Process raw records")
-        print(f"Number of raw records received: {len(self.raw_records)}")
+        print("[INFO] Started - Process raw records")
+        print(f"[INFO] Number of raw records received: {len(self.raw_records)}")
         records = {}
 
         for raw_record in self.raw_records:
@@ -27,17 +27,17 @@ class RawRecordProcessor:
             finding_id = self.__create_finding_id(control_id)
 
             new_record_timestamp = notification["turbot"]["createTimestamp"]
-            print(f"Processing raw record - {finding_id} - {new_record_timestamp}")
+            print(f"[INFO] Processing raw record - {finding_id} - {new_record_timestamp}")
 
             notification_type = notification["notificationType"]
             if notification_type != "control_updated":
                 print(
-                    f"Ignore record - {finding_id} - Notification type `{notification_type}` is not handled currently")
+                    f"[INFO] Ignore record - {finding_id} - Notification type `{notification_type}` is not handled currently")
                 continue
 
             resource_metadata = control["resource"]["metadata"]
             if "aws" not in resource_metadata:
-                print(f"Ignore record - {finding_id} - Cloud provider not AWS")
+                print(f"[INFO] Ignore record - {finding_id} - Cloud provider not AWS")
                 continue
 
             if finding_id in records:
@@ -48,16 +48,16 @@ class RawRecordProcessor:
 
                 if exist_record_dt <= new_record_dt:
                     records[finding_id] = self.__create_record(finding_id, notification)
-                    print(f"Updated existing entry in sorted records - {finding_id} - {new_record_timestamp}")
+                    print(f"[INFO] Updated existing entry in sorted records - {finding_id} - {new_record_timestamp}")
                 else:
                     print(
-                        f"Ignore record - {finding_id} - More recent update `{exist_record_timestamp}` exists compared to record `{new_record_timestamp}`")
+                        f"[INFO] Ignore record - {finding_id} - More recent update `{exist_record_timestamp}` exists compared to record `{new_record_timestamp}`")
             else:
                 records[finding_id] = self.__create_record(finding_id, notification)
-                print(f"Created new entry in sorted records - {finding_id} - {new_record_timestamp}")
+                print(f"[INFO] Created new entry in sorted records - {finding_id} - {new_record_timestamp}")
 
-        print(f"Consolidated record count: {len(records)}")
-        print("Completed - Process raw records")
+        print(f"[INFO] Consolidated record count: {len(records)}")
+        print("[INFO] Completed - Process raw records")
 
         return records
 
