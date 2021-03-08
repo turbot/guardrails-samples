@@ -45,7 +45,7 @@ def lambda_handler(event, context):
                 notification_dt = dt.datetime.fromisoformat(notification_update_timestamp[:-1])
 
                 if notification_dt < existing_finding_dt:
-                    print(f"Ingoring record - More recent update - {key} - {notification_update_timestamp}")
+                    print(f"[INFO] Ingoring record - More recent update - {key} - {notification_update_timestamp}")
                     continue
 
                 if record.control_state == "alarm":
@@ -55,10 +55,10 @@ def lambda_handler(event, context):
             else:
                 # A notification that has resolved but not been recorded
                 if record.control_state in ["ok", "skipped", "tbd"]:
-                    print(f"Ignoring record - record is in a healthy state - {key}")
+                    print(f"[INFO] Ignoring record - record is in a healthy state - {key}")
                     continue
 
-                print(f"Create record - {key} - {notification_update_timestamp}")
+                print(f"[INFO] Create record - {key} - {notification_update_timestamp}")
                 security_hub.insert_finding(record)
 
         partial_failure = security_hub.process_findings()
@@ -66,8 +66,8 @@ def lambda_handler(event, context):
         if partial_failure == True:
             raise RuntimeError("Partial batch handled - retry")
 
-        print("Completed - No Errors")
+        print("[INFO] Completed - No Errors")
     except Exception as e:
-        print(f'Exception: {str(e)}')
-        print("Completed - With Errors")
+        print(f'[ERROR] Exception: {str(e)}')
+        print("[ERROR] Completed - With Errors")
         raise
