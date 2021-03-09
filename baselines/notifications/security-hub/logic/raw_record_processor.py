@@ -1,22 +1,18 @@
 import json
 import datetime as dt
 from .record import Record
+from .account_record_collection import AccountRecordCollection
 
 
 class RawRecordProcessor:
-    def __init__(self, raw_records, account_id, region) -> None:
+    def __init__(self, raw_records) -> None:
         self.raw_records = raw_records
-        self.region = region
-        self.account_id = account_id
-        pass
 
-    def __create_finding_id(self, control_id):
-        return f"arn:aws:securityhub:{self.region}:{self.account_id}:turbot/{control_id}"
-
-    def process(self):
-        print("[INFO] Started - Process raw records")
+    def create_account_record_collection(self):
+        print("[INFO] Started - Create account record collection")
         print(f"[INFO] Number of raw records received: {len(self.raw_records)}")
-        records = {}
+
+        account_record_collection = AccountRecordCollection()
 
         for raw_record in self.raw_records:
             json_body = json.loads(raw_record['body'])
@@ -24,42 +20,49 @@ class RawRecordProcessor:
 
             control = notification["control"]
             control_id = control["turbot"]["id"]
-            finding_id = self.__create_finding_id(control_id)
 
             new_record_timestamp = notification["turbot"]["createTimestamp"]
-            print(f"[INFO] Processing raw record - {finding_id} - {new_record_timestamp}")
+            print(f"[INFO] Processing raw record")
 
             notification_type = notification["notificationType"]
             if notification_type != "control_updated":
                 print(
-                    f"[INFO] Ignore record - {finding_id} - Notification type `{notification_type}` is not handled currently")
+                    f"[INFO] Ignore record - Notification type `{notification_type}` is not handled currently")
                 continue
 
             resource_metadata = control["resource"]["metadata"]
             if "aws" not in resource_metadata:
-                print(f"[INFO] Ignore record - {finding_id} - Cloud provider not AWS")
+                print(f"[INFO] Ignore record - Cloud provider not AWS")
                 continue
 
-            if finding_id in records:
-                exist_record_timestamp = records[finding_id].updated_timestamp
+            account_id = resource_metadata["aws"]["accountId"]
+            region = resource_metadata["aws"]["regionName"] if resource_metadata["aws"]["regionName"] else "global"
+            finding_id = self.__create_finding_id(control_id, account_id, region)
 
-                exist_record_dt = dt.datetime.fromisoformat(exist_record_timestamp[:-1])
+            previous_record = account_record_collection.get_account_record(account_id, finding_id)
+
+            if previous_record:
+                previous_record_timestamp = previous_record.updated_timestamp
+
+                previous_record_dt = dt.datetime.fromisoformat(previous_record_timestamp[:-1])
                 new_record_dt = dt.datetime.fromisoformat(new_record_timestamp[:-1])
 
-                if exist_record_dt <= new_record_dt:
-                    records[finding_id] = self.__create_record(finding_id, notification)
+                if previous_record_dt <= new_record_dt:
+                    account_record_collection.add_record(
+                        account_id, finding_id, self.__create_record(finding_id, notification))
                     print(f"[INFO] Updated existing entry in sorted records - {finding_id} - {new_record_timestamp}")
                 else:
                     print(
-                        f"[INFO] Ignore record - {finding_id} - More recent update `{exist_record_timestamp}` exists compared to record `{new_record_timestamp}`")
+                        f"[INFO] Ignore record - {finding_id} - More recent update `{previous_record_timestamp}` exists compared to record `{new_record_timestamp}`")
             else:
-                records[finding_id] = self.__create_record(finding_id, notification)
+                account_record_collection.add_record(
+                    account_id, finding_id, self.__create_record(finding_id, notification))
                 print(f"[INFO] Created new entry in sorted records - {finding_id} - {new_record_timestamp}")
 
-        print(f"[INFO] Consolidated record count: {len(records)}")
-        print("[INFO] Completed - Process raw records")
+        print(f"[INFO] Process record count: {account_record_collection.get_record_count()}")
+        print("[INFO] Completed - Create account record collection")
 
-        return records
+        return account_record_collection
 
     def __create_record(self, id, notification):
         record = {}
@@ -96,3 +99,6 @@ class RawRecordProcessor:
             notification["control"]["resource"]["akas"],
             control_state
         )
+
+    def __create_finding_id(self, control_id, account_id, region):
+        return f"arn:aws:securityhub:{region}:{account_id}:turbot/{control_id}"

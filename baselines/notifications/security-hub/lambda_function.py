@@ -20,48 +20,58 @@ def get_account_id_and_region(context):
 
 def lambda_handler(event, context):
     try:
+        # security_hub = SecurityHub.createOld(cache)
+        # account_id, region = get_account_id_and_region(context)
         cache = Cache.create()
+        raw_record_processor = RawRecordProcessor(event['Records'])
 
-        security_hub = SecurityHub.create(cache)
+        account_record_collection = raw_record_processor.create_account_record_collection()
 
-        account_id, region = get_account_id_and_region(context)
-        raw_record_processor = RawRecordProcessor(event['Records'], account_id, region)
+        partial_failure = False
 
-        records_to_process = raw_record_processor.process()
+        # Create all the sec hub sessions here
+        for account_id in account_record_collection:
+            print(f"[INFO] Started - Update findings for account {account_id}")
 
-        ids = list(records_to_process.keys())
-        existing_findings_map = find_existing_findings_map(security_hub, cache, ids)
+            # NOTE: We have a problem here, we are creating a new session but is this session in the correct region?
+            security_hub = SecurityHub.create(cache, account_id)
+            records = account_record_collection.get_records(account_id)
+            ids = list(records.keys())
 
-        for key in records_to_process:
-            record = records_to_process[key]
+            existing_findings_map = find_existing_findings_map(security_hub, cache, ids)
 
-            notification_update_timestamp = record.updated_timestamp
+            for key in records:
+                record = records[key]
 
-            if key in existing_findings_map:
-                # Check if findings is more recent, if not then ignore
-                existing_finding_update_timestamp = existing_findings_map[key]
+                notification_update_timestamp = record.updated_timestamp
 
-                existing_finding_dt = dt.datetime.fromisoformat(existing_finding_update_timestamp[:-1])
-                notification_dt = dt.datetime.fromisoformat(notification_update_timestamp[:-1])
+                if key in existing_findings_map:
+                    # Check if findings is more recent, if not then ignore
+                    existing_finding_update_timestamp = existing_findings_map[key]
 
-                if notification_dt < existing_finding_dt:
-                    print(f"[INFO] Ingoring record - More recent update - {key} - {notification_update_timestamp}")
-                    continue
+                    existing_finding_dt = dt.datetime.fromisoformat(existing_finding_update_timestamp[:-1])
+                    notification_dt = dt.datetime.fromisoformat(notification_update_timestamp[:-1])
 
-                if record.control_state == "alarm":
-                    security_hub.reopen_finding(record)
+                    if notification_dt < existing_finding_dt:
+                        print(f"[INFO] Ingoring record - More recent update - {key} - {notification_update_timestamp}")
+                        continue
+
+                    if record.control_state == "alarm":
+                        security_hub.reopen_finding(record)
+                    else:
+                        security_hub.resolve_finding(record)
                 else:
-                    security_hub.resolve_finding(record)
-            else:
-                # A notification that has resolved but not been recorded
-                if record.control_state in ["ok", "skipped", "tbd"]:
-                    print(f"[INFO] Ignoring record - record is in a healthy state - {key}")
-                    continue
+                    # A notification that has resolved but not been recorded
+                    if record.control_state in ["ok", "skipped", "tbd"]:
+                        print(f"[INFO] Ignoring record - record is in a healthy state - {key}")
+                        continue
 
-                print(f"[INFO] Create record - {key} - {notification_update_timestamp}")
-                security_hub.insert_finding(record)
+                    print(f"[INFO] Create record - {key} - {notification_update_timestamp}")
+                    security_hub.insert_finding(record)
 
-        partial_failure = security_hub.process_findings()
+            print(f"[INFO] Completed - Update findings for account {account_id}")
+
+            partial_failure = partial_failure | security_hub.process_findings()
 
         if partial_failure == True:
             raise RuntimeError("Partial batch handled - retry")
