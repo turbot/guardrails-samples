@@ -21,13 +21,49 @@ class SecurityHub:
         self.resolve_findings = {}
 
     @staticmethod
-    def create(cache):
+    def create(cache, account_id):
+        start_time = time.perf_counter()
+        print(f"[INFO] Started - Security Hub create client")
         product_arn = os.getenv("SECURITY_HUB_PRODUCT_ARN")
         if product_arn is None:
             raise RuntimeError("Environment variable `SECURITY_HUB_PRODUCT_ARN` is missing")
 
-        aws_client = boto3.client('securityhub')
+        role = os.getenv("SECURITY_HUB_ROLE")
+        external_id = os.getenv("SECURITY_HUB_EXTERNAL_ID")
 
+        if role:
+            role_arn = f"arn:aws:iam::{account_id}:role/{role}"
+
+            sts_connection = boto3.client('sts')
+            if external_id:
+                acct_b = sts_connection.assume_role(
+                    RoleArn=role_arn,
+                    ExternalId=external_id,
+                    RoleSessionName="Turbot_Security_Hub_Integration"
+                )
+            else:
+                acct_b = sts_connection.assume_role(
+                    RoleArn=role_arn,
+                    RoleSessionName="Turbot_Security_Hub_Integration"
+                )
+
+            access_key_id = acct_b['Credentials']['AccessKeyId']
+            secret_access_key = acct_b['Credentials']['SecretAccessKey']
+            session_token = acct_b['Credentials']['SessionToken']
+        else:
+            access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+            secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+            session_token = os.getenv("AWS_SESSION_TOKEN")
+
+        aws_client = boto3.client(
+            'securityhub',
+            aws_access_key_id=access_key_id,
+            aws_secret_access_key=secret_access_key,
+            aws_session_token=session_token,
+        )
+
+        end_time = time.perf_counter()
+        print(f"[INFO] Completed - Security Hub create client - {end_time - start_time:0.4f} seconds")
         return SecurityHub(aws_client, cache, product_arn)
 
     def get_findings(self, ids):
