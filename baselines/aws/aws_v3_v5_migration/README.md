@@ -1,14 +1,15 @@
 # AWS v3 to v5 Migration Policies
 
-Provide all the policies and sane defaults required to enable event handling for an account in v3 and v5 at the same time.  The defaults assume that the user needs Turbot provisioned buckets, CloudTrail and Event Handlers.
+Provide all the policies and sane defaults required to enable event handling for an account in v3 and v5 at the same time. The defaults assume that the user needs Turbot provisioned buckets, CloudTrail and Event Handlers.
 
 - Individual parameters to control:
-    - Turbot Service Roles
-    - Turbot CloudTrails
-    - Turbot regional logging buckets
-    - Turbot event handlers.
+  - Turbot Service Roles
+  - Turbot CloudTrails
+  - Turbot regional logging buckets
+  - Turbot event handlers.
 
 ## Alert
+
 - These policies should be deployed and attached before an account is imported into v5.
 - For customers sensitive to IAM controls, the Service Roles policy will deploy additional IAM roles and groups into the account.
 

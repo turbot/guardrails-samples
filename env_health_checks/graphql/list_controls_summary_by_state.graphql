@@ -1,0 +1,22 @@
+query ControlsSummary {
+  resource: controlSummariesByResource(filter: "resourceId:'tmod:@turbot/turbot#/'") {
+    items {
+      data: resource {
+        turbot {
+          title
+        }
+      }
+      summary {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+  }
+}
