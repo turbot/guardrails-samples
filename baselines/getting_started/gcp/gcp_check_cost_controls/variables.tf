@@ -129,7 +129,7 @@ variable "enable_compute_engine_active_policies" {
   default     = true
 }
 
-variable "enable_network_policies" {
+variable "enable_network_approved_policies" {
   type        = bool
   description = "Enable the GCP Network address Network Tier policies for baseline"
   default     = true
