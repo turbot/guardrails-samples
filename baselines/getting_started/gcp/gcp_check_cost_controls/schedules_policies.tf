@@ -14,7 +14,7 @@
 # GCP > Compute Engine > Instance > Schedule
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceSchedule
 resource "turbot_policy_setting" "gcp_computeengine_instance_schedule" {
-  count    = var.gcp_computeengine_instance_schedule_policies ? 1 : 0
+  count    = var.enable_compute_engine_schedule_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceSchedule"
   value    = "Skip"
@@ -24,9 +24,9 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_schedule" {
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceScheduleTag
 # # Schedule Tag Option, more information https://turbot.com/v5/docs/concepts/guardrails/scheduling#scheduling-with-a-tag
 resource "turbot_policy_setting" "gcp_computeengine_instance_schedule_tag" {
-  count    = var.gcp_computeengine_instance_schedule_tag_policies ? 1 : 0
+  count    = var.enable_compute_engine_schedule_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceScheduleTag"
   value    = "Skip"
-            # "Enforce: Schedule per turbot_custom_schedule tag"
+  # "Enforce: Schedule per turbot_custom_schedule tag"
 }
