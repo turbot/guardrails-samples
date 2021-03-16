@@ -12,8 +12,8 @@ resource "turbot_policy_setting" "set_resource_active_policies" {
   value    = each.value
 }
 
-# GCP > Compute Engine > Instance > Active > Age
-# https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceActiveAge
+# GCP > **Service** > **Resource** > Active > Age
+# Example policy: https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/instanceActiveAge
 resource "turbot_policy_setting" "set_resource_age_policies" {
   for_each = var.resource_active
   resource = turbot_smart_folder.gcp_cost_controls.id
