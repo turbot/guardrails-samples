@@ -18,12 +18,12 @@ output "resource_active" {
   value = var.resource_active
 }
 
-output "enable_compute_engine_policies" {
-  value = var.enable_compute_engine_policies
+output "enable_compute_engine_active_policies" {
+  value = var.enable_compute_engine_active_policies
 }
 
-output "enable_network_policies" {
-  value = var.enable_network_policies
+output "enable_network_approved_policies" {
+  value = var.enable_network_approved_policies
 }
 
 output "enable_compute_engine_schedule_policies" {

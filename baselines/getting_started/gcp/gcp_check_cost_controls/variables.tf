@@ -123,13 +123,13 @@ variable "smart_folder_parent_resource" {
   default     = "tmod:@turbot/turbot#/"
 }
 
-variable "enable_compute_engine_policies" {
+variable "enable_compute_engine_active_policies" {
   type        = bool
   description = "Enable the Compute Engine policies for baseline"
   default     = true
 }
 
-variable "enable_network_policies" {
+variable "enable_network_approved_policies" {
   type        = bool
   description = "Enable the GCP Network address Network Tier policies for baseline"
   default     = true

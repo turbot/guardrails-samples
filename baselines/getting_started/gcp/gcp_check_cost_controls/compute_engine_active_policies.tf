@@ -3,7 +3,7 @@
 # GCP > Compute Engine > Disk > Active
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/diskActive
 resource "turbot_policy_setting" "gcp_computeengine_disk_active" {
-  count    = var.enable_compute_engine_policies ? 1 : 0
+  count    = var.enable_compute_engine_active_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskActive"
   value    = "Check: Active"
@@ -12,7 +12,7 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_active" {
 # GCP > Compute Engine > Disk > Active > Attached
 # https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/policy/types/diskActiveAttached
 resource "turbot_policy_setting" "gcp_computeengine_disk_active_attached" {
-  count    = var.enable_compute_engine_policies ? 1 : 0
+  count    = var.enable_compute_engine_active_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_cost_controls.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskActiveAttached"
   value    = "Force inactive if unattached"
