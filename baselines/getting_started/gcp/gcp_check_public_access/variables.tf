@@ -1,32 +1,14 @@
 # Baseline Configuration
 
-variable "enable_instance_block_project_wide_ssh_keys_policies" {
+variable "enable_compute_engine_policies" {
   type        = bool
-  description = "Enable Compute Engine Instance Block Project Wide SSH Keys policies for baseline"
+  description = "Enable Compute Engine public access policies for the baseline"
   default     = true
 }
 
-variable "enable_instance_external_ip_addresses_policies" {
+variable "enable_network_policies" {
   type        = bool
-  description = "Enable the GCP Compute Engine instance external IP addresses policies for baseline"
-  default     = true
-}
-
-variable "enable_instance_serial_port_access_policies" {
-  type        = bool
-  description = "Enable Compute Engine instance Serial Port Access policies for baseline"
-  default     = true
-}
-
-variable "enable_gcp_network_firewall_ingress_rules_approved_policies" {
-  type        = bool
-  description = "Enable GCP Network Firewall Ingress Rule approved policies for baseline"
-  default     = true
-}
-
-variable "enable_gcp_network_firewall_ingress_rules_approved_rules_policies" {
-  type        = bool
-  description = "Enable GCP Network Firewall Ingress Rule OCL policies for baseline"
+  description = "Enable GCP Network public access policies for baseline"
   default     = true
 }
 
@@ -55,16 +37,16 @@ variable "smart_folder_parent_resource" {
 }
 
 variable "instance_serial_port_access" {
-  type        = string
+  type    = string
   default = "Check: Enabled"
 }
 
 variable "gcp_network_firewall_ingress_rules_approved" {
-  type        = string
+  type    = string
   default = "Check: Approved"
 }
 
 variable "gcp_service_trusted_access" {
-  type        = string
+  type    = string
   default = "Check: Trusted Access > *"
 }
