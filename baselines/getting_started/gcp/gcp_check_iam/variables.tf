@@ -2,37 +2,19 @@
 
 variable "enable_service_account_key_active_policies" {
   type        = bool
-  description = "Enable the IAM user access key policies for baseline"
+  description = "Enable the IAM user access service account key active policies for baseline"
   default     = true
 }
 
-variable "enable_service_account_key_active_age_policies" {
+variable "enable_service_account_key_approved_policies" {
   type        = bool
-  description = "Enable the IAM user access key age policies for baseline"
+  description = "Enable the IAM user access service account key approved policies for baseline"
   default     = true
 }
 
-variable "service_account_key_approved_policies" {
+variable "enable_service_account_trusted_access_policies" {
   type        = bool
-  description = "Enable the IAM Service Account password policies for baseline"
-  default     = false
-}
-
-variable "service_account_key_approved_usage_policies" {
-  type        = bool
-  description = "Enable the IAM Service Account Key approved policies for baseline"
-  default     = false
-}
-
-variable "enable_service_account_policy_trusted_access_policies" {
-  type        = bool
-  description = "Enable the IAM Service Account Trusted Access policies for baseline"
-  default     = true
-}
-
-variable "enable_service_account_policy_trusted_domains_policies" {
-  type        = bool
-  description = "Enable the IAM Service Account Trusted Domain policies for baseline"
+  description = "Enable the IAM Service Account Trusted policies for baseline"
   default     = false
 }
 

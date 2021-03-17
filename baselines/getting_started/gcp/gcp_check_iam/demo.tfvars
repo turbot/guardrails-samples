@@ -3,8 +3,9 @@
 # See README for more details.
 
 # See file service_account_key_policies.tf
-service_account_key_approved_policies = false
-service_account_key_approved_usage_policies = false
+enable_service_account_key_policies = false
+
+enable_service_account_key_approved_policies = false
 
 # See file service_account_policy_trust_policies.tf
-enable_service_account_policy_trusted_domains_policies = false
+enable_service_account_trusted_access_policies = false

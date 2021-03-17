@@ -4,7 +4,7 @@
 # GCP > IAM > Service Account > Policy > Trusted Access
 # https://turbot.com/v5/mods/turbot/gcp-iam/inspect#/policy/types/serviceAccountPolicyTrustedAccess
 resource "turbot_policy_setting" "iam_service_account_policy_trusted_access" {
-  count    = var.enable_service_account_policy_trusted_access_policies ? 1 : 0
+  count    = var.enable_service_account_trusted_access_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_iam.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountPolicyTrustedAccess"
   value    = "Check: Trusted Access > *"
@@ -18,7 +18,7 @@ resource "turbot_policy_setting" "iam_service_account_policy_trusted_access" {
 # GCP > IAM > Service Account > Policy > Trusted Access > Domains
 # https://turbot.com/v5/mods/turbot/gcp-iam/inspect#/policy/types/serviceAccountPolicyTrustedDomains
 resource "turbot_policy_setting" "iam_service_account_policy_trusted_domains" {
-  count    = var.enable_service_account_policy_trusted_domains_policies ? 1 : 0
+  count    = var.enable_service_account_trusted_access_policies ? 1 : 0
   resource = turbot_smart_folder.gcp_iam.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountPolicyTrustedDomains"
   value    = <<-EOT
