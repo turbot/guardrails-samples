@@ -5,6 +5,8 @@
 # List of Trusted Domains
 # Could also consider Trusted Groups, Projects, Service Accounts, and Users
 
+# GCP > Project > Trusted Domains [Default]
+# https://turbot.com/v5/mods/turbot/gcp/inspect#/policy/types/trustedDomains
 resource "turbot_policy_setting" "project_trusted_domains_template" {
   resource = turbot_smart_folder.gcp_public_access.id
   type     = "tmod:@turbot/gcp#/policy/types/trustedDomains"
@@ -15,6 +17,8 @@ EOT
 }
 
 #Loop through var.service_status and set enable policies
+# GCP > **Service** > **Resource** > Policy > Trusted Access
+# Example policy: https://turbot.com/v5/mods/turbot/gcp-computeengine/inspect#/control/types/diskPolicyTrustedAccess
 resource "turbot_policy_setting" "gcp_service_trusted_access" {
   for_each = local.policy_map
   resource = turbot_smart_folder.gcp_public_access.id
