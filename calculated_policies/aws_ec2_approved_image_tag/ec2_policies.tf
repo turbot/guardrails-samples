@@ -1,18 +1,3 @@
-terraform {
-  required_providers {
-    turbot = {
-      source = "turbot/turbot"
-    }
-  }
-}
-
-#Smart folder
-resource "turbot_smart_folder" "aws_ec2_folder" {
-  title       = var.smart_folder_title
-  description = var.smart_folder_description
-  parent      = var.smart_folder_parent_resource
-}
-
 #AWS > EC2 > Instace > Approved > Usage
 resource "turbot_policy_setting" "aws_ec2_approved_usage" { 
     resource = turbot_smart_folder.aws_ec2_folder.id
