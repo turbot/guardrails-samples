@@ -43,7 +43,7 @@ Approval logic for EC2 Instances.
 ```nunjucks
 {%- set approved = "Approved" -%}
 
-{%- elif not $.resources.items[0].tags -%}
+{%- if not $.resources.items[0].tags -%}
 {%- set approved = "Not approved" -%}
 {%- elif not $.resources.items[0].tags['approved'] -%}
 {%- set approved = "Not approved" -%}
