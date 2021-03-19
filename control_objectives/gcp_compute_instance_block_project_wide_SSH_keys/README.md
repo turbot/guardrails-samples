@@ -1,7 +1,7 @@
 # GCP Compute Instance Block Project Wide SSH Keys
 
 ## Use case
-GCP offers an option on each Compute instance to block or allow project-wide public SSH keys.  By default this setting allows for project-wide SSH keys.  This is easy to manually enable on an instance; however, it becomes a challenge at scale (e.g. many instances in a multi-project model) to deploy and keep configurations consistent over time.  Our recommendation is that customers default to instance-level SSH keys unless projects or specific instances are given an approved exception to allow project-wide SSH keys. Following that model allows Turbot’s automation to block project-wide SSH keys on all instances, while allowing point in time exceptions to allow.  This control objective provides an example to help enforce blocking project-wide SSH keys across all of your instances in your GCP projects.
+GCP offers an option on each Compute instance to block or allow project-wide public SSH keys.  By default this setting allows for project-wide SSH keys.  This is easy to manually enable on an instance; however, it becomes a challenge at scale (e.g. many instances in a multi-project model) to deploy and keep configurations consistent over time.  Our recommendation is that customers default to instance-level SSH keys unless projects or specific instances are given an approved exception to allow project-wide SSH keys. Turbot’s automation can be applied globally to block project-wide SSH keys on all instances in every project, while allowing time-based exceptions on specific instances when approved. This control objective provides an example to help enforce blocking project-wide SSH keys across all of your instances in your GCP projects.
 
 ## Implementation details
 
