@@ -23,7 +23,7 @@
 #
 # For full documentation see:
 # - Filter documentation: https://turbot.com/v5/docs/reference/filter
-# - GraphQL resourceType: https://turbot.com/v5/docs/reference/graphql/query/resourceTypeId
+# - GraphQL resourceTypeId: https://turbot.com/v5/docs/reference/graphql/query/resourceTypeId
 
 
 {
