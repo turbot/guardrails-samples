@@ -25,9 +25,7 @@ resource "turbot_policy_setting" "aws_ec2_approved_usage" {
     template = <<-TEMPLATE
     {%- set approved = "Approved" -%}
 
-    {%- if $.resources.items[0].public == true -%}
-    {%- set approved = "Not approved" -%}
-    {%- elif not $.resources.items[0].tags -%}
+    {%- if not $.resources.items[0].tags -%}
     {%- set approved = "Not approved" -%}
     {%- elif not $.resources.items[0].tags['approved'] -%}
     {%- set approved = "Not approved" -%}
