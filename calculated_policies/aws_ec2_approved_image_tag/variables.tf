@@ -15,3 +15,7 @@ variable "smart_folder_parent_resource" {
   type        = string
   default     = "tmod:@turbot/turbot#/"
 }
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+}
