@@ -23,12 +23,11 @@
 #
 # For full documentation see:
 # - Filter documentation: https://turbot.com/v5/docs/reference/filter
-# - GraphQL resourceType: https://turbot.com/v5/docs/reference/graphql/query/resourceType
-#
+# - GraphQL resourceType: https://turbot.com/v5/docs/reference/graphql/query/resourceTypeId
 
 
 {
-  resources(filter: "resourceType:'tmod:@turbot/aws#/resource/types/budget' limit:500") {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/budget' limit:500") {
     metadata {
       stats {
         total
