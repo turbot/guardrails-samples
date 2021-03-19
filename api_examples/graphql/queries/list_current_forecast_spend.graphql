@@ -23,7 +23,7 @@
 #
 # For full documentation see:
 # - Filter documentation: https://turbot.com/v5/docs/reference/filter
-# - GraphQL controlCategories: https://turbot.com/v5/docs/reference/graphql/query/controlCategories
+# - GraphQL resourceType: https://turbot.com/v5/docs/reference/graphql/query/resourceType
 #
 
 
