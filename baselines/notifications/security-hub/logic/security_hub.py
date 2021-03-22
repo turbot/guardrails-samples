@@ -179,9 +179,11 @@ class SecurityHub:
         resources = []
 
         for aka in record.akas:
+
             resource_aka = {
                 "Type": "Resource AKA",
-                "Id": aka
+                "Id": aka,
+                "Tags": record.tags
             }
 
             if record.partition:
