@@ -13,7 +13,7 @@
 # Filter
 # ------
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' (aka for s3 bucket) are returned.
 #
@@ -30,8 +30,8 @@
 # - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
 #
 
-query ListResourcesByResourceTypeWithSpecificTag {
-  resources(filter: "resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {
+query ListResourcesByResourceTypeIdWithSpecificTag {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {
     items {
       turbot {
         title

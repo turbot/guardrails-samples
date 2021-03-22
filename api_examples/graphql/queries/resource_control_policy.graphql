@@ -1,5 +1,5 @@
 query ResourceControlPolicyQuery {
-  resources(paging: "", filter: "resourceType:'tmod:@turbot/aws#/resource/types/aws'") {
+  resources(paging: "", filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/aws'") {
     items {
       data
       controls(filter: "state:alarm,error,ok") {

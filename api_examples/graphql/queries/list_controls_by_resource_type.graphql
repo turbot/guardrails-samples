@@ -18,7 +18,7 @@
 #   The matching algorithm will perform a caseless compare of the akas from right to left.
 #   In example, filters the AWS controls that are in either error, invalid or tbd state.
 #
-# resourceType:
+# resourceTypeId:
 #   Filter resources of a specific resource type.
 #   In example, the resources 'tmod:@turbot/aws#/resource/types/aws' (the AWS controls) are returned.
 #
@@ -32,7 +32,7 @@
 #
 
 query ListControlsByResourceType {
-  controls(filter: "state:error,invalid,tbd resourceType:tmod:@turbot/aws#/resource/types/aws") {
+  controls(filter: "state:error,invalid,tbd resourceTypeId:tmod:@turbot/aws#/resource/types/aws") {
     metadata {
       stats {
         total

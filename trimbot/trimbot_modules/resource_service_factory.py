@@ -12,7 +12,8 @@ from .turbot_database import TurbotDatabaseResourceService
 from .turbot_policies import TurbotPoliciesResourceService
 from .turbot_account import TurbotAccountResourceService
 from .cloudtrail_trial import CloudTrailTrailResourceService
-
+from .cloudwatch_logs import CloudWatchLogsResourceService
+from .lam_function import LambdaFunctionResourceService
 
 class ResourceServiceFactory:
     def __init__(self, master_session, client_session, v3_api, turbot_account_id, turbot_cluster_id) -> None:
@@ -26,7 +27,7 @@ class ResourceServiceFactory:
         super().__init__()
 
     def create_resource_service(self, recipe):
-        key = f"{recipe['service']}_{recipe['resource']}"
+        key = f"{recipe['service'].lower()}_{recipe['resource'].lower()}"
 
         if key not in self.client_map:
             message = f"Resource factory unable to create a resource instance for service {recipe['service']} and resource {recipe['resource']}"
@@ -60,5 +61,7 @@ class ResourceServiceFactory:
             "turbot_policies": TurbotPoliciesResourceService,
             "codecommit_repository": CodeCommitRepositoryResourceService,
             "turbot_account": TurbotAccountResourceService,
-            "cloudtrail_trail": CloudTrailTrailResourceService
+            "cloudtrail_trail": CloudTrailTrailResourceService,
+            "cloudwatch_loggroup": CloudWatchLogsResourceService,
+            "lambda_function": LambdaFunctionResourceService,
         }

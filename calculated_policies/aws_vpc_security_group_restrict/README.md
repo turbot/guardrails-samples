@@ -1,4 +1,4 @@
-# AWS EC2 - Restrict Instance images to trusted AWS accounts AMIs
+# AWS VPC - Restrict Security Group Ingress and Egress Rules
 
 ## Use case
 

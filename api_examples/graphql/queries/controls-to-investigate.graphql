@@ -102,10 +102,10 @@ query unhealthyControlsInFolder {
 query unhealthyAWSControls {
   # List all the AWS controls in the workspace with the state error, invalid and tbd
   # As shown below, we can list other provider and turbot controls as well.
-  # Azure Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/azure#/resource/types/azure"
-  # GCP Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/gcp#/resource/types/gcp"
-  # Turbot Controls: filter: "state:error,invalid,tbd resourceType:tmod:@turbot/turbot#/resource/types/turbot"
-  controls(filter: "state:error,invalid,tbd resourceType:tmod:@turbot/aws#/resource/types/aws") {
+  # Azure Controls: filter: "state:error,invalid,tbd resourceTypeId:tmod:@turbot/azure#/resource/types/azure"
+  # GCP Controls: filter: "state:error,invalid,tbd resourceTypeId:tmod:@turbot/gcp#/resource/types/gcp"
+  # Turbot Controls: filter: "state:error,invalid,tbd resourceTypeId:tmod:@turbot/turbot#/resource/types/turbot"
+  controls(filter: "state:error,invalid,tbd resourceTypeId:tmod:@turbot/aws#/resource/types/aws") {
     metadata {
       stats {
         total
@@ -150,7 +150,7 @@ query tenOldestAlertsInWorkspace {
 
 query tenOldestAlertsForS3BucketInAWSAccount {
   # List the 10 oldest alerts for S3 Bucket resource type in an AWS Account with turbot ID 162262236546812 with state error, invalid, tbd
-  controls(filter: "state:error,invalid,tbd resource:'162262236546812' resourceType:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {
+  controls(filter: "state:error,invalid,tbd resource:'162262236546812' resourceTypeId:tmod:@turbot/aws-s3#/resource/types/bucket sort:stateChangeTimestamp limit:10") {
     items {
       state
       reason
@@ -170,7 +170,7 @@ query controlsSummary {
   # Turbot automatically detects the best level to show results, and
   # provides the full trunk information and summary statistics.
   # This works with resourceType filter as well.
-  # Example: filter: "resource:'169970390928576' resourceType:tmod:@turbot/aws-iam#/resource/types/iam"
+  # Example: filter: "resource:'169970390928576' resourceTypeId:tmod:@turbot/aws-iam#/resource/types/iam"
   controlSummariesByResourceType(filter: "resource:'169970390928576'") {
     metadata {
       stats {

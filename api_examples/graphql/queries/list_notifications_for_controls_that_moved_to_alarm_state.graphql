@@ -12,7 +12,7 @@
 #
 # Substitute aka/id for any resource in <resourceType>.
 #
-# <resourceType>:
+# <resourceTypeID>:
 #   Any valid resource id or aka can be substituted.
 #   The same graphql examples can be run for different resources, just by substituting the respective resource's id/aka.
 #
@@ -29,7 +29,7 @@
 #
 #   Filtering with resource id/aka
 #   ------------------------------
-#     1. Replace <resourceType> with the id/aka for any resource for example
+#     1. Replace <resourceTypeID> with the id/aka for any resource for example
 #        'tmod:@turbot/aws-ec2#/resource/types/keyPair'.
 #     2. Execute this GraphQL script
 #
@@ -49,7 +49,7 @@
 #
 
 query ListNotificationsForControlsThatMovedToAlarmState {
-  notifications(filter: "notificationType:control_updated resourceType:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self") {
+  notifications(filter: "notificationType:control_updated resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' timestamp:>T-1d level:self") {
     metadata {
       stats {
         total

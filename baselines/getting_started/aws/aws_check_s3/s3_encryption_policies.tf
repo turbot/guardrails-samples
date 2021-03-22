@@ -1,5 +1,8 @@
-# Encryption at Rest Guardrails - https://turbot.com/v5/docs/concepts/guardrails/encryption-at-rest
-# Encryption in Transit Guardrails - https://turbot.com/v5/docs/concepts/guardrails/encryption-in-transit
+# Encryption at Rest Guardrails
+#   https://turbot.com/v5/docs/concepts/guardrails/encryption-at-rest
+
+# Encryption in Transit Guardrails
+#   https://turbot.com/v5/docs/concepts/guardrails/encryption-in-transit
 
 # Encryption at Rest and In Transit.  Also in the Encryption Baseline
 

@@ -23,6 +23,11 @@ created by other baselines.
 
 This baseline will not attach to a resource and will need to be done manually using the Turbot UI.
 
+## Important
+
+Running the baseline without an input variable file assumes that you have **ALL** AWS mods installed.
+To limit the baseline, look at the example input variable file [demo.tfvars](demo.tfvars).
+
 ## Requirements
 
 - Terraform v0.13 or greater installed
@@ -52,13 +57,20 @@ To run the baseline:
 2. Initialise Terraform
 3. Apply the baseline using the demo input variable file [demo.tfvars](demo.tfvars)
 
-On the terminal this will look like:
+TODO: Omero clean up
+From the workspace root folder using the the terminal, to apply the install the demo run the following commands:
 
 ```shell
-cd <baseline_folder>
+cd ./baselines/getting_started/aws/aws_check_encryption
 terraform init
 terraform apply --var-file demo.tfvars
 ```
+
+**Note** 
+
+- Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
+
+- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
 
 ### Input variable files
 
