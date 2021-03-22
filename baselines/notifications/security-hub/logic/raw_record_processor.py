@@ -86,6 +86,16 @@ class RawRecordProcessor:
         else:
             title = f"{control_state.capitalize()} - {control_type}"
 
+        tags = {}
+        if "tags" in notification["control"]["resource"]["turbot"]:
+            tags = notification["control"]["resource"]["turbot"]["tags"]
+
+        # TODO: Remove
+        tags = {
+            "including-tags": "hey-its-a-tag",
+            "itau-hyphens-in-key": "Hyphens make nunjucks complicated"
+        }
+
         return Record(
             id,
             control_type,
@@ -97,7 +107,8 @@ class RawRecordProcessor:
             title,
             description,
             notification["control"]["resource"]["akas"],
-            control_state
+            control_state,
+            tags
         )
 
     def __create_finding_id(self, control_id, account_id, region):
