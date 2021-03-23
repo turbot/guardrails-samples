@@ -1,3 +1,11 @@
+# Required
+
+variable "turbot_profile" {
+  description = "Enter profile matching your turbot cli credentials."
+}
+
+# Optional
+
 variable "resource_active" {
   description = <<DESC
   Map of the list of approved regions controls.
@@ -19,7 +27,7 @@ variable "resource_active" {
   NOTE: Default behaviour is to approve all services which means expecting all mods to be installed
   DESC
   type        = map(string)
-  default = { 
+  default = {
     # gcp-bigquery-dataset                = "Check: Active"
     # gcp-bigquery-table                  = "Check: Active"
     # gcp-bigtable-cluster                = "Check: Active"
@@ -30,27 +38,27 @@ variable "resource_active" {
     # gcp-computeengine-healthCheck       = "Check: Active"
     # gcp-computeengine-httpHealthCheck   = "Check: Active"
     # gcp-computeengine-httpsHealthCheck  = "Check: Active"
-    gcp-computeengine-image             = "Check: Active"
-    gcp-computeengine-instance          = "Check: Active"
+    gcp-computeengine-image    = "Check: Active"
+    gcp-computeengine-instance = "Check: Active"
     # gcp-computeengine-instanceTemplate  = "Check: Active"
     # gcp-computeengine-nodeGroup         = "Check: Active"
     # gcp-computeengine-nodeTemplate      = "Check: Active"
-    gcp-computeengine-regionDisk        = "Check: Active"
+    gcp-computeengine-regionDisk = "Check: Active"
     # gcp-computeengine-regionHealthCheck = "Check: Active"
-    gcp-computeengine-snapshot          = "Check: Active"
+    gcp-computeengine-snapshot = "Check: Active"
     # gcp-dataflow-job                    = "Check: Active"
     # gcp-dataproc-cluster                = "Check: Active"
     # gcp-dataproc-job                    = "Check: Active"
     # gcp-dataproc-workflowTemplate       = "Check: Active"
     # gcp-dns-managedZone                 = "Check: Active"
-    gcp-functions-function              = "Check: Active"
+    gcp-functions-function = "Check: Active"
     # gcp-iam-projectUser                 = "Check: Active"
     # gcp-iam-projectUserAdminActivity    = "Check: Active"
     # gcp-iam-serviceAccount              = "Check: Active"
     # gcp-iam-serviceAccountKey           = "Check: Active"
-    gcp-kubernetesengine-regionCluster  = "Check: Active"
+    gcp-kubernetesengine-regionCluster = "Check: Active"
     # gcp-kubernetesengine-regionNodePool = "Check: Active"
-    gcp-kubernetesengine-zoneCluster    = "Check: Active"
+    gcp-kubernetesengine-zoneCluster = "Check: Active"
     # gcp-kubernetesengine-zoneNodePool   = "Check: Active"
     # gcp-logging-exclusion               = "Check: Active"
     # gcp-logging-metric                  = "Check: Active"
@@ -89,52 +97,12 @@ variable "resource_active" {
     # gcp-pubsub-topic                    = "Check: Active"
     # gcp-scheduler-job                   = "Check: Active"
     # gcp-spanner-instance                = "Check: Active"
-    gcp-sql-backup                      = "Check: Active"
-    gcp-sql-database                    = "Check: Active"
-    gcp-sql-instance                    = "Check: Active"
-    gcp-storage-bucket                  = "Check: Active"
+    gcp-sql-backup     = "Check: Active"
+    gcp-sql-database   = "Check: Active"
+    gcp-sql-instance   = "Check: Active"
+    gcp-storage-bucket = "Check: Active"
     # gcp-storage-object                  = "Check: Active" # turned off by default to reduce noise
   }
-}
-
-variable "gcp_computeengine_disk_active_policies" {
-  type        = bool
-  description = "Enable the Compute Engine Disk Active policies for baseline"
-  default     = true
-}
-
-variable "gcp_computeengine_disk_active_attached_policies" {
-  type        = bool
-  description = "Enable the Compute Engine Disk Active Attached policies for baseline"
-  default     = true
-}
-
-variable "gcp_network_address_approved_policies" {
-  type        = bool
-  description = "Enable the GCP Network address approved policies for baseline"
-  default     = true
-}
-
-variable "gcp_address_approved_network_tier_policies" {
-  type        = bool
-  description = "Enable the GCP Network address Network Tier policies for baseline"
-  default     = true
-}
-
-variable "gcp_computeengine_instance_schedule_policies" {
-  type        = bool
-  description = "Enable the GCP Compute Engine Instance Schedule policies for baseline"
-  default     = true
-}
-
-variable "gcp_computeengine_instance_schedule_tag_policies" {
-  type        = bool
-  description = "Enable the GCP Compute Engine Instance Schedule Tag policies for baseline"
-  default     = false
-}
-
-variable "turbot_profile" {
-  description = "Enter profile matching your turbot cli credentials."
 }
 
 variable "smart_folder_name" {
@@ -153,4 +121,22 @@ variable "smart_folder_parent_resource" {
   description = "Enter the resource ID or AKA for the parent of the smart folder"
   type        = string
   default     = "tmod:@turbot/turbot#/"
-} 
+}
+
+variable "enable_compute_engine_active_policies" {
+  type        = bool
+  description = "Enable the Compute Engine policies for baseline"
+  default     = true
+}
+
+variable "enable_network_approved_policies" {
+  type        = bool
+  description = "Enable the GCP Network address Network Tier policies for baseline"
+  default     = true
+}
+
+variable "enable_compute_engine_schedule_policies" {
+  type        = bool
+  description = "Enable the compute engine schedule policies for compute instances"
+  default     = true
+}

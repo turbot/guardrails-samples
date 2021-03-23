@@ -18,18 +18,14 @@ output "resource_active" {
   value = var.resource_active
 }
 
-output "gcp_computeengine_disk_active_attached_policies" {
-  value = var.gcp_computeengine_disk_active_attached_policies
+output "enable_compute_engine_active_policies" {
+  value = var.enable_compute_engine_active_policies
 }
 
-output "gcp_computeengine_disk_active_policies" {
-  value = var.gcp_computeengine_disk_active_policies
+output "enable_network_approved_policies" {
+  value = var.enable_network_approved_policies
 }
 
-output "gcp_network_address_approved_policies" {
-  value = var.gcp_network_address_approved_policies
-}
-
-output "gcp_address_approved_network_tier_policies" {
-  value = var.gcp_address_approved_network_tier_policies
+output "enable_compute_engine_schedule_policies" {
+  value = var.enable_compute_engine_schedule_policies
 }
