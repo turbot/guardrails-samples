@@ -36,7 +36,12 @@ class RawRecordProcessor:
                 continue
 
             account_id = resource_metadata["aws"]["accountId"]
-            region = resource_metadata["aws"]["regionName"] if resource_metadata["aws"]["regionName"] else "global"
+
+            if "regionName" in resource_metadata["aws"]:
+                region = resource_metadata["aws"]["regionName"]
+            else:
+                region = "global"
+
             finding_id = self.__create_finding_id(control_id, account_id, region)
 
             previous_record = account_record_collection.get_account_record(account_id, finding_id)

@@ -19,8 +19,6 @@ def get_account_id_and_region(context):
 
 def lambda_handler(event, context):
     try:
-        # security_hub = SecurityHub.createOld(cache)
-        # account_id, region = get_account_id_and_region(context)
         cache = Cache.create()
         raw_record_processor = RawRecordProcessor(event['Records'])
 
@@ -77,6 +75,9 @@ def lambda_handler(event, context):
                 if e.response['Error']['Code'] == 'InvalidAccessException':
                     print(
                         f"[WARN] Security Hub is not enabled for {account_id}. Will discard findings for this account.")
+                elif e.response['Error']['Code'] == 'AccessDeniedException':
+                    print(
+                        f"[WARN] Access denied to account {account_id}. Will discard findings for this account.")
                 else:
                     raise
 
