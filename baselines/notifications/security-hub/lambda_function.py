@@ -75,7 +75,7 @@ def lambda_handler(event, context):
                 if e.response['Error']['Code'] == 'InvalidAccessException':
                     print(
                         f"[WARN] Security Hub is not enabled for {account_id}. Will discard findings for this account.")
-                elif e.response['Error']['Code'] == 'AccessDeniedException':
+                elif e.response['Error']['Code'] == 'AccessDenied':
                     print(
                         f"[WARN] Access denied to account {account_id}. Will discard findings for this account.")
                 else:
