@@ -9,5 +9,5 @@ rm deployment-package.zip
 cd .packaging/lib/python3.8/site-packages
 zip -r ../../../../deployment-package.zip .
 cd -
-zip -g deployment-package.zip lambda_function.py
+zip -g deployment-package.zip lambda_function.py logic/*
 rm -rf .packaging
