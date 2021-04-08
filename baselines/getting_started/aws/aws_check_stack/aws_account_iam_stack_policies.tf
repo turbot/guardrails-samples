@@ -35,6 +35,6 @@ resource "turbot_policy_setting" "aws_iam_permissions_custom_levels_account" {
   resource = turbot_smart_folder.aws_stack.id
   type     = "tmod:@turbot/aws-iam#/policy/types/permissionsCustomLevelsAccount"
   value    = <<EOT
-- example-role
+- example_role
 EOT
 }
