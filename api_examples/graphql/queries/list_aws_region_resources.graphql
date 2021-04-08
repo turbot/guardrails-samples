@@ -28,9 +28,7 @@
 
 {
   # List all AWS region resources (with increased limit)
-  resources(
-    filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/region' limit:200"
-  ) {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/region' limit:200") {
     items {
       # Get the metadata, which includes account + region info
       trunk {
