@@ -255,7 +255,7 @@ function main {
         exit 3
     fi
     
-    displayEstimatedTime ${TOTAL_POLICIES} ${BATCH_SIZE} ${TIME_SLEEP}
+    # displayEstimatedTime ${TOTAL_POLICIES} ${BATCH_SIZE} ${TIME_SLEEP}
     
     local TOTAL_RETURNED=0
     local PAGING=""
@@ -295,6 +295,8 @@ function main {
                 runPolicy ${ID}
             fi
         done
+        
+        # TODO: Run the policies here now
         
         let "TOTAL_RETURNED += TOTAL_ITEMS"
         
