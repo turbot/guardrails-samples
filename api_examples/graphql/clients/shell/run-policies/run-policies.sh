@@ -51,7 +51,7 @@ function runPolicies {
         MUTATION_VARIABLES+="${VARIABLE_ENTRY} "
     done
     
-    local MUTATION="mutation RunPolicy(${INPUT_STRING}) { ${MUTATION_BODY}}"
+    local MUTATION="mutation RunPolicies(${INPUT_STRING}) { ${MUTATION_BODY}}"
     local VARIABLES="{ ${MUTATION_VARIABLES}}"
     
     if [[ -z ${PROFILE} ]]

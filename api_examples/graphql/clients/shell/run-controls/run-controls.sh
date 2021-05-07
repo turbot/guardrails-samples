@@ -51,7 +51,7 @@ function runControls {
         MUTATION_VARIABLES+="${VARIABLE_ENTRY} "
     done
     
-    local MUTATION="mutation RunControl(${INPUT_STRING}) { ${MUTATION_BODY}}"
+    local MUTATION="mutation RunControls(${INPUT_STRING}) { ${MUTATION_BODY}}"
     local VARIABLES="{ ${MUTATION_VARIABLES}}"
     
     if [[ -z ${PROFILE} ]]
