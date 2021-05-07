@@ -50,31 +50,52 @@ function displayHelp {
 }
 
 function runControl {
-    local ID=$1
+    local RUN_COLLECTION=("$@")
+    local COLLECTION_COUNT=${#RUN_COLLECTION[@]}
+    local INPUT_STRING=""
+    local MUTATION_BODY=""
+    local MUTATION_VARIABLES=""
     
-    local RUN_CONTROL_MUTATION=""
-    local RUN_CONTROL_VARIABLES=""
+    let "END_INDEX = COLLECTION_COUNT - 1"
     
-    read -r -d '' RUN_CONTROL_MUTATION <<-EOM
-        mutation RunControl(\$input: RunControlInput!) {
-          runControl(input: \$input) {
-            turbot {
-              id
-            }
-          }
-        }
-EOM
-    local RUN_CONTROL_VARIABLES="{ \"input\": { \"id\": ${ID} } }"
+    for (( INDEX=0; INDEX<${COLLECTION_COUNT}; INDEX++ ))
+    do
+        # Parameters
+        if [[ -n ${INPUT_STRING} ]]
+        then
+            INPUT_STRING+=", "
+        fi
+        INPUT_STRING+="\$input${INDEX}: RunControlInput!"
+        
+        # Mutation
+        MUTATION_BODY_ENTRY="run${INDEX}: runControl(input: \$input${INDEX}) { turbot { id } }"
+        MUTATION_BODY+="${MUTATION_BODY_ENTRY} "
+        
+        # Variables
+        VARIABLE_ENTRY='"input'${INDEX}'": { "id": '${RUN_COLLECTION[${INDEX}]}' }'
+        if [[ ${INDEX} != ${END_INDEX} ]]
+        then
+            VARIABLE_ENTRY+=","
+        fi
+        
+        MUTATION_VARIABLES+="${VARIABLE_ENTRY} "
+    done
+    
+    local MUTATION="mutation RunControl(${INPUT_STRING}) { ${MUTATION_BODY}}"
+    local VARIABLES="{ ${MUTATION_VARIABLES}}"
     
     if [[ -z ${PROFILE} ]]
     then
-        local MUTATION_RESULT=$(turbot graphql --format json --query "${RUN_CONTROL_MUTATION}" --variables "${RUN_CONTROL_VARIABLES}")
+        local MUTATION_RESULT=$(turbot graphql --format json --query "'${MUTATION}'" --variables "'${VARIABLES}'")
     else
-        local MUTATION_RESULT=$(turbot graphql --format json --query "${RUN_CONTROL_MUTATION}" --variables "${RUN_CONTROL_VARIABLES}" --profile "${PROFILE}")
+        local MUTATION_RESULT=$(turbot graphql --format json --query "${MUTATION}" --variables "${VARIABLES}" --profile "${PROFILE}")
     fi
     
-    local PROCESS_ID=$(echo ${MUTATION_RESULT} | jq '.runControl.turbot.id')
-    echo "[INFO] Process ${PROCESS_ID} assigned to re-run control ${ID}"
+    for (( INDEX=0; INDEX<${COLLECTION_COUNT}; INDEX++ ))
+    do
+        local PROCESS_ID=$(echo ${MUTATION_RESULT} | jq '.run'${INDEX}'.turbot.id')
+        echo "[INFO] Process ${PROCESS_ID} assigned to re-run control ${RUN_COLLECTION[${INDEX}]}"
+    done
 }
 
 function createTotalQuery {
@@ -101,10 +122,15 @@ function createControlQuery {
     local PAGING=$2
     local BATCH_SIZE=$3
     
+    if [[ -z ${PAGING} ]]
+    then
+        PAGING='""'
+    fi
+    
     local CONTROL_QUERY
     read -r -d '' CONTROL_QUERY <<-EOM
         query GetControls {
-          controls(filter: "${FILTER} limit:${BATCH_SIZE}") {
+          controls(filter: "${FILTER} limit:${BATCH_SIZE}" paging:${PAGING}) {
             paging {
               next
             }
@@ -274,6 +300,7 @@ function main {
         fi
         
         local TOTAL_ITEMS=$(echo ${CONTROLS_QUERY_RESULT} | jq ".controls.items | length")
+        local RUN_COLLECTION=()
         
         for ((INDEX = 0 ; INDEX < TOTAL_ITEMS ; INDEX++)); do
             local ITEM=$(echo ${CONTROLS_QUERY_RESULT} | jq ".controls.items[${INDEX}]")
@@ -290,13 +317,15 @@ function main {
             echo "[INFO]    Reason: ${REASON}"
             echo "[INFO]    ID: ${ID}"
             
-            if [[ ${DRY_RUN} == false ]]
-            then
-                runControl ${ID}
-            fi
+            RUN_COLLECTION+=(${ID})
         done
         
         # TODO: Run the controls here now
+        if [[ ${DRY_RUN} == false ]]
+        then
+            runControl "${RUN_COLLECTION[@]}"
+        fi
+        
         
         let "TOTAL_RETURNED += TOTAL_ITEMS"
         
@@ -309,7 +338,7 @@ function main {
         PAGING=$(echo ${CONTROLS_QUERY_RESULT} | jq ".controls.paging.next")
     done
     
-    displayTotalItems
+    displayTotalItems ${TOTAL_CONTROLS}
     
     END=`date +%s`
     RUNTIME=$((END - START))
