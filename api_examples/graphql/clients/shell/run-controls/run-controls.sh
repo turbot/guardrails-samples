@@ -6,36 +6,6 @@ function displayTotalItems {
     echo "[INFO] Total amount of controls re-run: ${TOTAL_ITEMS}"
 }
 
-function displayEstimatedTime {
-    local TOTAL_ITEMS=$1
-    local BATCH_SIZE=$2
-    local TIME_SLEEP=$3
-    local TIME_QUERY=5000
-    local TIME_PER_CALL=2500
-    
-    let "BATCH_SIZE = BATCH_SIZE < TOTAL_ITEMS ? BATCH_SIZE : TOTAL_ITEMS"
-    
-    local TOTAL_TIME=0
-    if (( ${BATCH_SIZE} > 0 ))
-    then
-        let "TOTAL_TIME = (BATCH_SIZE * TIME_PER_CALL + TIME_SLEEP + TIME_QUERY) * TOTAL_ITEMS / BATCH_SIZE / 1000"
-    fi
-    
-    if [[ ${TOTAL_TIME} -gt 60 ]]
-    then
-        let "TOTAL_TIME = TOTAL_TIME / 60"
-        if [[ ${TOTAL_TIME} -gt 60 ]]
-        then
-            let "TOTAL_TIME = TOTAL_TIME / 60"
-            echo "[INFO] Script will complete in roughly ${TOTAL_TIME} hour(s)"
-        else
-            echo "[INFO] Script will complete in roughly ${TOTAL_TIME} minute(s)"
-        fi
-    else
-        echo "[INFO] Script will complete in roughly ${TOTAL_TIME} second(s)"
-    fi
-}
-
 function displayHelp {
     echo "Mandatory arguments"
     echo "  --filter: the control query filter that will return a subset of controls to re-run"
@@ -280,8 +250,6 @@ function main {
         echo -e ${TOTAL_QUERY_RESULT}
         exit 3
     fi
-    
-    # displayEstimatedTime ${TOTAL_CONTROLS} ${BATCH_SIZE} ${TIME_SLEEP}
     
     local TOTAL_RETURNED=0
     local PAGING=""
