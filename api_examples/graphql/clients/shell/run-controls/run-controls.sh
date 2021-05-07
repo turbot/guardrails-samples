@@ -293,7 +293,6 @@ function main {
             runControls "${RUN_COLLECTION[@]}"
         fi
         
-        
         let "TOTAL_RETURNED += TOTAL_ITEMS"
         
         if [[ ${DRY_RUN} == false ]] && (( ${TOTAL_RETURNED} != ${TOTAL_ITEMS} ))
