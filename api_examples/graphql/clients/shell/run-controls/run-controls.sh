@@ -58,7 +58,7 @@ function runControls {
     then
         local MUTATION_RESULT=$(turbot graphql --format json --query "'${MUTATION}'" --variables "'${VARIABLES}'")
     else
-        local MUTATION_RESULT=$(turbot graphql --format json --query "${MUTATION}" --variables "${VARIABLES}" --profile "${PROFILE}")
+        local MUTATION_RESULT=$(turbot graphql --format json --query "'${MUTATION}'" --variables "'${VARIABLES}'" --profile "${PROFILE}")
     fi
     
     for (( INDEX=0; INDEX<${COLLECTION_COUNT}; INDEX++ ))

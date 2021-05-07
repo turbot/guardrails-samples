@@ -10,7 +10,7 @@
       "name": "run-controls.sh",
       "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/",
       "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
-      "args": ["--filter", "state:error", "--dry-run", "true", "--batch-size", "2", "--sleep-time", "0"]
+      "args": ["--filter", "state:error", "--dry-run", "false", "--batch-size", "2", "--sleep-time", "0"]
     },
     {
       "type": "bashdb",
@@ -18,7 +18,7 @@
       "name": "run-policies.sh",
       "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-policies/",
       "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-policies/run-policies.sh",
-      "args": ["--filter", "state:ok"]
+      "args": ["--filter", "state:ok", "--dry-run", "false"]
     },
     {
       "type": "node",
