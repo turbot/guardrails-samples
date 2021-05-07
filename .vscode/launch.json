@@ -10,7 +10,7 @@
       "name": "run-controls.sh",
       "cwd": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/",
       "program": "${workspaceFolder}/api_examples/graphql/clients/shell/run-controls/run-controls.sh",
-      "args": ["--filter", "state:error"]
+      "args": ["--filter", "state:error", "--dry-run", "true", "--batch-size", "2", "--sleep-time", "0"]
     },
     {
       "type": "bashdb",

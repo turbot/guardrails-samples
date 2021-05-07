@@ -19,7 +19,7 @@ function displayHelp {
     echo "  will be calculated based on the larger batch size."
 }
 
-function runControl {
+function runControls {
     local RUN_COLLECTION=("$@")
     local COLLECTION_COUNT=${#RUN_COLLECTION[@]}
     local INPUT_STRING=""
@@ -288,10 +288,9 @@ function main {
             RUN_COLLECTION+=(${ID})
         done
         
-        # TODO: Run the controls here now
         if [[ ${DRY_RUN} == false ]]
         then
-            runControl "${RUN_COLLECTION[@]}"
+            runControls "${RUN_COLLECTION[@]}"
         fi
         
         
@@ -306,7 +305,7 @@ function main {
         PAGING=$(echo ${CONTROLS_QUERY_RESULT} | jq ".controls.paging.next")
     done
     
-    displayTotalItems ${TOTAL_CONTROLS}
+    displayTotalItems ${TOTAL_RETURNED}
     
     END=`date +%s`
     RUNTIME=$((END - START))
