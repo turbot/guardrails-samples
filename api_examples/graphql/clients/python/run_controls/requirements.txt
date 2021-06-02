@@ -3,7 +3,7 @@ chardet==3.0.4
 click==7.1.2
 idna==2.10
 requests==2.24.0
-urllib3==1.25.10
+urllib3==1.26.5
 xdg==3.0.2
 PyYAML==5.4
 ../turbot
