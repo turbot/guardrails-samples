@@ -1,4 +1,4 @@
-# 1.0.1 (2021-06-25)
+# 1.1.0 (2021-06-25)
   - Choose between postgresql11, postgresql12 or postgresql13 client installation. Defaults to postgresql13.
 
 # 1.0.0
