@@ -8,7 +8,7 @@ It leverages AWS EC2 instance(s) managed by [Session Manager](https://docs.aws.a
 - Grabs the latest Amazon Linux2 AMI using SSM Parameters.
 - Gives the ability to use custom configurations for AMIs and IAM Roles.
 - Self-destructs after the desired number of hours.
-- Comes with postgresql11 client installed.
+- Choose between postgresql11, postgresql12 or postgresql13 client installation. Defaults to postgresql13.
 
 In addition to the above, it also compliments the Session Manager capabilities such as
 
