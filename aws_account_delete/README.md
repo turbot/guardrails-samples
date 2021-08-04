@@ -1,6 +1,16 @@
-# Run policies
+# AWS Account Delete
 
-Finds all resources matching the provided filter, and deletes them in batches if `--execute` is set.
+This script is used to offboard AWS accounts from Turbot Workspaces. It has 4 modes:
+
+1. With no flags set it will check connectivity and report back the number of CMDB policies and resources currently cataloged in the Turbot CMDB
+
+2. With the --disable flag set it will disable all CMDB controls in the account which will result in deletion of Turbot CMDB records
+
+3. With the --delete flag set it will delete any child resources in the Turbot CMDB
+
+4. With the --delete-acct flag set it will attempt to delete the AWS account from Turbot.
+
+There is also an optional terraform template to remove the Turbot event handlers in the account.  If the account will remain active after removing from Turbot, this script must be run, and you must wait for the controls to return to OK state before deleting the account.
 
 ## Prerequisites
 
