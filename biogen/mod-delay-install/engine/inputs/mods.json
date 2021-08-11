@@ -1,0 +1,316 @@
+{
+  "data": {
+    "mods": {
+      "items": [
+        {
+          "modId": "tmod:@turbot/aws"
+        },
+        {
+          "modId": "tmod:@turbot/aws-acm"
+        },
+        {
+          "modId": "tmod:@turbot/aws-amplify"
+        },
+        {
+          "modId": "tmod:@turbot/aws-apigateway"
+        },
+        {
+          "modId": "tmod:@turbot/aws-appstream"
+        },
+        {
+          "modId": "tmod:@turbot/aws-appsync"
+        },
+        {
+          "modId": "tmod:@turbot/aws-athena"
+        },
+        {
+          "modId": "tmod:@turbot/aws-batch"
+        },
+        {
+          "modId": "tmod:@turbot/aws-billing"
+        },
+        {
+          "modId": "tmod:@turbot/aws-chatbot"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cloud9"
+        },
+        {
+          "modId": "tmod:@turbot/aws-clouddirectory"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cloudformation"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cloudfront"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cloudsearch"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cloudtrail"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cloudwatch"
+        },
+        {
+          "modId": "tmod:@turbot/aws-codebuild"
+        },
+        {
+          "modId": "tmod:@turbot/aws-codecommit"
+        },
+        {
+          "modId": "tmod:@turbot/aws-codedeploy"
+        },
+        {
+          "modId": "tmod:@turbot/aws-codepipeline"
+        },
+        {
+          "modId": "tmod:@turbot/aws-cognito"
+        },
+        {
+          "modId": "tmod:@turbot/aws-comprehend"
+        },
+        {
+          "modId": "tmod:@turbot/aws-computeoptimizer"
+        },
+        {
+          "modId": "tmod:@turbot/aws-config"
+        },
+        {
+          "modId": "tmod:@turbot/aws-connect"
+        },
+        {
+          "modId": "tmod:@turbot/aws-datapipeline"
+        },
+        {
+          "modId": "tmod:@turbot/aws-datasync"
+        },
+        {
+          "modId": "tmod:@turbot/aws-devicefarm"
+        },
+        {
+          "modId": "tmod:@turbot/aws-directconnect"
+        },
+        {
+          "modId": "tmod:@turbot/aws-directoryservice"
+        },
+        {
+          "modId": "tmod:@turbot/aws-dms"
+        },
+        {
+          "modId": "tmod:@turbot/aws-dynamodb"
+        },
+        {
+          "modId": "tmod:@turbot/aws-ec2"
+        },
+        {
+          "modId": "tmod:@turbot/aws-ecr"
+        },
+        {
+          "modId": "tmod:@turbot/aws-ecs"
+        },
+        {
+          "modId": "tmod:@turbot/aws-efs"
+        },
+        {
+          "modId": "tmod:@turbot/aws-eks"
+        },
+        {
+          "modId": "tmod:@turbot/aws-elasticache"
+        },
+        {
+          "modId": "tmod:@turbot/aws-elasticbeanstalk"
+        },
+        {
+          "modId": "tmod:@turbot/aws-elasticsearch"
+        },
+        {
+          "modId": "tmod:@turbot/aws-elastictranscoder"
+        },
+        {
+          "modId": "tmod:@turbot/aws-emr"
+        },
+        {
+          "modId": "tmod:@turbot/aws-events"
+        },
+        {
+          "modId": "tmod:@turbot/aws-fsx"
+        },
+        {
+          "modId": "tmod:@turbot/aws-glacier"
+        },
+        {
+          "modId": "tmod:@turbot/aws-glue"
+        },
+        {
+          "modId": "tmod:@turbot/aws-guardduty"
+        },
+        {
+          "modId": "tmod:@turbot/aws-iam"
+        },
+        {
+          "modId": "tmod:@turbot/aws-iot"
+        },
+        {
+          "modId": "tmod:@turbot/aws-kinesis"
+        },
+        {
+          "modId": "tmod:@turbot/aws-kms"
+        },
+        {
+          "modId": "tmod:@turbot/aws-lambda"
+        },
+        {
+          "modId": "tmod:@turbot/aws-lex"
+        },
+        {
+          "modId": "tmod:@turbot/aws-logs"
+        },
+        {
+          "modId": "tmod:@turbot/aws-machinelearning"
+        },
+        {
+          "modId": "tmod:@turbot/aws-macie"
+        },
+        {
+          "modId": "tmod:@turbot/aws-mediaconvert"
+        },
+        {
+          "modId": "tmod:@turbot/aws-mq"
+        },
+        {
+          "modId": "tmod:@turbot/aws-polly"
+        },
+        {
+          "modId": "tmod:@turbot/aws-quicksight"
+        },
+        {
+          "modId": "tmod:@turbot/aws-rds"
+        },
+        {
+          "modId": "tmod:@turbot/aws-redshift"
+        },
+        {
+          "modId": "tmod:@turbot/aws-rekognition"
+        },
+        {
+          "modId": "tmod:@turbot/aws-resourcegroups"
+        },
+        {
+          "modId": "tmod:@turbot/aws-route53"
+        },
+        {
+          "modId": "tmod:@turbot/aws-s3"
+        },
+        {
+          "modId": "tmod:@turbot/aws-sagemaker"
+        },
+        {
+          "modId": "tmod:@turbot/aws-secretsmanager"
+        },
+        {
+          "modId": "tmod:@turbot/aws-securityhub"
+        },
+        {
+          "modId": "tmod:@turbot/aws-servermigration"
+        },
+        {
+          "modId": "tmod:@turbot/aws-servicecatalog"
+        },
+        {
+          "modId": "tmod:@turbot/aws-ses"
+        },
+        {
+          "modId": "tmod:@turbot/aws-shield"
+        },
+        {
+          "modId": "tmod:@turbot/aws-simpledb"
+        },
+        {
+          "modId": "tmod:@turbot/aws-snowball"
+        },
+        {
+          "modId": "tmod:@turbot/aws-sns"
+        },
+        {
+          "modId": "tmod:@turbot/aws-sqs"
+        },
+        {
+          "modId": "tmod:@turbot/aws-ssm"
+        },
+        {
+          "modId": "tmod:@turbot/aws-stepfunctions"
+        },
+        {
+          "modId": "tmod:@turbot/aws-storagegateway"
+        },
+        {
+          "modId": "tmod:@turbot/aws-tagging"
+        },
+        {
+          "modId": "tmod:@turbot/aws-textract"
+        },
+        {
+          "modId": "tmod:@turbot/aws-transcribe"
+        },
+        {
+          "modId": "tmod:@turbot/aws-transfer"
+        },
+        {
+          "modId": "tmod:@turbot/aws-translate"
+        },
+        {
+          "modId": "tmod:@turbot/aws-trustedadvisor"
+        },
+        {
+          "modId": "tmod:@turbot/aws-vpc-connect"
+        },
+        {
+          "modId": "tmod:@turbot/aws-vpc-core"
+        },
+        {
+          "modId": "tmod:@turbot/aws-vpc-internet"
+        },
+        {
+          "modId": "tmod:@turbot/aws-vpc-security"
+        },
+        {
+          "modId": "tmod:@turbot/aws-waf"
+        },
+        {
+          "modId": "tmod:@turbot/aws-workdocs"
+        },
+        {
+          "modId": "tmod:@turbot/aws-workspaces"
+        },
+        {
+          "modId": "tmod:@turbot/aws-xray"
+        },
+        {
+          "modId": "tmod:@turbot/linux"
+        },
+        {
+          "modId": "tmod:@turbot/linux-playbook"
+        },
+        {
+          "modId": "tmod:@turbot/turbot"
+        },
+        {
+          "modId": "tmod:@turbot/turbot-iam"
+        },
+        {
+          "modId": "tmod:@turbot/windows"
+        },
+        {
+          "modId": "tmod:@turbot/windows-playbook"
+        }
+      ],
+      "metadata": {
+        "stats": {
+          "total": 101
+        }
+      }
+    }
+  }
+}

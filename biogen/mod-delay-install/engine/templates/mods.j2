@@ -1,0 +1,27 @@
+{%- for mod in mod_list -%}
+{% if mod["depends_on"] is undefined -%}
+# Install mod - {{ mod["mod_name"] }}
+resource "turbot_mod" "{{ mod["safe_mod_name"] }}" {
+  org        = "turbot"
+  parent     = "tmod:@turbot/turbot#/"
+  version    = ">=5.0.0"
+  mod        = "{{ mod["mod_name"] }}"
+}
+{% else %}
+# Install mod - {{ mod["mod_name"] }}
+resource "turbot_mod" "{{ mod["safe_mod_name"] }}" {
+  # Wait for {{ mod["depends_on"] }} timer to run out
+  depends_on = [time_sleep.{{ mod["safe_depends_on"] }}_wait_{{ duration }}_seconds]
+  org        = "turbot"
+  parent     = "tmod:@turbot/turbot#/"
+  version    = ">=5.0.0"
+  mod        = "{{ mod["mod_name"] }}"
+}
+{% endif %}
+# Back off timer - {{ mod["mod_name"] }}
+resource "time_sleep" "{{ mod["safe_mod_name"] }}_wait_{{ duration }}_seconds" {
+  # After {{ mod["mod_name"] }} mod is installed, wait {{ duration }} seconds
+  depends_on      = [turbot_mod.{{ mod["safe_mod_name"] }}]
+  create_duration = var.backoff_duration
+}
+{% endfor %}

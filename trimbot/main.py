@@ -164,7 +164,7 @@ def cli(config_file, approve, trace, check):
 
             except Exception as e:
                 logging.error(f'Ignoring workspace for account {workspace.get_account()}')
-                logging.error(e)
+                logging.fatal(e)
 
         logging.info(f'TrimBot completed')
     except Exception as e:
