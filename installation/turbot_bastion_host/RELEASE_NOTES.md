@@ -1,3 +1,6 @@
+# 1.1.1 (2021-08-30)
+  - Install postgresql12 and postgresql13 clients from amazon-linux-extras.
+
 # 1.1.0 (2021-06-25)
   - Choose between postgresql11, postgresql12 or postgresql13 client installation. Defaults to postgresql13.
 
