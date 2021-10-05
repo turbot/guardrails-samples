@@ -11,12 +11,12 @@ setup(
     author='Turbot Inc',
     py_modules=['main'],
     install_requires=[
-        'click',
-        'jsonschema',
-        'PyYAML',
-        'boto3',
-        "requests",
-        "urllib3"
+        'click==8.0.1',
+        'jsonschema==3.2.0',
+        'PyYAML==5.4.1',
+        'boto3==1.18.55',
+        "requests==2.26.0",
+        "urllib3==1.26.7"
     ],
     packages=['trimbot_modules'],
     entry_points='''
