@@ -194,6 +194,7 @@ query ControlUsages($filter: [String!]!, $paging: String) {
                       'invalid': invalid_total,
                       'ok': ok_total,
                       'tbd': tbd_total,
+                      'skipped': skipped_total,
                       'activeControlDays': active_control_days_total,
                       'inactiveControls': inactive_controls_total
                     }
