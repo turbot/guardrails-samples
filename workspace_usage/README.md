@@ -26,5 +26,34 @@ source .venv/bin/activate
    
 5. The script will output the stats required to generate a bill.
 
-   - we also generate a text file with a summary in the format `<workspaceAlias>_<startDate>_<endDate>_control_usage.txt`.
+   - We generate a text file with a summary in the format `<workspaceAlias>_<startDate>_<endDate>_control_usage.txt`.
    - We also generate a CSV file with a breakdown in the format `<workspaceAlias>_<startDate>_<endDate>_control_usage.csv`.
+
+   - Use the optional -o parameter to generate the breakdown in json format: `python3 get_workspace_usage.py -w <workspaceAlias> -s <startDate> -e <endDate> -o json`
+
+   e.g. `python3 get_workspace_usage.py -w acme -s 20200501 -e 20200531 -o json`
+
+   The output will be in the json format for each usage period:
+
+   {
+      "licenseId": "[licenseId]",
+      "workspaceId": "[workspaceId]",
+      "period": "<period for which the usage is generated>",
+      "control": {
+         "version": "2020-07-22",
+         "usage": [
+            {
+            "uri": "<control-type-uri>",
+            "error": <error-count>,
+            "alarm": <alarm-count>,
+            "invalid": <invalid-count>,
+            "ok": <ok-count>,
+            "tbd": <tbd-count>,
+            "skipped": <skipped-count>,
+            "activeControlDays": <active-count>,
+            "inactiveControls": <inactive-count>
+            }
+            ...
+         ]
+      }
+   }
