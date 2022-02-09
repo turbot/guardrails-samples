@@ -93,20 +93,43 @@ class IamPolicyResourceService(ResourceService):
     def get_all(self, region):
         iam_client = self.session.create_client('iam', region)
 
+        ignore_policy_names = []
         path_prefix = "/"
         for filter in self.recipe["filters"]:
             if filter["field"] == "PathPrefix":
                 path_prefix = filter["value"]
-
-        response = iam_client.list_policies(
-            PathPrefix=path_prefix,
-            Scope='Local',
-            OnlyAttached=False
-        )
+            elif filter["field"] == "IgnorePolicy":
+                ignore_policy_names.append(filter["value"])
+            else:
+                logging.error("Unknown filter type")
 
         resources = []
-        for policy in response["Policies"]:
-            if policy["Path"] == path_prefix:
-                resources.append(IamPolicy(self.session, region, policy))
+        complete = False
+        marker = None
+
+        while not complete:
+            response = None
+            if marker:
+                response = iam_client.list_policies(
+                    PathPrefix=path_prefix,
+                    Scope='Local',
+                    OnlyAttached=False,
+                    Marker=marker,
+                )
+            else:
+                response = iam_client.list_policies(
+                    PathPrefix=path_prefix,
+                    Scope='Local',
+                    OnlyAttached=False,
+                )
+
+            if "Marker" in response:
+                marker = response["Marker"]
+            else:
+                complete = True
+
+            for policy in response["Policies"]:
+                if policy["Path"] == path_prefix and policy["PolicyName"] not in ignore_policy_names:
+                    resources.append(IamPolicy(self.session, region, policy))
 
         return resources

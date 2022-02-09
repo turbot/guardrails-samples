@@ -77,18 +77,39 @@ class IamGroupResourceService(ResourceService):
     def get_all(self, region):
         iam_client = self.session.create_client('iam', region)
 
+        ignore_group_names = []
         path_prefix = "/"
         for filter in self.recipe["filters"]:
             if filter["field"] == "PathPrefix":
                 path_prefix = filter["value"]
-
-        response = iam_client.list_groups(
-            PathPrefix=path_prefix
-        )
+            elif filter["field"] == "IgnoreGroup":
+                ignore_group_names.append(filter["value"])
+            else:
+                logging.error("Unknown filter type")
 
         resources = []
-        for group in response["Groups"]:
-            if group["Path"] == path_prefix:
-                resources.append(IamGroup(self.session, region, group))
+        complete = False
+        marker = None
+
+        while not complete:
+            response = None
+            if marker:
+                response = iam_client.list_groups(
+                    PathPrefix=path_prefix,
+                    Marker=marker,
+                )
+            else:
+                response = iam_client.list_groups(
+                    PathPrefix=path_prefix,
+                )
+
+            if "Marker" in response:
+                marker = response["Marker"]
+            else:
+                complete = True
+
+            for group in response["Groups"]:
+                if group["Path"] == path_prefix and group["GroupName"] not in ignore_group_names:
+                    resources.append(IamGroup(self.session, region, group))
 
         return resources
