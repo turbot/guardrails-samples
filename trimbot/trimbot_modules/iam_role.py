@@ -116,7 +116,11 @@ class IamRoleResourceService(ResourceService):
 
             for role in response["Roles"]:
                 if role["Path"] == path_prefix:
-                    if len(ends_with_tuple) and role["RoleName"].endswith(ends_with_tuple):
+                    if (
+                        len(ends_with_tuple)
+                        and role["RoleName"].endswith(ends_with_tuple)
+                        and role["RoleName"] not in ends_with_tuple
+                    ):
                         resources.append(IamRole(self.session, region, role))
                         logging.info(role["RoleName"])
                     elif len(ends_with_tuple) == 0:
