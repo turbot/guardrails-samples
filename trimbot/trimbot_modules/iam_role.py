@@ -81,16 +81,46 @@ class IamRoleResourceService(ResourceService):
         iam_client = self.session.create_client('iam', region)
 
         resources = []
+        ends_with_list = []
+        path_prefix = ""
+
         for filter in self.recipe["filters"]:
             if filter["field"] == "PathPrefix":
                 path_prefix = filter["value"]
+            elif filter["field"] == "EndsWith":
+                ends_with_list.append(filter["value"])
+            else:
+                logging.error("Unknown filter type")
 
+        ends_with_tuple = tuple(ends_with_list)
+
+        complete = False
+        marker = None
+
+        while not complete:
+            response = None
+            if marker:
                 response = iam_client.list_roles(
-                    PathPrefix=path_prefix
+                    PathPrefix=path_prefix,
+                    Marker=marker,
+                )
+            else:
+                response = iam_client.list_roles(
+                    PathPrefix=path_prefix,
                 )
 
-                for role in response["Roles"]:
-                    if role["Path"] == path_prefix:
+            if "Marker" in response:
+                marker = response["Marker"]
+            else:
+                complete = True
+
+            for role in response["Roles"]:
+                if role["Path"] == path_prefix:
+                    if len(ends_with_tuple) and role["RoleName"].endswith(ends_with_tuple):
                         resources.append(IamRole(self.session, region, role))
+                        logging.info(role["RoleName"])
+                    elif len(ends_with_tuple) == 0:
+                        resources.append(IamRole(self.session, region, role))
+                        logging.info(role["RoleName"])
 
         return resources
