@@ -63,7 +63,7 @@ OPTIONS
        --account-id=<accountId>
        -a <accountId>
 
-       Use Turbot account <accountId> (e.g. abc) for the AWS CLI command.
+       Use Turbot account <accountId> (e.g. 111222333444) for the AWS CLI command.
 
        May also be set with the TURBOT_ACCOUNT_ID environment variable, or set
        in the AWS config file as default.turbot_account_id.
@@ -124,10 +124,10 @@ CONFIGURATION
        aws configure set default.turbot_secret_access_key 1d1cc2ce-c0ba-4997-9b28-fd850fe51f7c
        aws configure set default.turbot_user_id jane@example.com
 
-       If you are usually accessing the same account (e.g. abc) for AWS CLI
+       If you are usually accessing the same account (e.g. 111222333444) for AWS CLI
        commands, you can also set the default account:
 
-       aws configure set default.turbot_account_id abc
+       aws configure set default.turbot_account_id 111222333444
 
 EXAMPLES
 
@@ -141,7 +141,7 @@ EXAMPLES
        turbot-aws s3 ls
 
        # List S3 buckets in account abb
-       turbot-aws --account-id=abb s3 ls
+       turbot-aws --account-id=111222333444 s3 ls
 
        # List EC2 instances in eu-west-1 of the default account
        turbot-aws ec2 describe-instances --region eu-west-1
@@ -150,7 +150,7 @@ EXAMPLES
        turbot-aws -vv s3 ls
 
        # Set the account ID using an environment variable
-       TURBOT_ACCOUNT_ID=abb turbot-aws s3 ls
+       TURBOT_ACCOUNT_ID=111222333444 turbot-aws s3 ls
 
 EOF
 
