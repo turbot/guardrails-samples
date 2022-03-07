@@ -48,6 +48,7 @@ class TurbotDatabase(Resource):
 
     def delete_directory_users(self, urn, dry_run):
         table_name = 'TurbotDirectoryUsers'
+        logging.info(f"Removing {table_name}")
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -57,7 +58,7 @@ class TurbotDatabase(Resource):
         )
 
         for item in items:
-            self.dynamodb_client.delete_item(
+            self.delete_item(
                 table_name=table_name,
                 key_info={
                     'directoryUrn': item.get('directoryUrn'),
@@ -68,6 +69,7 @@ class TurbotDatabase(Resource):
 
     def delete_grants(self, urn, dry_run):
         table_name = 'TurbotGrants'
+        logging.info(f"Removing {table_name}")
 
         grants = self.query_table(
             table_name=table_name,
@@ -85,6 +87,8 @@ class TurbotDatabase(Resource):
 
     def delete_account_guardrails(self, urn, dry_run):
         table_name = 'TurbotGuardrails'
+        logging.info(f"Removing {table_name}")
+
         index_name = 'accountUrn-alarmUrn-index'
         key_expression = 'accountUrn = :urn AND begins_with ( alarmUrn , :alarm_urn )'
 
@@ -110,6 +114,7 @@ class TurbotDatabase(Resource):
 
     def delete_account_monitors(self, urn, dry_run):
         table_name = 'TurbotMonitors'
+        logging.info(f"Removing {table_name}")
 
         index_name = 'accountUrn-alarmUrn-index'
         key_expression = 'accountUrn = :urn AND begins_with ( alarmUrn , :alarm_urn )'
@@ -124,7 +129,7 @@ class TurbotDatabase(Resource):
         )
 
         for monitor in monitors:
-            self.dynamodb_client.delete_item(
+            self.delete_item(
                 table_name=table_name,
                 key_info={
                     'resourceUrn': monitor.get('resourceUrn'),
@@ -135,6 +140,8 @@ class TurbotDatabase(Resource):
 
     def delete_option_settings(self, urn, dry_run):
         table_name = 'TurbotOptionSettings'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         options = self.scan_table(
@@ -155,6 +162,7 @@ class TurbotDatabase(Resource):
 
     def delete_package_sources(self, urn, dry_run):
         table_name = 'TurbotPackageSources'
+        logging.info(f"Removing {table_name}")
 
         if table_name not in self.tables:
             return
@@ -178,6 +186,7 @@ class TurbotDatabase(Resource):
 
     def delete_package_version_installations(self, urn, dry_run):
         table_name = 'TurbotPackageVersionInstallations'
+        logging.info(f"Removing {table_name}")
 
         if table_name not in self.tables:
             return
@@ -202,6 +211,8 @@ class TurbotDatabase(Resource):
 
     def delete_playbooks(self, urn, dry_run):
         table_name = 'TurbotPlaybooks'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -222,6 +233,8 @@ class TurbotDatabase(Resource):
 
     def delete_profiles(self, urn, dry_run):
         table_name = 'TurbotProfiles'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -241,6 +254,8 @@ class TurbotDatabase(Resource):
 
     def delete_profile_service_logins(self, urn, dry_run):
         table_name = 'TurbotProfileServiceLogins'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -258,6 +273,8 @@ class TurbotDatabase(Resource):
 
     def delete_resource_groups(self, urn, dry_run):
         table_name = 'TurbotResourceGroups'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -267,7 +284,7 @@ class TurbotDatabase(Resource):
         )
 
         for item in items:
-            result = self.delete_item(
+            self.delete_item(
                 table_name=table_name,
                 key_info={
                     'resourceUrn': item.get('resourceUrn'),
@@ -278,6 +295,8 @@ class TurbotDatabase(Resource):
 
     def delete_resource_metadata(self, urn, dry_run):
         table_name = 'TurbotResourceMetadata'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -287,7 +306,7 @@ class TurbotDatabase(Resource):
         )
 
         for item in items:
-            result = self.delete_item(
+            self.delete_item(
                 table_name=table_name,
                 key_info={
                     'resourceUrn': item.get('resourceUrn'),
@@ -298,6 +317,8 @@ class TurbotDatabase(Resource):
 
     def delete_resource_secrets(self, urn, dry_run):
         table_name = 'TurbotResourceSecrets'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -318,6 +339,8 @@ class TurbotDatabase(Resource):
 
     def delete_ssh_keys(self, urn, dry_run):
         table_name = 'TurbotSshKeys'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
@@ -338,6 +361,7 @@ class TurbotDatabase(Resource):
 
     def delete_account_stacks(self, urn, dry_run):
         table_name = 'TurbotStacks'
+        logging.info(f"Removing {table_name}")
 
         index_name = 'accountUrn-alarmUrn-index'
         key_expression = 'accountUrn = :urn AND begins_with ( alarmUrn , :alarm_urn )'
@@ -364,6 +388,8 @@ class TurbotDatabase(Resource):
 
     def delete_user_access_keys(self, urn, dry_run):
         table_name = 'TurbotUserAccessKeys'
+        logging.info(f"Removing {table_name}")
+
         search_urn = urn + ':'
 
         items = self.scan_table(
