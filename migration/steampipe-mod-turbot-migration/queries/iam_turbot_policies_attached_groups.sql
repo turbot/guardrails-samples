@@ -9,4 +9,5 @@ from aws_iam_policy_attachment pol
          left join aws_iam_group g on g.group_id = groups ->> 'GroupId'
 where is_attached
   and policy_arn like '%/turbot/%'
+    and pol.policy_arn not like '%/turbot_lockdown%'
   and g.path not like '%/turbot/%';
