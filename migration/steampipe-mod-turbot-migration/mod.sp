@@ -52,8 +52,8 @@ control "iam_turbot_users_with_inline_policies" {
 
 
 control "iam_turbot_users_nonturbot_policies" {
-  title = "IAM - Turbot Users with NonTurbot Policies Attached"
-  description = "List of Turbot users with nonTurbot managed policies attached."
+  title = "IAM - Turbot Users with non-Turbot Policies Attached"
+  description = "List of Turbot users with non-Turbot managed policies attached."
   sql = query.iam_turbot_users_nonturbot_policies.sql
 }
 
@@ -65,13 +65,13 @@ control "iam_turbot_policies_attached_groups" {
 }
 
 control "iam_turbot_policies_attached_users" {
-    title = "IAM - Turbot policies attached to non-Turbot Groups"
+    title = "IAM - Turbot policies attached to non-Turbot Users"
     description = "List of Turbot policies attached to non-Turbot Users"
     sql = query.iam_turbot_policies_attached_users.sql
 }
 
 control "iam_turbot_policies_attached_roles" {
-    title = "IAM - Turbot policies attached to non-Turbot Groups"
+    title = "IAM - Turbot policies attached to non-Turbot Roles"
     description = "List of Turbot policies attached to non-Turbot Roles"
     sql = query.iam_turbot_policies_attached_roles.sql
 }
@@ -83,7 +83,7 @@ control "iam_turbot_groups_non_users" {
 }
 
 control "iam_turbot_users_non_groups" {
-    title = "IAM - Turbot Groups with non-Turbot users"
+    title = "IAM - Turbot Users in non-Turbot Groups"
     description = "List of Turbot users belonging to non-Turbot Groups"
     sql = query.iam_turbot_users_non_groups.sql
 }
