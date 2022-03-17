@@ -12,4 +12,5 @@ from aws_iam_policy_attachment pol
 where is_attached
   and pol.policy_arn like '%/turbot/%'
   and pol.policy_arn not like '%/turbot_lockdown%'
-  and r.path not like '%/turbot/%';
+  and r.path not like '%/turbot/%'
+  and roles ->> 'RoleName' not like 'cloudwatch-event-role';
