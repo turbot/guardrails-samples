@@ -1,15 +1,12 @@
 --identify turbot groups with non-Turbot users
-select path                            as group_path,
-       name                            as group_name,
-       iam_user ->> 'Path'             as user_path,
+select name                            as group_name,
        iam_user ->> 'UserName'         as user_name,
-       g.account_id                    as account_id,
+       name                            as resource,
+       'alarm'                          as status,
+       name || ' group has ' || (iam_user ->> 'UserName')
+           || ' Turbot user attached.' as reason,
        _ctx ->> 'connection_name'      as connection_name,
-       g.account_id                            as resource,
-       'info'                          as status,
-       name || ' group has '
-           || (iam_user ->> 'UserName')
-           || ' Turbot user attached.' as reason
+       g.account_id                    as account_id
 from aws_iam_group g
          cross join jsonb_array_elements(users) as iam_user
 

@@ -7,18 +7,19 @@ with pre_groups_users as (
      post_groups_users as (
          select g.name                     as group_name,
                 iam_user ->> 'UserName'    as user_name,
-                g.account_id               as account_id,
-                _ctx ->> 'connection_name' as connection_name
+                _ctx ->> 'connection_name' as connection_name,
+                g.account_id               as account_id
          from aws_iam_group g
                   cross join jsonb_array_elements(users) as iam_user
          where g.path like '%/turbot/%'
            and iam_user ->> 'Path' like '%/turbot/%'
      )
 select *
-     , post.connection_name
-     , post.account_id                                         as resource
+     , post.group_name                                         as resource
      , 'alarm'                                                 as status
      , 'There is a mismatch between Pre and Post Gruops&Users' as reason
+     , post.connection_name                                    as connection_name
+     , post.account_id                                         as account_id
 from pre_groups_users pre
          full outer join post_groups_users post
                          on pre.group_name = post.group_name
