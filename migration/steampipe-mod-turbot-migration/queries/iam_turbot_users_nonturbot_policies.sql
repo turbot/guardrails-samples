@@ -4,7 +4,7 @@ select path,
        name as resource,
        attached_policies,
        'alarm' as status,
-       'Turbot user ' || name || ' has an attached non-Turbot policy: ' || attached_policies as reason
+       'Turbot user ' || name || ' has a non-Turbot policy ' || attached_policies as reason
 from aws_iam_user
      cross join jsonb_array_elements_text(attached_policy_arns) as attached_policies
 where path like '%/turbot/%'
