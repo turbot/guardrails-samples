@@ -16,8 +16,8 @@ benchmark "pre" {
     control.iam_turbot_users_with_inline_policies,
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
-    control.iam_turbot_policies_attached_roles,
-    control.iam_users_two_keys
+    control.iam_users_two_keys,
+    control.iam_turbot_policies_attached_roles
     ]
 }
 
@@ -30,6 +30,7 @@ benchmark "inventory" {
         control.iam_users_groups
         ]
 }
+
 benchmark "post" {
     title = "Post-migration Health Checks"
     description = "Checks after the account has been migrated"
@@ -43,6 +44,7 @@ control "iam_users_two_keys" {
     description = "Enumerate those users with two AWS Access keys"
     sql = query.iam_users_two_keys.sql
 }
+
 control "iam_users_groups" {
     title = "IAM - Enumerate all users in all Groups"
     description = "Enumerate all groups and all users in those groups.  Misses Users not in any groups. Does not examine policies in anyway."
@@ -115,7 +117,7 @@ control "iam_turbot_groups_non_users" {
 }
 
 control "iam_turbot_users_non_groups" {
-    title = "IAM - Turbot Groups with non-Turbot users"
+    title = "IAM - Turbot users  non-Turbot groups"
     description = "List of Turbot users belonging to non-Turbot Groups"
     sql = query.iam_turbot_users_non_groups.sql
 }
