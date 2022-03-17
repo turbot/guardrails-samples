@@ -16,6 +16,6 @@ steampipe check control.iam_turbot_all_groups_all_users --header --output csv > 
 2. Perform the account migration
 3. Compare Pre and Post by running:
 ```shell
-steampipe check control.iam_turbot_all_groups_all_users --header --output csv > data/post_groups_users.csv
+steampipe check control.iam_turbot_all_groups_all_users_post
 ```
 4. Resolve any discrepancies between Pre and Post.

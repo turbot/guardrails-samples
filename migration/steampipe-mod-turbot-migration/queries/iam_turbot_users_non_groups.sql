@@ -6,7 +6,9 @@ select path                               as user_path,
        name                               as resource,
        'alarm'                            as status,
        'Turbot user ' || name || ' is a member of non-Turbot managed group '
-           || (iam_group ->> 'GroupName') as reason
+           || (iam_group ->> 'GroupName') as reason,
+       u.account_id,
+       u._ctx ->> 'connectionName'        as connection_name
 from aws_iam_user u
          cross join jsonb_array_elements(groups) as iam_group
 where u.path like '%/turbot/%'
