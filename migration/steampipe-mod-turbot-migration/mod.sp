@@ -6,43 +6,68 @@ mod "migration_checks" {
   documentation = file("./docs/index.md")
 }
 
-# DONE Turbot Managed IAM User with NonTurbot Attached Policy
-# Turbot Managed IAM User with Inline Policy
-# Turbot Managed IAM User with NonTurbot Group
-# DONE Turbot Managed Group with NonTurbot managed Users
-# DONE NonTurbot Managed Role with Turbot Managed IAM Policy
-# DONE NonTurbot Managed User with Turbot Managed IAM Policy
-# DONE NonTurbot Managed Group with Turbot Managed IAM Policy
-# NonTurbot Managed User with Attached Turbot Managed IAM Policy
-# NonTurbot Managed User Attached to Turbot Managed Group
-
 benchmark "pre" {
     title = "Pre-Migration Health Checks"
     description = "A list of checks to get baseline data before an account is migrated"
     children = [
     control.iam_turbot_groups_non_users,
     control.iam_turbot_users_non_groups,
+    control.iam_turbot_users_nonturbot_policies,
+    control.iam_turbot_users_with_inline_policies,
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
     control.iam_turbot_policies_attached_roles,
-    control.iam_turbot_users_nonturbot_policies,
-    control.iam_turbot_users_with_inline_policies
-    # Compare CSV of v3 grants with Omero's Terraform
-    # Compare CSV of effective grants compared with what's in AWS
-    # Get a list of Turbot-managed users in Turbot-managed groups
+    control.iam_turbot_all_groups_all_users
+    control.iam_users_groups
+#    control.iam_turbot_grants_vs_aws  #BLOCKED
     ]
-
 }
+
 benchmark "post" {
     title = "Post-migration Health Checks"
     description = "Checks after the account has been migrated"
      children = [
-     # Get a list of Turbot-managed users in Turbot-managed groups
-     # Compare CSV of effective grants compared with what's in AWS
-     # Compare pre-check of AWS groups+users with post-check of AWS groups+users
-
+        control.iam_turbot_all_groups_all_users_post
      ]
 }
+
+control "iam_users_groups" {
+    title = "IAM - Enumerate all users in all Groups"
+    description = "Enumerate all groups and all users in those groups.  Misses Users not in any groups. Does not examine policies in anyway."
+    sql = query.iam_users_groups.sql
+}
+
+control "iam_turbot_all_groups_all_users" {
+    title = "IAM - Compare Pre Groups&Users with Post Groups&Users"
+    description = "Compare the list of pre-migration groups and users with the groups and users currently in AWS.  See the Readme for more details on how to run this control."
+    sql = query.iam_turbot_all_groups_all_users_post.sql
+}
+
+control "iam_turbot_all_groups_all_users" {
+    title = "IAM - List all Turbot-managed users in all Turbot-managed Groups"
+    description = "Used to verify that the migration was successful by comparing user+groups before and after migration."
+    sql = query.iam_turbot_all_groups_all_users.sql
+}
+
+control "iam_turbot_all_groups_all_users_post" {
+    title = "IAM - List all Turbot-managed users in all Turbot-managed Groups"
+    description = "Used to verify that the migration was successful by comparing user+groups before and after migration."
+    sql = query.iam_turbot_all_groups_all_users_post.sql
+}
+
+# Waiting on a bug fix to get working. https://github.com/turbot/steampipe/issues/1688
+#control "iam_turbot_grants_vs_aws" {
+#    title = "IAM - Compare Turbot Grants exports to AWS"
+#    description = "Compare Turbot Grants to AWS.  Read CSV and AWS then compare"
+#    sql = query.iam_turbot_grants_vs_aws.sql
+#    param "account" {
+#        default = var.account
+#    }
+#}
+#
+#variable "account" {
+#    type = string
+#}
 
 control "iam_turbot_users_with_inline_policies" {
     title = "IAM - Turbot Users with Inline Policies"
@@ -65,13 +90,13 @@ control "iam_turbot_policies_attached_groups" {
 }
 
 control "iam_turbot_policies_attached_users" {
-    title = "IAM - Turbot policies attached to non-Turbot Groups"
+    title = "IAM - Turbot policies attached to non-Turbot Users"
     description = "List of Turbot policies attached to non-Turbot Users"
     sql = query.iam_turbot_policies_attached_users.sql
 }
 
 control "iam_turbot_policies_attached_roles" {
-    title = "IAM - Turbot policies attached to non-Turbot Groups"
+    title = "IAM - Turbot policies attached to non-Turbot Roles"
     description = "List of Turbot policies attached to non-Turbot Roles"
     sql = query.iam_turbot_policies_attached_roles.sql
 }
@@ -93,36 +118,7 @@ control "iam_turbot_users_non_groups" {
 #  description = "Identify Turbot managed IAM users that have third party IAM policies (inline and managed) attached"
 #  sql = query.iam_non_turbot_policies.sql
 #}
-#
-#control "iam_non_turbot_users" {
-#title = "IAM - Turbot IAM Users with non-Turbot IAM policies"
-#  sql = query.iam_non_turbot_users.sql
-#}
 
-#benchmark "ec2" {
-#  title       = "AWS Health - EC2"
-#  description = "Checks on EC2 Environment Health"
-#  children    = [
-#    control.ec2_missing_ami
-#  ]
-#}
 
-#benchmark "iam" {
-#
-#  title = "AWS Health - IAM"
-#  description = "Checks for IAM Environment Health"
-#  children = [
-#  control.iam_non_turbot_policies,
-#  control.iam_non_turbot_users,
-#  control.iam_turbot_groups_non_users]
-#}
-#control "ec2_missing_ami" {
-# title       = "EC2 - Instances with Missing AMIs"
-#  description = "A list of EC2 instances showing whether the AMI used to launch the instance is still present"
-#  query         = query.ec2_missing_ami
-#  args = {
-#    shared_ami_owner = 707491007138
-#  }
-#}
 
 
