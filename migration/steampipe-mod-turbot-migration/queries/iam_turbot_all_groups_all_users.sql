@@ -4,7 +4,8 @@ select path                            as group_path,
        iam_user ->> 'Path'             as user_path,
        iam_user ->> 'UserName'         as user_name,
        g.account_id                    as account_id,
-       name as resource,
+       _ctx ->> 'connection_name'      as connection_name,
+       g.account_id                            as resource,
        'info'                          as status,
        name || ' group has '
            || (iam_user ->> 'UserName')

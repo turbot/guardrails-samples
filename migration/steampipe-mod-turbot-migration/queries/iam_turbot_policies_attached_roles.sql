@@ -1,9 +1,11 @@
-select policy_arn as resource
-     , roles ->> 'RoleName' as policy_role
-     , r.path
-     , r.name
-     , 'alarm' as status
-     , 'Turbot policy ' || policy_arn || ' is attached to non-Turbot managed role ' || r.name || ' when it shouldnt be' as reason
+select (regexp_match(policy_arn, '.*/(\w*)$'))[1]                  as resource
+     , roles ->> 'RoleName'                                        as policy_role
+     , 'alarm'                                                     as status
+     , 'Turbot policy '
+           || (regexp_match(policy_arn, '.*/(\w*)$'))[1]
+           || ' is attached to non-Turbot managed role ' || r.name as reason
+     , pol.account_id
+     , pol._ctx ->> 'connectionName'                               as connection_name
 from aws_iam_policy_attachment pol
    , jsonb_array_elements(pol.policy_roles) as roles
          left join aws_iam_role r on r.role_id = roles ->> 'RoleId'
