@@ -17,20 +17,32 @@ benchmark "pre" {
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
     control.iam_turbot_policies_attached_roles,
-    control.iam_turbot_all_groups_all_users,
-    control.iam_users_groups
-#    control.iam_turbot_grants_vs_aws  #BLOCKED
+    control.iam_users_two_keys
     ]
 }
 
+benchmark "inventory" {
+    title = "Inventory of AWS resources"
+    description = "Inventory dumps"
+    children = [
+        control.iam_turbot_all_groups_all_users,
+        control.iam_turbot_all_groups_all_users_post,
+        control.iam_users_groups
+        ]
+}
 benchmark "post" {
     title = "Post-migration Health Checks"
     description = "Checks after the account has been migrated"
      children = [
-        control.iam_turbot_all_groups_all_users_post
+
      ]
 }
 
+control "iam_users_two_keys" {
+    title = "IAM - Turbot Users with two AWS Access Keys"
+    description = "Enumerate those users with two AWS Access keys"
+    sql = query.iam_users_two_keys.sql
+}
 control "iam_users_groups" {
     title = "IAM - Enumerate all users in all Groups"
     description = "Enumerate all groups and all users in those groups.  Misses Users not in any groups. Does not examine policies in anyway."
