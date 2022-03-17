@@ -17,7 +17,7 @@ benchmark "pre" {
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
     control.iam_turbot_policies_attached_roles,
-    control.iam_turbot_all_groups_all_users
+    control.iam_turbot_all_groups_all_users,
     control.iam_users_groups
 #    control.iam_turbot_grants_vs_aws  #BLOCKED
     ]
@@ -37,7 +37,7 @@ control "iam_users_groups" {
     sql = query.iam_users_groups.sql
 }
 
-control "iam_turbot_all_groups_all_users" {
+control "iam_turbot_all_groups_all_users_post" {
     title = "IAM - Compare Pre Groups&Users with Post Groups&Users"
     description = "Compare the list of pre-migration groups and users with the groups and users currently in AWS.  See the Readme for more details on how to run this control."
     sql = query.iam_turbot_all_groups_all_users_post.sql
@@ -49,11 +49,6 @@ control "iam_turbot_all_groups_all_users" {
     sql = query.iam_turbot_all_groups_all_users.sql
 }
 
-control "iam_turbot_all_groups_all_users_post" {
-    title = "IAM - List all Turbot-managed users in all Turbot-managed Groups"
-    description = "Used to verify that the migration was successful by comparing user+groups before and after migration."
-    sql = query.iam_turbot_all_groups_all_users_post.sql
-}
 
 # Waiting on a bug fix to get working. https://github.com/turbot/steampipe/issues/1688
 #control "iam_turbot_grants_vs_aws" {
