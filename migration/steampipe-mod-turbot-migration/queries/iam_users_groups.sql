@@ -5,6 +5,8 @@ select path                               as group_path,
        iam_user ->> 'UserId'              as user_id,
        iam_user ->> 'PermissionsBoundary' as permission_boundary,
        iam_user ->> 'PasswordLastUsed'    as password_last_used,
-       iam_user ->> 'CreateDate'          as user_create_date
+       iam_user ->> 'CreateDate'          as user_create_date,
+       account_id
+
 from aws_iam_group
          cross join jsonb_array_elements(users) as iam_user;
