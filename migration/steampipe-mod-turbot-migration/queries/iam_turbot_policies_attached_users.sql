@@ -10,5 +10,5 @@ from aws_iam_policy_attachment pol
          left join aws_iam_user u on u.user_id = users ->> 'UserId'
 where is_attached
   and policy_arn like '%/turbot/%'
-  and policy_arn not like '%turbot_lockdown%'
+  and pol.policy_arn not like '%/turbot_lockdown%'
   and u.path not like '%/turbot/%';
