@@ -115,7 +115,7 @@ control "iam_turbot_groups_non_users" {
 }
 
 control "iam_turbot_users_non_groups" {
-    title = "IAM - Turbot Groups with non-Turbot users"
+    title = "IAM - Turbot users  non-Turbot groups"
     description = "List of Turbot users belonging to non-Turbot Groups"
     sql = query.iam_turbot_users_non_groups.sql
 }
