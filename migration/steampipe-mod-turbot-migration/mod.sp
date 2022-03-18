@@ -10,6 +10,11 @@ benchmark "pre" {
     title = "Pre-Migration Health Checks"
     description = "A list of checks to get baseline data before an account is migrated"
     children = [
+    control.iam_users_two_keys,
+    control.iam_service_quotas_roles,
+    control.iam_service_quotas_policies_per_user,
+    control.iam_service_quotas_policies_per_role,
+    control.iam_service_quotas_policies_per_group,
     control.iam_turbot_groups_non_users,
     control.iam_turbot_users_non_groups,
     control.iam_turbot_users_nonturbot_policies,
@@ -41,6 +46,25 @@ benchmark "post" {
      ]
 }
 
+control "iam_service_quotas_policies_per_group" {
+    title = "IAM - Service Quota policies per group"
+    description = "Examine service quotas on policies per group"
+    sql = query.iam_service_quotas_policies_per_group.sql
+}
+control "iam_service_quotas_policies_per_role" {
+    title = "IAM - Service Quota policies per role"
+    description = "Examine service quotas on policies per role"
+    sql = query.iam_service_quotas_policies_per_role.sql
+}
+control "iam_service_quotas_policies_per_user" {
+    title = "IAM - Service Quota policies per user"
+    description = "Examine service quotas on policies per user"
+    sql = query.iam_service_quotas_policies_per_user.sql
+}
+control "iam_service_quotas_roles" {
+    title = "IAM - Service Quotas for role counts"
+    description = "Examine AWS IMA Service Quotas for roles.  Will alarm when more than 80% of the quota is used."
+    sql = query.iam_service_quotas_roles.sql
 
 control "iam_role_service_quotas" {
     title = "IAM - Role Service Quotas"

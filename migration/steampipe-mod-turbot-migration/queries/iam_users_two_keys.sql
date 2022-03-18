@@ -9,8 +9,8 @@ select user_name as resource
 from aws_iam_access_key ak
 where status = 'Active'
 group by user_name,
-          access_keys,
-         status
-         , connection_name
-         , account_id
+         access_keys,
+         status,
+         connection_name,
+         account_id
 having count(*) > 1;
