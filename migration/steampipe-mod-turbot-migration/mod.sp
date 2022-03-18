@@ -10,21 +10,20 @@ benchmark "pre" {
     title = "Pre-Migration Health Checks"
     description = "A list of checks to get baseline data before an account is migrated"
     children = [
-    control.iam_users_two_keys,
-    control.iam_service_quotas_roles,
-    control.iam_service_quotas_policies_per_user,
-    control.iam_service_quotas_policies_per_role,
+    control.iam_role_service_quotas,
     control.iam_service_quotas_policies_per_group,
+    control.iam_service_quotas_policies_per_role,
+    control.iam_service_quotas_policies_per_user,
+    control.iam_service_quotas_roles,
     control.iam_turbot_groups_non_users,
+    control.iam_turbot_policies_attached_groups,
+    control.iam_turbot_policies_attached_roles,
+    control.iam_turbot_policies_attached_users,
     control.iam_turbot_users_non_groups,
     control.iam_turbot_users_nonturbot_policies,
     control.iam_turbot_users_with_inline_policies,
-    control.iam_turbot_policies_attached_groups,
-    control.iam_turbot_policies_attached_users,
-    control.iam_users_two_keys,
-    control.iam_turbot_policies_attached_roles,
-    control.iam_role_service_quotas,
-    control.iam_users_in_group_count
+    control.iam_users_in_group_count,
+    control.iam_users_two_keys
     ]
 }
 
