@@ -17,8 +17,9 @@ benchmark "pre" {
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
     control.iam_users_two_keys,
-    control.iam_users_in_group_count,
-    control.iam_turbot_policies_attached_roles
+    control.iam_turbot_policies_attached_roles,
+    control.iam_role_service_quotas,
+    control.iam_users_in_group_count
     ]
 }
 
@@ -38,6 +39,13 @@ benchmark "post" {
      children = [
 
      ]
+}
+
+
+control "iam_role_service_quotas" {
+    title = "IAM - Role Service Quotas"
+    description = "Evaluate if an AWS Account is approaching its IAM service quotas"
+    sql = query.iam_role_service_quotas.sql
 }
 
 control "iam_users_in_group_count" {
