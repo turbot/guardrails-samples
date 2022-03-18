@@ -27,6 +27,17 @@ benchmark "pre" {
     ]
 }
 
+benchmark "quotas" {
+    title = "Evaluate Service Quotas"
+    description = "Check whether accounts are near their service quotas"
+    children = [
+    control.iam_role_service_quotas,
+    control.iam_service_quotas_policies_per_group,
+    control.iam_service_quotas_policies_per_role,
+    control.iam_service_quotas_policies_per_user,
+    ]
+}
+
 benchmark "inventory" {
     title = "Inventory of AWS resources"
     description = "Inventory dumps"
@@ -43,29 +54,7 @@ benchmark "post" {
      children = []
 }
 
-control "iam_service_quotas_policies_per_group" {
-    title = "IAM - Service Quota policies per group"
-    description = "Examine service quotas on policies per group"
-    sql = query.iam_service_quotas_policies_per_group.sql
-}
 
-control "iam_service_quotas_policies_per_role" {
-    title = "IAM - Service Quota policies per role"
-    description = "Examine service quotas on policies per role"
-    sql = query.iam_service_quotas_policies_per_role.sql
-}
-
-control "iam_service_quotas_policies_per_user" {
-    title = "IAM - Service Quota policies per user"
-    description = "Examine service quotas on policies per user"
-    sql = query.iam_service_quotas_policies_per_user.sql
-}
-
-control "iam_service_quotas_roles" {
-    title = "IAM - Service Quotas for role counts"
-    description = "Examine AWS IMA Service Quotas for roles.  Will alarm when more than 80% of the quota is used."
-    sql = query.iam_service_quotas_roles.sql
-}
 
 control "iam_role_service_quotas" {
     title = "IAM - Role Service Quotas"
