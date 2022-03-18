@@ -12,8 +12,11 @@ select g.name                                                    as resource
      , g.account_id
 from aws_iam_group g
          left join user_policy_quota upq on upq.account_id = g.account_id
-group by g.name, jsonb_array_length(attached_policy_arns), jsonb_array_length(attached_policy_arns) / upq.quota::float4,
-         _ctx ->> 'connection_name', g.account_id
+group by g.name,
+         jsonb_array_length(attached_policy_arns),
+         jsonb_array_length(attached_policy_arns) / upq.quota::float4,
+         _ctx ->> 'connection_name',
+         g.account_id
 having jsonb_array_length(attached_policy_arns) / upq.quota::float4 > 0.8;
 
 -- attached policies per user
