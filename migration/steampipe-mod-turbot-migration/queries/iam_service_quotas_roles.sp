@@ -1,3 +1,7 @@
+control "iam_service_quotas_roles" {
+    title = "IAM - Service Quotas for role counts"
+    description = "Examine AWS IMA Service Quotas for roles.  Will alarm when more than 80% of the quota is used."
+    sql = <<EOQ
 select roles
      , roles_quota
      , roles / roles_quota::float4               as quota_percent
@@ -9,7 +13,5 @@ select roles
 from aws_iam_account_summary
 group by roles, roles_quota, roles / roles_quota::double precision, account_id, _ctx ->> 'connection_name'
 having roles / roles_quota::float4 < 0.8;
-
--- attached policies per user
--- attached policies per role: policy count > max - 2
--- service limit on policies per group
+    EOQ
+}

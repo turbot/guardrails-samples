@@ -1,3 +1,7 @@
+control "iam_service_quotas_policies_per_role" {
+    title = "IAM - Service Quota policies per role"
+    description = "Examine service quotas on policies per role"
+    sql = <<EOQ
 with user_policy_quota as (
     select attached_policies_per_role_quota as quota
          , account_id
@@ -18,7 +22,5 @@ group by r.name,
          _ctx ->> 'connection_name',
          r.account_id
 having jsonb_array_length(attached_policy_arns) / upq.quota::float4 > 0.8;
-
--- attached policies per user
--- attached policies per role: policy count > max - 2
--- service limit on policies per group
+    EOQ
+}
