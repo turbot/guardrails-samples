@@ -19,6 +19,7 @@ benchmark "pre" {
     control.iam_users_two_keys,
     control.iam_service_quotas_roles,
     control.iam_service_quotas_policies_per_user,
+    control.iam_service_quotas_policies_per_role,
     control.iam_turbot_policies_attached_roles
     ]
 }
@@ -39,6 +40,11 @@ benchmark "post" {
      children = [
 
      ]
+}
+control "iam_service_quotas_policies_per_role" {
+    title = "IAM - Service Quota policies per role"
+    description = "Examine service quotas on policies per role"
+    sql = query.iam_service_quotas_policies_per_role.sql
 }
 control "iam_service_quotas_policies_per_user" {
     title = "IAM - Service Quota policies per user"
