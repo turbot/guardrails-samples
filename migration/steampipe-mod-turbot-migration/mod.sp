@@ -18,6 +18,7 @@ benchmark "pre" {
     control.iam_turbot_policies_attached_users,
     control.iam_users_two_keys,
     control.iam_service_quotas_roles,
+    control.iam_service_quotas_policies_per_user,
     control.iam_turbot_policies_attached_roles
     ]
 }
@@ -39,7 +40,11 @@ benchmark "post" {
 
      ]
 }
-
+control "iam_service_quotas_policies_per_user" {
+    title = "IAM - Service Quota policies per user"
+    description = "Examine service quotas on policies per user"
+    sql = query.iam_service_quotas_policies_per_user.sql
+}
 control "iam_service_quotas_roles" {
     title = "IAM - Service Quotas"
     description = "Examine AWS IMA Service Quotas for roles.  Will alarm when more than 80% of the quota is used."
