@@ -17,6 +17,7 @@ benchmark "pre" {
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
     control.iam_users_two_keys,
+    control.iam_users_in_group_count,
     control.iam_turbot_policies_attached_roles
     ]
 }
@@ -37,6 +38,12 @@ benchmark "post" {
      children = [
 
      ]
+}
+
+control "iam_users_in_group_count" {
+    title = "IAM - Turbot Users in how many groups"
+    description = "Alarm when a user belongs to more than 8 groups"
+    sql = query.iam_users_in_group_count.sql
 }
 
 control "iam_users_two_keys" {
