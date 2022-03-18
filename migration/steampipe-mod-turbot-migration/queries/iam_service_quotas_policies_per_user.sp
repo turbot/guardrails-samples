@@ -1,4 +1,8 @@
-with user_policy_quota as (
+control "iam_service_quotas_policies_per_user" {
+    title = "IAM - Service Quota policies per user"
+    description = "Examine service quotas on policies per user"
+    sql = <<EOQ
+    with user_policy_quota as (
     select attached_policies_per_user_quota as quota
          , account_id
     from aws_iam_account_summary
@@ -18,7 +22,6 @@ group by u.name,
          _ctx ->> 'connection_name',
          u.account_id
 having jsonb_array_length(u.attached_policy_arns) / upq.quota::float4 > 0.8;
+    EOQ
 
--- attached policies per user
--- attached policies per role: policy count > max - 2
--- service limit on policies per group
+}
