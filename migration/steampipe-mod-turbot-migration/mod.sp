@@ -17,7 +17,8 @@ benchmark "pre" {
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
     control.iam_users_two_keys,
-    control.iam_turbot_policies_attached_roles
+    control.iam_turbot_policies_attached_roles,
+    control.iam_role_service_quotas
     ]
 }
 
@@ -39,6 +40,11 @@ benchmark "post" {
      ]
 }
 
+control "iam_role_service_quotas" {
+    title = "IAM - Role Service Quotas"
+    description = "Evaluate if an AWS Account is approaching its IAM service quotas"
+    sql = query.iam_role_service_quotas.sql
+}
 control "iam_users_two_keys" {
     title = "IAM - Turbot Users with two AWS Access Keys"
     description = "Enumerate those users with two AWS Access keys"
