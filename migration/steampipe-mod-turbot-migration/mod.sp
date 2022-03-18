@@ -21,7 +21,10 @@ benchmark "pre" {
     control.iam_turbot_users_with_inline_policies,
     control.iam_turbot_policies_attached_groups,
     control.iam_turbot_policies_attached_users,
-    control.iam_turbot_policies_attached_roles
+    control.iam_users_two_keys,
+    control.iam_turbot_policies_attached_roles,
+    control.iam_role_service_quotas,
+    control.iam_users_in_group_count
     ]
 }
 
@@ -62,6 +65,17 @@ control "iam_service_quotas_roles" {
     title = "IAM - Service Quotas for role counts"
     description = "Examine AWS IMA Service Quotas for roles.  Will alarm when more than 80% of the quota is used."
     sql = query.iam_service_quotas_roles.sql
+
+control "iam_role_service_quotas" {
+    title = "IAM - Role Service Quotas"
+    description = "Evaluate if an AWS Account is approaching its IAM service quotas"
+    sql = query.iam_role_service_quotas.sql
+}
+
+control "iam_users_in_group_count" {
+    title = "IAM - Turbot Users in how many groups"
+    description = "Alarm when a user belongs to more than 8 groups"
+    sql = query.iam_users_in_group_count.sql
 }
 
 control "iam_users_two_keys" {
