@@ -24,7 +24,9 @@ benchmark "pre" {
     control.iam_turbot_users_nonturbot_policies,
     control.iam_turbot_users_with_inline_policies,
     control.iam_users_in_group_count,
-    control.iam_users_two_keys
+    control.iam_users_two_keys,
+    control.iam_total_turbot_users,
+    control.iam_total_turbot_groups
     ]
 }
 
@@ -58,6 +60,16 @@ benchmark "post" {
      ]
 }
 
+control "iam_total_turbot_groups" {
+    title = "IAM - Total Turbot Groups"
+    description = "Number of Turbot managed groups by account"
+    sql = query.iam_total_turbot_groups.sql
+}
+control "iam_total_turbot_users" {
+    title = "IAM - Total Turbot Users"
+    description = "Number of Turbot managed users by account"
+    sql = query.iam_total_turbot_users.sql
+}
 
 control "iam_users_in_group_count" {
     title = "IAM - Turbot Users in how many groups"
