@@ -89,11 +89,7 @@ control "iam_users_groups" {
     sql = query.iam_users_groups.sql
 }
 
-control "iam_turbot_all_groups_all_users_post" {
-    title = "IAM - Compare Pre Groups&Users with Post Groups&Users"
-    description = "Compare the list of pre-migration groups and users with the groups and users currently in AWS.  See the Readme for more details on how to run this control."
-    sql = query.iam_turbot_all_groups_all_users_post.sql
-}
+
 
 control "iam_turbot_all_groups_all_users" {
     title = "IAM - List all Turbot-managed users in all Turbot-managed Groups"
@@ -110,10 +106,6 @@ control "iam_turbot_all_groups_all_users" {
 #    param "account" {
 #        default = var.account
 #    }
-#}
-#
-#variable "account" {
-#    type = string
 #}
 
 control "iam_turbot_users_with_inline_policies" {
