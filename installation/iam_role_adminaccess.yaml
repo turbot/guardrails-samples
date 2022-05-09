@@ -1,0 +1,43 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  RoleName:
+    Type: String
+    Default: turbot-service-superuser
+    Description: The role that Turbot uses to connect to this account
+
+  TurbotAccountId:
+    Type: String
+    Default: 287590803701
+    Description: |
+      The AWS Account ID where Turbot is installed.
+      This will be added to the trust policy of the role to allow access for Turbot
+
+  TurbotExternalId:
+    Type: String
+    NoEcho: True
+    MinLength: 1
+    Description: |
+      The AWS External ID to add to the trust policy of the Turbot role
+
+Resources:
+
+  TurbotSuperuserRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${TurbotAccountId}:root
+            Action:
+              - sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: !Ref TurbotExternalId
+      Path: /turbot/core/
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AdministratorAccess"
+      RoleName: !Ref RoleName

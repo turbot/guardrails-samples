@@ -1,0 +1,92 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  RoleName:
+    Type: String
+    Default: turbot-service-readonly
+    Description: The role that Turbot uses to connect to this account
+  PolicyName:
+    Type: String
+    Default: turbot-readonly-events-sns
+    Description: The name for the policy for SNS and Events write access.
+  TurbotAccountId:
+    Type: String
+    Default: 287590803701
+    Description: >
+      The AWS Account ID where Turbot is installed.
+
+      This will be added to the trust policy of the role to allow access for
+      Turbot
+
+      Defaults to the Turbot US SaaS account
+  TurbotExternalId:
+    Type: String
+    NoEcho: true
+    MinLength: 1
+    Description: |
+      The AWS External ID to add to the trust policy of the Turbot role
+Resources:
+  TurbotReadOnlyRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${TurbotAccountId}:root'
+            Action:
+              - 'sts:AssumeRole'
+            Condition:
+              StringEquals:
+                'sts:ExternalId': !Ref TurbotExternalId
+      Path: /turbot/core/
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/ReadOnlyAccess'
+      RoleName: !Ref RoleName
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e66f3008-2c13-4544-bf72-2a69e5e5a4a9
+  TurbotSNSEventsPolicy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: !Ref PolicyName
+      Roles:
+        - !Ref RoleName
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: TurbotEvents
+            Effect: Allow
+            Action:
+              - 'events:PutEvents'
+              - 'events:EnableRule'
+              - 'events:PutRule'
+              - 'events:TagResource'
+              - 'events:DeleteRule'
+              - 'events:PutTargets'
+              - 'events:RemoveTargets'
+              - 'events:UntagResource'
+              - 'events:DisableRule'
+            Resource:
+              - !Sub 'arn:aws:events:*:${AWS::AccountId}:rule/turbot_aws_api_events*'
+          - Sid: TurbotSNS
+            Effect: Allow
+            Action:
+              - 'sns:TagResource'
+              - 'sns:DeleteTopic'
+              - 'sns:CreateTopic'
+              - 'sns:SetTopicAttributes'
+              - 'sns:UntagResource'
+              - 'sns:AddPermission'
+              - 'sns:Publish'
+              - 'sns:Subscribe'
+              - 'sns:ConfirmSubscription'
+              - 'sns:RemovePermission'
+            Resource:
+              - !Sub 'arn:aws:sns:*:${AWS::AccountId}:turbot_aws_api_handler'
+              - !Sub 'arn:aws:sns:*:${AWS::AccountId}:turbot_aws_api_handler:*'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 45e5ef15-aac1-413c-91f5-75eea48e0b5c
+    DependsOn:
+      - TurbotReadOnlyRole
