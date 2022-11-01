@@ -170,7 +170,10 @@ def run_discovery(session, endpoint, duplicates):
                 run_query(session=session, endpoint=endpoint, query=mutation, variables=control_vars)
             except Exception as err:
                 print(err)
-    print("All discovery controls have been rerun.  Exiting.")
+    if len(duplicates.keys()) > 0:
+        print("All discovery controls have been rerun.  Exiting.")
+    else:
+        print("Didn't find any discovery controls to run. Exiting.")
 
 
 def run_query(session, endpoint, query, variables):
