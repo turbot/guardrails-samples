@@ -10,7 +10,7 @@ for key in users['Users']:
     result['userName']=key['UserName']
     List_of_Policies =  client.list_attached_user_policies(UserName=key['UserName'])
 
-    result['Policies'] = List_of_Policies['PolicyNames']
+    result['Policies'] = List_of_Policies['AttachedPolicies']
  
     user_list.append(result)
 
