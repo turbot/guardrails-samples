@@ -3,4 +3,4 @@ client = boto3.client('iam',aws_access_key_id="AKIASELM5PMNK5NVCS7D",aws_secret_
 
 users = client.list_users()
 for key in users['Users']:
-    print key['UserName']
+    print(key['UserName'])
