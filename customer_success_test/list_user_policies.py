@@ -1,5 +1,5 @@
 import boto3
-client = boto3.client('iam',aws_access_key_id="AKIASELM5PMNK5NVCS7D",aws_secret_access_key="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") 
+client = boto3.client('iam') 
 
 users = client.list_users()
 user_list = []
