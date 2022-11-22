@@ -1,26 +1,22 @@
 # Description
 # -----------
 #
-# The query returns the controls which are in any of the state: error/invalid/tbd in a specified turbot account.
+# The query returns a list of cloud accounts in the workspace with a count of active and total controls for each.
 #
 
 # Usage
 # -----
 #
-# turbot graphql --query ./list_controls_in_specific_account.graphql
-#
+# turbot graphql --query ./list_control_counts_by_cloud_account.graphql
+# OR
+# paste the query into Turbot Console > Developers in the top right corner
 
 # Filter
 # ------
 #
-# state:
-#   Any controls that are in any of these states alarm/ok/tbd/skipped/error will be returned.
-#   The matching algorithm will perform a caseless compare of the akas from right to left.
-#   In example, filters the controls that are in either error, invalid or tbd state.
-#
-# resource:
-#   AKA or ID for the turbot product will be returned.
-#   In example, filters the resources with turbot account id '175816468884383'.
+# resourceTypeId:
+#   Lists AWS Accounts, Azure Subscriptions and GCP Projects.
+#   Users should adapt the resourceTypesId list to match up their environment.
 #
 
 # Documentation
@@ -28,31 +24,35 @@
 #
 # For full documentation see:
 # - Filter documentation: https://turbot.com/v5/docs/reference/filter
-# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/resources
 #
 
-query ListControlsInSpecificAccount {
-  controls(filter: "state:error,invalid,tbd resource:'175816468884383'") {
-    metadata {
+query ControlsByAccount {
+  resources(
+    filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/account','tmod:@turbot/azure#/resource/types/subscription','tmod:@turbot/gcp#/resource/types/project' level:self"
+  ) {
+    cloud_account_count: metadata {
       stats {
         total
       }
     }
     items {
-      state
-      type {
-        uri
-        title
-      }
-      resource {
-        turbot {
-          title
-          akas
+      akas
+      metadata
+      active_controls: controls(filter: "state:active") {
+        metadata {
+          stats {
+            total
+          }
         }
       }
-    }
-    paging {
-      next
+      total_controls: controls {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
     }
   }
 }
