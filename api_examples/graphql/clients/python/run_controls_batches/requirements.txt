@@ -9,5 +9,5 @@ PyYAML==5.3
 requests==2.22.0
 sgqlc==10.1
 
-urllib3==1.25.8
+urllib3==1.26.5
 ../turbot
