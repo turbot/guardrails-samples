@@ -1,62 +1,61 @@
-# GCP Compute Engine - approve the image usage based on the approved image and project list
+# GCP Compute Engine - approve the instance based on approved image(s).
 
 ## Use case
 
-The business owner of the GCP project will allow only the images that are in the approved image which are from approved project to be used.
+The business owner of the GCP project will allow only the instances that are launched using the approved image(s).
 
 ## Implementation details
 
 This Terraform template creates a smart folder and applies calculated policies on the policies:
 
-- `AWS > VPC > Elastic IP > Approved`
-- `AWS > VPC > Elastic IP > Approved > Usage`
+- `GCP > Compute Engine > Instance > Approved`
+- `GCP > Compute Engine > Instance > Approved > Custom`
 
-If an elastic ip is associated with resource then the approved usage policy will be set to `Approved` otherwise
+If an Image Id of the Compute Instance is in the list of Approved list of Images then the the Custom policy will be set to `Approved` otherwise
 it will be set to `Not Approved`.
 
 ### Template input (GraphQL)
 
 The template input to a calculated policy is a GraphQL query.
-
-GraphQL query that will check if a function policy has cross-account access.
-If the query returns an array of zero items, then there are no function with cross-account access.
+We make use of a multi-query for this. The first part of the query captures the Root Disk details of the Compute Instance, and search for the `sourceImageId` from the Images list.
 
 ```graphql
-{
-      item: resource {
-        name: get(path: "name")
-        imageId: get(path: "sourceImage")
+- |
+  {
+    resource {
+      rootDiskName: get(path: "disks[0].deviceName")
+    }
+  }
+- |
+  {
+    disks: resources(filter: "resourceTypeId:'tmod:@turbot/gcp-computeengine#/resource/types/disk' $.name:{{ $.resource.rootDiskName }} resourceTypeLevel:self"){
+      items {
+        sourceImage: get(path: "sourceImage")
+        sourceImageId: get(path: "sourceImageId")
       }
-}
+    }
+  }
 ```
-
+NOTE: The `Calculated Policy Builder` does not support multi-query, but works when deployed via Terraform. 
 ### Template (Nunjucks)
 
-Approval logic for Lambda Function cross-account access.
-If no external account is found in Principal.AWS, Condition.'AWS:SourceAccount' or Condition.'AWS:SourceArn'
-then there are no cross-account access
+Approval logic for Google Compute Instance for Image.
+If the instance Image Id is part of the approved sourceImages list then the instance is marked approved. 
 
 ```nunjucks
-{% if $.item.imageId == null %} 
-  "Not approved"
+{% if $.disks.items | length == 0 %}
+- title: Image
+  result: Not approved
+  message: Unable to find the source Image details.
+{%- elif $.disks.items[0].sourceImageId in ['4644004327634874935', '4801817364715522935']  %}
+- title: Image
+  result: Approved
+  message: Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is approved for usage.
 {% else %}
-{% set imageName = $.item.name %}
-{% set imageProject = $.item.imageId.split("projects/")[1].split("/") | first %}
-{% set approvedImageProjectList = [
-  'project1',
-  'project2'
-  ] %}
-{% set approvedImageList  = [
-  'image1',
-  'image2'
-  ] %}
-
-{% if imageProject in approvedImageProjectList and imageName in approvedImageList%}
-  "Approved"
-{% else %}
-  "Not approved"  
-{% endif %}
-{% endif %}
+- title: Image
+  result: Not approved
+  message: Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is not approved for usage.
+{%- endif -%}
 ```
 
 The template itself is a [Nunjucks formatted template](https://mozilla.github.io/nunjucks/templating.html).
