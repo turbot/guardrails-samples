@@ -1,4 +1,4 @@
-wheel==0.34.2
+wheel==0.38.1
 astroid==2.3.3
 certifi==2019.11.28
 chardet==3.0.4
