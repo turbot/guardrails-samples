@@ -23,12 +23,11 @@ turbot graphql --profile client-prod --query ./get_users.graphql
 
 2. From the user query, find the resource ID of the user.
 3. Copy the resource ID into the `user` field in user_password.json
-4. Set a good strong password in user_password.json.  You must include symbols and numbers.
+4. Set a good strong password in user_password.json
 5. Run the below query to set the password.
 
 ```shell script
 turbot graphql --profile client-prod --query ./set_new_password.graphql --variables user_password.json
 ```
-If you get "Internal Error" messages when running the above command, it's likely that your password complexity isn't high enough.
 
 6. Login as that user to verify that the password applied properly.

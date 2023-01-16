@@ -5,9 +5,9 @@ Click==7.0
 graphql-core==3.0.2
 idna==2.8
 
-PyYAML==5.4
+PyYAML==5.3
 requests==2.22.0
 sgqlc==10.1
 
-urllib3==1.26.5
+urllib3==1.25.8
 ../turbot
