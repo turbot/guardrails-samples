@@ -1,6 +1,3 @@
-# 1.1.2 (2022-11-28)
-  - Add support for postgresql14 client installation from amazon-linux-extras.
-
 # 1.1.1 (2021-08-30)
   - Install postgresql12 and postgresql13 clients from amazon-linux-extras.
 
