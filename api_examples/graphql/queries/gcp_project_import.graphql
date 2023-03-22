@@ -110,7 +110,7 @@ mutation SetPolicy($SetClientEmail: CreatePolicySettingInput!, $setPrivateKey: C
   "setPrivateKey": {
     "type": "tmod:@turbot/gcp#/policy/types/privateKey",
     "resource": "<resource-id>", # the Turbot resource ID returned from STEP 1.
-    "value": "<privet-key>"     # privateKey value is retrieved from the downloaded document.
+    "value": "<privet-key>",     # privateKey value is retrieved from the downloaded document.
     "precedence": "REQUIRED"
   }
 }

@@ -1,0 +1,416 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Turbot Bastion Host v1.2.0
+Metadata:
+  "AWS::CloudFormation::Interface":
+    ParameterGroups:
+      - Label:
+          default: Turbot bastion configuration
+        Parameters:
+          - BastionHostName
+          - TimeToLive
+      - Label:
+          default: Network configuration
+        Parameters:
+          - VPCId
+          - PublicSubnetId
+          - PublicIPv4Address
+      - Label:
+          default: Amazon EC2 configuration
+        Parameters:
+          - LatestAmiId
+          - BastionInstanceType
+          - RootVolumeSize
+          - PostgreSQLClient
+      - Label:
+          default: Alternative configuration
+        Parameters:
+          - OSImageOverride
+          - AlternativeIAMRole
+          # - EnvironmentVariables
+      - Label:
+          default: Session Manager Preferences
+        Parameters:
+          - KMSEncryptionKeyArn
+          - CloudWatchLogGroupName
+          - S3BucketWithPrefix
+    ParameterLabels:
+      BastionHostName:
+        default: Bastion Host Name
+      TimeToLive:
+        default: Life Time (in hours)
+      VPCId:
+        default: VPC Id
+      PublicSubnetId:
+        default: Public Subnet Id
+      PublicIPv4Address:
+        default: Public IPv4 Address
+      LatestAmiId:
+        default: Bastion AMI operating system
+      BastionInstanceType:
+        default: Bastion instance type
+      RootVolumeSize:
+        default: Root volume size
+      PostgreSQLClient:
+        default: PostgreSQL client version
+      # EnvironmentVariables:
+      #   default: Environment Variables
+      KMSEncryptionKeyArn:
+        default: KMS Encryption
+      CloudWatchLogGroupName:
+        default: CloudWatch Logging
+      S3BucketWithPrefix:
+        default: S3 Logging
+      OSImageOverride:
+        default: Custom AMI
+      AlternativeIAMRole:
+        default: IAM role
+
+Parameters:
+  BastionHostName:
+    Default: "Turbot Bastion Host"
+    Description: Name of the bastion host
+    Type: String
+  TimeToLive:
+    AllowedValues:
+      - "2"
+      - "4"
+      - "6"
+      - "8"
+      - "10"
+      - "12"
+      - "Do not delete the stack"
+    Default: "6"
+    Description: Life time of the bastion host, after which the cloudformation stack is terminated automatically
+    Type: String
+  VPCId:
+    Description: Id of the AWS VPC (e.g., vpc-1a2b3c4d or vpc-1234567890abcdef0)
+    Type: "AWS::EC2::VPC::Id"
+  PublicSubnetId:
+    Description: Id of the Public subnet in which the bastion host will be provisioned (e.g., subnet-a0246dcd)
+    Type: "AWS::EC2::Subnet::Id"
+  PublicIPv4Address:
+    Description: Assign a Public IPv4 Address to the bastion host. If set to false, will try to connect over Private IPv4 address.
+    AllowedValues:
+      - "true"
+      - "false"
+    Default: "true"
+    Type: String
+  LatestAmiId:
+    Description: AWS SSM Parameter Store namespace for the AMI. Defaults to Amazon Linux 2 distribution.
+      Leave this as it is, if you want to use Custom AMI.
+    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
+    Default: "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+  BastionInstanceType:
+    AllowedValues:
+      # General Purpose
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+      # Compute Optimized
+      - c5.large
+      - c5.xlarge
+      - c5.2xlarge
+      - c5.4xlarge
+      # Memory Optimized
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
+      - r5.4xlarge
+      - r5.8xlarge
+    Default: t3.medium
+    Description: Amazon EC2 instance type
+    Type: String
+  RootVolumeSize:
+    Description: The root EBS volume size in GB
+    Type: Number
+    Default: "10"
+  PostgreSQLClient:
+    Description: PostgreSQL client version.
+    Type: String
+    AllowedValues:
+      - postgresql11
+      - postgresql12
+      - postgresql13
+      - postgresql14
+    Default: postgresql14
+  # EnvironmentVariables:
+  #   Description: A comma-separated list of environment variables for use in bootstrapping. Variables must be in the format KEY=VALUE. VALUE cannot contain commas. Use the variables RDSHOST, REDISHOST, REDISREPLICAHOST for RDS and Redis respectively. RDSPASSWORD is set by default. Example, RDSHOST=turbot-hive.ab3defg51jkl.us-east-2.rds.amazonaws.com,REDISHOST=master.turbot-redis-cache-cluster.ab7xyz.use2.cache.amazonaws.com:6379,REDISREPLICAHOST=replica.turbot-redis-cache-cluster.ab7xyz.use2.cache.amazonaws.com:6379 You need to run "source /etc/profile.d/environment" after you login to the bastion for these variables to reflect.
+  #   Type: String
+  #   Default: ""
+  KMSEncryptionKeyArn:
+    Default: ""
+    Description:
+      Session Manager can be configured to use AWS Key Management Service (AWS KMS) key encryption to provide additional protection to the data transmitted between client machines and managed instances.
+      If KMS Encryption is configured then enter the KMS Key full ARN used in your AWS Systems Manager > Session Manager > Preferences. (e.g., "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"). Please make sure the user with which you logged into the console is listed as "Key Users" for it.
+      Leave empty if KMS Encryption is disabled.
+    Type: String
+  CloudWatchLogGroupName:
+    Default: ""
+    Description:
+      Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group.
+      If Cloudwatch Logging is enabled, then enter the "CloudWatch log group" name from AWS Systems Manager > Session Manager > Preferences. (e.g., my-sessionmanager-loggroup).
+      Leave empty if CloudWatch Logging is disabled.
+    Type: String
+  S3BucketWithPrefix:
+    Default: ""
+    Description:
+      Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group.
+      If S3 Logging is enabled, then enter the "S3 bucket" followed by "S3 prefix" from AWS Systems Manager > Session Manager > Preferences. (e.g., my-sessionmanager-logs-bucket/my-sub-folder/).
+      Leave empty if S3 Logging is disabled.
+    Type: String
+
+  OSImageOverride:
+    Description: The region-specific Custom AMI image to use (e.g., ami-1a2b3c4d or ami-1234567890abcdef0)
+    Type: String
+    Default: ""
+  AlternativeIAMRole:
+    Description: An existing IAM Role Name to attach (e.g., my_ssm_role).
+      If left empty, a new role will be created.
+    Default: ""
+    Type: String
+Rules:
+  SubnetsInVPC:
+    Assertions:
+      - Assert:
+          "Fn::EachMemberIn":
+            - "Fn::ValueOfAll":
+                - "AWS::EC2::Subnet::Id"
+                - VpcId
+            - "Fn::RefAll": "AWS::EC2::VPC::Id"
+        AssertDescription: All subnets must exist in the VPC
+Conditions:
+  CreateIAMRole: !Equals
+    - !Ref AlternativeIAMRole
+    - ""
+  UseOSImageOverride: !Not
+    - !Equals
+      - !Ref OSImageOverride
+      - ""
+  UsePublicIPv4Address: !Equals
+    - !Ref PublicIPv4Address
+    - "true"
+  UseKMSEncryption: !Not
+    - !Equals
+      - !Ref KMSEncryptionKeyArn
+      - ""
+  UseCloudWatchLogging: !Not
+    - !Equals
+      - !Ref CloudWatchLogGroupName
+      - ""
+  UseS3Logging: !Not
+    - !Equals
+      - !Ref S3BucketWithPrefix
+      - ""
+  GovCloudAccount: !Equals
+    - !Ref AWS::Partition
+    - "aws-us-gov"
+
+Resources:
+  BastionHostRole:
+    Condition: CreateIAMRole
+    Type: "AWS::IAM::Role"
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - "sts:AssumeRole"
+            Principal:
+              Service:
+                - !Sub "ec2.${AWS::URLSuffix}"
+            Effect: Allow
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - !Sub "arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      Tags:
+        - Key: cfn_stack_name
+          Value: !Ref AWS::StackName
+        - Key: Vendor
+          Value: "Turbot HQ Inc"
+        - Key: Product
+          Value: "Turbot Bastion Host"
+        - Key: Version
+          Value: "1.2.0"
+
+  BastionHostPolicy:
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: TurbotBastionPolicy
+      Roles:
+        - !If
+          - CreateIAMRole
+          - !Ref BastionHostRole
+          - !Ref AlternativeIAMRole
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - "rds-db:connect"
+            Effect: Allow
+            Resource:
+              - !Join ["", [!Sub "arn:${AWS::Partition}:rds-db:*:${AWS::AccountId}", ":dbuser:*/turbot"]]
+          - !If
+            - UseKMSEncryption
+            - Action:
+                - "kms:Decrypt"
+                - "kms:GenerateDataKey"
+              Effect: Allow
+              Resource:
+                - !Ref KMSEncryptionKeyArn
+            - !Ref "AWS::NoValue"
+          - !If
+            - UseCloudWatchLogging
+            - Action:
+                - "logs:CreateLogStream"
+                - "logs:PutLogEvents"
+              Effect: Allow
+              Resource:
+                !Join ["", [!Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:", !Ref "CloudWatchLogGroupName", ":*"]]
+            - !Ref "AWS::NoValue"
+          - !If
+            - UseS3Logging
+            - Action:
+                - "s3:PutObject"
+              Effect: Allow
+              Resource: !Join ["", [!Sub "arn:${AWS::Partition}:s3:::", !Ref "S3BucketWithPrefix", "*"]]
+            - !Ref "AWS::NoValue"
+          - Action:
+              - "ec2:DescribeInstances"
+              - "s3:GetEncryptionConfiguration"
+              - "logs:DescribeLogGroups"
+              - "logs:DescribeLogStreams"
+            Effect: Allow
+            Resource: "*"
+          - Action:
+              - "cloudformation:DeleteStack"
+            Effect: Allow
+            Resource: !Ref AWS::StackId
+          - Action:
+              - "ec2:TerminateInstances"
+              - "ec2:DisassociateIamInstanceProfile"
+            Effect: Allow
+            Resource: !Join ["", [!Sub "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:instance/*"]]
+            Condition: { "StringEquals": { "ec2:ResourceTag/cfn_stack_name": !Ref AWS::StackName } }
+          - Action:
+              - "iam:DeleteRolePolicy"
+              - "iam:DetachRolePolicy"
+              - "iam:DeleteRole"
+            Effect: Allow
+            Resource: !Join ["", [!Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/*"]]
+            Condition: { "StringEquals": { "iam:ResourceTag/cfn_stack_name": !Ref AWS::StackName } }
+          - Action:
+              - "iam:RemoveRoleFromInstanceProfile"
+              - "iam:DeleteInstanceProfile"
+            Effect: Allow
+            Resource: !Join ["", [!Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:instance-profile/*"]]
+  BastionHostProfile:
+    DependsOn: BastionHostPolicy
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Roles:
+        - !If
+          - CreateIAMRole
+          - !Ref BastionHostRole
+          - !Ref AlternativeIAMRole
+      Path: /
+
+  BastionInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      IamInstanceProfile: !Ref BastionHostProfile
+      ImageId: !If
+        - UseOSImageOverride
+        - !Ref OSImageOverride
+        - !Ref LatestAmiId
+      InstanceType: !Ref BastionInstanceType
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: gp3
+            Encrypted: true
+            DeleteOnTermination: true
+      NetworkInterfaces: !If
+        - UsePublicIPv4Address
+        - - AssociatePublicIpAddress: true
+            DeviceIndex: 0
+            SubnetId: !Ref PublicSubnetId
+        - - AssociatePublicIpAddress: false
+            DeviceIndex: 0
+            SubnetId: !Ref PublicSubnetId
+      UserData:
+        Fn::Base64:
+          Fn::Sub: |
+            #!/bin/bash
+            # Script to delete the stack after x hours
+            touch /etc/profile.d/load_env.log
+            cat > /etc/profile.d/load_env.sh << 'EOF'
+            #!/bin/bash
+            export ACCOUNT_ID=${AWS::AccountId}
+            export REGION=${AWS::Region}
+            export CFN_STACK_NAME=${AWS::StackName}
+            export TIME_TO_LIVE=${TimeToLive}h
+
+            if [ "${TimeToLive}" == "Do not delete the stack" ] ; then
+              echo "$(date): Stack will live forever young!"
+            else
+              echo "$(date): Self destruct will be initiated in: $TIME_TO_LIVE"
+              sleep $TIME_TO_LIVE && aws --region $REGION cloudformation delete-stack --stack-name $CFN_STACK_NAME
+            fi
+            EOF
+            nohup sh /etc/profile.d/load_env.sh >> /etc/profile.d/load_env.log 2>&1 &
+
+            # Installing packages for RDS
+            if [ "${PostgreSQLClient}" == "postgresql11" ] ; then
+              amazon-linux-extras install postgresql11 -y
+            elif [ "${PostgreSQLClient}" == "postgresql12" ] ; then
+              amazon-linux-extras install postgresql12 -y
+            elif [ "${PostgreSQLClient}" == "postgresql13" ] ; then
+              amazon-linux-extras install postgresql13 -y
+            else
+              amazon-linux-extras install postgresql14 -y
+            fi
+
+            # Installing packages for ElastiCache Redis
+            amazon-linux-extras  install redis6 -y
+
+      Tags:
+        - Key: Name
+          Value: !Ref BastionHostName
+        - Key: cfn_stack_name
+          Value: !Ref AWS::StackName
+        - Key: Vendor
+          Value: "Turbot HQ Inc"
+        - Key: Product
+          Value: "Turbot Bastion Host"
+        - Key: Version
+          Value: "1.2.0"
+
+Outputs:
+  BastionHostRole:
+    Description: Bastion IAM Role name
+    Value: !If
+      - CreateIAMRole
+      - !Ref BastionHostRole
+      - !Ref AlternativeIAMRole
+    Export:
+      Name: !Sub "${AWS::StackName}-BastionHostRole"
+  BastionInstance:
+    Description: Bastion Host Instance
+    Value: !Ref BastionInstance
+    Export:
+      Name: !Sub "${AWS::StackName}-BastionInstance"
+  SessionsList:
+    Description: The URL to the Session Management Console listing all instances it is aware of
+    Value: !If
+      - GovCloudAccount
+      - !Sub https://console.amazonaws-us-gov.com/systems-manager/session-manager/start-session?region=${AWS::Region}
+      - !Sub https://${AWS::Region}.console.aws.amazon.com/systems-manager/session-manager/start-session?region=${AWS::Region}
+  StartYourSession:
+    Description: The URL to the Session Management Console for this instance
+    Value: !If
+      - GovCloudAccount
+      - !Sub https://console.amazonaws-us-gov.com/systems-manager/session-manager/${BastionInstance}?region=${AWS::Region}
+      - !Sub https://${AWS::Region}.console.aws.amazon.com/systems-manager/session-manager/${BastionInstance}?region=${AWS::Region}

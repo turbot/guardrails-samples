@@ -1,3 +1,11 @@
+
+# 1.2.0 (2023-03-15)
+  - Add support for redis-cli v6.x from amazon-linux-extras.
+  - Removed EnvironmentVariables parameter from simplicity.
+
+# 1.1.2 (2022-11-28)
+  - Add support for postgresql14 client installation from amazon-linux-extras.
+
 # 1.1.1 (2021-08-30)
   - Install postgresql12 and postgresql13 clients from amazon-linux-extras.
 
