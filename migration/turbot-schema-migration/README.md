@@ -10,4 +10,4 @@ nohup ./migration.sh --region us-east-2 --turbot-schema panda --source-endpoint 
 ```
 
 * If the schema already exists in the Target database, this script will drop it before proceeding with the restore.
-* As the product evolves, more triggers will be added that could make this script obsolete, please check with the Database Team for complete list of triggers that need to be dropped before pg_dump.
+* As the product evolves, more triggers will be added that could make this script obsolete, please check with the Turbot Customer Support (help@turbot.com) for complete list of triggers that need to be dropped before pg_dump.
