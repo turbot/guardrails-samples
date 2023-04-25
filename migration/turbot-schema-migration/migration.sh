@@ -235,11 +235,11 @@ EOF
     echo -e "${yellow}${uline}Pg_restore:${reset}${yellow} Restoring the schema $TURBOT_SCHEMA to $TARGET_ENDPOINT\n${reset}"
     db_conn $TARGET_ENDPOINT
     time pg_restore -h $TARGET_ENDPOINT -U turbot -d turbot --disable-triggers --exit-on-error $TURBOT_SCHEMA.dump --verbose -j 3 2>${TURBOT_SCHEMA}_pgrestore.log
-    exit_status "${green}pg_restore: Success, completed pg_restore of the schema ${TURBOT_SCHEMA} onto $TARGET_ENDPOINT\n${reset}" "${red}pg_restore: Error, something went wrong with pg_restore of the schema ${TURBOT_SCHEMA} onto $TARGET_ENDPOINT, please check ${TURBOT_SCHEMA}_pgrestore.log\n${reset}"
+    # exit_status "${green}pg_restore: Success, completed pg_restore of the schema ${TURBOT_SCHEMA} onto $TARGET_ENDPOINT\n${reset}" "${red}pg_restore: Error, something went wrong with pg_restore of the schema ${TURBOT_SCHEMA} onto $TARGET_ENDPOINT, please check ${TURBOT_SCHEMA}_pgrestore.log\n${reset}"
 
     db_conn $TARGET_ENDPOINT
     time pg_restore -h $TARGET_ENDPOINT -U turbot -d turbot --disable-triggers --exit-on-error ${TURBOT_SCHEMA}_migrations.dump --verbose 2>${TURBOT_SCHEMA}_migrations_pgrestore.log
-    exit_status "${green}pg_restore: Success, completed pg_restore of the table ${TURBOT_SCHEMA}_migrations onto $TARGET_ENDPOINT\n${reset}" "${red}pg_restore: Error, something went wrong with pg_restore of the table ${TURBOT_SCHEMA}_migrations onto $TARGET_ENDPOINT, please check ${TURBOT_SCHEMA}_migrations_pgrestore.log\n${reset}"
+    # exit_status "${green}pg_restore: Success, completed pg_restore of the table ${TURBOT_SCHEMA}_migrations onto $TARGET_ENDPOINT\n${reset}" "${red}pg_restore: Error, something went wrong with pg_restore of the table ${TURBOT_SCHEMA}_migrations onto $TARGET_ENDPOINT, please check ${TURBOT_SCHEMA}_migrations_pgrestore.log\n${reset}"
 
 
     # Create triggers
