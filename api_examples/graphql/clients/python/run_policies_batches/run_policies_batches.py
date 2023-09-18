@@ -1,7 +1,6 @@
 import click
 import turbot
 from sgqlc.endpoint.http import HTTPEndpoint
-import pprint
 import time
 
 
