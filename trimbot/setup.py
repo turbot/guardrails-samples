@@ -15,8 +15,8 @@ setup(
         'jsonschema==3.2.0',
         'PyYAML==5.4.1',
         'boto3==1.18.55',
+        "urllib3==1.26.18"
         "requests==2.31.0",
-        "urllib3==1.26.7"
     ],
     packages=['trimbot_modules'],
     entry_points='''
