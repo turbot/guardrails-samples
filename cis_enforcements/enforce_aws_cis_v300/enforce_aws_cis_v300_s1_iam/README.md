@@ -9,7 +9,7 @@ mod_dependencies:
   - "@turbot/aws-iam"
 ---
 
-# AWS CIS v3.0.0 - Section 1 - IAM
+# Enforce AWS CIS v3.0.0 - Section 1 - IAM
 
 Automate enforcement of CIS benchmark best practices using Turbot Guardrails.
 
