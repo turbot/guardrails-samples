@@ -30,19 +30,19 @@ terrafrom apply
 ```
 
 ## Check Mode
-Be default all enforcement controls in this section are set to `Check Mode`. Each policy setting that has an enforcement option will have a corresponding enforcement setting that is commented out. 
+The default setting for all enforcement controls in this section are set to `Check Mode`. Each policy setting that has an enforcement option will have a corresponding enforcement setting that is commented out. These can easily be found by searching in a given file for `Enforce:`.
 
 ## How to use
 
 1. Create the smart folder (with check mode settings) in your workspace.
 1. Attach the smart folder to your account(s)
-  * Navigate to the AWS account in Guardrails.
-  * Click on the `Detail` subtab.
-  * On the right side of the screen select `MANAGE` in the `Smart Folders` section of the UI.
-  * Click `+ Add` 
-  * Select the current smart folder from the list.
-    > NOTE: While you can have multiple smart folders attached to the same resource, you can only attach/detach one smart folder at a time.
-  * Choose `Save`
+    * Navigate to the AWS account in Guardrails.
+    * Click on the `Detail` subtab.
+    * On the right side of the screen select `MANAGE` in the `Smart Folders` section of the UI.
+    * Click `+ Add` 
+    * Select the current smart folder from the list.
+      > NOTE: While you can have multiple smart folders attached to the same resource, you can only attach/detach one smart folder at a time.
+    * Choose `Save`
 1. Once applied, check that all applicable controls are in OK state.
 1. If any controls are in Alarm, determine if having Guardrails enforce those controls would cause any disruption to the applications running in your account.
 1. Once all alarms have been resolved or you have decided to allow Guardrails to enforce the controls, update the Terraform source from `Check` to `Enforce` see below.
