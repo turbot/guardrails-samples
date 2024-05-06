@@ -25,7 +25,7 @@ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
 Install:
 ```sh
 terraform init
-terraform check
+terraform plan
 terrafrom apply
 ```
 
