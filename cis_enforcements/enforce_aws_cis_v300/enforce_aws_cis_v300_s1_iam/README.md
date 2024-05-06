@@ -3,10 +3,10 @@ benchmark: AWS CIS v3.0.0
 section_number: 1
 section_name: IAM
 cis_description: "This section contains recommendations for configuring identity and access management related options."
-icon: aws.svg
+icon: "aws.svg"
 mod_dependencies:
-  - @turbot/aws
-  - @turbot/aws-iam
+  - "@turbot/aws"
+  - "@turbot/aws-iam"
 ---
 
 # AWS CIS v3.0.0 - Section 1 - IAM
