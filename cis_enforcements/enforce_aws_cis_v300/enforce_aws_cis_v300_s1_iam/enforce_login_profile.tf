@@ -1,10 +1,5 @@
 # AWS > IAM > User > Login Profile 
 resource "turbot_policy_setting" "aws_iam_user_login_profile" {
-  note           = <<-EOT
-    AWS CIS v3.0.0 - Section 1 - IAM: |
-      1.10 Ensure multi-factor authentication (MFA) is enabled for all IAM users that have a console password. |
-      1.11 Do not setup access keys during initial user setup for all IAM users that have a console password.
-    EOT
   resource       = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type           = "tmod:@turbot/aws-iam#/policy/types/userLoginProfile"
   template_input = <<-EOT
@@ -57,4 +52,5 @@ resource "turbot_policy_setting" "aws_iam_user_login_profile" {
       Skip
     {%- endif -%}
     EOT
+  note     = "AWS CIS v3.0.0 - Controls: 1.10 & 1.11"
 }
