@@ -26,9 +26,7 @@ Verify Prerequisites:
 - Turbot Guardrails Workspace:
     ```sh
     $ turbot graphql --query '{policyValues(filter: "policyTypeId:tmod:@turbot/turbot#/policy/types/workspaceVersion,tmod:@turbot/turbot#/policy/types/workspaceUrl level:self") {items {value type {title}}}}' --profile my-workspace-profile
-    policyValues:
-      items:
-        - value: 'https://demo-turbot.cloud.turbot-dev.com/apollo'
+        - value: 'https://dunder-mifflin.cloud.turbot.com/'
           type:
             title: Workspace URL
         - value: 5.42.23
@@ -59,8 +57,8 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
 Install the Smart Folder into your workspace with Terraform:
 ```sh
 $ terraform init
-$ terraform plan
-$ terrafrom apply
+$ terraform plan -var guardrails_profile="my-workspace-profile"
+$ terrafrom apply -var guardrails_profile="my-workspace-profile"
 ```
 
 > [!CAUTION]
