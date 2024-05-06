@@ -1,4 +1,4 @@
-## AWS > IAM > User > Policy Attachments > Approved
+# AWS > IAM > User > Policy Attachments > Approved
 resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved" {
   note     = <<-EOT
     AWS CIS v3.0.0 - Section 1 - IAM: |
@@ -10,7 +10,7 @@ resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved" {
   # value    = "Enforce: Delete unapproved"
 }
 
-## AWS > IAM > User > Policy Attachments > Approved > Rules
+# AWS > IAM > User > Policy Attachments > Approved > Rules
 resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved_rules" {
   note     = <<-EOT
     AWS CIS v3.0.0 - Section 1 - IAM: |
@@ -21,7 +21,7 @@ resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved_rules
   value    = "REJECT *"
 }
 
-## AWS > IAM > User > Inline Policy > Approved
+# AWS > IAM > User > Inline Policy > Approved
 resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved" {
   note     = <<-EOT
     AWS CIS v3.0.0 - Section 1 - IAM: |
@@ -34,7 +34,7 @@ resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-## AWS > IAM > User > Inline Policy > Approved > Usage
+# AWS > IAM > User > Inline Policy > Approved > Usage
 resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved_usage" {
   note     = <<-EOT
     AWS CIS v3.0.0 - Section 1 - IAM: |

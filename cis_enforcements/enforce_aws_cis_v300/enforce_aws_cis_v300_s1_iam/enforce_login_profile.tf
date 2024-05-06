@@ -52,9 +52,9 @@ resource "turbot_policy_setting" "aws_iam_user_login_profile" {
     {%- endfor -%}
     {# Result #}
     {%- if (not has_mfa) or has_key -%}
-      '{{$.value}}'
+      {{ $.value | json }}
     {%- else -%}
-      'Skip'
+      Skip
     {%- endif -%}
     EOT
 }

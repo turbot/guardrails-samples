@@ -23,7 +23,7 @@ resource "turbot_policy_setting" "aws_iam_account_password_policy_settings_minim
   value    = 14
 }
 
-## AWS > IAM > Account Password Policy > Settings > Reuse Prevention
+# AWS > IAM > Account Password Policy > Settings > Reuse Prevention
 resource "turbot_policy_setting" "aws_iam_account_password_policy_settings_reuse_prevention" {
   note     = <<-EOT
     AWS CIS v3.0.0 - Section 1 - IAM: |
