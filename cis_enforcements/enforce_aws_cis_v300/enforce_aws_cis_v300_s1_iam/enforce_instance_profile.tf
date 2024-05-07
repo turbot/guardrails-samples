@@ -1,0 +1,15 @@
+resource turbot_policy_setting "aws_ec2_instance_instance_profile" {
+  resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
+  type = "tmod:@turbot/aws-ec2#/policy/types/instanceProfile"
+  value = "Check: Instance profile attached"
+  #   value = "Check: Instance Profile > Name attached"
+  #   value = "Enforce: Attach Instance Profile > Name"
+  note = "AWS CIS v3.0.0 AWS CIS v3.0.0 - Controls: 1.18"
+}
+
+resource turbot_policy_setting "aws_ec2_instance_instance_profile" {
+  resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
+  type = "tmod:@turbot/aws-ec2#/policy/types/instanceProfile"
+  value = var.ec2_instance_profile
+  note = "AWS CIS v3.0.0 AWS CIS v3.0.0 - Controls: 1.18"
+}
