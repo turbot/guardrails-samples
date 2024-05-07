@@ -16,5 +16,5 @@ variable "guardrails_profile" {
 
 variable "ec2_instance_profile" {
   description = "EC2 Instance Profile name; not the full ARN for the IAM role."
-  type = string
+  type        = string
 }
