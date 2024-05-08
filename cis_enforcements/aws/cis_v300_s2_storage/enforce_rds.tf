@@ -4,6 +4,9 @@ resource "turbot_policy_setting" "aws_rds_db_instance_approved" {
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.3.1"
   value    = "Check: Approved"
+  # value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Stop unapproved if new"
+  # value    = "Enforce: Snapshot and delete unapproved if new"
 }
 
 # AWS > RDS > DB Instance > Approved > Usage
@@ -28,6 +31,7 @@ resource "turbot_policy_setting" "aws_rds_db_instance_auto_minor_version_upgrade
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceAutoMinorVersionUpgrade"
   note     = "AWS CIS v3.0.0 - Control: 2.3.2"
   value    = "Check: Enabled"
+  # value    = "Enforce: Enabled"
 }
 
 # AWS > RDS > DB Instance > Publicly Accessible
@@ -36,5 +40,6 @@ resource "turbot_policy_setting" "aws_rds_db_instance_publicly_accessible" {
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstancePubliclyAccessible"
   note     = "AWS CIS v3.0.0 - Control: 2.3.3"
   value    = "Check: DB Instance is not publicly accessible"
+  # value    = "Enforce: DB Instance is not publicly accessible"
 }
 
