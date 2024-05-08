@@ -2,6 +2,7 @@
 resource "turbot_policy_setting" "aws_iam_user_login_profile" {
   resource       = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type           = "tmod:@turbot/aws-iam#/policy/types/userLoginProfile"
+  note           = "AWS CIS v3.0.0 - Controls: 1.10 & 1.11"
   template_input = <<-EOT
     {
       value: constant(value: "Check: Login profile enabled")
@@ -52,5 +53,4 @@ resource "turbot_policy_setting" "aws_iam_user_login_profile" {
       Skip
     {%- endif -%}
     EOT
-  note     = "AWS CIS v3.0.0 - Controls: 1.10 & 1.11"
 }
