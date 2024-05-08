@@ -13,7 +13,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_last_modified" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveLastModified"
   value    = "Force active if last modified <= 7 days"
-  note     = "Prevent's newly created access keys from being deleted for not having been used recently."
+  note     = "Prevents newly created access keys from being deleted for not having been used recently."
 }
 
 # AWS > IAM > Access Key > Active > Recently Used
