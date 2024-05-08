@@ -7,10 +7,15 @@ terraform {
 }
 
 provider "turbot" {
-  profile = var.guardrails_profile
 }
 
-variable "guardrails_profile" {
-  description = "Enter profile matching your turbot cli credentials."
+variable "logging_bucket" {
+  type        = string
+  description = "The name of an S3 bucket to which the Guardrails Trail will be delivered. If not provided, Turbot will create one."
+  default     = ""
 }
 
+variable "encryption_key" {
+  type        = string
+  description = "The ARN of the KMS key that encrypts the logs delivered by CloudTrail."
+}

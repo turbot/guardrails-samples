@@ -1,3 +1,4 @@
+# Smart Folder
 resource "turbot_smart_folder" "aws_cis_v300_s3_logging" {
   parent      = "tmod:@turbot/turbot#/"
   title       = "AWS CIS v3.0.0 - Section 3 - Logging"
