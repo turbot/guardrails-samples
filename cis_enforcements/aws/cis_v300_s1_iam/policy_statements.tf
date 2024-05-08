@@ -32,7 +32,7 @@ resource "turbot_policy_setting" "aws_iam_group_inline_policy_statements_approve
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws-iam#/policy/types/groupInlinePolicyStatementsApprovedAdminAccess"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
-  value    = "Disabled: Disallow Administrator Access ('*:*') policies" 
+  value    = "Disabled: Disallow Administrator Access ('*:*') policies"
 }
 
 # AWS > IAM > User > Inline Policy > Statements > Approved
