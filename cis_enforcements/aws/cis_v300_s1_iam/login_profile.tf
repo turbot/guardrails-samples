@@ -6,7 +6,7 @@ resource "turbot_policy_setting" "aws_iam_user_login_profile" {
   template_input = <<-EOT
     {
       value: constant(value: "Check: Login profile enabled")
-      #value: constant(value: "Enforce: Delete login profile")
+      # value: constant(value: "Enforce: Delete login profile")
       user {
         children(filter:[
             "resourceTypeId:'tmod:@turbot/aws-iam#/resource/types/accessKey'",
