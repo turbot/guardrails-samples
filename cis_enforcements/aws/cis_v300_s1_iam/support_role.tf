@@ -13,7 +13,7 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
   resource       = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type           = "tmod:@turbot/aws-iam#/policy/types/iamStackSource"
   note           = "AWS CIS v3.0.0 - Controls:  1.17"
-  template_input = <<EOT
+  template_input = <<-EOT
   {
     account  {
       Id
@@ -21,7 +21,7 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
     }
   }
   EOT
-  template       = <<EOT
+  template       = <<-EOT
   |
   resource "aws_iam_role" "aws_support_role" {
     name = "AWSSupportRole"
@@ -46,9 +46,9 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
 
 # AWS > IAM > Stack > Terraform Version
 resource "turbot_policy_setting" "aws_iam_iam_stack_terraform_version" {
-  resource = "320670689088314"
+  # The `jsonencode()` function is not supported in Terraform 0.11.*.  Run with 0.15.* instead.
+  resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws-iam#/policy/types/iamStackTerraformVersion"
   note     = "AWS CIS v3.0.0 - Controls:  1.17"
-  # The `jsonencode()` function is not supported in Terraform 0.11.*.  Run with 0.15.* instead.
-  value = "0.15.*"
+  value    = "0.15.*"
 }
