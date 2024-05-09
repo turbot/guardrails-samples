@@ -4,7 +4,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_access_logging" {
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketAccessLogging"
   note     = "AWS CIS v3.0.0 - Controls: 3.04"
   value    = "Check: Enabled to Access Logging > Bucket"
-  # value = "Enforce: Enabled to Access Logging > Bucket"
+  # value    = "Enforce: Enabled to Access Logging > Bucket"
 }
 
 # AWS > S3 > Bucket > Access Logging > Bucket
@@ -13,11 +13,15 @@ resource "turbot_policy_setting" "aws_s3_bucket_access_logging_bucket" {
   type           = "tmod:@turbot/aws-s3#/policy/types/bucketAccessLoggingBucket"
   note           = "AWS CIS v3.0.0 - Controls: 3.04"
   template_input = var.logging_bucket != "" ? null : <<-EOT
-{
-  turbotLoggingBucket: policy(uri: "aws#/policy/types/loggingBucketDefault")
-}
-EOT
+    {
+      turbotLoggingBucket: policy(uri: "aws#/policy/types/loggingBucketDefault")
+    }
+    EOT
   template       = var.logging_bucket != "" ? var.logging_bucket : <<-EOT
-{% if $.turbotLoggingBucket %}"{{ $.turbotLoggingBucket }}"{% else %}""{% endif %}
-EOT
+    {% if $.turbotLoggingBucket %}
+    {{ $.turbotLoggingBucket | json }}
+    {% else %}
+    ""
+    {% endif %}
+    EOT
 }

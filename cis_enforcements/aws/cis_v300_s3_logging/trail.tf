@@ -37,13 +37,17 @@ resource "turbot_policy_setting" "aws_trail_bucket" {
   type           = "tmod:@turbot/aws#/policy/types/trailBucket"
   note           = "AWS CIS v3.0.0 - Controls: 3.01"
   template_input = var.logging_bucket != "" ? null : <<-EOT
-{
-  turbotLoggingBucket: policy(uri: "aws#/policy/types/loggingBucketDefault")
-}
-EOT
+    {
+      turbotLoggingBucket: policy(uri: "aws#/policy/types/loggingBucketDefault")
+    }
+    EOT
   template       = var.logging_bucket != "" ? var.logging_bucket : <<-EOT
-{% if $.turbotLoggingBucket %}"{{ $.turbotLoggingBucket }}"{% else %}""{% endif %}
-EOT
+    {% if $.turbotLoggingBucket %}
+    {{ $.turbotLoggingBucket | json }}
+    {% else %}
+    ""
+    {% endif %}
+    EOT
 }
 
 # AWS > Turbot > Logging > Bucket
@@ -52,7 +56,7 @@ resource "turbot_policy_setting" "aws_logging_bucket" {
   type     = "tmod:@turbot/aws#/policy/types/loggingBucket"
   note     = "AWS CIS v3.0.0 - Controls: 3.01"
   value    = "Check: Configured"
-  # value = "Enforce: Configured"
+  # value    = "Enforce: Configured"
 }
 
 # AWS > Turbot > Logging > Bucket > Encryption in Transit
@@ -69,15 +73,15 @@ resource "turbot_policy_setting" "aws_trail_event_selectors" {
   type     = "tmod:@turbot/aws#/policy/types/trailEventSelectors"
   note     = "AWS CIS v3.0.0 - Controls: 3.01 & 3.08 & 3.09"
   value    = <<-EOT
-event_selector {
-  read_write_type           = "All"
-  include_management_events = true
-  data_resource {
-    type   = "AWS::S3::Object"
-    values = ["arn:aws:s3"]
-  }
-}
-EOT
+    event_selector {
+      read_write_type           = "All"
+      include_management_events = true
+      data_resource {
+        type   = "AWS::S3::Object"
+        values = ["arn:aws:s3"]
+      }
+    }
+    EOT
 }
 
 # AWS > CloudTrail > Trail > Log File Validation
@@ -86,8 +90,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_log_file_validation" {
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailLogFileValidation"
   note     = "AWS CIS v3.0.0 - Controls: 3.02"
   value    = "Check: Enabled"
-  # value = "Enforce: Enabled"
-
+  # value    = "Enforce: Enabled"
 }
 
 # AWS > CloudTrail > Trail > Encryption at Rest
@@ -96,7 +99,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRest"
   note     = "AWS CIS v3.0.0 - Controls: 3.05"
   value    = "Check: Encryption at Rest > Customer Managed Key"
-  # value = "Enforce: Encryption at Rest > Customer Managed Key"
+  # value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
 
 # AWS > CloudTrail > Trail > Encryption at Rest > Customer Managed Key
