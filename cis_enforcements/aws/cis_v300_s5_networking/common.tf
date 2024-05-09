@@ -1,3 +1,4 @@
+# Smart Folder
 resource "turbot_smart_folder" "aws_cis_v300_s5_networking" {
   parent      = "tmod:@turbot/turbot#/"
   title       = "AWS CIS v3.0.0 - Section 5 - Networking"
