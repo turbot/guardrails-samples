@@ -14,34 +14,34 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
   type           = "tmod:@turbot/aws-iam#/policy/types/iamStackSource"
   note           = "AWS CIS v3.0.0 - Controls:  1.17"
   template_input = <<-EOT
-  {
-    account  {
-      Id
-      metadata
+    {
+      account  {
+        Id
+        metadata
+      }
     }
-  }
-  EOT
+    EOT
   template       = <<-EOT
-  |
-  resource "aws_iam_role" "aws_support_role" {
-    name = "AWSSupportRole"
-    managed_policy_arns = [
-      "arn:aws:iam::aws:policy/AWSSupportAccess"
-    ]
-    assume_role_policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Action = "sts:AssumeRole"
-          Effect = "Allow"
-          Principal = {
-              "AWS": "arn:{{ $.account.metadata.aws.partition }}:::{{ $.account.Id }}:root"
-          }
-        },
+    |
+    resource "aws_iam_role" "aws_support_role" {
+      name = "AWSSupportRole"
+      managed_policy_arns = [
+        "arn:aws:iam::aws:policy/AWSSupportAccess"
       ]
-    })
-  }
-  EOT
+      assume_role_policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [
+          {
+            Action = "sts:AssumeRole"
+            Effect = "Allow"
+            Principal = {
+                "AWS": "arn:{{ $.account.metadata.aws.partition }}:::{{ $.account.Id }}:root"
+            }
+          },
+        ]
+      })
+    }
+    EOT
 }
 
 # AWS > IAM > Stack > Terraform Version
