@@ -15,7 +15,8 @@ variable "logging_bucket" {
   default     = ""
 }
 
-variable "encryption_key" {
+variable "kms_key_alias" {
   type        = string
-  description = "The ARN of the KMS key that encrypts the logs delivered by CloudTrail."
+  description = "The Alias of the KMS key that encrypts the logs delivered by CloudTrail."
+  default     = "alias/turbot/default"
 }

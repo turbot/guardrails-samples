@@ -25,10 +25,28 @@ resource "turbot_policy_setting" "aws_trail_type" {
 
 # AWS > Turbot > Audit Trail > CloudTrail > Trail > Encryption Key 
 resource "turbot_policy_setting" "aws_trail_encryption_key" {
-  resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
-  type     = "tmod:@turbot/aws#/policy/types/trailEncryptionKey"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01"
-  value    = var.encryption_key
+  resource       = turbot_smart_folder.aws_cis_v300_s3_logging.id
+  type           = "tmod:@turbot/aws#/policy/types/trailEncryptionKey"
+  note           = "AWS CIS v3.0.0 - Controls: 3.01"
+  template_input = <<-EOT
+    {
+      resource {
+        children(filter: "resourceTypeId:tmod:@turbot/aws-kms#/resource/types/key level:self,descendant limit:5000") {
+          items {
+            AliasName: get(path: "AliasName")
+            KeyArn: get(path: "KeyArn")
+          }
+        }
+      }
+    }
+    EOT
+  template       = <<-EOT
+    {%  for key in $.resource.children.items %}
+      {%- if key.AliasName == "${var.kms_key_alias}" -%}
+        {{ key.KeyArn | json }}
+      {%- endif -%}
+    {% endfor %}
+    EOT
 }
 
 # AWS > Turbot > Audit Trail > CloudTrail > Trail > S3 Bucket
@@ -43,7 +61,7 @@ resource "turbot_policy_setting" "aws_trail_bucket" {
     EOT
   template       = var.logging_bucket != "" ? var.logging_bucket : <<-EOT
     {% if $.turbotLoggingBucket %}
-    {{ $.turbotLoggingBucket | json }}
+      {{ $.turbotLoggingBucket | json }}
     {% else %}
     ""
     {% endif %}
@@ -103,11 +121,13 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
 }
 
 # AWS > CloudTrail > Trail > Encryption at Rest > Customer Managed Key
-# The KMS key must have a key policy set to grant encrypt permission.
+# Ensure the CMK is located in the same region as the S3 bucket
+# You will need to apply a KMS Key policy on the selected CMK in order for CloudTrail as a service
+# to encrypt and decrypt log files using the CMK provided.
 # Reference: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-kms-key-policy-for-cloudtrail.html
 resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest_customer_managed_key" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRestCustomerManagedKey"
   note     = "AWS CIS v3.0.0 - Controls: 3.05"
-  value    = var.encryption_key
+  value    = var.kms_key_alias
 }

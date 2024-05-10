@@ -39,8 +39,8 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s3_logging
     ```
 
     ```hcl
-    # AWS KMS Key ARN for encryption of the logs delivered by CloudTrail.
-    encryption_key = "arn:aws:kms:us-east-1:123456789012:key/0e933fef-e757-4b66-a28e-9f7bf4a126cf"
+    # AWS KMS Key Alias name for encryption of the logs delivered by CloudTrail.
+    kms_key_alias = "alias/turbot/default"
 
     # AWS S3 Logging Bucket
     logging_bucket = "aws-cloudtrail-logs-123456789012-830c8976"
