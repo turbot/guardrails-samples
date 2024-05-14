@@ -13,7 +13,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_enabled" {
 }
 
 # AWS > CloudWatch > Enabled
-resource "turbot_policy_setting" "aws_cloudtrail_enabled" {
+resource "turbot_policy_setting" "aws_cloudwatch_enabled" {
   resource = turbot_smart_folder.aws_cis_v300_s4_monitoring.id
   type     = "tmod:@turbot/aws-cloudwatch#/policy/types/cloudWatchEnabled"
   value    = "Enabled"
