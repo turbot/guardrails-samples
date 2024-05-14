@@ -32,6 +32,7 @@ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s2_storage
 ## How to use
 
 1. __Create the Smart Folder in your workspace__:
+
     ```sh
     terraform init
     export TURBOT_PROFILE="my-workspace"

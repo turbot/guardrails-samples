@@ -29,12 +29,14 @@ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
 ## How to use
 
 1. __Create the Smart Folder in your workspace__:
+
     ```sh
     terraform init
     export TURBOT_PROFILE="my-workspace"
     terraform plan 
     terrafrom apply
     ```
+
 1. __Attach the Smart Folder to your test account__: Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#). Select the account from the list for testing. Click on the "Detail" subtab and look for the "Smart Folders" widget in the bottom right of the page. Select the "MANAGE" link and `+ Add` the `AWS CIS v3.0.0 - Section 1 - IAM` Smart Folder from the dropdown menu, then select "Save".
     > [!IMPORTANT]
     > Do not add or remove more than one Smart Folder to a resource at a time.  Adding Smart Folders is an asyncronous operation, after changing the Smart Folder configuration for a resource, wait at least 5 minutes before adding or removing other Smart Folders.
