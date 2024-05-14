@@ -1,5 +1,5 @@
 # AWS > EC2 > Instance > Instance Profile
-resource turbot_policy_setting "aws_ec2_instance_instance_profile" {
+resource "turbot_policy_setting" "aws_ec2_instance_instance_profile" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceProfile"
   note     = "AWS CIS v3.0.0 - Controls: 1.18"
@@ -9,7 +9,7 @@ resource turbot_policy_setting "aws_ec2_instance_instance_profile" {
 }
 
 # AWS > EC2 > Instance > Instance Profile > Name
-resource turbot_policy_setting "aws_ec2_instance_instance_profile_role_name" {
+resource "turbot_policy_setting" "aws_ec2_instance_instance_profile_role_name" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceProfileName"
   note     = "AWS CIS v3.0.0 - Controls: 1.18"
