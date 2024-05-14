@@ -18,12 +18,14 @@ Automate enforcement of CIS benchmark best practices using Turbot Guardrails.
 The Terraform stack defined in this section will create a Guardrails Smart Folder, containing specific policy examples, to automate enforcement controls aligned to the [CIS Amazon Web Services Foundations Benchmark](#).
 
 ## Installation
+
 Installing this Smart Folder requires [admin credentials to a Turbot Guardrails workspace](#), the [`@turbot/aws-cisv3-0`](#) mod (with all of it's dependencies) installed and [a way to run Terraform](#).
 
 Clone the repo locally:
+
 ```sh
-$ git clone https://github.com/turbot/guardrails-samples.git
-$ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s5_networking
+git clone https://github.com/turbot/guardrails-samples.git
+cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s5_networking
 ```
 
 ## How to use
@@ -51,7 +53,9 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s5_networking
       value    = "Enforce: Delete unapproved"
     }
     ```
+
     Then re-apply the Terraform stack:
+
     ```sh
     terraform plan 
     terrafrom apply

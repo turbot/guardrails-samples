@@ -16,12 +16,14 @@ Automate enforcement of CIS benchmark best practices using Turbot Guardrails.
 The Terraform stack defined in this section will create a Guardrails Smart Folder, containing specific policy examples, to automate enforcement controls aligned to the [CIS Amazon Web Services Foundations Benchmark](#).
 
 ## Installation
+
 Installing this Smart Folder requires [admin credentials to a Turbot Guardrails workspace](#), the [`@turbot/aws-cisv3-0`](#) mod (with all of it's dependencies) installed and [a way to run Terraform](#).
 
 Clone the repo locally:
+
 ```sh
-$ git clone https://github.com/turbot/guardrails-samples.git
-$ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
+git clone https://github.com/turbot/guardrails-samples.git
+cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
 ```
 
 ## How to use
@@ -38,7 +40,7 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
     > Do not add or remove more than one Smart Folder to a resource at a time.  Adding Smart Folders is an asyncronous operation, after changing the Smart Folder configuration for a resource, wait at least 5 minutes before adding or removing other Smart Folders.
 
 1. __Verify state (`OK`, `Alarm`, `Error`) of associated controls__: Within the Guardrails UI navigate to [{workspace-url}/apollo/reports/controls-by-resource?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-iam%23%2Fresource%2Ftypes%2Fiam%27+state%3Aalarm](#). Use the "Resource" filter to select the test account where the Smart Folder is attached. Review all controls in `Alarm` state to understand why they are violating CIS control objectives.
-1. For each control type, choose to [resolve the alarms](#), [create resource exceptions](#) or to apply enforcement settings. The default setting for all controls are set to `Check: ...`. Each policy with an enforcement option will have a corresponding enforcement setting that is commented out. These can easily be found by searching across the `*.tf` files for `Enforce:`. 
+1. For each control type, choose to [resolve the alarms](#), [create resource exceptions](#) or to apply enforcement settings. The default setting for all controls are set to `Check: ...`. Each policy with an enforcement option will have a corresponding enforcement setting that is commented out. These can easily be found by searching across the `*.tf` files for `Enforce:`.
 1. To apply enforcement automation: Open the Smart Folder Terraform source files in your code editor. Toggle individual controls between `Check` and `Enforce` by changing which line is commented out:
 
     ```hcl
@@ -49,7 +51,9 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s1_iam
       value    = "Enforce: Delete unapproved"
     }
     ```
+
     Then re-apply the Terraform stack:
+
     ```sh
     terraform plan 
     terrafrom apply

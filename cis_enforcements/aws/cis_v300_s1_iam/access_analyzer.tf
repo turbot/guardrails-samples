@@ -1,5 +1,5 @@
 # AWS > Region > Stack > Source
-resource turbot_policy_setting "aws_iam_regional_access_analyzer" {
+resource "turbot_policy_setting" "aws_iam_regional_access_analyzer" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws#/policy/types/regionStack"
   note     = "AWS CIS v3.0.0 - Controls: 1.20"
@@ -8,7 +8,7 @@ resource turbot_policy_setting "aws_iam_regional_access_analyzer" {
 }
 
 # AWS > Region > Stack > Source
-resource turbot_policy_setting "aws_iam_regional_access_analyzer_source" {
+resource "turbot_policy_setting" "aws_iam_regional_access_analyzer_source" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws#/policy/types/regionStackSource"
   note     = "AWS CIS v3.0.0 - Controls: 1.20"

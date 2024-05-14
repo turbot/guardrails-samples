@@ -2,7 +2,7 @@
 
 Welcome to the repository containing a collection of examples designed to enforce compliance with the AWS CIS 3.0 benchmark using Turbot Guardrails.
 
-## Go beyond reporting with Guardrails
+## Go beyond reporting with Guardrails.
 
 Turbot Guardrails is the leading platform to automate the enforcement of compliance, security, and operational controls for large organizations leveraging public cloud infrastructure, such as AWS.
 
