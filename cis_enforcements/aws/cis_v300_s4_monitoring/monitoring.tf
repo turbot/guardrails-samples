@@ -4,7 +4,7 @@
 resource "turbot_policy_setting" "aws_region_stack" {
   resource = turbot_smart_folder.aws_cis_v300_s4_monitoring.id
   type     = "tmod:@turbot/aws#/policy/types/regionStack"
-  note     = "AWS CIS v3.0.0 - Controls:  4.01, 4.02, 4.03, 4.04, 4.05, 4.06, 4.07, 4.08, 4.09, 4.10, 4.11, 4.12, 4.13, 4.14, 4,15, 4,16"
+  note     = "AWS CIS v3.0.0 - Controls:  4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 4.14, 4,15, 4,16"
   value    = "Check: Configured"
   # value    = "Enforce: Configured"
 
@@ -14,7 +14,7 @@ resource "turbot_policy_setting" "aws_region_stack" {
 resource "turbot_policy_setting" "aws_region_stack_source" {
   resource       = turbot_smart_folder.aws_cis_v300_s4_monitoring.id
   type           = "tmod:@turbot/aws#/policy/types/regionStackSource"
-  note           = "AWS CIS v3.0.0 - Controls:  4.01, 4.02, 4.03, 4.04, 4.05, 4.06, 4.07, 4.08, 4.09, 4.10, 4.11, 4.12, 4.13, 4.14, 4,15, 4,16"
+  note           = "AWS CIS v3.0.0 - Controls:  4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 4.14, 4,15, 4,16"
   template_input = <<-EOT
     {
       region  {
@@ -419,6 +419,6 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
 resource "turbot_policy_setting" "aws_region_stack_terraform_version" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws#/policy/types/regionStackTerraformVersion"
-  note     = "AWS CIS v3.0.0 - Controls:  4.01, 4.02, 4.03, 4.04, 4.05, 4.06, 4.07, 4.08, 4.09, 4.10, 4.11, 4.12, 4.13, 4.14, 4,15, 4,16"
+  note     = "AWS CIS v3.0.0 - Controls:  4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 4.14, 4,15, 4,16"
   value    = "0.15.*"
 }
