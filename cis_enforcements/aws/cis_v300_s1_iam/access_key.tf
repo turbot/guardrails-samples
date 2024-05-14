@@ -20,7 +20,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_recently_used" {
   resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveRecentlyUsed"
   note     = "AWS CIS v3.0.0 - Controls: 1.12"
-  value    = "Force active if recently used <= 30 days"  
+  value    = "Force active if recently used <= 30 days"
 }
 
 # AWS > IAM > Access Key > Active > Latest
