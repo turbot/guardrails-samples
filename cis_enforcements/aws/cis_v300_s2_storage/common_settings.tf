@@ -22,7 +22,7 @@ resource "turbot_policy_setting" "aws_ec2_enabled" {
 # AWS > RDS > Enabled
 resource "turbot_policy_setting" "aws_rds_enabled" {
   resource = turbot_smart_folder.aws_cis_v300_s2_storage.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/rdsEnabled"
+  type     = "tmod:@turbot/aws-rds#/policy/types/rdsEnabled"
   value    = "Enabled"
 }
 

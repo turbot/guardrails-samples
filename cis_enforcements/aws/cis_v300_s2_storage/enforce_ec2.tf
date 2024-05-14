@@ -19,7 +19,7 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved" {
 
 # AWS > EC2 > Volume > Approved > Usage
 resource "turbot_policy_setting" "aws_ec2_volume_approved_usage" {
-  resource = turbot_smart_folder.aws_cis_v_300_s_2_storage.id
+  resource = turbot_smart_folder.aws_cis_v300_s2_storage.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApprovedUsage"
   value    = "Approved"
 }
