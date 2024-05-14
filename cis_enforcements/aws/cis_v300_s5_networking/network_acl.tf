@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved" {
 resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved_rules" {
   resource = turbot_smart_folder.aws_cis_v300_s5_networking.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/networkAclIngressRulesApprovedRules"
-  note     = "AWS CIS v3.0.0 - Controls: 5.1"  
+  note     = "AWS CIS v3.0.0 - Controls: 5.1"
   value    = <<-EOT
     # Reject port range sizes -1 (all traffic)
     REJECT \
