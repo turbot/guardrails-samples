@@ -23,8 +23,13 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_recently_used" {
   value    = "Force active if recently used <= 30 days"
 }
 
-# TODO - Need AWS > IAM > Access Key > Approved
-# 1.13 Ensure there is only one active access key available for any single
+# AWS > IAM > Access Key > Active > Latest
+resource "turbot_policy_setting" "aws_iam_access_key_active_latest" {
+  resource = turbot_smart_folder.aws_cis_v300_s1_iam.id
+  type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveLatest"
+  note     = "AWS CIS v3.0.0 - Controls: 1.13"
+  value    = "Force inactive if not latest"
+}
 
 # AWS > IAM > Access Key > Active > Age
 resource "turbot_policy_setting" "aws_iam_access_key_active_age" {
