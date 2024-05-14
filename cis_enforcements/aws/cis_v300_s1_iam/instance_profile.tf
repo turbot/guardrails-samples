@@ -14,5 +14,5 @@ resource "turbot_policy_setting" "aws_ec2_instance_instance_profile_role_name" {
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceProfileName"
   note     = "AWS CIS v3.0.0 - Controls: 1.18"
   # EC2 Instance Profile name. Just the name not the full ARN.
-  value    = "orgDefaultInstanceProfile"
+  value = "orgDefaultInstanceProfile"
 }

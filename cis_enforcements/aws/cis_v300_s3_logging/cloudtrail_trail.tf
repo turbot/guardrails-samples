@@ -2,7 +2,7 @@
 resource "turbot_policy_setting" "aws_audit_trail" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws#/policy/types/auditTrail"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01"
+  note     = "AWS CIS v3.0.0 - Controls: 3.1"
   value    = "Check: Configured"
   # value    = "Enforce: Configured"
 }
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "aws_audit_trail" {
 resource "turbot_policy_setting" "aws_trail_global_region" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws#/policy/types/trailGlobalRegion"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01"
+  note     = "AWS CIS v3.0.0 - Controls: 3.1"
   value    = "us-east-1"
 }
 
@@ -19,7 +19,7 @@ resource "turbot_policy_setting" "aws_trail_global_region" {
 resource "turbot_policy_setting" "aws_trail_type" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws#/policy/types/trailType"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01"
+  note     = "AWS CIS v3.0.0 - Controls: 3.1"
   value    = "A multi-region trail in the `Trail > Global Region` in each account"
 }
 
@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "aws_trail_type" {
 resource "turbot_policy_setting" "aws_trail_encryption_key" {
   resource       = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type           = "tmod:@turbot/aws#/policy/types/trailEncryptionKey"
-  note           = "AWS CIS v3.0.0 - Controls: 3.01"
+  note           = "AWS CIS v3.0.0 - Controls: 3.1"
   template_input = <<-EOT
     {
       resource {
@@ -53,7 +53,7 @@ resource "turbot_policy_setting" "aws_trail_encryption_key" {
 resource "turbot_policy_setting" "aws_trail_bucket" {
   resource       = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type           = "tmod:@turbot/aws#/policy/types/trailBucket"
-  note           = "AWS CIS v3.0.0 - Controls: 3.01"
+  note           = "AWS CIS v3.0.0 - Controls: 3.1"
   template_input = var.logging_bucket != "" ? null : <<-EOT
     {
       turbotLoggingBucket: policy(uri: "aws#/policy/types/loggingBucketDefault")
@@ -72,7 +72,7 @@ resource "turbot_policy_setting" "aws_trail_bucket" {
 resource "turbot_policy_setting" "aws_logging_bucket" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws#/policy/types/loggingBucket"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01"
+  note     = "AWS CIS v3.0.0 - Controls: 3.1"
   value    = "Check: Configured"
   # value    = "Enforce: Configured"
 }
@@ -81,7 +81,7 @@ resource "turbot_policy_setting" "aws_logging_bucket" {
 resource "turbot_policy_setting" "aws_logging_bucket_encryption_in_transit" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws#/policy/types/loggingBucketEncryptionInTransit"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01"
+  note     = "AWS CIS v3.0.0 - Controls: 3.1"
   value    = "Enabled"
 }
 
@@ -89,7 +89,7 @@ resource "turbot_policy_setting" "aws_logging_bucket_encryption_in_transit" {
 resource "turbot_policy_setting" "aws_trail_event_selectors" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws#/policy/types/trailEventSelectors"
-  note     = "AWS CIS v3.0.0 - Controls: 3.01 & 3.08 & 3.09"
+  note     = "AWS CIS v3.0.0 - Controls: 3.1 & 3.8 & 3.9"
   value    = <<-EOT
     event_selector {
       read_write_type           = "All"
@@ -106,7 +106,7 @@ resource "turbot_policy_setting" "aws_trail_event_selectors" {
 resource "turbot_policy_setting" "aws_cloudtrail_trail_log_file_validation" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailLogFileValidation"
-  note     = "AWS CIS v3.0.0 - Controls: 3.02"
+  note     = "AWS CIS v3.0.0 - Controls: 3.2"
   value    = "Check: Enabled"
   # value    = "Enforce: Enabled"
 }
@@ -115,7 +115,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_log_file_validation" {
 resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRest"
-  note     = "AWS CIS v3.0.0 - Controls: 3.05"
+  note     = "AWS CIS v3.0.0 - Controls: 3.5"
   value    = "Check: Encryption at Rest > Customer Managed Key"
   # value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
@@ -128,6 +128,6 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
 resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest_customer_managed_key" {
   resource = turbot_smart_folder.aws_cis_v300_s3_logging.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRestCustomerManagedKey"
-  note     = "AWS CIS v3.0.0 - Controls: 3.05"
+  note     = "AWS CIS v3.0.0 - Controls: 3.5"
   value    = var.kms_key_alias
 }

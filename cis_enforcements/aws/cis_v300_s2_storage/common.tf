@@ -32,4 +32,3 @@ resource "turbot_policy_setting" "aws_efs_enabled" {
   type     = "tmod:@turbot/aws-efs#/policy/types/efsEnabled"
   value    = "Enabled"
 }
-

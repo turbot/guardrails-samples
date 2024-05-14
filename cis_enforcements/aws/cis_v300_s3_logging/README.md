@@ -21,12 +21,14 @@ Automate enforcement of CIS benchmark best practices using Turbot Guardrails.
 The Terraform stack defined in this section will create a Guardrails Smart Folder, containing specific policy examples, to automate enforcement controls aligned to the [CIS Amazon Web Services Foundations Benchmark](#).
 
 ## Installation
+
 Installing this Smart Folder requires [admin credentials to a Turbot Guardrails workspace](#), the [`@turbot/aws-cisv3-0`](#) mod (with all of it's dependencies) installed and [a way to run Terraform](#).
 
 Clone the repo locally:
+
 ```sh
-$ git clone https://github.com/turbot/guardrails-samples.git
-$ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s3_logging
+git clone https://github.com/turbot/guardrails-samples.git
+cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s3_logging
 ```
 
 ## How to use
@@ -47,12 +49,14 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s3_logging
     ```
 
 1. __Create the Smart Folder in your workspace__:
+
     ```sh
     terraform init
     export TURBOT_PROFILE="my-workspace"
     terraform plan 
     terrafrom apply --var-file=logging.tfvars
     ```
+
 1. __Attach the Smart Folder to your test account__: Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#). Select the account from the list for testing. Click on the "Detail" subtab and look for the "Smart Folders" widget in the bottom right of the page. Select the "MANAGE" link and `+ Add` the `AWS CIS v3.0.0 - Section 3 - Logging` Smart Folder from the dropdown menu, then select "Save".
     > [!IMPORTANT]
     > Do not add or remove more than one Smart Folder to a resource at a time.  Adding Smart Folders is an asyncronous operation, after changing the Smart Folder configuration for a resource, wait at least 5 minutes before adding or removing other Smart Folders.
@@ -69,7 +73,9 @@ $ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s3_logging
       value    = "Enforce: Delete unapproved"
     }
     ```
+
     Then re-apply the Terraform stack:
+
     ```sh
     terraform plan 
     terrafrom apply --var-file=logging.tfvars

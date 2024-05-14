@@ -42,4 +42,3 @@ resource "turbot_policy_setting" "aws_rds_db_instance_publicly_accessible" {
   value    = "Check: DB Instance is not publicly accessible"
   # value    = "Enforce: DB Instance is not publicly accessible"
 }
-
