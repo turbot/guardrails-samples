@@ -31,6 +31,27 @@ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s4_monitoring
 
 ## How to use
 
+1. __Set the variable values__:
+
+    ```sh
+    cp monitoring.tfvars.example monitoring.tfvars
+    vi monitoring.tfvars
+    ```
+
+    ```hcl
+    # Log Metric Filter name for control 4.01
+    log_metric_filter_name_4_1 = "unauthorized_api_calls_filter"
+
+    # Log Metric Alarm name for control 4.01
+    log_metric_alarm_name_4_1 = "unauthorized_api_calls_alarm"
+
+    # Log Metric Filter name for control 4.02
+    log_metric_filter_name_4_2 = "no_mfa_console_signin_filter"
+
+    # Log Metric Alarm name for control 4.02
+    log_metric_alarm_name_4_2 = "no_mfa_console_signin_alarm"
+    ```
+
 1. __Create the Smart Folder in your workspace__:
 
     ```sh
