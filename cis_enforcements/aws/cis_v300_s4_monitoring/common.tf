@@ -29,6 +29,6 @@ resource "turbot_policy_setting" "aws_logs_enabled" {
 # AWS > Security Hub > Enabled
 resource "turbot_policy_setting" "aws_security_hub_enabled" {
   resource = turbot_smart_folder.aws_cis_v300_s4_monitoring.id
-  type     = "tmod:@turbot/aws-logs#/policy/types/securityHubEnabled"
+  type     = "tmod:@turbot/aws-securityhub#/policy/types/securityHubEnabled"
   value    = "Enabled"
 }
