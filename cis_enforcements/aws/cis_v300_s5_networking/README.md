@@ -46,9 +46,9 @@ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s5_networking
 1. __Verify state (`OK`, `Alarm`, `Error`) of associated controls__: Within the Guardrails UI navigate to: 
     ```
     {workspace-url}/apollo/reports/controls-by-resource?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-vpc-core%23%2Fresource%2Ftypes%2FvpcService%27+state%3Aalarm
-    
+    ```
     and 
-    
+    ```
     {workspace-url}/apollo/reports/controls-by-resource?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-ec2%23%2Fresource%2Ftypes%2Fec2%27+state%3Aalarm
     ```
     Replace `{workspace-url}` with the FQDN of your workspace (e.g. https://company.cloud.turbot.com). Use the "Resource" filter to select the test account where the Smart Folder is attached. Review all controls in `Alarm` state to understand why they are violating CIS control objectives.
