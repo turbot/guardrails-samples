@@ -52,7 +52,6 @@ cd guardrails-samples/cis_enforcements/aws_cis_v300/aws_cis_v300_s5_networking
     {workspace-url}/apollo/reports/controls-by-resource?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-ec2%23%2Fresource%2Ftypes%2Fec2%27+state%3Aalarm
     ```
     Replace `{workspace-url}` with the FQDN of your workspace (e.g. https://company.cloud.turbot.com). Use the "Resource" filter to select the test account where the Smart Folder is attached. Review all controls in `Alarm` state to understand why they are violating CIS control objectives.
-
 1. For each control type, choose to [resolve the alarms](https://turbot.com/guardrails/docs/guides/quick-actions), [create resource exceptions](https://turbot.com/guardrails/docs/getting-started/activity-exceptions#manual-policy-exceptions) or to apply enforcement settings. The default setting for all controls are set to `Check: ...`. Each policy with an enforcement option will have a corresponding enforcement setting that is commented out. These can easily be found by searching across the `*.tf` files for `Enforce:`.
 1. To apply enforcement automation: Open the Smart Folder Terraform source files in your code editor. Toggle individual controls between `Check` and `Enforce` by changing which line is commented out:
 
