@@ -1,0 +1,68 @@
+# Description
+# -----------
+#
+# The query returns the controls which are in any of the state: error/invalid/tbd.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_controls.graphql
+#
+
+# Filter
+# ------
+#
+# state:
+#   Any controls that are in any of these states alarm/ok/tbd/skipped/error will be returned.
+#   The matching algorithm will perform a caseless compare of the akas from right to left.
+#   In example, filters the controls that are in either error, invalid or tbd state.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
+
+query ListControls {
+  controls(filter: "state:error,invalid,tbd") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      state
+      turbot {
+        id
+      }
+      type {
+        trunk {
+          items {
+            turbot {
+              title
+            }
+          }
+        }
+      }
+      resource {
+        turbot {
+          id
+        }
+        trunk {
+          items {
+            turbot {
+              title
+            }
+          }
+        }
+      }
+    }
+    paging {
+      next
+    }
+  }
+}
