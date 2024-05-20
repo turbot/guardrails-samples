@@ -1,1 +1,1 @@
-smart_folder_title = "AWS VPC Flow Log configuration"
+policy_pack_title = "Policy Pack for VPC Flow Logs"
