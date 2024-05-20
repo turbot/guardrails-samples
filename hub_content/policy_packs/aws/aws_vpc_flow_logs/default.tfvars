@@ -1,1 +1,0 @@
-policy_pack_title = "Policy Pack for VPC Flow Logs"
