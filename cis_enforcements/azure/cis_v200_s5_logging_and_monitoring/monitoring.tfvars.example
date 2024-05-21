@@ -1,0 +1,34 @@
+# Azure Monitor Action Group for Section 5.2
+monitor_action_group_name_5_2 = "azure_cis_v200_s5_2_action_group"
+monitor_action_group_email_reciever_name_5_2 = "John Doe"
+monitor_action_group_email_address_5_2 = "test@example.com"
+
+# Log Metric Alert name for control 5.2.1
+monitor_log_alert_name_5_2_1 = "create_policy_assignment_log_alert"
+
+# Log Metric Alert name for control 5.2.2
+monitor_log_alert_name_5_2_2 = "delete_policy_assignment_log_alert"
+
+# Log Metric Filter name for control 5.2.3
+monitor_log_alert_name_5_2_3 = "create_update_nsg_log_alert"
+
+# Log Metric Alert name for control 5.2.4
+monitor_log_alert_name_5_2_4 = "delete_nsg_log_alert"
+
+# Log Metric Filter name for control 5.2.5
+monitor_log_alert_name_5_2_5 = "create_update_security_solution_log_alert"
+
+# Log Metric Alert name for control 5.2.6
+monitor_log_alert_name_5_2_6 = "delete_security_solution_log_alert"
+
+# Log Metric Filter name for control 5.2.7
+monitor_log_alert_name_5_2_7 = "create_update_sql_server_firewall_rule_log_alert"
+
+# Log Metric Alert name for control 5.2.8
+monitor_log_alert_name_5_2_8 = "delete_sql_server_firewall_rule_log_alert"
+
+# Log Metric Filter name for control 5.2.9
+monitor_log_alert_name_5_2_9 = "create_update_public_ip_address_log_alert"
+
+# Log Metric Alert name for control 5.2.10
+monitor_log_alert_name_5_2_10 = "delete_public_ip_address_log_alert"
