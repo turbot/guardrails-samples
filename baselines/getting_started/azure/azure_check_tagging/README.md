@@ -1,4 +1,4 @@
-# Baseline - GCP Check Tagging
+# Baseline - Azure Check Tagging
 
 This baseline will allow you to check for adherence to the tagging templates, make sure that the Tag Templates are updated with the specific use case to validate.
 
