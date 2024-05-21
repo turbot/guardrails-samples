@@ -30,6 +30,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
     resource "azurerm_monitor_action_group" "monitor_action_group_5_2" {
       name                = var.monitor_action_group_name_5_2
       resource_group_name = ${ $.resourceGroup.metadata.azure.resourceGroupName }
+      short_name          = var.monitor_action_group_short_name_5_2
 
       email_receiver {
         name                    = var.monitor_action_group_email_reciever_name_5_2

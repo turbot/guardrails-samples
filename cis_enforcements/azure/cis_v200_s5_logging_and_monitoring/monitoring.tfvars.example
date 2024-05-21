@@ -1,5 +1,6 @@
 # Azure Monitor Action Group for Section 5.2
 monitor_action_group_name_5_2 = "azure_cis_v200_s5_2_action_group"
+monitor_action_group_short_name_5_2 = "azure_cis_v200_s5_2_action_group"
 monitor_action_group_email_reciever_name_5_2 = "John Doe"
 monitor_action_group_email_address_5_2 = "test@example.com"
 
