@@ -17,7 +17,7 @@
 
 Open the AWS Console and navigate to the Service Catalog service in the region where the TED is deployed.
 
-![AWS Console Home Page](screenshot_aws_console.png)
+<!-- ![AWS Console Home Page](screenshot_aws_console.png) -->
 
 ---
 
@@ -25,7 +25,7 @@ Open the AWS Console and navigate to the Service Catalog service in the region w
 
 Select the hamburger menu in the top left and click on `Provisioned products`.
 
-![Navigation Menu](screenshot_navigation_menu.png)
+<!-- ![Navigation Menu](screenshot_navigation_menu.png) -->
 
 ---
 
@@ -33,7 +33,7 @@ Select the hamburger menu in the top left and click on `Provisioned products`.
 
 There should be three or more provisioned products: TED product(s), a TEF product, and TE product(s). The TED is identifiable by a postfix that matches the database hive name.
 
-![Provisioned Products List](screenshot_provisioned_products_list.png)
+<!-- ![Provisioned Products List](screenshot_provisioned_products_list.png) -->
 
 ---
 
@@ -41,7 +41,7 @@ There should be three or more provisioned products: TED product(s), a TEF produc
 
 Select the TED product. Click `Actions` and then `Update`.
 
-![TED Product Details and Actions Menu](screenshot_ted_product_details.png)
+<!-- ![TED Product Details and Actions Menu](screenshot_ted_product_details.png) -->
 
 ---
 
@@ -49,7 +49,7 @@ Select the TED product. Click `Actions` and then `Update`.
 
 Choose the desired version from the `Product versions`.
 
-![Version Selection Page](screenshot_version_selection.png)
+<!-- ![Version Selection Page](screenshot_version_selection.png) -->
 
 ---
 
@@ -57,7 +57,7 @@ Choose the desired version from the `Product versions`.
 
 Ensure all parameters are correct. Generally, these can be left as default.
 
-![Parameters Verification Page](screenshot_parameters_verification.png)
+<!-- ![Parameters Verification Page](screenshot_parameters_verification.png) -->
 
 ---
 
@@ -65,7 +65,7 @@ Ensure all parameters are correct. Generally, these can be left as default.
 
 Verify the parameters again and select `Update`.
 
-![Update Confirmation Page](screenshot_update_confirmation.png)
+<!-- ![Update Confirmation Page](screenshot_update_confirmation.png) -->
 
 ---
 
@@ -73,7 +73,7 @@ Verify the parameters again and select `Update`.
 
 The TED provisioned product status should change to `Under Change` and the TED stack in CloudFormation will begin updating. This process typically takes a couple of minutes.
 
-![CloudFormation Stack Update Status](screenshot_stack_update_status.png)
+<!-- ![CloudFormation Stack Update Status](screenshot_stack_update_status.png) -->
 
 ---
 

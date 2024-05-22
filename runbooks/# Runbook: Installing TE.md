@@ -17,7 +17,7 @@
 
 Open the AWS Console and navigate to the Service Catalog service in the region to deploy TE.
 
-![AWS Console Home Page](screenshot_aws_console.png)
+<!-- ![AWS Console Home Page](screenshot_aws_console.png) -->
 
 ---
 
@@ -25,7 +25,7 @@ Open the AWS Console and navigate to the Service Catalog service in the region t
 
 Select the hamburger menu in the top left and click on `Products`.
 
-![Navigation Menu](screenshot_navigation_menu.png)
+<!-- ![Navigation Menu](screenshot_navigation_menu.png) -->
 
 ---
 
@@ -33,7 +33,7 @@ Select the hamburger menu in the top left and click on `Products`.
 
 Select `Turbot Guardrails Enterprise` from the products list and click `Launch Product`.
 
-![Service Catalog Products List](screenshot_service_catalog_products_list.png)
+<!-- ![Service Catalog Products List](screenshot_service_catalog_products_list.png) -->
 
 ---
 
@@ -41,7 +41,7 @@ Select `Turbot Guardrails Enterprise` from the products list and click `Launch P
 
 Select the desired version and name the provisioned product with the version number prefixed with `te`.
 
-![Provisioned Product Naming](screenshot_provisioned_product_naming.png)
+<!-- ![Provisioned Product Naming](screenshot_provisioned_product_naming.png) -->
 
 ---
 
@@ -49,7 +49,7 @@ Select the desired version and name the provisioned product with the version num
 
 Ensure all parameters are correct. Generally, these can be left as default.
 
-![Parameters Verification Page](screenshot_parameters_verification.png)
+<!-- ![Parameters Verification Page](screenshot_parameters_verification.png) -->
 
 ---
 
@@ -57,7 +57,7 @@ Ensure all parameters are correct. Generally, these can be left as default.
 
 Verify the parameters again and select `Launch product`.
 
-![Update Confirmation Page](screenshot_update_confirmation.png)
+<!-- ![Update Confirmation Page](screenshot_update_confirmation.png) -->
 
 ---
 
@@ -65,7 +65,7 @@ Verify the parameters again and select `Launch product`.
 
 The installed TE version should appear in `Provisioned products` with the status `Under change` and a new CloudFormation stack should be created with the status `CREATING`.
 
-![Verification Page](screenshot_verification_page.png)
+<!-- ![Verification Page](screenshot_verification_page.png) -->
 
 ---
 
@@ -73,7 +73,7 @@ The installed TE version should appear in `Provisioned products` with the status
 
 The TE provisioned product status should change to `Available` and the CloudFormation stack status should be `CREATE_COMPLETE` to ensure the installation completed successfully.
 
-![CloudFormation Stack Update Status](screenshot_stack_update_status.png)
+<!-- ![CloudFormation Stack Update Status](screenshot_stack_update_status.png) -->
 
 ---
 
