@@ -17,8 +17,7 @@
 
 Open the AWS Console and navigate to the Service Catalog service in the region where the TEF is deployed.
 
-<!-- ![AWS Console Home Page](screenshot_aws_console.png) -->
-<img src="images/tef/screenshot_aws_console.png" alt="AWS Console Home Page" width="500"/>
+<img src="images/tef/aws_console.png" alt="AWS Console Home Page" width="500"/>
 
 ---
 
@@ -26,7 +25,7 @@ Open the AWS Console and navigate to the Service Catalog service in the region w
 
 Select the hamburger menu in the top left and click on `Provisioned products`.
 
-<img src="images/tef/screenshot_navigation_menu.png" alt="Navigation Menu" width="500"/>
+<img src="images/tef/servicecatalog_navigation_menu.png" alt="Service Catalog Navigation Menu" width="500"/>
 
 ---
 
@@ -34,7 +33,7 @@ Select the hamburger menu in the top left and click on `Provisioned products`.
 
 There should be three or more provisioned products: a TEF product, TED product(s), and TE product(s). If the product names are not clear, select the product to view its details and identify the TEF product.
 
-<img src="images/tef/screenshot_provisioned_products_list.png" alt="Provisioned Products List" width="500"/>
+<img src="images/tef/servicecatalog_provisioned_products_list.png" alt="Provisioned Products List" width="500"/>
 
 ---
 
@@ -42,7 +41,7 @@ There should be three or more provisioned products: a TEF product, TED product(s
 
 Select the TEF product. Click `Actions` and then `Update`.
 
-<img src="images/tef/screenshot_tef_product_details.png" alt="TEF Product Details and Actions Menu" width="500"/>
+<img src="images/tef/servicecatalog_tef_product_selection.png" alt="TEF Product Details and Actions Menu" width="500"/>
 
 ---
 
@@ -50,7 +49,7 @@ Select the TEF product. Click `Actions` and then `Update`.
 
 Choose the desired version from the `Product versions`.
 
-<img src="images/tef/screenshot_version_selection.png" alt="Version Selection Page" width="500"/>
+<img src="images/tef/servicecatalog_version_selection.png" alt="Version Selection Page" width="500"/>
 
 ---
 
@@ -58,7 +57,7 @@ Choose the desired version from the `Product versions`.
 
 Ensure all parameters are correct. Generally, these can be left as default.
 
-<img src="images/tef/screenshot_parameters_verification.png" alt="Parameters Verification Page" width="500"/>
+<img src="images/tef/servicecatalog_parameters_verification.png" alt="Parameters Verification Page" width="500"/>
 
 ---
 
@@ -66,7 +65,7 @@ Ensure all parameters are correct. Generally, these can be left as default.
 
 Verify the parameters again and select `Update`.
 
-<img src="images/tef/screenshot_update_confirmation.png" alt="Update Confirmation Page" width="500"/>
+<img src="images/tef/servicecatalog_update_action.png" alt="Update Action Page" width="500"/>
 
 ---
 
@@ -81,9 +80,9 @@ The TEF provisioned product status should change to `Under Change` and the TEF s
 - The status of the TEF stack in CloudFormation should be `UPDATE_COMPLETE` which ensures the update completed successfully.
 - Confirm that the TEF product `Version name` reflects the update and the status moves back to `Available`.
 
-<img src="images/tef/screenshot_cloudformation_update_confirmation.png" alt="Update Confirmation Cloudformation" width="600"/>
+<img src="images/tef/cloudformation_update_confirmation.png" alt="Update Confirmation Cloudformation" width="600"/>
 
-<img src="images/tef/screenshot_servicecatalog_update_confirmation.png" alt="Update Confirmation Service Catalog" width="600"/>
+<img src="images/tef/servicecatalog_update_confirmation.png" alt="Update Confirmation Service Catalog" width="600"/>
 
 ---
 
