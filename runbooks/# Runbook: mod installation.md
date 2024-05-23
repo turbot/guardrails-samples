@@ -6,8 +6,9 @@
 
 **Prerequisites**: 
 - `Turbot/Owner` permissions at Turbot resource level.
+- Guardrails CLI [Installed and configured](https://turbot.com/guardrails/docs/reference/cli/installation)
+- Terraform with configured [Turbot Guardrails Terraform provider](https://registry.terraform.io/providers/turbot/turbot/latest/docs)
 - Familiarity with Guardrails Console, Terraform, and Guardrails CLI.
-- Large AWS environments (>100 accounts), accounts for AWS Event Handler churn. Refer to [Mod Installation in Large Environments](https://turbot.com/guardrails/docs/mods/guide/troubleshooting#mod-management-in-large-environments) instructions.
 
 ---
 
@@ -45,11 +46,9 @@ Browse or search for the mod, select it, and click `Install Mod`.
 
 ## Install Mod via CLI
 
-Note: Ensure that the Guardrails CLI is installed and properly configured.
-
 #### Step 1: Install Mod
 
-Run the following command to install the desired mod (e.g., `aws-s3`):
+Run this command to install the desired mod (e.g., `aws-s3`):
 
 ```bash
 turbot install @turbot/aws-s3
@@ -60,6 +59,8 @@ Syntax will be similar across other mod types, such as @turbot/aws-sns, @turbot/
 
 The mod will appear on the Guardrails console installed mods list.
 
+<img src="images/mod_install/mod_install_cli_success.png" alt="Mod Install CLI Success" width="400"/>
+
 ## Install Mod via Terraform
 
 Use the `turbot_mod` resource to install, uninstall, and update mods across an environment.
@@ -69,19 +70,50 @@ Use the `turbot_mod` resource to install, uninstall, and update mods across an e
 **To use the latest version:**
 
 ```hcl
-resource "turbot_mod" "aws-s3" {
+resource "turbot_mod" "aws_s3" {
   parent  = "tmod:@turbot/turbot#/"
   org     = "turbot"
   mod     = "aws-s3"
 }
 ```
 
+Run `terraform plan` to Verify the actions to be performed.
+
+```
+Terraform will perform the following actions:
+
+  # turbot_mod.aws-s3 will be created
+  + resource "turbot_mod" "aws_s3" {
+      + id              = (known after apply)
+      + mod             = "aws-s3"
+      + org             = "turbot"
+      + parent          = "tmod:@turbot/turbot#/"
+      + parent_akas     = (known after apply)
+      + uri             = (known after apply)
+      + version         = "*"
+      + version_current = "5.24.0"
+      + version_latest  = (known after apply)
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+```
+
+Run `terraform apply`
+
+```
+turbot_mod.aws-s3: Creating...
+turbot_mod.aws-s3: Still creating... [10s elapsed]
+turbot_mod.aws-s3: Creation complete after 11s [id=321961374574169]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
+
 **To install a pinned mod version**
 
-Note: Ensure Mod Auto-update is disabled when using pinned versions.
+Note: Ensure to set `Turbot > Mod > Auto Update` policy to `Skip` on the Guardrails console when using pinned versions.
 
 ```hcl
-resource "turbot_mod" "aws-s3" {
+resource "turbot_mod" "aws_s3" {
   parent  = "tmod:@turbot/turbot#/"
   org     = "turbot"
   mod     = "aws-s3"
@@ -91,20 +123,51 @@ resource "turbot_mod" "aws-s3" {
 
 **To install mod with dependencies**
 
+The dependent mods should be available prior or installed together.
+
 ```hcl
-resource "turbot_mod" "aws-s3" {
+resource "turbot_mod" "aws_s3" {
   parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.aws, turbot_mod.aws-iam, turbot_mod.aws-kms]
+  depends_on = [turbot_mod.aws, turbot_mod.aws_iam, turbot_mod.aws_kms]
   org        = "turbot"
   mod        = "aws-s3"
 }
 ```
 
-**Notes for Terraform Installation:**
+<details>
+<summary>Complete Terraform code with dependencies</summary>
 
-- Run with `-parallelism=1` to minimize issues from multiple mods performing Discovery simultaneously.
-- Terraform does not handle mod dependencies. Specify dependencies in Terraform files to avoid errors.
-- High DB load from Discovery and CMDB controls can cause API timeouts. This load is proportional to the number of accounts/subs/projects and resources discovered.
+```hcl
+resource "turbot_mod" "aws" {
+  parent     = "tmod:@turbot/turbot#/"
+  org        = "turbot"
+  mod        = "aws"
+}
+
+resource "turbot_mod" "aws_iam" {
+  parent     = "tmod:@turbot/turbot#/"
+  org        = "turbot"
+  mod        = "aws-iam"
+}
+
+resource "turbot_mod" "aws_kms" {
+  parent     = "tmod:@turbot/turbot#/"
+  org        = "turbot"
+  mod        = "aws-kms"
+}
+
+resource "turbot_mod" "aws_s3" {
+  parent     = "tmod:@turbot/turbot#/"
+  depends_on = [
+    turbot_mod.aws,
+    turbot_mod.aws_iam,
+    turbot_mod.aws_kms
+  ]
+  org        = "turbot"
+  mod        = "aws-s3"
+} 
+```
+</details>
 
 ## Troubleshooting
 
@@ -113,6 +176,8 @@ resource "turbot_mod" "aws-s3" {
     - Solution: Click the mod name to verify its details, including dependent controls, upgrade history, and dependencies.
 2. **Terraform installation failed**:
     - Solution: Review the resource type, dependencies and environment config.
+3. **Large AWS environments (>100 accounts) accounts for AWS Event Handler churn** 
+    -  Solution: Refer to [Mod Installation in Large Environments](https://turbot.com/guardrails/docs/mods/guide/troubleshooting#mod-management-in-large-environments) instructions.
 
 ## Conclusion
 
