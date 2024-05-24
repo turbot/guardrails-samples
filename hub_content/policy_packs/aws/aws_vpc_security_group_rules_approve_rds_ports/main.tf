@@ -11,20 +11,10 @@ resource "turbot_smart_folder" "vpc_sg_rule_check" {
 # APPROVING 80 and 443 are allowed egress to 0.0.0.0/0 but nothing else
 # Also AWS CIS v1.2 Section 4.01 Ensure no security groups allow ingress from 0.0.0.0/0 to port 22 (Scored) and # 4.02 Ensure no security groups allow ingress from 0.0.0.0/0 to port 3389 (Scored)
 
-# resource "turbot_policy_setting" "security_group_ingress_rules_approved_rules"{
-#   resource = turbot_smart_folder.vpc_sg_rule_check.id
-#   type = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApprovedRules"
-#   value = "REJECT $.turbot.ports.+:22,3389 $.turbot.cidr:0.0.0.0/0,::/0\nAPPROVE $.turbot.ports.+:1433,1521,3306,5432 $.turbot.cidr:<=10.0.0.0/8\nREJECT *"
-# }
-
-resource "turbot_policy_setting" "security_group_ingress_rules_approved_rules" {
+resource "turbot_policy_setting" "security_group_ingress_rules_approved_rules"{
   resource = turbot_smart_folder.vpc_sg_rule_check.id
-  type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApprovedRules"
-  value    = <<EOF
-REJECT $.turbot.ports.+:22,3389 $.turbot.cidr:0.0.0.0/0,::/0
-APPROVE $.turbot.ports.+:1433,1521,3306,5432 $.turbot.cidr:<=10.0.0.0/8
-REJECT *
-EOF
+  type = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApprovedRules"
+  value = "REJECT $.turbot.ports.+:22,3389 $.turbot.cidr:0.0.0.0/0,::/0\nAPPROVE $.turbot.ports.+:1433,1521,3306,5432 $.turbot.cidr:<=10.0.0.0/8\nREJECT *"
 }
 
 resource "turbot_policy_setting" "security_group_egress_rules_approved_rules"{

@@ -43,16 +43,16 @@ cd guardrails-samples/policy_packs/aws/aws_vpc_flow_logs
     terraform init
     export TURBOT_PROFILE="my-workspace"
     terraform plan 
-    terrafrom apply
+    terraform apply
     ```
 
-1. **Attach the Policy Pack to your test account**: Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#). Select the account from the list for testing. Click on the "Detail" subtab and look for the "Policy Packs" widget in the bottom right of the page. Select the "MANAGE" link and `+ Add` the `Configure VPC Flow Logs` Policy Pack from the dropdown menu, then select "Save".
+1. **Attach the Policy Pack to your test account**: Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#). Select the account from the list for testing. Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page. Select the "MANAGE" link and `+ Add` the `Configure VPC Flow Logs` Policy Pack from the dropdown menu, then select "Save".
     > [!IMPORTANT]
     > Do not add or remove more than one Policy Pack to a resource at a time. Adding Policy Packs is an asynchronous operation, after changing the Policy Pack configuration for a resource, wait at least 5 minutes before adding or removing other Policy Packs.
 
 1. **Verify state (`OK`, `Alarm`, `Error`) of associated controls**: Within the Guardrails UI navigate to:
 
-    ```
+    ```sh
     {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-vpc-core%23%2Fcontrol%2Ftypes%2FvpcFlowloggingStack%27
     ```
 
