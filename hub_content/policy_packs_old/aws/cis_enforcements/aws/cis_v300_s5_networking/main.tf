@@ -8,4 +8,3 @@ terraform {
 
 provider "turbot" {
 }
-
