@@ -1,5 +1,5 @@
 # AWS > EC2 > Instance > Approved
-resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher
 }
 
 # AWS > EC2 > Instance > Approved > Image
-resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher_image" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
   value    = "Approved if ImageId in Image > AMI IDs and Owner in Image > Publishers"
@@ -19,7 +19,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher
 }
 
 # AWS > EC2 > Instance > Approved > Image > AMI IDs
-resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher_image_ami_ids" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved_image_ami_ids" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImageAmiIds"
   # Insert your AMI IDs below
@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher
 }
 
 # AWS > EC2 > Instance > Approved > Image > Publishers
-resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher_image_ami_publishers" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved_image_publishers" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImagePublishers"
   # Insert your Publisher Account IDs below

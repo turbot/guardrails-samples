@@ -26,7 +26,7 @@ resource "turbot_smart_folder" "pack" {
 }
 ```
 
-- Resource name should `pack`.
+- Resource name should `pack`. This will allow users to build composite packs i.e. combining multiple policy packs into one. Having `pack` as the policy pack name across policy packs will allow users to form composite packs easily.
 - Title should clearly define what the policy pack does.
 - Description should be a short summary of what the policy pack does. (Ask ChatGPT).
 
@@ -67,6 +67,7 @@ provider "turbot" {
 
 - This file includes:
 - All relevant policy settings for the resource per the policy pack.
+- Resource names for all the policy settings should be in the form of `"<provider>_<service>_<policy_setting_name>"`. E.g. `aws_ec2_instance_approved`, `aws_ec2_instance_approved_image`, `aws_ec2_instance_approved_image_ami_ids`. This will allow users to form composite policy packs and main uniqueness across resource names.
 
 ### README.md
 
