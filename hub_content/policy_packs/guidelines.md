@@ -6,7 +6,7 @@
 - add the resource type name after provider name
 - add what the policy pack does, starting with a verb
 - use snake_case
-- e.g. aws_ec2_instance_deny_unapproved_ami
+- e.g. aws_ec2_instance_deny_unapproved_ami_publisher
 
 ## Files
 
@@ -20,7 +20,7 @@ e.g.
 
 ```hcl
 # Policy Pack
-resource "turbot_smart_folder" "aws_ec2_instance_deny_unapproved_ami" {
+resource "turbot_smart_folder" "aws_ec2_instance_deny_unapproved_ami_publisher" {
   title       = "AWS EC2 instance deny unapproved AMIs"
   description = "Deny the launch of EC2 instances that are not using approved AMIs"
   parent      = "tmod:@turbot/turbot#/"
@@ -36,7 +36,7 @@ resource "turbot_smart_folder" "aws_ec2_instance_deny_unapproved_ami" {
 ```hcl
 # AWS > EC2 > Enabled
 resource "turbot_policy_setting" "aws_ec2_enabled" {
-  resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami.id
+  resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami_publisher.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2Enabled"
   value    = "Enabled"
 }
@@ -44,7 +44,7 @@ resource "turbot_policy_setting" "aws_ec2_enabled" {
 
 - Include a comment which says which service to enable.
 - Comment should start with capital letters and not have a period at the end
-- resource name should be <provider>_<service>_enabled
+- resource name should be `<provider>_<service>_enabled`
 
 ### main.tf
 
@@ -71,4 +71,4 @@ provider "turbot" {
 
 ### README.md
 
-- Follow `policy_pack_example_readme.md` and file for details and `aws_ec2_instance_deny_unapproved_ami.md` as an example.
+- Follow `policy_pack_example_readme.md` and file for details and `aws_ec2_instance_deny_unapproved_ami_publisher.md` as an example.

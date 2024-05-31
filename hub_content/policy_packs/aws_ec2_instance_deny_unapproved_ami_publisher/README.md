@@ -3,8 +3,8 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/aws.svg"
 brand_color: "#FF9900"
-display_name: "Deny AWS EC2 instances with unapproved AMIs"
-short_name: "aws_ec2_instance_deny_unapproved_ami"
+display_name: "Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts"
+short_name: "aws_ec2_instance_deny_unapproved_ami_publisher"
 description: "Guardrails policy pack to stop/terminate EC2 instances that use unapproved AMIs and/or publisher accounts."
 mod_dependencies:
   - "@turbot/aws"
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws_ec2_instance_deny_unapproved_ami
+cd guardrails-samples/policy_packs/aws_ec2_instance_deny_unapproved_ami_publisher
 ```
 
 ### Credentials
@@ -78,9 +78,10 @@ For each control type, choose to [resolve the alarms](https://turbot.com/guardra
 To apply enforcement automation: Open the Policy Pack Terraform source files in your code editor. Toggle individual controls between `Check` and `Enforce` by changing which line is commented out:
 
   ```hcl
-    resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami" {
-        resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami.id
+    resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher" {
+        resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami_publisher.id
         type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
+        # value    = "Check: Approved"
         value    = "Enforce: Stop unapproved"
         # value    = "Enforce: Stop unapproved if new"
         # value    = "Enforce: Delete unapproved if new"
