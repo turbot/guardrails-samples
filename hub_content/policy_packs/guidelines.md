@@ -2,11 +2,10 @@
 
 ## Folder
 
-- starts with the provider name
-- add the resource type name after provider name
-- add what the policy pack does, starting with a verb
-- use snake_case
-- e.g. aws_ec2_instance_deny_unapproved_ami_publisher
+- Top level folder should be of the cloud provider. e.g. aws
+- Policy packs should be group per service. e.g. aws/ec2
+- Policy pack name should be in a regular sentence format that is easily readable. e.g. deny_unapproved_ami_publisher_for_instance
+- Use snake_case
 
 ## Files
 
@@ -14,24 +13,24 @@
 
 This file includes:
 
-#### a. A policy pack TF resource
+#### a. A policy pack Terraform resource
 
 e.g.
 
 ```hcl
 # Policy Pack
-resource "turbot_smart_folder" "aws_ec2_instance_deny_unapproved_ami_publisher" {
-  title       = "AWS EC2 instance deny unapproved AMIs"
-  description = "Deny the launch of EC2 instances that are not using approved AMIs"
+resource "turbot_smart_folder" "pack" {
+  title       = "Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts"
+  description = "Deny launch of EC2 instances that do not approved AMIs and Publisher Accounts"
   parent      = "tmod:@turbot/turbot#/"
 }
 ```
 
-- resource name should be same as <folder_name>.
-- title should clearly define what the policy pack does.
-- description should be a short summary of what the policy pack does. (Ask ChatGPT).
+- Resource name should `pack`.
+- Title should clearly define what the policy pack does.
+- Description should be a short summary of what the policy pack does. (Ask ChatGPT).
 
-#### b. TF to enable relevant services for the policy pack
+#### b. Terraform to enable relevant services for the policy pack
 
 ```hcl
 # AWS > EC2 > Enabled
@@ -44,7 +43,7 @@ resource "turbot_policy_setting" "aws_ec2_enabled" {
 
 - Include a comment which says which service to enable.
 - Comment should start with capital letters and not have a period at the end
-- resource name should be `<provider>_<service>_enabled`
+- Resource name should be `<provider>_<service>_enabled`
 
 ### main.tf
 
@@ -64,11 +63,11 @@ provider "turbot" {
 }
 ```
 
-### <folder_name>.tf
+### policies.tf
 
 - This file includes:
 - All relevant policy settings for the resource per the policy pack.
 
 ### README.md
 
-- Follow `policy_pack_example_readme.md` and file for details and `aws_ec2_instance_deny_unapproved_ami_publisher.md` as an example.
+- Follow `policy_pack_example_readme.md` and file for details and `deny_unapproved_ami_publisher_for_instance.md` as an example.
