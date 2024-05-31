@@ -1,0 +1,32 @@
+# AWS > EC2 > Instance > Approved
+resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami" {
+  resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Stop unapproved if new"
+  # value    = "Enforce: Delete unapproved if new"
+}
+
+# AWS > EC2 > Instance > Approved > Image
+resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_image" {
+  resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
+  value    = "Approved if ImageId in Image > AMI IDs and Owner in Image > Publishers"
+  # value    = "Approved if ImageId in Image > AMI IDs or Owner in Image > Publisher"
+}
+
+# AWS > EC2 > Instance > Approved > Image > AMI IDs
+resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_image_ami_ids" {
+  resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImageAmiIds"
+  # Insert your AMI IDs below
+  value    = ["ami-12345678", "ami-87654321"]
+}
+
+# AWS > EC2 > Instance > Approved > Image > Publishers
+resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_image_ami_publishers" {
+  resource = turbot_smart_folder.aws_ec2_instance_deny_unapproved_ami.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImagePublishers"
+  # Insert your Publisher Account IDs below
+  value    = ["123456789012", "987654321098"]
+}
