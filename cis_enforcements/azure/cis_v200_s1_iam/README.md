@@ -33,24 +33,6 @@ cd guardrails-samples/cis_enforcements/azure/cis_v200_s1_iam/
 
 ## How to use
 
-<!-- 1. **Set the variable values**:
-
-   ```sh
-   cp monitoring.tfvars.example monitoring.tfvars
-   vi monitoring.tfvars
-   ```
-
-   ```hcl
-   # Log Metric Alert name for control 5.2.1
-   monitor_log_alert_name_5_2_1 = "create_policy_assignment_log_alert"
-   # Log Metric Alert name for control 5.2.2
-   monitor_log_alert_name_5_2_2 = "delete_policy_assignment_log_alert"
-   # Log Metric Filter name for control 5.2.3
-   monitor_log_alert_name_5_2_3 = "create_update_nsg_log_alert"
-   # Log Metric Alert name for control 5.2.4
-   monitor_log_alert_name_5_2_4 = "delete_nsg_log_alert"
-   ``` -->
-
 1. **Create the Smart Folder in your workspace**:
 
    ```sh
