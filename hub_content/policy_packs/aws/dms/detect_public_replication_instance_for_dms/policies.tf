@@ -22,7 +22,7 @@ resource "turbot_policy_setting" "aws_dms_replication_instance_approved_custom" 
     }
     EOT
   template       = <<-EOT
-    title: "Detect Replication Instance Publicly Accessible"
+    title: "Detect If Replication Instance Publicly Accessible"
     {%- if $.replicationInstance.parent.publiclyAccessible %}
     result: Not approved
     message: "Replication instance is publicly accessible"
