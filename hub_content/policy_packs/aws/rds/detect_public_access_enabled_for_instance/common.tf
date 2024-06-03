@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect if encryption is enabled for RDS instances"
-  description = "Detect and report RDS instances that have encryption enabled"
+  title       = "Detect if public access is enabled for RDS instances"
+  description = "Detect and report RDS instances that have public access enabled"
   parent      = "tmod:@turbot/turbot#/"
 }
 
