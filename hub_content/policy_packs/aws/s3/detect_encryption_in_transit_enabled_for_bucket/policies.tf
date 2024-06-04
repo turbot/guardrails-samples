@@ -12,7 +12,8 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved" {
 resource "turbot_policy_setting" "aws_s3_bucket_approved_bucketEncryptionInTransit" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-s3#/policy/types/encryptionInTransit"
-  value    = "Enabled"
-  # value  = "Disabled"
-  # value  = "Enabled"
+  value    = "Check: Enabled"
+  # value  = "Check: Disabled"
+  # value  = "Enforce: Disabled"
+  # value  = "Enforce: Enabled"
 }
