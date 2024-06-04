@@ -10,9 +10,9 @@ resource "turbot_policy_setting" "aws_rds_db_instance_approved" {
 
 # AWS > RDS > DB Instance > Approved > Encryption at Rest
 resource "turbot_policy_setting" "aws_rds_db_instance_approved_dbInstanceEncryptionAtRest" {
-  resource       = turbot_smart_folder.pack.id
-  type           = "tmod:@turbot/aws-rds#/policy/types/dbInstanceEncryptionAtRest"
-  value          = "AWS managed key or higher"
+  resource = turbot_smart_folder.pack.id
+  type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceEncryptionAtRest"
+  value    = "AWS managed key or higher"
   # value         = "None"
   # value         = "None or higher"
   # value         = "AWS managed key"
@@ -23,9 +23,9 @@ resource "turbot_policy_setting" "aws_rds_db_instance_approved_dbInstanceEncrypt
 
 # AWS > RDS > DB Instance > Approved > Encryption at Rest > Customer Managed Key
 resource "turbot_policy_setting" "aws_rds_db_instance_approved_dbInstanceEncryptionAtRestCustomerManagedKey" {
-  resource       = turbot_smart_folder.pack.id
-  type           = "tmod:@turbot/aws-rds#/policy/types/dbInstanceEncryptionAtRestCustomerManagedKey"
+  resource = turbot_smart_folder.pack.id
+  type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceEncryptionAtRestCustomerManagedKey"
   # Update with default encryption key/alias below
-  value          = "alias/turbot/default"
+  value = "alias/turbot/default"
 }
 

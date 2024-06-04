@@ -8,8 +8,8 @@ resource "turbot_policy_setting" "aws_rds_db_snapshot_manual_approved" {
 
 # AWS > RDS > DB Snapshot [Manual] > Approved > Custom
 resource "turbot_policy_setting" "aws_rds_db_snapshot_manual_approved_custom" {
-  resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-rds#/policy/types/dbSnapshotManualApprovedCustom"
+  resource       = turbot_smart_folder.pack.id
+  type           = "tmod:@turbot/aws-rds#/policy/types/dbSnapshotManualApprovedCustom"
   template_input = <<-EOT
     {
       dbSnapshotManual {
