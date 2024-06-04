@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts"
-  description = "Deny launch of EC2 instances that do not approved AMIs and Publisher Accounts"
+  title       = "Detect AWS EC2 instances with unapproved AMIs and/or publisher accounts"
+  description = "Detect launch of EC2 instances that do not approved AMIs and Publisher Accounts"
   parent      = "tmod:@turbot/turbot#/"
 }
 

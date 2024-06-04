@@ -4,7 +4,7 @@
 
 - Top level folder should be of the cloud provider. e.g. aws
 - Policy packs should be group per service. e.g. aws/ec2
-- Policy pack name should be in a regular sentence format that is easily readable. e.g. deny_unapproved_ami_publisher_for_instance
+- Policy pack name should be in a regular sentence format that is easily readable. e.g. detect_unapproved_ami_publisher_for_instance
 - Use snake_case
 
 ## Files
@@ -71,4 +71,4 @@ provider "turbot" {
 
 ### README.md
 
-- Follow `policy_pack_example_readme.md` and file for details and `deny_unapproved_ami_publisher_for_instance.md` as an example.
+- Follow `policy_pack_example_readme.md` and file for details and `detect_unapproved_ami_publisher_for_instance.md` as an example.

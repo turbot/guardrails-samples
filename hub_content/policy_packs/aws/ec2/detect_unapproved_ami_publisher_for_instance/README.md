@@ -3,8 +3,8 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/aws.svg"
 brand_color: "#FF9900"
-display_name: "Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts"
-short_name: "deny_unapproved_ami_publisher_for_instance"
+display_name: "Detect AWS EC2 instances with unapproved AMIs and/or publisher accounts"
+short_name: "detect_unapproved_ami_publisher_for_instance"
 description: "Guardrails policy pack to stop/terminate EC2 instances that use unapproved AMIs and/or publisher accounts."
 mod_dependencies:
   - "@turbot/aws"
@@ -12,7 +12,7 @@ mod_dependencies:
   - "@turbot/aws-ec2"
 ---
 
-# Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts
+# Detect AWS EC2 instances with unapproved AMIs and/or publisher accounts
 
 This policy-pack stops/terminates EC2 instances that use unapproved AMIs and/or publisher accounts, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically detect and stop/terminate unapproved instances.
 
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/deny_unapproved_ami_publisher_for_instance
+cd guardrails-samples/policy_packs/aws/ec2/detect_unapproved_ami_publisher_for_instance
 ```
 
 ### Credentials
@@ -55,7 +55,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the account from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Detect AWS EC2 instances with unapproved AMIs and/or publisher accounts` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]
@@ -78,7 +78,7 @@ For each control type, choose to [resolve the alarms](https://turbot.com/guardra
 To apply enforcement automation: Open the Policy Pack Terraform source files in your code editor. Toggle individual controls between `Check` and `Enforce` by changing which line is commented out:
 
   ```hcl
-    resource "turbot_policy_setting" "aws_ec2_instance_deny_unapproved_ami_publisher" {
+    resource "turbot_policy_setting" "aws_ec2_instance_detect_unapproved_ami_publisher" {
         resource = turbot_smart_folder.pack.id
         type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
         # value    = "Check: Approved"
