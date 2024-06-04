@@ -12,7 +12,6 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
 resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
   resource       = turbot_smart_folder.pack.id
   type           = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedCustom"
-  note           = "Detect if IMDSv2 is enforced for AWS EC2 instances"
   template_input = <<-EOT
     {
       instance {
@@ -22,11 +21,13 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
     EOT
   template       = <<-EOT
       {%- if $.instance.httpTokens == "required" -%}
-      result: Approved
-      message: "IMDSv2 is enforced for EC2 instance"
+        title: IMDSv2
+        result: Approved
+        message: "IMDSv2 is enforced for EC2 instance"
       {%- else -%}
-      result: Not approved
-      message: "IMDSv2 is NOT enforced for EC2 instance"
+        title: IMDSv2
+        result: Not approved
+        message: "IMDSv2 is not enforced for EC2 instance"
       {%- endif -%}
     EOT
 }

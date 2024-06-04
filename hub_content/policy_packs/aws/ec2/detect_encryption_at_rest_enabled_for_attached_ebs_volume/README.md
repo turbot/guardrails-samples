@@ -4,7 +4,7 @@ category: ["public cloud"]
 icon_url: "/images/plugins/turbot/aws.svg"
 brand_color: "#FF9900"
 display_name: "Detect whether encryption is enabled for AWS EBS volumes attached to AWS EC2 instances"
-short_name: "detect_encryption_enabled_for_attached_ebs_volumes"
+short_name: "detect_encryption_at_rest_enabled_for_attached_ebs_volume"
 description: "Guardrails policy pack to detect whether encryption is enabled for AWS EBS volumes attached to AWS EC2 instances."
 mod_dependencies:
   - "@turbot/aws"
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/detect_encryption_enabled_for_attached_ebs_volumes
+cd guardrails-samples/policy_packs/aws/ec2/detect_encryption_at_rest_enabled_for_attached_ebs_volume
 ```
 
 ### Credentials

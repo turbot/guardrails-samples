@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect whether encryption is enabled for AWS EBS volumes attached to AWS EC2 instances"
-  description = "Detect if encryption is enabled for AWS EBS volumes attached to EC2 instances"
+  title       = "Detect if encryption at rest is enabled for AWS EBS volumes attached to AWS EC2 instances"
+  description = "Detect if encryption at rest is enabled for AWS EBS volumes attached to AWS EC2 instances"
   parent      = "tmod:@turbot/turbot#/"
 }
 
