@@ -20,14 +20,14 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
     }
     EOT
   template       = <<-EOT
-      {%- if $.instance.httpTokens == "required" -%}
-        title: IMDSv2
-        result: Approved
-        message: "IMDSv2 is enforced for EC2 instance"
-      {%- else -%}
-        title: IMDSv2
-        result: Not approved
-        message: "IMDSv2 is not enforced for EC2 instance"
-      {%- endif -%}
+    {%- if $.instance.httpTokens == "required" -%}
+      title: IMDSv2
+      result: Approved
+      message: "IMDSv2 is enforced for EC2 instance"
+    {%- else -%}
+      title: IMDSv2
+      result: Not approved
+      message: "IMDSv2 is not enforced for EC2 instance"
+    {%- endif -%}
     EOT
 }
