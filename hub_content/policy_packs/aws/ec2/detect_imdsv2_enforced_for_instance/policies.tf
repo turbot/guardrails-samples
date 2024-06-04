@@ -16,12 +16,12 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
   template_input = <<-EOT
     {
       instance {
-        HttpTokens: get(path: "MetadataOptions.HttpTokens")
+        httpTokens: get(path: "MetadataOptions.HttpTokens")
       }
     }
     EOT
   template       = <<-EOT
-      {%- if $.instance.HttpTokens == "required" -%}
+      {%- if $.instance.httpTokens == "required" -%}
       result: Approved
       message: "IMDSv2 is enforced for EC2 instance"
       {%- else -%}
