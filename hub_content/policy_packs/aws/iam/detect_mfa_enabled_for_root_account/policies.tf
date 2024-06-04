@@ -2,13 +2,13 @@
 resource "turbot_policy_setting" "aws_iam_account_summary_approved" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountSummaryApproved"
-  value    =  "Check: Approved"
+  value    = "Check: Approved"
 }
 
 # AWS > IAM > Account Summary > Approved > Custom
 resource "turbot_policy_setting" "aws_iam_account_summary_approved_custom" {
-  resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-iam#/policy/types/accountSummaryApprovedCustom"
+  resource       = turbot_smart_folder.pack.id
+  type           = "tmod:@turbot/aws-iam#/policy/types/accountSummaryApprovedCustom"
   template_input = <<-EOT
     {
       accountSummary {

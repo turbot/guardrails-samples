@@ -2,7 +2,7 @@
 resource "turbot_policy_setting" "aws_iam_access_key_active" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActive"
-  value    =  "Check: Active"
+  value    = "Check: Active"
   # value    =  "Enforce: Delete inactive with 1 day warning"
   # value    =  "Enforce: Delete inactive with 3 days warning"
   # value    =  "Enforce: Delete inactive with 7 days warning"
