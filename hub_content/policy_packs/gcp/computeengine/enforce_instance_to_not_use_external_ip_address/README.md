@@ -1,20 +1,20 @@
 ---
 organization: Turbot
 category: ["public cloud"]
-icon_url: "/images/plugins/turbot/aws.svg"
-brand_color: "#FF9900"
-display_name: "Enforce AWS EC2 instances to use approved AMIs and/or publisher accounts"
-short_name: "enforce_unapproved_ami_publisher_for_instance"
-description: "Guardrails policy pack to stop/terminate EC2 instances that use unapproved AMIs and/or publisher accounts."
+icon_url: "/images/plugins/turbot/gcp.svg"
+brand_color: "#FF9900" # TODO: verify the brand_color
+display_name: "Enforce GCP Compute Engine instances to not use external IP addresses"
+short_name: "enforce_instance_to_not_use_external_ip_address"
+description: "Delete Access Configs for the instance that use external IP addresses."
 mod_dependencies:
-  - "@turbot/aws"
-  - "@turbot/aws-iam"
-  - "@turbot/aws-ec2"
+  - "@turbot/gcp"
+  - "@turbot/gcp-iam"
+  - "@turbot/gcp-computeengine"
 ---
 
-# Enforce AWS EC2 instances to use approved AMIs and/or publisher accounts
+# Enforce GCP Compute Engine instances to not use external IP addresses
 
-This policy-pack stops/terminates EC2 instances that use unapproved AMIs and/or publisher accounts, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically detect and stop/terminate unapproved instances.
+This policy-pack removes access configs with external IPs that are used in compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically detect and remove the external IPs.
 
 ## Documentation
 
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_approved_ami_publisher_for_instance
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instance_to_not_use_external_ip_address
 ```
 
 ### Credentials
@@ -49,12 +49,12 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
   terraform apply
   ```
 
-### Attach the Policy Pack to your account
+### Attach the Policy Pack to your project
 
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
-- Select the account from the list for testing.
+- Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce AWS EC2 instances to use approved AMIs and/or publisher accounts` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce GCP Compute Engine instances to not use external IP addresses` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]
@@ -65,7 +65,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 Within the Guardrails UI navigate to:
 
   ```sh
-  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-ec2%23%2Fcontrol%2Ftypes%2FinstanceApproved%27
+  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Fgcp-computeengine%23%2Fcontrol%2Ftypes%2FinstanceExternalIpAddresses%27
   ```
 
   Replace `{workspace-url}` with the FQDN of your workspace (e.g. <https://company.cloud.turbot.com>). Use the "Resource" filter to select the test account where the Policy Pack is attached. Review all controls in `Alarm` state to understand why they are violating this policy pack objective.
@@ -77,13 +77,11 @@ For each control type, choose to [resolve the alarms](https://turbot.com/guardra
 To apply enforcement automation: Open the Policy Pack Terraform source files in your code editor. Toggle individual controls between `Check` and `Enforce` by changing which line is commented out:
 
   ```hcl
-    resource "turbot_policy_setting" "aws_ec2_instance_enforce_unapproved_ami_publisher" {
-        resource = turbot_smart_folder.pack.id
-        type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-        # value    = "Check: Approved"
-        value    = "Enforce: Stop unapproved"
-        # value    = "Enforce: Stop unapproved if new"
-        # value    = "Enforce: Delete unapproved if new"
+    resource "turbot_policy_setting" "gcp_compute_engine_instance_external_ip_address" {
+      resource = turbot_smart_folder.pack.id
+      type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceExternalIpAddresses"
+      # value    = "Check: None"
+      value    = "Enforce: None"
     }
   ```
 
