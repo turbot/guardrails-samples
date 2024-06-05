@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   # value    = "Enforce: Stop unapproved"
 }
 
-# AWS > EC2 > Instance > Custom
+# AWS > EC2 > Instance > Approved > Custom
 resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
   resource       = turbot_smart_folder.pack.id
   type           = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedCustom"
