@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Enforce KMS cryptographic keys to not be publicly accessible"
-  description = "Enforce KMS cryptographic keys to not be publicly accessible"
+  description = "Ensure that there are no publicly accessible KMS cryptographic keys available within the project."
   parent      = "tmod:@turbot/turbot#/"
 }
 

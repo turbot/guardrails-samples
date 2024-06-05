@@ -19,15 +19,18 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
     EOT
   template       = <<-EOT
     {%- if $.cryptoKey.keyState == "DISABLED" or $.cryptoKey.keyState == "DESTROY_SCHEDULED" or $.cryptoKey.keyState == "DESTROYED" -%}
+    title: Rotation
     result: Skip
     message: Crypto key is {{ $.cryptoKey.keyState }}
     {%- else -%}
     {%- set rotationPeriodWithoutSeconds = $.cryptoKey.rotationPeriod.slice(1, -1) -%}
     {%- set rotationPeriodInDays = rotationPeriodWithoutSeconds / 86400 -%}
     {%- if rotationPeriodInDays > 1 -%}
+    title: Rotation
     result: Not approved
     message: Crypto key not rotated regularly
     {%- else -%}
+    title: Rotation
     result: Approved
     message: Crypto key rotated regularly
     {%- endif -%}
