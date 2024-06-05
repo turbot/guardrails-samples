@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect managed service identities for Web Apps"
-  description = "Detect managed service identities status for Web Apps"
+  title       = "Detect disabled managed service identities for Web Apps"
+  description = "Detect managed service identities that are disabled for Web Apps"
   parent      = "tmod:@turbot/turbot#/"
 }
 

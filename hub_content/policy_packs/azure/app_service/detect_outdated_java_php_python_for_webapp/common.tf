@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect HTTP traffic for Web Apps"
-  description = "Detect HTTP traffic status for Web Apps"
+  title       = "Detect outdated Java/PHP/Python for Web Apps"
+  description = "Detect Web Apps that are running outdated Java/PHP/Python version"
   parent      = "tmod:@turbot/turbot#/"
 }
 

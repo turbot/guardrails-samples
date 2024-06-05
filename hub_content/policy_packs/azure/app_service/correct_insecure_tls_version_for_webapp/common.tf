@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Deny insecure TLS version for Web Apps"
-  description = "Deny Web Apps that are using insecure TLS versions - 1.0 and 1.1"
+  title       = "Correct insecure TLS version for Web Apps"
+  description = "Correct Web Apps that are using insecure TLS versions - 1.0 and 1.1"
   parent      = "tmod:@turbot/turbot#/"
 }
 
