@@ -65,7 +65,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 Within the Guardrails UI navigate to:
 
   ```sh
-  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-iam%23%2Fcontrol%2Ftypes%2FaccountSummaryApproved%27
+  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-iam%23%2Fcontrol%2Ftypes%2FrootApproved%27
   ```
 
   Replace `{workspace-url}` with the FQDN of your workspace (e.g. <https://company.cloud.turbot.com>). Use the "Resource" filter to select the test account where the Policy Pack is attached. Review all controls in `Alarm` state to understand why they are violating this policy pack objective.
