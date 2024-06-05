@@ -17,6 +17,7 @@ resource "turbot_policy_setting" "aws_iam_account_summary_approved_custom" {
     }
     EOT
   template       = <<-EOT
+    title: "MFA Enabled"
     {% if $.accountSummary.AccountMFAEnabled %}
     result: Approved
     message: "MFA is enabled on root account"
