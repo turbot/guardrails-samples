@@ -14,7 +14,7 @@ mod_dependencies:
 
 # Enforce GCP Compute Engine instances to not use external IP addresses
 
-This policy-pack removes access configs with external IPs that are used in compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically detect and remove the external IPs.
+This Policy Pack removes access configs with external IPs that are used in compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect and remove the external IPs.
 
 ## Documentation
 

@@ -14,7 +14,7 @@ mod_dependencies:
 
 # Enforce enable block project-wide SSH keys for GCP Compute Engine instances
 
-This policy-pack enables block project-wide SSH keys setting for compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically detect and enable block project-wide SSH keys.
+This Policy Pack enables block project-wide SSH keys setting for compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect and enable block project-wide SSH keys.
 
 ## Documentation
 

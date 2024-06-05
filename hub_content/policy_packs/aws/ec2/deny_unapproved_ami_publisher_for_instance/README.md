@@ -14,7 +14,7 @@ mod_dependencies:
 
 # Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts
 
-This policy-pack denies launching EC2 instances that use unapproved AMIs and/or publisher accounts, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically deny launching unapproved instances.
+This Policy Pack denies launching EC2 instances that use unapproved AMIs and/or publisher accounts, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically deny launching unapproved instances.
 
 ## Documentation
 

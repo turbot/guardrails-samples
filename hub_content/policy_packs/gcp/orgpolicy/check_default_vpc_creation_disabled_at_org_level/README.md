@@ -14,7 +14,7 @@ mod_dependencies:
 
 # Check if the creation of the default VPC network is disabled at the GCP organization level
 
-This policy-pack checks if the GCP Organization Policy "Skip default network creation" is disabled at the GCP organization level, using Terraform. It automates the creation and setup of necessary Guardrails policies to which will allows Guardrails to automatically detect if the setting is disabled.
+This Policy Pack checks if the GCP Organization Policy "Skip default network creation" is disabled at the GCP organization level, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect if the setting is disabled.
 
 ## Documentation
 
