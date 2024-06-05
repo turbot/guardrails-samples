@@ -1,24 +1,24 @@
-# AWS > IAM > Account Summary > Approved
-resource "turbot_policy_setting" "aws_iam_account_summary_approved" {
+# AWS > IAM > Root > Approved
+resource "turbot_policy_setting" "aws_iam_root_approved" {
   resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-iam#/policy/types/accountSummaryApproved"
+  type     = "tmod:@turbot/aws-iam#/policy/types/rootApproved"
   value    = "Check: Approved"
 }
 
-# AWS > IAM > Account Summary > Approved > Custom
-resource "turbot_policy_setting" "aws_iam_account_summary_approved_custom" {
+# AWS > IAM > Root > Approved > Custom
+resource "turbot_policy_setting" "aws_iam_root_approved_custom" {
   resource       = turbot_smart_folder.pack.id
-  type           = "tmod:@turbot/aws-iam#/policy/types/accountSummaryApprovedCustom"
+  type           = "tmod:@turbot/aws-iam#/policy/types/rootApprovedCustom"
   template_input = <<-EOT
     {
-      accountSummary {
-        AccountMFAEnabled: get(path:"AccountMFAEnabled")
+      root {
+        mfaActive: get(path: "mfa_active")
       }
     }
     EOT
   template       = <<-EOT
     title: "MFA Enabled"
-    {% if $.accountSummary.AccountMFAEnabled %}
+    {% if $.root.mfaActive == "true" %}
     result: Approved
     message: "MFA is enabled on root account"
     {% else -%}
