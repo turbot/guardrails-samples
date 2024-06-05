@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce GCP Compute Engine instances to not use external IP addresses"
-  description = "Delete access configs for instances that use external IP addresses"
+  title       = "Enforce enable block project-wide SSH keys for GCP Compute Engine instances"
+  description = "Enforce enable block project-wide SSH keys for GCP Compute Engine instances"
   parent      = "tmod:@turbot/turbot#/"
 }
 
