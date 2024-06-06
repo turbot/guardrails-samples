@@ -17,14 +17,14 @@ resource "turbot_policy_setting" "aws_iam_root_approved_custom" {
     }
     EOT
   template       = <<-EOT
-    {% if $.root.mfaActive == "true" %}
+    {% if $.root.mfaActive == "false" %}
       title: "MFA Enabled"
-      result: Approved
-      message: "MFA is enabled on root account"
-    {% else -%}
-      title: "MFA Enabled"
-      result: Not approved
+      result: "Not approved"
       message: "MFA is not enabled on root account"
+    {% else %}
+      title: "MFA Enabled"
+      result: "Approved"
+      message: "MFA is enabled on root account"
     {% endif %}
     EOT
 }
