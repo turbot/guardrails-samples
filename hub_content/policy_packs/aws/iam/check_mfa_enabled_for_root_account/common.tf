@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Detect MFA enabled for root account"
-  description = "Detect and report root account where MFA is Enabled"
+  description = "Detect if MFA is enabled for AWS IAM root account."
   parent      = "tmod:@turbot/turbot#/"
 }
 
@@ -11,4 +11,3 @@ resource "turbot_policy_setting" "aws_iam_enabled" {
   type     = "tmod:@turbot/aws-iam#/policy/types/iamEnabled"
   value    = "Enabled"
 }
-
