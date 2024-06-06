@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect IAM access key 90 days older"
-  description = "Detect and report IAM access keys that is older than 90 days"
+  title       = "Enforce IAM access keys to be not older than 90 days"
+  description = "Deactivate or delete IAM access keys that are older than 90 days."
   parent      = "tmod:@turbot/turbot#/"
 }
 
