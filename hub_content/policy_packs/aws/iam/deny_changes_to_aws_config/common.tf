@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Disallow Configuration Changes to AWS Config"
-  description = "IAM policy to disallow configuration change in AWS config"
+  title       = "Deny configuration changes to AWS config"
+  description = "Disallow configuration changes to AWS config."
   parent      = "tmod:@turbot/turbot#/"
 }
 

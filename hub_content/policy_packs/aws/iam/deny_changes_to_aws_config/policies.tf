@@ -8,8 +8,8 @@ resource "turbot_policy_setting" "aws_iam_stack" {
 
 # AWS > IAM > Stack > Source
 resource "turbot_policy_setting" "aws_iam_stack_source" {
-  resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-iam#/policy/types/iamStackSource"
+  resource       = turbot_smart_folder.pack.id
+  type           = "tmod:@turbot/aws-iam#/policy/types/iamStackSource"
   template_input = <<-EOT
     {
       account  {
@@ -20,9 +20,9 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
     EOT
   template       = <<-EOT
     |
-    resource "aws_iam_policy" "deny_config_changes" {
-      name        = "DenyConfigChanges"
-      description = "Deny specific Config actions unless the principal is AWSControlTowerExecution role"
+    resource "aws_iam_policy" "deny_aws_config_changes" {
+      name        = "deny_aws_config_changes"
+      description = "Disallow configuration changes to AWS config"
       policy      = <<EOF
     {
         "Version": "2012-10-17",
