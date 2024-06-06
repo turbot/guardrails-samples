@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Detect if Azure network security group rules allow all, RDP and SSH inbound access"
-  description = "Detect if AWS EC2 instance has IMDSv2 enforced"
+  description = "Detect if Azure network security group rules allow all, RDP and SSH inbound access"
   parent      = "tmod:@turbot/turbot#/"
 }
 
