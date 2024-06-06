@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect if encryption at rest is enabled for S3 buckets"
-  description = "Detect and report S3 buckets that have encryption at rest enabled"
+  title       = "Enforce block public access on S3 accounts"
+  description = "Enforce block public access on S3 accounts."
   parent      = "tmod:@turbot/turbot#/"
 }
 

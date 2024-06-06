@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect if encryption in transit is enabled for S3 buckets"
-  description = "Detect and report S3 buckets that have encryption in transit enabled"
+  title       = "Enforce block public access on S3 buckets"
+  description = "Enforce block public access on S3 buckets."
   parent      = "tmod:@turbot/turbot#/"
 }
 

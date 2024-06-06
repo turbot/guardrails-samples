@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Correct public access for S3 buckets"
-  description = "Correct read/write public access for S3 buckets"
+  title       = "Enforce enable encryption at rest for S3 buckets"
+  description = "Ensure encryption at rest is enabled for S3 buckets."
   parent      = "tmod:@turbot/turbot#/"
 }
 
