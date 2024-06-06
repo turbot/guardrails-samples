@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect enabled RBAC AKS clusters"
-  description = "Detect AKS clusters that are enabled"
+  title       = "Enforce enable RBAC for AKS managed clusters"
+  description = "Delete AKS managed clusters that do not have role-based access control enabled."
   parent      = "tmod:@turbot/turbot#/"
 }
 
