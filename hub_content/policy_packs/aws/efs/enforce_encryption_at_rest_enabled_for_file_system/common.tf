@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect if encryption at rest is enabled for EFS file system"
-  description = "Detect if encryption at rest is enabled for EFS file system"
+  title       = "Enforce encryption at rest is enabled for AWS EFS file systems"
+  description = "Delete AWS EFS file systems that do not have encryption at rest enabled."
   parent      = "tmod:@turbot/turbot#/"
 }
 

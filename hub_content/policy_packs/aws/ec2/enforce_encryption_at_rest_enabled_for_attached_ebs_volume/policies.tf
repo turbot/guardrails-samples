@@ -6,7 +6,6 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved" {
       {
         volume {
           attachments: get(path: "Attachments")
-          encrypted: get(path: "Encrypted")
         }
       }
       EOT
@@ -16,7 +15,7 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved" {
       {#- If AWS EBS volume is attached to an EC2 instance -#}
       {%- if attachment.InstanceId -%}
       {%- set attachedWithInstance = true -%}
-        {%- if attachedWithInstance and $.volume.encrypted -%}
+        {%- if attachedWithInstance -%}
           Check: Approved
           {#- Enforce: Detach unapproved if new -#}
           {#- Enforce: Detach, snapshot and delete unapproved if new -#}
@@ -26,15 +25,14 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved" {
     EOT
 }
 
-# AWS > EC2 > Volume > Encryption at Rest
-resource "turbot_policy_setting" "aws_ec2_volume_encryption_at_rest" {
+# AWS > EC2 > Volume > Approved > Encryption at Rest
+resource "turbot_policy_setting" "aws_ec2_volume_approved_encryption_at_rest" {
   resource       = turbot_smart_folder.pack.id
   type           = "tmod:@turbot/aws-ec2#/policy/types/volumeEncryptionAtRest"
   template_input = <<-EOT
     {
       volume {
         attachments: get(path: "Attachments")
-        encrypted: get(path: "Encrypted")
       }
     }
     EOT
@@ -44,13 +42,20 @@ resource "turbot_policy_setting" "aws_ec2_volume_encryption_at_rest" {
       {#- If AWS EBS volume is attached to an EC2 instance -#}
       {%- if attachment.InstanceId -%}
       {%- set attachedWithInstance = true -%}
-        {%- if attachedWithInstance and $.volume.encrypted -%}
+        {%- if attachedWithInstance -%}
           AWS managed key or higher
-          {#- AWS managed key -#}
           {#- Customer managed key -#}
           {#- Encryption at Rest > Customer Managed Key -#}
         {%- endif -%}
       {%- endif -%}
     {%- endfor -%}
     EOT
+}
+
+# AWS > EC2 > Volume > Approved > Encryption at Rest > Customer Managed Key
+resource "turbot_policy_setting" "aws_ec2_volume_approved_encryption_at_rest_customer_managed_key" {
+  resource = turbot_smart_folder.pack.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/volumeEncryptionAtRestCustomerManagedKey"
+  # Enter your CMK id/arn/alias below
+  value    = "alias/turbot/default"
 }

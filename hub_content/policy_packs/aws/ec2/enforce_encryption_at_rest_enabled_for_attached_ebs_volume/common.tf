@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect that IMDSv2 is enforced for all AWS EC2 instances"
-  description = "Detect if AWS EC2 instance has IMDSv2 enforced"
+  title       = "Enforce encryption at rest is enabled for AWS EBS volumes attached to AWS EC2 instances"
+  description = "Detach/Snapshot and delete attached AWS EBS volumes that do not have encryption at rest enabled."
   parent      = "tmod:@turbot/turbot#/"
 }
 
