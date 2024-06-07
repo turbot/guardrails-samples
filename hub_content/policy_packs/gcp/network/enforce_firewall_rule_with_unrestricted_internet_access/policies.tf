@@ -18,7 +18,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved_ru
     REJECT $.turbot.protocol:all $.turbot.cidr:0.0.0.0/0,::/0
 
     # Reject port range sizes above maximum
-    REJECT $.turbot.portRangeSize:>1 $.turbot.cidr:0.0.0.0/0,::/0
+    REJECT $.turbot.portRangeSize:>1
 
     # Approve unmatched rules
     APPROVE *
