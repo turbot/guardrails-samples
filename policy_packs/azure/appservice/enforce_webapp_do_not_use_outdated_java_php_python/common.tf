@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Correct insecure TLS version for Web Apps"
-  description = "Correct Web Apps that are using insecure TLS versions - 1.0 and 1.1"
+  title       = "Enforce App Service web apps do not use outdated Java/PHP/Python versions"
+  description = "Delete App Service web apps that use outdated Java/PHP/Python versions."
   parent      = "tmod:@turbot/turbot#/"
 }
 

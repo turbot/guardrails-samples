@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect outdated Java/PHP/Python for Web Apps"
-  description = "Detect Web Apps that are running outdated Java/PHP/Python version"
+  title       = "Enforce App Service Web Apps to use managed service identity"
+  description = "Delete App Service Web Apps that do not use managed service identity."
   parent      = "tmod:@turbot/turbot#/"
 }
 

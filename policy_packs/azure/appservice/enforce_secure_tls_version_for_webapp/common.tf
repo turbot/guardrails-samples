@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect disabled HTTP traffic for Web Apps"
-  description = "Detect HTTP traffic that is disabled for Web Apps"
+  title       = "Correct insecure TLS version for App Service web apps"
+  description = "Ensure App Service web apps use a secure TLS version - 1.2"
   parent      = "tmod:@turbot/turbot#/"
 }
 

@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect disabled managed service identities for Web Apps"
-  description = "Detect managed service identities that are disabled for Web Apps"
+  title       = "Enforce HTTPs traffic for App Service web apps"
+  description = "Ensure App Service web apps use HTTPS traffic."
   parent      = "tmod:@turbot/turbot#/"
 }
 
