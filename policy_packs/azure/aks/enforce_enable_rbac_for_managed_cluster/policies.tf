@@ -18,14 +18,32 @@ resource "turbot_policy_setting" "azure_aks_managed_cluster_approved_custom" {
     }
     EOT
   template       = <<-EOT
-    {%- if $.managedCluster.enableRBAC %}
-      title: "RBAC Enabled"
-      result: Approved
-      message: "RBAC is enabled for managed cluster"
-    {%- else -%}
-      title: "RBAC Enabled"
-      result: Not approved
-      message: "RBAC is not enabled for managed cluster"
-      {%- endif -%}
+    {%- if $.managedCluster.enableRBAC == false -%} 
+
+      {%- set data = { 
+          "title": "RBAC Enabled",
+          "result": "Not approved",
+          "message": "RBAC is not enabled for managed cluster"
+      } -%} 
+
+    {%- elif $.managedCluster.enableRBAC == true -%} 
+
+      {%- set data = { 
+          "title": "RBAC Enabled",
+          "result": "Approved",
+          "message": "RBAC is enabled for managed cluster"
+      } -%} 
+
+    {%- else -%} 
+
+      {%- set data = { 
+          "title": "RBAC Enabled",
+          "result": "Skip",
+          "message": "No RBAC data for managed cluster yet"
+      } -%} 
+
+    {%- endif -%} 
+
+    {{ data | json }}
     EOT
 }
