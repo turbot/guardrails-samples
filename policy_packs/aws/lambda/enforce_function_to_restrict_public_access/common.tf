@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce Lambda functions to restrict public access"
-  description = "Ensure that the AWS Lambda function policy attached to functions blocks public access."
+  title       = "Enforce AWS Lambda functions to restrict public access"
+  description = "Ensure that AWS Lambda function policies attached to functions blocks public access."
   parent      = "tmod:@turbot/turbot#/"
 }
 
