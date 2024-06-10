@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect public replication instances for AWS DMS"
-  description = "Detect whether replication instances for AWS database migration service are public"
+  title       = "Enforce AWS DMS relication instances to restrict public access"
+  description = "Stop/Terminate AWS DMS replication instances if they are are publicly accessible."
   parent      = "tmod:@turbot/turbot#/"
 }
 
