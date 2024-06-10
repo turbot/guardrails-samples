@@ -23,16 +23,16 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
       result: Skip
       message: Crypto key is {{ $.cryptoKey.keyState }}
     {%- else %}
-      {%- set rotationPeriodWithoutSeconds = $.cryptoKey.rotationPeriod.slice(1, -1) -%}
+      {%- set rotationPeriodWithoutSeconds = $.cryptoKey.rotationPeriod.slice(0, -1) -%}
       {%- set rotationPeriodInDays = rotationPeriodWithoutSeconds / 86400 -%}
-      {%- if rotationPeriodInDays > 1 %}
-        title: Rotation
-        result: Not approved
-        message: Crypto key not rotated regularly
-      {%- else %}
+      {%- if rotationPeriodInDays <= 90 %}
         title: Rotation
         result: Approved
         message: Crypto key rotated regularly
+      {%- else %}
+        title: Rotation
+        result: Not approved
+        message: Crypto key not rotated regularly
       {%- endif -%}
     {%- endif -%}
     EOT
