@@ -3,15 +3,15 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/aws.svg"
 brand_color: "#FF9900"
-display_name: "Deny configuration changes to AWS config"
+display_name: "Deny Configuration Changes to AWS Config"
 short_name: "deny_changes_to_aws_config"
-description: "IAM policy to disallow configuration change in AWS config."
+description: "Disallow any configuration changes to AWS Config."
 mod_dependencies:
   - "@turbot/aws"
   - "@turbot/aws-iam"
 ---
 
-# Deny configuration changes to AWS config
+# Deny Configuration Changes to AWS Config
 
 This policy pack prevents unauthorized configuration changes to AWS Config using Terraform. It automates the creation and setup of the necessary Guardrails policies, allowing Guardrails to automatically enforce restrictions on configuration changes, ensuring that only authorized roles can modify AWS Config settings.
 
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the account from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Deny configuration changes to AWS config` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Deny Configuration Changes to AWS Config` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]

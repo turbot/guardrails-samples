@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce HTTPs traffic for App Service web apps"
-  description = "Ensure App Service web apps use HTTPS traffic."
+  title       = "Enforce HTTPS Traffic for Azure App Service Web Apps"
+  description = "Ensure Azure App Service web apps use HTTPS traffic."
   parent      = "tmod:@turbot/turbot#/"
 }
 

@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce App Service web apps do not use outdated Java/PHP/Python versions"
-  description = "Delete App Service web apps that use outdated Java/PHP/Python versions."
+  title       = "Enforce Azure App Service Web Apps to Not Use Outdated Java/PHP/Python Versions"
+  description = "Delete Azure App Service web apps that use outdated Java/PHP/Python versions."
   parent      = "tmod:@turbot/turbot#/"
 }
 

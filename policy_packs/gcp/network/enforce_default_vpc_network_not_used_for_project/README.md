@@ -3,16 +3,16 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Enforce default VPC network is not used within GCP projects"
+display_name: "Enforce Default VPC Network to Not Be Used Within GCP Projects"
 short_name: "enforce_default_vpc_network_not_used_for_project"
-description: "Ensure that default VPC networks is not being used within GCP projects."
+description: "Ensure that the default VPC network is not being used within GCP projects."
 mod_dependencies:
   - "@turbot/gcp"
   - "@turbot/gcp-iam"
   - "@turbot/gcp-network"
 ---
 
-# Enforce default VPC networks is not used within GCP projects
+# Enforce Default VPC Network to Not Be Used Within GCP Projects
 
 This Policy Pack ensures that default VPC networks is not being used within GCP projects, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect and delete default VPC networks.
 
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce default VPC network is not used within GCP projects` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce Default VPC Network to Not Be Used Within GCP Projects` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]

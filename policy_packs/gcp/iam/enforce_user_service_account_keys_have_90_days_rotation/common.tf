@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce GCP IAM user-managed service account keys to not have rotation period of more than 90 days"
+  title       = "Enforce GCP IAM User-Managed Service Account Keys to Not Have Rotation Period of More Than 90 Days"
   description = "Delete GCP IAM user-managed service account keys that have rotation period of more than 90 days."
   parent      = "tmod:@turbot/turbot#/"
 }

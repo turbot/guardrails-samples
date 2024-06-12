@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Deny configuration changes to AWS config"
-  description = "Disallow configuration changes to AWS config."
+  title       = "Deny Configuration Changes to AWS Config"
+  description = "Disallow any configuration changes to AWS Config."
   parent      = "tmod:@turbot/turbot#/"
 }
 

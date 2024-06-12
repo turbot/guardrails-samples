@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Correct insecure TLS version for App Service web apps"
-  description = "Ensure App Service web apps use a secure TLS version - 1.2"
+  title       = "Enforce Secure TLS Version for Azure App Service Web Apps"
+  description = "Ensure Azure App Service web apps use a secure TLS version - 1.2."
   parent      = "tmod:@turbot/turbot#/"
 }
 

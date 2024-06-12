@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce App Service Web Apps to use managed service identity"
-  description = "Delete App Service Web Apps that do not use managed service identity."
+  title       = "Enforce Azure App Service Web Apps to Use Managed Service Identity"
+  description = "Delete Azure App Service Web Apps that do not use managed service identity."
   parent      = "tmod:@turbot/turbot#/"
 }
 

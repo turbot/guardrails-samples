@@ -3,16 +3,16 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Enforce enable block project-wide SSH keys for GCP Compute Engine instances"
+display_name: "Enforce Enable Block Project-Wide SSH Keys for GCP Compute Engine Instances"
 short_name: "enforce_enable_block_project_wide_ssh_keys_for_instance"
-description: "Enforce enable block project-wide SSH keys for GCP Compute Engine instances."
+description: "Ensure that block project-wide SSH keys is enabled for GCP Compute Engine instances."
 mod_dependencies:
   - "@turbot/gcp"
   - "@turbot/gcp-iam"
   - "@turbot/gcp-computeengine"
 ---
 
-# Enforce enable block project-wide SSH keys for GCP Compute Engine instances
+# Enforce Enable Block Project-Wide SSH Keys for GCP Compute Engine Instances
 
 This Policy Pack enables block project-wide SSH keys setting for compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect and enable block project-wide SSH keys.
 
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce enable block project-wide SSH keys for GCP Compute Engine instances` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce Enable Block Project-Wide SSH Keys for GCP Compute Engine Instances` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]

@@ -3,16 +3,16 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Enforce GCP Compute Engine instances to not use external IP addresses"
+display_name: "Enforce GCP Compute Engine Instances to Not Use External IP Addresses"
 short_name: "enforce_instance_to_not_use_external_ip_address"
-description: "Delete access configs for instances that use external IP addresses."
+description: "Delete access configs for GCP Compute Engine instances that use external IP addresses."
 mod_dependencies:
   - "@turbot/gcp"
   - "@turbot/gcp-iam"
   - "@turbot/gcp-computeengine"
 ---
 
-# Enforce GCP Compute Engine instances to not use external IP addresses
+# Enforce GCP Compute Engine Instances to Not Use External IP Addresses
 
 This Policy Pack removes access configs with external IPs that are used in compute engine instances, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect and remove the external IPs.
 
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce GCP Compute Engine instances to not use external IP addresses` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce GCP Compute Engine Instances to Not Use External IP Addresses` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]

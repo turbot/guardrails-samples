@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce block public access on S3 accounts"
-  description = "Enforce block public access on S3 accounts."
+  title       = "Enforce Block Public Access on S3 Accounts"
+  description = "Ensure block public access settings is enabled for S3 accounts."
   parent      = "tmod:@turbot/turbot#/"
 }
 

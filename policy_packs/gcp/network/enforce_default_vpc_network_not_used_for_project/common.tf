@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce default VPC network is not used within GCP projects"
+  title       = "Enforce Default VPC Network to Not Be Used Within GCP Projects"
   description = "Ensure that the default VPC network is not being used within GCP projects."
   parent      = "tmod:@turbot/turbot#/"
 }

@@ -3,7 +3,7 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Enforce GCP IAM user-managed service accounts to not have admin privileges"
+display_name: "Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges"
 short_name: "enforce_user_service_account_to_not_have_admin_privileges"
 description: "Delete GCP IAM user-managed service accounts that have admin privileges."
 mod_dependencies:
@@ -11,7 +11,7 @@ mod_dependencies:
   - "@turbot/gcp-iam"
 ---
 
-# Enforce GCP IAM user-managed service accounts to not have admin privileges
+# Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges
 
 This Policy Pack checks and deletes user-managed service accounts that have admin privileges, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect and remove the offending service accounts.
 
@@ -53,7 +53,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce GCP IAM user-managed service accounts to not have admin privileges` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]

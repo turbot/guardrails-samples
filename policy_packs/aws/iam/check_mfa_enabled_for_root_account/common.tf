@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect MFA enabled for root account"
+  title       = "Detect MFA Enabled for AWS IAM Root Account"
   description = "Detect if MFA is enabled for AWS IAM root account."
   parent      = "tmod:@turbot/turbot#/"
 }

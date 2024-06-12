@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce GCP IAM user-managed service accounts to not have admin privileges"
+  title       = "Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges"
   description = "Delete GCP IAM user-managed service accounts that have admin privileges."
   parent      = "tmod:@turbot/turbot#/"
 }

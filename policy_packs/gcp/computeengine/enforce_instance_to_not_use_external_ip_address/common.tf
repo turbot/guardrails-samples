@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce GCP Compute Engine instances to not use external IP addresses"
-  description = "Delete access configs for instances that use external IP addresses"
+  title       = "Enforce GCP Compute Engine Instances to Not Use External IP Addresses"
+  description = "Delete access configs for GCP Compute Engine instances that use external IP addresses."
   parent      = "tmod:@turbot/turbot#/"
 }
 

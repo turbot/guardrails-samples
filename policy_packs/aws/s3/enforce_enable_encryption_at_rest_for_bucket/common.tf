@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce enable encryption at rest for S3 buckets"
+  title       = "Enforce Enable Encryption at Rest for S3 Buckets"
   description = "Ensure encryption at rest is enabled for S3 buckets."
   parent      = "tmod:@turbot/turbot#/"
 }

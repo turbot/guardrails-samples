@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce enable block project-wide SSH keys for GCP Compute Engine instances"
-  description = "Enforce enable block project-wide SSH keys for GCP Compute Engine instances"
+  title       = "Enforce Enable Block Project-Wide SSH Keys for GCP Compute Engine Instances"
+  description = "Ensure that block project-wide SSH keys is enabled for GCP Compute Engine instances."
   parent      = "tmod:@turbot/turbot#/"
 }
 

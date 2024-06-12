@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce encryption at rest is enabled for AWS EBS volumes attached to AWS EC2 instances"
+  title       = "Enforce Encryption at Rest is Enabled for AWS EBS Volumes Attached to AWS EC2 Instances"
   description = "Detach/Snapshot and delete attached AWS EBS volumes that do not have encryption at rest enabled."
   parent      = "tmod:@turbot/turbot#/"
 }

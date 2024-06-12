@@ -3,16 +3,16 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/aws.svg"
 brand_color: "#FF9900"
-display_name: "Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts"
-short_name: "deny"
-description: "Guardrails policy pack to stop/terminate EC2 instances that use unapproved AMIs and/or publisher accounts."
+Display Name: "Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts"
+short_name: "deny_unapproved_ami_publisher_for_instance"
+description: "Deny launch of AWS EC2 instances that do not use approved AMIs and Publisher Accounts."
 mod_dependencies:
   - "@turbot/aws"
   - "@turbot/aws-iam"
   - "@turbot/aws-ec2"
 ---
 
-# Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts
+# Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts
 
 This Policy Pack denies launching EC2 instances that use unapproved AMIs and/or publisher accounts, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically deny launching unapproved instances.
 
@@ -55,7 +55,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the account from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Deny AWS EC2 instances with unapproved AMIs and/or publisher accounts` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]

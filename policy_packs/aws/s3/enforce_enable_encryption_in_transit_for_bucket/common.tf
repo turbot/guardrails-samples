@@ -1,6 +1,6 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce enable encryption in transit for S3 buckets"
+  title       = "Enforce Enable Encryption in Transit for S3 Buckets"
   description = "Ensure encryption in transit is enabled for S3 buckets."
   parent      = "tmod:@turbot/turbot#/"
 }

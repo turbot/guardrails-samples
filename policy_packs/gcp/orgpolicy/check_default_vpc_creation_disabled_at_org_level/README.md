@@ -3,16 +3,16 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Check if the creation of the default VPC network is disabled at the GCP organization level"
+display_name: "Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level"
 short_name: "check_default_vpc_creation_disabled_at_org_level"
-description: "Ensure that the creation of the default VPC network is disabled at the GCP organization level."
+description: "Ensure that creation of default VPC network is disabled at the GCP organization level."
 mod_dependencies:
   - "@turbot/gcp"
   - "@turbot/gcp-iam"
   - "@turbot/gcp-orgpolicy"
 ---
 
-# Check if the creation of the default VPC network is disabled at the GCP organization level
+# Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level
 
 This Policy Pack checks if the GCP Organization Policy "Skip default network creation" is disabled at the GCP organization level, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect if the setting is disabled.
 
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Check if the creation of the default VPC network is disabled at the GCP organization level` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]
