@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce approved VM extension installed"
-  description = "Stop VM that uses unapproved VM extention"
+  title       = "Enforce Approved Extensions Are Installed on Azure Compute Virtual Machines"
+  description = "Stop/Terminate Azure compute virtual machines use unapproved extensions."
   parent      = "tmod:@turbot/turbot#/"
 }
 

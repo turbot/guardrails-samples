@@ -3,18 +3,18 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/azure.svg"
 brand_color: "#FF9900"
-display_name: "Enforce approved VM extension installed"
-short_name: "enforce_approved_vm_extension_installed"
-description: "Guardrails policy pack to stop/terminate EC2 instances that use unapproved AMIs and/or publisher accounts."
+display_name: "Enforce Approved Extensions Are Installed on Azure Compute Virtual Machines"
+short_name: "enforce_approved_extensions_installed_for_vms"
+description: "Stop/Terminate Azure compute virtual machines use unapproved extensions."
 mod_dependencies:
   - "@turbot/azure"
   - "@turbot/azure-iam"
   - "@turbot/azure-compute"
 ---
 
-# Enforce approved VM extension installed
+# Enforce Approved Extensions Are Installed on Azure Compute Virtual Machines
 
-This Policy Pack stop VM that use unapproved VM extensions, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically stop unapproved virtual machines.
+This Policy Pack stops/terminates Virtual Machines that use unapproved extensions, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically stop/terminate unapproved virtual machines.
 
 ## Documentation
 
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/compute/enforce_approved_vm_extension_installed
+cd guardrails-samples/policy_packs/azure/compute/enforce_approved_extensions_installed_for_vms
 ```
 
 ### Credentials
@@ -55,7 +55,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the account from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce approved VM extension installed` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce Approved Extensions Are Installed on Azure Compute Virtual Machines` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]
@@ -83,6 +83,7 @@ To apply enforcement automation: Open the Policy Pack Terraform source files in 
       type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
       # value    = "Check: Approved"
       value    = "Enforce: Stop unapproved"
+      # value    = "Enforce: Delete unapproved if new"
     }
   ```
 
