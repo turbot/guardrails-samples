@@ -3,18 +3,18 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Enforce GCP Cloud Storage no publicly accessible buckets"
-short_name: "enforce_public_access_enabled_for_storage_bucket"
-description: "Enforce that no GCP Storage buckets within your GCP account are publicly accessible."
+Display Name: "Enforce GCP Storage Buckets Are Not Publicly Accessible"
+short_name: "enforce_bucket_is_not_publicly_accessible"
+description: "Ensure that GCP storage buckets are not publicly accessible."
 mod_dependencies:
   - "@turbot/gcp"
   - "@turbot/gcp-iam"
   - "@turbot/gcp-storage"
 ---
 
-# Enforce that no GCP storage buckets within your GCP account are publicly accessible
+# Enforce GCP Storage Buckets Are Not Publicly Accessible
 
-This policy-pack removes public access from Storage buckets using Terraform. It automates the creation and setup of necessary Guardrails policies, allowing Guardrails to automatically detect and disable public access to these buckets.
+This policy-pack removes public access from Storage buckets, using Terraform. It automates the creation and setup of necessary Guardrails policies, allowing Guardrails to automatically detect and disable public access from these buckets.
 
 ## Documentation
 
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_public_access_enabled_for_storage_bucket
+cd guardrails-samples/policy_packs/gcp/storage/enforce_bucket_is_not_publicly_accessible
 ```
 
 ### Credentials
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Enforce GCP Storage no publicly accessible buckets` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Enforce GCP Storage Buckets Are Not Publicly Accessible` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]
@@ -65,7 +65,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 Within the Guardrails UI navigate to:
 
   ```sh
-  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Faws-s3%23%2Fcontrol%2Ftypes%2FbucketPolicyTrustedAccess%27
+  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Fgcp-storage%23%2Fcontrol%2Ftypes%2FbucketPolicyTrustedAccess%27
   ```
 
   Replace `{workspace-url}` with the FQDN of your workspace (e.g. <https://company.cloud.turbot.com>). Use the "Resource" filter to select the test account where the Policy Pack is attached. Review all controls in `Alarm` state to understand why they are violating this policy pack objective.

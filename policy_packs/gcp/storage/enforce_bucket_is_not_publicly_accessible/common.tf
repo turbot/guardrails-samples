@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce GCP Storage no publicly accessible buckets"
-  description = "Enforce that no GCP Storage buckets within your GCP account are publicly accessible"
+  title       = "Enforce GCP Storage Buckets Are Not Publicly Accessible"
+  description = "Ensure that GCP storage buckets are not publicly accessible."
   parent      = "tmod:@turbot/turbot#/"
 }
 
