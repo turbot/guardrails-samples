@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Detect that encryption of Kubernetes secrets is enabled for GKE clusters"
-  description = "Detect that encryption of Kubernetes secrets is enabled for GKE clusters"
+  title       = "Enforce Encryption for Secrets is Enabled for GCP GKE Clusters"
+  description = "Delete GCP GKE clusters that do not have encryption for secrets enabled."
   parent      = "tmod:@turbot/turbot#/"
 }
 

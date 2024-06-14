@@ -13,20 +13,35 @@ resource "turbot_policy_setting" "gcp_kubernetesengine_region_cluster_approved_c
   template_input = <<-EOT
     {
       regionCluster {
-        databaseEncryption: get(path: "databaseEncryption")
         databaseEncryptionState: get(path: "databaseEncryption.state")
       }
     }
     EOT
   template       = <<-EOT
     {%- if $.regionCluster.databaseEncryptionState == "ENCRYPTED" -%}
-      title: Encryption of secrets at the application layer
-      result: Approved
-      message: "GKE region clusters secrets are encrypted at the application layer"
+
+      {%- set data = { 
+          title: "Encryption for Secrets"
+          result: Approved
+          message: "Encryption for secrets is enabled"
+      } -%} 
+
+    {%- elif $.regionCluster.databaseEncryptionState != "ENCRYPTED" -%}
+
+      {%- set data = { 
+          title: "Encryption for Secrets"
+          result: "Not approved"
+          message: "Encryption for secrets is not enabled"
+      } -%} 
+
     {%- else -%}
-      title: Encryption of secrets at the application layer
-      result: Not approved
-      message: "GKE region clusters secrets are not encrypted at the application layer"
+
+      {%- set data = { 
+          title: "Encryption for Secrets"
+          result: "Skip"
+          message: "No data for encryption yet"
+      } -%} 
+
     {%- endif -%}
     EOT
 }
@@ -46,20 +61,35 @@ resource "turbot_policy_setting" "gcp_kubernetesengine_zone_cluster_approved_cus
   template_input = <<-EOT
     {
       zoneCluster {
-        databaseEncryption: get(path: "databaseEncryption")
         databaseEncryptionState: get(path: "databaseEncryption.state")
       }
     }
     EOT
   template       = <<-EOT
     {%- if $.zoneCluster.databaseEncryptionState == "ENCRYPTED" -%}
-      title: Encryption of secrets at the application layer
-      result: Approved
-      message: "GKE zone clusters secrets are encrypted at the application layer"
+
+      {%- set data = { 
+          title: "Encryption for Secrets"
+          result: Approved
+          message: "Encryption for secrets is enabled"
+      } -%} 
+
+    {%- elif $.zoneCluster.databaseEncryptionState != "ENCRYPTED" -%}
+
+      {%- set data = { 
+          title: "Encryption for Secrets"
+          result: "Not approved"
+          message: "Encryption for secrets is not enabled"
+      } -%} 
+
     {%- else -%}
-      title: Encryption of secrets at the application layer
-      result: Not approved
-      message: "GKE zone clusters secrets are not encrypted at the application layer"
+
+      {%- set data = { 
+          title: "Encryption for Secrets"
+          result: "Skip"
+          message: "No data for encryption yet"
+      } -%} 
+
     {%- endif -%}
     EOT
 }
