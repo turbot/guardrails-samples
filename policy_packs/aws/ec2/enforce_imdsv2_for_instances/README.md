@@ -1,13 +1,9 @@
 ---
-category: ["public cloud"]
+categories: ["security"]
 display_name: "Enforce IMDSv2 on AWS EC2 Instances"
 short_name: "enforce_imdsv2_for_instances"
-# TODO: Do we need a short description?
-description: "Ensure that IMDSv2 is enforced for AWS EC2 instances."
-# TODO: Do we need to list dependencies? Can they automatically be calculated?
+description: "Mitigate the risk of unauthorized metadata exposure through vulnerabilities like Server-Side Request Forgery (SSRF)."
 mod_dependencies:
-  - "@turbot/aws"
-  - "@turbot/aws-iam"
   - "@turbot/aws-ec2"
 ---
 
@@ -17,7 +13,7 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 ## Documentation
 
-- **[Policy settings →](/policy-packs/enforce_imdsv2_for_instances/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_imdsv2_for_instances/settings)**
 
 ## Getting Started
 
@@ -25,21 +21,19 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - The following Guardrails mods need to be installed:
-  - `@turbot/aws`
-  - `@turbot/aws-iam`
-  - `@turbot/aws-ec2`
+  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/aws-ec2)
 
 ### Credentials
 
-`Turbot/Admin` permissions are required to create the policy pack and policy settings.
+To create a policy pack through Terraform, setup your [Turbot Guardrails CLI credentials](https://turbot.com/guardrails/docs/reference/cli/installation#set-up-your-turbot-guardrails-credentials) using [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key).
 
-By default, the [Turbot Guardrails default profile](https://turbot.com/guardrails/docs/reference/cli/installation#set-up-your-turbot-guardrails-credentials) from the Turbot Guardrails CLI will be used. This profile uses [access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key).
-
-To use a different profile:
+If you create a profile other than `default`, you can set an environment variable:
 
 ```sh
 export TURBOT_PROFILE="my-workspace"
 ```
+
+The profile will require the `Turbot/Admin` permission.
 
 ## Usage
 
@@ -65,5 +59,23 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
-> [!IMPORTANT]
-> Do not add or remove more than one policy pack to a resource at a time. Adding policy packs is an asynchronous operation, after changing the policy pack configuration for a resource, wait at least 5 minutes before adding or removing other policy packs.
+### Enforce Mode
+
+By default, the controls are set to Check mode based on the policy settings. To enable automated enforcements, you can switch to Enforce mode by changing the policy settings:
+
+```hcl
+resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
+  resource = turbot_smart_folder.pack.id
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataService"
+  value    =  "Enforce: Enabled for V2 only"
+}
+```
+
+And re-applying the Terraform:
+
+```sh
+terraform plan
+terraform apply
+```
+
+You can also change the policy value in the Guardrails console, though your Terraform state file may become out of sync.
