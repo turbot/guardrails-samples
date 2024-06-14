@@ -1,7 +1,7 @@
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
-  title       = "Enforce VPC firewall with unrestricted inbound access"
-  description = "Ensure that there are no VPC firewall rules that allow unrestricted inbound access on known ports."
+  title       = "Enforce GCP VPC Network Firewall Rules with Range of Ports to not allow incoming traffic"
+  description = "Delete GCP VPC network firewall rules with range of ports that are opened to allow incoming traffic."
   parent      = "tmod:@turbot/turbot#/"
 }
 
