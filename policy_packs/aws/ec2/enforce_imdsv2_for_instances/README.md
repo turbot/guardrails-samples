@@ -23,17 +23,23 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 ### Requirements
 
-The following mods need to be installed:
-
-- `@turbot/aws`
-- `@turbot/aws-iam`
-- `@turbot/aws-ec2`
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- The following Guardrails mods need to be installed:
+  - `@turbot/aws`
+  - `@turbot/aws-iam`
+  - `@turbot/aws-ec2`
 
 ### Credentials
 
-Installing this policy pack requires [admin credentials to a Turbot Guardrails workspace](https://turbot.com/guardrails/docs/guides/iam/access-keys) and [a way to run Terraform](https://turbot.com/guardrails/docs/7-minute-labs/terraform).
+`Turbot/Admin` permissions are required to create the policy pack and policy settings.
 
-To setup your Guardrails credentials, please see [Set up your Guardrails credentials](https://turbot.com/guardrails/docs/7-minute-labs/cli#set-up-your-turbot-credentials).
+By default, the [Turbot Guardrails default profile](https://turbot.com/guardrails/docs/reference/cli/installation#set-up-your-turbot-guardrails-credentials) from the Turbot Guardrails CLI will be used. This profile uses [access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key).
+
+To use a different profile:
+
+```sh
+export TURBOT_PROFILE="my-workspace"
+```
 
 ## Usage
 
@@ -47,9 +53,13 @@ cd guardrails-samples/policy_packs/aws/ec2/enforce_imdsv2_for_instances
 Run the Terraform to create the policy pack in your workspace:
 
 ```sh
-export TURBOT_PROFILE="my-workspace"
 terraform init
 terraform plan
+```
+
+Then apply the changes:
+
+```sh
 terraform apply
 ```
 
