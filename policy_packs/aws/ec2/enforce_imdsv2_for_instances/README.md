@@ -1,10 +1,6 @@
 ---
 categories: ["security"]
-display_name: "Enforce IMDSv2 on AWS EC2 Instances"
-short_name: "enforce_imdsv2_for_instances"
 description: "Mitigate the risk of unauthorized metadata exposure through vulnerabilities like Server-Side Request Forgery (SSRF)."
-mod_dependencies:
-  - "@turbot/aws-ec2"
 ---
 
 # Enforce IMDSv2 on AWS EC2 Instances
