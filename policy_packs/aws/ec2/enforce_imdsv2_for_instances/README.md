@@ -21,15 +21,32 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 ### Credentials
 
-To create a policy pack through Terraform, setup your [Turbot Guardrails CLI credentials](https://turbot.com/guardrails/docs/reference/cli/installation#set-up-your-turbot-guardrails-credentials) using [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key).
+To create a policy pack through Terraform, ensure you have `Turbot/Admin` permissions in Guardrails and then create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) and credentials:
 
-If you create a profile other than `default`, you can set an environment variable:
+```sh
+vi ~/.config/turbot/credentials
+```
+
+```yml
+default:
+  accessKey: acce6ac5-access-key-here
+  secretKey: a8af61ec-secret-key-here
+  workspace: myworkspace-turbot.cloud.turbot.com
+```
+
+Or use environment variables:
+
+```sh
+export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
+export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
+export TURBOT_WORKSPACE=myworkspace-turbot.cloud.turbot.com
+```
+
+If you use a profile other than `default`, set an environment variable:
 
 ```sh
 export TURBOT_PROFILE="my-workspace"
 ```
-
-The profile will require the `Turbot/Admin` permission.
 
 ## Usage
 
