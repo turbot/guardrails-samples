@@ -17,11 +17,15 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - The following Guardrails mods need to be installed:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/aws-ec2)
+  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
 
 ### Credentials
 
-To create a policy pack through Terraform, ensure you have `Turbot/Admin` permissions in Guardrails, create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key), and then set your credentials:
+To create a policy pack through Terraform:
+- Ensure you have `Turbot/Admin` permissions in Guardrails
+- Create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key)
+
+And then set your credentials:
 
 ```sh
 vi ~/.config/turbot/credentials
