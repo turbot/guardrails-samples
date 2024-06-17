@@ -21,7 +21,7 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 ### Credentials
 
-To create a policy pack through Terraform, ensure you have `Turbot/Admin` permissions in Guardrails and then create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) and credentials:
+To create a policy pack through Terraform, ensure you have `Turbot/Admin` permissions in Guardrails, create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key), and then set your credentials:
 
 ```sh
 vi ~/.config/turbot/credentials
@@ -74,7 +74,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ### Enforce Mode
 
-By default, the controls are set to Check mode based on the policy settings. To enable automated enforcements, you can switch to Enforce mode by changing the policy settings:
+By default, the controls are set to Check mode based on the policy settings. To enable automated enforcements, you can switch to Enforce mode by changing the policy setting:
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
@@ -91,4 +91,6 @@ terraform plan
 terraform apply
 ```
 
-You can also change the policy value in the Guardrails console, though your Terraform state file may become out of sync.
+You can also update the policy setting on the policy pack directly in the Guardrails console.
+
+Note: If modifying the policy setting in the console, your Terraform state file will become out of sync.
