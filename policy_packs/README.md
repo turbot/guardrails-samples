@@ -13,6 +13,8 @@ If the policy settings use multiple services, then the primary service should be
 ### Naming
 
 Policy pack names should:
+- Contain the resource in plural format
+  - Do not include the provider or service since the folders above already contain them
 - Begin with `deny`, `detect`, or `enforce`, depending on the control objective
 - Be designed to be readable as short sentences
 - Be in snake case
@@ -24,6 +26,8 @@ Policy pack names should:
 This file includes:
 - The `turbot` provider
 - Policy pack resource
+  - `title` should be the same as the README header
+  - `description` should be the same as the README `description` in frontmatter
 - Any service enabled policy setting resources
 
 #### policies.tf
@@ -47,5 +51,6 @@ Frontmatter should include:
   - A one sentence description that explains why using the policy pack is helpful ("why" instead of "what")
 
 Other guidelines:
+- The H1 header should be the control objective in title case and contain the provider and service names
 - For the required mods, only include mods whose policy settings are included, not any 2nd or 3rd level mod dependencies
 - Do not include the `Enable Enforcement` section if there is no `Enforce` policy value
