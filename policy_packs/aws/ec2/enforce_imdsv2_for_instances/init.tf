@@ -9,10 +9,9 @@ terraform {
 provider "turbot" {
 }
 
-# TODO: What should the resource name, title and description be?
 resource "turbot_smart_folder" "pack" {
-  title       = "AWS Policy Pack"
-  description = "Policy pack containing AWS policy settings."
+  title       = "Enforce IMDSv2 on AWS EC2 Instances"
+  description = "Mitigate the risk of unauthorized metadata exposure through vulnerabilities like Server-Side Request Forgery (SSRF)."
   parent      = "tmod:@turbot/turbot#/"
 }
 

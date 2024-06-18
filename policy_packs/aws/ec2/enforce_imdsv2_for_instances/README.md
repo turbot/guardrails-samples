@@ -22,35 +22,18 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 ### Credentials
 
 To create a policy pack through Terraform:
-- Ensure you have `Turbot/Admin` permissions in Guardrails
+- Ensure you have `Turbot/Owner` or `Turbot/Admin` permissions in Guardrails
 - Create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key)
 
 And then set your credentials:
 
 ```sh
-vi ~/.config/turbot/credentials
-```
-
-```yml
-default:
-  accessKey: acce6ac5-access-key-here
-  secretKey: a8af61ec-secret-key-here
-  workspace: myworkspace-turbot.cloud.turbot.com
-```
-
-Or use environment variables:
-
-```sh
+export TURBOT_WORKSPACE=myworkspace-turbot.cloud.turbot.com
 export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
 export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
-export TURBOT_WORKSPACE=myworkspace-turbot.cloud.turbot.com
 ```
 
-If you use a profile other than `default`, set an environment variable:
-
-```sh
-export TURBOT_PROFILE="my-workspace"
-```
+Please [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
 ## Usage
 
@@ -76,19 +59,20 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
-### Enforce Mode
+### Enable Enforcement
 
-By default, the controls are set to Check mode based on the policy settings. To enable automated enforcements, you can switch to Enforce mode by changing the policy setting:
+By default, the controls are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataService"
+  # value    = "Check: Enabled for V2 only"
   value    =  "Enforce: Enabled for V2 only"
 }
 ```
 
-And re-applying the Terraform:
+Then re-apply the changes:
 
 ```sh
 terraform plan
@@ -97,4 +81,4 @@ terraform apply
 
 You can also update the policy setting on the policy pack directly in the Guardrails console.
 
-Note: If modifying the policy setting in the console, your Terraform state file will become out of sync.
+Note: If modifying the policy setting in the console, your Terraform state file will become out of sync, so the policy settings should only be managed in the console.
