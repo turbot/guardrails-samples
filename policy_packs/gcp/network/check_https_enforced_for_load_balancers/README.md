@@ -3,18 +3,18 @@ organization: Turbot
 category: ["public cloud"]
 icon_url: "/images/plugins/turbot/gcp.svg"
 brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Detect that load balancers enforce HTTPS to handle encrypted web traffic"
-short_name: "check_https_enforced_for_load_balancer"
-description: "Check that load balancers enforce HTTPS to handle encrypted web traffic."
+display_name: "Check If GCP Network Load Balancers Enforce HTTPS to Manage Encrypted Web Traffic"
+short_name: "check_https_enforced_for_load_balancers"
+description: "Detect if GCP Network load balancers enforce HTTPS to handle encrypted web traffic."
 mod_dependencies:
   - "@turbot/gcp"
   - "@turbot/gcp-iam"
   - "@turbot/gcp-network"
 ---
 
-# Enforce that GCP load balancers enforce HTTPS to handle encrypted web traffic
+# Check If GCP Network Load Balancers Enforce HTTPS to Manage Encrypted Web Traffic
 
-This policy-pack checks that load balancers enforce HTTPS to handle encrypted web traffic using Terraform. It automates the creation and setup of necessary Guardrails policies, allowing Guardrails to automatically detect if HTTPS is used to handle encrypted web traffic.
+This policy-pack checks that load balancers enforce HTTPS to handle encrypted web traffic, using Terraform. It automates the creation and setup of necessary Guardrails policies, allowing Guardrails to automatically detect if HTTPS is enforced on load balancers to handle encrypted web traffic.
 
 ## Documentation
 
@@ -28,7 +28,7 @@ Clone the repo locally:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/network/check_https_enforced_for_load_balancer
+cd guardrails-samples/policy_packs/gcp/network/check_https_enforced_for_load_balancers
 ```
 
 ### Credentials
@@ -54,7 +54,7 @@ Installing this Policy Pack requires [admin credentials to a Turbot Guardrails w
 - Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
 - Select the project from the list for testing.
 - Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Detect that load balancers enforce HTTPS to handle encrypted web traffic` Policy Pack from the dropdown menu.
+- Select the "MANAGE" link and `+ Add` the `Check If GCP Network Load Balancers Enforce HTTPS to Manage Encrypted Web Traffic` Policy Pack from the dropdown menu.
 - Select "Save".
 
 > [!IMPORTANT]
