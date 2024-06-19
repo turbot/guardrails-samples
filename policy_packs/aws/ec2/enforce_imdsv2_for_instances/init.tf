@@ -1,7 +1,17 @@
-# Policy Pack
+terraform {
+  required_providers {
+    turbot = {
+      source = "turbot/turbot"
+    }
+  }
+}
+
+provider "turbot" {
+}
+
 resource "turbot_smart_folder" "pack" {
   title       = "Enforce IMDSv2 on AWS EC2 Instances"
-  description = "Ensure that IMDSv2 is enforced for AWS EC2 instances."
+  description = "Mitigate the risk of unauthorized metadata exposure through vulnerabilities like Server-Side Request Forgery (SSRF)."
   parent      = "tmod:@turbot/turbot#/"
 }
 
