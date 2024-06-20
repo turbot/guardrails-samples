@@ -1,15 +1,15 @@
 ---
 categories: ["security"]
-description: "Prevent use of potentially vulnerable or malicious images, ensuring that only vetted and compliant resources are deployed."
+description: "Enforcing encryption at rest for AWS EBS volumes is critical to protect sensitive data from unauthorized access and potential breaches."
 ---
 
-# Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts
+# Enforce Encryption at Rest is Enabled for AWS EBS Volumes
 
-Denying AWS EC2 instances with unapproved AMIs and/or publisher accounts is essential to maintain a secure and controlled environment. This prevents the use of potentially vulnerable or malicious images, ensuring that only vetted and compliant resources are deployed, thereby reducing security risks and maintaining compliance with organizational policies.
+Enforcing encryption at rest for AWS EBS volumes is critical to protect sensitive data from unauthorized access and potential breaches. This measure ensures that data stored on EBS volumes is encrypted, thereby enhancing data security and compliance with regulatory requirements.
 
 ## Documentation
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/deny_unapproved_amis_publishers_for_instances/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_ebs_volumes/settings)**
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/deny_unapproved_amis_publishers_for_instances
+cd guardrails-samples/policy_packs/aws/ec2/enforce_encryption_at_rest_is_enabled_for_ebs_volumes
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -62,17 +62,15 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ### Enable Enforcement
 
-By default, the policies are set to `Lockdown Disabled` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Lockdown Disabled` setting and removing the comment from one of the listed enforcement options:
+By default, the controls are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image" {
-  resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImage"
-  # value    = "Lockdown Disabled"
-  # value    = "Lockdown Enabled: Allow Image > AMI IDs only"
-  # value    = "Lockdown Enabled: Allow Image > Publishers only"
-  # value    = "Lockdown Enabled: Allow Image > AMI IDs or Image > Publishers"
-  value    = "Lockdown Enabled: Allow Image > AMI IDs from Image > Publishers"
+resource "turbot_policy_setting" "aws_ec2_volume_approved" {
+  resource       = turbot_smart_folder.pack.id
+  type           = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
+  # value          = "Check: Approved"
+  value          =  "Enforce: Detach unapproved if new"
+  # value          =  "Enforce: Detach, snapshot and delete unapproved if new"
 }
 ```
 
