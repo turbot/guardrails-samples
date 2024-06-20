@@ -1,7 +1,18 @@
+terraform {
+  required_providers {
+    turbot = {
+      source = "turbot/turbot"
+    }
+  }
+}
+
+provider "turbot" {
+}
+
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Enforce AWS IAM Access Keys to Not Be Older Than 90 Days"
-  description = "Deactivate or delete AWS IAM access keys that are older than 90 days."
+  description = "Reduce the risk of compromised credentials by ensuring keys are regularly rotated."
   parent      = "tmod:@turbot/turbot#/"
 }
 
