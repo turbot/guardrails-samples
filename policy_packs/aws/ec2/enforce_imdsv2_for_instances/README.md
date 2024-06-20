@@ -29,7 +29,7 @@ To create a policy pack through Terraform:
 And then set your credentials:
 
 ```sh
-export TURBOT_WORKSPACE=myworkspace-turbot.cloud.turbot.com
+export TURBOT_WORKSPACE=myworkspace.acme.com
 export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
 export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
 ```
