@@ -14,7 +14,10 @@ resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_am
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImageAmiIds"
   # Insert your AMI IDs below
-  value    = yamlencode(["ami-12345678", "ami-87654321"])
+  value    = <<-EOT
+    - "ami-12345678"
+    - "ami-87654321"
+    EOT
 }
 
 
@@ -23,7 +26,13 @@ resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_pu
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImagePublishers"
   # Insert your Publisher Account IDs below
-  value    = yamlencode(["123456789012", "987654321098"])
+  value    = <<-EOT
+    - "123456789012"
+    - "987654321098"
+    EOT
   # Allow all images with `amazon` ImageOwnerAlias and all local images
-  # value    = yamlencode(["amazon", "local"])
+  # value    = <<-EOT
+  #   - "amazon"
+  #   - "local"
+  #   EOT
 }

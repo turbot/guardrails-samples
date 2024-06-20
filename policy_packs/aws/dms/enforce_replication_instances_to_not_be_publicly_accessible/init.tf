@@ -1,7 +1,18 @@
+terraform {
+  required_providers {
+    turbot = {
+      source = "turbot/turbot"
+    }
+  }
+}
+
+provider "turbot" {
+}
+
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Enforce AWS DMS Replication Instances to Restrict Public Access"
-  description = "Stop/Terminate AWS DMS replication instances if they are are publicly accessible."
+  description = "Mitigate the risk of unauthorized access, potential data breaches, and ensures compliance with security best practices and regulatory requirements."
   parent      = "tmod:@turbot/turbot#/"
 }
 

@@ -1,15 +1,15 @@
 ---
 categories: ["security"]
-description: "Mitigate the risk of unauthorized metadata exposure through vulnerabilities like Server-Side Request Forgery (SSRF)."
+description: "Mitigate the risk of unauthorized access, potential data breaches, and ensures compliance with security best practices and regulatory requirements."
 ---
 
-# Enforce IMDSv2 on AWS EC2 Instances
+# Enforce AWS DMS Replication Instances to Restrict Public Access
 
-Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-based authentication to access instance metadata, mitigating the risk of unauthorized metadata exposure through vulnerabilities like SSRF (Server-Side Request Forgery). This helps ensure that only authorized applications and users can retrieve sensitive instance data.
+Enforcing AWS DMS Replication Instances to restrict public access is crucial to protect sensitive data during migration processes. This measure minimizes the risk of unauthorized access, potential data breaches, and ensures compliance with security best practices and regulatory requirements.
 
 ## Documentation
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_imdsv2_for_instances/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_replication_instances_to_not_be_publicly_accessible/settings)**
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ Enforcing IMDSv2 on AWS EC2 instances enhances security by requiring session-bas
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - The following Guardrails mods need to be installed:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
+  - [@turbot/aws-dms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-dms)
 
 ### Credentials
 
@@ -42,7 +42,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_imdsv2_for_instances
+cd guardrails-samples/policy_packs/aws/ec2/enforce_replication_instances_to_not_be_publicly_accessible
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -65,11 +65,13 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the controls are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
+resource "turbot_policy_setting" "aws_dms_replication_instance_approved" {
   resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataService"
-  # value    = "Check: Enabled for V2 only"
-  value    =  "Enforce: Enabled for V2 only"
+  type     = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Stop unapproved if new"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

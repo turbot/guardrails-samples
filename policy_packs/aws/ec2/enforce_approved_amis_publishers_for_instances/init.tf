@@ -1,7 +1,18 @@
+terraform {
+  required_providers {
+    turbot = {
+      source = "turbot/turbot"
+    }
+  }
+}
+
+provider "turbot" {
+}
+
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Enforce AWS EC2 Instances to Use Approved AMIs and/or Publisher Accounts"
-  description = "Stop/Terminate AWS EC2 instances that use unapproved AMIs and/or publisher accounts."
+  description = "Ensure that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards."
   parent      = "tmod:@turbot/turbot#/"
 }
 
