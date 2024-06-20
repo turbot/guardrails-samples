@@ -1,15 +1,15 @@
 ---
 categories: ["security"]
-description: "Mitigate the risk of unauthorized access, potential data breaches, and ensures compliance with security best practices and regulatory requirements."
+description: "Ensure that all data stored within file systems is encrypted, protecting it from unauthorized access and potential data breaches."
 ---
 
-# Enforce AWS DMS Replication Instances to Restrict Public Access
+# Enforce Encryption at Rest is Enabled for AWS EFS File Systems
 
-Enforcing AWS DMS Replication Instances to restrict public access is crucial to protect sensitive data during migration processes. This measure minimizes the risk of unauthorized access, potential data breaches, and ensures compliance with security best practices and regulatory requirements.
+Enforcing encryption at rest for AWS EFS File Systems is crucial because it ensures that all data stored within the file system is automatically encrypted, protecting it from unauthorized access and potential data breaches. This measure helps maintain data confidentiality and integrity, meeting compliance requirements and safeguarding sensitive information.
 
 ## Documentation
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_replication_instances_to_not_be_publicly_accessible/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_file_systems/settings)**
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ Enforcing AWS DMS Replication Instances to restrict public access is crucial to 
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - The following Guardrails mods need to be installed:
-  - [@turbot/aws-dms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-dms)
+  - [@turbot/aws-efs](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-efs)
 
 ### Credentials
 
@@ -42,7 +42,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/dms/enforce_replication_instances_to_not_be_publicly_accessible
+cd guardrails-samples/policy_packs/aws/efs/enforce_encryption_at_rest_is_enabled_for_file_systems
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -65,13 +65,11 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the controls are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_dms_replication_instance_approved" {
+resource "turbot_policy_setting" "aws_efs_file_system_approved" {
   resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApproved"
+  type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemApproved"
   # value    = "Check: Approved"
-  value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
-  # value    = "Enforce: Delete unapproved if new"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

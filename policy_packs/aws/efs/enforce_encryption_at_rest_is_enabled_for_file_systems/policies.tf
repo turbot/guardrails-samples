@@ -11,8 +11,8 @@ resource "turbot_policy_setting" "aws_efs_file_system_approved_encryption_at_res
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemEncryptionAtRest"
   value    = "AWS managed key or higher"
-  # value = "Customer managed key"
-  # value = "Encryption at Rest > Customer Managed Key"
+  # value    = "Customer managed key"
+  # value    = "Encryption at Rest > Customer Managed Key"
 }
 
 # AWS > EFS > FileSystem > Approved > Encryption at Rest > Customer Managed Key
