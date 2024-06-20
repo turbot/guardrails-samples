@@ -1,7 +1,18 @@
+terraform {
+  required_providers {
+    turbot = {
+      source = "turbot/turbot"
+    }
+  }
+}
+
+provider "turbot" {
+}
+
 # Policy Pack
 resource "turbot_smart_folder" "pack" {
   title       = "Enforce Enable Block Project-Wide SSH Keys for GCP Compute Engine Instances"
-  description = "Ensure that block project-wide SSH keys is enabled for GCP Compute Engine instances."
+  description = "Restrict the use of universally accessible SSH keys, thereby reducing the risk of unauthorized access."
   parent      = "tmod:@turbot/turbot#/"
 }
 
