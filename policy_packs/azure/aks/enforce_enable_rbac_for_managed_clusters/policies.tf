@@ -43,7 +43,6 @@ resource "turbot_policy_setting" "azure_aks_managed_cluster_approved_custom" {
       } -%} 
 
     {%- endif -%} 
-
     {{ data | json }}
     EOT
 }
