@@ -23,7 +23,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
         {%- set data = { 
             "title": "Rotation",
             "result": "Skip",
-            "message": Crypto key is {{ $.cryptoKey.keyState }}
+            "message": "Crypto key is not ENABLED"
         } -%} 
 
     {%- else -%}
