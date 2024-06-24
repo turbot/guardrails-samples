@@ -13,5 +13,5 @@ resource "turbot_policy_setting" "aws_ec2_instance_metadata_service_token_hop_li
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataServiceTokenHopLimit"
   # Set between 1 and 64
-  value    = 1
+  value    = 2
 }
