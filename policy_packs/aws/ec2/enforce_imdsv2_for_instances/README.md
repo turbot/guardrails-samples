@@ -7,6 +7,7 @@ categories: ["security"]
 Enforcing [IMDSv2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) for AWS EC2 instances enhances security by requiring session-based authentication to access instance metadata, mitigating the risk of unauthorized metadata exposure through vulnerabilities like SSRF (Server-Side Request Forgery). This helps ensure that only authorized applications and users can retrieve sensitive instance data.
 
 For an EC2 instance, this policy pack can configure:
+
 - Use of IMDSv1 and IMDSv2
 - HTTP token hop limit
 
