@@ -10,5 +10,10 @@ resource "turbot_policy_setting" "aws_s3_bucket_public_access_block" {
 resource "turbot_policy_setting" "aws_s3_bucket_public_access_block_settings" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/aws-s3#/policy/types/s3BucketPublicAccessBlockSettings"
-  value    = jsonencode(["Block Public ACLs", "Block Public Bucket Policies", "Ignore Public ACLs", "Restrict Public Bucket Policies"])
+  value    = <<-EOT
+    - "Block Public ACLs"
+    - "Block Public Bucket Policies"
+    - "Ignore Public ACLs"
+    - "Restrict Public Bucket Policies"
+    EOT
 }
