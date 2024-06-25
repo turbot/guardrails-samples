@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing [IMDSv2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) for AWS EC2 instances enhances security by requiring session-based authentication to access instance metadata, mitigating the risk of unauthorized metadata exposure through vulnerabilities like SSRF (Server-Side Request Forgery). This helps ensure that only authorized applications and users can retrieve sensitive instance data.
 
-With this policy pack, you can configure the following settings for individual EC2 instances:
+This policy pack can help you configure the following settings for EC2 instances:
 - Enforce IMDSv2, which requires session-based authentication
 - Set the `PUT` response hop limit to restrict IMDS access
 
@@ -38,8 +38,6 @@ export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
 Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
 ## Usage
-
-
 
 ### Install Policy Pack
 
@@ -78,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
 
-By default, the controls are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {

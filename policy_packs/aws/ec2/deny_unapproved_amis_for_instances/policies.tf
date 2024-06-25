@@ -20,7 +20,6 @@ resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_am
     EOT
 }
 
-
 # AWS > EC2 > Permissions > Lockdown > Instance > Image > Publishers
 resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_publishers" {
   resource = turbot_smart_folder.main.id

@@ -19,27 +19,27 @@ resource "turbot_policy_setting" "aws_iam_root_approved_custom" {
   template       = <<-EOT
     {%- if $.root.mfaActive == "true" -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "MFA Enabled",
           "result": "Approved",
           "message": "MFA is enabled on root account"
-      } -%} 
+      } -%}
 
     {%- elif $.root.mfaActive == "false" -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "MFA Enabled",
           "result": "Not approved",
           "message": "MFA is not enabled on root account"
-      } -%} 
+      } -%}
 
     {%- else -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "MFA Enabled",
           "result": "Skip",
           "message": "No data for MFA yet"
-      } -%} 
+      } -%}
 
     {%- endif -%}
     {{ data | json }}

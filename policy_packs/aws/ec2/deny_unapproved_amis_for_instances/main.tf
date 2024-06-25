@@ -1,5 +1,5 @@
 resource "turbot_smart_folder" "main" {
-  title       = "Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts"
+  title       = "Deny Unapproved AMIs for AWS EC2 Instances"
   description = "Prevent use of potentially vulnerable or malicious images, ensuring that only vetted and compliant resources are deployed."
   parent      = "tmod:@turbot/turbot#/"
 }
