@@ -73,6 +73,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 > [!TIP]
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
+>
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
 
 By default, the policies are set to `Lockdown Disabled` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Lockdown Disabled` setting and removing the comment from one of the listed enforcement options:
