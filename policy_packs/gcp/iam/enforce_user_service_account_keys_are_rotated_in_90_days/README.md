@@ -77,7 +77,7 @@ To apply enforcement automation: Open the Policy Pack Terraform source files in 
 
   ```hcl
     resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
-      resource = turbot_smart_folder.pack.id
+      resource = turbot_smart_folder.main.id
       type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
       # value    = "Check: Active"
       value    =  "Enforce: Delete inactive with 90 days warning"

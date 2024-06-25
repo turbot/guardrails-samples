@@ -1,6 +1,6 @@
 # GCP > IAM > Service Account > Approved
 resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
   value    = "Check: Approved"
   # value    =  "Enforce: Delete unapproved if new"
@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
 
 # GCP > IAM > Service Account > Approved > Custom
 resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApprovedCustom"
   template_input = <<-EOT
   - |

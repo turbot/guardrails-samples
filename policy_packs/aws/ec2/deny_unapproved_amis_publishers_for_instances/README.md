@@ -66,7 +66,7 @@ By default, the policies are set to `Lockdown Disabled` in the pack's policy set
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImage"
   # value    = "Lockdown Disabled"
   # value    = "Lockdown Enabled: Allow Image > AMI IDs only"

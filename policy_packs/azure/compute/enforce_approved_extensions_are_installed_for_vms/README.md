@@ -79,7 +79,7 @@ To apply enforcement automation: Open the Policy Pack Terraform source files in 
 
   ```hcl
     resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
-      resource = turbot_smart_folder.pack.id
+      resource = turbot_smart_folder.main.id
       type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
       # value    = "Check: Approved"
       value    = "Enforce: Stop unapproved"

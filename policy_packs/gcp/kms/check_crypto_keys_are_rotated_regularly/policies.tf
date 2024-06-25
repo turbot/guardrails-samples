@@ -1,13 +1,13 @@
 # GCP > KMS > Crypto Key > Approved
 resource "turbot_policy_setting" "gcp_kms_crypto_key_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyApproved"
   value    = "Check: Approved"
 }
 
 # GCP > KMS > Crypto Key > Approved > Custom
 resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
-  resource       = turbot_smart_folder.pack.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyApprovedCustom"
   template_input = <<-EOT
     {

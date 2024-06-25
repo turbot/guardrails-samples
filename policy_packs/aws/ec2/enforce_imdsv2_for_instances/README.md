@@ -78,7 +78,7 @@ By default, the controls are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataService"
   # value    = "Check: Enabled for V2 only"
   value    =  "Enforce: Enabled for V2 only"

@@ -66,7 +66,7 @@ By default, the controls are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_efs_file_system_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"

@@ -1,6 +1,6 @@
 # Azure > AKS > Managed Cluster > Approved
 resource "turbot_policy_setting" "azure_aks_managed_cluster_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-aks#/policy/types/managedClusterApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "azure_aks_managed_cluster_approved" {
 
 # Azure > AKS > Managed Cluster > Custom
 resource "turbot_policy_setting" "azure_aks_managed_cluster_approved_custom" {
-  resource       = turbot_smart_folder.pack.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-aks#/policy/types/managedClusterApprovedCustom"
   template_input = <<-EOT
     {

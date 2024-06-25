@@ -1,6 +1,6 @@
 # Azure > Compute > Virtual Machine > Approved
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Stop unapproved"
@@ -9,14 +9,14 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
 
 # Azure > Compute > Virtual Machine > Approved > Usage
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_usage" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApprovedUsage"
   value    = "Approved"
 }
 
 # Azure > Compute > Virtual Machine > Approved > Custom
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom" {
-  resource       = turbot_smart_folder.pack.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApprovedCustom"
   template_input = <<-EOT
     {

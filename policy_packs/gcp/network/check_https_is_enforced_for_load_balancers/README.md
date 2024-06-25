@@ -76,7 +76,7 @@ For each control type, choose to [resolve the alarms](https://turbot.com/guardra
 
   ```hcl
     resource "turbot_policy_setting" "gcp_network_url_map_approved" {
-      resource = turbot_smart_folder.pack.id
+      resource = turbot_smart_folder.main.id
       type     = "tmod:@turbot/gcp-network#/policy/types/urlMapApproved"
       # value    = "Check: Approved"
     }

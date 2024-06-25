@@ -1,6 +1,6 @@
 # Azure > AppService > WebApp > Approved
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
 
 # Azure > AppService > WebApp > Approved > Custom
 resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
-  resource       = turbot_smart_folder.pack.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/webAppApprovedCustom"
   template_input = <<-EOT
     {

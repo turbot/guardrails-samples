@@ -1,6 +1,6 @@
 # AWS > EC2 > Permissions > Lockdown > Instance > Image
 resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImage"
   value    = "Lockdown Disabled"
   # value    = "Lockdown Enabled: Allow Image > AMI IDs only"
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image" {
 
 # AWS > EC2 > Permissions > Lockdown > Instance > Image > AMI IDs
 resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_ami_ids" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImageAmiIds"
   # Insert your AMI IDs below
   value    = <<-EOT
@@ -23,7 +23,7 @@ resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_am
 
 # AWS > EC2 > Permissions > Lockdown > Instance > Image > Publishers
 resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image_publishers" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2PermissionsLockdownInstanceImagePublishers"
   # Insert your Publisher Account IDs below
   value    = <<-EOT

@@ -1,13 +1,13 @@
 # AWS > IAM > Root > Approved
 resource "turbot_policy_setting" "aws_iam_root_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/rootApproved"
   value    = "Check: Approved"
 }
 
 # AWS > IAM > Root > Approved > Custom
 resource "turbot_policy_setting" "aws_iam_root_approved_custom" {
-  resource       = turbot_smart_folder.pack.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/aws-iam#/policy/types/rootApprovedCustom"
   template_input = <<-EOT
     {

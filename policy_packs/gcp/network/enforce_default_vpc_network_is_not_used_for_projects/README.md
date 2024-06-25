@@ -78,7 +78,7 @@ To apply enforcement automation: Open the Policy Pack Terraform source files in 
 
   ```hcl
     resource "turbot_policy_setting" "gcp_network_network_approved" {
-      resource = turbot_smart_folder.pack.id
+      resource = turbot_smart_folder.main.id
       type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
       # value    = "Check: Approved"
       value    = "Enforce: Delete unapproved if new"

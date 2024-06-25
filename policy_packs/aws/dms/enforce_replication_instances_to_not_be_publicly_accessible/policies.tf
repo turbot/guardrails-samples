@@ -1,6 +1,6 @@
 # AWS > DMS > Replication Instance > Approved
 resource "turbot_policy_setting" "aws_dms_replication_instance_approved" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Stop unapproved"
@@ -17,7 +17,7 @@ resource "turbot_policy_setting" "aws_dms_replication_instance_approved_usage" {
 
 # AWS > DMS > Replication Instance > Approved > Custom
 resource "turbot_policy_setting" "aws_dms_replication_instance_approved_custom" {
-  resource       = turbot_smart_folder.pack.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApprovedCustom"
   template_input = <<-EOT
     {
