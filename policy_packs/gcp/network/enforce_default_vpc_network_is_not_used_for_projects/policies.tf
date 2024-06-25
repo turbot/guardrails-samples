@@ -18,13 +18,31 @@ resource "turbot_policy_setting" "gcp_network_network_approved_custom" {
     }
     EOT
   template       = <<-EOT
-    title: "Default Network"
-    {%- if $.network.name == "default" -%}
-      result: "Not approved"
-      message: "Default network is not approved for use in the project"
+    {%- if $.network.name != "default" -%}
+
+      {%- set data = { 
+          "title": "Default Network",
+          "result": "Approved",
+          "message": "Project does not use a default network"
+      } -%}
+
+    {%- elif $.network.name == "default" -%}
+
+      {%- set data = { 
+          "title": "Default Network",
+          "result": "Not approved",
+          "message": "Project uses a default network"
+      } -%}
+
     {%- else -%}
-      result: "Approved"
-      message: "Network is approved for use in the project"
+
+      {%- set data = { 
+          "title": "Default Network",
+          "result": "Skip",
+          "message": "No data for default network yet"
+      } -%}
+
     {%- endif -%}
+    {{ data | json }}
     EOT
 }
