@@ -1,5 +1,5 @@
 resource "turbot_smart_folder" "main" {
   title       = "Enforce GCP BigQuery Datasets Are Not Publicly Accessible"
-  description = "Ensure datasets are only accessible to authorized users and services, thereby preventing potential data breaches and maintaining compliance."
+  description = "Protect sensitive and proprietary data from unauthorized access and potential breaches."
   parent      = "tmod:@turbot/turbot#/"
 }

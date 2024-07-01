@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Azure Storage Blob Containers Block Public Access
 
-Enforcing that Azure Storage Blob Containers do not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
+Enforcing Azure Storage Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
 
 This policy pack can help you configure the following settings for storage accounts:
 
@@ -84,7 +84,6 @@ resource "turbot_policy_setting" "azure_storage_storage_account_public_access" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
   # value    = "Check: Enabled"
-  # value    = "Enforce: Disabled"
   value    = "Enforce: Enabled"
 }
 ```
