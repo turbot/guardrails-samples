@@ -6,9 +6,9 @@ categories: ["security"]
 
 Enforcing GCP BigQuery datasets are not publicly accessible is crucial to protect sensitive and proprietary data from unauthorized access and potential breaches. By restricting public access, organizations can maintain data privacy, comply with regulatory requirements, and safeguard against malicious activities.
 
-This policy pack can help you configure the following settings for bigquery datasets:
+This policy pack can help you configure the following settings for BigQuery datasets:
 
-- Enforce bigquery dataset public access to be disabled
+- Enforce public access to be disabled
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_datasets_are_not_publicly_accessible/settings)**
 
