@@ -2,24 +2,23 @@
 categories: ["security"]
 ---
 
-# Enforce IMDSv2 for AWS EC2 Instances
+# Enforce GCP BigQuery Datasets Are Not Publicly Accessible
 
-Enforcing [IMDSv2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) for AWS EC2 instances enhances security by requiring session-based authentication to access instance metadata, mitigating the risk of unauthorized metadata exposure through vulnerabilities like SSRF (Server-Side Request Forgery). This helps ensure that only authorized applications and users can retrieve sensitive instance data.
+Enforcing GCP BigQuery datasets are not publicly accessible is crucial to protect sensitive and proprietary data from unauthorized access and potential breaches. By restricting public access, organizations can maintain data privacy, comply with regulatory requirements, and safeguard against malicious activities.
 
-This policy pack can help you configure the following settings for EC2 instances:
+This policy pack can help you configure the following settings for bigquery datasets:
 
-- Enforce IMDSv2, which requires session-based authentication
-- Set the `PUT` response hop limit to restrict IMDS access
+- Enforce bigquery dataset public access to be disabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_imdsv2_for_instances/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_datasets_are_not_publicly_accessible/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
+  - [@turbot/gcp-bigquery](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-bigquery)
 
 ### Credentials
 
@@ -51,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_imdsv2_for_instances
+cd guardrails-samples/policy_packs/gcp/bigquery/enforce_datasets_are_not_publicly_accessible
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -81,11 +80,11 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
+resource "turbot_policy_setting" "gcp_bigquery_dataset_publicly_accessible" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataService"
-  # value    = "Check: Enabled for V2 only"
-  value    =  "Enforce: Enabled for V2 only"
+  type     = "tmod:@turbot/gcp-bigquery#/policy/types/datasetPubliclyAccessible"
+  # value    = "Check: Dataset is not publicly accessible"
+  value    = "Enforce: Dataset is not publicly accessible"
 }
 ```
 

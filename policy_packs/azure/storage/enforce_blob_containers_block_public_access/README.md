@@ -2,24 +2,23 @@
 categories: ["security"]
 ---
 
-# Enforce IMDSv2 for AWS EC2 Instances
+# Enforce Azure Storage Blob Containers Block Public Access
 
-Enforcing [IMDSv2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) for AWS EC2 instances enhances security by requiring session-based authentication to access instance metadata, mitigating the risk of unauthorized metadata exposure through vulnerabilities like SSRF (Server-Side Request Forgery). This helps ensure that only authorized applications and users can retrieve sensitive instance data.
+Enforcing that Azure Storage Blob Containers do not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
 
-This policy pack can help you configure the following settings for EC2 instances:
+This policy pack can help you configure the following settings for storage accounts:
 
-- Enforce IMDSv2, which requires session-based authentication
-- Set the `PUT` response hop limit to restrict IMDS access
+- Enforce blob public access to be disabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_imdsv2_for_instances/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_blob_containers_block_public_access/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
+  - [@turbot/azure-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-storage)
 
 ### Credentials
 
@@ -51,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_imdsv2_for_instances
+cd guardrails-samples/policy_packs/azure/storage/enforce_blob_containers_block_public_access
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -81,11 +80,12 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_metadata_service" {
+resource "turbot_policy_setting" "azure_storage_storage_account_public_access" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceMetadataService"
-  # value    = "Check: Enabled for V2 only"
-  value    =  "Enforce: Enabled for V2 only"
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
+  # value    = "Check: Enabled"
+  # value    = "Enforce: Disabled"
+  value    = "Enforce: Enabled"
 }
 ```
 
