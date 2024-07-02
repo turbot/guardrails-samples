@@ -18,7 +18,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
       outdatedPhpVersions: constant(value: "['5.6', '7.0', '7.1', '7.2', '7.3']")
       outdatedPythonVersions: constant(value: "['2.7', '3.4', '3.5', '3.6']")
       webApp {
-        appServiceAuth: get(path:"authSettings.enabled")
+        appServiceAuth: get(path:"authSettings.enabled"),
         javaVersion: get(path:"configuration.javaVersion"),
         phpVersion: get(path:"configuration.phpVersion"),
         pythonVersion: get(path:"configuration.pythonVersion")
