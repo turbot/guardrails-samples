@@ -26,6 +26,8 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
     }
   EOT
   template       = <<-EOT
+    {% set results = [] -%}
+
     {%- if $.webApp.appServiceAuth == false -%}
 
       {%- set data = {
@@ -34,7 +36,19 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
           "message": "App Service authentication is disabled"
       } -%}
 
-    {%- elif $.webApp.javaVersion in $.outdatedJavaVersions -%}
+    {%- else -%}
+
+      {%- set data = {
+          "title": "App Service authentication",
+          "result": "Approved",
+          "message": "App Service authentication is enabled"
+        } -%}
+
+    {%- endif -%}
+
+    {% set results = results.concat(data) -%}
+
+    {%- if $.webApp.javaVersion in $.outdatedJavaVersions -%}
 
       {%- set data = {
           "title": "Java Version",
@@ -42,7 +56,27 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
           "message": "Web App is running with outdated Java version"
       } -%}
 
-    {%- elif $.webApp.phpVersion in $.outdatedPhpVersions -%}
+    {%- elif $.webApp.javaVersion -%}
+
+      {%- set data = {
+          "title": "Java Version",
+          "result": "Approved",
+          "message": "Web App is running on a latest Java version"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Java Version",
+          "result": "Skip",
+          "message": "No data for web app yet"
+      } -%}
+
+    {%- endif -%}
+
+    {% set results = results.concat(data) -%}
+
+    {%- if $.webApp.phpVersion in $.outdatedPhpVersions -%}
 
       {%- set data = {
           "title": "PHP Version",
@@ -50,7 +84,27 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
           "message": "Web App is running with outdated PHP version"
       } -%}
 
-    {%- elif $.webApp.pythonVersion in $.outdatedPythonVersions -%}
+    {%- elif $.webApp.phpVersion -%}
+
+      {%- set data = {
+          "title": "PHP Version",
+          "result": "Approved",
+          "message": "Web App is running on a latest PHP version"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "PHP Version",
+          "result": "Skip",
+          "message": "No data for web app yet"
+      } -%}
+
+    {%- endif -%}
+
+    {% set results = results.concat(data) -%}
+
+    {%- if $.webApp.pythonVersion in $.outdatedPythonVersions -%}
 
       {%- set data = {
           "title": "Python Version",
@@ -58,52 +112,26 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
           "message": "Web App is running with outdated Python version"
       } -%}
 
+    {%- elif $.webApp.pythonVersion -%}
+
+      {%- set data = {
+          "title": "Python Version",
+          "result": "Approved",
+          "message": "Web App is running on a latest Python version"
+      } -%}
+
     {%- else -%}
 
-      {%- if $.webApp.appServiceAuth == true -%}
-
-        {%- set data = {
-            "title": "App Service authentication",
-            "result": "Approved",
-            "message": "App Service authentication is enabled"
-        } -%}
-
-      {%- elif $.webApp.javaVersion -%}
-
-        {%- set data = {
-            "title": "Java Version",
-            "result": "Approved",
-            "message": "Web App is running on a latest Java version"
-        } -%}
-
-      {%- elif $.webApp.phpVersion -%}
-
-        {%- set data = {
-            "title": "PHP Version",
-            "result": "Approved",
-            "message": "Web App is running on a latest PHP version"
-        } -%}
-
-      {%- elif $.webApp.pythonVersion -%}
-
-        {%- set data = {
-            "title": "Python Version",
-            "result": "Approved",
-            "message": "Web App is running on a latest Python version"
-        } -%}
-
-      {%- else -%}
-
-        {%- set data = {
-            "title": "Java/PHP/Python Version",
-            "result": "Skip",
-            "message": "No data for web app yet"
-        } -%}
-
-      {%- endif -%}
+      {%- set data = {
+          "title": "Python Version",
+          "result": "Skip",
+          "message": "No data for web app yet"
+      } -%}
 
     {%- endif -%}
-    {{ data | json }}
+
+    {% set results = results.concat(data) -%}
+    {{ results | json }}
   EOT
 }
 
