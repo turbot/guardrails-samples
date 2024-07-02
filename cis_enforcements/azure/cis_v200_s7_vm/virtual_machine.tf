@@ -2,7 +2,7 @@
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   resource = turbot_smart_folder.azure_cis_v200_s7_virtual_machine.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
-  note     = "Azure CIS v2.0.0 - Control: 7.2 and 7.6"
+  note     = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved"
 }
@@ -11,10 +11,10 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom" {
   resource       = turbot_smart_folder.azure_cis_v200_s7_virtual_machine.id
   type           = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApprovedCustom"
-  note           = "Azure CIS v2.0.0 - Control: 7.2 and 7.6"
+  note           = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   template_input = <<-EOT
     {
-      installedExtensions: constant(value: "['MDE.Linux', 'extension2']")
+      approvedExtensions: constant(value: "['MDE.Linux', 'extension2']")
       virtualMachine {
         name
         extensions: get(path: "resources")
@@ -37,7 +37,7 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom"
 
       {%- for extension in $.virtualMachine.extensions -%}
 
-        {%- if extension.name in $.installedExtensions -%}
+        {%- if extension.name in $.approvedExtensions -%}
 
           {% set data = {
               "title": extension.name,
