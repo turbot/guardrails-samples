@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
   # value    = "Enforce: Delete unapproved"
 }
 
-# Azure > AppService > WebApp > custom
+# Azure > AppService > WebApp > Approved > Custom
 resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
   resource       = turbot_smart_folder.azure_cis_v200_s9_app_service.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/webAppApprovedCustom"
@@ -105,4 +105,40 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
     {%- endif -%}
     {{ data | json }}
   EOT
+}
+
+# Azure > AppService > WebApp > HttpsOnly
+resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
+  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttpsOnly"
+  note     = "Azure CIS v2.0.0 - Control: 9.2"
+  value    = "Check: Enabled"
+  # value    = "Enforce: Enabled"
+}
+
+# Azure > AppService > WebApp > MinimumTlsVersion
+resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" {
+  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppMinimumTlsVersion"
+  note     = "Azure CIS v2.0.0 - Control: 9.3"
+  value    = "Check: TLS 1.2"
+  # value    = "Enforce: TLS 1.2"
+}
+
+# Azure > AppService > WebApp > Http20Enabled
+resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
+  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttp20Enabled"
+  note     = "Azure CIS v2.0.0 - Control: 9.9"
+  value    = "Check: Enabled"
+  # value    = "Enforce: Enabled"
+}
+
+# Azure > AppService > WebApp > FtpsState
+resource "turbot_policy_setting" "azure_appservice_web_app_ftps_state" {
+  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppFtpsState"
+  note     = "Azure CIS v2.0.0 - Control: 9.10"
+  value    = "Check: FTPS only"
+  # value    = "Enforce: FTPS only"
 }
