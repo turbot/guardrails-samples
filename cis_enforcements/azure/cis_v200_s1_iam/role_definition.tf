@@ -12,6 +12,15 @@ resource "turbot_policy_setting" "azure_iam_role_definition_approved_custom" {
   resource       = turbot_smart_folder.azure_cis_v200_s1_iam.id
   type           = "tmod:@turbot/azure-iam#/policy/types/roleDefinitionApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 1.23"
+  template_input = <<-EOT
+    {
+      roleDefinition {
+        roleType: get(path: "roleType")
+        assignableScopes: get(path: "assignableScopes")
+        permissions: get(path: "permissions")
+      }
+    }
+    EOT
   template       = <<-EOT
     {%- set actionsCheck = false -%}
     {%- for permission in $.roleDefinition.permissions -%}
