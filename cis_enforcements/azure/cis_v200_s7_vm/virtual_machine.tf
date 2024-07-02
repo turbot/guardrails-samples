@@ -28,12 +28,24 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom"
     {%- if $.virtualMachine.managedDiskId == "" or $.virtualMachine.managedDiskId == null -%}
 
       {%- set data = {
-          "title": extension.name,
+          "title": "Managed Disk",
           "result": "Not approved",
-          "message": extension.name + " is not using managed disks"
+          "message": $.virtualMachine.name + " is not using managed disks"
       } -%}
 
-    {%- elif $.virtualMachine.extensions -%}
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Managed Disk",
+          "result": "Approved",
+          "message": $.virtualMachine.name + " is using managed disks"
+      } -%}
+
+    {%- endif -%}
+
+    {% set results = results.concat(data) -%}
+
+    {%- if $.virtualMachine.extensions -%}
 
       {%- for extension in $.virtualMachine.extensions -%}
 
@@ -61,25 +73,16 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom"
 
     {%- else -%}
 
-      {%- if $.virtualMachine.managedDiskId != "" and $.virtualMachine.managedDiskId != null -%}
-
-        {%- set results = {
-            "title": extension.name,
-            "result": "Approved",
-            "message": extension.name + " is using managed disks"
-        } -%}
-
-      {%- else -%}
-
-        {%- set results = {
-            "title": "Extensions",
-            "result": "Skip",
-            "message": "No data for VM yet"
-        } -%}
-
-      {%- endif -%}
+      {%- set data = {
+          "title": "Extensions",
+          "result": "Skip",
+          "message": "No data for VM yet"
+      } -%}
 
     {% endif -%}
+
+    {% set results = results.concat(data) -%}
+
     {{ results | json }}
   EOT
 }
