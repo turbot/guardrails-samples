@@ -48,7 +48,7 @@ resource "turbot_policy_setting" "azure_storage_account_queue_service_logging_pr
 }
 
 # Azure > Storage > Storage Account > Firewall
-resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
+resource "turbot_policy_setting" "azure_storage_account_firewall" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountFirewall"
   note     = "Azure CIS v2.0.0 - Control: 3.9"
@@ -59,7 +59,7 @@ resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
 }
 
 # Azure > Storage > Storage Account > Firewall > Exceptions
-resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
+resource "turbot_policy_setting" "azure_storage_account_firewall_exceptions" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountFirewallExceptions"
   note     = "Azure CIS v2.0.0 - Control: 3.9"
@@ -68,11 +68,15 @@ resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
 }
 
 # Azure > Storage > Storage Account > Firewall > Exceptions > Items
-resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
+resource "turbot_policy_setting" "azure_storage_account_firewall_exceptions_items" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountFirewallExceptionsItems"
   note     = "Azure CIS v2.0.0 - Control: 3.9"
-  value    = ["Azure services"]
+  value    = <<EOT
+    [
+      "Azure services"
+    ]
+  EOT
 }
 
 # Azure > Storage > Storage Account > Data Protection > Soft Delete
