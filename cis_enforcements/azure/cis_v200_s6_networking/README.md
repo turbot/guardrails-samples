@@ -17,6 +17,7 @@ This policy pack can help you automate enforcement of Azure CIS benchmark sectio
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
 - Guardrails mods:
   - [@turbot/azure-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-network)
+  - [@turbot/azure-networkwatcher](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-networkwatcher)
 
 ### Credentials
 
@@ -78,13 +79,14 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
+resource "turbot_policy_setting" "azure_network_nsg_ingress_rules_approved" {
   resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterDefenderPlan"
-  note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11, 2.1.12"
-  # value    = "Check: Defender Plan Enabled"
-  value    = "Enforce: Defender Plan Enabled"
+  type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
+  note     = "Azure CIS v2.0.0 - Controls: 6.1"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved"
 }
+
 ```
 
 Then re-apply the changes:
