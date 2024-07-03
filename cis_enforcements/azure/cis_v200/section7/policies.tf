@@ -1,6 +1,6 @@
 # Azure > Compute > Virtual Machines > Approved
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
-  resource = turbot_smart_folder.azure_cis_v200_s7_virtual_machine.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   note     = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
 
 # Azure > Compute > Virtual Machines > Approved > Custom
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom" {
-  resource       = turbot_smart_folder.azure_cis_v200_s7_virtual_machine.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   template_input = <<-EOT
