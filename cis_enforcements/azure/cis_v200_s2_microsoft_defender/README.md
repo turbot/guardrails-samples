@@ -1,79 +1,100 @@
 ---
-benchmark: Azure CIS v2.0.0
-section_number: 2
-section_name: Microsoft Defender
-cis_description: |
-  This section covers recommendations to consider for tenant-wide security policies and plans related to Microsoft Defender. Please note that because Microsoft Defender products require additional licensing, all Microsoft Defender plan recommendations in subsection 2.1 are assigned as "Level 2."
-
-  Microsoft Defender products addressed in this section include:
-     1. Microsoft Defender for Cloud
-     2. Microsoft Defender for IOT
-     3. Microsoft Defender External Attack Surface Management
-icon: "azure.svg"
-mod_dependencies:
-  - "@turbot/azure"
-  - "@turbot/azure-securitycenter"
+categories: ["cis"]
 ---
 
 # Enforce Azure CIS v2.0.0 - Section 2 - Microsoft Defender
 
-Automate enforcement of CIS benchmark best practices using Turbot Guardrails.
+This section covers recommendations to consider for tenant-wide security policies and plans related to Microsoft Defender. Please note that because Microsoft Defender products require additional licensing, all Microsoft Defender plan recommendations in subsection 2.1 are assigned as "Level 2."
 
-The Terraform stack defined in this section will create a Guardrails Smart Folder, containing specific policy examples, to automate enforcement controls aligned to the [CIS Azure Foundations Benchmark](https://learn.microsoft.com/en-us/azure/governance/policy/samples/cis-azure-2-0-0).
+Microsoft Defender products addressed in this section include:
+• Microsoft Defender for Cloud
+• Microsoft Defender for IoT
+• Microsoft Defender External Attack Surface Management
 
-## Installation
+This policy pack can help you automate enforcement of Azure CIS benchmark section 2 best practices.
 
-Installing this Smart Folder requires [admin credentials to a Turbot Guardrails workspace](https://turbot.com/guardrails/docs/guides/iam/access-keys) and [a way to run Terraform](https://turbot.com/guardrails/docs/7-minute-labs/terraform).
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section2/settings)**
 
-Clone the repo locally:
+## Getting Started
+
+### Requirements
+
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- Guardrails mods:
+  - [@turbot/azure-securitycenter](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-securitycenter)
+
+### Credentials
+
+To create a policy pack through Terraform:
+
+- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
+
+And then set your credentials:
+
+```sh
+export TURBOT_WORKSPACE=myworkspace.acme.com
+export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
+export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
+```
+
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
+
+## Usage
+
+### Install Policy Pack
+
+> [!NOTE]
+> By default, installed policy packs are not attached to any resources.
+>
+> Policy packs must be attached to resources in order for their policy settings to take effect.
+
+Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/cis_enforcements/azure/cis_v200_s2_microsoft_defender/
+cd guardrails-samples/policy_packs/azure/cis_v200/section2
 ```
 
-## How to use
+Run the Terraform to create the policy pack in your workspace:
 
-1. **Create the Smart Folder in your workspace**:
+```sh
+terraform init
+terraform plan
+```
 
-   ```sh
-   terraform init
-   export TURBOT_PROFILE="my-workspace"
-   terraform plan
-   terrafrom apply
-   ```
+Then apply the changes:
 
-2. **Attach the Smart Folder to your test account**: Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#). Select the account from the list for testing. Click on the "Detail" subtab and look for the "Smart Folders" widget in the bottom right of the page. Select the "MANAGE" link and `+ Add` the `Azure CIS v2.0.0 - Section 2 - Microsoft Defender` Smart Folder from the dropdown menu, then select "Save".
+```sh
+terraform apply
+```
 
-   > [!IMPORTANT]
-   > Do not add or remove more than one Smart Folder to a resource at a time. Adding Smart Folders is an asynchronous operation, after changing the Smart Folder configuration for a resource, wait at least 5 minutes before adding or removing other Smart Folders.
+### Apply Policy Pack
 
-3. **Verify state (`OK`, `Alarm`, `Error`) of associated controls**: Within the Guardrails UI navigate to:
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
-   ```
-   {workspace-url}/apollo/reports/alerts-by-control-type?filter=state%3Aalarm+controlTypeId%3A%27tmod%3A%40turbot%2Fazure%23%2Fcontrol%2Ftypes%2FsubscriptionStack%27
-   ```
+### Enable Enforcement
 
-   Replace `{workspace-url}` with the FQDN of your workspace (e.g. https://company.cloud.turbot.com). Use the "Resource" filter to select the test account where the Smart Folder is attached. Review all controls in `Alarm` state to understand why they are violating CIS control objectives.
+> [!TIP]
+> You can also update the policy settings in this policy pack directly in the Guardrails console.
+>
+> Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
 
-4. For each control type, choose to [resolve the alarms](https://turbot.com/guardrails/docs/guides/quick-actions), [create resource exceptions](https://turbot.com/guardrails/docs/getting-started/activity-exceptions#manual-policy-exceptions) or to apply enforcement settings. The default setting for all controls are set to `Check: ...`. Each policy with an enforcement option will have a corresponding enforcement setting that is commented out. These can easily be found by searching across the `*.tf` files for `Enforce:`.
-5. To apply enforcement automation: Open the Smart Folder Terraform source files in your code editor. Toggle individual controls between `Check` and `Enforce` by changing which line is commented out:
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
-   ```hcl
-   resource "turbot_policy_setting" "example" {
-     resource = turbot_smart_folder.example.id
-     type     = "tmod:@turbot/azure#/policy/types/resourceName"
-     # value    = "Check: Approved"
-     value    = "Enforce: Delete unapproved"
-   }
-   ```
+```hcl
+resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
+  resource = turbot_smart_folder.pack.id
+  type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterDefenderPlan"
+  note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11, 2.1.12"
+  # value    = "Check: Defender Plan Enabled"
+  value    = "Enforce: Defender Plan Enabled"
+}
+```
 
-   Then re-apply the Terraform stack:
+Then re-apply the changes:
 
-   ```sh
-   terraform plan
-   terrafrom apply
-   ```
-
-   > [!CAUTION]
-   > Enforcement controls have the ability delete data, remove permissions and change configuration of your cloud resources. Guardrails automation is very fast and there is no undo; if you do not fully understand the scope of an enforcement or the potential impact to your applications then do not implement enforcement options.
+```sh
+terraform plan
+terraform apply
+```
