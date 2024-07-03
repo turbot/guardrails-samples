@@ -1,6 +1,6 @@
 # Azure > IAM > RoleDefinition > Approved
 resource "turbot_policy_setting" "azure_iam_role_definition_approved" {
-  resource = turbot_smart_folder.azure_cis_v200_s1_iam.id
+  resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/azure-iam#/policy/types/roleDefinitionApproved"
   note     = "Azure CIS v2.0.0 - Control: 1.23"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "azure_iam_role_definition_approved" {
 
 # Azure > IAM > RoleDefinition > Approved > Custom
 resource "turbot_policy_setting" "azure_iam_role_definition_approved_custom" {
-  resource       = turbot_smart_folder.azure_cis_v200_s1_iam.id
+  resource       = turbot_smart_folder.pack.id
   type           = "tmod:@turbot/azure-iam#/policy/types/roleDefinitionApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 1.23"
   template_input = <<-EOT
