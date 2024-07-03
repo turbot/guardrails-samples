@@ -36,7 +36,7 @@ resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
 # Azure > Storage > Storage Account > Queue > Logging > Properties
 resource "turbot_policy_setting" "azure_storage_account_queue_service_logging_properties" {
   resource = turbot_smart_folder.pack.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/queueServiceLogging"
+  type     = "tmod:@turbot/azure-storage#/policy/types/queueServiceLoggingProperties"
   note     = "Azure CIS v2.0.0 - Control: 3.5"
   value    = <<EOT
     [
