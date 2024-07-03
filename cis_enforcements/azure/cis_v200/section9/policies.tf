@@ -1,17 +1,17 @@
 # Azure > AppService > WebApp > Approved
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
-  note     = "Azure CIS v2.0.0 - Control: 9.1, 9.5, 9,6 and 9.7"
+  note     = "Azure CIS v2.0.0 - Control: 9.1, 9.6, 9,7 and 9.8"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved"
 }
 
 # Azure > AppService > WebApp > Approved > Custom
 resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
-  resource       = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/webAppApprovedCustom"
-  note           = "Azure CIS v2.0.0 - Control: 9.1, 9.5, 9,6 and 9.7"
+  note           = "Azure CIS v2.0.0 - Control: 9.1, 9.6, 9,7 and 9.8"
   template_input = <<-EOT
     {
       outdatedJavaVersions: constant(value: "['8', '11']")
@@ -137,7 +137,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
 
 # Azure > AppService > WebApp > HttpsOnly
 resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
-  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttpsOnly"
   note     = "Azure CIS v2.0.0 - Control: 9.2"
   value    = "Check: Enabled"
@@ -146,7 +146,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
 
 # Azure > AppService > WebApp > MinimumTlsVersion
 resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" {
-  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppMinimumTlsVersion"
   note     = "Azure CIS v2.0.0 - Control: 9.3"
   value    = "Check: TLS 1.2"
@@ -155,7 +155,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" 
 
 # Azure > AppService > WebApp > Http20Enabled
 resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
-  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttp20Enabled"
   note     = "Azure CIS v2.0.0 - Control: 9.9"
   value    = "Check: Enabled"
@@ -164,7 +164,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
 
 # Azure > AppService > WebApp > FtpsState
 resource "turbot_policy_setting" "azure_appservice_web_app_ftps_state" {
-  resource = turbot_smart_folder.azure_cis_v200_s9_app_service.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppFtpsState"
   note     = "Azure CIS v2.0.0 - Control: 9.10"
   value    = "Check: FTPS only"
