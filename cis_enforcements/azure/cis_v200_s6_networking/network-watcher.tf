@@ -15,7 +15,6 @@ resource "turbot_policy_setting" "azure_networkwatcher_flow_log_retention_policy
   value    = 90
 }
 
-
 # Azure > Network Watcher > Network Watcher > Approved
 resource "turbot_policy_setting" "azure_network_watcher_approved" {
   resource = turbot_smart_folder.pack.id
