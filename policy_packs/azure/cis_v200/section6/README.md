@@ -86,15 +86,13 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved"
 }
-```
 
-```hcl
 resource "turbot_policy_setting" "azure_network_watcher_approved" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/azure-networkwatcher#/policy/types/networkWatcherApproved"
   note     = "Azure CIS v2.0.0 - Controls: 6.6"
   # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 
