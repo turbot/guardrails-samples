@@ -1,0 +1,15 @@
+{
+  "categories": [
+    "Delete"
+  ],
+  "id": "/subscriptions/3510ae4d-530b-497d-8f30-53b9616fc6c1/providers/microsoft.insights/logprofiles/mylogprofile",
+  "locations": [
+    "westus"
+  ],
+  "name": "mylogprofile",
+  "retentionPolicy": {
+    "days": 0,
+    "enabled": true
+  },
+  "storageAccountId": "/subscriptions/3510ae4d-530b-497d-8f30-53b9616fc6c1/resourceGroups/test_niharika/providers/Microsoft.Storage/storageAccounts/niharikastorage00028"
+}
