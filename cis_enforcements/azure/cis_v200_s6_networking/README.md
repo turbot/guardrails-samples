@@ -79,14 +79,23 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_network_nsg_ingress_rules_approved" {
+resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
   resource = turbot_smart_folder.pack.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
-  note     = "Azure CIS v2.0.0 - Controls: 6.1"
+  note     = "Azure CIS v2.0.0 - Controls: 6.1, 6.2, 6.3, 6.4"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved"
 }
+```
 
+```hcl
+resource "turbot_policy_setting" "azure_network_watcher_approved" {
+  resource = turbot_smart_folder.pack.id
+  type     = "tmod:@turbot/azure-networkwatcher#/policy/types/networkWatcherApproved"
+  note     = "Azure CIS v2.0.0 - Controls: 6.6"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved"
+}
 ```
 
 Then re-apply the changes:
