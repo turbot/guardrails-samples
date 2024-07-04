@@ -12,14 +12,12 @@ resource "turbot_policy_setting" "azure_network_security_group_ingress_rules_app
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApprovedRules"
   template = <<-EOT
     {#- Reject ports 22, 3389 -#}
-    REJECT $.turbot.fromPort:="22" $.turbot.toPort:="22"
-
-    REJECT $.turbot.fromPort:="3389" $.turbot.toPort:="3389"
+    REJECT $.turbot.ports.+:*,22,3389 $.access:Allow
 
     {#- Reject any inbound from internet -#}
     REJECT $.turbot.cidr:=0.0.0.0/0
 
     {#- Approve unmatched rules -#}
     APPROVE *
-    EOT
+  EOT
 }
