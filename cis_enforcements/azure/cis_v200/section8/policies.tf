@@ -32,12 +32,20 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved_custom" {
           "message": "Role based access control is disabled"
       } -%}
 
-    {%- else -%}
+    {%- elif $.vault.enableRbacAuthorization == false -%}
 
       {%- set data = {
           "title": "Role Based Access Control",
           "result": "Approved",
           "message": "Role based access control is enabled"
+        } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Role Based Access Control",
+          "result": "Skip",
+          "message": "No data for role based access control yet"
         } -%}
 
     {%- endif -%}
