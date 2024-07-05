@@ -4,7 +4,7 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultApproved"
   note     = "Azure CIS v2.0.0 - Control: 8.6 and 8.7"
   value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 
 # Azure > KeyVault > Vault > custom
@@ -47,17 +47,17 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved_custom" {
     {%- if $.vault.privateEndpointConnections == null -%}
 
       {%- set data = {
-          "title": "Private endpoint connections",
+          "title": "Private Endpoint Connections",
           "result": "Not approved",
-          "message": "Private endpoint connections is not used"
+          "message": "Private endpoint connections are not used"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "Private endpoint connections",
+          "title": "Private Endpoint Connections",
           "result": "Approved",
-          "message": "Private endpoint connections is used"
+          "message": "Private endpoint connections are used"
       } -%}
 
     {%- endif -%}

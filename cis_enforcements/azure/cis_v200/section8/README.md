@@ -82,8 +82,32 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultApproved"
   note     = "Azure CIS v2.0.0 - Control: 8.6 and 8.7"
-  value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved"
+  # value  = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-keyvault#/policy/types/keyExpiration"
+  note     = "Azure CIS v2.0.0 - Control: 8.1 and 8.2"
+  # value  = "Check: Expiration"
+  value    = "Enforce: Expiration"
+}
+
+resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-keyvault#/policy/types/secretExpiration"
+  note     = "Azure CIS v2.0.0 - Control: 8.3 and 8.4"
+  # value  = "Check: Expiration"
+  value    = "Enforce: Expiration"
+}
+
+resource "turbot_policy_setting" "azure_keyvault_vault_purge_protection" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultPurgeProtection"
+  note     = "Azure CIS v2.0.0 - Control: 8.5"
+  # value  = "Check: Purge Protection Enabled"
+  value    = "Enforce: Enable Purge Protection"
 }
 ```
 
