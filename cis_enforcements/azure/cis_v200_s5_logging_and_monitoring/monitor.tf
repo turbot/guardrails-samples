@@ -21,10 +21,6 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
     EOT
   template       = <<-EOT
     |
-    provider "azurerm" {
-      features {}
-    }
-
     resource "azurerm_monitor_action_group" "monitor_action_group_5_2" {
       name                = "azure_cis_v200_s5_2_action_group"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
