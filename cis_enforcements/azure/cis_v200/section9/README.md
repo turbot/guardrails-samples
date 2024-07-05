@@ -80,8 +80,8 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   note     = "Azure CIS v2.0.0 - Control: 9.1, 9.6, 9,7 and 9.8"
-  value    = "Check: Approved"
-  # value  = "Enforce: Delete unapproved if new"
+  # value  = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
