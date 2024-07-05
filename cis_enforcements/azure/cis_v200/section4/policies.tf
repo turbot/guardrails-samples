@@ -16,16 +16,16 @@ resource "turbot_policy_setting" "azure_sql_server_auditing_storage_account" {
   # value    = "https://teststorageaccmr.blob.core.windows.net/"
 }
 
-# Azure > NSG > IngressRule > Approved
+# Azure > NSG > Ingress Rule > Approved
 resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
   note     = "Azure CIS v2.0.0 - Control: 4.1.2"
   value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 
-# Azure > NSG > IngressRule > Approved > Rules
+# Azure > NSG > Ingress Rule > Approved > Rules
 resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved_rules" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApprovedRules"
@@ -71,7 +71,7 @@ resource "turbot_policy_setting" "azure_sql_server_active_directory_administrato
   value    = "testAdminUser"
 }
 
-# Azure > SQL > Server > DataSecurity
+# Azure > SQL > Server > Data Security
 resource "turbot_policy_setting" "azure_sql_server_data_security" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverDataSecurity"
@@ -80,7 +80,7 @@ resource "turbot_policy_setting" "azure_sql_server_data_security" {
   # value    = "Enforce: Enabled"
 }
 
-# Azure > SQL > Server > VulnerabilityAssessmentStorageAccount
+# Azure > SQL > Server > Vulnerability Assessment Storage Account
 resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_storage_account" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentStorageAccount"
@@ -89,7 +89,7 @@ resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_stor
   # value    = "teststorageaccmr/containername"
 }
 
-# Azure > SQL > Server > VulnerabilityAssessmentPeriodicScans
+# Azure > SQL > Server > Vulnerability Assessment Periodic Scans
 resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_periodic_scan" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentPeriodicScans"
@@ -97,7 +97,7 @@ resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_peri
   value    = "Enabled"
 }
 
-# Azure > SQL > Server > VulnerabilityAssessmentEmailAddresses
+# Azure > SQL > Server > Vulnerability Assessment Email Addresses
 resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_email_addresses" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentEmailAddresses"
@@ -105,7 +105,7 @@ resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_emai
   value    = jsonencode(["test@turbot.com"])
 }
 
-# Azure > SQL > Server > ThreatProtectionNotifyAdmins
+# Azure > SQL > Server > Threat Protection Notify Admins
 resource "turbot_policy_setting" "azure_sql_server_threat_protection_notify_admins" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionNotifyAdmins"
@@ -113,7 +113,7 @@ resource "turbot_policy_setting" "azure_sql_server_threat_protection_notify_admi
   value    = "Enabled"
 }
 
-# Azure > SQL > Server > ThreatProtectionEmailAddresses
+# Azure > SQL > Server > Threat Protection Email Addresses
 resource "turbot_policy_setting" "azure_sql_server_threat_protection_email_addresses" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionEmailAddresses"
@@ -121,22 +121,22 @@ resource "turbot_policy_setting" "azure_sql_server_threat_protection_email_addre
   value    = jsonencode(["test@turbot.com"])
 }
 
-# Azure > SQL > Server > ThreatProtectionTypes
+# Azure > SQL > Server > Threat Protection Types
 resource "turbot_policy_setting" "azure_sql_server_threat_protection_types" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionTypes"
   note     = "Azure CIS v2.0.0 - Control: 4.2.5"
   value    = <<EOT
-- SQL Injection
-- SQL Injection Vulnerability
-- Data Exfiltration
-- Unsafe Action
-- Access Anomaly
-- Brute Force
-EOT
+  - SQL Injection
+  - SQL Injection Vulnerability
+  - Data Exfiltration
+  - Unsafe Action
+  - Access Anomaly
+  - Brute Force
+  EOT
 }
 
-# Azure > PostgreSQL > Server > EncryptionInTransit
+# Azure > PostgreSQL > Server > Encryption In Transit
 resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverEncryptionInTransit"
@@ -145,8 +145,8 @@ resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit"
   # value    = "Enforce: Enabled"
 }
 
-# Azure > PostgreSQL > Server > EncryptionInTransitFlexi
-resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit_flexi" {
+# Azure > PostgreSQL > Flexible Server > Encryption In Transit
+resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.3.1"
@@ -154,7 +154,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit_
   # value    = "Enforce: Enabled"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging
+# Azure > PostgreSQL > Server > Audit Logging
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLogging"
@@ -163,8 +163,8 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
   # value    = "Enforce: Audit Logging > *"
 }
 
-# Azure > PostgreSQL > Server > AuditLoggingFlexi
-resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_flexi" {
+# Azure > PostgreSQL > Flexible Server > Audit Logging
+resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerAuditLogging"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
@@ -180,15 +180,15 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_chec
   value    = "On"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging > LogCheckpointsFlexi
-resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_checkpoints_flexi" {
+# Azure > PostgreSQL > Flexible Server > Audit Logging > Log Checkpoints
+resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging_log_checkpoints" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerAuditLoggingLogCheckpoints"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
   value    = "On"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging > LogConnections
+# Azure > PostgreSQL > Server > Audit Logging > Log Connections
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_connections" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogConnections"
@@ -196,7 +196,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_conn
   value    = "On"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging > LogDisconnections
+# Azure > PostgreSQL > Server > Audit Logging > Log Disconnections
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_disconnections" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogDisconnections"
@@ -204,7 +204,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_disc
   value    = "On"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging > ConnectionThrottling
+# Azure > PostgreSQL > Server > Audit Logging > Connection Throttling
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_connection_throttling" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingConnectionThrottling"
@@ -212,7 +212,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_connecti
   value    = "On"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging > LogRetentionDays
+# Azure > PostgreSQL > Server > Audit Logging > Log Retention Days
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_retention_days" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogRetentionDays"
@@ -229,7 +229,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# Azure > PostgreSQL > Server > ApprovedUsage
+# Azure > PostgreSQL > Server > Approved Usage
 resource "turbot_policy_setting" "azure_postgresql_server_approved_usage" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverApprovedUsage"
@@ -307,7 +307,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
   EOT
 }
 
-# Azure > MySQL > Server > EncryptionInTransit
+# Azure > MySQL > Server > Encryption In Transit
 resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/serverEncryptionInTransit"
@@ -316,8 +316,8 @@ resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit" {
   # value    = "Enforce: Enabled"
 }
 
-# Azure > MySQL > Server > EncryptionInTransitFlexi
-resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit_flexi" {
+# Azure > MySQL > Flexible Server > Encryption In Transit
+resource "turbot_policy_setting" "azure_mysql_flexible_server_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/flexibleServerEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.4.1"
@@ -325,8 +325,8 @@ resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit_flexi
   # value    = "Enforce: Enabled"
 }
 
-# Azure > MySQL > Server > EncryptionInTransit
-resource "turbot_policy_setting" "azure_mysql_flexible_server_minimum_tls_version_flexi" {
+# Azure > MySQL > Flexible Server > Minimum Tls Version
+resource "turbot_policy_setting" "azure_mysql_flexible_server_minimum_tls_version" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/flexibleServerMinimumTlsVersion"
   note     = "Azure CIS v2.0.0 - Control: 4.4.2"
