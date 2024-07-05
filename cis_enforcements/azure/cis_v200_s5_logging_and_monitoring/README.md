@@ -18,6 +18,7 @@ This policy pack can help you automate enforcement of Azure CIS benchmark sectio
 - Guardrails mods:
   - [@turbot/azure-monitor](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-monitor)
   - [@turbot/azure-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-storage)
+  - [@turbot/azure](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure)
 
 ### Credentials
 
@@ -86,15 +87,21 @@ resource "turbot_policy_setting" "azure_monitor_stack" {
   value    = "Check: Configured"
   # value    = "Enforce: Configured"
 }
-```
 
-```hcl
 resource "turbot_policy_setting" "azure_storage_container_public_access_level" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/containerPublicAccessLevel"
   note     = "Azure CIS v2.0.0 - Control: 5.1.3"
   value    = "Check: Private (No anonymous access)"
   # value    = "Enforce: Private (No anonymous access)"
+}
+
+resource "turbot_policy_setting" "azure_resource_group_stack" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure#/policy/types/resourceGroupStack"
+  note     = "Azure CIS v2.0.0 - Controls: 5.3.1"
+  value    = "Check: Configured"
+  # value    = "Enforce: Configured"
 }
 ```
 
