@@ -54,7 +54,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "delete_policy_assignment_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on delete policy assignment"
+      description         = "Activity log alert on delete policy assignment."
 
       criteria {
         category        = "Administrative"
@@ -71,7 +71,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "create_update_nsg_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Monitor NSG create/update events"
+      description         = "Monitor NSG create/update events."
 
       criteria {
         category        = "Administrative"
@@ -88,7 +88,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "delete_nsg_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Monitor NSG delete events"
+      description         = "Monitor NSG delete events."
 
       criteria {
         category        = "Administrative"
@@ -105,7 +105,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "create_update_security_solution_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on create/update security solutions"
+      description         = "Activity log alert on create/update security solutions."
 
       criteria {
         category        = "Administrative"
@@ -122,7 +122,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "delete_security_solution_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on delete security solutions"
+      description         = "Activity log alert on delete security solutions."
 
       criteria {
         category        = "Administrative"
@@ -139,7 +139,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "create_update_sql_server_firewall_rule_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on create/update SQL server firewall rules"
+      description         = "Activity log alert on create/update SQL server firewall rules."
 
       criteria {
         category        = "Administrative"
@@ -156,7 +156,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "delete_sql_server_firewall_rule_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on delete SQL server firewall rules"
+      description         = "Activity log alert on delete SQL server firewall rules."
 
       criteria {
         category        = "Administrative"
@@ -173,7 +173,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = create_update_public_ip_address_log_alert
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on create/update Public IP Addresses"
+      description         = "Activity log alert on create/update Public IP Addresses."
 
       criteria {
         category        = "Administrative"
@@ -190,7 +190,7 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
       name                = "delete_public_ip_address_log_alert"
       resource_group_name = {{ $.resourceGroup.metadata.azure.resourceGroupName }}
       scopes              = ["/subscriptions/{{ $.resourceGroup.metadata.azure.subscriptionId }}"]
-      description         = "Activity log alert on delete Public IP Addresses"
+      description         = "Activity log alert on delete Public IP Addresses."
 
       criteria {
         category        = "Administrative"
