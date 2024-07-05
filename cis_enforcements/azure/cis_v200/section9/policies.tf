@@ -36,12 +36,20 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
           "message": "App Service authentication is disabled"
       } -%}
 
+    {%- elif $.webApp.appServiceAuth == true -%}
+
+      {%- set data = {
+          "title": "App Service Authentication",
+          "result": "Approved",
+          "message": "App Service authentication is enabled"
+        } -%}
+
     {%- else -%}
 
       {%- set data = {
-          "title": "App Service authentication",
-          "result": "Approved",
-          "message": "App Service authentication is enabled"
+          "title": "App Service Authentication",
+          "result": "Skip",
+          "message": "No data for authentication yet"
         } -%}
 
     {%- endif -%}
