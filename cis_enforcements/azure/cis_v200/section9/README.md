@@ -2,9 +2,9 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 9 - AppService
+# Enforce Azure CIS v2.0.0 - Section 9 - App Service
 
-This section covers security recommendations for Azure AppService.
+This section covers security recommendations for Azure App Service.
 
 This policy pack can help you automate the enforcement of Azure CIS benchmark section 9 best practices.
 
@@ -81,7 +81,39 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   note     = "Azure CIS v2.0.0 - Control: 9.1, 9.6, 9,7 and 9.8"
   value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved"
+  # value  = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttpsOnly"
+  note     = "Azure CIS v2.0.0 - Control: 9.2"
+  # value  = "Check: Enabled"
+  value    = "Enforce: Enabled"
+}
+
+resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppMinimumTlsVersion"
+  note     = "Azure CIS v2.0.0 - Control: 9.3"
+  # value  = "Check: TLS 1.2"
+  value    = "Enforce: TLS 1.2"
+}
+
+resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttp20Enabled"
+  note     = "Azure CIS v2.0.0 - Control: 9.9"
+  # value  = "Check: Enabled"
+  value    = "Enforce: Enabled"
+}
+
+resource "turbot_policy_setting" "azure_appservice_web_app_ftps_state" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppFtpsState"
+  note     = "Azure CIS v2.0.0 - Control: 9.10"
+  # value  = "Check: FTPS only"
+  value    = "Enforce: FTPS only"
 }
 ```
 
