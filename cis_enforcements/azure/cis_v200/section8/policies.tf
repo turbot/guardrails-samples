@@ -1,4 +1,4 @@
-# Azure > KeyVault > Vault > Approved
+# Azure > Key Vault > Vault > Approved
 resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultApproved"
@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# Azure > KeyVault > Vault > custom
+# Azure > Key Vault > Vault > Custom
 resource "turbot_policy_setting" "azure_keyvault_vault_approved_custom" {
   resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-keyvault#/policy/types/vaultApprovedCustom"
@@ -76,7 +76,7 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved_custom" {
   EOT
 }
 
-# Azure > KeyVault > Key > Expiration
+# Azure > Key Vault > Key > Expiration
 resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/keyExpiration"
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
   # value    = "Enforce: Expiration"
 }
 
-# Azure > KeyVault > Secret > Expiration
+# Azure > Key Vault > Secret > Expiration
 resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/secretExpiration"
@@ -94,7 +94,7 @@ resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
   # value    = "Enforce: Expiration"
 }
 
-# Azure > KeyVault > Vault > PurgeProtection
+# Azure > Key Vault > Vault > Purge Protection
 resource "turbot_policy_setting" "azure_keyvault_vault_purge_protection" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultPurgeProtection"
