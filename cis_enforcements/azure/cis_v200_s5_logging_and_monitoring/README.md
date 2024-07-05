@@ -84,24 +84,24 @@ resource "turbot_policy_setting" "azure_monitor_stack" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-monitor#/policy/types/monitorStack"
   note     = "Azure CIS v2.0.0 - Controls:  5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9, 5.2.10"
-  value    = "Check: Configured"
-  # value    = "Enforce: Configured"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 
 resource "turbot_policy_setting" "azure_storage_container_public_access_level" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/containerPublicAccessLevel"
   note     = "Azure CIS v2.0.0 - Control: 5.1.3"
-  value    = "Check: Private (No anonymous access)"
-  # value    = "Enforce: Private (No anonymous access)"
+  # value    = "Check: Private (No anonymous access)"
+  value    = "Enforce: Private (No anonymous access)"
 }
 
 resource "turbot_policy_setting" "azure_resource_group_stack" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure#/policy/types/resourceGroupStack"
   note     = "Azure CIS v2.0.0 - Controls: 5.3.1"
-  value    = "Check: Configured"
-  # value    = "Enforce: Configured"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 ```
 
