@@ -80,8 +80,10 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   note     = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
-  value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved"
+  # value    = "Check: Approved"
+  # value    = "Enforce: Stop unapproved if new"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

@@ -4,7 +4,9 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   note     = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved"
+  # value    = "Enforce: Stop unapproved if new"
+  # value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 
 # Azure > Compute > Virtual Machines > Approved > Custom
@@ -33,12 +35,20 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom"
           "message": $.virtualMachine.name + " is not using managed disks"
       } -%}
 
-    {%- else -%}
+    {%- elif $.virtualMachine.managedDiskId -%}
 
       {%- set data = {
           "title": "Managed Disk",
           "result": "Approved",
           "message": $.virtualMachine.name + " is using managed disks"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Managed Disk",
+          "result": "Skip",
+          "message": "No data for managed disks yet"
       } -%}
 
     {%- endif -%}
@@ -76,7 +86,7 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom"
       {%- set data = {
           "title": "Extensions",
           "result": "Skip",
-          "message": "No data for VM yet"
+          "message": "No data for extensions yet"
       } -%}
 
     {% endif -%}
