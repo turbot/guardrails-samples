@@ -4,12 +4,13 @@ categories: ["cis"]
 
 # Enforce Azure CIS v2.0.0 - Section 2 - Microsoft Defender
 
-This section covers recommendations to consider for tenant-wide security policies and plans related to Microsoft Defender. Please note that because Microsoft Defender products require additional licensing, all Microsoft Defender plan recommendations in subsection 2.1 are assigned as "Level 2."
+This section covers recommendations to consider for tenant-wide security policies and plans related to Microsoft Defender. Please note that because Microsoft Defender products require additional licensing.
 
 Microsoft Defender products addressed in this section include:
-  -  Microsoft Defender for Cloud
-  -  Microsoft Defender for IoT
-  -  Microsoft Defender External Attack Surface Management
+
+- Microsoft Defender for Cloud
+- Microsoft Defender for IoT
+- Microsoft Defender External Attack Surface Management
 
 This policy pack can help you automate enforcement of Azure CIS benchmark section 2 best practices.
 
@@ -84,11 +85,19 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterDefenderPlan"
-  note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11, 2.1.12"
+  note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11 and 2.1.12"
   # value    = "Check: Defender Plan Enabled"
   value    = "Enforce: Defender Plan Enabled"
+}
+
+resource "turbot_policy_setting" "azure_securitycenter_auto_provisioning" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterAutoProvisioning"
+  note     = "Azure CIS v2.0.0 - Control: 2.1.15"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 
