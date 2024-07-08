@@ -1,0 +1,50 @@
+# Description
+# -----------
+#
+# The query filter s3 buckets.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_by_resource_type.graphql
+#
+
+# Filter
+# ------
+#
+# resourceTypeId:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' (aka for s3 bucket) are returned.
+#
+# limit:
+#   Number of data returned.
+#   In example, 'limit:5' 5 buckets are returned.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+query ListResourcesByResourceTypeId {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' limit:5") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      object
+      turbot {
+        title
+        id
+        akas
+        tags
+      }
+    }
+  }
+}

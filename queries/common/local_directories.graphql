@@ -1,0 +1,40 @@
+# Step 1 - Create a User in the directory
+mutation CreateDirectoryUser($input: CreateResourceInput!) {
+  createResource(input: $input) {
+    turbot {
+      id
+    }
+    object
+  }
+}
+
+# --------- Query variables --------- #
+{
+  "input": {
+    "parent": "162236619156582",
+    "type": "tmod:@turbot/turbot-iam#/resource/types/localDirectoryUser",
+    "data": {
+      "email": "test1@turbot.com",
+      "name": "test1",
+      "familyName": " user",
+      "displayName": "test1 user",
+      "status": "Active",
+      "title": "test1 user",
+      "givenName": "test1"
+    }
+  }
+}
+
+# Step 2 - Generate password for created user
+mutation CreateUserPassword($input: CreateLocalDirectoryUserPasswordInput!) {
+  createLocalDirectoryUserPassword(input: $input) {
+    password
+  }
+}
+
+# --------- Query variables --------- #
+{
+  "input": {
+    "user": "181544671551302"
+  }
+}

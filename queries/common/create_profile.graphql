@@ -1,0 +1,23 @@
+mutation CreateProfileInDirectory($input: CreateResourceInput!) {
+  createResource(input: $input) {
+    turbot {
+      id
+    }
+  }
+}
+
+{
+  "input": {
+    "parent":"165104053063647",  # Turbot id of the Directory
+    "type":"tmod:@turbot/turbot-iam#/resource/types/profile",
+    "data":{
+      "email": "puskar@turbot.com",
+      "title": "Puskar Basu",
+      "status": "Active",
+      "givenName": "Puskar",
+      "profileId": "puskar@turbot.com",
+      "familyName": "Basu",
+      "displayName": "Puskar Basu"
+    }
+  }
+}

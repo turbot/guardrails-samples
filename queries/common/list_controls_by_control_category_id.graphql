@@ -1,0 +1,56 @@
+# Description
+# -----------
+#
+# NOTE The preferred method when using the full exact aka.
+#
+# Lists all the controls that completely matches the passed in control category aka.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_controls_by_control_category_id.graphql
+#
+
+# Filter
+# ------
+#
+# controlCategoryId:
+#   The control category that should be queried.
+#   The value should exactly match the uri of the control category.
+#   In example, this is set to `controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot`.
+#
+# controlCategoryLevel:
+#   Controls which items to return from the control category hierarchy.
+#   In example only items that match are returned by setting value to `self`
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
+
+query ListControlsByControlCategoryId {
+  controls(filter: "controlCategoryId:tmod:@turbot/turbot#/control/categories/turbot controlCategoryLevel:self") {
+    items {
+      state
+      reason
+      details
+      type {
+        title
+        controlUri: uri
+        modUri
+        targets
+      }
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

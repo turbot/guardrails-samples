@@ -1,0 +1,5 @@
+# Policy Pack title
+policy_pack_title = "Policy Pack for VPC Flow Logs"
+
+# VPC flow logging S3 bucket key prefix
+vpc_flow_logging_s3_key_bucket_prefix = ""
