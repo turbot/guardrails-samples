@@ -76,39 +76,45 @@ resource "turbot_policy_setting" "azure_sql_server_active_directory_administrato
 resource "turbot_policy_setting" "azure_sql_server_data_security" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverDataSecurity"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.1, 4.2.2, 4.2.3, 4.2.4, 4.2.5"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1, 4.2.2, 4.2.3, 4.2.4 and 4.2.5"
   value    = "Check: Enabled"
   # value    = "Enforce: Enabled"
 }
 
-# Azure > SQL > Server > Advanced Data Security > Threat Protection Types
+# Azure > SQL > Server > Advanced Data Security > Threat Protection > Types
 resource "turbot_policy_setting" "azure_sql_server_threat_protection_types" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionTypes"
   note     = "Azure CIS v2.0.0 - Control: 4.2.1"
   value    = <<-EOT
-  - SQL Injection
-  - SQL Injection Vulnerability
-  - Data Exfiltration
-  - Unsafe Action
-  - Access Anomaly
-  - Brute Force
+    - "SQL Injection"
+    - "SQL Injection Vulnerability"
+    - "Data Exfiltration"
+    - "Unsafe Action"
+    - "Access Anomaly"
+    - "Brute Force"
   EOT
 }
 
-# Azure > SQL > Server > Advanced Data Security > Threat Protection Email Addresses
+# Azure > SQL > Server > Advanced Data Security > Threat Protection > Notify Admins
+resource "turbot_policy_setting" "azure_sql_server_threat_protection_notify_admins" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionNotifyAdmins"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1"
+  value    = "Enabled"
+}
+
+# Azure > SQL > Server > Advanced Data Security > Threat Protection > Email Addresses
 resource "turbot_policy_setting" "azure_sql_server_threat_protection_email_addresses" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionEmailAddresses"
   note     = "Azure CIS v2.0.0 - Control: 4.2.1"
   value    = <<-EOT
-  [
-    "email@example.com"
-  ]
+    - "email@example.com"
   EOT
 }
 
-# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment Storage Account
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment > Storage Account
 resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_storage_account" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentStorageAccount"
@@ -117,7 +123,7 @@ resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_stor
   value = "myStorageAccount"
 }
 
-# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment Periodic Scans
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment > Periodic Scans
 resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_periodic_scan" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentPeriodicScans"
@@ -125,23 +131,20 @@ resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_peri
   value    = "Enabled"
 }
 
-# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment Email Addresses
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment > Periodic Scans > Email Addresses
 resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_email_addresses" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentEmailAddresses"
   note     = "Azure CIS v2.0.0 - Control: 4.2.4"
   value    = <<-EOT
-  [
-    "email@example.com"
-  ]
+    - "email@example.com"
   EOT
 }
 
-# Azure > SQL > Server > Advanced Data Security > Threat Protection Notify Admins
-resource "turbot_policy_setting" "azure_sql_server_threat_protection_notify_admins" {
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment > Periodic Scans > Notify Admins
+resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_notify_admins" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionNotifyAdmins"
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentNotifyAdmins"
   note     = "Azure CIS v2.0.0 - Control: 4.2.5"
   value    = "Enabled"
 }
-

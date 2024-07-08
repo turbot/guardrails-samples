@@ -114,7 +114,7 @@ resource "turbot_policy_setting" "azure_sql_server_active_directory_administrato
 resource "turbot_policy_setting" "azure_sql_server_data_security" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverDataSecurity"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.1, 4.2.2, 4.2.3, 4.2.4, 4.2.5"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1, 4.2.2, 4.2.3, 4.2.4 and 4.2.5"
   # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
