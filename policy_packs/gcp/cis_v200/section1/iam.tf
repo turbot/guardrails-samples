@@ -14,49 +14,38 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_approved_custom" {
   type           = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 1.4"
   template_input = <<-EOT
-  - |
     {
-      serviceAccount {
-        turbot {
-          id
-        }
-      }
-    }
-  - |
-    {
-      serviceAccountKeys: resources(filter: "resourceId:{{ $.serviceAccount.turbot.id }} resourceTypeId:'tmod:@turbot/gcp-iam#/resource/types/serviceAccountKey' resourceTypeLevel:self $.keyType:'USER_MANAGED' limit:5000") {
-        items {
-          name: get(path: "name")
-          keyType: get(path: "keyType")
-        }
+      serviceAccountKey: serviceAccountKey {
+        name: get(path: "name")
+        keyType: get(path: "keyType")
       }
     }
   EOT
   template       = <<-EOT
-    {% set userManagedKeys = $.serviceAccountKeys.items %}
+    {% set keyType = $.serviceAccountKey.keyType %}
 
-    {%- if userManagedKeys and userManagedKeys | length > 0 -%}
+    {%- if keyType == "USER_MANAGED" -%}
 
       {%- set data = {
-          "title": "GCP-Managed Service Account Keys Only",
+          "title": "GCP-Managed Service Account Key",
           "result": "Not approved",
-          "message": "Service Account contains both GCP-Managed and User-Managed keys"
+          "message": "Service Account Key is User-Managed"
       } -%}
 
-    {%- elif userManagedKeys and userManagedKeys | length == 0 -%}
+    {%- elif keyType == "SYSTEM_MANAGED" -%}
 
       {%- set data = {
-          "title": "GCP-Managed Service Account Keys Only",
+          "title": "GCP-Managed Service Account Key",
           "result": "Approved",
-          "message": Service Account only contains GCP-Managed keys"
+          "message": "Service Account Key is GCP-Managed"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "GCP-Managed Service Account Keys Only",
+          "title": "GCP-Managed Service Account Key",
           "result": "Skip",
-          "message": "No data for Service Account yet"
+          "message": "No data available for key type of Service Account Key yet"
       } -%}
 
     {%- endif -%}
@@ -88,19 +77,15 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
     }
   - |
     {
-      iamPolicy: resource(id:`gcp://cloudresourcemanager.googleapis.com/projects/{{ $.project.id }}/iamPolicy`) {
+      iamPolicy: resource(id: "gcp://cloudresourcemanager.googleapis.com/projects/{{ $.project.id }}/iamPolicy", options: {notFound: RETURN_NULL}) {
         bindings: get(path: "bindings")
       }
       serviceAccount: serviceAccount {
         email: get(path: "email")
       }
-      projectUser: projectUser {
-        userId: get(path: "userId")
-      }
     }
     EOT
   template       = <<-EOT
-    {% set results = [] -%}
     {%- set role = '' -%}
     {%- set userServiceAccount = "serviceAccount:" + $.serviceAccount.email -%}
 
@@ -148,9 +133,45 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
     {%- endif -%}
 
-    {% set results = results.concat(data) -%}
+    {{ data | json }}
+    EOT
+}
 
+# GCP > IAM > Project User > Approved
+resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
+  note     = "GCP CIS v2.0.0 - Control: 1.6"
+  value    = "Check: Approved"
+  # value    =  "Enforce: Delete unapproved if new"
+}
+
+# GCP > IAM > Project User > Approved > Custom
+resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
+  resource       = turbot_smart_folder.main.id
+  type           = "tmod:@turbot/gcp-iam#/policy/types/projectUserApprovedCustom"
+  note           = "GCP CIS v2.0.0 - Control: 1.6"
+  template_input = <<-EOT
+  - |
+    {
+      project: project {
+        id: get(path: "projectId")
+      }
+    }
+  - |
+    {
+      iamPolicy: resource(id: "gcp://cloudresourcemanager.googleapis.com/projects/{{ $.project.id }}/iamPolicy", options: {notFound: RETURN_NULL}) {
+        bindings: get(path: "bindings")
+      }
+      projectUser: projectUser {
+        userId: get(path: "userId")
+      }
+    }
+    EOT
+  template       = <<-EOT
+    {%- set role = '' -%}
     {%- set userId = "user:" + $.projectUser.userId -%}
+
     {%- if userId.startsWith("user:") -%}
 
       {%- for binding in $.iamPolicy.bindings -%}
@@ -178,7 +199,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
       {%- elif role != "roles/iam.serviceAccountUser" and role != "roles/iam.serviceAccountTokenCreator" -%}
 
         {%- set data = {
-            "title": Service Account User or Token Creator Role",
+            "title": "Service Account User or Token Creator Role",
             "result": "Approved",
             "message": "User is not assigned with service account user or token creator roles at project level"
         } -%}
@@ -186,7 +207,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
       {%- else -%}
 
         {%- set data = {
-            "title": Service Account User or Token Creator Role",
+            "title": "Service Account User or Token Creator Role",
             "result": "Skip",
             "message": "No data for user yet"
         } -%}
@@ -195,9 +216,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
     {%- endif -%}
 
-    {% set results = results.concat(data) -%}
-
-    {{ results | json }}
+    {{ data | json }}
     EOT
 }
 

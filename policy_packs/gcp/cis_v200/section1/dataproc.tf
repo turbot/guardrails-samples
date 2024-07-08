@@ -1,5 +1,3 @@
-
-
 # GCP > Dataproc > Cluster > Approved
 resource "turbot_policy_setting" "gcp_dataproc_cluster_approved" {
   resource = turbot_smart_folder.main.id
@@ -12,7 +10,7 @@ resource "turbot_policy_setting" "gcp_dataproc_cluster_approved" {
 # GCP > Dataproc > Cluster > Approved > Custom
 resource "turbot_policy_setting" "gcp_dataproc_cluster_approved_custom" {
   resource       = turbot_smart_folder.main.id
-  type           = "tmod:@turbot/gcp-dataproc#/policy/types/serviceAccountKeyApprovedCustom"
+  type           = "tmod:@turbot/gcp-dataproc#/policy/types/clusterApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 1.17"
   template_input = <<-EOT
     {
