@@ -57,8 +57,8 @@ cd guardrails-samples/policy_packs/aws/cis_v300/section3
 Set the variable values:
 
 ```sh
-cp logging.tfvars.example logging.tfvars
-vi logging.tfvars
+cp section3.tfvars.example section3.tfvars
+vi section3.tfvars
 ```
 
 ```hcl
