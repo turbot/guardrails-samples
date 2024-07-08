@@ -1,4 +1,0 @@
-fields @timestamp, @message
-| filter tenant="turbot-acme"
-| stats count() as messageCount by message, bin(1h)
-| sort messageCount desc

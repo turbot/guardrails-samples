@@ -1,5 +1,0 @@
-fields @timestamp, @message, @data.msgObj.type
-| filter message like "received SQS message"
-| filter data.msgObj.type like "tick.turbot.com:Next"
-| stats count() as messageCount by data.msgObj.type
-| sort messageCount desc

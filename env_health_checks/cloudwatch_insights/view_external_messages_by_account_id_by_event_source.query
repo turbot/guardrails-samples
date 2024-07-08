@@ -1,6 +1,0 @@
-fields @timestamp, @message
-| filter message="received SQS message"
-| filter data.msgObj.type="event.turbot.com:External"
-| filter data.msgObj.payload.account="123412341234"
-| stats count() as messageCount by data.msgObj.payload.source
-| sort messageCount desc

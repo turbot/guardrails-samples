@@ -1,4 +1,0 @@
-{
-  "query": "{ resources { items { turbot { title } } } }",
-  "variables": {}
-}
