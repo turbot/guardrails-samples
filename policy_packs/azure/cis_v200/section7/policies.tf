@@ -111,6 +111,6 @@ resource "turbot_policy_setting" "azure_compute_disk_encryption_at_rest_disk_enc
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/diskEncryptionAtRestDiskEncryptionSet"
   note     = "Azure CIS v2.0.0 - Control: 7.3, 7.4 and 7.7"
-  # "Disk Encryption Set ID to be used for Encryption at Rest"
+  # Disk Encryption Set ID to be used for Encryption at Rest
   value = "/subscriptions/cd1234c5-6cc7-8901-a234-567c8e901f2e/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/myDiskEncryptionSet"
 }
