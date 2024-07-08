@@ -100,7 +100,6 @@ resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" 
   value    = "Enforce: TLS 1.2"
 }
 
-# Azure > AppService > WebApp > System Assigned Identity
 resource "turbot_policy_setting" "azure_appservice_web_app_system_assigned_identity" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppSystemAssignedIdentity"
