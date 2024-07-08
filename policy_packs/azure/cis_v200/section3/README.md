@@ -79,11 +79,51 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_storage_account_encryption_in_transit" {
-  resource = turbot_smart_folder.pack.id
+  resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 3.1"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"
+}
+
+resource "turbot_policy_setting" "azure_storage_account_access_keys_rotation_reminder" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessKeysRotationReminder"
+  note     = "Azure CIS v2.0.0 - Control: 3.3"
+  # value    = "Check: Enabled per Rotation Reminder > Days"
+  value    = "Enforce: Enabled per Rotation Reminder > Days"
+}
+
+resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/queueServiceLogging"
+  note     = "Azure CIS v2.0.0 - Control: 3.5"
+  # value    = "Check: Per Logging > Properties"
+  value    = "Enforce: Per Logging > Properties"
+}
+
+resource "turbot_policy_setting" "azure_storage_account_data_protection_soft_delete" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountDataProtectionSoftDelete"
+  note     = "Azure CIS v2.0.0 - Control: 3.11"
+  # value    = "Check: Configured per Soft Delete > * policies"
+  value    = "Enforce: Configured per Soft Delete > * policies"
+}
+
+resource "turbot_policy_setting" "azure_storage_account_blob_service_logging" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountBlobServiceLogging"
+  note     = "Azure CIS v2.0.0 - Control: 3.13"
+  # value    = "Check: Per Logging > Properties"
+  value    = "Enforce: Per Logging > Properties"
+}
+
+resource "turbot_policy_setting" "azure_storage_account_minimum_tls_version" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountMinimumTlsVersion"
+  note     = "Azure CIS v2.0.0 - Control: 3.15"
+  # value    = "Check: TLS 1.2"
+  value    = "Enforce: TLS 1.2"
 }
 ```
 
