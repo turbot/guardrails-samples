@@ -1,5 +1,3 @@
-
-
 # Azure > MySQL > Server > Encryption In Transit
 resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
@@ -18,7 +16,7 @@ resource "turbot_policy_setting" "azure_mysql_flexible_server_encryption_in_tran
   # value    = "Enforce: Enabled"
 }
 
-# Azure > MySQL > Flexible Server > Minimum Tls Version
+# Azure > MySQL > Flexible Server > Minimum TLS Version
 resource "turbot_policy_setting" "azure_mysql_flexible_server_minimum_tls_version" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/flexibleServerMinimumTlsVersion"

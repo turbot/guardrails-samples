@@ -20,7 +20,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLogging"
-  note     = "Azure CIS v2.0.0 - Control: 4.3.2"
+  note     = "Azure CIS v2.0.0 - Control: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.3.6, 4.3.7 and 4.3.8"
   value    = "Check: Audit Logging > *"
   # value    = "Enforce: Audit Logging > *"
 }
@@ -34,7 +34,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging
   # value    = "Enforce: Audit Logging > *"
 }
 
-# Azure > PostgreSQL > Server > AuditLogging > LogCheckpoints
+# Azure > PostgreSQL > Server > Audit Logging > Log Checkpoints
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_checkpoints" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogCheckpoints"
@@ -91,14 +91,6 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# Azure > PostgreSQL > Server > Approved Usage
-resource "turbot_policy_setting" "azure_postgresql_server_approved_usage" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-postgresql#/policy/types/serverApprovedUsage"
-  note     = "Azure CIS v2.0.0 - Control: 4.3.7 and 4.3.8"
-  value    = "Approved"
-}
-
 # Azure > PostgreSQL > Server > Approved > Custom
 resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
   resource       = turbot_smart_folder.main.id
@@ -115,9 +107,9 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
     }
   EOT
   template       = <<-EOT
-    {% set results = [] -%}
+    {%- set results = [] -%}
 
-    {% if $.resource.infra_encryption and $.resource.infra_encryption == "Disabled" %}
+    {%- if $.resource.infra_encryption and $.resource.infra_encryption == "Disabled" -%}
 
       {%- set data = {
           "title": "Infrastructure Encryption",
@@ -125,7 +117,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
           "message": "Infrastructure encryption is disabled"
       } -%}
 
-    {% else %}
+    {%- elif $.resource.infra_encryption and $.resource.infra_encryption == "Enabled" -%}
 
       {%- set data = {
           "title": "Infrastructure Encryption",
@@ -133,11 +125,19 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
           "message": "Infrastructure encryption is enabled"
       } -%}
 
-    {% endif %}
+    {%- else -%}
 
-    {% set results = results.concat(data) -%}
+      {%- set data = {
+          "title": "Infrastructure Encryption",
+          "result": "Skip",
+          "message": "No data for infrastructure encryption yet"
+      } -%}
 
-    {% if $.resource.firewallRulesName == "AllowAllWindowsAzureIps" %}
+    {%- endif -%}
+
+    {%- set results = results.concat(data) -%}
+
+    {%- if $.resource.firewallRulesName == "AllowAllWindowsAzureIps" -%}
 
       {%- set data = {
           "title": "Allow access to Azure services",
@@ -145,7 +145,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
           "message": "Allow access to Azure services is enabled"
       } -%}
 
-    {% elif $.resource.startIpAddress == "0.0.0.0" and $.resource.endIpAddress == "0.0.0.0" %}
+    {%- elif $.resource.startIpAddress == "0.0.0.0" and $.resource.endIpAddress == "0.0.0.0" -%}
 
       {%- set data = {
           "title": "Allow access to Azure services",
@@ -153,7 +153,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
           "message": "Allow access to Azure services is enabled"
       } -%}
 
-    {% else %}
+    {%- else -%}
 
       {%- set data = {
           "title": "Allow access to Azure services",
@@ -161,9 +161,9 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
           "message": "Allow access to Azure services is disabled"
       } -%}
 
-    {% endif %}
+    {%- endif -%}
 
-    {% set results = results.concat(data) -%}
+    {%- set results = results.concat(data) -%}
 
     {{ results | json }}
   EOT

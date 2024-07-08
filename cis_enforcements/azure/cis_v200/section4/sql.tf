@@ -2,21 +2,29 @@
 resource "turbot_policy_setting" "azure_sql_server_auditing" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditing"
-  note     = "Azure CIS v2.0.0 - Control: 4.1.1"
+  note     = "Azure CIS v2.0.0 - Control: 4.1.1 and 4.1.6"
   value    = "Check: Enabled"
   # value    = "Enforce: Enabled"
 }
 
-# Azure > SQL > Server > Auditing -> Storage Account
+# Azure > SQL > Server > Auditing > Storage Account
 resource "turbot_policy_setting" "azure_sql_server_auditing_storage_account" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditingStorageAccount"
-  note     = "Azure CIS v2.0.0 - Control: 4.1.1"
-  value    = "teststorageaccmr"
-  # value    = "https://teststorageaccmr.blob.core.windows.net/"
+  note     = "Azure CIS v2.0.0 - Control: 4.1.1 and 4.1.6"
+  # Your storage account name
+  value = "myStorageAccount"
 }
 
-# Azure > NSG > Ingress Rule > Approved
+# Azure > SQL > Server > Auditing > Retention Days
+resource "turbot_policy_setting" "azure_sql_server_auditing_retention_days" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditingRetentionDays"
+  note     = "Azure CIS v2.0.0 - Control: 4.1.1 and 4.1.6"
+  value    = "90"
+}
+
+# Azure > Network > Network Security Group > Ingress Rules > Approved
 resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
@@ -25,24 +33,16 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
   # value    = "Enforce: Delete unapproved"
 }
 
-# Azure > NSG > Ingress Rule > Approved > Rules
+# Azure > Network > Network Security Group > Ingress Rules > Approved > Rules
 resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved_rules" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApprovedRules"
-  note     = "Azure CIS v2.0.0 - Control: 4.1.2. For complete enforcement, the rules for 4.1.2 should be merged with the rules for 6.1.4."
+  note     = "Azure CIS v2.0.0 - Control: 4.1.2"
   value    = <<EOT
-    REJECT $.turbot.cidr:0.0.0.0/0 $.turbot.ports=1433  #CISv2.0 4.1.2
+    REJECT $.turbot.cidr:0.0.0.0/0
+
     APPROVE *
   EOT
-}
-
-# Azure > SQL > Server > Auditing -> Retention Days
-resource "turbot_policy_setting" "azure_sql_server_auditing_retention_days" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditingRetentionDays"
-  note     = "Azure CIS v2.0.0 - Control: 4.1.1 and 4.1.6"
-  value    = "100"
-  # value    = "maximum - 3285"
 }
 
 # Azure > SQL > Database > Encryption At Rest
@@ -68,65 +68,25 @@ resource "turbot_policy_setting" "azure_sql_server_active_directory_administrato
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverActiveDirectoryAdministratorName"
   note     = "Azure CIS v2.0.0 - Control: 4.1.4"
-  value    = "testAdminUser"
+  # Your admin user
+  value = "myAdminUser"
 }
 
-# Azure > SQL > Server > Data Security
+# Azure > SQL > Server > Advanced Data Security
 resource "turbot_policy_setting" "azure_sql_server_data_security" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverDataSecurity"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.1"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1, 4.2.2, 4.2.3, 4.2.4, 4.2.5"
   value    = "Check: Enabled"
   # value    = "Enforce: Enabled"
 }
 
-# Azure > SQL > Server > Vulnerability Assessment Storage Account
-resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_storage_account" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentStorageAccount"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.2"
-  value    = "teststorageaccmr"
-  # value    = "teststorageaccmr/containername"
-}
-
-# Azure > SQL > Server > Vulnerability Assessment Periodic Scans
-resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_periodic_scan" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentPeriodicScans"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.3"
-  value    = "Enabled"
-}
-
-# Azure > SQL > Server > Vulnerability Assessment Email Addresses
-resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_email_addresses" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentEmailAddresses"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.4"
-  value    = jsonencode(["test@turbot.com"])
-}
-
-# Azure > SQL > Server > Threat Protection Notify Admins
-resource "turbot_policy_setting" "azure_sql_server_threat_protection_notify_admins" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionNotifyAdmins"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.5"
-  value    = "Enabled"
-}
-
-# Azure > SQL > Server > Threat Protection Email Addresses
-resource "turbot_policy_setting" "azure_sql_server_threat_protection_email_addresses" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionEmailAddresses"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.5"
-  value    = jsonencode(["test@turbot.com"])
-}
-
-# Azure > SQL > Server > Threat Protection Types
+# Azure > SQL > Server > Advanced Data Security > Threat Protection Types
 resource "turbot_policy_setting" "azure_sql_server_threat_protection_types" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionTypes"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.5"
-  value    = <<EOT
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1"
+  value    = <<-EOT
   - SQL Injection
   - SQL Injection Vulnerability
   - Data Exfiltration
@@ -135,3 +95,53 @@ resource "turbot_policy_setting" "azure_sql_server_threat_protection_types" {
   - Brute Force
   EOT
 }
+
+# Azure > SQL > Server > Advanced Data Security > Threat Protection Email Addresses
+resource "turbot_policy_setting" "azure_sql_server_threat_protection_email_addresses" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionEmailAddresses"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1"
+  value    = <<-EOT
+  [
+    "email@example.com"
+  ]
+  EOT
+}
+
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment Storage Account
+resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_storage_account" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentStorageAccount"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.2"
+  # Your storage account name
+  value = "myStorageAccount"
+}
+
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment Periodic Scans
+resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_periodic_scan" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentPeriodicScans"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.3"
+  value    = "Enabled"
+}
+
+# Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment Email Addresses
+resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_email_addresses" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentEmailAddresses"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.4"
+  value    = <<-EOT
+  [
+    "email@example.com"
+  ]
+  EOT
+}
+
+# Azure > SQL > Server > Advanced Data Security > Threat Protection Notify Admins
+resource "turbot_policy_setting" "azure_sql_server_threat_protection_notify_admins" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverThreatProtectionNotifyAdmins"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.5"
+  value    = "Enabled"
+}
+

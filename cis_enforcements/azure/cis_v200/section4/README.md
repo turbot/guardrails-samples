@@ -83,7 +83,7 @@ resource "turbot_policy_setting" "azure_sql_server_auditing" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditing"
   note     = "Azure CIS v2.0.0 - Control: 4.1.1"
-  # value  = "Check: Enabled"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -91,7 +91,7 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
   note     = "Azure CIS v2.0.0 - Control: 4.1.2"
-  # value  = "Check: Approved"
+  # value   = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }
 
@@ -99,7 +99,7 @@ resource "turbot_policy_setting" "azure_sql_database_encryption_at_rest" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/databaseEncryptionAtRest"
   note     = "Azure CIS v2.0.0 - Control: 4.1.5"
-  # value  = "Check: Enabled"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -107,15 +107,15 @@ resource "turbot_policy_setting" "azure_sql_server_active_directory_administrato
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverActiveDirectoryAdministrator"
   note     = "Azure CIS v2.0.0 - Control: 4.1.4"
-  # value  = "Check: Enabled to Active Directory Administrator > Name"
+  # value   = "Check: Enabled to Active Directory Administrator > Name"
   value    = "Enforce: Enabled to Active Directory Administrator > Name"
 }
 
 resource "turbot_policy_setting" "azure_sql_server_data_security" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverDataSecurity"
-  note     = "Azure CIS v2.0.0 - Control: 4.2.1"
-  # value  = "Check: Enabled"
+  note     = "Azure CIS v2.0.0 - Control: 4.2.1, 4.2.2, 4.2.3, 4.2.4, 4.2.5"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -123,7 +123,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit"
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.3.1"
-  # value  = "Check: Enabled"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -131,7 +131,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.3.1"
-  # value  = "Check: Enabled"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -139,7 +139,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLogging"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
-  # value  = "Check: Audit Logging > *"
+  # value   = "Check: Audit Logging > *"
   value    = "Enforce: Audit Logging > *"
 }
 
@@ -147,7 +147,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerAuditLogging"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
-  # value  = "Check: Audit Logging > *"
+  # value   = "Check: Audit Logging > *"
   value    = "Enforce: Audit Logging > *"
 }
 
@@ -155,7 +155,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverApproved"
   note     = "Azure CIS v2.0.0 - Control: 4.3.7 and 4.3.8"
-  # value  = "Check: Approved"
+  # value   = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }
 
@@ -163,7 +163,7 @@ resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/serverEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.4.1"
-  # value  = "Check: Enabled"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -171,7 +171,7 @@ resource "turbot_policy_setting" "azure_mysql_flexible_server_encryption_in_tran
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/flexibleServerEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.4.1"
-  # value  = "Check: Enabled"
+  # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
 
@@ -179,7 +179,7 @@ resource "turbot_policy_setting" "azure_mysql_flexible_server_minimum_tls_versio
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/flexibleServerMinimumTlsVersion"
   note     = "Azure CIS v2.0.0 - Control: 4.4.2"
-  #value   = "Check: TLS 1.2"
+  #value    = "Check: TLS 1.2"
   value    = "Enforce: TLS 1.2"
 }
 ```
