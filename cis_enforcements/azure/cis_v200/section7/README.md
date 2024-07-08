@@ -85,6 +85,14 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   value    = "Enforce: Stop unapproved"
   # value    = "Enforce: Delete unapproved if new"
 }
+
+resource "turbot_policy_setting" "azure_compute_disk_encryption_at_rest" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-compute#/policy/types/diskEncryptionAtRest"
+  note     = "Azure CIS v2.0.0 - Control: 7.3, 7.4 and 7.7"
+  # value    = "Check: Encryption at Rest > Disk Encryption Set"
+  value    = "Enforce: Encryption at Rest > Disk Encryption Set"
+}
 ```
 
 Then re-apply the changes:
