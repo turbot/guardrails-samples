@@ -95,20 +95,20 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
   value    = "Enforce: Delete unapproved if new"
 }
 
-resource "turbot_policy_setting" "azure_sql_database_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-sql#/policy/types/databaseEncryptionAtRest"
-  note     = "Azure CIS v2.0.0 - Control: 4.1.5"
-  # value   = "Check: Enabled"
-  value    = "Enforce: Enabled"
-}
-
 resource "turbot_policy_setting" "azure_sql_server_active_directory_administrator" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverActiveDirectoryAdministrator"
   note     = "Azure CIS v2.0.0 - Control: 4.1.4"
   # value   = "Check: Enabled to Active Directory Administrator > Name"
   value    = "Enforce: Enabled to Active Directory Administrator > Name"
+}
+
+resource "turbot_policy_setting" "azure_sql_database_encryption_at_rest" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-sql#/policy/types/databaseEncryptionAtRest"
+  note     = "Azure CIS v2.0.0 - Control: 4.1.5"
+  # value   = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 
 resource "turbot_policy_setting" "azure_sql_server_data_security" {
