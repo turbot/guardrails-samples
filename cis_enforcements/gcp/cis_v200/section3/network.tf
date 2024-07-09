@@ -2,7 +2,7 @@
 resource "turbot_policy_setting" "gcp_network_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
-  note     = "GCP CIS v2.0.0 - Control: 3.1"
+  note     = "GCP CIS v2.0.0 - Control: 3.1 and 3.2"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
 }
@@ -15,7 +15,7 @@ resource "turbot_policy_setting" "gcp_network_approved_custom" {
   template_input = <<-EOT
     {
       network {
-        name
+        name: get(path: "name")
         autoCreateSubnetworks: get(path: "autoCreateSubnetworks")
       }
     }
@@ -26,23 +26,23 @@ resource "turbot_policy_setting" "gcp_network_approved_custom" {
     {%- if $.network.name == "default" -%}
 
       {%- set data = {
-          "title": "Network",
+          "title": "Default Network",
           "result": "Not approved",
-          "message": "Default network"
+          "message": "This is a default network"
       } -%}
 
     {%- elif $.network.name != "default" -%}
 
       {%- set data = {
-          "title": "Network",
+          "title": "Default Network",
           "result": "Approved",
-          "message": "Not a default network"
+          "message": "This is not a default network"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "Network",
+          "title": "Default Network",
           "result": "Skip",
           "message": "No data for network yet"
       } -%}
@@ -54,25 +54,25 @@ resource "turbot_policy_setting" "gcp_network_approved_custom" {
     {%- if $.network.autoCreateSubnetworks == null -%}
 
       {%- set data = {
-          "title": "Network",
+          "title": "Legacy Network",
           "result": "Not approved",
-          "message": "Legacy network"
+          "message": "This is a legacy network"
       } -%}
 
     {%- elif $.network.autoCreateSubnetworks != null -%}
 
       {%- set data = {
-          "title": "Network",
+          "title": "Legacy Network",
           "result": "Approved",
-          "message": "Not a legacy network"
+          "message": "This is not a legacy network"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "Subnetworks",
+          "title": "Legacy Network",
           "result": "Skip",
-          "message": "No data for AutoCreateSubnetworks yet"
+          "message": "No data for legacy network yet"
       } -%}
 
     {% endif -%}
@@ -98,7 +98,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved_ru
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApprovedRules"
   note     = "GCP CIS v2.0.0 - Control: 3.6 and 3.7"
   value    = <<EOT
-    REJECT $.turbot.cidr:0.0.0.0/0 $.turbot.ports=22, 3389
+    REJECT $.turbot.cidr:0.0.0.0/0 $.turbot.ports=22,3389
 
     APPROVE *
   EOT
@@ -109,7 +109,8 @@ resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyMinimumTlsVersion"
   note     = "GCP CIS v2.0.0 - Control: 3.9"
-  value    = "Enforce: TLS 1.2"
+  value    = "Check: TLS 1.2"
+  # value    = "Enforce: TLS 1.2"
 }
 
 # GCP > Network > SSL Policy > Profile
@@ -117,7 +118,8 @@ resource "turbot_policy_setting" "gcp_network_ssl_policy_profile" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyProfile"
   note     = "GCP CIS v2.0.0 - Control: 3.9"
-  value    = "Enforce: Restricted"
+  value    = "Check: Restricted"
+  # value    = "Enforce: Restricted"
 }
 
 # GCP > Network > Firewall > Approved

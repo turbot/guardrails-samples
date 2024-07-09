@@ -1,3 +1,12 @@
+# GCP > DNS > Managed Zone > DNSSEC Configuration
+resource "turbot_policy_setting" "gcp_dns_managed_zone_dnssec_configuration" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneDnssecConfiguration"
+  note     = "GCP CIS v2.0.0 - Control: 3.3"
+  value    = "Check: Enabled"
+  # value    = "Enforce: Enabled"
+}
+
 # GCP > DNS > Managed Zone > Approved
 resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
   resource = turbot_smart_folder.main.id
@@ -27,14 +36,21 @@ resource "turbot_policy_setting" "gcp_dns_managed_zone_approved_custom" {
       {%- set dnssecConfigDefaultKeySpecs = $.managedZone.dnssecConfigDefaultKeySpecs -%}
 
       {%- set zoneSigningRsasha1 = false -%}
+
       {%- set keySigningRsasha1 = false -%}
 
       {%- for keySpec in dnssecConfigDefaultKeySpecs -%}
+
         {%- if keySpec.keyType == 'zoneSigning' and keySpec.algorithm == 'rsasha1' -%}
+
           {%- set zoneSigningRsasha1 = true -%}
+
         {%- elif keySpec.keyType == 'keySigning' and keySpec.algorithm == 'rsasha1' -%}
+
           {%- set keySigningRsasha1 = true -%}
+
         {%- endif -%}
+
       {%- endfor -%}
 
       {%- if zoneSigningRsasha1 -%}
