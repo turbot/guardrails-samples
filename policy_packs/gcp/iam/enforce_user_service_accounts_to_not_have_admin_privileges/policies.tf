@@ -19,7 +19,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
     }
   - |
     {
-      iamPolicy: resource(id:`gcp://cloudresourcemanager.googleapis.com/projects/{{ $.project.id }}/iamPolicy`) {
+      iamPolicy: resource(id:"gcp://cloudresourcemanager.googleapis.com/projects/{{ $.project.id }}/iamPolicy") {
         bindings: get(path: "bindings")
       }
       item: serviceAccount {
