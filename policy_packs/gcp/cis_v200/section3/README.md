@@ -80,7 +80,23 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 resource "turbot_policy_setting" "gcp_network_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
-  note     = "GCP CIS v2.0.0 - Control: 3.1"
+  note     = "GCP CIS v2.0.0 - Control: 3.1 and 3.2"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "gcp_dns_managed_zone_dnssec_configuration" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneDnssecConfiguration"
+  note     = "GCP CIS v2.0.0 - Control: 3.3"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
+}
+
+resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneApproved"
+  note     = "GCP CIS v2.0.0 - Control: 3.4 and 3.5"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }
@@ -93,6 +109,22 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
   value    = "Enforce: Delete unapproved"
 }
 
+resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyMinimumTlsVersion"
+  note     = "GCP CIS v2.0.0 - Control: 3.9"
+  # value    = "Check: TLS 1.2"
+  value    = "Enforce: TLS 1.2"
+}
+
+resource "turbot_policy_setting" "gcp_network_ssl_policy_profile" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyProfile"
+  note     = "GCP CIS v2.0.0 - Control: 3.9"
+  # value    = "Check: Restricted"
+  value    = "Enforce: Restricted"
+}
+
 resource "turbot_policy_setting" "gcp_network_firewall_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallApproved"
@@ -101,13 +133,6 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved" {
   value    = "Enforce: Delete unapproved if new"
 }
 
-resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneApproved"
-  note     = "GCP CIS v2.0.0 - Control: 3.4 and 3.5"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
-}
 ```
 
 Then re-apply the changes:

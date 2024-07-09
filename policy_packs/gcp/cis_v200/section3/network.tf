@@ -1,4 +1,4 @@
-# GCP > Network > Approved
+# GCP > Network > Network > Approved
 resource "turbot_policy_setting" "gcp_network_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "gcp_network_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# GCP > Network > Approved > Custom
+# GCP > Network > Network > Approved > Custom
 resource "turbot_policy_setting" "gcp_network_approved_custom" {
   resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/gcp-network#/policy/types/networkApprovedCustom"
@@ -147,23 +147,20 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
   template       = <<-EOT
     {%- set results = [] -%}
 
-    {%- if $.firewall.sourceRanges == null -%}
-
-      {%- set data = {
-          "title": "Source Ranges",
-          "result": "Not approved",
-          "message": "No source ranges defined"
-      } -%}
-
-    {%- elif $.firewall.sourceRanges != null -%}
+    {%- if $.firewall.sourceRanges != null -%}
 
       {%- set allowedSourceIPRanges = ["35.235.240.0/20", "130.211.0.0/22", "35.191.0.0/16"] -%}
+
       {%- set allRequiredIpExist = true -%}
 
       {%- for ip in allowedSourceIPRanges -%}
+
         {%- if ip not in $.firewall.sourceRanges -%}
+
           {%- set allRequiredIpExist = false -%}
+
         {%- endif -%}
+
       {%- endfor -%}
 
       {%- if allRequiredIpExist -%}
@@ -179,7 +176,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
         {%- set data = {
             "title": "Source Ranges",
             "result": "Not approved",
-            "message": "Missing required source ranges"
+            "message": "All required source ranges are not defined"
         } -%}
 
       {%- endif -%}
@@ -198,27 +195,28 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
 
     {%- endif -%}
 
-    {%- if $.firewall.allowed == null -%}
-
-      {%- set data = {
-          "title": "Allowed Protocols",
-          "result": "Not approved",
-          "message": "No allowed protocols defined"
-      } -%}
-
-    {%- elif $.firewall.allowed != null -%}
+    {%- if $.firewall.allowed != null -%}
 
       {%- set desiredPorts = ["22", "80", "443", "3389"] -%}
+
       {%- set allowProtocolsAndPorts = false -%}
 
       {%- for allow in $.firewall.allowed -%}
+
         {%- if allow.IPProtocol == "tcp" and allow.ports is defined -%}
+
           {%- for port in allow.ports -%}
+
             {%- if port in desiredPorts -%}
+
               {%- set allowProtocolsAndPorts = true -%}
+
             {%- endif -%}
+
           {%- endfor -%}
+
         {%- endif -%}
+
       {%- endfor -%}
 
       {%- if allowProtocolsAndPorts -%}
@@ -244,9 +242,9 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
     {%- else -%}
 
       {%- set data = {
-          "title": "Allowed Protocols",
+          "title": "Allowed Ports",
           "result": "Skip",
-          "message": "No data for allowed protocols yet"
+          "message": "No data for allowed ports yet"
       } -%}
 
       {% set results = results.concat(data) -%}
