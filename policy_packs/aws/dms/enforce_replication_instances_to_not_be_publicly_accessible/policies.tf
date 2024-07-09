@@ -8,13 +8,6 @@ resource "turbot_policy_setting" "aws_dms_replication_instance_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# AWS > DMS > Replication Instance > Approved > Usage
-resource "turbot_policy_setting" "aws_dms_replication_instance_approved_usage" {
-  resource = "tmod:@turbot/turbot#/"
-  type     = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApprovedUsage"
-  value    = "Approved"
-}
-
 # AWS > DMS > Replication Instance > Approved > Custom
 resource "turbot_policy_setting" "aws_dms_replication_instance_approved_custom" {
   resource       = turbot_smart_folder.main.id

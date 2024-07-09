@@ -1,42 +1,52 @@
 ---
 categories: ["security"]
-description: "Prevent use of potentially vulnerable or malicious images, ensuring that only vetted and compliant resources are deployed."
 ---
 
 # Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts
 
 Denying AWS EC2 instances with unapproved AMIs and/or publisher accounts is essential to maintain a secure and controlled environment. This prevents the use of potentially vulnerable or malicious images, ensuring that only vetted and compliant resources are deployed, thereby reducing security risks and maintaining compliance with organizational policies.
 
-## Documentation
+This policy pack can help you configure the following settings for EC2 instances:
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/deny_unapproved_amis_publishers_for_instances/settings)**
+- Enforce a lockdown IAM policy via Guardrails to deny launching EC2 instances with unapproved AMIs and/or publishers
+- Set the AMI IDs that are approved for use
+- Set the publisher account IDs that are approved for use
+
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/deny_unapproved_amis_publishers_for_instances/settings)**
 
 ## Getting Started
 
 ### Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-- The following Guardrails mods need to be installed:
+- Guardrails mods:
   - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
 
 ### Credentials
 
 To create a policy pack through Terraform:
 
-- Ensure you have `Turbot/Owner` or `Turbot/Admin` permissions in Guardrails
-- Create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key)
+- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
 
 And then set your credentials:
 
 ```sh
-export TURBOT_WORKSPACE=myworkspace-turbot.cloud.turbot.com
+export TURBOT_WORKSPACE=myworkspace.acme.com
 export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
 export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
 ```
 
-Please check [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
 ## Usage
+
+### Install Policy Pack
+
+> [!NOTE]
+> By default, installed policy packs are not attached to any resources.
+>
+> Policy packs must be attached to resources in order for their policy settings to take effect.
 
 Clone:
 
@@ -58,11 +68,18 @@ Then apply the changes:
 terraform apply
 ```
 
+### Apply Policy Pack
+
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 ### Enable Enforcement
 
-By default, the policies are set to `Lockdown Disabled` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Lockdown Disabled` setting and removing the comment from one of the listed enforcement options:
+> [!TIP]
+> You can also update the policy settings in this policy pack directly in the Guardrails console.
+>
+> Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
+
+By default, the lockdown policy is set to `Lockdown: Disabled` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Lockdown: Disabled` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_permissions_lockdown_instance_image" {
@@ -82,7 +99,3 @@ Then re-apply the changes:
 terraform plan
 terraform apply
 ```
-
-You can also update the policy setting on the policy pack directly in the Guardrails console.
-
-Note: If modifying the policy setting in the console, your Terraform state file will become out of sync, so the policy settings should only be managed in the console.
