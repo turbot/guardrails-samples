@@ -1,4 +1,0 @@
-recipe: "./recipes/aws_account_only.yaml"
-workspaces:
-  - account: "111122223333"
-    profile: default

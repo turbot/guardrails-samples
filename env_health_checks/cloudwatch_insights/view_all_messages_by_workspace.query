@@ -1,4 +1,0 @@
-fields @timestamp, @message
-| filter message="received SQS message"
-| stats count() as messageCount by tenant
-| sort messageCount desc

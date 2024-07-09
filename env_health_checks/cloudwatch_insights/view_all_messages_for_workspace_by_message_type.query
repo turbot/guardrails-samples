@@ -1,5 +1,0 @@
-fields @timestamp, @message
-| filter message="received SQS message"
-| filter tenant="turbot-acme"
-| stats count() as messageCount by data.msgObj.type
-| sort messageCount desc

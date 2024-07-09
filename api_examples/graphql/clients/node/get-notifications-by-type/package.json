@@ -1,7 +1,0 @@
-{
-  "name": "get-notifications-by-type",
-  "dependencies": {
-    "btoa": "^1.2.1",
-    "graphql-request": "^3.3.0"
-  }
-}
