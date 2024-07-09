@@ -1,0 +1,53 @@
+  
+# Description
+# -----------
+#
+# Look up default VPC and state of the control AWS > VPC > Default VPC > Approved
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_default_vpc_and_controls.graphql
+#
+
+# Filter
+# ------
+#
+# resourceTypeId:
+#   ID for the specific resource type.
+#   In this example, 'tmod:@turbot/aws-vpc-core#/resource/types/vpc' filters for the vpc resource type.
+#
+# controlTypeId:
+#   ID for the specific control type.
+#   In this example, 'tmod:@turbot/aws-vpc-core#/control/types/defaultVpcApproved' filters for the AWS > VPC > Default VPC > Approved control.
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resourceTypeId: https://turbot.com/v5/docs/reference/graphql/query/resourceTypeId
+#
+
+
+{
+    resources(filter: "resourceTypeId:tmod:@turbot/aws-vpc-core#/resource/types/vpc $.IsDefault:true") {
+        metadata {
+            stats {
+                total
+            }
+        }
+        items {
+            VpcId: get(path: "VpcId")
+            State: get(path: "State")
+            OwnerId: get(path: "OwnerId")
+            RegionName: get(path: "turbot.custom.aws.regionName")
+            DefaultVPCControls: controls(filter:"level:ancestor controlTypeLevel:self controlTypeId:'tmod:@turbot/aws-vpc-core#/control/types/defaultVpcApproved'") {
+                items {
+                    state
+                }
+            }
+        }
+    }
+}
