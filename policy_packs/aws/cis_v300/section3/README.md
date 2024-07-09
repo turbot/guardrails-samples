@@ -62,10 +62,10 @@ vi section3.tfvars
 ```
 
 ```hcl
-# AWS KMS Key Alias name for encryption of the logs delivered by CloudTrail.
+# The alias of the KMS key that encrypts the logs delivered by CloudTrail. To be used for control 3.1.
 kms_key_alias = "alias/turbot/default"
 
-# AWS S3 Logging Bucket
+# The name of an S3 bucket to which the CloudTrail will deliver the logs. To be used for controls 3.1 and 3.4.
 logging_bucket = "aws-cloudtrail-logs-123456789012-830c8976"
 ```
 
