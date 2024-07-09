@@ -1,71 +1,97 @@
 ---
-organization: Turbot
-category: ["public cloud"]
-icon_url: "/images/plugins/turbot/gcp.svg"
-brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level"
-short_name: "check_default_vpc_creation_disabled_at_org_level"
-description: "Ensure that creation of default VPC network is disabled at the GCP organization level."
-mod_dependencies:
-  - "@turbot/gcp"
-  - "@turbot/gcp-iam"
-  - "@turbot/gcp-orgpolicy"
+categories: ["public cloud"]
 ---
 
 # Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level
 
-This Policy Pack checks if the GCP Organization Policy "Skip default network creation" is disabled at the GCP organization level, using Terraform. It automates the creation and setup of necessary Guardrails policies which will allow Guardrails to automatically detect if the setting is disabled.
+Default VPC Network has a preconfigured network configuration and automatically generates the following insecure firewall rules that allows ingress connection on TCP, SSH, IDP and IPCM. Furthermore, the default network is an auto mode network, which means that its subnets use the same predefined range of IP addresses, and as a result, it's not possible to use Cloud VPN or VPC Network Peering with the default network.
 
-## Documentation
+This policy pack can help you configure the following settings for organizations:
 
-- **[Policy pack definitions & examples →](#)**
+- Checks if the project organization policy skips the creation of default network
 
-## Get started
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_default_vpc_creation_is_disabled_at_org_level/settings)**
 
-### Install
+## Getting Started
 
-Clone the repo locally:
+### Requirements
 
-```sh
-git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/computeengine/check_default_vpc_creation_disabled_at_org_level
-```
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- Guardrails mods:
+  - [@turbot/gcp-orgpolicy](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-orgpolicy)
 
 ### Credentials
 
-Installing this Policy Pack requires [admin credentials to a Turbot Guardrails workspace](https://turbot.com/guardrails/docs/guides/iam/access-keys) and [a way to run Terraform](https://turbot.com/guardrails/docs/7-minute-labs/terraform).
+To create a policy pack through Terraform:
 
-### Configuration
+- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
 
-- **[Set up your Guardrails environment variables →](https://registry.terraform.io/providers/turbot/turbot/latest/docs#environment-variables)**
+And then set your credentials:
 
-## How to use
+```sh
+export TURBOT_WORKSPACE=myworkspace.acme.com
+export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
+export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
+```
 
-### Create the Policy Pack in your workspace
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
-  ```sh
-  terraform init
-  terraform plan 
-  terraform apply
-  ```
+## Usage
 
-### Attach the Policy Pack to your project
+### Install Policy Pack
 
-- Within the Guardrails UI navigate to [{workspace-url}/apollo?exploreMode=account](#).
-- Select the project from the list for testing.
-- Click on the "Detail" sub-tab and look for the "Policy Packs" widget in the bottom right of the page.
-- Select the "MANAGE" link and `+ Add` the `Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level` Policy Pack from the dropdown menu.
-- Select "Save".
+> [!NOTE]
+> By default, installed policy packs are not attached to any resources.
+>
+> Policy packs must be attached to resources in order for their policy settings to take effect.
 
-> [!IMPORTANT]
-> Do not add or remove more than one Policy Pack to a resource at a time. Adding Policy Packs is an asynchronous operation, after changing the Policy Pack configuration for a resource, wait at least 5 minutes before adding or removing other Policy Packs.
+Clone:
 
-### Verify state (OK, Alarm, Error) of associated controls
+```sh
+git clone https://github.com/turbot/guardrails-samples.git
+cd guardrails-samples/policy_packs/gcp/orgpolicy/check_default_vpc_creation_is_disabled_at_org_level
+```
 
-Within the Guardrails UI navigate to:
+Run the Terraform to create the policy pack in your workspace:
 
-  ```sh
-  {workspace-url}/apollo/controls/explore?filter=controlTypeId%3A%27tmod%3A%40turbot%2Fgcp-orgpolicy%23%2Fcontrol%2Ftypes%2FcomputeSkipDefaultNetworkCreation%27
-  ```
+```sh
+terraform init
+terraform plan
+```
 
-  Replace `{workspace-url}` with the FQDN of your workspace (e.g. <https://company.cloud.turbot.com>). Use the "Resource" filter to select the test account where the Policy Pack is attached. Review all controls in `Alarm` state to understand why they are violating this policy pack objective.
+Then apply the changes:
+
+```sh
+terraform apply
+```
+
+### Apply Policy Pack
+
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+### Enable Enforcement
+
+> [!TIP]
+> You can also update the policy settings in this policy pack directly in the Guardrails console.
+>
+> Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
+
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+
+```hcl
+resource "turbot_policy_setting" "gcp_org_policy_compute_skip_default_network_creation" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-orgpolicy#/policy/types/computeSkipDefaultNetworkCreation"
+  value    = "Check: On, effective value"
+  # value    = "Check: On, set on project"
+  # value    = "Check: On, inherited"
+}
+```
+
+Then re-apply the changes:
+
+```sh
+terraform plan
+terraform apply
+```

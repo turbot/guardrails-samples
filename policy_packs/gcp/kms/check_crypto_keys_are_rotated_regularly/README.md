@@ -1,13 +1,71 @@
 ---
-organization: Turbot
-category: ["public cloud"]
-icon_url: "/images/plugins/turbot/gcp.svg"
-brand_color: "#FF9900" # TODO: verify the brand_color
-display_name: "Check If GCP KMS Crypto Keys Are Rotated Regularly"
-short_name: "check_crypto_keys_are_rotated_regularly"
-description: "Check if GCP KMS cryptographic keys available within the project are rotated regularly."
-mod_dependencies:
-  - "@turbot/gcp"
-  - "@turbot/gcp-iam"
-  - "@turbot/gcp-kms"
+categories: ["public cloud"]
 ---
+
+# Enforce GCP KMS Crypto Keys to be rotated on regular basis
+
+KMS Crypto Keys should be rotated on regular basis. A rotation schedule defines the frequency of rotation, and optionally the date and time when the first rotation occurs. The rotation schedule can be based on either the key's age or the number or volume of messages encrypted with a key version.
+
+This policy pack can help you configure the following settings for KMS crypto keys:
+
+- Enforce crypto keys to be rotated on regular basis
+
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_crypto_keys_are_rotated_regularly/settings)**
+
+## Getting Started
+
+### Requirements
+
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- Guardrails mods:
+  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-kms)
+
+### Credentials
+
+To create a policy pack through Terraform:
+
+- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
+
+And then set your credentials:
+
+```sh
+export TURBOT_WORKSPACE=myworkspace.acme.com
+export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
+export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
+```
+
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
+
+## Usage
+
+### Install Policy Pack
+
+> [!NOTE]
+> By default, installed policy packs are not attached to any resources.
+>
+> Policy packs must be attached to resources in order for their policy settings to take effect.
+
+Clone:
+
+```sh
+git clone https://github.com/turbot/guardrails-samples.git
+cd guardrails-samples/policy_packs/gcp/kms/check_crypto_keys_are_rotated_regularly
+```
+
+Run the Terraform to create the policy pack in your workspace:
+
+```sh
+terraform init
+terraform plan
+```
+
+Then apply the changes:
+
+```sh
+terraform apply
+```
+
+### Apply Policy Pack
+
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
