@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce GCP CIS v2.0.0 - Section 5 - Storage
+# GCP CIS v2.0.0 - Section 5 - Storage
 
 This section covers recommendations addressing storage on Google Cloud Platform.
 

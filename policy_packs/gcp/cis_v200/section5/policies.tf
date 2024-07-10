@@ -14,8 +14,8 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_domains" {
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Domains that are trusted for access
   value = <<-EOT
-  - company.com
-  - company-dev.org
+    - "example.com"
+    - "example-dev.org"
   EOT
 }
 
@@ -26,8 +26,8 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_groups" {
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Groups that are trusted for access
   value = <<-EOT
-  - notification@company.com
-  - "*@company.com"
+    - "notification@example.com"
+    - "email@example.com"
   EOT
 }
 
@@ -38,8 +38,8 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_service_acco
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Service Accounts that are trusted for access
   value = <<-EOT
-  - project-owner@dev-aaa.iam.gserviceaccount.com
-  - "*"
+    - "project-owner@dev-aaa.iam.gserviceaccount.com"
+    - "project-operator@dev-aaa.iam.gserviceaccount.com"
   EOT
 }
 
@@ -50,8 +50,8 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_users" {
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Users that are trusted for access
   value = <<-EOT
-  - "dummy@gmail.com"
-  - "*@mycompany.com"
+    - "acme@example.com"
+    - "johndoe@example.com"
   EOT
 }
 
@@ -62,8 +62,8 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_projects" {
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Projects that are trusted for access
   value = <<-EOT
-  - "dev-aaa"
-  - "dev-aab"
+    - "dev-aaa"
+    - "dev-aab"
   EOT
 }
 
@@ -72,9 +72,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_all_users" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAllUsers"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
-  # Anonymous that are trusted for access
-  value = "Allow allUsers (Anonymous Access)"
-  # value = "Do not allow allUsers"
+  value    = "Do not allow allUsers"
 }
 
 # GCP > Storage > Bucket > Policy > Trusted All Authenticated
@@ -82,9 +80,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_all_authenti
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAllAuthenticated"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
-  # Granted public access
-  value = "Allow allAuthenticatedUsers (Public Access)"
-  # value = "Do not allow allAuthenticatedUsers"
+  value    = "Do not allow allAuthenticatedUsers"
 }
 
 # GCP > Storage > Bucket > Access Control
