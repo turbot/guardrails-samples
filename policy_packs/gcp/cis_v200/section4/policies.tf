@@ -110,19 +110,19 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
       {%- set data = {
           "title": "Confidential Computing Enabled",
           "result": "Approved",
-          "message": "Instance has Confidential Computing enabled"
+          "message": "Instance has confidential computing enabled"
       } -%}
     {%- elif not enableConfidentialCompute -%}
       {%- set data = {
           "title": "Confidential Computing Enabled",
           "result": "Not approved",
-          "message": "Instance has Confidential Computing disabled"
+          "message": "Instance has confidential computing disabled"
       } -%}
     {%- else -%}
       {%- set data = {
           "title": "Confidential Computing Enabled",
           "result": "Skip",
-          "message": "No data available for Confidential Computing yet"
+          "message": "No data available for confidential computing yet"
       } -%}
     {%- endif -%}
 
@@ -161,19 +161,19 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
       {%- set data = {
           "title": "Default Service Account",
           "result": "Approved",
-          "message": "Instance is not configured to use Default Service Account"
+          "message": "Instance is not configured to use default service account"
       } -%}
     {%- elif instanceWithDefaultSA | length > 0 -%}
       {%- set data = {
           "title": "Default Service Account",
           "result": "Not approved",
-          "message": "Instance is configured to use Default Service Account"
+          "message": "Instance is configured to use default service account"
       } -%}
     {%- else -%}
       {%- set data = {
           "title": "Default Service Account",
           "result": "Skip",
-          "message": "No data available for Service Account yet"
+          "message": "No data available for service account yet"
       } -%}
     {%- endif -%}
 
@@ -201,19 +201,19 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
       {%- set data = {
           "title": "Default Service Account with full API access",
           "result": "Approved",
-          "message": "Instance is not configured to use Default Service Account with Full Access to all cloud APIs"
+          "message": "Instance is not configured to use Default service account with full access to all cloud APIs"
       } -%}
     {%- elif instanceWithFullAccess | length > 0 -%}
       {%- set data = {
           "title": "Default Service Account with full API access",
           "result": "Not approved",
-          "message": "Instance is configured to use Default Service Account with Full Access to all cloud APIs"
+          "message": "Instance is configured to use Default service account with full access to all cloud APIs"
       } -%}
     {%- else -%}
       {%- set data = {
           "title": "Default Service Account with full API access",
           "result": "Skip",
-          "message": "No data available for Service Account yet"
+          "message": "No data available for service account yet"
       } -%}
     {%- endif -%}
 
