@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce GCP CIS v2.0.0 - Section 6 - Cloud SQL Database Services
+# GCP CIS v2.0.0 - Section 6 - Cloud SQL Database Services
 
 This section covers security recommendations to follow to secure Cloud SQL database services.
 
@@ -76,7 +76,13 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 > By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-
+resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDatabaseFlags"
+  note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
+  # value    = "Check: Database flags are correct"
+  value    = "Enforce: Set Database flags"
+}
 ```
 
 Then re-apply the changes:

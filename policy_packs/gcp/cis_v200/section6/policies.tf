@@ -2,7 +2,7 @@
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDatabaseFlags"
-  note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3"
+  note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   value    = "Check: Database flags are correct"
   # value    = "Enforce: Set Database flags"
 }
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_mysql_template" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceMysqlDatabaseFlagsTemplate"
-  note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3"
+  note     = "GCP CIS v2.0.0 - Control: 6.1.2 and 6.1.3"
   value    = <<-EOT
     {
       "skip_show_database": "on",
@@ -24,7 +24,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_mysql_template
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_postgresql_template" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instancePostgresqlDatabaseFlagsTemplate"
-  note     = "GCP CIS v2.0.0 - Control: 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8"
+  note     = "GCP CIS v2.0.0 - Control: 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7 and 6.2.8"
   value    = <<-EOT
     {
       "log_error_verbosity": "default",
@@ -43,7 +43,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_postgresql_tem
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_template" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceSqlDatabaseFlagsTemplate"
-  note     = "GCP CIS v2.0.0 - Control: 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6, 6.3.7"
+  note     = "GCP CIS v2.0.0 - Control: 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   value    = <<-EOT
     {
       "3625": "on",
