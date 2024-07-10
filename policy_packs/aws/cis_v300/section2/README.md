@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce AWS CIS v3.0.0 - Section 2 - Storage
+# AWS CIS v3.0.0 - Section 2 - Storage
 
 This section contains recommendations for configuring AWS Storage.
 

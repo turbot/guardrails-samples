@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 6 - Networking
+# Azure CIS v2.0.0 - Section 6 - Networking
 
 This section covers security recommendations to follow in order to set networking policies on an Azure subscription.
 

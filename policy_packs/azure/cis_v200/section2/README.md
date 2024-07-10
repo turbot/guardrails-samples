@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 2 - Microsoft Defender
+# Azure CIS v2.0.0 - Section 2 - Microsoft Defender
 
 This section covers recommendations to consider for tenant-wide security policies and plans related to Microsoft Defender. Please note that because Microsoft Defender products require additional licensing.
 

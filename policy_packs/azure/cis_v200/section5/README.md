@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 5 - Logging and Monitoring
+# Azure CIS v2.0.0 - Section 5 - Logging and Monitoring
 
 This section contains recommendations for configuring Azure logging and monitoring features.
 

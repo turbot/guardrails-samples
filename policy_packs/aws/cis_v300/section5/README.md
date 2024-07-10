@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce AWS CIS v3.0.0 - Section 5 - Networking
+# AWS CIS v3.0.0 - Section 5 - Networking
 
 This section contains recommendations for configuring security-related aspects of AWS Virtual Private Cloud (VPC).
 

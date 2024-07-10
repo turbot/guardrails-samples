@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce AWS CIS v3.0.0 - Section 3 - Logging
+# AWS CIS v3.0.0 - Section 3 - Logging
 
 This section contains recommendations for configuring AWS logging features.
 

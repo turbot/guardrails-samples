@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce AWS CIS v3.0.0 - Section 1 - Identity and Access Management
+# AWS CIS v3.0.0 - Section 1 - Identity and Access Management
 
 This section contains recommendations for configuring identity and access management related options.
 

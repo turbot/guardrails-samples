@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 1 - IAM
+# Azure CIS v2.0.0 - Section 1 - IAM
 
 This section covers security recommendations to set identity and access management policies on an Azure Subscription. Identity and Access Management policies are the first step towards a defense-in-depth approach to securing an Azure Cloud Platform environment.
 

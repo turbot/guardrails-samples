@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 7 - Virtual Machines
+# Azure CIS v2.0.0 - Section 7 - Virtual Machines
 
 This section covers security recommendations to follow for the configuration of Virtual Machines on an Azure subscription.
 

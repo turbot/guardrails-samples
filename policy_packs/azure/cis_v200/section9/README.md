@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 9 - App Service
+# Azure CIS v2.0.0 - Section 9 - App Service
 
 This section covers security recommendations for Azure App Service.
 
