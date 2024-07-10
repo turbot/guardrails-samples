@@ -46,17 +46,17 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved_custom" {
       {%- if $.sinkDetails.items.length > 0 and $.item.retentionPolicy and $.item.retentionPolicy.isLocked -%}
 
         {%- set data = {
-            "title": "Retention policy using Bucket Lock",
+            "title": "Retention Policy for Bucket Lock",
             "result": "Approved",
-            "message": "Recommendation met"
+            "message": "Retention policy for bucket lock is enabled"
         } -%}
 
       {%- else -%}
 
         {%- set data = {
-            "title": "Retention policy using Bucket Lock",
+            "title": "Retention Policy for Bucket Lock",
             "result": "Not approved",
-            "message": "Recommendation not met"
+            "message": "Retention policy for bucket lock is not enabled"
         } -%}
 
       {%- endif -%}
@@ -64,9 +64,9 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved_custom" {
     {%- else -%}
 
       {%- set data = {
-          "title": "Retention policy using Bucket Lock",
-          "result": "Not approved",
-          "message": "Recommendation not met"
+          "title": "Retention Policy for Bucket Lock",
+          "result": "Skip",
+          "message": "Not data for bucket lock yet"
       } -%}
 
     {%- endif -%}

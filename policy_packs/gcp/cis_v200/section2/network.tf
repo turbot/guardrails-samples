@@ -12,5 +12,6 @@ resource "turbot_policy_setting" "gcp_network_backend_service_logging_sample_rat
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/backendServiceLoggingSampleRate"
   note     = "GCP CIS v2.0.0 - Control: 2.16"
+  # Value of 1 means all logged requests are reported and 0 means no logged requests are reported
   value    = 1
 }
