@@ -65,7 +65,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
             {%- set data = {
                 "title": "Rotation",
                 "result": "Approved",
-                "message": "Crypto key rotated regularly"
+                "message": "Crypto key is rotated every 90 days"
             } -%}
 
         {%- elif rotationPeriodInDays > 90 -%}
@@ -73,7 +73,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
             {%- set data = {
                 "title": "Rotation",
                 "result": "Not approved",
-                "message": "Crypto key not rotated regularly"
+                "message": "Crypto key is not rotated every 90 days"
             } -%}
 
         {%- else -%}

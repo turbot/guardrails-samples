@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce GCP CIS v2.0.0 - Section 1 - Identity and Access Management
+# GCP CIS v2.0.0 - Section 1 - Identity and Access Management
 
 This section covers recommendations addressing Identity and Access Management on Google Cloud Platform.
 
@@ -16,9 +16,9 @@ This policy pack can help you automate enforcement of GCP CIS benchmark section 
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
+  - [@turbot/gcp-dataproc](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-dataproc)
   - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
   - [@turbot/gcp-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-kms)
-  - [@turbot/gcp-dataproc](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-dataproc)
 
 ### Credentials
 

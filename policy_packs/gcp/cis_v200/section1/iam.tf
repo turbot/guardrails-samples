@@ -27,25 +27,25 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_approved_custom" {
     {%- if keyType == "USER_MANAGED" -%}
 
       {%- set data = {
-          "title": "GCP-Managed Service Account Key",
+          "title": "GCP Managed Service Account Key",
           "result": "Not approved",
-          "message": "Service Account Key is User-Managed"
+          "message": "Service account key is user managed"
       } -%}
 
     {%- elif keyType == "SYSTEM_MANAGED" -%}
 
       {%- set data = {
-          "title": "GCP-Managed Service Account Key",
+          "title": "GCP Managed Service Account Key",
           "result": "Approved",
-          "message": "Service Account Key is GCP-Managed"
+          "message": "Service account key is GCP managed"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "GCP-Managed Service Account Key",
+          "title": "GCP Managed Service Account Key",
           "result": "Skip",
-          "message": "No data available for key type of Service Account Key yet"
+          "message": "No data for service account key yet"
       } -%}
 
     {%- endif -%}
@@ -110,7 +110,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
         {%- set data = {
             "title": "Admin Privileges",
             "result": "Not approved",
-            "message": "Service Account has admin privileges"
+            "message": "Service account has admin privileges"
         } -%}
 
       {%- elif role != "roles/owner" and role != "roles/admin" and role != "roles/editor" -%}
@@ -118,7 +118,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
         {%- set data = {
             "title": "Admin Privileges",
             "result": "Approved",
-            "message": "Service Account does not have admin privileges"
+            "message": "Service account does not have admin privileges"
         } -%}
 
       {%- else -%}
@@ -193,7 +193,7 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
         {%- set data = {
             "title": "Service Account User or Token Creator Role",
             "result": "Not approved",
-            "message": "User is assigned with service account user or token creator roles at project level"
+            "message": "User is assigned with service account user or token creator role"
         } -%}
 
       {%- elif role != "roles/iam.serviceAccountUser" and role != "roles/iam.serviceAccountTokenCreator" -%}
@@ -201,7 +201,7 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
         {%- set data = {
             "title": "Service Account User or Token Creator Role",
             "result": "Approved",
-            "message": "User is not assigned with service account user or token creator roles at project level"
+            "message": "User is not assigned with service account user or token creator role"
         } -%}
 
       {%- else -%}

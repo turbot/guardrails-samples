@@ -22,29 +22,29 @@ resource "turbot_policy_setting" "gcp_dataproc_cluster_approved_custom" {
   template       = <<-EOT
     {% set encryptionConfig = $.item.encryptionConfig %}
 
-    {# This is because gcePdKmsKeyName property doesn't exist incase of GCP managed key #}
+    {# Check gcePdKmsKeyName property because it doesn't exist incase of GCP managed key #}
     {%- if encryptionConfig and encryptionConfig.gcePdKmsKeyName -%}
 
       {%- set data = {
-          "title": "Dataproc Cluster encrypted with Customer-Managed key",
+          "title": "Encryption with customer managed key",
           "result": "Approved",
-          "message": "Dataproc Cluster is encrypted with Customer-Managed Encryption key"
+          "message": "Cluster is encrypted with customer managed key"
       } -%}
 
     {%- elif encryptionConfig and not encryptionConfig.gcePdKmsKeyName -%}
 
       {%- set data = {
-          "title": "Dataproc Cluster encrypted with Customer-Managed key",
+          "title": "Encryption with customer managed key",
           "result": "Not Approved",
-          "message": Dataproc Cluster is not encrypted with Customer-Managed Encryption key"
+          "message": "Cluster is not encrypted with customer managed key"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "Dataproc Cluster encrypted with Customer-Managed key",
+          "title": "Encryption with customer managed key",
           "result": "Skip",
-          "message": "No data for encryption of Dataproc Cluster yet"
+          "message": "No data for encryption yet"
       } -%}
 
     {%- endif -%}
