@@ -4,7 +4,6 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
   # value    = "Enforce: Delete unapproved if new"
 }
 

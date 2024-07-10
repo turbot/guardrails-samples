@@ -8,7 +8,7 @@ Enforcing Azure Storage Blob Containers to not allow public access is crucial fo
 
 This policy pack can help you configure the following settings for storage accounts:
 
-- Enforce blob public access to be disabled
+- Enforce block blob public access is set to Enabled
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_blob_containers_block_public_access/settings)**
 
@@ -80,7 +80,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_storage_storage_account_public_access" {
+resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
   # value    = "Check: Enabled"

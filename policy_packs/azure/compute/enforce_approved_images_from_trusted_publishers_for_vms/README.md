@@ -1,48 +1,59 @@
 ---
 categories: ["security"]
-description: "Ensure that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards."
 ---
 
 # Enforce Azure Compute Virtual Machines to Use Approved AMIs from Trusted Publishers
 
 Enforcing Azure compute instances to use approved AMIs from trusted publishers is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
 
+This policy pack can help you configure the following settings for Compute virtual machines:
+
+- Stop/Terminate VMs that do not use approved AMIs from trusted publishers
+- Set the image IDs that are approved for use
+
 ## Documentation
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_approved_amis_publishers_for_vms/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_approved_amis_publishers_for_vms/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
-- The following Guardrails mods need to be installed:
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- Guardrails mods:
   - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/azure-compute)
 
 ### Credentials
 
 To create a policy pack through Terraform:
 
-- Ensure you have `Turbot/Owner` or `Turbot/Admin` permissions in Guardrails
-- Create [Guardrails access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key)
+- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
 
 And then set your credentials:
 
 ```sh
-export TURBOT_WORKSPACE=myworkspace-turbot.cloud.turbot.com
+export TURBOT_WORKSPACE=myworkspace.acme.com
 export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
 export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
 ```
 
-Please check [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
 ## Usage
+
+### Install Policy Pack
+
+> [!NOTE]
+> By default, installed policy packs are not attached to any resources.
+>
+> Policy packs must be attached to resources in order for their policy settings to take effect.
 
 Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_approved_amis_publishers_for_vms
+cd guardrails-samples/policy_packs/azure/compute/enforce_approved_amis_publishers_for_vms
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -58,11 +69,18 @@ Then apply the changes:
 terraform apply
 ```
 
+### Apply Policy Pack
+
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 ### Enable Enforcement
 
-By default, the controls are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+> [!TIP]
+> You can also update the policy settings in this policy pack directly in the Guardrails console.
+>
+> Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
+
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
@@ -70,10 +88,8 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
   # value    = "Enforce: Delete unapproved if new"
 }
-
 ```
 
 Then re-apply the changes:
@@ -82,7 +98,3 @@ Then re-apply the changes:
 terraform plan
 terraform apply
 ```
-
-You can also update the policy setting on the policy pack directly in the Guardrails console.
-
-Note: If modifying the policy setting in the console, your Terraform state file will become out of sync, so the policy settings should only be managed in the console.
