@@ -1,5 +1,5 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce GCP Storage Buckets Are Not Publicly Accessible
@@ -8,7 +8,9 @@ Cloud Storage buckets, like other GCP resources, have Cloud Identity and Access 
 
 This policy pack can help you configure the following settings for storage buckets:
 
-- Enforce public access to be disabled for buckets
+- Remove access for non-trusted members
+- Do not allow `allUsers` access to buckets
+- Do not allow `allAuthenticatedUsers` access to buckets
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_buckets_are_not_publicly_accessible/settings)**
 
@@ -83,8 +85,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAccess"
-  value    = "Check: Trusted Access > *"
-  # value    = "Enforce: Trusted Access > *"
+  # value    = "Check: Trusted Access > *"
+  value    = "Enforce: Trusted Access > *"
 }
 ```
 

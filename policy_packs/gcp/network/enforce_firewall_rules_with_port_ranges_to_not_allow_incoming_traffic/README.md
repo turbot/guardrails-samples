@@ -1,5 +1,5 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce Network Firewall Rules with Port Ranges to Not Allow Incoming Traffic
@@ -8,7 +8,8 @@ Ensure that your Google Cloud VPC network firewall rules don't have range of por
 
 This policy pack can help you configure the following settings for Network firewalls:
 
-- Delete firewall rules that allow incoming traffic from all ports
+- Revoke firewall rules that allow incoming traffic from all IP addresses
+- Revoke firewall rules that have port range size of greater than 1
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_firewall_rules_with_port_ranges_to_not_allow_incoming_traffic/settings)**
 
@@ -83,8 +84,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
-  value    = "Check: Approved"
-  # value  = "Enforce: Delete unapproved"
+  # value    = "Check: Approved"
+  value  = "Enforce: Delete unapproved"
 }
 ```
 

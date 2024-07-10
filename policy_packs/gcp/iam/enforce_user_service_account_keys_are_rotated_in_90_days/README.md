@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce GCP IAM User-Managed Service Account Keys to Not Have Rotation Period of More Than 90 Days
 
-Inactive user-managed service account keys that have a rotation period of more than 90 days should be deleted.
+Enforcing that GCP IAM user-managed service account keys do not have a rotation period of more than 90 days is crucial for maintaining security and reducing the risk of key compromise. Regular key rotation limits the exposure of keys, ensuring that any potentially compromised keys are promptly replaced, thereby enhancing the overall security posture and ensuring compliance with best practices and regulatory requirements.
 
 This policy pack can help you configure the following settings for IAM user-managed service account keys:
 
-- Delete inactive user-managed service account keys with 90 days warning
+- Delete inactive service account keys that are older than 90 days
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
 
@@ -83,8 +83,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
-  value    = "Check: Active"
-  # value    =  "Enforce: Delete inactive with 90 days warning"
+  # value    = "Check: Active"
+  value    =  "Enforce: Delete inactive with 90 days warning"
 }
 ```
 

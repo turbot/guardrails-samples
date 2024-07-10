@@ -1,14 +1,16 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce GCP KMS Crypto Keys Are Not Publicly Accessible
 
-It is recommended that Cloud KMS 'cryptokeys' should restrict anonymous and/or public access. Rationale: Granting permissions to 'allUsers' or 'allAuthenticatedUsers' allows anyone to access the dataset. Such access might not be desirable if sensitive data is stored at the location.
+Enforcing that GCP KMS crypto keys are not publicly accessible is vital for protecting sensitive data from unauthorized access. This ensures that cryptographic keys, which are essential for data encryption and security, are only accessible to authorized users and services, thereby preventing potential data breaches and maintaining compliance with security best practices and regulatory standards.
 
 This policy pack can help you configure the following settings for KMS crypto keys:
 
-- Enforce public access to be disabled for crypto keys
+- Remove access for non-trusted members
+- Do not allow `allUsers` access to crypto keys
+- Do not allow `allAuthenticatedUsers` access to crypto keys
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_imdsv2_for_instances/settings)**
 
@@ -83,8 +85,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAccess"
-  value    = "Check: Trusted Access > *"
-  # value    = "Enforce: Trusted Access > *"
+  # value    = "Check: Trusted Access > *"
+  value    = "Enforce: Trusted Access > *"
 }
 ```
 

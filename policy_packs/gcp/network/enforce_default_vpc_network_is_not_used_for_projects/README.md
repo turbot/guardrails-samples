@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce Default VPC Network to Not Be Used Within GCP Projects
 
-Ensure that "Skip Default Network Creation" constraint policy is enforced for your Google Cloud Platform (GCP) organizations in order to follow security best practices and meet networking requirements. Once enabled, this constraint skips the creation of the default Virtual Private Cloud (VPC) network and related resources during Google Cloud project creation.
+Enforcing that the default VPC network is not used within GCP projects is essential for maintaining a secure and customized network environment. This practice encourages the creation of tailored VPC networks with specific configurations and security controls, reducing the risk of misconfigurations and enhancing overall network security and compliance with best practices.
 
 This policy pack can help you configure the following settings for VPC networks:
 
-- Delete default VPC network used within a project
+- Remove default networks that are used within projects
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_default_vpc_network_is_not_used_for_projects/settings)**
 
@@ -84,8 +84,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_network_network_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
-  value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved if new"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

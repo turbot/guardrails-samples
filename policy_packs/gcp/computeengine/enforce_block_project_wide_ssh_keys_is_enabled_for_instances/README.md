@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing the enablement of block project-wide SSH keys for GCP Compute Engine instances is important because it restricts the use of universally accessible SSH keys, thereby reducing the risk of unauthorized access. This measure ensures that only instance-specific SSH keys are used, enhancing the security and control over individual instance access.
 
-This policy pack can help you configure the following settings for Compute Engine Instances:
+This policy pack can help you configure the following settings for Compute Engine instances:
 
 - Enforce project wide SSH keys are blocked
 

@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce GCP Compute Engine Instances to Not Use External IP Addresses
 
-Access configs with external IPs that are used in compute engine instances should be deleted.
+Enforcing GCP Compute Engine instances to not use external IP addresses is vital for reducing the attack surface and enhancing security. By restricting instances to internal IP addresses, it minimizes exposure to the internet, thereby protecting sensitive data and systems from unauthorized access and potential threats.
 
-This policy pack can help you configure the following settings for Compute Engine Instances:
+This policy pack can help you configure the following settings for Compute Engine instances:
 
-- Delete managed clusters that do not have RBAC enabled
+- Enforce no external IP addresses are used
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_external_ip_address/settings)**
 
@@ -83,8 +83,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_compute_engine_instance_external_ip_address" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceExternalIpAddresses"
-  value    = "Check: None"
-  # value    = "Enforce: None"
+  # value    = "Check: None"
+  value    = "Enforce: None"
 }
 ```
 

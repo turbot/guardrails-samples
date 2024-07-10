@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges
 
-User-managed service accounts that have admin privileges should be deleted.
+Enforcing that GCP IAM user-managed service accounts do not have admin privileges is essential for maintaining the principle of least privilege. This minimizes the risk of unauthorized access and potential misuse of administrative capabilities, enhancing security by ensuring that service accounts only have the permissions necessary to perform their specific tasks.
 
 This policy pack can help you configure the following settings for IAM user-managed service accounts:
 
-- Delete user-managed service accounts that have admin privileges
+- Delete service accounts that have `roles/owner`, `roles/admin` or `roles/editor` privileges
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_accounts_to_not_have_admin_privileges/settings)**
 
@@ -83,8 +83,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
-  value    = "Check: Approved"
-  # value    =  "Enforce: Delete unapproved if new"
+  # value    = "Check: Approved"
+  value    =  "Enforce: Delete unapproved if new"
 }
 ```
 

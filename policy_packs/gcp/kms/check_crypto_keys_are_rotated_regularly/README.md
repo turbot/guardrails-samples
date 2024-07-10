@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Enforce GCP KMS Crypto Keys to be rotated on regular basis
 
-KMS Crypto Keys should be rotated on regular basis. A rotation schedule defines the frequency of rotation, and optionally the date and time when the first rotation occurs. The rotation schedule can be based on either the key's age or the number or volume of messages encrypted with a key version.
+KMS Crypto Keys should be rotated on regular basis. A rotation schedule defines the frequency of rotation, and optionally the date and time when the first rotation occurs. The rotation schedule can be based on either the key's age or the number or volume of messages encrypted with a key version. Enforcing regular rotation of GCP KMS crypto keys is essential for maintaining the security and integrity of encrypted data. Regular key rotation mitigates the risk of key compromise, ensuring that even if a key is exposed, its usage window is limited, thereby enhancing overall security and ensuring compliance with best practices and regulatory requirements.
 
 This policy pack can help you configure the following settings for KMS crypto keys:
 
-- Enforce crypto keys to be rotated on regular basis
+- Check and alarm if crypto keys have rotation period of more than 90 days
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_crypto_keys_are_rotated_regularly/settings)**
 
@@ -18,7 +18,7 @@ This policy pack can help you configure the following settings for KMS crypto ke
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-kms)
+  - [@turbot/gcp-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-kms)
 
 ### Credentials
 

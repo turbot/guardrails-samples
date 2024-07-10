@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
 # Check If GCP Network Load Balancers Enforce HTTPS to Manage Encrypted Web Traffic
 
-Ensure that GCP Network Load Balancers are configured to use valid SSL/TLS certificates in order to handle encrypted web traffic. SSL certificate resources contain SSL certificate information that the load balancer uses to terminate SSL/TLS when HTTPS clients connect to it.
+Ensure that GCP Network Load Balancers are configured to use valid SSL/TLS certificates in order to handle encrypted web traffic. SSL certificate resources contain SSL certificate information that the load balancer uses to terminate SSL/TLS when HTTPS clients connect to it. This practice guarantees that data transmitted between clients and load-balanced applications is encrypted, protecting it from interception and unauthorized access, thereby enhancing security and compliance with regulatory requirements and best practices.
 
-This policy pack can help you configure the following settings for Network Load Balancers:
+This policy pack can help you configure the following settings for network load balancers:
 
-- Check if load balancers enforce HTTPS to manage encrypted web traffic
+- Check and alarm if the URL map for load balancers is configured to use target https proxy
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_https_is_enforced_for_load_balancers/settings)**
 

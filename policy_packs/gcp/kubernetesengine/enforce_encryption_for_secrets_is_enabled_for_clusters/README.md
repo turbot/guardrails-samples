@@ -1,14 +1,14 @@
 ---
-categories: ["public cloud"]
+categories: ["security"]
 ---
 
-# Enforce Ecryption for Secrets is Enabled for GKE Regional Clusters
+# Enforce Encryption for Secrets is Enabled for GCP GKE Clusters
 
-Although GKE encrypts data stored at rest by default, Application-layer Secrets Encryption should be used as an additional layer of security for sensitive data stored in etcd, such as secrets. Cloud KMS keys are used to encrypt the data.
+Enforcing encryption for secrets in GCP GKE clusters is critical for protecting sensitive information stored within the cluster. This measure ensures that secrets, such as passwords and API keys, are encrypted, safeguarding them from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for GKE regional clusters:
+This policy pack can help you configure the following settings for GKE clusters:
 
-- Delete GKE regional clusters that do not have encryption for secrets enabled
+- Delete clusters that do not have database encryption state set to `ENCRYPTED`
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_for_secrets_is_enabled_for_clusters/settings)**
 
@@ -83,8 +83,15 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_kubernetesengine_region_cluster_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-kubernetesengine#/policy/types/regionClusterApproved"
-  value    = "Check: Approved"
-  # value    = "Enforce: Delete unapproved if new"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "gcp_kubernetesengine_zone_cluster_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-kubernetesengine#/policy/types/zoneClusterApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 
