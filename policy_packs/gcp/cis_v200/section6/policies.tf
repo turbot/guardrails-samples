@@ -56,3 +56,34 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_tem
     }
   EOT
 }
+
+# GCP > SQL > Instance > Data Protection > Managed Backups
+resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionManagedBackups"
+  note     = "GCP CIS v2.0.0 - Control: 6.7"
+  value    = "Skip"
+  # value    = "Enforce: Manage snapshots, per Managed Backups > Schedule and Managed Backups > Minimum Schedule"
+}
+
+# GCP > SQL > Instance > Data Protection > Managed Backups > Schedule
+resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups_schedule" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionSchedule"
+  note     = "GCP CIS v2.0.0 - Control: 6.7"
+  value    = "Enforce: Daily for 30 days"
+  # value    = "Enforce: Daily with backoff to 1 year"
+  # value    = "Enforce: Hourly with backoff to 3 months"
+  # value    = "Enforce: Hourly with backoff to 1 year"
+}
+
+# GCP > SQL > Instance > Data Protection > Managed Backups > Minimum Schedule
+resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups_minimum_schedule" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionMinimumSchedule"
+  note     = "GCP CIS v2.0.0 - Control: 6.7"
+  value    = "Enforce: Daily for 30 days"
+  # value    = "Enforce: Daily with backoff to 1 year"
+  # value    = "Enforce: Hourly with backoff to 3 months"
+  # value    = "Enforce: Hourly with backoff to 1 year"
+}

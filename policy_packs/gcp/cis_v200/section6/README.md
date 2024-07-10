@@ -73,7 +73,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
 >
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
-> By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+> By default, the policies are set to `Check` or `Skip` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check`/`Skip` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
@@ -82,6 +82,14 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
   note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   # value    = "Check: Database flags are correct"
   value    = "Enforce: Set Database flags"
+}
+
+resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionManagedBackups"
+  note     = "GCP CIS v2.0.0 - Control: 6.7"
+  # value    = "Skip"
+  value    = "Enforce: Manage snapshots, per Managed Backups > Schedule and Managed Backups > Minimum Schedule"
 }
 ```
 
