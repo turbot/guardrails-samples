@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce GCP CIS v2.0.0 - Section 3 - Networking
+# GCP CIS v2.0.0 - Section 3 - Networking
 
 This section covers recommendations addressing networking on Google Cloud Platform.
 
@@ -16,8 +16,8 @@ This policy pack can help you automate enforcement of GCP CIS benchmark section 
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
   - [@turbot/gcp-dns](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-dns)
+  - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
 
 ### Credentials
 
