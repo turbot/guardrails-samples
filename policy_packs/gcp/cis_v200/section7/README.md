@@ -91,6 +91,16 @@ resource "turbot_policy_setting" "gcp_bigquery_table_approved" {
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }
+
+resource "turbot_policy_setting" "gcp_bigquery_dataset_encryption_at_rest" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-bigquery#/policy/types/datasetEncryptionAtRest"
+  note     = "GCP CIS v2.0.0 - Control: 7.3"
+  # value    = "Check: Customer managed key"
+  value    = "Enforce: Customer managed key"
+  # value    = "Check: Encryption at Rest > Customer Managed Key"
+  # value    = "Enforce: Encryption at Rest > Customer Managed Key"
+}
 ```
 
 Then re-apply the changes:
