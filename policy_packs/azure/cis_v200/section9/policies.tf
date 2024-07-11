@@ -161,6 +161,15 @@ resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" 
   # value    = "Enforce: TLS 1.2"
 }
 
+# Azure > App Service > Web App > Client Cert Mode
+resource "turbot_policy_setting" "azure_appservice_web_app_client_cert_mode" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppClientCertMode"
+  note     = "Azure CIS v2.0.0 - Control: 9.4"
+  value    = "Check: Require"
+  # value    = "Enforce: Require"
+}
+
 # Azure > AppService > Web App > System Assigned Identity
 resource "turbot_policy_setting" "azure_appservice_web_app_system_assigned_identity" {
   resource = turbot_smart_folder.main.id
@@ -187,4 +196,3 @@ resource "turbot_policy_setting" "azure_appservice_web_app_ftps_state" {
   value    = "Check: FTPS only"
   # value    = "Enforce: FTPS only"
 }
-
