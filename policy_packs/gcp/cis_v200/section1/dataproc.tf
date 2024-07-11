@@ -26,7 +26,7 @@ resource "turbot_policy_setting" "gcp_dataproc_cluster_approved_custom" {
     {%- if encryptionConfig and encryptionConfig.gcePdKmsKeyName -%}
 
       {%- set data = {
-          "title": "Encryption with customer managed key",
+          "title": "Encryption With Customer Managed Key",
           "result": "Approved",
           "message": "Cluster is encrypted with customer managed key"
       } -%}
@@ -34,7 +34,7 @@ resource "turbot_policy_setting" "gcp_dataproc_cluster_approved_custom" {
     {%- elif encryptionConfig and not encryptionConfig.gcePdKmsKeyName -%}
 
       {%- set data = {
-          "title": "Encryption with customer managed key",
+          "title": "Encryption With Customer Managed Key",
           "result": "Not Approved",
           "message": "Cluster is not encrypted with customer managed key"
       } -%}
@@ -42,7 +42,7 @@ resource "turbot_policy_setting" "gcp_dataproc_cluster_approved_custom" {
     {%- else -%}
 
       {%- set data = {
-          "title": "Encryption with customer managed key",
+          "title": "Encryption With Customer Managed Key",
           "result": "Skip",
           "message": "No data for encryption yet"
       } -%}
