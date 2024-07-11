@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce GCP CIS v2.0.0 - Section 7 - BigQuery
+# GCP CIS v2.0.0 - Section 7 - BigQuery
 
 This section addresses Google CloudPlatform BigQuery. BigQuery is a serverless, highly-scalable, and cost-effective cloud data warehouse with an in-memory BI Engine and machine learning built in.
 
