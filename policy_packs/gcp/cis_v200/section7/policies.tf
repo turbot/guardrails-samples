@@ -31,8 +31,8 @@ resource "turbot_policy_setting" "gcp_bigquery_table_approved_encryption_at_rest
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-bigquery#/policy/types/tableApprovedEncryptionAtRestCustomerManagedKey"
   note     = "GCP CIS v2.0.0 - Control: 7.2"
-  # The ID of a GCP KMS symmetric key
-  value = "projects/my-kms-project/locations/us-east1/keyRings/my-keyring/cryptoKeys/my-key"
+  # The ID of your GCP KMS key
+  value = "projects/my-project/locations/us-east1/keyRings/my-keyring/cryptoKeys/my-key"
 }
 
 # GCP > BigQuery > Dataset > Encryption At Rest
