@@ -60,7 +60,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.5"
   value    = "Check: Approved"
-  # value    =  "Enforce: Delete unapproved if new"k
+  # value    =  "Enforce: Delete unapproved if new"
 }
 
 # GCP > IAM > Service Account > Approved > Custom
@@ -143,7 +143,6 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.6, 1.8, 1.11"
   value    = "Check: Approved"
-  # value    =  "Enforce: Delete unapproved if new"
 }
 
 # GCP > IAM > Project User > Approved > Custom
