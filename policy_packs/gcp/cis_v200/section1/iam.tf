@@ -60,7 +60,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.5"
   value    = "Check: Approved"
-  # value    =  "Enforce: Delete unapproved if new"
+  # value    =  "Enforce: Delete unapproved if new"k
 }
 
 # GCP > IAM > Service Account > Approved > Custom
@@ -141,7 +141,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
-  note     = "GCP CIS v2.0.0 - Control: 1.6"
+  note     = "GCP CIS v2.0.0 - Control: 1.6, 1.8, 1.11"
   value    = "Check: Approved"
   # value    =  "Enforce: Delete unapproved if new"
 }
@@ -150,73 +150,127 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
 resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
   resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/gcp-iam#/policy/types/projectUserApprovedCustom"
-  note           = "GCP CIS v2.0.0 - Control: 1.6"
+  note           = "GCP CIS v2.0.0 - Control: 1.6, 1.8, 1.11"
   template_input = <<-EOT
-  - |
     {
-      project: project {
-        id: get(path: "projectId")
-      }
-    }
-  - |
-    {
-      iamPolicy: resource(id: "gcp://cloudresourcemanager.googleapis.com/projects/{{ $.project.id }}/iamPolicy", options: {notFound: RETURN_NULL}) {
-        bindings: get(path: "bindings")
-      }
       projectUser: projectUser {
+        roles: get(path: "roles")
         userId: get(path: "userId")
       }
     }
     EOT
   template       = <<-EOT
-    {%- set role = '' -%}
-    {%- set userId = "user:" + $.projectUser.userId -%}
+    {%- set results = [] -%}
+    {%- set userRoles = $.projectUser.roles -%}
 
-    {%- if userId.startsWith("user:") -%}
+    {%- set hasSAUserRole = "roles/iam.serviceAccountUser" in userRoles -%}
+    {%- set hasSATokenCreator = "roles/iam.serviceAccountTokenCreator" in userRoles -%}
 
-      {%- for binding in $.iamPolicy.bindings -%}
+    {%- if hasSAUserRole or hasSATokenCreator -%}
 
-        {%- for member in binding.members -%}
+      {%- set data = {
+          "title": "SA User or Token Creator Role",
+          "result": "Not approved",
+          "message": "User is assigned with service account user or token creator role"
+      } -%}
 
-          {%- if member == userId -%}
+    {%- elif not hasSAUserRole or not hasSATokenCreator -%}
 
-            {%- set role = binding.role -%}
+      {%- set data = {
+          "title": "SA User or Token Creator Role",
+          "result": "Approved",
+          "message": "User is not assigned with service account user or token creator role"
+      } -%}
 
-          {%- endif -%}
+    {%- else -%}
 
-        {%- endfor -%}
-
-      {%- endfor -%}
-
-      {%- if role == "roles/iam.serviceAccountUser" or role == "roles/iam.serviceAccountTokenCreator" -%}
-
-        {%- set data = {
-            "title": "Service Account User or Token Creator Role",
-            "result": "Not approved",
-            "message": "User is assigned with service account user or token creator role"
-        } -%}
-
-      {%- elif role != "roles/iam.serviceAccountUser" and role != "roles/iam.serviceAccountTokenCreator" -%}
-
-        {%- set data = {
-            "title": "Service Account User or Token Creator Role",
-            "result": "Approved",
-            "message": "User is not assigned with service account user or token creator role"
-        } -%}
-
-      {%- else -%}
-
-        {%- set data = {
-            "title": "Service Account User or Token Creator Role",
-            "result": "Skip",
-            "message": "No data for user yet"
-        } -%}
-
-      {%- endif -%}
+      {%- set data = {
+          "title": "SA User or Token Creator Role",
+          "result": "Skip",
+          "message": "No data for user yet"
+      } -%}
 
     {%- endif -%}
 
-    {{ data | json }}
+    {%- set results = results.concat(data) -%}
+
+    {%- set hasKmsAdminRole = false -%}
+    {%- set hasCryptoKeyRole = false -%}
+
+    {%- for role in userRoles -%}
+
+      {%- if role == "roles/cloudkms.admin" -%}
+
+        {%- set hasKmsAdminRole = true -%}
+
+      {%- elif role == "roles/cloudkms.cryptoKeyDecrypter" or role == "roles/cloudkms.cryptoKeyEncrypter" or role == "roles/cloudkms.cryptoKeyEncrypterDecrypter" -%}
+
+        {%- set hasCryptoKeyRole = true -%}
+
+      {%- endif -%}
+
+    {%- endfor -%}
+
+    {%- if not hasKmsAdminRole and not hasCryptoKeyRole -%}
+
+      {%- set data = {
+          "title": "KMS Admin and Crypto Key Roles",
+          "result": "Approved",
+          "message": "User does not have KMS admin and crypto key roles"
+      } -%}
+
+    {%- elif hasKmsAdminRole and hasCryptoKeyRole -%}
+
+      {%- set data = {
+          "title": "KMS Admin and Crypto Key Roles",
+          "result": "Not approved",
+          "message": "User has KMS admin and crypto key roles"
+      } -%}
+
+    {%- else -%}
+
+     {%- set data = {
+          "title": "KMS Admin and Crypto Key Roles",
+          "result": "Skip",
+          "message": "No data available for KMS admin and crypto key roles yet"
+      } -%}
+
+    {%- endif -%}
+
+    {%- set results = results.concat(data) -%}
+
+    {%- set hasServiceAccountAdminRole = "roles/iam.serviceAccountAdmin" in userRoles -%}
+    {%- set hasServiceAccountUserRole = "roles/iam.serviceAccountUser" in userRoles -%}
+
+    {%- if not hasServiceAccountAdminRole and not hasServiceAccountUserRole -%}
+
+      {%- set data = {
+          "title": "SA Admin and User Roles",
+          "result": "Approved",
+          "message": "User does not have service account admin and user roles"
+      } -%}
+
+    {%- elif hasServiceAccountAdminRole and hasServiceAccountUserRole -%}
+
+      {%- set data = {
+          "title": "SA Admin and User Roles",
+          "result": "Not approved",
+          "message": "User has service account admin and user roles"
+      } -%}
+
+    {%- else -%}
+
+     {%- set data = {
+          "title": "SA Admin and User Roles",
+          "result": "Skip",
+          "message": "No data available for service account admin and user roles yet"
+      } -%}
+
+    {%- endif -%}
+
+    {%- set results = results.concat(data) -%}
+
+    {{ results | json }}
     EOT
 }
 
