@@ -80,14 +80,6 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_monitor_stack" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-monitor#/policy/types/monitorStack"
-  note     = "Azure CIS v2.0.0 - Controls:  5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9, 5.2.10"
-  # value    = "Check: Configured"
-  value    = "Enforce: Configured"
-}
-
 resource "turbot_policy_setting" "azure_storage_container_public_access_level" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/containerPublicAccessLevel"
@@ -102,6 +94,14 @@ resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved" {
   note     = "Azure CIS v2.0.0 - Control: 5.1.6"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "azure_monitor_stack" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-monitor#/policy/types/monitorStack"
+  note     = "Azure CIS v2.0.0 - Controls:  5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9, 5.2.10"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 
 resource "turbot_policy_setting" "azure_resource_group_stack" {
