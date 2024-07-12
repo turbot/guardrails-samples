@@ -374,7 +374,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
 
     {%- set results = results.concat(data) -%}
 
-    {{ data | json }}
+    {{ results | json }}
   EOT
 }
 
