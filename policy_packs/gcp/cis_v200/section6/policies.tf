@@ -57,6 +57,17 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_tem
   EOT
 }
 
+# GCP > SQL > Instance > Encryption In Transit
+resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"
+  note     = "GCP CIS v2.0.0 - Control: 6.4"
+  value    = "Check: Enabled"
+  # value    = "Check: Enabled with trusted client certificate"
+  # value    = "Enforce: Enabled"
+  # value    = "Enforce: Enabled with trusted client certificate"
+}
+
 # GCP > SQL > Instance > Data Protection > Managed Backups
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
   resource = turbot_smart_folder.main.id
