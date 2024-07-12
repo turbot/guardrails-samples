@@ -148,7 +148,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved_c
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApprovedCidrRanges"
   note     = "GCP CIS v2.0.0 - Control: 6.5"
-  # List of approved CIDR ranges, defaults to `[*]`
+  # List of approved CIDR ranges
   value    = <<-EOT
     - "10.2.1.2"
     - "172.141.23.22/26"
