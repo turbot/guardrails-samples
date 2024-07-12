@@ -2,7 +2,7 @@
 resource "turbot_policy_setting" "azure_monitor_stack" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-monitor#/policy/types/monitorStack"
-  note     = "Azure CIS v2.0.0 - Controls: 5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9, 5.2.10"
+  note     = "Azure CIS v2.0.0 - Controls: 5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9 and 5.2.10"
   value    = "Check: Configured"
   # value    = "Enforce: Configured"
 }
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "azure_monitor_stack" {
 resource "turbot_policy_setting" "azure_monitor_stack_source" {
   resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/azure-monitor#/policy/types/monitorStackSource"
-  note           = "Azure CIS v2.0.0 - Controls: 5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9, 5.2.10"
+  note           = "Azure CIS v2.0.0 - Controls: 5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9 and 5.2.10"
   template_input = <<-EOT
     {
       resourceGroup  {
@@ -209,6 +209,6 @@ resource "turbot_policy_setting" "azure_monitor_stack_source" {
 resource "turbot_policy_setting" "azure_monitor_stack_terraform_version" {
   resource = turbot_smart_folder.azure_cis_v200_s5_monitoring.id
   type     = "tmod:@turbot/azure-monitor#/policy/types/monitorStackTerraformVersion"
-  note     = "Azure CIS v2.0.0 - Controls:  5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9, 5.2.10"
+  note     = "Azure CIS v2.0.0 - Controls:  5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9 and 5.2.10"
   value    = "0.15.*"
 }
