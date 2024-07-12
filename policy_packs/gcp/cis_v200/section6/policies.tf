@@ -39,6 +39,67 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_postgresql_tem
   EOT
 }
 
+# GCP > SQL > Instance > Approved
+resource "turbot_policy_setting" "gcp_sql_instance_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceApproved"
+  note     = "GCP CIS v2.0.0 - Control: 6.2.9"
+  value    = "Check: Approved"
+  # value    = "Enforce: Delete unapproved if new"
+}
+
+# GCP > SQL > Instance > Approved > Custom
+resource "turbot_policy_setting" "gcp_sql_instance_approved_custom" {
+  resource       = turbot_smart_folder.main.id
+  type           = "tmod:@turbot/gcp-sql#/policy/types/instanceApprovedCustom"
+  note           = "GCP CIS v2.0.0 - Control: 6.2.9"
+  template_input = <<-EOT
+    {
+      item: instance {
+        ipAddresses: get(path: "ipAddresses")
+      }
+    }
+  EOT
+  template       = <<-EOT
+    {%- set ipAddresses = $.item.ipAddresses -%}
+    {%- set flag = false -%}
+
+    {%- for obj in ipAddressesArr -%}
+      {%- if not flag and obj.type == "PRIVATE" -%}
+        {%- set flag = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if ipAddresses | length == 0 or not flag -%}
+
+      {%- set data = {
+          "title": "Private IP Assignment",
+          "result": "Not approved",
+          "message": "Instance IP assignment is set to private"
+      } -%}
+
+    {%- elif flag -%}
+
+      {%- set data = {
+          "title": "Private IP Assignment",
+          "result": "Approved",
+          "message": "Instance IP assignment is not set to private"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Private IP Assignment",
+          "result": "Skip",
+          "message": "No data for IP assignment yet"
+      } -%}
+
+    {%- endif -%}
+
+    {{ data | json }}
+  EOT
+}
+
 # GCP > SQL > Instance > Database Flags > SQL Server > Template
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_template" {
   resource = turbot_smart_folder.main.id
@@ -55,6 +116,23 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_tem
       "contained database authentication": "off"
     }
   EOT
+}
+
+# GCP > SQL > Instance > Authorized Network > Approved
+resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
+  note     = "GCP CIS v2.0.0 - Control: 6.5"
+  value    = "Check: Approved"
+  # value    = "Enforce: Delete unapproved"
+}
+
+# GCP > SQL > Instance > Authorized Network > Approved > CIDR Ranges
+resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved_cidr_ranges" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApprovedCidrRanges"
+  note     = "GCP CIS v2.0.0 - Control: 6.5"
+  value    = "['*']"
 }
 
 # GCP > SQL > Instance > Data Protection > Managed Backups

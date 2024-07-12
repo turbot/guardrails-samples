@@ -84,6 +84,22 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
   value    = "Enforce: Set Database flags"
 }
 
+resource "turbot_policy_setting" "gcp_sql_instance_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceApproved"
+  note     = "GCP CIS v2.0.0 - Control: 6.2.9"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
+  note     = "GCP CIS v2.0.0 - Control: 6.5"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved"
+}
+
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionManagedBackups"
