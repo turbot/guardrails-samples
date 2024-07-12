@@ -379,7 +379,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
 }
 
 # GCP > IAM > API Key > Active
-resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
+resource "turbot_policy_setting" "gcp_iam_api_key_active" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyActive"
   note     = "GCP CIS v2.0.0 - Control: 1.15"
@@ -388,7 +388,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
 }
 
 # GCP > IAM > API Key > Active > Age
-resource "turbot_policy_setting" "gcp_iam_service_account_active_age" {
+resource "turbot_policy_setting" "gcp_iam_api_key_active_age" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyActiveAge"
   note     = "GCP CIS v2.0.0 - Control: 1.15"
