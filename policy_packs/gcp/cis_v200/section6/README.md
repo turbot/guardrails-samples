@@ -92,13 +92,6 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved" {
   value    = "Enforce: Delete unapproved if new"
 }
 
-resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
-  note     = "GCP CIS v2.0.0 - Control: 6.5"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved"
-}
 
 resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
   resource = turbot_smart_folder.main.id
@@ -108,6 +101,14 @@ resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
   # value    = "Check: Enabled with trusted client certificate"
   value    = "Enforce: Enabled"
   # value    = "Enforce: Enabled with trusted client certificate"
+}
+
+resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
+  note     = "GCP CIS v2.0.0 - Control: 6.5"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved"
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {

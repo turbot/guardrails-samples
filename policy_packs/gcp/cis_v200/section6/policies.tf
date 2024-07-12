@@ -62,28 +62,33 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved_custom" {
   EOT
   template       = <<-EOT
     {%- set ipAddresses = $.item.ipAddresses -%}
-    {%- set flag = false -%}
+
+    {%- set privateIpExists = false -%}
 
     {%- for obj in ipAddressesArr -%}
-      {%- if not flag and obj.type == "PRIVATE" -%}
-        {%- set flag = true -%}
+
+      {%- if not privateIpExists and obj.type == "PRIVATE" -%}
+
+        {%- set privateIpExists = true -%}
+      
       {%- endif -%}
+    
     {%- endfor -%}
 
-    {%- if ipAddresses | length == 0 or not flag -%}
+    {%- if ipAddresses | length == 0 or not privateIpExists -%}
 
       {%- set data = {
           "title": "Private IP Assignment",
           "result": "Not approved",
-          "message": "Instance IP assignment is set to private"
+          "message": "IP assignment type is not private"
       } -%}
 
-    {%- elif flag -%}
+    {%- elif privateIpExists -%}
 
       {%- set data = {
           "title": "Private IP Assignment",
           "result": "Approved",
-          "message": "Instance IP assignment is not set to private"
+          "message": "IP assignment type is private"
       } -%}
 
     {%- else -%}
@@ -118,6 +123,17 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_tem
   EOT
 }
 
+# GCP > SQL > Instance > Encryption In Transit
+resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"
+  note     = "GCP CIS v2.0.0 - Control: 6.4"
+  value    = "Check: Enabled"
+  # value    = "Check: Enabled with trusted client certificate"
+  # value    = "Enforce: Enabled"
+  # value    = "Enforce: Enabled with trusted client certificate"
+}
+
 # GCP > SQL > Instance > Authorized Network > Approved
 resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
   resource = turbot_smart_folder.main.id
@@ -132,18 +148,11 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved_c
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApprovedCidrRanges"
   note     = "GCP CIS v2.0.0 - Control: 6.5"
-  value    = "['*']"
-}
-
-# GCP > SQL > Instance > Encryption In Transit
-resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"
-  note     = "GCP CIS v2.0.0 - Control: 6.4"
-  value    = "Check: Enabled"
-  # value    = "Check: Enabled with trusted client certificate"
-  # value    = "Enforce: Enabled"
-  # value    = "Enforce: Enabled with trusted client certificate"
+  # List of approved CIDR ranges, defaults to `[*]`
+  value    = <<-EOT
+    - "10.2.1.2"
+    - "172.141.23.22/26"
+  EOT
 }
 
 # GCP > SQL > Instance > Data Protection > Managed Backups
