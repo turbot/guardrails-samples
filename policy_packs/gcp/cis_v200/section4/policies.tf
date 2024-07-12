@@ -267,7 +267,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_c
 # GCP > Compute Engine > Instance > Shielded Instance Configuration > vTPM
 resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration_vtpm" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfigurationvTPM"
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfigurationVtpm"
   note     = "GCP CIS v2.0.0 - Control: 4.8"
   value    = "Enabled"
 }
