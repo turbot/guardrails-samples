@@ -96,6 +96,14 @@ resource "turbot_policy_setting" "azure_storage_container_public_access_level" {
   value    = "Enforce: Private (No anonymous access)"
 }
 
+resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/flowLogApproved"
+  note     = "Azure CIS v2.0.0 - Control: 5.1.6"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
+}
+
 resource "turbot_policy_setting" "azure_resource_group_stack" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure#/policy/types/resourceGroupStack"
