@@ -2,7 +2,7 @@
 categories: ["cis"]
 ---
 
-# Enforce Azure CIS v2.0.0 - Section 3 - Storage Accounts
+# Azure CIS v2.0.0 - Section 3 - Storage Accounts
 
 This section covers security recommendations to follow to set storage account policies on an Azure Subscription. An Azure storage account provides a unique namespace to store and access Azure Storage data objects.
 
@@ -86,6 +86,14 @@ resource "turbot_policy_setting" "azure_storage_account_encryption_in_transit" {
   value    = "Enforce: Enabled"
 }
 
+resource "turbot_policy_setting" "azure_storage_account_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountApproved"
+  note     = "Azure CIS v2.0.0 - Control: 3.2"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
+}
+
 resource "turbot_policy_setting" "azure_storage_account_access_keys_rotation_reminder" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessKeysRotationReminder"
@@ -102,6 +110,14 @@ resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
   value    = "Enforce: Per Logging > Properties"
 }
 
+resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
+  note     = "Azure CIS v2.0.0 - Control: 3.7"
+  value    = "Check: Enabled"
+  # value    = "Enforce: Enabled"
+}
+
 resource "turbot_policy_setting" "azure_storage_account_data_protection_soft_delete" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountDataProtectionSoftDelete"
@@ -110,12 +126,12 @@ resource "turbot_policy_setting" "azure_storage_account_data_protection_soft_del
   value    = "Enforce: Configured per Soft Delete > * policies"
 }
 
-resource "turbot_policy_setting" "azure_storage_account_blob_service_logging" {
+resource "turbot_policy_setting" "azure_storage_storage_account_blob_logging" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountBlobServiceLogging"
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountBlobLogging"
   note     = "Azure CIS v2.0.0 - Control: 3.13"
-  # value    = "Check: Per Logging > Properties"
-  value    = "Enforce: Per Logging > Properties"
+  # value    = "Check: Per `Logging > *`"
+  value    = "Enforce: Per `Logging > *`"
 }
 
 resource "turbot_policy_setting" "azure_storage_account_minimum_tls_version" {
