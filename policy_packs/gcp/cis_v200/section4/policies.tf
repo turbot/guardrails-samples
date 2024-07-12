@@ -255,6 +255,31 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_approved_encryption_at_
   value    = "Customer supplied key"
 }
 
+# GCP > Compute Engine > Instance > Shielded Instance Configuration
+resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfiguration"
+  note     = "GCP CIS v2.0.0 - Control: 4.8"
+  value    = "Check: Enabled per `Shielded Instance Configuration > *`"
+  # value    = "Enforce: Enabled per `Shielded Instance Configuration > *`"
+}
+
+# GCP > Compute Engine > Instance > Shielded Instance Configuration > vTPM
+resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration_vtpm" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfigurationVtpm"
+  note     = "GCP CIS v2.0.0 - Control: 4.8"
+  value    = "Enabled"
+}
+
+# GCP > Compute Engine > Instance > Shielded Instance Configuration > Integrity Monitoring
+resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration_integrity_monitoring" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfigurationIntegrityMonitoring"
+  note     = "GCP CIS v2.0.0 - Control: 4.8"
+  value    = "Enabled"
+}
+
 # GCP > Compute Engine > Instance > External IP Addresses
 resource "turbot_policy_setting" "gcp_computeengine_instance_external_ip_addresses" {
   resource = turbot_smart_folder.main.id

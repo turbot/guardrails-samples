@@ -117,6 +117,14 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_approved" {
   value    = "Enforce: Delete unapproved if new"
 }
 
+resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfiguration"
+  note     = "GCP CIS v2.0.0 - Control: 4.8"
+  # value    = "Check: Enabled per `Shielded Instance Configuration > *`"
+  value    = "Enforce: Enabled per `Shielded Instance Configuration > *`"
+}
+
 resource "turbot_policy_setting" "gcp_computeengine_instance_external_ip_addresses" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceExternalIpAddresses"
