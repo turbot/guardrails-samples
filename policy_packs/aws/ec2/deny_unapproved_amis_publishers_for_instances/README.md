@@ -2,7 +2,7 @@
 categories: ["security"]
 ---
 
-# Deny AWS EC2 Instances with Unapproved AMIs and/or Publisher Accounts
+# Deny AWS EC2 Instances with Unapproved AMIs or Publisher Accounts
 
 Denying AWS EC2 instances with unapproved AMIs and/or publisher accounts is essential to maintain a secure and controlled environment. This prevents the use of potentially vulnerable or malicious images, ensuring that only vetted and compliant resources are deployed, thereby reducing security risks and maintaining compliance with organizational policies.
 
