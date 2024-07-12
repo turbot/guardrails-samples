@@ -137,6 +137,23 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
     EOT
 }
 
+# GCP > IAM > Service Account Key > Active
+resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
+  note     = "GCP CIS v2.0.0 - Control: 1.7"
+  value    = "Check: Active"
+  # value    =  "Enforce: Delete inactive with 90 days warning"
+}
+
+# GCP > IAM > Service Account Key > Active > Age
+resource "turbot_policy_setting" "gcp_iam_service_account_active_age" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActiveAge"
+  note     = "GCP CIS v2.0.0 - Control: 1.7"
+  value    = "Force inactive if age > 90 days"
+}
+
 # GCP > IAM > Project User > Approved
 resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
   resource = turbot_smart_folder.main.id
@@ -274,19 +291,106 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
     EOT
 }
 
-# GCP > IAM > Service Account Key > Active
+# GCP > IAM > API Key > Approved
+resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApproved"
+  note     = "GCP CIS v2.0.0 - Control: 1.12, 1.14"
+  value    = "Check: Approved"
+  # value    = "Enforce: Delete unapproved if new"
+}
+
+# GCP > IAM > API Key > Approved
+resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
+  resource       = turbot_smart_folder.main.id
+  type           = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApprovedCustom"
+  note           = "GCP CIS v2.0.0 - Control: 1.12, 1.14"
+  template_input = <<-EOT
+    {
+      item: apiKey {
+        name: get(path: "name")
+        apiTargets: get(path: "restrictions.apiTargets")
+        createTime: get(path: "createTime")
+      }
+    }
+  EOT
+  template       = <<-EOT
+    {%- set results = [] -%}
+    {%- set apiTargets = $.item.apiTargets | default([]) -%}
+    {%- set name = $.item.name -%}
+    {%- set containsCloudApi = false -%}
+
+    {%- for item in apiTargets -%}
+      {%- if not containsCloudApi and item.service == "cloudapis.googleapis.com" -%}
+        {%- set containsCloudApi = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if containsCloudApi -%}
+
+      {%- set data = {
+          "title": "Restrict to Application APIs",
+          "result": "Not approved",
+          "message": "API Key is restricted to APIs that application needs access"
+      } -%}
+
+    {%- elif not containsCloudApi -%}
+
+      {%- set data = {
+          "title": "Restrict to Application APIs",
+          "result": "Approved",
+          "message": "API Key is not restricted to APIs that application needs access"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Restrict to Application APIs",
+          "result": "Skip",
+          "message": "No data for API Key restriction yet"
+      } -%}
+
+    {%- endif -%}
+
+    {%- set results = results.concat(data) -%}
+
+    {%- if name | length > 0 -%}
+
+      {%- set data = {
+          "title": "API Key Exist",
+          "result": "Not approved",
+          "message": "API Key is present"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "API Key Exist",
+          "result": "Skip",
+          "message": "No data for API Key yet"
+      } -%}
+
+    {%- endif -%}
+
+    {%- set results = results.concat(data) -%}
+
+    {{ data | json }}
+  EOT
+}
+
+# GCP > IAM > API Key > Active
 resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
-  note     = "GCP CIS v2.0.0 - Control: 1.7"
+  type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyActive"
+  note     = "GCP CIS v2.0.0 - Control: 1.15"
   value    = "Check: Active"
   # value    =  "Enforce: Delete inactive with 90 days warning"
 }
 
-# GCP > IAM > Service Account Key > Active > Age
+# GCP > IAM > API Key > Active > Age
 resource "turbot_policy_setting" "gcp_iam_service_account_active_age" {
   resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActiveAge"
-  note     = "GCP CIS v2.0.0 - Control: 1.7"
+  type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyActiveAge"
+  note     = "GCP CIS v2.0.0 - Control: 1.15"
   value    = "Force inactive if age > 90 days"
 }
