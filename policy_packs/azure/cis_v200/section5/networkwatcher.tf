@@ -25,7 +25,7 @@ resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved_custom" 
     {%- if $.flowLog.logAnalyticsEnabled and "networkSecurityGroups" in $.flowLog.targetResourceId -%}
 
       {%- set data = {
-          "title": "Flow Log",
+          "title": "Flow Logging to Log Analytics",
           "result": "Approved",
           "message": "Flow logs are captured and sent to Log Analytics"
       } -%}
@@ -33,7 +33,7 @@ resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved_custom" 
     {%- elif not $.flowLog.logAnalyticsEnabled or $.flowLog.targetResourceId == "" or $.flowLog.targetResourceId == null -%}
 
       {%- set data = {
-          "title": "Flow Log",
+          "title": "Flow Logging to Log Analytics",
           "result": "Not approved",
           "message": "Flow logs are not captured and sent to Log Analytics"
       } -%}
@@ -41,9 +41,9 @@ resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved_custom" 
     {%- else -%}
 
       {%- set data = {
-          "title": "Flow Log",
+          "title": "Flow Logging to Log Analytics",
           "result": "Skip",
-          "message": "No data for Flow Log yet"
+          "message": "No data for flow log yet"
       } -%}
 
     {%- endif -%}
@@ -51,4 +51,3 @@ resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved_custom" 
     {{ data | json }}
   EOT
 }
-
