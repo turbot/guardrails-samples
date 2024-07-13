@@ -295,7 +295,7 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
 resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApproved"
-  note     = "GCP CIS v2.0.0 - Control: 1.12, 1.14"
+  note     = "GCP CIS v2.0.0 - Control: 1.12, 1.13, 1.14"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
 }
@@ -304,13 +304,17 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
 resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
   resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApprovedCustom"
-  note           = "GCP CIS v2.0.0 - Control: 1.12, 1.14"
+  note           = "GCP CIS v2.0.0 - Control: 1.12, 1.13, 1.14"
   template_input = <<-EOT
     {
       item: apiKey {
         name: get(path: "name")
         apiTargets: get(path: "restrictions.apiTargets")
         createTime: get(path: "createTime")
+        browserKeyRestrictions: get(path: "restrictions.browserKeyRestrictions")
+        serverKeyRestrictions: get(path: "restrictions.serverKeyRestrictions")
+        androidKeyRestrictions: get(path: "restrictions.androidKeyRestrictions")
+        iosKeyRestrictions: get(path: "restrictions.iosKeyRestrictions")
       }
     }
   EOT
@@ -368,6 +372,72 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
           "title": "API Key Exist",
           "result": "Skip",
           "message": "No data for API Key yet"
+      } -%}
+
+    {%- endif -%}
+
+    {%- set results = results.concat(data) -%}
+
+    {%- set browserKeyRestrictions = $.item.browserKeyRestrictions -%}
+    {%- set serverKeyRestrictions = $.item.serverKeyRestrictions -%}
+    {%- set androidKeyRestrictions = $.item.androidKeyRestrictions -%}
+    {%- set iosKeyRestrictions = $.item.iosKeyRestrictions -%}
+    {%- set applicationRestrictions = true -%}
+
+    {%- if browserKeyRestrictions == null and serverKeyRestrictions == null and androidKeyRestrictions == null and iosKeyRestrictions == null-%}
+
+      {%- set applicationRestrictions = false -%}
+
+    {%- elif browserKeyRestrictions != null -%}
+
+      {%- for referrer in browserKeyRestrictions.allowedReferrers -%}
+
+        {%- if "*" in referrer -%}
+
+          {%- set applicationRestrictions = false -%}
+
+        {%- endif -%}
+
+      {%- endfor -%}
+
+    {%- elif serverKeyRestrictions != null -%}
+
+      {%- set invalidIps = ['0.0.0.0', '0.0.0.0/0', '::0'] -%}
+
+      {%- for ip in serverKeyRestrictions.allowedIps -%}
+
+        {%- if invalidIps | list | contains(ip) -%}
+
+          {%- set applicationRestrictions = false -%}
+
+        {%- endif -%}
+
+      {%- endfor -%}
+
+    {%- endif -%}
+
+    {%- if applicationRestrictions -%}
+
+      {%- set data = {
+          "title": "Key restrictions",
+          "result": "Approved",
+          "message": "API keys are restricted to use by only specified hosts and apps"
+      } -%}
+
+    {%- elif not applicationRestrictions -%}
+
+      {%- set data = {
+          "title": "Key restrictions",
+          "result": "Not approved",
+          "message": "API keys are not restricted to use by only specified hosts and apps"
+      } -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Key restrictions",
+          "result": "Skip",
+          "message": "No data for key restrictions yet"
       } -%}
 
     {%- endif -%}
