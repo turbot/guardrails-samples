@@ -126,7 +126,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.12, 1.13 and 1.14"
   # value    = "Check: Approved"
@@ -134,7 +134,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyActive"
   note     = "GCP CIS v2.0.0 - Control: 1.15"
   # value    = "Check: Active"
