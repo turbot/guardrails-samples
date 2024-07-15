@@ -189,11 +189,27 @@ resource "turbot_policy_setting" "azure_mysql_flexible_server_minimum_tls_versio
 }
 
 resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewall"
   note     = "Azure CIS v2.0.0 - Control: 4.5.1"
   # value    = "Check: Allow only approved virtual networks and IP ranges"
   value    = "Enforce: Allow only approved virtual networks and IP ranges"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_ip_ranges_required" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallIpRangesRequired"
+  note     = "Azure CIS v2.0.0 - Control: 4.5.1"
+  # value    = "Check: Required > Items"
+  value    = "Enforce: Required > Items"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_virtual_networks_required" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallVirtualNetworksRequired"
+  note     = "Azure CIS v2.0.0 - Control: 4.5.1"
+  # value    = "Check: Required > Items"
+  value    = "Enforce: Required > Items"
 }
 ```
 
