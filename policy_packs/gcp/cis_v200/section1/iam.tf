@@ -406,7 +406,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
 
       {%- for ip in serverKeyRestrictions.allowedIps -%}
 
-        {%- if invalidIps | list | contains(ip) -%}
+        {%- if ip in invalidIps -%}
 
           {%- set applicationRestrictions = false -%}
 
