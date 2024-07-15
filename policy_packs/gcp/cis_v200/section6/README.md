@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers security recommendations to follow to secure Cloud SQL database services.
 
-This policy pack can help you automate enforcement of GCP CIS benchmark section 6 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of GCP CIS benchmark section 6 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/cis_v200/section6/settings)**
 
@@ -67,6 +67,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -77,7 +81,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDatabaseFlags"
   note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   # value    = "Check: Database flags are correct"
@@ -85,7 +89,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceApproved"
   note     = "GCP CIS v2.0.0 - Control: 6.2.9"
   # value    = "Check: Approved"
@@ -94,7 +98,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved" {
 
 
 resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"
   note     = "GCP CIS v2.0.0 - Control: 6.4"
   # value    = "Check: Enabled"
@@ -104,7 +108,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
   note     = "GCP CIS v2.0.0 - Control: 6.5"
   # value    = "Check: Approved"
@@ -112,7 +116,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" 
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionManagedBackups"
   note     = "GCP CIS v2.0.0 - Control: 6.7"
   # value    = "Skip"

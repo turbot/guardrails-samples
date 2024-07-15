@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section addresses Google CloudPlatform BigQuery. BigQuery is a serverless, highly-scalable, and cost-effective cloud data warehouse with an in-memory BI Engine and machine learning built in.
 
-This policy pack can help you automate enforcement of GCP CIS benchmark section 7 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of GCP CIS benchmark section 7 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/cis_v200/section7/settings)**
 
@@ -67,6 +67,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -77,7 +81,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_bigquery_dataset_publicly_accessible" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-bigquery#/policy/types/datasetPubliclyAccessible"
   note     = "GCP CIS v2.0.0 - Control: 7.1"
   # value    = "Check: Dataset is not publicly accessible"
@@ -85,7 +89,7 @@ resource "turbot_policy_setting" "gcp_bigquery_dataset_publicly_accessible" {
 }
 
 resource "turbot_policy_setting" "gcp_bigquery_table_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-bigquery#/policy/types/tableApproved"
   note     = "GCP CIS v2.0.0 - Control: 7.2"
   # value    = "Check: Approved"
@@ -93,7 +97,7 @@ resource "turbot_policy_setting" "gcp_bigquery_table_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_bigquery_dataset_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-bigquery#/policy/types/datasetEncryptionAtRest"
   note     = "GCP CIS v2.0.0 - Control: 7.3"
   # value    = "Check: Customer managed key"

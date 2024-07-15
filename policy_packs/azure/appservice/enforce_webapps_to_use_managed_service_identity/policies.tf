@@ -1,6 +1,6 @@
 # Azure > AppService > WebApp > Approved
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
 
 # Azure > AppService > WebApp > Approved > Custom
 resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/webAppApprovedCustom"
   template_input = <<-EOT
     {
@@ -21,27 +21,27 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
   template       = <<-EOT
     {%- if $.webApp.location and $.webApp.managedServiceIdentityId != null -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "Managed Service Identity",
           "result": "Approved",
           "message": "Managed Service Identity is available"
-      } -%} 
+      } -%}
 
     {%- elif $.webApp.location and $.webApp.managedServiceIdentityId == null -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "Managed Service Identity",
           "result": "Not approved",
           "message": "Managed Service Identity is not available"
-      } -%} 
+      } -%}
 
     {%- else -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "Managed Service Identity",
           "result": "Skip",
           "message": "No data for Web App yet"
-      } -%} 
+      } -%}
 
     {%- endif -%}
     {{ data | json }}

@@ -1,6 +1,6 @@
 # GCP > IAM > Service Account > Approved
 resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
   value    = "Check: Approved"
   # value    =  "Enforce: Delete unapproved if new"
@@ -8,8 +8,8 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
 
 # GCP > IAM > Service Account > Approved > Custom
 resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
-  resource = turbot_smart_folder.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApprovedCustom"
+  resource       = turbot_policy_pack.main.id
+  type           = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApprovedCustom"
   template_input = <<-EOT
   - |
     {
@@ -49,7 +49,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
       {%- if role == "roles/owner" or role == "roles/admin" or role == "roles/editor" -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "Admin Privileges",
             "result": "Not approved",
             "message": "Service Account has admin privileges"
@@ -57,7 +57,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
       {%- elif role != "roles/owner" and role != "roles/admin" and role != "roles/editor" -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "Admin Privileges",
             "result": "Approved",
             "message": "Service Account does not have admin privileges"
@@ -65,7 +65,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
       {%- else -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "Admin Privileges",
             "result": "Skip",
             "message": "No data for admin privileges yet"

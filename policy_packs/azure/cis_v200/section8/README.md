@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers security recommendations to follow for the configuration and use of Azure Key Vault.
 
-This policy pack can help you automate enforcement of Azure CIS benchmark section 8 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of Azure CIS benchmark section 8 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section8/settings)**
 
@@ -68,6 +68,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -79,7 +83,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultApproved"
   note     = "Azure CIS v2.0.0 - Control: 8.6 and 8.7"
   # value  = "Check: Approved"
@@ -87,7 +91,7 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
 }
 
 resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/keyExpiration"
   note     = "Azure CIS v2.0.0 - Control: 8.1 and 8.2"
   # value  = "Check: Expiration"
@@ -95,7 +99,7 @@ resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
 }
 
 resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/secretExpiration"
   note     = "Azure CIS v2.0.0 - Control: 8.3 and 8.4"
   # value  = "Check: Expiration"
@@ -103,7 +107,7 @@ resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
 }
 
 resource "turbot_policy_setting" "azure_keyvault_vault_purge_protection" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultPurgeProtection"
   note     = "Azure CIS v2.0.0 - Control: 8.5"
   # value  = "Check: Purge Protection Enabled"

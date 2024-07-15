@@ -1,6 +1,6 @@
 # Azure > Key Vault > Vault > Approved
 resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultApproved"
   note     = "Azure CIS v2.0.0 - Control: 8.6 and 8.7"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved" {
 
 # Azure > Key Vault > Vault > Custom
 resource "turbot_policy_setting" "azure_keyvault_vault_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/azure-keyvault#/policy/types/vaultApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 8.6 and 8.7"
   template_input = <<-EOT
@@ -78,7 +78,7 @@ resource "turbot_policy_setting" "azure_keyvault_vault_approved_custom" {
 
 # Azure > Key Vault > Key > Expiration
 resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/keyExpiration"
   note     = "Azure CIS v2.0.0 - Control: 8.1 and 8.2"
   value    = "Check: Expiration"
@@ -87,7 +87,7 @@ resource "turbot_policy_setting" "azure_keyvault_key_expiration" {
 
 # Azure > Key Vault > Secret > Expiration
 resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/secretExpiration"
   note     = "Azure CIS v2.0.0 - Control: 8.3 and 8.4"
   value    = "Check: Expiration"
@@ -96,7 +96,7 @@ resource "turbot_policy_setting" "azure_keyvault_secret_expiration" {
 
 # Azure > Key Vault > Vault > Purge Protection
 resource "turbot_policy_setting" "azure_keyvault_vault_purge_protection" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-keyvault#/policy/types/vaultPurgeProtection"
   note     = "Azure CIS v2.0.0 - Control: 8.5"
   value    = "Check: Purge Protection Enabled"

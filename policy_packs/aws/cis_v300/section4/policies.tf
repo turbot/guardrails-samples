@@ -2,7 +2,7 @@
 # The below settings assumes a CloudTrail Trail and an associated CloudWatch Log Group is available from CIS section 3.01 and 3.04 Policy Packs
 
 resource "turbot_policy_setting" "aws_region_stack" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/regionStack"
   note     = "AWS CIS v3.0.0 - Controls: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 4.14, 4.15 and 4.16"
   value    = "Check: Configured"
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "aws_region_stack" {
 
 # AWS > Region > Stack > Source
 resource "turbot_policy_setting" "aws_region_stack_source" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws#/policy/types/regionStackSource"
   note           = "AWS CIS v3.0.0 - Controls:  4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 4.14, 4.15 and 4.16"
   template_input = <<-EOT
@@ -55,7 +55,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_2" {
@@ -80,7 +80,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_3" {
@@ -105,7 +105,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_4" {
@@ -130,7 +130,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_5" {
@@ -155,7 +155,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_6" {
@@ -180,7 +180,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_7" {
@@ -205,7 +205,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_8" {
@@ -230,7 +230,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_9" {
@@ -255,7 +255,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_10" {
@@ -280,7 +280,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_11" {
@@ -305,7 +305,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_12" {
@@ -330,7 +330,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_13" {
@@ -355,7 +355,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_14" {
@@ -380,7 +380,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_cloudwatch_log_metric_filter" "log_metric_filter_4_15" {
@@ -405,7 +405,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
       evaluation_periods  = 1
       threshold           = 1
       comparison_operator = "GreaterThanOrEqualToThreshold"
-      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn] 
+      alarm_actions       = [aws_sns_topic.metric_alarm_topic.arn]
     }
 
     resource "aws_securityhub_account" "enable_security_hub" {}
@@ -414,7 +414,7 @@ resource "turbot_policy_setting" "aws_region_stack_source" {
 
 # AWS > Region > Stack > Terraform Version
 resource "turbot_policy_setting" "aws_region_stack_terraform_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/regionStackTerraformVersion"
   note     = "AWS CIS v3.0.0 - Controls: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4.10, 4.11, 4.12, 4.13, 4.14, 4.15 and 4.16"
   value    = "0.15.*"

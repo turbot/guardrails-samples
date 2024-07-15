@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section contains recommendations for configuring security-related aspects of AWS Virtual Private Cloud (VPC).
 
-This policy pack can help you automate enforcement of AWS CIS benchmark section 5 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of AWS CIS benchmark section 5 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/cis_v300/section5/settings)**
 
@@ -69,6 +69,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -79,7 +83,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/networkAclIngressRulesApproved"
   note     = "AWS CIS v3.0.0 - Controls: 5.1"
   # value    = "Check: Approved"
@@ -87,7 +91,7 @@ resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved" {
 }
 
 resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
   note     = "AWS CIS v3.0.0 - Controls: 5.2, 5.3, 5.4"
   # value    = "Check: Approved"
@@ -95,7 +99,7 @@ resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved"
 }
 
 resource "turbot_policy_setting" "aws_ec2_account_attributes_instance_metadata_service_defaults" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2AccountAttributesInstanceMetadataServiceDefaults"
   note     = "AWS CIS v3.0.0 - Controls: 5.6"
   # value    = "Check: Enabled for V2 only"

@@ -1,6 +1,6 @@
 # GCP > Storage > Bucket > Approved
 resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketApproved"
   note     = "GCP CIS v2.0.0 - Control: 2.3"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
 
 # GCP > Storage > Bucket > Approved > Custom
 resource "turbot_policy_setting" "gcp_storage_bucket_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-storage#/policy/types/bucketApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 2.3"
   template_input = <<-EOT
@@ -40,7 +40,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved_custom" {
       }
     }
   EOT
-  template = <<-EOT
+  template       = <<-EOT
     {%- if $.sinkDetails.items -%}
 
       {%- if $.sinkDetails.items.length > 0 and $.item.retentionPolicy and $.item.retentionPolicy.isLocked -%}

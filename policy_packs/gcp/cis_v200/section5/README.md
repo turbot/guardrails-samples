@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers recommendations addressing storage on Google Cloud Platform.
 
-This policy pack can help you automate enforcement of GCP CIS benchmark section 5 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of GCP CIS benchmark section 5 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/cis_v200/section5/settings)**
 
@@ -67,6 +67,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -77,7 +81,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAccess"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # value    = "Check: Trusted Access > *"
@@ -85,7 +89,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
 }
 
 resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
   note     = "GCP CIS v2.0.0 - Control: 5.2"
   # value    = "Check: Uniform"

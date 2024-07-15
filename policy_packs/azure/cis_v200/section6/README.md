@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers security recommendations to follow in order to set networking policies on an Azure subscription.
 
-This policy pack can help you automate enforcement of Azure CIS benchmark section 6 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of Azure CIS benchmark section 6 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section6/settings)**
 
@@ -69,6 +69,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -80,15 +84,23 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
   note     = "Azure CIS v2.0.0 - Controls: 6.1, 6.2, 6.3, 6.4"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved"
 }
 
+resource "turbot_policy_setting" "azure_networkwatcher_flow_log_retention_policy" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-networkwatcher#/policy/types/flowLogRetentionPolicy"
+  note     = "Azure CIS v2.0.0 - Controls: 6.5"
+  # value    = "Check: Enabled per `Retention Policy > Days`"
+  value    = "Enforce: Enabled per `Retention Policy > Days`"
+}
+
 resource "turbot_policy_setting" "azure_network_watcher_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-networkwatcher#/policy/types/networkWatcherApproved"
   note     = "Azure CIS v2.0.0 - Controls: 6.6"
   # value    = "Check: Approved"

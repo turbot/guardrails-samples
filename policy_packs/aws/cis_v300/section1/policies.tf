@@ -1,6 +1,6 @@
 # AWS > IAM > Account Password Policy > Settings
 resource "turbot_policy_setting" "aws_iam_account_password_policy_settings" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettings"
   note     = "AWS CIS v3.0.0 - Controls: 1.8 & 1.9"
   value    = "Check: Configured"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "aws_iam_account_password_policy_settings" {
 
 # AWS > IAM > Account Password Policy > Settings > Minimum Length
 resource "turbot_policy_setting" "aws_iam_account_password_policy_settings_minimum_length" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettingsMinimumLength"
   value    = 14
   note     = "AWS CIS v3.0.0 - Controls: 1.8"
@@ -17,15 +17,15 @@ resource "turbot_policy_setting" "aws_iam_account_password_policy_settings_minim
 
 # AWS > IAM > Account Password Policy > Settings > Reuse Prevention
 resource "turbot_policy_setting" "aws_iam_account_password_policy_settings_reuse_prevention" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettingsReusePrevention"
   value    = 24
   note     = "AWS CIS v3.0.0 - Controls: 1.9"
 }
 
-# AWS > IAM > User > Login Profile 
+# AWS > IAM > User > Login Profile
 resource "turbot_policy_setting" "aws_iam_user_login_profile" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-iam#/policy/types/userLoginProfile"
   note           = "AWS CIS v3.0.0 - Controls: 1.10 & 1.11"
   template_input = <<-EOT
@@ -102,7 +102,7 @@ resource "turbot_policy_setting" "aws_iam_user_login_profile" {
 
 # AWS > IAM > Access Key > Active
 resource "turbot_policy_setting" "aws_iam_access_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActive"
   note     = "AWS CIS v3.0.0 - Controls: 1.12, 1.13 and 1.14"
   value    = "Check: Active"
@@ -111,7 +111,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active" {
 
 # AWS > IAM > Access Key > Active > Last Modified
 resource "turbot_policy_setting" "aws_iam_access_key_active_last_modified" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveLastModified"
   note     = "Prevents newly created access keys from being deleted for not having been used recently."
   value    = "Force active if last modified <= 7 days"
@@ -119,7 +119,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_last_modified" {
 
 # AWS > IAM > Access Key > Active > Recently Used
 resource "turbot_policy_setting" "aws_iam_access_key_active_recently_used" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveRecentlyUsed"
   note     = "AWS CIS v3.0.0 - Controls: 1.12"
   value    = "Force active if recently used <= 30 days"
@@ -127,7 +127,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_recently_used" {
 
 # AWS > IAM > Access Key > Active > Latest
 resource "turbot_policy_setting" "aws_iam_access_key_active_latest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveLatest"
   note     = "AWS CIS v3.0.0 - Controls: 1.13"
   value    = "Force inactive if not latest"
@@ -135,7 +135,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_latest" {
 
 # AWS > IAM > Access Key > Active > Age
 resource "turbot_policy_setting" "aws_iam_access_key_active_age" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActiveAge"
   note     = "AWS CIS v3.0.0 - Controls: 1.14"
   value    = "Force inactive if age > 90 days"
@@ -143,7 +143,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active_age" {
 
 # AWS > IAM > User > Policy Attachments > Approved
 resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userPolicyAttachmentsApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.15"
   value    = "Check: Approved"
@@ -152,7 +152,7 @@ resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved" {
 
 # AWS > IAM > User > Policy Attachments > Approved > Rules
 resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved_rules" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userPolicyAttachmentsApprovedRules"
   note     = "AWS CIS v3.0.0 - Controls: 1.15"
   value    = "REJECT *"
@@ -160,7 +160,7 @@ resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved_rules
 
 # AWS > IAM > User > Inline Policy > Approved
 resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userInlinePolicyApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.15"
   value    = "Check: Approved"
@@ -170,7 +170,7 @@ resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved" {
 
 # AWS > IAM > User > Inline Policy > Approved > Usage
 resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved_usage" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userInlinePolicyApprovedUsage"
   note     = "AWS CIS v3.0.0 - Controls: 1.15"
   value    = "Not approved"
@@ -178,7 +178,7 @@ resource "turbot_policy_setting" "aws_iam_user_inline_policy_approved_usage" {
 
 # AWS > IAM > Policy > Statements > Approved
 resource "turbot_policy_setting" "aws_iam_statements_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/statementsApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Check: Approved"
@@ -187,7 +187,7 @@ resource "turbot_policy_setting" "aws_iam_statements_approved" {
 
 # AWS > IAM > Policy > Statements > Approved > Rules
 resource "turbot_policy_setting" "aws_iam_statements_approved_rules" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/statementsApprovedRules"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = <<-EOT
@@ -198,7 +198,7 @@ resource "turbot_policy_setting" "aws_iam_statements_approved_rules" {
 
 # AWS > IAM > Group > Inline Policy > Statements > Approved
 resource "turbot_policy_setting" "aws_iam_group_inline_policy_statements_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/groupInlinePolicyStatementsApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Check: Approved"
@@ -207,7 +207,7 @@ resource "turbot_policy_setting" "aws_iam_group_inline_policy_statements_approve
 
 # AWS > IAM > Group > Inline Policy > Statements > Approved > Admin Access
 resource "turbot_policy_setting" "aws_iam_group_inline_policy_statements_approved_admin_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/groupInlinePolicyStatementsApprovedAdminAccess"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Disabled: Disallow Administrator Access ('*:*') policies"
@@ -215,7 +215,7 @@ resource "turbot_policy_setting" "aws_iam_group_inline_policy_statements_approve
 
 # AWS > IAM > User > Inline Policy > Statements > Approved
 resource "turbot_policy_setting" "aws_iam_user_inline_policy_statements_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userInlinePolicyStatementsApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Check: Approved"
@@ -224,7 +224,7 @@ resource "turbot_policy_setting" "aws_iam_user_inline_policy_statements_approved
 
 # AWS > IAM > User > Inline Policy > Statements > Approved > Admin Access
 resource "turbot_policy_setting" "aws_iam_user_inline_policy_statements_approved_admin_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userInlinePolicyStatementsApprovedAdminAccess"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Disabled: Disallow Administrator Access ('*:*') policies"
@@ -232,7 +232,7 @@ resource "turbot_policy_setting" "aws_iam_user_inline_policy_statements_approved
 
 # AWS > IAM > Role > Inline Policy > Statements > Approved
 resource "turbot_policy_setting" "aws_iam_role_inline_policy_statements_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/roleInlinePolicyStatementsApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Check: Approved"
@@ -241,7 +241,7 @@ resource "turbot_policy_setting" "aws_iam_role_inline_policy_statements_approved
 
 # AWS > IAM > Role > Inline Policy > Statements > Approved > Admin Access
 resource "turbot_policy_setting" "aws_iam_role_inline_policy_statements_approved_admin_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/roleInlinePolicyStatementsApprovedAdminAccess"
   note     = "AWS CIS v3.0.0 - Controls: 1.16"
   value    = "Disabled: Disallow Administrator Access ('*:*') policies"
@@ -249,7 +249,7 @@ resource "turbot_policy_setting" "aws_iam_role_inline_policy_statements_approved
 
 # AWS > IAM > Stack
 resource "turbot_policy_setting" "aws_iam_stack" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/iamStack"
   note     = "AWS CIS v3.0.0 - Controls:  1.17"
   value    = "Check: Configured"
@@ -258,7 +258,7 @@ resource "turbot_policy_setting" "aws_iam_stack" {
 
 # AWS > IAM > Stack > Source
 resource "turbot_policy_setting" "aws_iam_stack_source" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-iam#/policy/types/iamStackSource"
   note           = "AWS CIS v3.0.0 - Controls:  1.17"
   template_input = <<-EOT
@@ -294,7 +294,7 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
 
 # AWS > IAM > Stack > Terraform Version
 resource "turbot_policy_setting" "aws_iam_iam_stack_terraform_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/iamStackTerraformVersion"
   note     = "AWS CIS v3.0.0 - Controls:  1.17"
   value    = "0.15.*"
@@ -302,7 +302,7 @@ resource "turbot_policy_setting" "aws_iam_iam_stack_terraform_version" {
 
 # AWS > EC2 > Instance > Instance Profile
 resource "turbot_policy_setting" "aws_ec2_instance_instance_profile" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceProfile"
   note     = "AWS CIS v3.0.0 - Controls: 1.18"
   value    = "Check: Instance profile attached"
@@ -312,7 +312,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_instance_profile" {
 
 # AWS > EC2 > Instance > Instance Profile > Name
 resource "turbot_policy_setting" "aws_ec2_instance_instance_profile_role_name" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceProfileName"
   note     = "AWS CIS v3.0.0 - Controls: 1.18"
   # EC2 Instance Profile name. Just the name not the full ARN.
@@ -321,7 +321,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_instance_profile_role_name" {
 
 # AWS > IAM > Server Certificate > Active
 resource "turbot_policy_setting" "aws_iam_server_certificate_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/serverCertificateActive"
   note     = "AWS CIS v3.0.0 - Controls: 1.19"
   value    = "Check: Active"
@@ -330,7 +330,7 @@ resource "turbot_policy_setting" "aws_iam_server_certificate_active" {
 
 # AWS > IAM > Server Certificate > Active > Expired
 resource "turbot_policy_setting" "aws_iam_server_certificate_active_expired" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/serverCertificateActiveExpired"
   note     = "AWS CIS v3.0.0 - Controls: 1.19"
   value    = "Force inactive if expired"
@@ -338,16 +338,16 @@ resource "turbot_policy_setting" "aws_iam_server_certificate_active_expired" {
 
 # AWS > Region > Stack > Source
 resource "turbot_policy_setting" "aws_iam_regional_access_analyzer" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/regionStack"
   note     = "AWS CIS v3.0.0 - Controls: 1.20"
   value    = "Check: Configured"
-  # value    = "Enforce: Configured" 
+  # value    = "Enforce: Configured"
 }
 
 # AWS > Region > Stack > Source
 resource "turbot_policy_setting" "aws_iam_regional_access_analyzer_source" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/regionStackSource"
   note     = "AWS CIS v3.0.0 - Controls: 1.20"
   value    = <<-EOT

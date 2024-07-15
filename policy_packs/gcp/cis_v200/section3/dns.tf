@@ -1,6 +1,6 @@
 # GCP > DNS > Managed Zone > DNSSEC Configuration
 resource "turbot_policy_setting" "gcp_dns_managed_zone_dnssec_configuration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneDnssecConfiguration"
   note     = "GCP CIS v2.0.0 - Control: 3.3"
   value    = "Check: Enabled"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_dns_managed_zone_dnssec_configuration" {
 
 # GCP > DNS > Managed Zone > Approved
 resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.4 and 3.5"
   value    = "Check: Approved"
@@ -18,7 +18,7 @@ resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
 
 # GCP > DNS > Managed Zone > Approved > Custom
 resource "turbot_policy_setting" "gcp_dns_managed_zone_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-dns#/policy/types/managedZoneApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 3.4 and 3.5"
   template_input = <<-EOT

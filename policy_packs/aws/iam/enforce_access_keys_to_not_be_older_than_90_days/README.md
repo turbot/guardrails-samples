@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing AWS IAM access keys to not be older than 90 days is important because it reduces the risk of compromised credentials by ensuring keys are regularly rotated. Regular key rotation minimizes exposure time for potentially compromised keys, enhancing the security posture and reducing the likelihood of unauthorized access.
 
-This policy pack can help you configure the following settings for IAM access keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM access keys:
 
 - Deactivate/Delete access keys that are older than 90 days
 
@@ -72,6 +72,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -83,7 +87,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_iam_access_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActive"
   # value    = "Check: Active"
   value    = "Enforce: Deactivate inactive with 90 days warning"

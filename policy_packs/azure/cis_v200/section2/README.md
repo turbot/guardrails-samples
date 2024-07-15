@@ -12,7 +12,7 @@ Microsoft Defender products addressed in this section include:
 - Microsoft Defender for IoT
 - Microsoft Defender External Attack Surface Management
 
-This policy pack can help you automate enforcement of Azure CIS benchmark section 2 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of Azure CIS benchmark section 2 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section2/settings)**
 
@@ -74,6 +74,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -85,7 +89,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterDefenderPlan"
   note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11 and 2.1.12"
   # value    = "Check: Defender Plan Enabled"
@@ -93,7 +97,7 @@ resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
 }
 
 resource "turbot_policy_setting" "azure_securitycenter_auto_provisioning" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterAutoProvisioning"
   note     = "Azure CIS v2.0.0 - Control: 2.1.15"
   # value    = "Check: Enabled"

@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section contains recommendations for configuring Azure logging and monitoring features.
 
-This policy pack can help you automate enforcement of Azure CIS benchmark section 5 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of Azure CIS benchmark section 5 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section5/settings)**
 
@@ -70,6 +70,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -81,7 +85,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_storage_container_public_access_level" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/containerPublicAccessLevel"
   note     = "Azure CIS v2.0.0 - Control: 5.1.3"
   # value    = "Check: Private (No anonymous access)"
@@ -89,7 +93,7 @@ resource "turbot_policy_setting" "azure_storage_container_public_access_level" {
 }
 
 resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/flowLogApproved"
   note     = "Azure CIS v2.0.0 - Control: 5.1.6"
   # value    = "Check: Approved"
@@ -97,7 +101,7 @@ resource "turbot_policy_setting" "azure_networkwatcher_flowlog_approved" {
 }
 
 resource "turbot_policy_setting" "azure_monitor_stack" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-monitor#/policy/types/monitorStack"
   note     = "Azure CIS v2.0.0 - Controls:  5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.2.5, 5.2.6, 5.2.7, 5.2.8, 5.2.9 and 5.2.10"
   # value    = "Check: Configured"
@@ -105,7 +109,7 @@ resource "turbot_policy_setting" "azure_monitor_stack" {
 }
 
 resource "turbot_policy_setting" "azure_resource_group_stack" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure#/policy/types/resourceGroupStack"
   note     = "Azure CIS v2.0.0 - Controls: 5.3.1"
   # value    = "Check: Configured"
