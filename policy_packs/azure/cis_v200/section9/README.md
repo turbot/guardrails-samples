@@ -77,7 +77,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   note     = "Azure CIS v2.0.0 - Control: 9.1, 9.6, 9,7 and 9.8"
   # value    = "Check: Approved"
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttpsOnly"
   note     = "Azure CIS v2.0.0 - Control: 9.2"
   # value    = "Check: Enabled"
@@ -93,7 +93,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppMinimumTlsVersion"
   note     = "Azure CIS v2.0.0 - Control: 9.3"
   # value    = "Check: TLS 1.2"
@@ -101,7 +101,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" 
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_client_cert_mode" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppClientCertMode"
   note     = "Azure CIS v2.0.0 - Control: 9.4"
   # value    = "Check: Require"
@@ -109,7 +109,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_client_cert_mode" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_system_assigned_identity" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppSystemAssignedIdentity"
   note     = "Azure CIS v2.0.0 - Control: 9.5"
   # value    = "Check: Enabled"
@@ -117,7 +117,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_system_assigned_ident
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttp20Enabled"
   note     = "Azure CIS v2.0.0 - Control: 9.9"
   # value    = "Check: Enabled"
@@ -125,7 +125,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_ftps_state" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppFtpsState"
   note     = "Azure CIS v2.0.0 - Control: 9.10"
   # value    = "Check: FTPS only"

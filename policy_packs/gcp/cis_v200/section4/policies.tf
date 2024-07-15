@@ -1,6 +1,6 @@
 # GCP > Compute Engine > Instance > Approved
 resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
   note     = "GCP CIS v2.0.0 - Control: 4.1, 4.2, 4.6 and 4.11"
   value    = "Check: Approved"
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
 
 # GCP > Compute Engine > Instance > Approved > Custom
 resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 4.1, 4.2 and 4.11"
   template_input = <<-EOT
@@ -205,7 +205,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
 
 # GCP > Compute Engine > Instance > Approved > IP Forwarding
 resource "turbot_policy_setting" "gcp_computeengine_instance_approved_ip_forwarding" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApprovedIpForwarding"
   note     = "GCP CIS v2.0.0 - Control: 4.6"
   value    = "Approved if disabled"
@@ -213,7 +213,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_ip_forward
 
 # GCP > Compute Engine > Instance > Block Project Wide SSH Keys
 resource "turbot_policy_setting" "gcp_computeengine_instance_block_project_wide_ssh_keys" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceBlockProjectWideSshKeys"
   note     = "GCP CIS v2.0.0 - Control: 4.3"
   value    = "Check: Enabled"
@@ -222,7 +222,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_block_project_wide_
 
 # GCP > Compute Engine > Project > OS Login Enabled
 resource "turbot_policy_setting" "gcp_computeengine_project_os_login_enabled" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/osLoginEnabled"
   note     = "GCP CIS v2.0.0 - Control: 4.4"
   value    = "Check: Enabled"
@@ -231,7 +231,7 @@ resource "turbot_policy_setting" "gcp_computeengine_project_os_login_enabled" {
 
 # GCP > Compute Engine > Instance > Serial Port Access
 resource "turbot_policy_setting" "gcp_computeengine_instance_serial_port_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceSerialPortAccess"
   note     = "GCP CIS v2.0.0 - Control: 4.5"
   value    = "Check: Disabled"
@@ -240,7 +240,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_serial_port_access"
 
 # GCP > Compute Engine > Disk > Approved
 resource "turbot_policy_setting" "gcp_computeengine_disk_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskApproved"
   note     = "GCP CIS v2.0.0 - Control: 4.7"
   value    = "Check: Approved"
@@ -249,7 +249,7 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_approved" {
 
 # GCP > Compute Engine > Disk > Approved > Encryption at Rest
 resource "turbot_policy_setting" "gcp_computeengine_disk_approved_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskApprovedEncryptionAtRest"
   note     = "GCP CIS v2.0.0 - Control: 4.7"
   value    = "Customer supplied key"
@@ -257,7 +257,7 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_approved_encryption_at_
 
 # GCP > Compute Engine > Instance > Shielded Instance Configuration
 resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfiguration"
   note     = "GCP CIS v2.0.0 - Control: 4.8"
   value    = "Check: Enabled per `Shielded Instance Configuration > *`"
@@ -266,7 +266,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_c
 
 # GCP > Compute Engine > Instance > Shielded Instance Configuration > vTPM
 resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration_vtpm" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfigurationVtpm"
   note     = "GCP CIS v2.0.0 - Control: 4.8"
   value    = "Enabled"
@@ -274,7 +274,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_c
 
 # GCP > Compute Engine > Instance > Shielded Instance Configuration > Integrity Monitoring
 resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration_integrity_monitoring" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfigurationIntegrityMonitoring"
   note     = "GCP CIS v2.0.0 - Control: 4.8"
   value    = "Enabled"
@@ -282,7 +282,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_c
 
 # GCP > Compute Engine > Instance > External IP Addresses
 resource "turbot_policy_setting" "gcp_computeengine_instance_external_ip_addresses" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceExternalIpAddresses"
   note     = "GCP CIS v2.0.0 - Control: 4.9"
   value    = "Check: None"

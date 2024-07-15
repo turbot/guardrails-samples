@@ -81,7 +81,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_compute_engine_instance_external_ip_address" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceExternalIpAddresses"
   # value    = "Check: None"
   value    = "Enforce: None"

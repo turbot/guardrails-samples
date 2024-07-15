@@ -83,7 +83,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAccess"
   # value    = "Check: Trusted Access > *"
   value    = "Enforce: Trusted Access > *"

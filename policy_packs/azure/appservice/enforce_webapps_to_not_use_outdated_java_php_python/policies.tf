@@ -1,6 +1,6 @@
 # Azure > AppService > WebApp > Approved
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
 
 # Azure > AppService > WebApp > custom
 resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/azure-appservice#/policy/types/webAppApprovedCustom"
   template_input = <<-EOT
     {
@@ -23,67 +23,67 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved_custom" {
     }
   EOT
   template       = <<-EOT
-    {%- if $.webApp.javaVersion in $.outdatedJavaVersions -%} 
+    {%- if $.webApp.javaVersion in $.outdatedJavaVersions -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "Java Version",
           "result": "Not approved",
           "message": "Web App is running with outdated Java version"
-      } -%} 
+      } -%}
 
-    {%- elif $.webApp.phpVersion in $.outdatedPhpVersions -%} 
+    {%- elif $.webApp.phpVersion in $.outdatedPhpVersions -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "PHP Version",
           "result": "Not approved",
           "message": "Web App is running with outdated PHP version"
-      } -%} 
+      } -%}
 
-    {%- elif $.webApp.pythonVersion in $.outdatedPythonVersions -%} 
+    {%- elif $.webApp.pythonVersion in $.outdatedPythonVersions -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "Python Version",
           "result": "Not approved",
           "message": "Web App is running with outdated Python version"
-      } -%} 
+      } -%}
 
-    {%- else -%} 
+    {%- else -%}
 
-      {%- if $.webApp.javaVersion -%} 
+      {%- if $.webApp.javaVersion -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "Java Version",
             "result": "Approved",
             "message": "Web App is running on a valid Java version"
-        } -%} 
+        } -%}
 
-      {%- elif $.webApp.phpVersion -%} 
+      {%- elif $.webApp.phpVersion -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "PHP Version",
             "result": "Approved",
             "message": "Web App is running on a valid PHP version"
-        } -%} 
+        } -%}
 
-      {%- elif $.webApp.pythonVersion -%} 
+      {%- elif $.webApp.pythonVersion -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "Python Version",
             "result": "Approved",
             "message": "Web App is running on a valid Python version"
-        } -%} 
+        } -%}
 
       {%- else -%}
 
-        {%- set data = { 
+        {%- set data = {
             "title": "Java/PHP/Python Version",
             "result": "Skip",
             "message": "No data for web app yet"
-        } -%} 
+        } -%}
 
       {%- endif -%}
 
-    {%- endif -%} 
+    {%- endif -%}
     {{ data | json }}
   EOT
 }

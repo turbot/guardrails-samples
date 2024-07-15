@@ -79,7 +79,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_iam_service_account_key_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.4"
   # value    = "Check: Approved"
@@ -87,7 +87,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.5"
   # value    = "Check: Approved"
@@ -95,7 +95,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.6, 1.8 and 1.11"
   # value    = "Check: Approved"
@@ -103,7 +103,7 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
   note     = "GCP CIS v2.0.0 - Control: 1.7"
   # value    = "Check: Active"
@@ -111,7 +111,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
 }
 
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAccess"
   note     = "GCP CIS v2.0.0 - Control: 1.9"
   # value    = "Check: Trusted Access > *"
@@ -119,14 +119,14 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
 }
 
 resource "turbot_policy_setting" "gcp_kms_crypto_key_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.10"
   value    = "Check: Approved"
 }
 
 resource "turbot_policy_setting" "gcp_dataproc_cluster_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dataproc#/policy/types/clusterApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.17"
   # value    = "Check: Approved"

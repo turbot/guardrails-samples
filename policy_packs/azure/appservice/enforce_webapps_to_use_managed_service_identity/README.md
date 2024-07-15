@@ -83,7 +83,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"

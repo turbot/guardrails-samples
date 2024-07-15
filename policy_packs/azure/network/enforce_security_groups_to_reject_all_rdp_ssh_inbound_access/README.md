@@ -82,7 +82,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_network_security_group_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved"

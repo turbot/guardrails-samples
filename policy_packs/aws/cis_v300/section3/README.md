@@ -96,7 +96,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "aws_audit_trail" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/auditTrail"
   note     = "AWS CIS v3.0.0 - Controls: 3.1"
   # value    = "Check: Configured"
@@ -104,7 +104,7 @@ resource "turbot_policy_setting" "aws_audit_trail" {
 }
 
 resource "turbot_policy_setting" "aws_logging_bucket" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/loggingBucket"
   note     = "AWS CIS v3.0.0 - Controls: 3.1"
   # value    = "Check: Configured"
@@ -112,7 +112,7 @@ resource "turbot_policy_setting" "aws_logging_bucket" {
 }
 
 resource "turbot_policy_setting" "aws_cloudtrail_trail_log_file_validation" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailLogFileValidation"
   note     = "AWS CIS v3.0.0 - Controls: 3.2"
   # value    = "Check: Enabled"
@@ -120,7 +120,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_log_file_validation" {
 }
 
 resource "turbot_policy_setting" "aws_config_configuration_recording" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-config#/policy/types/configurationRecording"
   note     = "AWS CIS v3.0.0 - Controls: 3.3"
   # value    = "Check: Configured"
@@ -128,7 +128,7 @@ resource "turbot_policy_setting" "aws_config_configuration_recording" {
 }
 
 resource "turbot_policy_setting" "aws_s3_bucket_access_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketAccessLogging"
   note     = "AWS CIS v3.0.0 - Controls: 3.4"
   # value    = "Check: Enabled to Access Logging > Bucket"
@@ -136,7 +136,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_access_logging" {
 }
 
 resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-cloudtrail#/policy/types/trailEncryptionAtRest"
   note     = "AWS CIS v3.0.0 - Controls: 3.5"
   # value    = "Check: Encryption at Rest > Customer Managed Key"
@@ -144,7 +144,7 @@ resource "turbot_policy_setting" "aws_cloudtrail_trail_encryption_at_rest" {
 }
 
 resource "turbot_policy_setting" "aws_kms_key_rotation" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-kms#/policy/types/keyRotation"
   note     = "AWS CIS v3.0.0 - Controls: 3.6"
   # value    = "Check: Enabled"
@@ -152,7 +152,7 @@ resource "turbot_policy_setting" "aws_kms_key_rotation" {
 }
 
 resource "turbot_policy_setting" "aws_vpc_core_vpc_flow_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcFlowLogging"
   note     = "AWS CIS v3.0.0 - Controls: 3.7"
   # value    = "Check: Configured per `Flow Logging > *`"

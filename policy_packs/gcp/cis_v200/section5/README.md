@@ -77,7 +77,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAccess"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # value    = "Check: Trusted Access > *"
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
 }
 
 resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
   note     = "GCP CIS v2.0.0 - Control: 5.2"
   # value    = "Check: Uniform"

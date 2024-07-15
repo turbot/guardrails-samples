@@ -1,6 +1,6 @@
 # Azure > PostgreSQL > Server > Encryption In Transit
 resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.3.1"
   value    = "Check: Enabled"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit"
 
 # Azure > PostgreSQL > Flexible Server > Encryption In Transit
 resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 4.3.1"
   value    = "Check: Enabled"
@@ -18,7 +18,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in
 
 # Azure > PostgreSQL > Server > Audit Logging
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLogging"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.3.6, 4.3.7 and 4.3.8"
   value    = "Check: Audit Logging > *"
@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
 
 # Azure > PostgreSQL > Flexible Server > Audit Logging
 resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerAuditLogging"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
   value    = "Check: Audit Logging > *"
@@ -36,7 +36,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging
 
 # Azure > PostgreSQL > Server > Audit Logging > Log Checkpoints
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_checkpoints" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogCheckpoints"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
   value    = "On"
@@ -44,7 +44,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_chec
 
 # Azure > PostgreSQL > Flexible Server > Audit Logging > Log Checkpoints
 resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging_log_checkpoints" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerAuditLoggingLogCheckpoints"
   note     = "Azure CIS v2.0.0 - Control: 4.3.2"
   value    = "On"
@@ -52,7 +52,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_audit_logging
 
 # Azure > PostgreSQL > Server > Audit Logging > Log Connections
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_connections" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogConnections"
   note     = "Azure CIS v2.0.0 - Control: 4.3.3"
   value    = "On"
@@ -60,7 +60,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_conn
 
 # Azure > PostgreSQL > Server > Audit Logging > Log Disconnections
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_disconnections" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogDisconnections"
   note     = "Azure CIS v2.0.0 - Control: 4.3.4"
   value    = "On"
@@ -68,7 +68,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_disc
 
 # Azure > PostgreSQL > Server > Audit Logging > Connection Throttling
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_connection_throttling" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingConnectionThrottling"
   note     = "Azure CIS v2.0.0 - Control: 4.3.5"
   value    = "On"
@@ -76,7 +76,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_connecti
 
 # Azure > PostgreSQL > Server > Audit Logging > Log Retention Days
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_retention_days" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLoggingLogRetentionDays"
   note     = "Azure CIS v2.0.0 - Control: 4.3.6"
   value    = ">= 4 Days"
@@ -84,7 +84,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_audit_logging_log_rete
 
 # Azure > PostgreSQL > Server > Approved
 resource "turbot_policy_setting" "azure_postgresql_server_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverApproved"
   note     = "Azure CIS v2.0.0 - Control: 4.3.7 and 4.3.8"
   value    = "Check: Approved"
@@ -93,7 +93,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_approved" {
 
 # Azure > PostgreSQL > Server > Approved > Custom
 resource "turbot_policy_setting" "azure_postgresql_server_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/azure-postgresql#/policy/types/serverApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 4.3.7 and 4.3.8"
   template_input = <<-EOT

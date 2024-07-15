@@ -77,7 +77,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "aws_iam_account_password_policy_settings" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettings"
   note     = "AWS CIS v3.0.0 - Controls: 1.8 & 1.9"
   # value    = "Check: Configured"
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "aws_iam_account_password_policy_settings" {
 }
 
 resource "turbot_policy_setting" "aws_iam_access_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActive"
   note     = "AWS CIS v3.0.0 - Controls: 1.12, 1.13 & 1.14"
   # value    = "Check: Active"
@@ -93,7 +93,7 @@ resource "turbot_policy_setting" "aws_iam_access_key_active" {
 }
 
 resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userPolicyAttachmentsApproved"
   note     = "AWS CIS v3.0.0 - Controls: 1.15"
   # value    = "Check: Approved"
@@ -101,7 +101,7 @@ resource "turbot_policy_setting" "aws_iam_user_policy_attachments_approved" {
 }
 
 resource "turbot_policy_setting" "aws_iam_stack" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/iamStack"
   note     = "AWS CIS v3.0.0 - Controls:  1.17"
   # value    = "Check: Configured"
@@ -109,7 +109,7 @@ resource "turbot_policy_setting" "aws_iam_stack" {
 }
 
 resource "turbot_policy_setting" "aws_ec2_instance_instance_profile" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceProfile"
   note     = "AWS CIS v3.0.0 - Controls: 1.18"
   # value    = "Check: Instance profile attached"
@@ -118,7 +118,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_instance_profile" {
 }
 
 resource "turbot_policy_setting" "aws_iam_server_certificate_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/serverCertificateActive"
   note     = "AWS CIS v3.0.0 - Controls: 1.19"
   # value    = "Check: Active"
@@ -126,11 +126,11 @@ resource "turbot_policy_setting" "aws_iam_server_certificate_active" {
 }
 
 resource "turbot_policy_setting" "aws_iam_regional_access_analyzer" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/regionStack"
   note     = "AWS CIS v3.0.0 - Controls: 1.20"
   # value    = "Check: Configured"
-  value    = "Enforce: Configured" 
+  value    = "Enforce: Configured"
 }
 ```
 

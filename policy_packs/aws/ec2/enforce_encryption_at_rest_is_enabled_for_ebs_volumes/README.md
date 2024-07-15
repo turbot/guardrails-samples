@@ -84,7 +84,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_volume_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
   # value    = "Check: Approved"
   value    =  "Enforce: Detach unapproved if new"

@@ -1,6 +1,6 @@
 # GCP > Storage > Bucket > Policy > Trusted Access
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAccess"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   value    = "Check: Trusted Access > *"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {
 
 # GCP > Storage > Bucket > Policy > Trusted Domains
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_domains" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedDomains"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Domains that are trusted for access
@@ -21,7 +21,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_domains" {
 
 # GCP > Storage > Bucket > Policy > Trusted Groups
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_groups" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedGroups"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Groups that are trusted for access
@@ -33,7 +33,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_groups" {
 
 # GCP > Storage > Bucket > Policy > Trusted Service Accounts
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_service_accounts" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedServiceAccounts"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Service Accounts that are trusted for access
@@ -45,7 +45,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_service_acco
 
 # GCP > Storage > Bucket > Policy > Trusted Users
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_users" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedUsers"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Users that are trusted for access
@@ -57,7 +57,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_users" {
 
 # GCP > Storage > Bucket > Policy > Trusted Projects
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_projects" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedProjects"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   # GCP Projects that are trusted for access
@@ -69,7 +69,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_projects" {
 
 # GCP > Storage > Bucket > Policy > Trusted All Users
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_all_users" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAllUsers"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   value    = "Do not allow allUsers"
@@ -77,7 +77,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_all_users" {
 
 # GCP > Storage > Bucket > Policy > Trusted All Authenticated
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_all_authenticated" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketPolicyTrustedAllAuthenticated"
   note     = "GCP CIS v2.0.0 - Control: 5.1"
   value    = "Do not allow allAuthenticatedUsers"
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_all_authenti
 
 # GCP > Storage > Bucket > Access Control
 resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
   note     = "GCP CIS v2.0.0 - Control: 5.2"
   value    = "Check: Uniform"

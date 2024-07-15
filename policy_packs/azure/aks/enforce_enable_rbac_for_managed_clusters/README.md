@@ -83,7 +83,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_aks_managed_cluster_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-aks#/policy/types/managedClusterApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"

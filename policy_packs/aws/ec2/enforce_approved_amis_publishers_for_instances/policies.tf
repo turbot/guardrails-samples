@@ -1,6 +1,6 @@
 # AWS > EC2 > Instance > Approved
 resource "turbot_policy_setting" "aws_ec2_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Stop unapproved"
@@ -10,7 +10,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
 
 # AWS > EC2 > Instance > Approved > Image
 resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
   value    = "Approved if ImageId in Image > AMI IDs and Owner in Image > Publishers"
   # value    = "Approved if ImageId in Image > AMI IDs"
@@ -20,10 +20,10 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
 
 # AWS > EC2 > Instance > Approved > Image > AMI IDs
 resource "turbot_policy_setting" "aws_ec2_instance_approved_image_ami_ids" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImageAmiIds"
   # Insert your AMI IDs below
-  value    = <<-EOT
+  value = <<-EOT
     - "ami-12345678"
     - "ami-87654321"
     EOT
@@ -31,10 +31,10 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_image_ami_ids" {
 
 # AWS > EC2 > Instance > Approved > Image > Publishers
 resource "turbot_policy_setting" "aws_ec2_instance_approved_image_publishers" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImagePublishers"
   # Insert your Publisher Account IDs below
-  value    = <<-EOT
+  value = <<-EOT
     - "123456789012"
     - "987654321098"
     EOT

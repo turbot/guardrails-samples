@@ -80,7 +80,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "aws_s3_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-s3#/policy/types/encryptionInTransit"
   note     = "AWS CIS v3.0.0 - Control: 2.1.1"
   # value    = "Check: Enabled"
@@ -88,7 +88,7 @@ resource "turbot_policy_setting" "aws_s3_encryption_in_transit" {
 }
 
 resource "turbot_policy_setting" "aws_s3_s3_bucket_public_access_block" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-s3#/policy/types/s3BucketPublicAccessBlock"
   note     = "AWS CIS v3.0.0 - Control: 2.1.4"
   # value    = "Check: Per `Public Access Block  > Settings`"
@@ -96,7 +96,7 @@ resource "turbot_policy_setting" "aws_s3_s3_bucket_public_access_block" {
 }
 
 resource "turbot_policy_setting" "aws_ec2_ec2_account_attributes_ebs_encryption_by_default" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2AccountAttributesEbsEncryptionByDefault"
   note     = "AWS CIS v3.0.0 - Control: 2.2.1"
   # value    = "Check: AWS managed key or higher"
@@ -104,7 +104,7 @@ resource "turbot_policy_setting" "aws_ec2_ec2_account_attributes_ebs_encryption_
 }
 
 resource "turbot_policy_setting" "aws_ec2_volume_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.2.1"
   # value    = "Check: Approved"
@@ -113,7 +113,7 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved" {
 }
 
 resource "turbot_policy_setting" "aws_ec2_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.2.1"
   # value    = "Check: Approved"
@@ -123,7 +123,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
 }
 
 resource "turbot_policy_setting" "aws_rds_db_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.3.1"
   # value    = "Check: Approved"
@@ -133,7 +133,7 @@ resource "turbot_policy_setting" "aws_rds_db_instance_approved" {
 }
 
 resource "turbot_policy_setting" "aws_rds_db_instance_auto_minor_version_upgrade" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceAutoMinorVersionUpgrade"
   note     = "AWS CIS v3.0.0 - Control: 2.3.2"
   # value    = "Check: Enabled"
@@ -141,7 +141,7 @@ resource "turbot_policy_setting" "aws_rds_db_instance_auto_minor_version_upgrade
 }
 
 resource "turbot_policy_setting" "aws_rds_db_instance_publicly_accessible" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstancePubliclyAccessible"
   note     = "AWS CIS v3.0.0 - Control: 2.3.3"
   # value    = "Check: DB Instance is not publicly accessible"
@@ -149,7 +149,7 @@ resource "turbot_policy_setting" "aws_rds_db_instance_publicly_accessible" {
 }
 
 resource "turbot_policy_setting" "aws_efs_file_system_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.4.1"
   # value    = "Check: Approved"
@@ -157,7 +157,7 @@ resource "turbot_policy_setting" "aws_efs_file_system_approved" {
 }
 
 resource "turbot_policy_setting" "aws_efs_mount_target_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/mountTargetApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.4.1"
   # value    = "Check: Approved"

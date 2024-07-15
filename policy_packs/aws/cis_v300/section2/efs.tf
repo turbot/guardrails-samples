@@ -1,6 +1,6 @@
 # AWS > EFS > FileSystem > Approved
 resource "turbot_policy_setting" "aws_efs_file_system_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.4.1"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "aws_efs_file_system_approved" {
 
 # AWS > EFS > FileSystem > Approved > Encryption at Rest
 resource "turbot_policy_setting" "aws_efs_file_system_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemEncryptionAtRest"
   note     = "AWS CIS v3.0.0 - Control: 2.4.1"
   value    = "AWS managed key or higher"
@@ -17,7 +17,7 @@ resource "turbot_policy_setting" "aws_efs_file_system_encryption_at_rest" {
 
 # AWS > EFS > Mount Target > Approved
 resource "turbot_policy_setting" "aws_efs_mount_target_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/mountTargetApproved"
   note     = "AWS CIS v3.0.0 - Control: 2.4.1"
   value    = "Check: Approved"
@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "aws_efs_mount_target_approved" {
 
 # AWS > EFS > Mount Target > Approved > Custom
 resource "turbot_policy_setting" "aws_efs_mount_target_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-efs#/policy/types/mountTargetApprovedCustom"
   note           = "AWS CIS v3.0.0 - Control: 2.4.1"
   template_input = <<-EOT
@@ -43,7 +43,7 @@ resource "turbot_policy_setting" "aws_efs_mount_target_approved_custom" {
     title: "EFS Filesystem Encryption"
     {%- if $.mountTarget.parent.encrypted -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "EFS Filesystem Encryption",
           "result": "Approved",
           "message": "Filesystem is encrypted"
@@ -51,7 +51,7 @@ resource "turbot_policy_setting" "aws_efs_mount_target_approved_custom" {
 
     {%- else -%}
 
-      {%- set data = { 
+      {%- set data = {
           "title": "EFS Filesystem Encryption",
           "result": "Not approved",
           "message": "Filesystem is not encrypted"

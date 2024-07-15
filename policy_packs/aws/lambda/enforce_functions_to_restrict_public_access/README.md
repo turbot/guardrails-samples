@@ -85,7 +85,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_lambda_function_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-lambda#/policy/types/functionPolicyTrustedAccess"
   # value    = "Check: Trusted Access"
   value    = "Enforce: Revoke untrusted access"

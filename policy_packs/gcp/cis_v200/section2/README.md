@@ -80,7 +80,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_turbot_event_handler_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp#/policy/types/eventHandlersLogging"
   note     = "GCP CIS v2.0.0 - Control: 2.1"
   # value    = "Check: Configured"
@@ -88,7 +88,7 @@ resource "turbot_policy_setting" "gcp_turbot_event_handler_logging" {
 }
 
 resource "turbot_policy_setting" "gcp_turbot_event_handler_pubsub" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp#/policy/types/eventHandlersPubSub"
   note     = "GCP CIS v2.0.0 - Control: 2.2"
   # value    = "Check: Configured"
@@ -96,7 +96,7 @@ resource "turbot_policy_setting" "gcp_turbot_event_handler_pubsub" {
 }
 
 resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketApproved"
   note     = "GCP CIS v2.0.0 - Control: 2.3"
   # value    = "Check: Approved"
@@ -104,7 +104,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_dns_dns_policy_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dns#/policy/types/dnsPolicyLogging"
   note     = "GCP CIS v2.0.0 - Control: 2.12"
   # value    = "Check: Enabled"
@@ -112,7 +112,7 @@ resource "turbot_policy_setting" "gcp_dns_dns_policy_logging" {
 }
 
 resource "turbot_policy_setting" "gcp_network_backend_service_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/backendServiceLogging"
   note     = "GCP CIS v2.0.0 - Control: 2.16"
   # value    = "Check: Enabled"

@@ -1,6 +1,6 @@
 # AWS > VPC > Network ACL > Ingress Rules > Approved
 resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/networkAclIngressRulesApproved"
   note     = "AWS CIS v3.0.0 - Controls: 5.1"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved" {
 
 # AWS > VPC > Network ACL > Ingress Rules > Approved > Rules
 resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved_rules" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/networkAclIngressRulesApprovedRules"
   note     = "AWS CIS v3.0.0 - Controls: 5.1"
   value    = <<-EOT
@@ -30,7 +30,7 @@ resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved_rul
 
 # AWS > VPC > Security Group > Ingress Rules > Approved
 resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
   note     = "AWS CIS v3.0.0 - Controls: 5.2, 5.3, 5.4"
   value    = "Check: Approved"
@@ -39,7 +39,7 @@ resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved"
 
 # AWS > VPC > Security Group > Ingress Rules > Approved > Rules
 resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved_rules" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApprovedRules"
   note           = "AWS CIS v3.0.0 - Controls: 5.2, 5.3, 5.4"
   template_input = <<-EOT
@@ -70,7 +70,7 @@ resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved_
 
 # AWS > VPC > Security Group > Egress Rules > Approved
 resource "turbot_policy_setting" "aws_vpc_security_group_egress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupEgressRulesApproved"
   note     = "AWS CIS v3.0.0 - Controls: 5.4"
   value    = "Check: Approved"
@@ -79,7 +79,7 @@ resource "turbot_policy_setting" "aws_vpc_security_group_egress_rules_approved" 
 
 # AWS > VPC > Security Group > Egress Rules > Approved > Rules
 resource "turbot_policy_setting" "aws_vpc_security_group_egress_rules_approved_rules" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupEgressRulesApprovedRules"
   note           = "AWS CIS v3.0.0 - Controls: 5.4"
   template_input = <<-EOT

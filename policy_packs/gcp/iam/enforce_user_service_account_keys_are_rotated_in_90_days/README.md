@@ -81,7 +81,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
   # value    = "Check: Active"
   value    =  "Enforce: Delete inactive with 90 days warning"

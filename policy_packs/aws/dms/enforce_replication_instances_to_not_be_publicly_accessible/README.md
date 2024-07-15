@@ -81,7 +81,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_dms_replication_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Stop unapproved"

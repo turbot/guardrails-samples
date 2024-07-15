@@ -80,7 +80,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_active_directory_user_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-activedirectory#/policy/types/userApproved"
   note     = "Azure CIS v2.0.0 - Control: 1.5"
   # value    = "Check: Approved"
@@ -88,7 +88,7 @@ resource "turbot_policy_setting" "azure_active_directory_user_approved" {
 }
 
 resource "turbot_policy_setting" "azure_iam_role_definition_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-iam#/policy/types/roleDefinitionApproved"
   note     = "Azure CIS v2.0.0 - Control: 1.23"
   # value    = "Check: Approved"

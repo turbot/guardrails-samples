@@ -81,7 +81,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"

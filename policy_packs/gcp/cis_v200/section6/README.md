@@ -77,7 +77,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDatabaseFlags"
   note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   # value    = "Check: Database flags are correct"
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceApproved"
   note     = "GCP CIS v2.0.0 - Control: 6.2.9"
   # value    = "Check: Approved"
@@ -94,7 +94,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved" {
 
 
 resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"
   note     = "GCP CIS v2.0.0 - Control: 6.4"
   # value    = "Check: Enabled"
@@ -104,7 +104,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
   note     = "GCP CIS v2.0.0 - Control: 6.5"
   # value    = "Check: Approved"
@@ -112,7 +112,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" 
 }
 
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionManagedBackups"
   note     = "GCP CIS v2.0.0 - Control: 6.7"
   # value    = "Skip"

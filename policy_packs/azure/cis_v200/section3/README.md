@@ -79,7 +79,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_storage_account_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountEncryptionInTransit"
   note     = "Azure CIS v2.0.0 - Control: 3.1"
   # value    = "Check: Enabled"
@@ -87,7 +87,7 @@ resource "turbot_policy_setting" "azure_storage_account_encryption_in_transit" {
 }
 
 resource "turbot_policy_setting" "azure_storage_account_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountApproved"
   note     = "Azure CIS v2.0.0 - Control: 3.2"
   # value    = "Check: Approved"
@@ -95,7 +95,7 @@ resource "turbot_policy_setting" "azure_storage_account_approved" {
 }
 
 resource "turbot_policy_setting" "azure_storage_account_access_keys_rotation_reminder" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessKeysRotationReminder"
   note     = "Azure CIS v2.0.0 - Control: 3.3"
   # value    = "Check: Enabled per Rotation Reminder > Days"
@@ -103,7 +103,7 @@ resource "turbot_policy_setting" "azure_storage_account_access_keys_rotation_rem
 }
 
 resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/queueServiceLogging"
   note     = "Azure CIS v2.0.0 - Control: 3.5"
   # value    = "Check: Per Logging > Properties"
@@ -111,7 +111,7 @@ resource "turbot_policy_setting" "azure_storage_account_queue_service_logging" {
 }
 
 resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
   note     = "Azure CIS v2.0.0 - Control: 3.7"
   value    = "Check: Enabled"
@@ -119,7 +119,7 @@ resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_acce
 }
 
 resource "turbot_policy_setting" "azure_storage_account_data_protection_soft_delete" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountDataProtectionSoftDelete"
   note     = "Azure CIS v2.0.0 - Control: 3.11"
   # value    = "Check: Configured per Soft Delete > * policies"
@@ -127,7 +127,7 @@ resource "turbot_policy_setting" "azure_storage_account_data_protection_soft_del
 }
 
 resource "turbot_policy_setting" "azure_storage_storage_account_blob_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountBlobLogging"
   note     = "Azure CIS v2.0.0 - Control: 3.13"
   # value    = "Check: Per `Logging > *`"
@@ -135,7 +135,7 @@ resource "turbot_policy_setting" "azure_storage_storage_account_blob_logging" {
 }
 
 resource "turbot_policy_setting" "azure_storage_account_minimum_tls_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountMinimumTlsVersion"
   note     = "Azure CIS v2.0.0 - Control: 3.15"
   # value    = "Check: TLS 1.2"

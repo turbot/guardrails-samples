@@ -1,6 +1,6 @@
 # GCP > SQL > Instance > Database Flags
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDatabaseFlags"
   note     = "GCP CIS v2.0.0 - Control: 6.1.2, 6.1.3, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7, 6.2.8, 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   value    = "Check: Database flags are correct"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags" {
 
 # GCP > SQL > Instance > Database Flags > MySQL > Template
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_mysql_template" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceMysqlDatabaseFlagsTemplate"
   note     = "GCP CIS v2.0.0 - Control: 6.1.2 and 6.1.3"
   value    = <<-EOT
@@ -22,7 +22,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_mysql_template
 
 # GCP > SQL > Instance > Database Flags > PostgreSQL > Template
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_postgresql_template" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instancePostgresqlDatabaseFlagsTemplate"
   note     = "GCP CIS v2.0.0 - Control: 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 6.2.6, 6.2.7 and 6.2.8"
   value    = <<-EOT
@@ -41,7 +41,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_postgresql_tem
 
 # GCP > SQL > Instance > Approved
 resource "turbot_policy_setting" "gcp_sql_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceApproved"
   note     = "GCP CIS v2.0.0 - Control: 6.2.9"
   value    = "Check: Approved"
@@ -50,7 +50,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved" {
 
 # GCP > SQL > Instance > Approved > Custom
 resource "turbot_policy_setting" "gcp_sql_instance_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-sql#/policy/types/instanceApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 6.2.9"
   template_input = <<-EOT
@@ -70,9 +70,9 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved_custom" {
       {%- if not privateIpExists and obj.type == "PRIVATE" -%}
 
         {%- set privateIpExists = true -%}
-      
+
       {%- endif -%}
-    
+
     {%- endfor -%}
 
     {%- if ipAddresses | length == 0 or not privateIpExists -%}
@@ -107,7 +107,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_approved_custom" {
 
 # GCP > SQL > Instance > Database Flags > SQL Server > Template
 resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_template" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceSqlDatabaseFlagsTemplate"
   note     = "GCP CIS v2.0.0 - Control: 6.3.1, 6.3.2, 6.3.3, 6.3.4, 6.3.5, 6.3.6 and 6.3.7"
   value    = <<-EOT
@@ -125,7 +125,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_tem
 
 # GCP > SQL > Instance > Encryption In Transit
 resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"
   note     = "GCP CIS v2.0.0 - Control: 6.4"
   value    = "Check: Enabled"
@@ -136,7 +136,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
 
 # GCP > SQL > Instance > Authorized Network > Approved
 resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApproved"
   note     = "GCP CIS v2.0.0 - Control: 6.5"
   value    = "Check: Approved"
@@ -145,11 +145,11 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved" 
 
 # GCP > SQL > Instance > Authorized Network > Approved > CIDR Ranges
 resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved_cidr_ranges" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceAuthorizedNetworkApprovedCidrRanges"
   note     = "GCP CIS v2.0.0 - Control: 6.5"
   # List of approved CIDR ranges
-  value    = <<-EOT
+  value = <<-EOT
     - "10.2.1.2"
     - "172.141.23.22/26"
   EOT
@@ -157,7 +157,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved_c
 
 # GCP > SQL > Instance > Data Protection > Managed Backups
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionManagedBackups"
   note     = "GCP CIS v2.0.0 - Control: 6.7"
   value    = "Skip"
@@ -166,7 +166,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backu
 
 # GCP > SQL > Instance > Data Protection > Managed Backups > Schedule
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups_schedule" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionSchedule"
   note     = "GCP CIS v2.0.0 - Control: 6.7"
   value    = "Enforce: Daily for 30 days"
@@ -177,7 +177,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backu
 
 # GCP > SQL > Instance > Data Protection > Managed Backups > Minimum Schedule
 resource "turbot_policy_setting" "gcp_sql_instance_data_protection_managed_backups_minimum_schedule" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceDataProtectionMinimumSchedule"
   note     = "GCP CIS v2.0.0 - Control: 6.7"
   value    = "Enforce: Daily for 30 days"

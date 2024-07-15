@@ -82,7 +82,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
   # value    = "Check: Approved"
   value  = "Enforce: Delete unapproved"

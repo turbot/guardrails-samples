@@ -81,14 +81,14 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_kubernetesengine_region_cluster_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kubernetesengine#/policy/types/regionClusterApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }
 
 resource "turbot_policy_setting" "gcp_kubernetesengine_zone_cluster_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kubernetesengine#/policy/types/zoneClusterApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"

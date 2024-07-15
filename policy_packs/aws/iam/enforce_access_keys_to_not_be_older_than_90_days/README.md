@@ -83,7 +83,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_iam_access_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accessKeyActive"
   # value    = "Check: Active"
   value    = "Enforce: Deactivate inactive with 90 days warning"

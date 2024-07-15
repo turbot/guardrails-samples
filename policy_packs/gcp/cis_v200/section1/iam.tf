@@ -1,7 +1,7 @@
 
 # GCP > IAM > Service Account Key > Approved
 resource "turbot_policy_setting" "gcp_iam_service_account_key_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.4"
   value    = "Check: Approved"
@@ -10,7 +10,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_approved" {
 
 # GCP > IAM > Service Account Key > Approved > Custom
 resource "turbot_policy_setting" "gcp_iam_service_account_key_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 1.4"
   template_input = <<-EOT
@@ -56,7 +56,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_approved_custom" {
 
 # GCP > IAM > Service Account > Approved
 resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.5"
   value    = "Check: Approved"
@@ -65,7 +65,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved" {
 
 # GCP > IAM > Service Account > Approved > Custom
 resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 1.5"
   template_input = <<-EOT
@@ -139,7 +139,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
 # GCP > IAM > Project User > Approved
 resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.6, 1.8 and 1.11"
   value    = "Check: Approved"
@@ -148,7 +148,7 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
 
 # GCP > IAM > Project User > Approved > Custom
 resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-iam#/policy/types/projectUserApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 1.6, 1.8 and 1.11"
   template_input = <<-EOT
@@ -276,7 +276,7 @@ resource "turbot_policy_setting" "gcp_iam_project_user_approved_custom" {
 
 # GCP > IAM > Service Account Key > Active
 resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
   note     = "GCP CIS v2.0.0 - Control: 1.7"
   value    = "Check: Active"
@@ -285,7 +285,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
 
 # GCP > IAM > Service Account Key > Active > Age
 resource "turbot_policy_setting" "gcp_iam_service_account_active_age" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActiveAge"
   note     = "GCP CIS v2.0.0 - Control: 1.7"
   value    = "Force inactive if age > 90 days"

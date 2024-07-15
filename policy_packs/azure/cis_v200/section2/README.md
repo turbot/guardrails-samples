@@ -85,7 +85,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterDefenderPlan"
   note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11 and 2.1.12"
   # value    = "Check: Defender Plan Enabled"
@@ -93,7 +93,7 @@ resource "turbot_policy_setting" "azure_securitycenter_defender_plan" {
 }
 
 resource "turbot_policy_setting" "azure_securitycenter_auto_provisioning" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-securitycenter#/policy/types/securityCenterAutoProvisioning"
   note     = "Azure CIS v2.0.0 - Control: 2.1.15"
   # value    = "Check: Enabled"
