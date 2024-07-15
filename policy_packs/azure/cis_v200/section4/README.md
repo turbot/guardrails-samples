@@ -82,7 +82,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 resource "turbot_policy_setting" "azure_sql_server_auditing" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditing"
-  note     = "Azure CIS v2.0.0 - Control: 4.1.1"
+  note     = "Azure CIS v2.0.0 - Control: 4.1.1, 4.1.6"
   # value   = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
@@ -138,7 +138,7 @@ resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in
 resource "turbot_policy_setting" "azure_postgresql_server_audit_logging" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverAuditLogging"
-  note     = "Azure CIS v2.0.0 - Control: 4.3.2"
+  note     = "Azure CIS v2.0.0 - Control: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.3.6, 4.3.7 and 4.3.8"
   # value   = "Check: Audit Logging > *"
   value    = "Enforce: Audit Logging > *"
 }

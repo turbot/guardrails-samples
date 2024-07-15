@@ -87,6 +87,14 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
   value    = "Enforce: Delete unapproved"
 }
 
+resource "turbot_policy_setting" "azure_networkwatcher_flow_log_retention_policy" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-networkwatcher#/policy/types/flowLogRetentionPolicy"
+  note     = "Azure CIS v2.0.0 - Controls: 6.5"
+  # value    = "Check: Enabled per `Retention Policy > Days`"
+  value    = "Enforce: Enabled per `Retention Policy > Days`"
+}
+
 resource "turbot_policy_setting" "azure_network_watcher_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-networkwatcher#/policy/types/networkWatcherApproved"
