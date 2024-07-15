@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers security recommendations to follow for the configuration of Virtual Machines on an Azure subscription.
 
-This policy pack can help you automate the enforcement of Azure CIS benchmark section 7 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of Azure CIS benchmark section 7 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section7/settings)**
 
@@ -67,6 +67,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -77,7 +81,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   note     = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   # value    = "Check: Approved"
@@ -87,7 +91,7 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
 }
 
 resource "turbot_policy_setting" "azure_compute_disk_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/diskEncryptionAtRest"
   note     = "Azure CIS v2.0.0 - Control: 7.3, 7.4 and 7.7"
   # value    = "Check: Encryption at Rest > Disk Encryption Set"

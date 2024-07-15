@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers recommendations addressing virtual machines on Google Cloud Platform.
 
-This policy pack can help you automate enforcement of GCP CIS benchmark section 4 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of GCP CIS benchmark section 4 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/cis_v200/section4/settings)**
 
@@ -67,6 +67,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -77,7 +81,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
   note     = "GCP CIS v2.0.0 - Control: 4.1, 4.2, 4.6 and 4.11"
   # value    = "Check: Approved"
@@ -86,7 +90,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_computeengine_instance_block_project_wide_ssh_keys" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceBlockProjectWideSshKeys"
   note     = "GCP CIS v2.0.0 - Control: 4.3"
   # value    = "Check: Enabled"
@@ -94,7 +98,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_block_project_wide_
 }
 
 resource "turbot_policy_setting" "gcp_computeengine_project_os_login_enabled" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/osLoginEnabled"
   note     = "GCP CIS v2.0.0 - Control: 4.4"
   # value    = "Check: Enabled"
@@ -102,7 +106,7 @@ resource "turbot_policy_setting" "gcp_computeengine_project_os_login_enabled" {
 }
 
 resource "turbot_policy_setting" "gcp_computeengine_instance_serial_port_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceSerialPortAccess"
   note     = "GCP CIS v2.0.0 - Control: 4.5"
   # value    = "Check: Disabled"
@@ -110,7 +114,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_serial_port_access"
 }
 
 resource "turbot_policy_setting" "gcp_computeengine_disk_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskApproved"
   note     = "GCP CIS v2.0.0 - Control: 4.7"
   # value    = "Check: Approved"
@@ -118,7 +122,7 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_configuration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/shieldedInstanceConfiguration"
   note     = "GCP CIS v2.0.0 - Control: 4.8"
   # value    = "Check: Enabled per `Shielded Instance Configuration > *`"
@@ -126,7 +130,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_shielded_instance_c
 }
 
 resource "turbot_policy_setting" "gcp_computeengine_instance_external_ip_addresses" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceExternalIpAddresses"
   note     = "GCP CIS v2.0.0 - Control: 4.9"
   # value    = "Check: None"

@@ -1,6 +1,6 @@
 # Azure > Compute > Virtual Machines > Approved
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
   note     = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   value    = "Check: Approved"
@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
 
 # Azure > Compute > Virtual Machines > Approved > Custom
 resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 7.2, 7.5 and 7.6"
   template_input = <<-EOT
@@ -99,7 +99,7 @@ resource "turbot_policy_setting" "azure_compute_virtual_machine_approved_custom"
 
 # Azure > Compute > Disk > Encryption At Rest
 resource "turbot_policy_setting" "azure_compute_disk_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/diskEncryptionAtRest"
   note     = "Azure CIS v2.0.0 - Control: 7.3, 7.4 and 7.7"
   value    = "Check: Encryption at Rest > Disk Encryption Set"
@@ -108,7 +108,7 @@ resource "turbot_policy_setting" "azure_compute_disk_encryption_at_rest" {
 
 # Azure > Compute > Disk > Encryption At Rest > Disk Encryption Set
 resource "turbot_policy_setting" "azure_compute_disk_encryption_at_rest_disk_encryption_set" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-compute#/policy/types/diskEncryptionAtRestDiskEncryptionSet"
   note     = "Azure CIS v2.0.0 - Control: 7.3, 7.4 and 7.7"
   # Disk Encryption Set ID to be used for Encryption at Rest

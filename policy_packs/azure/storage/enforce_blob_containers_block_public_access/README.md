@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing Azure Storage Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
 
-This policy pack can help you configure the following settings for storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 
 - Enforce block blob public access is set to Enabled
 
@@ -70,6 +70,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -81,7 +85,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"

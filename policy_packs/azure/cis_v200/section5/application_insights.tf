@@ -1,6 +1,6 @@
 # Azure > Resource Group > Stack
 resource "turbot_policy_setting" "azure_resource_group_stack" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure#/policy/types/resourceGroupStack"
   note     = "Azure CIS v2.0.0 - Controls: 5.3.1"
   value    = "Check: Configured"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "azure_resource_group_stack" {
 
 # Azure > Resource Group > Stack > Source
 resource "turbot_policy_setting" "azure_resource_group_stack_source" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/azure#/policy/types/resourceGroupStackSource"
   note           = "Azure CIS v2.0.0 - Controls: 5.3.1"
   template_input = <<-EOT
@@ -43,7 +43,7 @@ resource "turbot_policy_setting" "azure_resource_group_stack_source" {
 
 # Azure > Resource Group > Stack > Terraform Version
 resource "turbot_policy_setting" "azure_resource_group_stack_terraform_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure#/policy/types/resourceGroupStackTerraformVersion"
   note     = "Azure CIS v2.0.0 - Controls: 5.3.1"
   value    = "0.15.*"

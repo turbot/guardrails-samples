@@ -1,6 +1,6 @@
 # GCP > KMS > Crypto Key > Policy > Trusted Access
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAccess"
   note     = "GCP CIS v2.0.0 - Control: 1.9"
   value    = "Check: Trusted Access > *"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
 
 # GCP > KMS > Crypto Key > Policy > Trusted Access > All Users
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access_all_users" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAllUsers"
   note     = "GCP CIS v2.0.0 - Control: 1.9"
   value    = "Do not allow allUsers"
@@ -18,7 +18,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access_all_u
 
 # GCP > KMS > Crypto Key > Policy > Trusted Access > All Authenticated
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access_all_authenticated" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAllAuthenticated"
   note     = "GCP CIS v2.0.0 - Control: 1.9"
   value    = "Do not allow allAuthenticatedUsers"
@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access_all_a
 
 # GCP > KMS > Crypto Key > Approved
 resource "turbot_policy_setting" "gcp_kms_crypto_key_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyApproved"
   note     = "GCP CIS v2.0.0 - Control: 1.10"
   value    = "Check: Approved"
@@ -35,7 +35,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved" {
 
 # GCP > KMS > Crypto Key > Approved > Custom
 resource "turbot_policy_setting" "gcp_kms_crypto_key_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyApprovedCustom"
   note           = "GCP CIS v2.0.0 - Control: 1.10"
   template_input = <<-EOT

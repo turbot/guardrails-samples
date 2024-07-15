@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing that the default VPC network is not used within GCP projects is essential for maintaining a secure and customized network environment. This practice encourages the creation of tailored VPC networks with specific configurations and security controls, reducing the risk of misconfigurations and enhancing overall network security and compliance with best practices.
 
-This policy pack can help you configure the following settings for VPC networks:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC networks:
 
 - Remove default networks that are used within projects
 
@@ -19,7 +19,6 @@ This policy pack can help you configure the following settings for VPC networks:
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
   - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
-
 
 ### Credentials
 
@@ -71,6 +70,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -82,7 +85,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_network_network_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"

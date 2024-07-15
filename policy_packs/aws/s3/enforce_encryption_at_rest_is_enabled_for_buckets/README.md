@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing encryption at rest for AWS S3 buckets is crucial to safeguard sensitive data stored in the cloud. This ensures that all data within S3 buckets is encrypted, protecting it from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for S3 buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
 - Enforce Encryption at Rest, to safeguard sensitive data in buckets
 - Set the Customer Managed Key to be used to encrypt data in buckets
@@ -73,6 +73,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -84,7 +88,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_s3_bucket_encryption_at_rest" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketEncryptionAtRest"
   # value    = "Check: AWS managed key or higher"
   value    = "Enforce: AWS managed key"

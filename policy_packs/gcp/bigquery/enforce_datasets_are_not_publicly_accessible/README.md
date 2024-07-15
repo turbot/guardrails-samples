@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing GCP BigQuery datasets to not be publicly accessible is crucial to protect sensitive and proprietary data from unauthorized access and potential breaches. By restricting public access, organizations can maintain data privacy, comply with regulatory requirements, and safeguard against malicious activities.
 
-This policy pack can help you configure the following settings for BigQuery datasets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for BigQuery datasets:
 
 - Enforce public access is disabled
 
@@ -70,6 +70,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -81,7 +85,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_bigquery_dataset_publicly_accessible" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-bigquery#/policy/types/datasetPubliclyAccessible"
   # value    = "Check: Dataset is not publicly accessible"
   value    = "Enforce: Dataset is not publicly accessible"

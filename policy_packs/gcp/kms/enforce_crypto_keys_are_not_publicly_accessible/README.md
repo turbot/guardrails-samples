@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing that GCP KMS crypto keys are not publicly accessible is vital for protecting sensitive data from unauthorized access. This ensures that cryptographic keys, which are essential for data encryption and security, are only accessible to authorized users and services, thereby preventing potential data breaches and maintaining compliance with security best practices and regulatory standards.
 
-This policy pack can help you configure the following settings for KMS crypto keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS crypto keys:
 
 - Remove access for non-trusted members
 - Do not allow `allUsers` access to crypto keys
@@ -72,6 +72,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -83,7 +87,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "gcp_kms_crypto_key_policy_trusted_access" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-kms#/policy/types/cryptoKeyPolicyTrustedAccess"
   # value    = "Check: Trusted Access > *"
   value    = "Enforce: Trusted Access > *"

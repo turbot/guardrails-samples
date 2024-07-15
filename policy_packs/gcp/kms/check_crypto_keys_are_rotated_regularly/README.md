@@ -6,7 +6,7 @@ categories: ["security"]
 
 KMS Crypto Keys should be rotated on regular basis. A rotation schedule defines the frequency of rotation, and optionally the date and time when the first rotation occurs. The rotation schedule can be based on either the key's age or the number or volume of messages encrypted with a key version. Enforcing regular rotation of GCP KMS crypto keys is essential for maintaining the security and integrity of encrypted data. Regular key rotation mitigates the risk of key compromise, ensuring that even if a key is exposed, its usage window is limited, thereby enhancing overall security and ensuring compliance with best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for KMS crypto keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS crypto keys:
 
 - Check and alarm if crypto keys have rotation period of more than 90 days
 
@@ -69,3 +69,7 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).

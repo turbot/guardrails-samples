@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers recommendations addressing Logging and Monitoring on Google Cloud Platform.
 
-This policy pack can help you automate enforcement of GCP CIS benchmark section 2 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of GCP CIS benchmark section 2 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/cis_v200/section2/settings)**
 
@@ -70,6 +70,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -80,7 +84,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_turbot_event_handler_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp#/policy/types/eventHandlersLogging"
   note     = "GCP CIS v2.0.0 - Control: 2.1"
   # value    = "Check: Configured"
@@ -88,7 +92,7 @@ resource "turbot_policy_setting" "gcp_turbot_event_handler_logging" {
 }
 
 resource "turbot_policy_setting" "gcp_turbot_event_handler_pubsub" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp#/policy/types/eventHandlersPubSub"
   note     = "GCP CIS v2.0.0 - Control: 2.2"
   # value    = "Check: Configured"
@@ -96,7 +100,7 @@ resource "turbot_policy_setting" "gcp_turbot_event_handler_pubsub" {
 }
 
 resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketApproved"
   note     = "GCP CIS v2.0.0 - Control: 2.3"
   # value    = "Check: Approved"
@@ -104,7 +108,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_dns_dns_policy_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dns#/policy/types/dnsPolicyLogging"
   note     = "GCP CIS v2.0.0 - Control: 2.12"
   # value    = "Check: Enabled"
@@ -112,7 +116,7 @@ resource "turbot_policy_setting" "gcp_dns_dns_policy_logging" {
 }
 
 resource "turbot_policy_setting" "gcp_network_backend_service_logging" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/backendServiceLogging"
   note     = "GCP CIS v2.0.0 - Control: 2.16"
   # value    = "Check: Enabled"

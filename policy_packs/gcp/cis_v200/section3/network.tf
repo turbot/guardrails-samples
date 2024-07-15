@@ -1,6 +1,6 @@
 # GCP > Network > Network > Approved
 resource "turbot_policy_setting" "gcp_network_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.1 and 3.2"
   value    = "Check: Approved"
@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_network_approved" {
 
 # GCP > Network > Network > Approved > Custom
 resource "turbot_policy_setting" "gcp_network_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-network#/policy/types/networkApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 3.1 and 3.2"
   template_input = <<-EOT
@@ -85,7 +85,7 @@ resource "turbot_policy_setting" "gcp_network_approved_custom" {
 
 # GCP > Network > Firewall > Ingress Rules > Approved
 resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.6 and 3.7"
   value    = "Check: Approved"
@@ -94,7 +94,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
 
 # GCP > Network > Firewall > Ingress Rules > Approved Rules
 resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved_rules" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApprovedRules"
   note     = "GCP CIS v2.0.0 - Control: 3.6 and 3.7"
   value    = <<EOT
@@ -106,7 +106,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved_ru
 
 # GCP > Network > SSL Policy > Minimum TLS Version
 resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyMinimumTlsVersion"
   note     = "GCP CIS v2.0.0 - Control: 3.9"
   value    = "Check: TLS 1.2"
@@ -115,7 +115,7 @@ resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
 
 # GCP > Network > SSL Policy > Profile
 resource "turbot_policy_setting" "gcp_network_ssl_policy_profile" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyProfile"
   note     = "GCP CIS v2.0.0 - Control: 3.9"
   value    = "Check: Restricted"
@@ -124,7 +124,7 @@ resource "turbot_policy_setting" "gcp_network_ssl_policy_profile" {
 
 # GCP > Network > Firewall > Approved
 resource "turbot_policy_setting" "gcp_network_firewall_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.10"
   value    = "Check: Approved"
@@ -133,7 +133,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved" {
 
 # GCP > Network > Firewall > Approved > Custom
 resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
-  resource       = turbot_smart_folder.main.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-network#/policy/types/firewallApprovedCustom"
   note           = "Azure CIS v2.0.0 - Control: 3.10"
   template_input = <<-EOT

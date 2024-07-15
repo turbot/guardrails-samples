@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers security recommendations for Azure App Service.
 
-This policy pack can help you automate the enforcement of Azure CIS benchmark section 9 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of Azure CIS benchmark section 9 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v200/section9/settings)**
 
@@ -67,6 +67,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -77,7 +81,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   note     = "Azure CIS v2.0.0 - Control: 9.1, 9.6, 9,7 and 9.8"
   # value    = "Check: Approved"
@@ -85,7 +89,7 @@ resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttpsOnly"
   note     = "Azure CIS v2.0.0 - Control: 9.2"
   # value    = "Check: Enabled"
@@ -93,7 +97,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_https_only" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppMinimumTlsVersion"
   note     = "Azure CIS v2.0.0 - Control: 9.3"
   # value    = "Check: TLS 1.2"
@@ -101,7 +105,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_minimum_tls_version" 
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_client_cert_mode" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppClientCertMode"
   note     = "Azure CIS v2.0.0 - Control: 9.4"
   # value    = "Check: Require"
@@ -109,7 +113,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_client_cert_mode" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_system_assigned_identity" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppSystemAssignedIdentity"
   note     = "Azure CIS v2.0.0 - Control: 9.5"
   # value    = "Check: Enabled"
@@ -117,7 +121,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_system_assigned_ident
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppHttp20Enabled"
   note     = "Azure CIS v2.0.0 - Control: 9.9"
   # value    = "Check: Enabled"
@@ -125,7 +129,7 @@ resource "turbot_policy_setting" "azure_appservice_web_app_http20_enabled" {
 }
 
 resource "turbot_policy_setting" "azure_appservice_web_app_ftps_state" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-appservice#/policy/types/webAppFtpsState"
   note     = "Azure CIS v2.0.0 - Control: 9.10"
   # value    = "Check: FTPS only"

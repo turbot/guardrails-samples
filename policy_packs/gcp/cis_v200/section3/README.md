@@ -6,7 +6,7 @@ categories: ["cis"]
 
 This section covers recommendations addressing networking on Google Cloud Platform.
 
-This policy pack can help you automate enforcement of GCP CIS benchmark section 3 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of GCP CIS benchmark section 3 best practices.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/cis_v200/section3/settings)**
 
@@ -68,6 +68,10 @@ terraform apply
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
 ### Enable Enforcement
 
 > [!TIP]
@@ -78,7 +82,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 ```hcl
 resource "turbot_policy_setting" "gcp_network_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.1 and 3.2"
   # value    = "Check: Approved"
@@ -86,7 +90,7 @@ resource "turbot_policy_setting" "gcp_network_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_dns_managed_zone_dnssec_configuration" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneDnssecConfiguration"
   note     = "GCP CIS v2.0.0 - Control: 3.3"
   # value    = "Check: Enabled"
@@ -94,7 +98,7 @@ resource "turbot_policy_setting" "gcp_dns_managed_zone_dnssec_configuration" {
 }
 
 resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-dns#/policy/types/managedZoneApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.4 and 3.5"
   # value    = "Check: Approved"
@@ -102,7 +106,7 @@ resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.6 and 3.7"
   # value    = "Check: Approved"
@@ -110,7 +114,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
 }
 
 resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyMinimumTlsVersion"
   note     = "GCP CIS v2.0.0 - Control: 3.9"
   # value    = "Check: TLS 1.2"
@@ -118,7 +122,7 @@ resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
 }
 
 resource "turbot_policy_setting" "gcp_network_ssl_policy_profile" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/sslPolicyProfile"
   note     = "GCP CIS v2.0.0 - Control: 3.9"
   # value    = "Check: Restricted"
@@ -126,7 +130,7 @@ resource "turbot_policy_setting" "gcp_network_ssl_policy_profile" {
 }
 
 resource "turbot_policy_setting" "gcp_network_firewall_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallApproved"
   note     = "GCP CIS v2.0.0 - Control: 3.10"
   # value    = "Check: Approved"
