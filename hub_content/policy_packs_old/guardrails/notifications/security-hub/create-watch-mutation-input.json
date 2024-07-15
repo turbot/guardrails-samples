@@ -1,7 +1,0 @@
-{
-  "input": {
-    "resource": "tmod:@turbot/turbot#/",
-    "action": "tmod:@turbot/firehose-aws-sns#/action/types/router",
-    "filters": ["level:self,descendant notificationType:control_updated"]
-  }
-}
