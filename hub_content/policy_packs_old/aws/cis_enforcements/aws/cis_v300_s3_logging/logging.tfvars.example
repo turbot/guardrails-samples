@@ -1,5 +1,0 @@
-# AWS KMS Key ARN for encryption of the logs delivered by CloudTrail.
-kms_key_alias = "alias/turbot/default"
-
-# AWS S3 Logging Bucket
-logging_bucket = "aws-cloudtrail-logs-123456789012-830c8976"
