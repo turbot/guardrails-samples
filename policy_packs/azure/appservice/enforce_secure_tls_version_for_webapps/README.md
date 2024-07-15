@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing a secure TLS version for Azure App Service Web Apps is critical to ensure secure communication between clients and web applications. This measure protects data by using strong encryption protocols, reducing the risk of vulnerabilities associated with older TLS versions, and ensuring compliance with security best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for App Service web apps:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for App Service web apps:
 
 - Enforce TLS version 1.2 for web apps
 
@@ -71,6 +71,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

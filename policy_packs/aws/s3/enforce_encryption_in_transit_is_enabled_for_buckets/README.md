@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing encryption in transit for AWS S3 buckets is vital to protect data as it moves between clients and the S3 service. This measure ensures that data is encrypted during transmission, safeguarding it from interception and unauthorized access, thereby enhancing security and compliance with best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for S3 buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
 - Enforce Encryption in Transit, to protect data as it moves between clients and the S3 service
 
@@ -71,6 +71,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

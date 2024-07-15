@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing encryption at rest for AWS EBS volumes is critical to protect sensitive data from unauthorized access and potential breaches. This measure ensures that data stored on EBS volumes is encrypted, thereby enhancing data security and compliance with regulatory requirements.
 
-This policy pack can help you configure the following settings for EBS volumes:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
 
 - Detach, snapshot and delete volumes that do not have Encryption at Rest enabled
 - Set Customer Managed Key which should be used to encrypt volumes
@@ -72,6 +72,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

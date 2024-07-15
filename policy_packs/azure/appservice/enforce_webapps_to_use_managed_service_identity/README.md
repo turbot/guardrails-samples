@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing Azure App Service Web Apps to use Managed Service Identity (MSI) is essential for enhancing security and simplifying access management. This measure allows web apps to securely access Azure resources without the need for hard-coded credentials, reducing the risk of credential exposure and ensuring compliance with security best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for App Service web apps:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for App Service web apps:
 
 - Delete web apps that do not use managed service identity
 
@@ -71,6 +71,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

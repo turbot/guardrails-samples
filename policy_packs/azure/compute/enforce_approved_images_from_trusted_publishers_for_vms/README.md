@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing Azure compute instances to use approved AMIs from trusted publishers is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
 
-This policy pack can help you configure the following settings for Compute virtual machines:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute virtual machines:
 
 - Stop/Terminate VMs that do not use approved AMIs from trusted publishers
 - Set the image IDs that are approved for use
@@ -72,6 +72,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing that GCP IAM user-managed service accounts do not have admin privileges is essential for maintaining the principle of least privilege. This minimizes the risk of unauthorized access and potential misuse of administrative capabilities, enhancing security by ensuring that service accounts only have the permissions necessary to perform their specific tasks.
 
-This policy pack can help you configure the following settings for IAM user-managed service accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service accounts:
 
 - Delete service accounts that have `roles/owner`, `roles/admin` or `roles/editor` privileges
 
@@ -69,6 +69,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

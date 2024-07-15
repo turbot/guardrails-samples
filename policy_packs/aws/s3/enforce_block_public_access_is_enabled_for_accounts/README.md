@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing Block Public Access for AWS S3 accounts is crucial to prevent unauthorized access and exposure of sensitive data at the S3 account level. This measure ensures that all S3 buckets within an account have restricted access settings, minimizing the risk of data breaches and ensuring compliance with security best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for S3 accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 accounts:
 
 - Enforce Block Public Access, which would prevent unauthorized access
 - Set individual Block Public Access setting for S3 accounts
@@ -72,6 +72,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

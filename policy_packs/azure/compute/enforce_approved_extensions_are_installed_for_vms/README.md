@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing that only approved extensions are installed on Azure Compute Virtual Machines is critical for maintaining a secure and controlled environment. This ensures that all installed extensions have been vetted for security and compliance, reducing the risk of vulnerabilities, unauthorized access, and ensuring adherence to organizational policies and security best practices.
 
-This policy pack can help you configure the following settings for Compute virtual machines:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute virtual machines:
 
 - Stop/Terminate VMs that do not use approved extensions
 
@@ -71,6 +71,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

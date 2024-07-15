@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing GCP Compute Engine instances to not use external IP addresses is vital for reducing the attack surface and enhancing security. By restricting instances to internal IP addresses, it minimizes exposure to the internet, thereby protecting sensitive data and systems from unauthorized access and potential threats.
 
-This policy pack can help you configure the following settings for Compute Engine instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
 - Enforce no external IP addresses are used
 
@@ -69,6 +69,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

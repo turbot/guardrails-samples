@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing security groups to reject all ingress, RDP, and SSH inbound access is critical for minimizing the attack surface and protecting systems from unauthorized access. This measure ensures that remote administrative access is blocked unless explicitly allowed, reducing the risk of malicious attacks and enhancing overall security posture.
 
-This policy pack can help you configure the following settings for network security groups:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network security groups:
 
 - Reject 0.0.0.0/0 ingress traffic
 - Reject inbound access on RDP and SSH ports
@@ -70,6 +70,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing AWS DMS Replication Instances to restrict public access is crucial to protect sensitive data during migration processes. This measure minimizes the risk of unauthorized access, potential data breaches, and ensures compliance with security best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for DMS replication instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for DMS replication instances:
 
 - Stop/Terminate replication instances which have public access enabled
 
@@ -69,6 +69,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 

@@ -6,7 +6,7 @@ categories: ["security"]
 
 Enforcing that GCP IAM user-managed service account keys do not have a rotation period of more than 90 days is crucial for maintaining security and reducing the risk of key compromise. Regular key rotation limits the exposure of keys, ensuring that any potentially compromised keys are promptly replaced, thereby enhancing the overall security posture and ensuring compliance with best practices and regulatory requirements.
 
-This policy pack can help you configure the following settings for IAM user-managed service account keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service account keys:
 
 - Delete inactive service account keys that are older than 90 days
 
@@ -69,6 +69,10 @@ terraform apply
 ### Apply Policy Pack
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 
