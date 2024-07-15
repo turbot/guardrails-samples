@@ -128,7 +128,7 @@ resource "turbot_policy_setting" "gcp_kms_crypto_key_approved" {
 resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
   resource = turbot_smart_folder.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApproved"
-  note     = "GCP CIS v2.0.0 - Control: 1.12, 1.13, 1.14"
+  note     = "GCP CIS v2.0.0 - Control: 1.12, 1.13 and 1.14"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }

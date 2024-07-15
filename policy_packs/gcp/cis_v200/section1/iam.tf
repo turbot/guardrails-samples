@@ -304,7 +304,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved" {
 resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
   resource       = turbot_smart_folder.main.id
   type           = "tmod:@turbot/gcp-iam#/policy/types/apiKeyApprovedCustom"
-  note           = "GCP CIS v2.0.0 - Control: 1.12, 1.13, 1.14"
+  note           = "GCP CIS v2.0.0 - Control: 1.12, 1.13 and 1.14"
   template_input = <<-EOT
     {
       item: apiKey {
@@ -320,36 +320,43 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
   EOT
   template       = <<-EOT
     {%- set results = [] -%}
+
     {%- set apiTargets = $.item.apiTargets | default([]) -%}
+
     {%- set name = $.item.name -%}
+
     {%- set containsCloudApi = false -%}
 
     {%- for item in apiTargets -%}
+
       {%- if not containsCloudApi and item.service == "cloudapis.googleapis.com" -%}
+
         {%- set containsCloudApi = true -%}
+
       {%- endif -%}
+
     {%- endfor -%}
 
     {%- if containsCloudApi -%}
 
       {%- set data = {
-          "title": "Restrict to Application APIs",
+          "title": "Access to Specific APIs",
           "result": "Not approved",
-          "message": "API Key is restricted to APIs that application needs access"
+          "message": "API Key is restricted to only APIs that application needs access"
       } -%}
 
     {%- elif not containsCloudApi -%}
 
       {%- set data = {
-          "title": "Restrict to Application APIs",
+          "title": "Access to Specific APIs",
           "result": "Approved",
-          "message": "API Key is not restricted to APIs that application needs access"
+          "message": "API Key is not restricted to only APIs that application needs access"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "Restrict to Application APIs",
+          "title": "Access to Specific APIs",
           "result": "Skip",
           "message": "No data for API Key restriction yet"
       } -%}
@@ -361,15 +368,15 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
     {%- if name | length > 0 -%}
 
       {%- set data = {
-          "title": "API Key Exist",
+          "title": "API Key Exists",
           "result": "Not approved",
-          "message": "API Key is present"
+          "message": "API Key should not exist for any active services"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-          "title": "API Key Exist",
+          "title": "API Key Exists",
           "result": "Skip",
           "message": "No data for API Key yet"
       } -%}
@@ -379,12 +386,16 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
     {%- set results = results.concat(data) -%}
 
     {%- set browserKeyRestrictions = $.item.browserKeyRestrictions -%}
+
     {%- set serverKeyRestrictions = $.item.serverKeyRestrictions -%}
+
     {%- set androidKeyRestrictions = $.item.androidKeyRestrictions -%}
+
     {%- set iosKeyRestrictions = $.item.iosKeyRestrictions -%}
+
     {%- set applicationRestrictions = true -%}
 
-    {%- if browserKeyRestrictions == null and serverKeyRestrictions == null and androidKeyRestrictions == null and iosKeyRestrictions == null-%}
+    {%- if browserKeyRestrictions == null and serverKeyRestrictions == null and androidKeyRestrictions == null and iosKeyRestrictions == null -%}
 
       {%- set applicationRestrictions = false -%}
 
@@ -419,7 +430,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
     {%- if applicationRestrictions -%}
 
       {%- set data = {
-          "title": "Key restrictions",
+          "title": "Access to Specific Hosts & Apps",
           "result": "Approved",
           "message": "API keys are restricted to use by only specified hosts and apps"
       } -%}
@@ -427,7 +438,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
     {%- elif not applicationRestrictions -%}
 
       {%- set data = {
-          "title": "Key restrictions",
+          "title": "Access to Specific Hosts & Apps",
           "result": "Not approved",
           "message": "API keys are not restricted to use by only specified hosts and apps"
       } -%}
@@ -435,7 +446,7 @@ resource "turbot_policy_setting" "gcp_iam_api_key_approved_custom" {
     {%- else -%}
 
       {%- set data = {
-          "title": "Key restrictions",
+          "title": "Access to Specific Hosts & Apps",
           "result": "Skip",
           "message": "No data for key restrictions yet"
       } -%}
