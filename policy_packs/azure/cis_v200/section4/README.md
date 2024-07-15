@@ -20,6 +20,7 @@ This policy pack can help you automate enforcement of Azure CIS benchmark sectio
   - [@turbot/azure-mysql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-mysql)
   - [@turbot/azure-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-network)
   - [@turbot/azure-postgresql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-postgresql)
+  - [@turbot/azure-cosmosdb](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-cosmosdb)
 
 ### Credentials
 
@@ -181,6 +182,14 @@ resource "turbot_policy_setting" "azure_mysql_flexible_server_minimum_tls_versio
   note     = "Azure CIS v2.0.0 - Control: 4.4.2"
   #value    = "Check: TLS 1.2"
   value    = "Enforce: TLS 1.2"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewall"
+  note     = "Azure CIS v2.0.0 - Control: 4.5.1"
+  # value    = "Check: Allow only approved virtual networks and IP ranges"
+  value    = "Enforce: Allow only approved virtual networks and IP ranges"
 }
 ```
 
