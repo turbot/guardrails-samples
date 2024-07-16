@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce Block Public Access Is Enabled for AWS S3 Accounts

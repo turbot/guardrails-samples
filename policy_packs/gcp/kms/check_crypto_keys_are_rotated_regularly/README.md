@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce GCP KMS Crypto Keys to be rotated on regular basis

@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Access Management"]
 ---
 
 # Enforce GCP IAM User-Managed Service Account Keys to Not Have Rotation Period of More Than 90 Days

@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Networking"]
 ---
 
 # Enforce Default VPC Network to Not Be Used Within GCP Projects

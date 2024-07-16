@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Access Management"]
 ---
 
 # Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges

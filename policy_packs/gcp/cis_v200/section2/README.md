@@ -1,5 +1,5 @@
 ---
-categories: ["cis"]
+categories: ["CIS"]
 ---
 
 # GCP CIS v2.0.0 - Section 2 - Logging and Monitoring
