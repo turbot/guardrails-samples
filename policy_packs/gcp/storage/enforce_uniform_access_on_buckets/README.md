@@ -10,7 +10,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Enforce uniform access control is enabled for buckets
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_buckets_uniform_access_control/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_uniform_access_on_buckets/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_buckets_uniform_access_control
+cd guardrails-samples/policy_packs/gcp/storage/enforce_uniform_access_on_buckets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
