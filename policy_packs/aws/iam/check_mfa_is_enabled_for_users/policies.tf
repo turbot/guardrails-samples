@@ -12,20 +12,20 @@ resource "turbot_policy_setting" "aws_iam_user_approved_usage" {
   resource       = turbot_smart_folder.aws_iam.id
   type           = "tmod:@turbot/aws-iam#/policy/types/userApprovedUsage"
   template_input = <<EOT
-{
-	user{
-		Arn
-		UserName
-		}
-resources(filter:"resourceType:'tmod:@turbot/aws-iam#/resource/types/mfaVirtual'") {
-	items {
-		usertest: get(path:"User.UserName")
-		trunk {
-			title
-			}
-		}
-	}
-}
+  {
+    user{
+      Arn
+      UserName
+    }
+  resources(filter:"resourceType:'tmod:@turbot/aws-iam#/resource/types/mfaVirtual'") {
+    items {
+      usertest: get(path:"User.UserName")
+        trunk {
+          title
+        }
+      }
+    }
+  }
 EOT
   template       = <<EOT
   {%- set matches = false -%}
