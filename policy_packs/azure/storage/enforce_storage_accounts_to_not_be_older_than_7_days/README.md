@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Azure Storage Accounts to Not Be Older Than 7 Days
 
-Enforcing Azure Storage Accounts to not be older than 7 days means implementing a policy that mandates the rotation or replacement of storage accounts within a 7-day period. This practice enhances security by minimizing the risk of vulnerabilities associated with long-term use.
+Enforcing Azure Storage Accounts to not be older than 7 days is important for ensuring that data is up-to-date, reducing the risk of storing outdated or redundant information. This practice helps maintain data integrity, security, and compliance with organizational or regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 

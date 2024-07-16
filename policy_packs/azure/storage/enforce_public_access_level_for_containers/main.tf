@@ -1,5 +1,5 @@
 resource "turbot_policy_pack" "main" {
   title       = "Enforce Public Access Level for Azure Storage Containers"
-  description = "Ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations."
+  description = "Ensure that sensitive data remains secure and compliant with regulatory standards, mitigating the risk of exposure to malicious actors."
   akas        = ["azure_storage_enforce_public_access_level_for_containers"]
 }

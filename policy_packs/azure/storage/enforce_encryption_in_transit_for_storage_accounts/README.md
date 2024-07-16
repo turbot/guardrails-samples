@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Encryption in Transit for Azure Storage Accounts
 
-Enforcing encryption in transit for Azure Storage Accounts ensures that all data moving to and from the storage accounts is encrypted. This security measure protects data from being intercepted or tampered with during transmission, safeguarding the integrity and confidentiality of the information.
+Enforcing encryption in transit for Azure Storage Accounts is crucial to protect data from interception and unauthorized access during transmission. This ensures that sensitive information remains confidential and secure while being transferred between clients and storage services, mitigating risks of data breaches and enhancing overall security compliance.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 

@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Azure Network Security Groups to Reject Inbound Access from unapproved CIDR
 
-Enforcing Azure Network Security Groups to reject inbound access from unapproved CIDR blocks ensures that network traffic is only allowed from trusted IP ranges. This security measure enhances the network's security by preventing unauthorized access and potential attacks from untrusted or malicious sources.
+Enforcing Azure Network Security Groups to reject inbound access from unapproved CIDR blocks is crucial for maintaining the security and integrity of your network. It prevents unauthorized access, reduces the risk of cyber attacks, and ensures that only trusted sources can communicate with your resources, thereby safeguarding sensitive data and applications.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network security groups:
 

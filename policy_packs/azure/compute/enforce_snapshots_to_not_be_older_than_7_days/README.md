@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Azure Snapshots to Not Be Older Than 7 Days
 
-Enforcing Azure Snapshots to not be older than 7 days means implementing a policy that mandates the rotation or replacement of snapshots within a 7-day period. This practice enhances security by minimizing the risk of vulnerabilities associated with long-term use.
+Enforcing that Azure Compute snapshots are not older than 7 days is critical for maintaining up-to-date and relevant backups. This practice ensures that snapshots are recent, reducing the risk of data loss and ensuring quick recovery in case of issues, while also adhering to best practices for data management and compliance.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for snapshots:
 

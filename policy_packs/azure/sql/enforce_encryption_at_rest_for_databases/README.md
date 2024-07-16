@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Encryption at Rest for Azure SQL Databases
 
-Enforcing encryption at rest for Azure SQL Databases ensures that all stored data is encrypted, protecting it from unauthorized access and potential breaches. This security measure safeguards sensitive information by encrypting the data on disk, making it accessible only to authorized users and applications.
+Enforcing encryption at rest for Azure SQL Databases is crucial for ensuring the confidentiality and integrity of sensitive data. This security measure protects data from unauthorized access and breaches, even if the physical storage or the database itself is compromised.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 

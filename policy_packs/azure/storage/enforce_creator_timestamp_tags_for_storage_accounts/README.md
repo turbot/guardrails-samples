@@ -4,7 +4,7 @@ categories: ["tagging"]
 
 # Enforce Creator and Create Timestamp Tags for Azure Storage Account
 
-Enforcing Creator and Create Timestamp tags for Azure Storage Accounts ensures that each storage account is tagged with information about who created it and when it was created. This practice enhances resource management, accountability, and auditing by providing clear metadata for tracking and monitoring purposes.
+Enforcing Creator and Create Timestamp Tags for Azure Storage Accounts is essential for ensuring data governance and accountability. These tags help track the origin and creation time of data, facilitating audit trails, compliance with regulatory requirements, and effective resource management.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 

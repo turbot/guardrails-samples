@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Minimum TLS Version for Azure Storage Accounts
 
-Enforcing a minimum TLS version for Azure Storage Accounts ensures that all data transmissions to and from the storage accounts use a specified version of TLS or higher. This enhances security by preventing the use of older, less secure encryption protocols, thereby protecting data from interception and tampering.
+Enforcing a minimum TLS version for Azure Storage Accounts is crucial for ensuring data encryption during transit, thereby protecting sensitive information from potential interception or tampering. This enhances overall security by requiring the use of stronger, more modern encryption protocols, mitigating the risks associated with outdated or vulnerable versions of TLS.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 

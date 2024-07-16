@@ -4,7 +4,7 @@ categories: ["security"]
 
 # Enforce Azure Virtual Machines to Not Be Older Than 7 Days
 
-Enforcing Azure Virtual Machines to not be older than 7 days means implementing a policy that mandates the rotation or replacement of virtual machines within a 7-day period. This practice enhances security by minimizing the risk of vulnerabilities associated with long-term use.
+Enforcing Azure Virtual Machines to not be older than 7 days ensures that the systems are continuously updated, reducing the risk of vulnerabilities and ensuring compliance with security policies. This practice helps in maintaining optimal performance, security, and reliability of the virtual environments.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for virtual machines:
 
