@@ -8,7 +8,7 @@ Enforcing Creator and Create Timestamp Tags for Azure Storage Accounts is essent
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 
-- Enforce creator and create timestamp tags for storage accounts
+- Add creator and createTimestamp tags on the storage account
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_timestamp_tags_for_storage_accounts/settings)**
 

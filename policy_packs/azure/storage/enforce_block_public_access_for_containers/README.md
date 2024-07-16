@@ -2,15 +2,15 @@
 categories: ["security"]
 ---
 
-# Enforce Public Access Level for Azure Storage Containers
+# Enforce Block Public Access for Azure Storage Containers
 
-Enforcing the public access level for Azure Storage Containers is crucial to prevent unauthorized access and potential data breaches. By controlling public access, organizations can ensure that sensitive data remains secure and compliant with regulatory standards, mitigating the risk of exposure to malicious actors.
+Enforcing block public access level for Azure Storage Containers is crucial to prevent unauthorized access and potential data breaches. By controlling public access, organizations can ensure that sensitive data remains secure and compliant with regulatory standards, mitigating the risk of exposure to malicious actors.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for containers:
 
-- Enforce public access level is set to Private
+- Set public access level to Private (no anonymous access)
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_public_access_level_for_containers/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_block_public_access_for_containers/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_public_access_level_for_containers
+cd guardrails-samples/policy_packs/azure/storage/enforce_block_public_access_for_containers
 ```
 
 Run the Terraform to create the policy pack in your workspace:

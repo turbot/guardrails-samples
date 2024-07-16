@@ -2,7 +2,7 @@
 categories: ["security"]
 ---
 
-# Enforce Azure Virtual Machines to Not Be Older Than 7 Days
+# Enforce Azure Compute Virtual Machines to Not Be Older Than 7 Days
 
 Enforcing Azure Virtual Machines to not be older than 7 days ensures that the systems are continuously updated, reducing the risk of vulnerabilities and ensuring compliance with security policies. This practice helps in maintaining optimal performance, security, and reliability of the virtual environments.
 
@@ -10,7 +10,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Delete virtual machines that are older than 7 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_compute_enforce_vms_to_not_be_older_than_7_days/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_vms_to_not_be_older_than_7_days/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/compute/azure_compute_enforce_vms_to_not_be_older_than_7_days
+cd guardrails-samples/policy_packs/azure/compute/enforce_vms_to_not_be_older_than_7_days
 ```
 
 Run the Terraform to create the policy pack in your workspace:

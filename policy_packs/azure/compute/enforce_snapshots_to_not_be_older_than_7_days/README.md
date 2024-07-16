@@ -2,7 +2,7 @@
 categories: ["security"]
 ---
 
-# Enforce Azure Snapshots to Not Be Older Than 7 Days
+# Enforce Azure Compute Snapshots to Not Be Older Than 7 Days
 
 Enforcing that Azure Compute snapshots are not older than 7 days is critical for maintaining up-to-date and relevant backups. This practice ensures that snapshots are recent, reducing the risk of data loss and ensuring quick recovery in case of issues, while also adhering to best practices for data management and compliance.
 

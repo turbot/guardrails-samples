@@ -1,13 +1,13 @@
 
 # Azure > Network > Network Security Group > Ingress Rules > Approved
-resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved_corrective" {
+resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
   value    = "Enforce: Delete unapproved"
 }
 
 # Azure > Network > Network Security Group > Ingress Rules > Approved > Rules
-resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved_rules_corrective" {
+resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved_rules" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApprovedRules"
   value    = <<-EOT
@@ -16,7 +16,7 @@ resource "turbot_policy_setting" "azure_network_network_security_group_ingress_r
     APPROVE $.turbot.fromPort:="443" $.turbot.toPort:="443" $.turbot.bitmaskLength:>=32
     APPROVE $.turbot.fromPort:="3389" $.turbot.toPort:="3389" $.turbot.bitmaskLength:>=32
 
-    # Approve allowed CIDR ranges
+    # List of CIDRs that are approved for use
     APPROVE $.turbot.cidr:<=15.46.12.0/22
     APPROVE $.turbot.cidr:<=104.29.0.0/20
     APPROVE $.turbot.cidr:<=10.0.0.0/8

@@ -8,7 +8,7 @@ Enforcing a minimum TLS version for Azure Storage Accounts is crucial for ensuri
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 
-- Enforce minimum tls version is set to TLS 1.2
+- Set minimum TLS version to v1.2
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_minimum_tls_version_for_storage_accounts/settings)**
 

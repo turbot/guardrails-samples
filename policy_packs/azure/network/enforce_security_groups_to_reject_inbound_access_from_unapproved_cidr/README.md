@@ -2,13 +2,15 @@
 categories: ["security"]
 ---
 
-# Enforce Azure Network Security Groups to Reject Inbound Access from unapproved CIDR
+# Enforce Azure Network Security Groups to Reject Inbound Access from unapproved CIDRs
 
 Enforcing Azure Network Security Groups to reject inbound access from unapproved CIDR blocks is crucial for maintaining the security and integrity of your network. It prevents unauthorized access, reduces the risk of cyber attacks, and ensures that only trusted sources can communicate with your resources, thereby safeguarding sensitive data and applications.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network security groups:
 
-- Reject inbound access from unapproved CIDR
+- Allow only specific ports (22, 443, 3389) for ingress rules.
+- Set access to individual IP addresses with a bitmask of `/32`.
+- Allow only specific CIDRs for ingress rules.
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_security_groups_to_reject_inbound_access_from_unapproved_cidr/settings)**
 
