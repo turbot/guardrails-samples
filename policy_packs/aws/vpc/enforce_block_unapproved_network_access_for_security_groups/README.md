@@ -8,9 +8,9 @@ Enforcing Block Unapproved Network Access for AWS VPC security groups is crucial
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC security groups:
 
-- Enforce only specific ports (22, 443, 3389) for ingress rules.
-- Set access to individual IP addresses with a bitmask of /32.
-- Enforce only specific CIDRs for ingress rules.
+- Allow only specific ports (22, 443, 3389) for ingress rules.
+- Set access to individual IP addresses with a bitmask of `/32`.
+- Allow only specific CIDRs for ingress rules.
 
 ## Documentation
 

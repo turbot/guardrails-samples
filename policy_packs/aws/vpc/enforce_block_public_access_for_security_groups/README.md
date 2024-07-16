@@ -10,6 +10,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Enforce Block Public Access, which would prevent unauthorized access
 - Set individual Block Public Access settings for VPC security groups
+- Reject and revoke unapproved rules that allow ingress for ports 22 (SSH) and -1 (all ports) from 0.0.0.0/0 and ::/0.
 
 ## Documentation
 
