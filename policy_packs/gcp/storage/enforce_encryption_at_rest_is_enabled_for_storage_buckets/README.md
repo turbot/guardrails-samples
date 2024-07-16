@@ -2,15 +2,15 @@
 categories: ["security"]
 ---
 
-# Enforce Uniform Access Control is Enabled for GCP Storage Buckets
+# Enforce Encryption at Rest is Enabled for GCP Storage Buckets
 
-Enforcing Uniform Access Control for GCP Storage Buckets is crucial to ensure consistent and centralized management of access permissions, reducing the risk of unauthorized access and potential data breaches. This control helps streamline the administration of security policies, ensuring all objects within a bucket inherit the same access controls, thus maintaining data integrity and security.
+Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Enforce uniform access control is enabled for buckets
+- Enforce Google Managed Key or Higher for Storage Buckets
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_uniform_access_on_buckets/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_storage_buckets/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_uniform_access_on_buckets
+cd guardrails-samples/policy_packs/gcp/storage/enforce_encryption_at_rest_is_enabled_for_storage_buckets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -84,11 +84,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
+resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
-  # value    = "Check: Uniform"
-  value    = "Enforce: Uniform"
+  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketEncryptionAtRest"
+  # value    = "Check: Google managed key or higher"
+  value    = "Enforce: Google managed key or higher"
 }
 ```
 

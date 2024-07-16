@@ -2,15 +2,15 @@
 categories: ["security"]
 ---
 
-# Enforce Uniform Access Control is Enabled for GCP Storage Buckets
+# Enforce GCP IAM Service-Accounts Belong To Trusted Domains And Users
 
-Enforcing Uniform Access Control for GCP Storage Buckets is crucial to ensure consistent and centralized management of access permissions, reducing the risk of unauthorized access and potential data breaches. This control helps streamline the administration of security policies, ensuring all objects within a bucket inherit the same access controls, thus maintaining data integrity and security.
+Enforcing GCP IAM Service Accounts to belong to trusted domains and users is essential to ensure that only verified and authorized entities can access and manage cloud resources. This control mitigates the risk of unauthorized access, data breaches, and malicious activities by ensuring that service accounts are managed within a secure and trusted environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service accounts:
 
-- Enforce uniform access control is enabled for buckets
+- Delete service accounts that have `roles/owner`, `roles/admin` or `roles/editor` privileges
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_uniform_access_on_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_accounts_belong_to_trusted_domains_and_users/settings)**
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
 
 ### Credentials
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_uniform_access_on_buckets
+cd guardrails-samples/policy_packs/gcp/iam/enforce_user_service_accounts_belong_to_trusted_domains_and_users
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -84,11 +84,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
+resource "turbot_policy_setting" "gcp_iam_service_account_policy_trusted_access" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
-  # value    = "Check: Uniform"
-  value    = "Enforce: Uniform"
+  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountPolicyTrustedAccess"
+  # value    = "Check: Trusted Access > *"
+  value    = "Enforce: Trusted Access > *"
 }
 ```
 

@@ -2,15 +2,15 @@
 categories: ["security"]
 ---
 
-# Enforce Uniform Access Control is Enabled for GCP Storage Buckets
+# Enforce GCP Compute Engine Instances to Not Use Specific Machine Type
 
-Enforcing Uniform Access Control for GCP Storage Buckets is crucial to ensure consistent and centralized management of access permissions, reducing the risk of unauthorized access and potential data breaches. This control helps streamline the administration of security policies, ensuring all objects within a bucket inherit the same access controls, thus maintaining data integrity and security.
+Enforcing GCP Compute Engine Instances to not use specific machine types is important to ensure compliance with organizational policies and cost management strategies. This control helps prevent the use of machine types that may be unsuitable for certain workloads, excessively costly, or lacking necessary security features, thereby optimizing resource utilization and maintaining a secure environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Enforce uniform access control is enabled for buckets
+- Enforce no external IP addresses are used
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_uniform_access_on_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_specific_machine_type/settings)**
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-computeengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-computeengine)
 
 ### Credentials
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_uniform_access_on_buckets
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_specific_machine_type
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -84,11 +84,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
+resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
-  # value    = "Check: Uniform"
-  value    = "Enforce: Uniform"
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
+  # value    = "Check: Approved"
+  value  = "Enforce: Delete unapproved if new"
 }
 ```
 

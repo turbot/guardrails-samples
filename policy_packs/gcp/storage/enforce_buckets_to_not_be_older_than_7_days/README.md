@@ -2,15 +2,15 @@
 categories: ["security"]
 ---
 
-# Enforce Uniform Access Control is Enabled for GCP Storage Buckets
+# Enforce Delete Inactive Buckets with 7 Days Warning
 
-Enforcing Uniform Access Control for GCP Storage Buckets is crucial to ensure consistent and centralized management of access permissions, reducing the risk of unauthorized access and potential data breaches. This control helps streamline the administration of security policies, ensuring all objects within a bucket inherit the same access controls, thus maintaining data integrity and security.
+Enforcing the deletion of inactive buckets with a 7-day warning is vital for maintaining efficient resource management and reducing security risks. This practice ensures that unused storage does not accumulate unnecessarily, which can help mitigate potential vulnerabilities and optimize costs.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Enforce uniform access control is enabled for buckets
+- Delete inactive disks that are older than 7 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_uniform_access_on_buckets/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_buckets_to_not_be_older_than_7_days/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_uniform_access_on_buckets
+cd guardrails-samples/policy_packs/gcp/storage/enforce_buckets_to_not_be_older_than_7_days
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -84,11 +84,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_access_control" {
+resource "turbot_policy_setting" "gcp_storage_bucket_active" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketAccessControl"
-  # value    = "Check: Uniform"
-  value    = "Enforce: Uniform"
+  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketActive"
+  # value    = "Check: Active"
+  value    = "Enforce: Delete inactive with 7 days warning"
 }
 ```
 
