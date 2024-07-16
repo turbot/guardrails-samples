@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["cost control"]
 ---
 
 # Enforce Azure Compute Virtual Machines to Not Be Older Than 7 Days
