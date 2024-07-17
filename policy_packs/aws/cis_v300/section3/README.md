@@ -1,5 +1,5 @@
 ---
-categories: ["Compliance", "Logging", "Networking", "Security", "Storage"]
+categories: ["CIS", "Compliance", "Logging", "Networking", "Security", "Storage"]
 primary_category: "Compliance"
 ---
 

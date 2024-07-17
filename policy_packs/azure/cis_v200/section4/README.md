@@ -1,5 +1,5 @@
 ---
-categories: ["Compliance", "Storage"]
+categories: ["CIS", "Compliance", "Storage"]
 primary_category: "Compliance"
 ---
 

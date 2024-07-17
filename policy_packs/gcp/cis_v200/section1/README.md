@@ -1,5 +1,5 @@
 ---
-categories: ["Access Management", "Compliance", "Data Protection"]
+categories: ["Access Management", "CIS", "Compliance", "Data Protection"]
 primary_category: "Compliance"
 ---
 

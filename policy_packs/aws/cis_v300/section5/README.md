@@ -1,5 +1,5 @@
 ---
-categories: ["Compliance", "Compute", "Networking"]
+categories: ["CIS", "Compliance", "Compute", "Networking"]
 primary_category: "Compliance"
 ---
 
