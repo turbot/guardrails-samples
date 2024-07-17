@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["Storage, Access Management, Security"]
+primary_category: "Security"
 ---
 
 # Enforce Trusted Access for ACLs on Buckets

@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["Storage, Security, Compliance"]
+primary_category: "Security"
 ---
 
 # Check Replication Restrictions for Buckets

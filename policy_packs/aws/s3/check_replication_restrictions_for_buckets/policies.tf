@@ -21,9 +21,11 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_custom" {
   template       = <<-EOT
     {%- if $.bucket.replication and $.bucket.replication | length == 0 -%}
 
-      title: Replication
-      result: Approved
-      message: "Bucket does not have replication enabled."
+      {%- set data = {
+          "title": "Replication",
+          "result": "Approved",
+          "message": "Bucket does not have replication enabled"
+      } -%}
 
     {%- elif $.bucket.replication -%}
 
@@ -41,24 +43,31 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_custom" {
 
       {%- if replicationApproved == "True" -%}
 
-        title: Replication
-        result: Approved
-        message: "Replication Destination Account(s) approved."
-
+        {%- set data = {
+            "title": "Replication",
+            "result": "Approved",
+            "message": "Replication Destination Account(s) approved"
+        } -%}
       {%- else -%}
 
-        title: Replication
-        result: Not approved
-        message: "Replication Destination Account(s) not approved."
+        {%- set data = {
+            "title": "Replication",
+            "result": "Not approved",
+            "message": "Replication Destination Account(s) not approved"
+        } -%}
 
       {%- endif %}
 
     {%- else -%}
 
-      title: Bucket
-      result: Skip
-      message: "No data for buckets yet."
+      {%- set data = {
+          "title": "Bucket",
+          "result": "Skip",
+          "message": "No data for buckets yet"
+      } -%}
 
     {% endif %}
+
+    {{ data | json }}
   EOT
 }

@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["Storage, Logging, Security"]
+primary_category: "Security"
 ---
 
 # Enforce Access Logging Is Enabled for Buckets
