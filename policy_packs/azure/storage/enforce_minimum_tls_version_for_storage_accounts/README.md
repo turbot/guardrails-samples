@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_categories: ["Security"]
+categories: ["Security", "Storage"]
 ---
 
 # Enforce Minimum TLS Version for Azure Storage Accounts

@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_categories: ["Security"]
+categories: ["Security"]
 ---
 
 # Enforce Block Public Access for Azure Storage Containers

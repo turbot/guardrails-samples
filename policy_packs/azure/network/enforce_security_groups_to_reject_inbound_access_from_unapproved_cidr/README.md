@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_categories: ["Security"]
+categories: ["Networking", "Security"]
 ---
 
 # Enforce Azure Network Security Groups to Reject Inbound Access from unapproved CIDRs

@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_categories: ["Security"]
+categories: ["Security"]
 ---
 
 # Enforce Encryption at Rest is Enabled for Azure SQL Databases

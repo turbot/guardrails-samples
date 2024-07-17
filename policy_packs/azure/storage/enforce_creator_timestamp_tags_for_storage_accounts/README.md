@@ -1,5 +1,6 @@
 ---
-categories: ["tagging"]
+primary_categories: ["Tagging"]
+categories: ["Storage", "Tagging"]
 ---
 
 # Enforce Creator and Create Timestamp Tags for Azure Storage Account

@@ -1,5 +1,6 @@
 ---
-categories: ["cost control"]
+primary_categories: ["Cost Controls"]
+categories: ["Compute", "Cost Controls"]
 ---
 
 # Enforce Azure Compute Snapshots to Not Be Older Than 7 Days

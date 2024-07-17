@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_categories: ["Security"]
+categories: ["Security", "Storage"]
 ---
 
 # Enforce Encryption in Transit is Enabled for Azure Storage Accounts
