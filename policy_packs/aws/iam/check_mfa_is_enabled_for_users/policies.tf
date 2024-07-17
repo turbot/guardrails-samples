@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "aws_iam_user_approved" {
 
 # AWS > IAM > User > Approved > Usage
 resource "turbot_policy_setting" "aws_iam_user_approved_usage" {
-  resource       = turbot_smart_folder.aws_iam.id
+  resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-iam#/policy/types/userApprovedUsage"
   template_input = <<EOT
   {

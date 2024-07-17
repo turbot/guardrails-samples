@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["Access Management", "Security"]
+primary_category: "Security"
 ---
 
 # Check MFA Is Enabled for Users
