@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["Logging", "Security"]
+primary_category: "Security"
 ---
 
 # Enforce Encryption at Rest Is Enabled for Log Groups

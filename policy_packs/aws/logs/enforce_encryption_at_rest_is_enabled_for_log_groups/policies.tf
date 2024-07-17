@@ -12,7 +12,7 @@ resource "turbot_policy_setting" "aws_logs_log_group_encryption_at_rest" {
 }
 
 # AWS > Logs > Log Group > Encryption at Rest > Customer Managed Key
-resource "turbot_policy_setting" "aws_logs_log_group_encryption_at_rest" {
+resource "turbot_policy_setting" "aws_logs_log_group_encryption_at_rest_customer_managed_key" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-logs#/policy/types/logGroupEncryptionAtRestCustomerManagedKey"
   # The KMS key ID for encryption at rest
