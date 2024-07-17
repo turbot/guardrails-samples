@@ -1,5 +1,5 @@
 ---
-primary_categories: ["Tagging"]
+primary_category: ["Tagging"]
 categories: ["Storage", "Tagging"]
 ---
 

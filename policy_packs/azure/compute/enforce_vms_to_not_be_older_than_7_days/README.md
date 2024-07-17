@@ -1,5 +1,5 @@
 ---
-primary_categories: ["Cost Controls"]
+primary_category: ["Cost Controls"]
 categories: ["Compute", "Cost Controls"]
 ---
 
