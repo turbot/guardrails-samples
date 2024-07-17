@@ -3,9 +3,9 @@ categories: ["Security", "Networking"]
 primary_category: "Security"
 ---
 
-# Enforce Block Actions from Unapproved CIDRs for Security Groups
+# Deny Access from Unapproved CIDRs for AWS VPC Security Groups
 
-Ensuring that AWS VPC security group ingress rules block actions from unapproved CIDRs is crucial for enhancing security. This measure helps protect resources by restricting inbound traffic to trusted IP ranges and blocking actions from unapproved sources, thereby reducing the risk of unauthorized access and ensuring compliance with security best practices and regulatory requirements.
+Denying access from unapproved CIDRs for security groups is essential for maintaining a secure network environment. This measure ensures that only traffic from trusted and authorized IP ranges can access your resources, reducing the risk of unauthorized access, potential attacks, and enhancing overall network security and compliance with best practices.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC security groups:
 
