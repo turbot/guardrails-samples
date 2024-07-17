@@ -1,5 +1,5 @@
 ---
-categories: ["Storage, Access Management, Security"]
+categories: ["Storage", "Access Management", "Security"]
 primary_category: "Security"
 ---
 
