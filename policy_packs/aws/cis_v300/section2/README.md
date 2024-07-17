@@ -1,6 +1,6 @@
 ---
-categories: ["CIS", "Compliance", "Compute", "Storage"]
-primary_category: "Compliance"
+categories: ["cis", "compliance", "compute", "storage"]
+primary_category: "compliance"
 ---
 
 # AWS CIS v3.0.0 - Section 2 - Storage

@@ -1,6 +1,6 @@
 ---
-categories: ["Security"]
-primary_category: "Security"
+categories: ["security"]
+primary_category: "security"
 ---
 
 # Enforce Azure App Service Web Apps to Not Use Outdated Java/PHP/Python Versions

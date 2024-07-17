@@ -1,6 +1,6 @@
 ---
-categories: ["Security", "Storage"]
-primary_category: "Security"
+categories: ["security", "storage"]
+primary_category: "security"
 ---
 
 # Enforce Encryption at Rest is Enabled for AWS EFS File Systems

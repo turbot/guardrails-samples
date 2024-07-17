@@ -1,6 +1,6 @@
 ---
-categories: ["Security", "Compute"]
-primary_category: "Security"
+categories: ["security", "compute"]
+primary_category: "security"
 ---
 
 # Enforce Enable RBAC for Azure AKS Managed Clusters

@@ -1,6 +1,6 @@
 ---
-categories: ["Compute", "Security"]
-primary_category: "Security"
+categories: ["compute", "security"]
+primary_category: "security"
 ---
 
 # Enforce Azure Compute Virtual Machines to Use Approved AMIs from Trusted Publishers

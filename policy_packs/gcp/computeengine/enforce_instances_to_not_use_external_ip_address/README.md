@@ -1,6 +1,6 @@
 ---
-categories: ["Security", "Networking"]
-primary_category: "Security"
+categories: ["security", "networking"]
+primary_category: "security"
 ---
 
 # Enforce GCP Compute Engine Instances to Not Use External IP Addresses

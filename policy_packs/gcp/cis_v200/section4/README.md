@@ -1,6 +1,6 @@
 ---
-categories: ["CIS", "Compliance", "Security"]
-primary_category: "Compliance"
+categories: ["cis", "compliance", "security"]
+primary_category: "compliance"
 ---
 
 # GCP CIS v2.0.0 - Section 4 - Virtual Machines

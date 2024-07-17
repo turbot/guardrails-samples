@@ -1,6 +1,6 @@
 ---
-categories: ["Networking", "Security"]
-primary_category: "Security"
+categories: ["networking", "security"]
+primary_category: "security"
 ---
 
 # Enforce HTTPS Traffic for Azure App Service Web Apps

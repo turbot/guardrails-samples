@@ -1,6 +1,6 @@
 ---
-categories: ["Access Management", "Security"]
-primary_category: "Access Management"
+categories: ["access management", "security"]
+primary_category: "access management"
 ---
 
 # Enforce AWS IAM Access Keys to Not Be Older Than 90 Days

@@ -1,6 +1,6 @@
 ---
-categories: ["Networking", "Security"]
-primary_category: "Security"
+categories: ["networking", "security"]
+primary_category: "security"
 ---
 
 # Enforce AWS DMS Replication Instances to Restrict Public Access

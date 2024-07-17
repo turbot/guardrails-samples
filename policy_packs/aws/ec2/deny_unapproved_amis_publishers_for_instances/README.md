@@ -1,6 +1,6 @@
 ---
-categories: ["Compute", "Security"]
-primary_category: "Security"
+categories: ["compute", "security"]
+primary_category: "security"
 ---
 
 # Deny AWS EC2 Instances with Unapproved AMIs or Publisher Accounts

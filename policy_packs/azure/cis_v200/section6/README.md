@@ -1,6 +1,6 @@
 ---
-categories: ["CIS", "Compliance", "Networking"]
-primary_category: "Compliance"
+categories: ["cis", "compliance", "networking"]
+primary_category: "compliance"
 ---
 
 # Azure CIS v2.0.0 - Section 6 - Networking

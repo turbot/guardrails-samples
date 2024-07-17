@@ -1,6 +1,6 @@
 ---
-categories: ["CIS", "Compliance", "Logging", "Networking"]
-primary_category: "Compliance"
+categories: ["cis", "compliance", "logging", "networking"]
+primary_category: "compliance"
 ---
 
 # GCP CIS v2.0.0 - Section 2 - Logging and Monitoring

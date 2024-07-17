@@ -1,6 +1,6 @@
 ---
-categories: ["CIS", "Compliance", "Logging", "Networking", "Security", "Storage"]
-primary_category: "Compliance"
+categories: ["cis", "compliance", "logging", "networking", "security", "storage"]
+primary_category: "compliance"
 ---
 
 # AWS CIS v3.0.0 - Section 3 - Logging

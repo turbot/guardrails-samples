@@ -1,6 +1,6 @@
 ---
-categories: ["Networking", "Security"]
-primary_category: "Security"
+categories: ["networking", "security"]
+primary_category: "security"
 ---
 
 # Enforce Block Public Access for AWS VPC Security Groups
