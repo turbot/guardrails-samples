@@ -81,10 +81,10 @@ By default, the policy is set to `Check: All CIS Benchmarks except attestations`
 
 ```hcl
 resource "turbot_policy_setting" "aws_cis_v300" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-cisv3-0#/policy/types/cis"
-  value    = "Check: All CIS Benchmarks"
   # value    = "Check: All CIS Benchmarks except attestations"
+  value    = "Check: All CIS Benchmarks"
 }
 ```
 
