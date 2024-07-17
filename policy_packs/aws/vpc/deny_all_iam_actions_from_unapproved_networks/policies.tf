@@ -24,7 +24,7 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
       # Boundary policy name that will be applied to the IAM role.
       name        = "myBoundaryPolicy"
       path        = "/"
-      description = "Guardrails Managed Boundary policy to prevent actions from  unapproved CIDRs"
+      description = "Guardrails Managed Boundary policy to prevent actions from unapproved CIDRs"
       policy      = jsonencode({
         "Version": "2012-10-17",
         "Statement": [

@@ -3,9 +3,9 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Deny Access from Unapproved CIDRs for AWS VPC Security Groups
+# Deny all IAM actions from Unapproved Networks
 
-Denying access from unapproved CIDRs for security groups is essential for maintaining a secure network environment. This measure ensures that only traffic from trusted and authorized IP ranges can access your resources, reducing the risk of unauthorized access, potential attacks, and enhancing overall network security and compliance with best practices.
+Denying all IAM actions from unapproved networks is vital for protecting your AWS environment from unauthorized access. This measure ensures that IAM actions, such as creating, modifying, or deleting resources, can only be performed from trusted and approved networks, reducing the risk of malicious activity and enhancing overall security and compliance with best practices.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC security groups:
 
@@ -71,6 +71,9 @@ terraform apply
 ```
 
 ### Apply Policy Pack
+
+> [!IMPORTANT]
+> Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the contents of the Stack's Source policy to `{}` (empty).
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
