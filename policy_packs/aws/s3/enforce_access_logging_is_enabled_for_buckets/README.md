@@ -1,5 +1,5 @@
 ---
-categories: ["Storage, Logging, Security"]
+categories: ["Storage", "Logging", "Security"]
 primary_category: "Security"
 ---
 
