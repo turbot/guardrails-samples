@@ -1,5 +1,6 @@
 ---
-categories: ["Security"]
+categories: ["Networking", "Security"]
+primary_category: "Security"
 ---
 
 # Enforce Azure Cosmos DB Database Accounts to be Accessible to Selected Networks

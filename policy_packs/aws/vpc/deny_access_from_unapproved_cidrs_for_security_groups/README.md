@@ -1,6 +1,6 @@
 ---
-categories: ["Security", "Networking"]
-primary_category: "Security"
+categories: ["Networking", "Security"]
+primary_category: "Networking"
 ---
 
 # Deny Access from Unapproved CIDRs for AWS VPC Security Groups

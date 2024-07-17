@@ -1,5 +1,6 @@
 ---
-categories: ["Security"]
+categories: ["Data Protection", "Security"]
+primary_category: "Data Protection"
 ---
 
 # Enforce Encryption for Secrets is Enabled for GCP GKE Clusters

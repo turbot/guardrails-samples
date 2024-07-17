@@ -1,5 +1,6 @@
 ---
-categories: ["Security"]
+categories: ["Security", "Compute"]
+primary_category: "Security"
 ---
 
 # Enforce IMDSv2 for AWS EC2 Instances

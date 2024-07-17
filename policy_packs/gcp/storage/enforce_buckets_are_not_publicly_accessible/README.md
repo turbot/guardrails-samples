@@ -1,5 +1,6 @@
 ---
-categories: ["Storage"]
+categories: ["Security", "Storage"]
+primary_category: "Security"
 ---
 
 # Enforce GCP Storage Buckets Are Not Publicly Accessible

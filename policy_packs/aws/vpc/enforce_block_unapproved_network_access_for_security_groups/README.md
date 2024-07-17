@@ -1,6 +1,6 @@
 ---
-categories: ["Security", "Networking"]
-primary_category: "Security"
+categories: ["Networking", "Security"]
+primary_category: "Networking"
 ---
 
 # Enforce Block Unapproved Network Access for AWS VPC Security Groups

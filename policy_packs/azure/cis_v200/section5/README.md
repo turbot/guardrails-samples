@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["Compliance", "Logging", "Storage"]
+primary_category: "Compliance"
 ---
 
 # Azure CIS v2.0.0 - Section 5 - Logging and Monitoring

@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["Compliance", "Networking"]
+primary_category: "Compliance"
 ---
 
 # GCP CIS v2.0.0 - Section 3 - Networking

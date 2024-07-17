@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["Compliance", "Security"]
+primary_category: "Compliance"
 ---
 
 # AWS CIS v3.0.0 - Section 4 - Monitoring

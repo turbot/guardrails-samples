@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["Compliance", "Compute", "Networking"]
+primary_category: "Compliance"
 ---
 
 # AWS CIS v3.0.0 - Section 5 - Networking

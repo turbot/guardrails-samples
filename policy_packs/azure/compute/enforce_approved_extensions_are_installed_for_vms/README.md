@@ -1,5 +1,6 @@
 ---
-categories: ["Security"]
+categories: ["Compute", "Security"]
+primary_category: "Security"
 ---
 
 # Enforce Approved Extensions Are Installed on Azure Compute Virtual Machines

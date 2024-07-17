@@ -1,5 +1,6 @@
 ---
-categories: ["Access Management"]
+categories: ["Access Management", "Security"]
+primary_category: "Access Management"
 ---
 
 # Check MFA is Enabled for AWS IAM Root Accounts

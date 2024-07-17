@@ -1,5 +1,6 @@
 ---
 categories: ["Security"]
+primary_category: "Security"
 ---
 
 # Enforce Azure App Service Web Apps to Use Managed Service Identity

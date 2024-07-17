@@ -1,5 +1,6 @@
 ---
-categories: ["Networking"]
+categories: ["Networking", "Security"]
+primary_category: "Networking"
 ---
 
 # Check If Creation of Default VPC Network Is Disabled at the GCP Organization Level

@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["Compliance", "Security"]
+primary_category: "Compliance"
 ---
 
 # Azure CIS v2.0.0 - Section 3 - Storage Accounts
