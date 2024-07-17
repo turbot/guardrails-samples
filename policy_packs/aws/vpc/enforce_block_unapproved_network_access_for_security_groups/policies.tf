@@ -16,9 +16,7 @@ resource "turbot_policy_setting" "aws_vpc_security_security_group_ingress_rules_
     APPROVE $.turbot.fromPort:=443 $.turbot.toPort:=443 $.turbot.bitmaskLength:>=32
     APPROVE $.turbot.fromPort:=3389 $.turbot.toPort:=3389 $.turbot.bitmaskLength:>=32
 
-    # List of CIDRs that are approved for use
-    APPROVE $.turbot.cidr:<=15.46.12.0/22
-    APPROVE $.turbot.cidr:<=104.29.0.0/20
+    # List of CIDRs (RFC 1918) that are approved for use
     APPROVE $.turbot.cidr:<=10.0.0.0/8
     APPROVE $.turbot.cidr:<=172.16.0.0/12
     APPROVE $.turbot.cidr:<=192.168.0.0/16
