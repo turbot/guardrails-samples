@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["Networking", "Security", "Compliance"]
+primary_category: "Security"
 ---
 
 # Enforce TLS 1.2 or Greater SSL Policy for Classic Load Balancer Listener

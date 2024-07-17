@@ -1,5 +1,6 @@
 ---
-categories: ["Cost Controls"]
+categories: ["Storage", "Cost Controls", "Compliance"]
+primary_category: "Cost Controls"
 ---
 
 # Enforce Deletion of Resources Older Than 90 Days for Volumes
