@@ -1,5 +1,5 @@
 # AWS > IAM > Stack
-resource "turbot_policy_setting" "aws_iam_iam_stack" {
+resource "turbot_policy_setting" "aws_iam_stack" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/iamStack"
   value    = "Check: Configured"
@@ -15,7 +15,7 @@ resource "turbot_policy_setting" "aws_iam_role_boundary_policy" {
 }
 
 # AWS > IAM > Stack > Source
-resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
+resource "turbot_policy_setting" "aws_iam_stack_source" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/iamStackSource"
   value    = <<EOT
