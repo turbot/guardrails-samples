@@ -2,7 +2,7 @@
 categories: ["security"]
 ---
 
-# Enforce Encryption in Transit for Azure Storage Accounts
+# Enforce Encryption in Transit is Enabled for Azure Storage Accounts
 
 Enforcing encryption in transit for Azure Storage Accounts is crucial to protect data from interception and unauthorized access during transmission. This ensures that sensitive information remains confidential and secure while being transferred between clients and storage services, mitigating risks of data breaches and enhancing overall security compliance.
 
@@ -10,7 +10,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Enforce encryption in transit is set to Enabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_in_transit_for_storage_accounts/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_in_transit_is_enabled_for_storage_accounts/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_encryption_in_transit_for_storage_accounts
+cd guardrails-samples/policy_packs/azure/storage/enforce_encryption_in_transit_is_enabled_for_storage_accounts
 ```
 
 Run the Terraform to create the policy pack in your workspace:

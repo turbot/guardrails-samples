@@ -19,9 +19,13 @@ resource "turbot_policy_setting" "azure_storage_storage_account_tags_template" {
     }
     EOT
   template       = <<-EOT
-    # Actor who created the resource
-    Creator: "{{ $.item.meatadata.createdBy }}"
-    # Creation Timestamp
-    Createtimestamp: "{{ $.item.metadata.createTimestamp }}"
+    {%- set metadata = $.item.metadata -%}
+
+    {%- if metadata -%}
+      # Actor who created the resource and creation timestamp
+      Creator: "{{ metadata.createdBy }}"
+      Createtimestamp: "{{ metadata.createTimestamp }}"
+    {%- endif -%}
+
     EOT
 }

@@ -2,7 +2,7 @@
 categories: ["security"]
 ---
 
-# Enforce Encryption at Rest for Azure SQL Databases
+# Enforce Encryption at Rest is Enabled for Azure SQL Databases
 
 Enforcing encryption at rest for Azure SQL Databases is crucial for ensuring the confidentiality and integrity of sensitive data. This security measure protects data from unauthorized access and breaches, even if the physical storage or the database itself is compromised.
 
@@ -10,7 +10,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Enforce encryption at rest is set to Enabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_for_databases/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_databases/settings)**
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/sql/enforce_encryption_at_rest_for_databases
+cd guardrails-samples/policy_packs/azure/sql/enforce_encryption_at_rest_is_enabled_for_databases
 ```
 
 Run the Terraform to create the policy pack in your workspace:

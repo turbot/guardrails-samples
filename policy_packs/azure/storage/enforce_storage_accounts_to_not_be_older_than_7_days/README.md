@@ -1,5 +1,6 @@
 ---
-categories: ["cost control"]
+categories: ["Cost Control"]
+primary_categories: []
 ---
 
 # Enforce Azure Storage Accounts to Not Be Older Than 7 Days
