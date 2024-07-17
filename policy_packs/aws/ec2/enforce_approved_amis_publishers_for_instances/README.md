@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce AWS EC2 Instances to Use Approved AMIs and/or Publisher Accounts

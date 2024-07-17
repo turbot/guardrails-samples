@@ -1,5 +1,5 @@
 ---
-categories: ["cis"]
+categories: ["CIS"]
 ---
 
 # AWS CIS v3.0.0 - Section 5 - Networking

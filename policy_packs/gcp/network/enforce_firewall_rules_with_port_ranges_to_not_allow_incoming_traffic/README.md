@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Networking"]
 ---
 
 # Enforce Network Firewall Rules with Port Ranges to Not Allow Incoming Traffic

@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Networking"]
 ---
 
 # Enforce Azure Network Security Groups to Reject All Ingress, RDP and SSH Inbound Access

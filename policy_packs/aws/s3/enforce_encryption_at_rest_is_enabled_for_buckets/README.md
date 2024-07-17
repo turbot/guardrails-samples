@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce Encryption at Rest Is Enabled for AWS S3 Buckets

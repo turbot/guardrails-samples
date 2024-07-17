@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce GCP Compute Engine Instances to Not Use External IP Addresses

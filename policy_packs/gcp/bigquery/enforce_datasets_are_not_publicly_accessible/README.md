@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce GCP BigQuery Datasets Are Not Publicly Accessible

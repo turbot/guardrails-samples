@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce Encryption in Transit Is Enabled for AWS S3 Buckets

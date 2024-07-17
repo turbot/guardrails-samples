@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce Encryption for Secrets is Enabled for GCP GKE Clusters

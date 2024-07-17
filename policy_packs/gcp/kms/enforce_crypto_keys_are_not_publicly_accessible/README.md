@@ -1,5 +1,5 @@
 ---
-categories: ["security"]
+categories: ["Security"]
 ---
 
 # Enforce GCP KMS Crypto Keys Are Not Publicly Accessible
