@@ -1,6 +1,7 @@
 ---
 categories: ["security", "compute"]
 primary_category: "security"
+type: "featured"
 ---
 
 # Enforce Enable Block Project-Wide SSH Keys for GCP Compute Engine Instances
