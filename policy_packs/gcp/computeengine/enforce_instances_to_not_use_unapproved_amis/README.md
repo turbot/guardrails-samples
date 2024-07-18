@@ -1,15 +1,15 @@
 ---
-categories: ["Security", "Compliance"]
-primary_category: "Security"
+primary_category: ["Security"]
+categories: ["Compute", "Cost Controls", "Security"]
 ---
 
-# Deny GCP Compute Engine Instances with Unapproved Images
+# Enforce GCP Compute Engine Instances to Not Use Unapproved Images
 
 Ensuring that only approved images are used for GCP Compute Engine instances is crucial for maintaining the security and compliance of your GCP environment. This policy prevents the use of potentially vulnerable or malicious images, thereby ensuring that all deployed resources are vetted and compliant.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Deny instances that use unapproved images.
+- Delete instances that use unapproved images
 
 - **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_unapproved_amis/settings)**
 

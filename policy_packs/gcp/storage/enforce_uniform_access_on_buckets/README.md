@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Storage"]
+categories: ["Storage", "Data Protection", "Security"]
 ---
 
 # Enforce Uniform Access Control is Enabled for GCP Storage Buckets
@@ -8,7 +9,7 @@ Enforcing Uniform Access Control for GCP Storage Buckets is crucial to ensure co
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage buckets:
 
-- Enforce uniform access control is enabled for buckets
+- Enforce uniform access control is enabled for storage buckets
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_uniform_access_on_buckets/settings)**
 

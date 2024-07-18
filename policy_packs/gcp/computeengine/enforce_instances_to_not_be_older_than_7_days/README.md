@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Cost Controls"]
+categories: ["Compute", "Cost Controls"]
 ---
 
 # Enforce GCP Compute Engine Instances to Not Be Older Than 7 Days
@@ -8,7 +9,7 @@ Enforcing GCP Compute Engine Instances to not be older than 7 days is important 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Delete inactive instances that are older than 7 days
+- Delete instances that are older than 7 days
 
 - **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_be_older_than_7_days/settings)**
 

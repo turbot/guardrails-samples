@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Security"]
+categories: ["Data Protection", "Security"]
 ---
 
 # Enforce GCP IAM User-Managed Service Account Keys to Not Have Rotation Period of More Than 90 Days
@@ -8,7 +9,7 @@ Enforcing that GCP IAM user-managed service account keys do not have a rotation 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service account keys:
 
-- Delete inactive service account keys that are older than 90 days
+- Delete service account keys that are older than 90 days
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
 

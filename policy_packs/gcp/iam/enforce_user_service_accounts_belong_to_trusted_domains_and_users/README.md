@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Security"]
+categories: ["Data Protection", "Compliance", "Security"]
 ---
 
 # Enforce GCP IAM Service-Accounts Belong To Trusted Domains And Users
@@ -8,7 +9,7 @@ Enforcing GCP IAM Service Accounts to belong to trusted domains and users is ess
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service accounts:
 
-- Delete service accounts that have `roles/owner`, `roles/admin` or `roles/editor` privileges
+- Delete service accounts that do not belong to trusted domains or users
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_accounts_belong_to_trusted_domains_and_users/settings)**
 

@@ -1,6 +1,6 @@
 ---
-categories: ["Security", "Compliance"]
-primary_category: "Security"
+primary_category: ["Security"]
+categories: ["Data Protection", "Compliance", "Security"]
 ---
 
 # Check GCP IAM Users Belong To Approved Domains
@@ -9,9 +9,7 @@ Ensuring that users belong to approved domains is crucial for maintaining the se
 
 This policy pack helps you verify that users belong to approved domains for GCP IAM:
 
-- Enhances the security of your GCP environment by restricting user access to trusted domains.
-- Ensures compliance with organizational policies regarding user domain approval.
-- Prevents unauthorized access and potential security breaches by ensuring users are from approved domains.
+- Delete project users that do not belong to approved domains
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_project_user_belong_to_approved_domains/settings)**
 

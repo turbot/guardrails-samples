@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Security"]
+categories: ["Data Protection", "Compliance", "Security"]
 ---
 
 # Enforce GCP IAM Project Policy Belong To Trusted Domains
@@ -8,7 +9,7 @@ Enforcing GCP IAM Project Policy to belong to trusted domains is crucial for mai
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service accounts:
 
-- Delete service accounts that have `roles/owner`, `roles/admin` or `roles/editor` privileges
+- Delete project policy that do not belong to trusted domains
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_project_policy_belong_to_trusted_domains/settings)**
 
@@ -87,8 +88,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "gcp_iam_project_iam_policy_trusted_access" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectIamPolicyTrustedAccess"
-  value    = "Check: Trusted Access > *"
-  # value = "Enforce: Trusted Access > *"
+  # value    = "Check: Trusted Access > *"
+  value = "Enforce: Trusted Access > *"
 }
 ```
 

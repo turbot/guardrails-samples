@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Data Protection"]
+categories: ["Storage", "Data Protection", "Security"]
 ---
 
 # Enforce Encryption at Rest is Enabled for GCP Storage Buckets
@@ -8,7 +9,7 @@ Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sen
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Enforce Google Managed Key or Higher for Storage Buckets
+- Enforce google managed key or higher for storage buckets
 
 - **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_storage_buckets/settings)**
 

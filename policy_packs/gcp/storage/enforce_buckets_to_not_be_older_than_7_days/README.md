@@ -1,14 +1,15 @@
 ---
-categories: ["security"]
+primary_category: ["Cost Controls"]
+categories: ["Storage", "Cost Controls"]
 ---
 
-# Enforce Delete Inactive Buckets with 7 Days Warning
+# Enforce Delete Buckets with 7 Days Warning
 
 Enforcing the deletion of inactive buckets with a 7-day warning is vital for maintaining efficient resource management and reducing security risks. This practice ensures that unused storage does not accumulate unnecessarily, which can help mitigate potential vulnerabilities and optimize costs.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Delete inactive disks that are older than 7 days
+- Delete disks that are older than 7 days
 
 - **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_buckets_to_not_be_older_than_7_days/settings)**
 

@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Cost Controls"]
+categories: ["Compute", "Cost Controls"]
 ---
 
 # Enforce GCP Compute Engine Disks to Not Be Older Than 7 Days
@@ -8,9 +9,9 @@ Enforcing GCP Compute Engine Disks to not be older than 7 days is critical to en
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Delete inactive or unattached disks that are older than 7 days
+- Delete disks that are unattached or older than 7 days
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_unattached_disks_inactive_more_than_7_days/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_disks_to_not_be_older_than_7_days/settings)**
 
 ## Getting Started
 
@@ -50,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/computeengine/enforce_unattached_disks_inactive_more_than_7_days
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_disks_to_not_be_older_than_7_days
 ```
 
 Run the Terraform to create the policy pack in your workspace:

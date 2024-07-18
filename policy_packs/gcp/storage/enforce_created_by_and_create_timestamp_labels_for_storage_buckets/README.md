@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+primary_category: ["Tagging"]
+categories: ["Storage", "Tagging"]
 ---
 
 # Enforce createdBy and createTimestamp Labels for GCP Storage Buckets
@@ -8,7 +9,7 @@ Enforcing createdBy and createTimestamp labels for GCP Storage Buckets is import
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Enforce Google Managed Key or Higher for Storage Buckets
+- Enforce tagging of storage buckets
 
 - **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_created_by_and_create_timestamp_labels_for_storage_buckets/settings)**
 
