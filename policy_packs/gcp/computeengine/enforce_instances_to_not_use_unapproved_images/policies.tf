@@ -41,7 +41,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
     {%- set data = {
         "title": "Image"
         "result": "Approved"
-        "message": Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is approved for usage
+        "message": Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is approved for use
     } -%}
 
   {%- elif $.disks.items | length > 0 and $.disks.items[0].sourceImageId not in $.approvedImageIds -%}
@@ -49,7 +49,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
     {%- set data = {
         "title": "Image"
         "result": "Not approved"
-        "message": Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is not approved for usage
+        "message": Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is not approved for use
     } -%}
   
   {%- else -%}
