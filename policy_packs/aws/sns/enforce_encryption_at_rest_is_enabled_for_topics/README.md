@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing Encryption at Rest for AWS SNS Topics is critical for ensuring that sensitive messages remain secure and protected from unauthorized access. This control helps safeguard data confidentiality by automatically encrypting all messages stored in SNS topics, thereby reducing the risk of data breaches and complying with regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for SNS topics:
 
 - Enforce Encryption at Rest, to safeguard sensitive data in topics
 - Set the Customer Managed Key to be used to encrypt data in topics

@@ -1,22 +1,19 @@
 ---
-categories: ["access management", "security"]
-primary_category: "access management"
+categories: ["compliance", "security"]
+primary_category: "security"
 ---
 
-# Enforce Service Role for Various Services
+# Enforce Scan On Push Is Enabled for AWS ECR Repositories
 
-Enforcing the use of service roles for various services is crucial to maintain a secure and least-privileged access model within AWS. This control ensures that each service and application operates with only the permissions it needs to perform its specific tasks, thereby minimizing the risk of unauthorized access and potential security breaches caused by over-permissioned accounts.
+Enforcing scan on push for AWS ECR (Elastic Container Registry) repositories is crucial for ensuring the security and integrity of container images. This control helps detect vulnerabilities and security issues in images before they are deployed, reducing the risk of running compromised or insecure containers in your environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for following services:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for ECR repositories:
 
-- Enforce service role for services
-- Enforce service role for config service
-- Enforce service role for EC2 service
-- Enforce config role for VPC flow logging service
+- Enforce scan on push is enabled for repositories
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_service_roles_for_various_services/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_scan_on_push_is_enabled_for_repositories/settings)**
 
 ## Getting Started
 
@@ -24,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
+  - [@turbot/aws-ecr](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ecr)
 
 ### Credentials
 
@@ -56,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/enforce_service_roles_for_various_services
+cd guardrails-samples/policy_packs/aws/s3/enforce_scan_on_push_is_enabled_for_repositories
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -90,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "turbot_serviceroles_configured" {
+resource "turbot_policy_setting" "aws_s3_bucket_access_logging" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
-  # value    = "Check: Configured"
-  value    = "Enforce: Configured"
+  type     = "tmod:@turbot/aws-s3#/policy/types/bucketAccessLogging"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled to Access Logging > Bucket"
 }
 ```
 

@@ -7,7 +7,7 @@ primary_category: "data protection"
 
 Enforcing key rotation for AWS KMS (Key Management Service) keys is crucial for maintaining the security and integrity of encrypted data. Regularly rotating cryptographic keys minimizes the risk of key compromise and limits the potential impact of a security breach, ensuring that encryption practices remain robust and compliant with security best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS keys:
 
 - Enforce key rotation for keys
 
