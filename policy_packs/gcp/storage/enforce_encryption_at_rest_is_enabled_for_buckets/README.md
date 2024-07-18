@@ -1,17 +1,18 @@
 ---
-categories: ["access management", "security"]
-primary_category: ["access management"]
+categories: ["data protection", "security", "storage"]
+primary_category: ["security"]
 ---
 
-# Check GCP IAM Users Belong To Approved Domains
+# Enforce Encryption at Rest is Enabled for GCP Storage Buckets
 
-Ensuring that users belong to approved domains is crucial for maintaining the security and compliance of your GCP environment. This policy ensures that only users from trusted domains can access your GCP resources, thereby reducing the risk of unauthorized access, data breaches, and malicious activities.
+Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
 
-This policy pack helps you verify that users belong to approved domains for GCP IAM:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
 
-- Delete project users that do not belong to approved domains
+- Set a KMS symmetric crypto key to be used for encryption
+- Enable Encryption at Rest for buckets via Google managed key or KMS crypto key
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_project_user_belong_to_approved_domains/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
 
 ## Getting Started
 
@@ -19,7 +20,7 @@ This policy pack helps you verify that users belong to approved domains for GCP 
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
+  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
 
 ### Credentials
 
@@ -51,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/enforce_project_user_belong_to_approved_domains
+cd guardrails-samples/policy_packs/gcp/storage/enforce_encryption_at_rest_is_enabled_for_buckets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +86,13 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
+resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
-  # value    = "Check: Approved"
-  value = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketEncryptionAtRest"
+  # value    = "Check: Google managed key"
+  # value    = "Check: Customer managed key"
+  # value    = "Enforce: Google managed key"
+  value    = "Enforce: Encryption at Rest > Customer Managed Key" 
 }
 ```
 

@@ -3,15 +3,16 @@ categories: ["access management", "security"]
 primary_category: ["access management"]
 ---
 
-# Enforce GCP IAM Project Policy Belong To Trusted Domains
+# Enforce GCP IAM Users Belong To Approved Domains
 
-Enforcing GCP IAM Project Policy to belong to trusted domains is crucial for maintaining a secure and controlled access environment. This ensures that only verified and authorized domains can define and manage IAM policies, reducing the risk of unauthorized access and potential security breaches.
+Enforcing that GCP IAM users belong to approved domains is crucial for maintaining a secure and controlled environment. This measure ensures that only users from trusted and verified domains can access your GCP resources, reducing the risk of unauthorized access and enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for GCP IAM users:
 
-- Delete project policy that do not belong to trusted domains
+- Set a list of approved domains
+- Delete users that do not belong to the approved domains
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_project_policy_belong_to_trusted_domains/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_users_belong_to_approved_domains/settings)**
 
 ## Getting Started
 
@@ -51,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/enforce_project_policy_belong_to_trusted_domains
+cd guardrails-samples/policy_packs/gcp/iam/enforce_users_belong_to_approved_domains
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +86,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_iam_project_iam_policy_trusted_access" {
+resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/projectIamPolicyTrustedAccess"
-  # value    = "Check: Trusted Access > *"
-  value = "Enforce: Trusted Access > *"
+  type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
+  # value    = "Check: Approved"
+  value = "Enforce: Delete unapproved if new"
 }
 ```
 

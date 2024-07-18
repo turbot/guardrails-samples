@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "gcp_iam_project_iam_policy_trusted_domains" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectIamPolicyTrustedDomains"
   value    = <<-EOT
-    - turbot.com
-    - guardrails.com
+    - example.com
+    - acme.com
     EOT
 }

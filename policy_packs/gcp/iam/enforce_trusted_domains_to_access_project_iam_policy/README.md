@@ -1,17 +1,18 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: ["tagging"]
+categories: ["access management", "security"]
+primary_category: ["access management"]
 ---
 
-# Enforce createdBy and createTimestamp Labels for GCP Storage Buckets
+# Enforce Trusted Domains to Access GCP IAM Project Policy
 
-Enforcing createdBy and createTimestamp labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+Enforcing trusted domains to access GCP IAM project policies is essential for ensuring that only authorized and verified domains can interact with your project's IAM policies. This measure helps prevent unauthorized access, enhances security by limiting access to trusted entities, and ensures compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for project policy:
 
-- Enforce tagging of storage buckets
+- Set a list of trusted domains
+- Revoke untrusted access from project IAM policy
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_created_by_and_create_timestamp_labels_for_storage_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_trusted_domains_to_access_project_iam_policy/settings)**
 
 ## Getting Started
 
@@ -19,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
 
 ### Credentials
 
@@ -51,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_created_by_and_create_timestamp_labels_for_storage_buckets
+cd guardrails-samples/policy_packs/gcp/iam/enforce_trusted_domains_to_access_project_iam_policy
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +86,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
+resource "turbot_policy_setting" "gcp_iam_project_iam_policy_trusted_access" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+  type     = "tmod:@turbot/gcp-iam#/policy/types/projectIamPolicyTrustedAccess"
+  # value    = "Check: Trusted Access > *"
+  value = "Enforce: Trusted Access > *"
 }
 ```
 

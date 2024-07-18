@@ -20,14 +20,31 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
     }
     EOT
   template       = <<-EOT
-    {% if $.resource.direction == "EGRESS" and not $.resource.allowed  -%}
-    - title: "Egress Rules"
-      result: Approved
-      message: "Does not contain any egress allowed rules"
-    {%- else -%}
-    - title: "Egress Rules"
-      result: Not approved
-      message: "Contains egress allowed rules"
-    {%- endif %}
-    EOT
+    {% if $.resource.direction == "EGRESS" and not $.resource.allowed -%}
+
+      {%- set data = {
+          "title": "Egress Rules",
+          "result": "Approved",
+          "message": "Firewall does not allow any egress rules"
+      } -%}
+
+    {% elif $.resource.direction == "EGRESS" and $.resource.allowed -%}
+
+      {%- set data = {
+          "title": "Egress Rules",
+          "result": "Not approved",
+          "message": "Firewall allows egress rules"
+      } -%}
+
+    {% else -%}
+
+      {%- set data = {
+          "title": "Egress Rules",
+          "result": "Skip",
+          "message": "No data for firewall yet"
+      } -%}
+
+    {%- endif -%}
+    {{ data | json }}
+  EOT
 }

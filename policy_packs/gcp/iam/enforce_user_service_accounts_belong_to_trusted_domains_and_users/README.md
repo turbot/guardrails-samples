@@ -3,13 +3,15 @@ categories: ["access management", "security"]
 primary_category: ["access management"]
 ---
 
-# Enforce GCP IAM Service-Accounts Belong To Trusted Domains And Users
+# Enforce GCP IAM User-Managed Service Accounts Belong To Trusted Domains And Users
 
-Enforcing GCP IAM Service Accounts to belong to trusted domains and users is essential to ensure that only verified and authorized entities can access and manage cloud resources. This control mitigates the risk of unauthorized access, data breaches, and malicious activities by ensuring that service accounts are managed within a secure and trusted environment.
+Enforcing GCP IAM User-Managed Service Accounts to belong to trusted domains and users is essential to ensure that only verified and authorized entities can access and manage cloud resources. This control mitigates the risk of unauthorized access, data breaches, and malicious activities by ensuring that service accounts are managed within a secure and trusted environment.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service accounts:
 
-- Delete service accounts that do not belong to trusted domains or users
+- Set a list of trusted domains
+- Set a list of trusted users
+- Revoke untrusted access from user-managed service accounts
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_accounts_belong_to_trusted_domains_and_users/settings)**
 

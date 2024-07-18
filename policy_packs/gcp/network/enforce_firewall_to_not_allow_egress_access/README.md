@@ -1,17 +1,17 @@
 ---
-categories: ["data protection", "security", "storage"]
-primary_category: ["data protection"]
+categories: ["data protection", "networking", "security"]
+primary_category: ["networking"]
 ---
 
-# Enforce Encryption at Rest is Enabled for GCP Storage Buckets
+# Enforce GCP Network Firewall To Not Allow Any Egress Access
 
-Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
+Enforcing GCP network firewalls to not allow any egress access is essential for maintaining a highly secure environment. This measure ensures that no outbound traffic is permitted, preventing data exfiltration and unauthorized communication with external systems, thereby reducing the risk of data breaches and ensuring compliance with strict security policies and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network load balancers:
 
-- Enforce google managed key or higher for storage buckets
+- Delete firewall network that contain egress allowed rules
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_storage_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_firewall_to_not_allow_egress_access/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
 
 ### Credentials
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_encryption_at_rest_is_enabled_for_storage_buckets
+cd guardrails-samples/policy_packs/gcp/network/enforce_firewall_to_not_allow_egress_access
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
+resource "turbot_policy_setting" "gcp_network_firewall_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketEncryptionAtRest"
-  # value    = "Check: Google managed key or higher"
-  value    = "Enforce: Google managed key or higher"
+  type     = "tmod:@turbot/gcp-network#/policy/types/firewallApproved"
+  # value    = "Check: Approved"
+  value = "Enforce: Delete unapproved if new"
 }
 ```
 

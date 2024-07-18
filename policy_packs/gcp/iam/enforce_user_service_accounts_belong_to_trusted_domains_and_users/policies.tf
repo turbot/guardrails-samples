@@ -11,8 +11,8 @@ resource "turbot_policy_setting" "gcp_iam_service_account_policy_trusted_domains
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountPolicyTrustedDomains"
   value    = <<-EOT
-    - turbot.com
-    - google.com
+    - example.com
+    - acme.com
   EOT
 }
 
@@ -21,7 +21,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_policy_trusted_users" 
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountPolicyTrustedUsers"
   value    = <<-EOT
-    - "*@turbot.com"
-    - "*@google.com"
+    - "*@example.com"
+    - "*@acme.com"
   EOT
 }
