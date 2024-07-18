@@ -1,6 +1,6 @@
 ---
-categories: ["Networking", "Security", "Compliance"]
-primary_category: "Security"
+categories: ["networking", "security"]
+primary_category: "security"
 ---
 
 # Enforce TLS 1.2 SSL Policy for AWS EC2 Classic Load Balancer Listeners
