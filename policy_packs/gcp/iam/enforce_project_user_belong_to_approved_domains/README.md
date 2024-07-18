@@ -13,7 +13,7 @@ This policy pack helps you verify that users belong to approved domains for GCP 
 - Ensures compliance with organizational policies regarding user domain approval.
 - Prevents unauthorized access and potential security breaches by ensuring users are from approved domains.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_user_belong_to_approved_domains/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_project_user_belong_to_approved_domains/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/check_user_belong_to_approved_domains
+cd guardrails-samples/policy_packs/gcp/iam/enforce_project_user_belong_to_approved_domains
 ```
 
 Run the Terraform to create the policy pack in your workspace:

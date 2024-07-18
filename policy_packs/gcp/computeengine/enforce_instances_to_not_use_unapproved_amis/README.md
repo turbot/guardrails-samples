@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Deny instances that use unapproved images.
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/deny_unapproved_amis_for_instances/settings)**
+- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_unapproved_amis/settings)**
 
 ## Getting Started
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/computeengine/deny_unapproved_amis_for_instances
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_unapproved_amis
 ```
 
 Run the Terraform to create the policy pack in your workspace:
