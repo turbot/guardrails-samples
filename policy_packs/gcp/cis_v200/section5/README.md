@@ -1,5 +1,6 @@
 ---
-categories: ["cis"]
+categories: ["cis", "compliance", "security", "storage"]
+primary_category: "compliance"
 ---
 
 # GCP CIS v2.0.0 - Section 5 - Storage

@@ -1,5 +1,6 @@
 ---
-categories: ["cis"]
+categories: ["cis", "compliance", "security"]
+primary_category: "compliance"
 ---
 
 # Azure CIS v2.0.0 - Section 2 - Microsoft Defender

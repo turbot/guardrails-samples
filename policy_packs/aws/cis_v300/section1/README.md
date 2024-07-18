@@ -1,5 +1,6 @@
 ---
-categories: ["cis"]
+categories: ["access management", "cis", "compliance", "security"]
+primary_category: "compliance"
 ---
 
 # AWS CIS v3.0.0 - Section 1 - Identity and Access Management

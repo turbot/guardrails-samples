@@ -1,5 +1,6 @@
 ---
-categories: ["cis"]
+categories: ["Access Management", "cis", "compliance", "security"]
+primary_category: "compliance"
 ---
 
 # Azure CIS v2.0.0 - Section 1 - IAM

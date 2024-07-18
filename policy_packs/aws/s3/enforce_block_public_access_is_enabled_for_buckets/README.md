@@ -1,5 +1,7 @@
 ---
-categories: ["security"]
+categories: ["security", "storage"]
+primary_category: "security"
+type: "featured"
 ---
 
 # Enforce Block Public Access Is Enabled for AWS S3 Buckets

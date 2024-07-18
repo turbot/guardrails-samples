@@ -1,5 +1,7 @@
 ---
-categories: ["security"]
+categories: ["data protection", "security"]
+primary_category: "data protection"
+type: "featured"
 ---
 
 # Enforce GCP BigQuery Datasets Are Not Publicly Accessible

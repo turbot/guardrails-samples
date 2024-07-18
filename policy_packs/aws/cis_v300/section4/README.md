@@ -1,11 +1,12 @@
 ---
-categories: ["cis"]
+categories: ["cis", "compliance", "security"]
+primary_category: "compliance"
 ---
 
 # AWS CIS v3.0.0 - Section 4 - Monitoring
 
 This section contains recommendations for configuring AWS to assist with monitoring and responding to account activities.
-Metric filter-related recommendations in this section are dependent on the Ensure CloudTrail is enabled in all regions and Ensure CloudTrail trails are integrated with CloudWatch Logs recommendation in the "Logging" section.
+Metric filter-related recommendations in this section are dependent on the Ensure CloudTrail is enabled in all regions and Ensure CloudTrail trails are integrated with CloudWatch Logs recommendation in the Logging section.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of AWS CIS benchmark section 4 best practices.
 

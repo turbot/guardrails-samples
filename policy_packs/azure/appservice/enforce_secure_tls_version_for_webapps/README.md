@@ -1,5 +1,7 @@
 ---
 categories: ["security"]
+primary_category: "security"
+type: "featured"
 ---
 
 # Enforce Secure TLS Version for Azure App Service Web Apps

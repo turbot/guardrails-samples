@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["security", "compute"]
+primary_category: "security"
 ---
 
 # Enforce AWS Lambda Functions to Restrict Public Access
