@@ -1,6 +1,6 @@
 ---
-primary_category: ["Security"]
-categories: ["Data Protection", "Compliance", "Security"]
+primary_category: ["Access Management"]
+categories: ["Access Management", "Security"]
 ---
 
 # Enforce GCP IAM Service-Accounts Belong To Trusted Domains And Users

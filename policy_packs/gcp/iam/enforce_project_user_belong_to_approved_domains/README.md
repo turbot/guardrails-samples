@@ -1,6 +1,6 @@
 ---
-primary_category: ["Security"]
-categories: ["Data Protection", "Compliance", "Security"]
+primary_category: ["Access Management"]
+categories: ["Security", "Access Management"]
 ---
 
 # Check GCP IAM Users Belong To Approved Domains
