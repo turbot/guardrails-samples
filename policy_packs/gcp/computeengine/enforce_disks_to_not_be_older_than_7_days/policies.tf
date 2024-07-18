@@ -12,10 +12,3 @@ resource "turbot_policy_setting" "gcp_computeengine_disk_active_age" {
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskActiveAge"
   value    = "Force inactive if age > 7 days"
 }
-
-# GCP > Compute Engine > Disk > Active > Attached
-resource "turbot_policy_setting" "gcp_computeengine_disk_active_attached" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-computeengine#/policy/types/diskActiveAttached"
-  value    = "Force inactive if unattached"
-}

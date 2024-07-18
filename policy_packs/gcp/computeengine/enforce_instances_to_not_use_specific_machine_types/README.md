@@ -1,17 +1,19 @@
 ---
 categories: ["compute", "cost controls", "security"]
-primary_category: ["cost controls"]
+primary_category: "cost controls"
 ---
 
-# Enforce GCP Compute Engine Instances to Not Use Specific Machine Type
+# Enforce GCP Compute Engine Instances to Not Use Specific Machine Types
 
 Enforcing GCP Compute Engine Instances to not use specific machine types is important to ensure compliance with organizational policies and cost management strategies. This control helps prevent the use of machine types that may be unsuitable for certain workloads, excessively costly, or lacking necessary security features, thereby optimizing resource utilization and maintaining a secure environment.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Enforce no external IP addresses are used
+- Set unapproved list if instance sizes
+- Set unapproved list of instance family
+- Terminate instances that are not approved for use due to unapproved size or family
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_specific_machine_type/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_specific_machine_types/settings)**
 
 ## Getting Started
 
@@ -51,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_specific_machine_type
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_specific_machine_types
 ```
 
 Run the Terraform to create the policy pack in your workspace:

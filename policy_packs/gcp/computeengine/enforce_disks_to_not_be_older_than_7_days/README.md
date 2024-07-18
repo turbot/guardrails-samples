@@ -1,15 +1,15 @@
 ---
 categories: ["compute", "cost controls"]
-primary_category: ["cost controls"]
+primary_category: "cost controls"
 ---
 
 # Enforce GCP Compute Engine Disks to Not Be Older Than 7 Days
 
 Enforcing GCP Compute Engine Disks to not be older than 7 days is critical to ensure that data storage is continuously refreshed and aligned with the latest security and performance standards. This practice helps prevent the accumulation of outdated and potentially vulnerable disks, thereby enhancing overall data integrity and security.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine disks:
 
-- Delete disks that are unattached or older than 7 days
+- Delete disks that are older than 7 days
 
 - **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_disks_to_not_be_older_than_7_days/settings)**
 
