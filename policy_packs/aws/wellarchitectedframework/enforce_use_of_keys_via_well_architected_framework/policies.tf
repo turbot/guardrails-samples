@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "aws_wellarchitectedtool_wellarchitectedframewo
 
 
 resource "turbot_policy_setting" "aws_wellarchitectedtool_wellarchitectedframework_security_sec08_key_mgmt" {
-  resource = turbot_smart_folder.aws_waf_calc_smart_folder.id
+  resource = turbot_policy_pack.main.id
   type = "tmod:@turbot/aws-wellarchitected-framework#/policy/types/sec08KeyMgmt"
   template_input = <<-EOT
   {
