@@ -1,16 +1,16 @@
 ---
-categories: ["Logging", "Security"]
-primary_category: "Security"
+categories: ["logging", "security"]
+primary_category: "security"
 ---
 
-# Enforce Encryption at Rest Is Enabled for Log Groups
+# Enforce Encryption at Rest Is Enabled for AWS Log Groups
 
 Ensuring that CloudWatch log groups are encrypted at rest is crucial for enhancing security. This measure helps protect log data by encrypting it, thereby reducing the risk of unauthorized access and ensuring compliance with security best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for CloudWatch log groups:
 
-- Enforce that log groups are encrypted at rest.
-- Ensure enhanced security for log data through encryption.
+- Set Customer Managed Key to be used for encryption
+- Enable Encryption at Rest for log groups 
 
 ## Documentation
 
@@ -94,10 +94,9 @@ resource "turbot_policy_setting" "aws_logs_log_group_encryption_at_rest" {
   # value    = "Check: AWS SSE or higher"
   # value    = "Check: Customer managed key"
   # value    = "Check: Encryption at Rest > Customer Managed Key"
-  value    = "Enforce: AWS SSE or higher"
+  # value    = "Enforce: AWS SSE or higher"
   # value    = "Enforce: Customer managed key"
-  # value    = "Enforce: Encryption at Rest > Customer Managed Key"
-
+  value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
 ```
 
