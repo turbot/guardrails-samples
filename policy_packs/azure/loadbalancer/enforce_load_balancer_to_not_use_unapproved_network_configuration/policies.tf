@@ -1,6 +1,6 @@
 # Azure > Load Balancer > Load Balancer > Approved
 resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApproved"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved if new"
@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved"
 
 # Azure > Load Balancer > Load Balancer > Approved > Usage
 resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved_custom" {
-  resource = turbot_smart_folder.main.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApprovedCustom"
   template_input = <<EOT
   {
@@ -38,16 +38,16 @@ resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved_
   {% if badPortFound == "True" %}
 
     {%- set data = {
-        "title": "Network Configuration"
-        "result": "Not approved"
+        "title": "Network Configuration",
+        "result": "Not approved",
         "message": "Network Configuration is not approved"
     } -%}
 
   {% else %}
 
     {%- set data = {
-        "title": "Network Configuration"
-        "result": "Approved"
+        "title": "Network Configuration",
+        "result": "Approved",
         "message": "Network Configuration is approved"
     } -%}
 
