@@ -1,19 +1,19 @@
 ---
-categories: ["Access Management", "Security"]
-primary_category: "Security"
+categories: ["access management", "security"]
+primary_category: "security"
 ---
 
-# Check MFA Is Enabled for Users
+# Enforce MFA Is Enabled for AWS IAM Users
 
-Ensuring that Multi-Factor Authentication (MFA) is enabled and required for AWS IAM users is crucial for enhancing security. This measure helps protect user accounts by adding an extra layer of authentication, thereby reducing the risk of unauthorized access and improving overall account security.
+Enforcing Multi-Factor Authentication (MFA) for AWS IAM users is crucial for enhancing account security. This measure adds an extra layer of protection by requiring a second form of verification, reducing the risk of unauthorized access even if credentials are compromised, and ensuring compliance with security best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM users:
 
-- Check that MFA is enabled for all IAM users.
+- Delete users that do not have MFA enabled
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_mfa_is_enabled_for_users/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_mfa_is_enabled_for_users/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/iam/check_mfa_is_enabled_for_users
+cd guardrails-samples/policy_packs/aws/iam/enforce_mfa_is_enabled_for_users
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -91,8 +91,8 @@ resource "turbot_policy_setting" "aws_iam_user_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userApproved"
   # value    = "Check: Approved"
-  value   = "Enforce: Delete unapproved"
-  # value   = "Enforce: Delete unapproved if new"
+  # value   = "Enforce: Delete unapproved"
+  value   = "Enforce: Delete unapproved if new"
 }
 ```
 
