@@ -76,8 +76,8 @@ resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_acce
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
   note     = "Azure CIS v2.0.0 - Control: 3.7"
-  value    = "Check: Enabled"
-  # value    = "Enforce: Enabled"
+  value    = "Check: Disabled"
+  # value    = "Enforce: Disabled"
 }
 
 # Azure > Storage > Storage Account > Data Protection > Soft Delete
