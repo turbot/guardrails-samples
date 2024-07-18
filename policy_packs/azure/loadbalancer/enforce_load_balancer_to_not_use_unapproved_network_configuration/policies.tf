@@ -10,7 +10,7 @@ resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved"
 resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved_custom" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApprovedCustom"
-  template_input = <<EOT
+  template_input = <<-EOT
   {
     resource {
       natrules: get(path: "inboundNatRules")
@@ -20,7 +20,7 @@ resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved_
     badPorts: constant(value: "['80', '21', '25']")
   }
   EOT
-  template = <<EOT
+  template = <<-EOT
   {% set badPortFound = "False" %}
 
   {%- for item in $.resource.natrules%}
