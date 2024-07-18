@@ -1,6 +1,6 @@
 ---
-primary_category: ["Cost Controls"]
-categories: ["Storage", "Cost Controls"]
+categories: ["cost controls", "storage"]
+primary_category: ["cost controls"]
 ---
 
 # Enforce Delete Buckets with 7 Days Warning

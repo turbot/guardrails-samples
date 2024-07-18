@@ -1,6 +1,6 @@
 ---
-primary_category: ["Cost Controls"]
-categories: ["Compute", "Cost Controls", "Security"]
+categories: ["compute", "cost controls", "security"]
+primary_category: ["cost controls"]
 ---
 
 # Enforce GCP Compute Engine Instances to Not Use Specific Machine Type

@@ -1,6 +1,6 @@
 ---
-primary_category: ["Tagging"]
-categories: ["Storage", "Tagging"]
+categories: ["storage", "tagging"]
+primary_category: ["tagging"]
 ---
 
 # Enforce createdBy and createTimestamp Labels for GCP Storage Buckets

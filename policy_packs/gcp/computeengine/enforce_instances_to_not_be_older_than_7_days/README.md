@@ -1,6 +1,6 @@
 ---
-primary_category: ["Cost Controls"]
-categories: ["Compute", "Cost Controls"]
+categories: ["compute", "cost controls"]
+primary_category: ["cost controls"]
 ---
 
 # Enforce GCP Compute Engine Instances to Not Be Older Than 7 Days

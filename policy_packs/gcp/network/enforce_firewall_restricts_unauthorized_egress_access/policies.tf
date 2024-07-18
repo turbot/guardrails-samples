@@ -2,8 +2,8 @@
 resource "turbot_policy_setting" "gcp_network_firewall_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallApproved"
-  # value    = "Check: Approved"
-  value = "Enforce: Delete unapproved if new"
+  value    = "Check: Approved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 
 # GCP > Network > Firewall > Approved > Custom

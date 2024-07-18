@@ -1,5 +1,6 @@
 ---
-categories: ["security"]
+categories: ["data protection", "networking", "security"]
+primary_category: ["networking"]
 ---
 
 # Enforce GCP Network Firewall Restrict Unauthorized Egress Access
@@ -8,7 +9,7 @@ Enforcing GCP Network Firewall to restrict unauthorized egress access is vital f
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network load balancers:
 
-- Check and alarm if the URL map for load balancers is configured to use target https proxy
+- Delete firewall network that contain egress allowed rules
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_firewall_restricts_unauthorized_egress_access/settings)**
 
@@ -73,3 +74,28 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
 For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+
+### Enable Enforcement
+
+> [!TIP]
+> You can also update the policy settings in this policy pack directly in the Guardrails console.
+>
+> Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
+
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+
+```hcl
+resource "turbot_policy_setting" "gcp_network_firewall_approved" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/gcp-network#/policy/types/firewallApproved"
+  # value    = "Check: Approved"
+  value = "Enforce: Delete unapproved if new"
+}
+```
+
+Then re-apply the changes:
+
+```sh
+terraform plan
+terraform apply
+```

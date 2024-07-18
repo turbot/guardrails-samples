@@ -1,6 +1,6 @@
 ---
-primary_category: ["Storage"]
-categories: ["Storage", "Data Protection", "Security"]
+categories: ["data protection", "security", "storage"]
+primary_category: ["storage"]
 ---
 
 # Enforce Uniform Access Control is Enabled for GCP Storage Buckets

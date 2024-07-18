@@ -1,6 +1,6 @@
 ---
-primary_category: ["Security"]
-categories: ["Compute", "Cost Controls", "Security"]
+categories: ["compute", "cost controls", "security"]
+primary_category: ["security"]
 ---
 
 # Enforce GCP Compute Engine Instances to Not Use Unapproved Images
