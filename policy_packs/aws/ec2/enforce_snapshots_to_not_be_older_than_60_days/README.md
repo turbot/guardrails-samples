@@ -1,18 +1,17 @@
 ---
-categories: ["Storage", "Cost Controls", "Compliance"]
-primary_category: "Cost Controls"
+categories: ["cost controls", "storage"]
+primary_category: "cost controls"
 ---
 
-# Enforce Deletion of Resources Older Than 60 Days for Snapshots
+# Enforce AWS EC2 Snapshots To Not Be Older Than 60 Days
 
 Automatically deleting AWS EC2 snapshots that have been active for more than 60 days is crucial for resource optimization and cost management. This measure helps in ensuring that old snapshots are periodically reviewed and deleted if no longer needed, thereby reducing unnecessary storage costs and improving overall resource management.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 snapshots:
 
-- Enforce automatic deletion of resources older than 60 days for snapshots.
-- Ensure periodic review and deletion of old snapshots.
+- Delete snapshots that are older than 60 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_deletion_of_resources_older_than_60_days_for_snapshots/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_snapshots_to_not_be_older_than_60_days/settings)**
 
 ## Getting Started
 
@@ -52,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_deletion_of_resources_older_than_60_days_for_snapshots
+cd guardrails-samples/policy_packs/aws/ec2/enforce_snapshots_to_not_be_older_than_60_days
 ```
 
 Run the Terraform to create the policy pack in your workspace:

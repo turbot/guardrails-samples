@@ -3,18 +3,17 @@ categories: ["Networking", "Security", "Compliance"]
 primary_category: "Security"
 ---
 
-# Enforce TLS 1.2 or Greater SSL Policy for Classic Load Balancer Listener
+# Enforce TLS 1.2 SSL Policy for AWS EC2 Classic Load Balancer Listeners
 
 Ensuring that AWS EC2 Classic Load Balancer listeners use SSL policies with TLS 1.2 or greater for any traffic traveling outside of the VPC is crucial for maintaining secure communications. This measure helps in protecting data in transit by enforcing stronger encryption standards, thereby reducing the risk of data breaches and ensuring compliance with security best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Classic Load Balancer listeners:
 
-- Enforce SSL policies with TLS 1.2 or greater for traffic traveling outside of the VPC.
-- Ensure secure communication standards for Classic Load Balancers.
+- Set SSL policy `ELBSecurityPolicy-TLS-1-2-2017-01` by default
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_tls_1_2_or_greater_ssl_policy_for_classic_load_balancer_listener/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_tls_1_2_ssl_policy_for_classic_load_balancer_listeners/settings)**
 
 ## Getting Started
 
@@ -54,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_tls_1_2_or_greater_ssl_policy_for_classic_load_balancer_listener
+cd guardrails-samples/policy_packs/aws/ec2/enforce_tls_1_2_ssl_policy_for_classic_load_balancer_listeners
 ```
 
 Run the Terraform to create the policy pack in your workspace:

@@ -1,18 +1,17 @@
 ---
-categories: ["Compute", "Cost Controls", "Compliance"]
-primary_category: "Cost Controls"
+categories: ["cost controls", "storage"]
+primary_category: "cost controls"
 ---
 
-# Enforce Deletion of Resources Older Than 90 Days for Instances
+# Enforce AWS EC2 EBS Volumes to Not Be Older Than 90 Days
 
-Automatically deleting AWS EC2 instances that have been running for more than 90 days is crucial for resource optimization and cost management. This measure helps in ensuring that long-running instances are periodically reviewed and terminated if no longer needed, thereby reducing unnecessary costs and improving overall resource utilization.
+Automatically deleting AWS EC2 volumes that have been active for more than 90 days is crucial for resource optimization and cost management. This measure helps in ensuring that long-running volumes are periodically reviewed and terminated if no longer needed, thereby reducing unnecessary costs and improving overall resource utilization.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 volumes:
 
-- Enforce automatic deletion of resources older than 90 days for instances.
-- Ensure periodic review and termination of long-running instances.
+- Detach, snapshot and delete volumes that are older than 90 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_deletion_of_resources_older_than_90_days_for_instances/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_ebs_volumes_to_not_be_older_than_90_days/settings)**
 
 ## Getting Started
 
@@ -52,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_deletion_of_resources_older_than_90_days_for_instances
+cd guardrails-samples/policy_packs/aws/ec2/enforce_ebs_volumes_to_not_be_older_than_90_days
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -86,11 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_active" {
+resource "turbot_policy_setting" "aws_ec2_volume_active" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceActive"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/volumeActive"
   # value    = "Check: Active"
-  value    = "Enforce: Delete inactive with 7 days warning"
+  value    = "Enforce: Detach, snapshot and delete inactive with 7 days warning"
 }
 ```
 
