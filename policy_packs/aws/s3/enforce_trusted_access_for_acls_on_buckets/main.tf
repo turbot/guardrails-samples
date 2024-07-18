@@ -1,5 +1,5 @@
 resource "turbot_policy_pack" "main" {
-  title       = "Enforce Trusted Access for ACLs on Buckets"
-  description = "Ensure that S3 bucket ACLs do not allow access to all AWS users or non-trusted AWS accounts for enhanced security."
+  title       = "Enforce Trusted Access for ACLs on AWS S3 Buckets"
+  description = "Ensure that only authorized users and services have access to your data."
   akas        = ["aws_s3_enforce_trusted_access_for_acls_on_buckets"]
 }

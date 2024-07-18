@@ -1,15 +1,17 @@
 ---
-categories: ["Storage", "Logging", "Security"]
-primary_category: "Security"
+categories: ["logging", "security", "storage"]
+primary_category: "logging"
 ---
 
-# Enforce Access Logging Is Enabled for Buckets
+# Enforce Access Logging Is Enabled for AWS S3 Buckets
 
 Ensuring that S3 bucket access logging is enabled and follows a specific naming convention is crucial for enhanced security and auditing. This measure helps in tracking access to S3 buckets, thereby improving visibility and accountability for data access and ensuring compliance with security best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
-- Enforce that access logging is enabled for all S3 buckets.
+- Set a logging bucket name
+- Set a logging bucket prefix
+- Enable access logging for buckets
 
 ## Documentation
 

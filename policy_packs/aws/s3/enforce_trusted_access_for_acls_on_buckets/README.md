@@ -1,16 +1,17 @@
 ---
-categories: ["Storage", "Access Management", "Security"]
-primary_category: "Security"
+categories: ["access management", "security", "storage"]
+primary_category: "security"
 ---
 
-# Enforce Trusted Access for ACLs on Buckets
+# Enforce Trusted Access for ACLs on AWS S3 Buckets
 
-Ensuring that S3 bucket ACLs do not allow access to all AWS users or non-trusted AWS accounts is crucial for enhancing security. This measure helps protect sensitive data by restricting bucket access to trusted accounts only, thereby reducing the risk of unauthorized access and ensuring compliance with security best practices and regulatory requirements.
+Enforcing trusted access for ACLs (Access Control Lists) on AWS S3 buckets is critical for ensuring that only authorized users and services have access to your data. This measure helps prevent unauthorized access, data breaches, and ensures that permissions are tightly controlled and aligned with security best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
-- Enforce that ACLs do not grant access to all AWS users.
-- Ensure that bucket access is limited to trusted AWS accounts only.
+- Set trusted ACL groups
+- Set trusted ACL Canonical IDs
+- Revoke untrusted access from buckets
 
 ## Documentation
 

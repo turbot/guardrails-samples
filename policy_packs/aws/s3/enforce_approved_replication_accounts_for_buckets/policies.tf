@@ -29,31 +29,31 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_custom" {
 
     {%- elif $.bucket.replication -%}
 
-      {%- set replicationApproved = "True" -%}
+      {%- set replicationApproved = true -%}
 
       {%- for rule in $.bucket.replication.Rules -%}
 
         {%- if rule.Destination.Account not in $.approvedReplicationAccountsList -%}
 
-        {%- set replicationApproved = "False" -%}
+        {%- set replicationApproved = false -%}
 
         {%- endif -%}
 
       {%- endfor -%}
 
-      {%- if replicationApproved == "True" -%}
+      {%- if replicationApproved -%}
 
         {%- set data = {
             "title": "Replication",
             "result": "Approved",
-            "message": "Replication Destination Account(s) approved"
+            "message": "Replication destination account(s) approved"
         } -%}
       {%- else -%}
 
         {%- set data = {
             "title": "Replication",
             "result": "Not approved",
-            "message": "Replication Destination Account(s) not approved"
+            "message": "Replication destination account(s) not approved"
         } -%}
 
       {%- endif %}
@@ -61,9 +61,9 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_custom" {
     {%- else -%}
 
       {%- set data = {
-          "title": "Bucket",
+          "title": "Replication",
           "result": "Skip",
-          "message": "No data for buckets yet"
+          "message": "No data for replication yet"
       } -%}
 
     {% endif %}

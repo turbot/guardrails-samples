@@ -1,19 +1,20 @@
 ---
-categories: ["Storage", "Security", "Compliance"]
-primary_category: "Security"
+categories: ["data protection", "security", "storage"]
+primary_category: "data protection"
 ---
 
-# Check Replication Restrictions for Buckets
+# Enforce Approved Replication Accounts For AWS S3 Buckets
 
-Ensuring that S3 buckets are not replicated to non-SF accounts is crucial for enhancing security and compliance. This measure helps protect sensitive data by ensuring that replication is restricted to trusted accounts only, thereby reducing the risk of unauthorized data access and ensuring compliance with security best practices and regulatory requirements.
+Enforcing the use of approved replication accounts for buckets is essential for maintaining control over data replication processes. This measure ensures that only trusted and authorized accounts are used for replicating data, reducing the risk of unauthorized data access or replication, and enhancing overall data security and compliance with organizational policies and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
-- Check that replication of S3 buckets is restricted to SF accounts.
+- Set approved replication accounts list
+- Delete buckets that are emptry and do not use approved replication accounts
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_replication_restrictions_for_buckets/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_approved_replication_accounts_for_buckets/settings)**
 
 ## Getting Started
 
@@ -53,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/s3/check_replication_restrictions_for_buckets
+cd guardrails-samples/policy_packs/aws/s3/enforce_approved_replication_accounts_for_buckets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
