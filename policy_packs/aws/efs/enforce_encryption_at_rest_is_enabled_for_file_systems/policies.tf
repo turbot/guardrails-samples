@@ -19,6 +19,6 @@ resource "turbot_policy_setting" "aws_efs_file_system_approved_encryption_at_res
 resource "turbot_policy_setting" "aws_efs_file_system_approved_encryption_at_rest_customer_managed_key" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-efs#/policy/types/fileSystemEncryptionAtRestCustomerManagedKey"
-  # Enter your CMK id/arn/alias below
+  # Your CMK id/arn/alias below
   value = "alias/turbot/default"
 }

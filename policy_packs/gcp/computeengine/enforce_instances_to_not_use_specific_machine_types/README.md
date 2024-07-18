@@ -1,17 +1,19 @@
 ---
-categories: ["access management", "security"]
-primary_category: "access management"
+categories: ["compute", "cost controls", "security"]
+primary_category: "cost controls"
 ---
 
-# Enforce GCP IAM User-Managed Service Account Keys Are Rotated Every 90 Days
+# Enforce GCP Compute Engine Instances to Not Use Specific Machine Types
 
-Enforcing that GCP IAM user-managed service account keys are rotated every 90 days is crucial for maintaining security and reducing the risk of key compromise. Regular key rotation ensures that any potentially exposed or compromised keys are rendered obsolete, thereby protecting access to GCP resources and ensuring compliance with security best practices and regulatory requirements.
+Enforcing GCP Compute Engine Instances to not use specific machine types is important to ensure compliance with organizational policies and cost management strategies. This control helps prevent the use of machine types that may be unsuitable for certain workloads, excessively costly, or lacking necessary security features, thereby optimizing resource utilization and maintaining a secure environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service account keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-- Delete service account keys that are older than 90 days
+- Set unapproved list if instance sizes
+- Set unapproved list of instance family
+- Terminate instances that are not approved for use due to unapproved size or family
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_specific_machine_types/settings)**
 
 ## Getting Started
 
@@ -19,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
+  - [@turbot/gcp-computeengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-computeengine)
 
 ### Credentials
 
@@ -51,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/enforce_user_service_account_keys_are_rotated_in_90_days
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_specific_machine_types
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
+resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
-  # value    = "Check: Active"
-  value    =  "Enforce: Delete inactive with 90 days warning"
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
+  # value    = "Check: Approved"
+  value  = "Enforce: Delete unapproved if new"
 }
 ```
 
