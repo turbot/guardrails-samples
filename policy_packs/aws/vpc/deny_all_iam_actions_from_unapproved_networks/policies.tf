@@ -24,7 +24,7 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
       # Boundary policy name that will be applied to the IAM role.
       name        = "myBoundaryPolicy"
       path        = "/"
-      description = "Guardrails Managed Boundary policy to prevent actions from  unapproved CIDRs"
+      description = "Guardrails Managed Boundary policy to prevent actions from unapproved CIDRs"
       policy      = jsonencode({
         "Version": "2012-10-17",
         "Statement": [
@@ -37,9 +37,7 @@ resource "turbot_policy_setting" "aws_iam_stack_source" {
                       "aws:SourceIp": [
                         "10.0.0.0/8",
                         "172.16.0.0/12",
-                        "192.168.0.0/16",
-                        "15.46.12.0/22",
-                        "104.29.0.0/20"
+                        "192.168.0.0/16"
                       ]
                     }
                 }
@@ -70,7 +68,8 @@ EOT
   template       = <<EOT
   {%- if $.resource.role_arn and $.resource.role_arn  != $.resource.parent.turbot_iam_role.value -%}
 
-    "Enforce: Boundary > Policy"
+    "Check: Boundary > Policy"
+    # "Enforce: Boundary > Policy"
 
   {%- else -%}
 
