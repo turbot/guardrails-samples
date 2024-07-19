@@ -1,15 +1,15 @@
 ---
-categories: ["security", "storage"]
-primary_category: "security"
+categories: ["data protection", "security", "storage"]
+primary_category: "data protection"
 ---
 
 # Enforce Azure Storage Containers Block Public Access
 
 Enforcing Azure Storage Containers to block public access is crucial to prevent unauthorized access and potential data breaches. By ensuring that storage containers are not publicly accessible, organizations can safeguard sensitive data, maintain compliance with security standards, and reduce the risk of exposure to cyber threats.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage container:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage containers:
 
-- Enforce block public access is set to Enabled
+- Enable Private (No anonymous access)
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_containers_block_public_access/settings)**
 
