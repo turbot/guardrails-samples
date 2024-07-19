@@ -3,13 +3,13 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS VPC VPCs to have Transit Gateway Attached
+# Enforce AWS VPCs to have Transit Gateways Attached
 
 Enforcing AWS VPCs to have a Transit Gateway attached is crucial for ensuring secure and efficient inter-VPC communication and centralized network management. This practice enhances network scalability, simplifies complex network architectures, and improves overall security by providing a single point of control for routing and connectivity.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC vpc:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPCs:
 
-- Delete vpc not attached to transit gateway
+- Delete VPCs that do not have a transit gateway attached
 
 ## Documentation
 
@@ -22,6 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
   - [@turbot/aws-vpc-core](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-core)
+  - [@turbot/aws-vpc-connect](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-connect)
 
 ### Credentials
 

@@ -1,19 +1,19 @@
 ---
-categories: ["networking", "security"]
-primary_category: "networking"
+categories: ["cost controls", "networking", "security"]
+primary_category: "cost controls"
 ---
 
-# Enforce AWS VPC Default Security Groups do not allow any access
+# Enforce AWS VPC Elastic IPs To Not Be Unassociated
 
-Enforcing that AWS VPC Default Security Groups do not allow any access is crucial because it prevents unintended network exposure and potential security vulnerabilities. Default Security Groups, if left open, could inadvertently permit unrestricted inbound and outbound traffic, leading to unauthorized access and exploitation of resources within the VPC.
+Enforcing that AWS VPC Elastic IPs are not unassociated is crucial for optimizing resource usage and maintaining a secure environment. This practice ensures that all allocated Elastic IPs are actively used, reducing the risk of unnecessary costs, potential IP misconfigurations, and security vulnerabilities associated with unused IP addresses.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC security groups:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC elastic IPs:
 
-- Removes rejected default security groups
+- Delete non associated elastic IPs
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_default_security_groups_do_not_allow_any_access/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_elastic_ips_to_not_be_unassociated/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws-vpc-security](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-security)
+  - [@turbot/aws-vpc-internet](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-internet)
 
 ### Credentials
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/vpc/enforce_default_security_groups_do_not_allow_any_access
+cd guardrails-samples/policy_packs/aws/vpc/enforce_elastic_ips_to_not_be_unassociated
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,18 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved" {
+resource "turbot_policy_setting" "awx_vpc_elastic_ip_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
+  type     = "tmod:@turbot/aws-vpc-internet#/policy/types/elasticIpApproved"
   # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved"
-}
-
-resource "turbot_policy_setting" "aws_vpc_security_group_egress_rules_approved" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupEgressRulesApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

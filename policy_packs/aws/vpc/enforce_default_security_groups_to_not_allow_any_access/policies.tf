@@ -11,18 +11,18 @@ resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved_
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApprovedRules"
   template_input = <<-EOT
-  {   
-    resource {
-      name: get(path: "GroupName")
+    {   
+      resource {
+        name: get(path: "GroupName")
+      }
     }
-  }
   EOT
   template       = <<-EOT
-  {%- if $.resource.name == "default" -%}
+    {%- if $.resource.name == "default" -%}
 
-  REJECT *
+      REJECT *
 
-  {%- endif -%}
+    {%- endif -%}
   EOT
 }
 
@@ -39,17 +39,17 @@ resource "turbot_policy_setting" "aws_vpc_security_group_egress_rules_approved_r
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupEgressRulesApprovedRules"
   template_input = <<-EOT
-  {   
-    resource {
-      name: get(path: "GroupName")
+    {   
+      resource {
+        name: get(path: "GroupName")
+      }
     }
-  }
   EOT
   template       = <<-EOT
-  {%- if $.resource.name == "default" -%}
+    {%- if $.resource.name == "default" -%}
 
-  REJECT *
+      REJECT *
 
-  {%- endif -%}
+    {%- endif -%}
   EOT
 }
