@@ -1,25 +1,27 @@
 ---
-categories: ["security", "storage"]
-primary_category: "security"
+categories: ["networking", "security"]
+primary_category: "networking"
 ---
 
-# Enforce Azure Storage Blob Containers Block Public Access
+# Enforce NAT Gateways To Not Exist
 
-Enforcing Azure Storage Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
+Enforcing that NAT Gateways do not exist in your AWS environment is crucial for ensuring that private instances remain completely isolated from the internet. This measure prevents any outbound internet traffic from private subnets, reducing the risk of data exfiltration, unauthorized access, and potential security breaches, thereby enhancing overall network security and compliance with stringent security policies.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC nat gateways:
 
-- Enforce block blob public access is set to Enabled
+- Delete Nat Gateways if available
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_blob_containers_block_public_access/settings)**
+## Documentation
+
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_nat_gateways_to_not_exist/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/azure-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-storage)
+  - [@turbot/aws-vpc-internet](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-internet)
 
 ### Credentials
 
@@ -51,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_blob_containers_block_public_access
+cd guardrails-samples/policy_packs/aws/vpc/enforce_nat_gateways_to_not_exist
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
+resource "turbot_policy_setting" "vpc_nat_gateway_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
-  # value    = "Check: Enabled"
-  value    = "Enforce: Enabled"
+  type     = "tmod:@turbot/aws-vpc-internet#/policy/types/natGatewayApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 
