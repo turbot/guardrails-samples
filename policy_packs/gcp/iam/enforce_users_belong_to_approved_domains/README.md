@@ -3,15 +3,16 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce GCP IAM User-Managed Service Account Keys Are Rotated Every 90 Days
+# Enforce GCP IAM Users Belong To Approved Domains
 
-Enforcing that GCP IAM user-managed service account keys are rotated every 90 days is crucial for maintaining security and reducing the risk of key compromise. Regular key rotation ensures that any potentially exposed or compromised keys are rendered obsolete, thereby protecting access to GCP resources and ensuring compliance with security best practices and regulatory requirements.
+Enforcing that GCP IAM users belong to approved domains is crucial for maintaining a secure and controlled environment. This measure ensures that only users from trusted and verified domains can access your GCP resources, reducing the risk of unauthorized access and enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service account keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for GCP IAM users:
 
-- Delete service account keys that are older than 90 days
+- Set a list of approved domains
+- Delete users that do not belong to the approved domains
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_users_belong_to_approved_domains/settings)**
 
 ## Getting Started
 
@@ -51,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/enforce_user_service_account_keys_are_rotated_in_90_days
+cd guardrails-samples/policy_packs/gcp/iam/enforce_users_belong_to_approved_domains
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +86,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
+resource "turbot_policy_setting" "gcp_iam_project_user_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
-  # value    = "Check: Active"
-  value    =  "Enforce: Delete inactive with 90 days warning"
+  type     = "tmod:@turbot/gcp-iam#/policy/types/projectUserApproved"
+  # value    = "Check: Approved"
+  value = "Enforce: Delete unapproved if new"
 }
 ```
 

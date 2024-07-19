@@ -1,25 +1,27 @@
 ---
-categories: ["access management", "security"]
-primary_category: "access management"
+categories: ["data protection", "security"]
+primary_category: "security"
 ---
 
-# Enforce GCP IAM User-Managed Service Account Keys Are Rotated Every 90 Days
+# Enforce Scan On Push Is Enabled for AWS ECR Repositories
 
-Enforcing that GCP IAM user-managed service account keys are rotated every 90 days is crucial for maintaining security and reducing the risk of key compromise. Regular key rotation ensures that any potentially exposed or compromised keys are rendered obsolete, thereby protecting access to GCP resources and ensuring compliance with security best practices and regulatory requirements.
+Enforcing scan on push for AWS ECR (Elastic Container Registry) repositories is crucial for ensuring the security and integrity of container images. This control helps detect vulnerabilities and security issues in images before they are deployed, reducing the risk of running compromised or insecure containers in your environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service account keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for ECR repositories:
 
-- Delete service account keys that are older than 90 days
+- Enable scan on push setting
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
+## Documentation
+
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_scan_on_push_is_enabled_for_repositories/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
+  - [@turbot/aws-ecr](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ecr)
 
 ### Credentials
 
@@ -51,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/enforce_user_service_account_keys_are_rotated_in_90_days
+cd guardrails-samples/policy_packs/aws/s3/enforce_scan_on_push_is_enabled_for_repositories
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
+resource "turbot_policy_setting" "aws_ecr_repository_scan_on_push_enabled" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
-  # value    = "Check: Active"
-  value    =  "Enforce: Delete inactive with 90 days warning"
+  type     = "tmod:@turbot/aws-ecr#/policy/types/repositoryScanOnPush"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 

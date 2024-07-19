@@ -3,23 +3,29 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce GCP IAM User-Managed Service Account Keys Are Rotated Every 90 Days
+# Enforce Enable AWS IAM Service Roles
 
-Enforcing that GCP IAM user-managed service account keys are rotated every 90 days is crucial for maintaining security and reducing the risk of key compromise. Regular key rotation ensures that any potentially exposed or compromised keys are rendered obsolete, thereby protecting access to GCP resources and ensuring compliance with security best practices and regulatory requirements.
+Enforcing the enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM user-managed service account keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following for service roles:
 
-- Delete service account keys that are older than 90 days
+- Create IAM service role for configuration recording
+- Create IAM service role for default EC2 instance
+- Create IAM service role for flow logging
+- Create IAM service role for SSM notification
+- Create IAM service role for Guardrails global event handlers
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
+## Documentation
+
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_iam_service_roles/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
+  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
 
 ### Credentials
 
@@ -51,7 +57,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/iam/enforce_user_service_account_keys_are_rotated_in_90_days
+cd guardrails-samples/policy_packs/aws/guardrails/enforce_enable_iam_service_roles
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -69,6 +75,9 @@ terraform apply
 
 ### Apply Policy Pack
 
+> [!IMPORTANT]
+> Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
+
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
@@ -85,11 +94,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_iam_service_account_key_active" {
+resource "turbot_policy_setting" "aws_turbot_service_roles_configured" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-iam#/policy/types/serviceAccountKeyActive"
-  # value    = "Check: Active"
-  value    =  "Enforce: Delete inactive with 90 days warning"
+  type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 ```
 

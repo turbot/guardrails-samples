@@ -109,7 +109,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_4_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_4.name}\" AND resource.type=\"global\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_4.name\}\" AND resource.type=\"global\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -157,7 +157,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_5_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_5.name}\" AND resource.type=\"global\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_5.name\}\" AND resource.type=\"global\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -205,7 +205,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_6_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_6.name}\" AND resource.type=\"global\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_6.name\}\" AND resource.type=\"global\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -253,7 +253,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_7_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_7.name}\" AND resource.type=\"global\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_7.name\}\" AND resource.type=\"global\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -301,7 +301,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_8_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_8.name}\" AND resource.type=\"global\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_8.name\}\" AND resource.type=\"global\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -349,7 +349,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_9_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_9.name}\" AND resource.type=\"global\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_9.name\}\" AND resource.type=\"global\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -397,7 +397,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_10_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_10.name}\" AND resource.type=\"gcs_bucket\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_10.name\}\" AND resource.type=\"gcs_bucket\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
@@ -445,7 +445,7 @@ resource "turbot_policy_setting" "gcp_project_stack_source" {
       conditions {
         display_name = "gcp_cis_v200_s2_11_alert_policy_condition"
         condition_threshold {
-          filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.logging_metric_2_11.name}\" AND resource.type=\"cloudsql_database\""
+          filter          = "metric.type=\"logging.googleapis.com/user/\$\{google_logging_metric.logging_metric_2_11.name\}\" AND resource.type=\"cloudsql_database\""
           duration        = "0s"
           comparison      = "COMPARISON_GT"
           threshold_value = 0
