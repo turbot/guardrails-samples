@@ -41,7 +41,7 @@ resource "turbot_policy_setting" "aws_iam_role_policy_trusted_organizations" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedOrganizations"
   value    = <<-EOT
-    - "o-333333333"
-    - "o-333333444"
+    - "o-a333333333"
+    - "o-c3a5y4wd52"
     EOT
 }
