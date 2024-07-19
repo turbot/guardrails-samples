@@ -3,21 +3,21 @@ categories: ["access management", "security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Trusted Access for AWS IAM Roles
+# Enforce AWS IAM Roles To Have Trusted Access
 
-Enforcing trusted access for AWS IAM roles is critical for ensuring that only authorized entities can assume specific roles, thereby maintaining a secure and controlled access environment. This control helps prevent unauthorized access and potential security breaches by verifying that trust relationships between roles and accounts are properly configured and managed.
+Enforcing that AWS IAM roles have trusted access is essential for ensuring that only authorized entities can assume roles and access resources. This measure restricts role assumption to trusted accounts and services, reducing the risk of unauthorized access, enhancing security, and ensuring compliance with organizational policies and best practices.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM roles:
 
 - Set trusted accounts
 - Set trusted services
 - Set trusted identity providers
-- Set trusted organization restrictions
+- Set trusted organizations
 - Revoke untrusted access from roles
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_trusted_access_for_roles/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_roles_to_have_trusted_access/settings)**
 
 ## Getting Started
 
@@ -57,7 +57,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/iam/enforce_trusted_access_for_roles
+cd guardrails-samples/policy_packs/aws/iam/enforce_roles_to_have_trusted_access
 ```
 
 Run the Terraform to create the policy pack in your workspace:

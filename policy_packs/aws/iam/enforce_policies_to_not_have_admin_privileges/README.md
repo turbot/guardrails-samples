@@ -1,6 +1,6 @@
 ---
-categories: ["access management", "security", "data protection"]
-primary_category: "security"
+categories: ["access management", "security"]
+primary_category: "access management"
 ---
 
 # Enforce AWS IAM Policies to Not Have Admin Privileges

@@ -1,28 +1,27 @@
 ---
 categories: ["access management", "security"]
-primary_category: "access management"
+primary_category: "security"
 ---
 
-# Enforce Password Settings for AWS IAM User Accounts
+# Enforce AWS IAM Account Password Policy Settings
 
-Enforcing password settings for AWS IAM user accounts is crucial for maintaining strong authentication practices and protecting against unauthorized access. This control ensures that password policies, such as complexity, length, and rotation frequency, are consistently applied, thereby enhancing the security of user accounts and reducing the risk of password-related security breaches.
+Enforcing AWS IAM account password policy settings is crucial for ensuring strong authentication and enhancing account security. This measure ensures that passwords meet specific complexity, length, and rotation requirements, reducing the risk of unauthorized access and aligning with best practices and regulatory compliance.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for IAM account password policy:
 
-- Enforce password settings is configured for user accounts
-- Enforce password change to be enabled for user accounts
-- Enforce hard expiry to be enabled for user accounts
-- Enforce maximum age to be between 1 and 1095 days
-- Enforce minimum length to be between 6 and 128 days
-- Enforce passwords to include atlease one lowercase character
-- Enforce passwords to include atlease one number
-- Enforce passwords to include atlease one symbol
-- Enforce passwords to include atlease one uppercase character
-- Enforce passwords to not be reused
+- Enable Allow Users to Change
+- Enable Hard Expiry
+- Set Max Age to 90
+- Set Minimum Length to 14
+- Set Reuse Prevention to 5
+- Enable Require Lowercase Characters
+- Enable Require Numbers
+- Enable Require Symbols
+- Enable Require Uppercase Characters
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_password_settings_for_users_accounts/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_account_password_policy_settings/settings)**
 
 ## Getting Started
 
@@ -62,7 +61,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/iam/enforce_password_settings_for_users_accounts
+cd guardrails-samples/policy_packs/aws/iam/enforce_account_password_policy_settings
 ```
 
 Run the Terraform to create the policy pack in your workspace:
