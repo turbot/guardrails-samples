@@ -1,6 +1,6 @@
 ---
-categories: ["security", "storage"]
-primary_category: "security"
+categories: ["tagging", "security"]
+primary_category: "tagging"
 ---
 
 # Enforce Tags For AWS Lambda Functions
