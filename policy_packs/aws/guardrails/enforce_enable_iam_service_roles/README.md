@@ -3,22 +3,21 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce Service Role for Various Services
+# Enforce Enable AWS IAM Service Roles
 
-Enforcing the use of service roles for various services is crucial to maintain a secure and least-privileged access model within AWS. This control ensures that each service and application operates with only the permissions it needs to perform its specific tasks, thereby minimizing the risk of unauthorized access and potential security breaches caused by over-permissioned accounts.
+Enforcing the enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for following services:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following for service roles:
 
-- Create all respective service roles that are enabled
-- Enable service role for configuration recording
-- Enable service role for default EC2 instance
-- Enable service role for flow logging
-- Enable service role for SSM notification
-- Enable service role for global event handler
+- Create IAM service role for configuration recording
+- Create IAM service role for default EC2 instance
+- Create IAM service role for flow logging
+- Create IAM service role for SSM notification
+- Create IAM service role for Guardrails global event handlers
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_service_roles_for_various_services/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_iam_service_roles/settings)**
 
 ## Getting Started
 
@@ -58,7 +57,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/enforce_service_roles_for_various_services
+cd guardrails-samples/policy_packs/aws/guardrails/enforce_enable_iam_service_roles
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -75,6 +74,9 @@ terraform apply
 ```
 
 ### Apply Policy Pack
+
+> [!IMPORTANT]
+> Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
 
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 

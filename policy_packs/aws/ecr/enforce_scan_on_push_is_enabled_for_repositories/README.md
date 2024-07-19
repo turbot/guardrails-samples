@@ -1,5 +1,5 @@
 ---
-categories: ["compliance", "security"]
+categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
@@ -9,7 +9,7 @@ Enforcing scan on push for AWS ECR (Elastic Container Registry) repositories is 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for ECR repositories:
 
-- Enforce scan on push is enabled for repositories
+- Enable scan on push setting
 
 ## Documentation
 

@@ -9,8 +9,8 @@ Enforcing Encryption at Rest for AWS SNS Topics is critical for ensuring that se
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for SNS topics:
 
-- Enforce Encryption at Rest, to safeguard sensitive data in topics
-- Set the Customer Managed Key to be used to encrypt data in topics
+- Set the Customer Managed Key to be used for encryption
+- Enforce Encryption at Rest via AWS managed key or a customer managed key
 
 ## Documentation
 
@@ -54,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/s3/enforce_encryption_at_rest_is_enabled_for_topics
+cd guardrails-samples/policy_packs/aws/sns/enforce_encryption_at_rest_is_enabled_for_topics
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -92,8 +92,8 @@ resource "turbot_policy_setting" "aws_sns_topic_encryption_at_rest" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-sns#/policy/types/topicEncryptionAtRest"
   # value    = "Check: AWS managed key or higher"
-  value    = "Enforce: AWS managed key"
-  # value    = "Enforce: Encryption at Rest > Customer Managed Key"
+  # value    = "Enforce: AWS managed key"
+  value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
 ```
 

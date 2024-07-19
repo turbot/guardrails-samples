@@ -1,5 +1,5 @@
 # AWS > Turbot > Service Roles
-resource "turbot_policy_setting" "aws_turbot_service_roles_configured" {
+resource "turbot_policy_setting" "aws_turbot_service_roles" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
   value    = "Check: Configured"

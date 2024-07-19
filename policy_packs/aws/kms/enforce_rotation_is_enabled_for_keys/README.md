@@ -3,13 +3,13 @@ categories: ["data protection", "security"]
 primary_category: "data protection"
 ---
 
-# Enforce Key Rotation for AWS KMS Keys
+# Enforce Rotation is Enabled on AWS KMS Keys
 
-Enforcing key rotation for AWS KMS (Key Management Service) keys is crucial for maintaining the security and integrity of encrypted data. Regularly rotating cryptographic keys minimizes the risk of key compromise and limits the potential impact of a security breach, ensuring that encryption practices remain robust and compliant with security best practices.
+Enforcing rotation for AWS KMS keys is essential for maintaining the security and integrity of encrypted data. Regular key rotation ensures that cryptographic keys are periodically updated, reducing the risk of key compromise and enhancing overall security, while also ensuring compliance with best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS keys:
 
-- Enforce rotation is enabled for keys
+- Enable rotation
 
 ## Documentation
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws-s3](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-s3)
+  - [@turbot/aws-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-kms)
 
 ### Credentials
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/s3/enforce_rotation_is_enabled_for_keys
+cd guardrails-samples/policy_packs/aws/kms/enforce_rotation_is_enabled_for_keys
 ```
 
 Run the Terraform to create the policy pack in your workspace:
