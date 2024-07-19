@@ -40,6 +40,7 @@ resource "turbot_policy_setting" "aws_vpc_approved_custom" {
     } -%}
 
   {%- endif %}
-  {{ results | json }}
+
+  {{ data | json }}
   EOT
 }
