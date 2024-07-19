@@ -15,34 +15,35 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved_custom" {
     {
       item: volume {
         attachments: get(path:"Attachments")
+        volumeId: get(path:"VolumeId")
       }
     }
     EOT
   template       = <<-EOT
     {%- set attachments = $.item.attachments -%}
 
-    {%- if attachments | length == 0 -%}
+    {%- if $.item.volumeId and attachments | length == 0 -%}
 
       {%- set data = {
-          "title": "EC2 Volumes Attachment",
+          "title": "Attachment",
           "result": "Not approved",
-          "message": "Volume is not attached with an EC2 instance"
+          "message": "Volume is not attached to an instance"
       } -%}
 
-    {%- elif attachments | length > 0 -%}
+    {%- elif $.item.volumeId and attachments | length > 0 -%}
 
       {%- set data = {
-          "title": "EC2 Volumes Attachment",
+          "title": "Attachment",
           "result": "Approved",
-          "message": "Volume is attached with an EC2 instance"
+          "message": "Volume is attached to an instance"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-         "title": "EC2 Volumes Attachment",
+         "title": "Attachment",
           "result": "Skip",
-          "message": "No data for volume attachments yet"
+          "message": "No data for volume yet"
       } -%}
 
     {%- endif -%}

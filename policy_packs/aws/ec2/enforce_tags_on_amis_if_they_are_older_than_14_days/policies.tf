@@ -3,7 +3,6 @@ resource "turbot_policy_setting" "aws_ec2_ami_active" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/amiActive"
   value    = "Check: Active"
-  # value    = "Enforce: Delete inactive with 14 days warning"
 }
 
 # AWS > EC2 > AMI > Active > Age
@@ -45,9 +44,13 @@ resource "turbot_policy_setting" "aws_ec2_ami_tags_template" {
     EOT
   template       = <<-EOT
     {%- if $.controls.items[0].state == "alarm" -%}
+
       - termination: "true"
+    
     {%- else -%}
+
       []
+
     {%- endif -%}
   EOT
 }

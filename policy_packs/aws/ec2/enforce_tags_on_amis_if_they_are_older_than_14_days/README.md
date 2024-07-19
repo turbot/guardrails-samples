@@ -1,19 +1,19 @@
 ---
-categories: ["security", "tagging"]
+categories: ["cost controls", "security", "tagging"]
 primary_category: "tagging"
 ---
 
-# Enforce AWS EC2 AMIs To Use Specific Approved Tags
+# Enforce Tags on AMIs if They Are Older Than 14 Days
 
-Enforcing specific approved tags on AWS EC2 AMIs is crucial for maintaining organizational compliance, improving resource management, and ensuring security. Proper tagging allows for better tracking, auditing, and automation of resource usage, thereby enhancing overall operational efficiency and governance.
+Enforcing tags on AMIs if they are older than 14 days is important for maintaining effective resource management and tracking. This practice ensures that aged AMIs are properly identified and classified, facilitating their management, compliance with organizational policies, and aiding in decisions related to their retention or deprecation.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 AMIs:
 
-- Delete and stop instances that do not have a specific tag associated with its attached AMI
+- Set tag `termination: true` if AMI is older than 14 days
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_amis_to_use_specific_approved_tags/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_tags_on_amis_if_they_are_older_than_14_days/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_amis_to_use_specific_approved_tags
+cd guardrails-samples/policy_packs/aws/ec2/enforce_tags_on_amis_if_they_are_older_than_14_days
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,13 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_approved" {
+resource "turbot_policy_setting" "aws_ec2_ami_tags" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-  # value    = "Check: Approved"
-  # value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
-  value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/amiTags"
+  # value    = "Check: Tags are correct"
+  value    = "Enforce: Set tags"
 }
 ```
 

@@ -4,7 +4,6 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   value    = "Check: Approved"
   # value    =  "Enforce: Stop unapproved"
-  # value    =  "Enforce: Stop unapproved if new"
   # value    =  "Enforce: Delete unapproved if new"
 }
 
@@ -36,40 +35,47 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
   EOT
   template       = <<-EOT
     {%- set hasIgw = false -%}
-    {%- set isApproved = true -%}
 
     {%- for item in $.resources.items -%}
+
       {%- if item.associations == $.item.subnetId -%}
+
         {%- for gateway in item.routes -%}
+
           {%- if 'igw' in gateway.GatewayId -%}
+
             {%- set hasIgw = true -%}
+
           {%- endif -%}
+
         {%- endfor -%}
+
       {%- endif -%}
+
     {%- endfor -%}
 
     {%- if not hasIgw -%}
 
       {%- set data = {
-          "title": "EC2 Instance Internet Access",
+          "title": "Internet Access Via Subnets",
           "result": "Approved",
-          "message": "EC2 instances are not allowed to have internet access via subnets"
+          "message": "Instance does not have internet access via subnets"
       } -%}
 
     {%- elif hasIgw -%}
 
       {%- set data = {
-          "title": "EC2 Instance Internet Access",
+          "title": "Internet Access Via Subnets",
           "result": "Not approved",
-          "message": "EC2 instances are allowed to have internet access via subnets"
+          "message": "Instance has internet access via subnets"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-         "title": "EC2 Instance Internet Access",
+         "title": "Internet Access Via Subnets",
           "result": "Skip",
-          "message": "No data for EC2 instance internet access yet"
+          "message": "No data for internet access yet"
       } -%}
 
     {%- endif -%}

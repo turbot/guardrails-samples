@@ -5,11 +5,11 @@ primary_category: "networking"
 
 # Enforce AWS EC2 Instances To Not Have Internet Access Via Subnets
 
-Enforcing the use of approved public AWS EC2 subnets is crucial for maintaining network security and compliance within an organization. This control ensures that only designated, secure subnets are used, preventing unauthorized access and reducing the risk of misconfigurations that could expose sensitive data or systems to potential threats.
+Enforcing that AWS EC2 instances do not have internet access via subnets is critical for maintaining a secure and controlled network environment. This measure ensures that instances are isolated from the internet, reducing the risk of unauthorized access and potential data breaches, and enhancing security by restricting outbound traffic to approved and monitored channels.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
 
-- Delete and stop instances that are are allowed to have internet access via subnets
+- Stop/Terminate instances that have internet access via subnets
 
 ## Documentation
 
@@ -91,9 +91,8 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   # value    = "Check: Approved"
-  # value    =  "Enforce: Stop unapproved"
-  # value    =  "Enforce: Stop unapproved if new"
-  value    =  "Enforce: Delete unapproved if new"
+  value    =  "Enforce: Stop unapproved"
+  # value    =  "Enforce: Delete unapproved if new"
 }
 ```
 

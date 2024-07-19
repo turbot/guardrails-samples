@@ -1,19 +1,20 @@
 ---
-categories: ["security", "storage"]
-primary_category: "security"
+categories: ["cost controls", "security", "tagging"]
+primary_category: "tagging"
 ---
 
-# Enforce AWS EC2 EBS Volumes Attached With An EC2 Instance
+# Enforce AWS EC2 AMIs Used By Instances To Use Specific Approved Tags
 
-Enforcing AWS EC2 EBS volumes are attached to an EC2 instance is critical for maintaining data accessibility and integrity. This practice prevents orphaned volumes, which can incur unnecessary costs and pose security risks if left unmanaged.
+Enforcing that AWS EC2 AMIs used by instances have specific approved tags is vital for maintaining resource organization, compliance, and effective management. This practice ensures that all instances are easily identifiable based on their purpose, environment, and other criteria, facilitating cost tracking, security management, and adherence to organizational policies and best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
 
-- Detach, snapshot and delete EBS volumes that are not attached with an EC2 instance
+- Set a list of approved tags for AMIs
+- Stop/Terminate instances if corresponding AMIs do not use specified tags
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_ebs_volumes_attached_with_an_instance/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_amis_used_by_instances_to_use_specific_approved_tags/settings)**
 
 ## Getting Started
 
@@ -53,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_ebs_volumes_attached_with_an_instance
+cd guardrails-samples/policy_packs/aws/ec2/enforce_amis_used_by_instances_to_use_specific_approved_tags
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,12 +88,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_volume_approved" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   # value    = "Check: Approved"
-  value    =  "Enforce: Detach unapproved if new"
-  # value    =  "Enforce: Detach, snapshot and delete unapproved if new"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

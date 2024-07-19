@@ -1,20 +1,19 @@
 ---
-categories: ["security", "tagging"]
-primary_category: "tagging"
+categories: ["cost controls", "security", "storage"]
+primary_category: "cost controls"
 ---
 
-# Enforce Tag on Alarm Control for AWS EC2 AMIs Older Than 14 Days
+# Enforce AWS EC2 EBS Volumes To Be Attached To An Instance
 
-Enforcing tags on alarms for AWS AMIs older than 14 days is crucial for maintaining resource management and operational efficiency. It ensures that outdated images are tracked and managed properly, reducing the risk of security vulnerabilities and optimizing cost by avoiding unnecessary storage of obsolete AMIs.
+Enforcing that AWS EC2 EBS volumes are attached to an instance is essential for optimizing resource usage and ensuring security. This practice helps avoid unnecessary costs associated with unattached volumes, reduces the risk of data exposure, and ensures that all storage resources are actively managed and utilized as intended.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for AMIs:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
 
-- Delete AMIs if older than 14 days
-- Set tag `termination: true` if the control is in alarm
+- Detach, snapshot and delete EBS volumes that are not attached to an instance
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_tag_on_alarm_control_for_amis_older_than_14_days/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_ebs_volumes_to_be_attached_to_an_instance/settings)**
 
 ## Getting Started
 
@@ -54,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_tag_on_alarm_control_for_amis_older_than_14_days
+cd guardrails-samples/policy_packs/aws/ec2/enforce_ebs_volumes_to_be_attached_to_an_instance
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,18 +87,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_ami_active" {
+resource "turbot_policy_setting" "aws_ec2_volume_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/amiActive"
-  # value    = "Check: Active"
-  value    = "Enforce: Delete inactive with 14 days warning"
-}
-
-resource "turbot_policy_setting" "aws_ec2_ami_tags" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/amiTags"
-  # value    = "Check: Tags are correct"
-  value    = "Enforce: Set tags"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
+  # value    = "Check: Approved"
+  value    =  "Enforce: Detach unapproved if new"
+  # value    =  "Enforce: Detach, snapshot and delete unapproved if new"
 }
 ```
 
