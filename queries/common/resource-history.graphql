@@ -1,0 +1,23 @@
+{
+  # Get the full history for a specific resource
+  resourceWithHistory: resource(id: "163137165459916") {
+    turbot {
+      title
+      id
+      tags
+      akas
+    }
+    history {
+      items {
+        turbot {
+          versionId
+          createTimestamp
+        }
+        object
+      }
+      paging {
+        next
+      }
+    }
+  }
+}

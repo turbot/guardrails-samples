@@ -41,7 +41,7 @@ resource "turbot_policy_setting" "aws_cis_r0101" {
   value = "Check: Level 1 (Scored)"
   count      = var.full_cis ? 1 : 0
 }
-
+ 
 resource "turbot_policy_setting" "aws_cis_r0102" {
   resource = turbot_smart_folder.aws_cis_enumerated.id
   type = "tmod:@turbot/aws-cisv1#/policy/types/r0102"

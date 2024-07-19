@@ -1,0 +1,17 @@
+# 178052069477783 is the turbot id for the AWS account(Resource to be moved)
+# and 178163693382845  is the turbot id for its new parent (it’s a folder)
+# As of now if we get a data validation error for this query
+# then used to include all required attributes in the data section
+mutation {
+  updateResource(
+    input: {
+      id: "178147832067446"
+      parent: "178326157417316"
+      data: { Id: "890124715803" }
+    }
+  ) {
+    turbot {
+      id
+    }
+  }
+}

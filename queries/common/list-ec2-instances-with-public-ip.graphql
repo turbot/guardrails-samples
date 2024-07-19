@@ -1,0 +1,63 @@
+# Description
+# -----------
+#
+# List all the EC2 instances managed by the workspace which have a public IP available.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list-ec2-instances-with-public-ip.graphql
+#
+
+# Filter
+# ------
+#
+# resourceTypeId:
+#   Filter resources of a specific resource type.
+#   In example, the resources type 'tmod:@turbot/aws-ec2#/resource/types/instance' is used
+#   which is the resource type`uri` for EC2 instances.
+#
+# $.PublicIpAddress:
+#   This addition to the filter will check if the `PublicIpAddress` property for the EC2 instance meets some criteria.
+#   In our example, we are only searching for EC2 instances that have a public IP Address.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+query ListEc2InstancesWithPublicIp {
+  EC2InstanceResourcesWithPublicIP: resources(
+    filter: "resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/instance' $.PublicIpAddress:!null"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      trunk {
+        title
+      }
+      type {
+        trunk {
+          title
+        }
+      }
+      data
+      Title: get(path: "turbot.title")
+      PublicIp: get(path: "PublicIpAddress")
+      InVpcId: get(path: "VpcId")
+      AssociatedSG: get(path: "SecurityGroups")
+      AWSAccount: get(path: "turbot.custom.aws.accountId")
+      AWSRegion: get(path: "turbot.custom.aws.regionName")
+      CreatedTimestamp: get(path: "turbot.createTimestamp")
+      UpdatedTimestamp: get(path: "turbot.updateTimestamp")
+    }
+  }
+}

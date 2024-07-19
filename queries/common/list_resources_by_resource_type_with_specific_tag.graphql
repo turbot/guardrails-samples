@@ -1,0 +1,42 @@
+# Description
+# -----------
+#
+# The query filteres out the s3 buckets that have tags key as 'new' and value starts with 'tes'.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_resources_by_resource_type_with_specific_tag.graphql
+#
+
+# Filter
+# ------
+#
+# resourceTypeId:
+#   Filter resources of a specific resource type.
+#   In example, the resources 'tmod:@turbot/aws-s3#/resource/types/bucket' (aka for s3 bucket) are returned.
+#
+# Searching tags with $.:
+#   Using $. one can filter resources using any property(here tags) of the object.
+#   In example, '$.turbot.tags.'new':/^tes-/' returnes any resource which has the key as 'new' and any value that starts with 'tes'.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+query ListResourcesByResourceTypeIdWithSpecificTag {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {
+    items {
+      turbot {
+        title
+      }
+      object
+    }
+  }
+}
