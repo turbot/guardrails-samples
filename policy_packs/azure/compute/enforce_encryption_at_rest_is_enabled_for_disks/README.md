@@ -1,20 +1,20 @@
 ---
 categories: ["storage", "security"]
 primary_category: "security"
-type: "featured"
 ---
 
-# Enforce Encryption at Rest is Enabled for Azure Compute Disks
+# Enforce Encryption at Rest Is Enabled For Azure Compute Disks
 
-Enforcing encryption at rest for Azure Compute Disks is crucial to protect sensitive data stored on virtual machines from unauthorized access and potential breaches. This security measure ensures that data remains confidential and secure, even if the physical storage media is compromised, by using strong encryption algorithms to render the data unreadable without the appropriate decryption keys.
+Enforcing encryption at rest for Azure Compute Disks via Disk Encryption Sets is crucial to protect sensitive data stored on virtual machines from unauthorized access and potential breaches. This security measure ensures that data remains confidential and secure, even if the physical storage media is compromised, by using strong encryption algorithms to render the data unreadable without the appropriate decryption keys.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute disks:
 
-- Set Customer Managed Key which should be used to encrypt disks
+- Set Disk Encryption Set to be used to encrypt disks
+- Enable Encryption at Rest
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_disk/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_disks/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/azure-compute)
+  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-compute)
 
 ### Credentials
 
@@ -54,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/compute/enforce_encryption_at_rest_is_enabled_for_disk
+cd guardrails-samples/policy_packs/azure/compute/enforce_encryption_at_rest_is_enabled_for_disks
 ```
 
 Run the Terraform to create the policy pack in your workspace:
