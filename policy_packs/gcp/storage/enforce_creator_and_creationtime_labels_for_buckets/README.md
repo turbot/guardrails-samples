@@ -1,6 +1,6 @@
 ---
 categories: ["storage", "tagging"]
-primary_category: ["tagging"]
+primary_category: "tagging"
 ---
 
 # Enforce Creator and Creation Time Labels for GCP Storage Buckets

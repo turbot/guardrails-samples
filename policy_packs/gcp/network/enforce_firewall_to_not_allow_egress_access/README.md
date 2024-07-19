@@ -1,6 +1,6 @@
 ---
 categories: ["data protection", "networking", "security"]
-primary_category: ["networking"]
+primary_category: "networking"
 ---
 
 # Enforce GCP Network Firewall To Not Allow Any Egress Access

@@ -1,6 +1,6 @@
 ---
 categories: ["access management", "security"]
-primary_category: ["access management"]
+primary_category: "access management"
 ---
 
 # Enforce Trusted Domains to Access GCP IAM Project Policy
