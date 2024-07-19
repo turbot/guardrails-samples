@@ -7,5 +7,4 @@ terraform {
 }
 
 provider "turbot" {
-  profile = "Parker"
 }
