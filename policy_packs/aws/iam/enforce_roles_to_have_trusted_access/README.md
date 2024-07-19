@@ -1,6 +1,6 @@
 ---
-categories: ["access management", "security", "storage"]
-primary_category: "security"
+categories: ["access management", "security"]
+primary_category: "access management"
 ---
 
 # Enforce AWS IAM Roles To Have Trusted Access
