@@ -26,7 +26,7 @@ resource "turbot_policy_setting" "aws_ec2_ami_tags_template" {
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-ec2#/policy/types/amiTagsTemplate"
   template_input = <<-EOT
-    -|
+    - |
       {
         item: region {
           turbot {
@@ -34,9 +34,9 @@ resource "turbot_policy_setting" "aws_ec2_ami_tags_template" {
           }
         }
       }
-    -|
+    - |
       {
-        controls(filter: "controlType:tmod:@turbot/aws-ec2#/control/types/amiActive resourceId:{{ $.item.turbot.id }}") {
+        controls(filter: "controlTypeId:tmod:@turbot/aws-ec2#/control/types/amiActive resourceId:{{ $.item.turbot.id }}") {
           items {
             state
           }

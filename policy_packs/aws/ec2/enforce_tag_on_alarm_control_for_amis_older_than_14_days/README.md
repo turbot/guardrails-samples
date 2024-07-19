@@ -9,7 +9,7 @@ Enforcing tags on alarms for AWS AMIs older than 14 days is crucial for maintain
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for AMIs:
 
-- Delete AMI if older than 14 days
+- Delete AMIs if older than 14 days
 - Set tag `termination: true` if the control is in alarm
 
 ## Documentation
