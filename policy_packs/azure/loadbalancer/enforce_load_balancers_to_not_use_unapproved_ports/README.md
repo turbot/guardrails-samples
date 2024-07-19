@@ -1,20 +1,20 @@
 ---
 categories: ["networking", "security"]
-primary_category: "security"
+primary_category: "networking"
 ---
 
 # Enforce Azure Load Balancer to not use Unapproved Network Configuration
 
-Ensuring that Azure Load Balancer does not use unapproved network configurations is crucial to maintaining network security and stability. It prevents potential vulnerabilities and misconfigurations that could lead to unauthorized access, data breaches, or service disruptions, thereby safeguarding the overall integrity and performance of the cloud environment.
+Enforcing that Azure Load Balancers do not use unapproved ports is essential for maintaining a secure network environment. This measure ensures that only approved and necessary ports are used, reducing the risk of unauthorized access and potential attacks, and enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Load Balancer load balancer:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for load balancers:
 
-- Set list of unapproved ports
-- Terminate load balancers that use unapproved network configurations
+- Set a list of unapproved ports
+- Delete load balancers that use unapproved ports
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_load_balancer_to_not_use_unapproved_network_configuration/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_load_balancers_to_not_use_unapproved_ports/settings)**
 
 ## Getting Started
 
@@ -54,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/cosmosdb/enforce_load_balancer_to_not_use_unapproved_network_configuration
+cd guardrails-samples/policy_packs/azure/loadbalancer/enforce_load_balancers_to_not_use_unapproved_ports
 ```
 
 Run the Terraform to create the policy pack in your workspace:
