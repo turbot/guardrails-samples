@@ -22,7 +22,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_acl_trusted_canonical_ids" {
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketAclTrustedCanonicalIds"
   # Your trusted canonical IDs
   value    = <<-EOT
-    - "1111222233334444555566667777888899990000abcd"
-    - "1111222233334444555566667777888899990000wxyz"
+    - "1111222233334444555566667777888899990000abcd88889999008888999900"
+    - "1111222233334444555566667777888899990000wxyz88889999008888999900"
     EOT
 }
