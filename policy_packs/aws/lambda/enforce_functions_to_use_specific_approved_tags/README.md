@@ -9,7 +9,7 @@ Enforcing approved usage of AWS Lambda functions is crucial to maintain security
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for lambda functions:
 
-- Delete lambda functions if specific tags not present
+- Delete lambda functions if specific tags are not present
 
 ## Documentation
 
