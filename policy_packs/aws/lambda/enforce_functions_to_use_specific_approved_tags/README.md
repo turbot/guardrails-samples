@@ -1,15 +1,16 @@
 ---
-categories: ["tagging", "security"]
+categories: ["cost controls", "tagging", "security"]
 primary_category: "tagging"
 ---
 
 # Enforce AWS Lambda Functions To Use Specific Approved Tags
 
-Enforcing approved usage of AWS Lambda functions is crucial to maintain security, compliance, and cost efficiency within an organization. It ensures that only authorized functions are executed, preventing potential vulnerabilities and misuse while optimizing resource allocation and controlling expenses.
+Enforcing that AWS Lambda functions use specific approved tags is crucial for maintaining organized and compliant cloud environments. This practice ensures proper resource management, cost tracking, and compliance with organizational policies by enabling the identification and classification of Lambda functions based on their purpose, environment, and other relevant criteria.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for lambda functions:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Lambda functions:
 
-- Delete lambda functions if specific tags are not present
+- Set a list of approved tags
+- Delete functions if specified tags are not present
 
 ## Documentation
 

@@ -17,45 +17,56 @@ resource "turbot_policy_setting" "aws_lambda_function_approved_custom" {
       }
     }
   EOT
-  # Replace dummy value for inputTagKeys in calculated policy
+  # Replace your list of approved tags in inputTagKeys
   template = <<-EOT
     {%- set tags = $.item.tags -%}
+
     {%- set inputTagKeys = ["name", "environment"] -%}
+
     {%- set tagsLength = tags | length -%}
+
     {%- set allTagsPresent = true -%}
+
     {%- set flag = true -%}
 
     {%- if tagsLength > 0 -%}
+
       {%- for key in inputTagKeys -%}
+
         {%- if flag and not key in tags -%}
+
           {%- set allTagsPresent = false -%}
+
           {%- set flag = false -%}
+
         {%- endif -%}
+
       {%- endfor -%}
+
     {%- endif -%}
 
     {%- if tagsLength > 0 and allTagsPresent -%}
 
       {%- set data = {
-          "title": "Lambda Functions Approved Tags",
+          "title": "Approved Tags",
           "result": "Approved",
-          "message": "Function contains specific tags"
+          "message": "Function has all approved tags"
       } -%}
 
     {%- elif tagsLength == 0 or not allTagsPresent -%}
 
       {%- set data = {
-          "title": "Lambda Functions Approved Tags",
+          "title": "Approved Tags",
           "result": "Not approved",
-          "message": "Function do not contain specific tags"
+          "message": "Function does not have all approved tags"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-         "title": "Lambda Functions Approved Tags",
+         "title": "Approved Tags",
           "result": "Skip",
-          "message": "No data for lambda function tags yet"
+          "message": "No data for function tags yet"
       } -%}
 
     {%- endif -%}

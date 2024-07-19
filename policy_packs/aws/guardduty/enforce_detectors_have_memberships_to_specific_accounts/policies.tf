@@ -15,34 +15,34 @@ resource "turbot_policy_setting" "aws_guardduty_detector_approved_custom" {
       item: detector {
         masterAccount: get(path: "Master.AccountId")
       }
+      approvedAccounts: constant(value: "['688720832423', '688720832465']")
     }
   EOT
   template       = <<-EOT
-    {# Replace dummy value with your account ID #}
     {%- set masterAccount = $.item.masterAccount -%}
 
-    {%- if masterAccount != null and masterAccount == "688720832404" or masterAccount == null -%}
+    {%- if masterAccount != null and masterAccount in $.approvedAccounts -%}
 
       {%- set data = {
-          "title": "GuardDuty Detector Master Account Usage",
+          "title": "GuardDuty Detector Membership",
           "result": "Approved",
-          "message": "GuardDuty detector membership to a specific master account"
+          "message": "GuardDuty detector is a member of approved account"
       } -%}
 
-    {%- elif masterAccount != null and masterAccount != "688720832404" -%}
+    {%- elif masterAccount != null and masterAccount not in $.approvedAccounts -%}
 
       {%- set data = {
-          "title": "GuardDuty Detector Master Account Usage",
+          "title": "GuardDuty Detector Membership",
           "result": "Not approved",
-          "message": "GuardDuty detector is not a membership to a specific master account"
+          "message": "GuardDuty detector is not a member of approved account"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-         "title": "GuardDuty Detector Master Account Usage",
+         "title": "GuardDuty Detector Membership",
           "result": "Skip",
-          "message": "No data for guardduty detector master account yet"
+          "message": "No data for detector yet"
       } -%}
 
     {%- endif -%}

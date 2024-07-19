@@ -1,19 +1,19 @@
 ---
-categories: ["security"]
+categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS GuardDuty Detectors Membership Restriction
+# Enforce AWS Lambda Functions to be in a VPC
 
-Enforcing approved usage for AWS GuardDuty Detectors is crucial to ensure that only authorized activities are monitored, minimizing security risks and ensuring compliance with organizational policies. This control helps prevent unauthorized access and usage, safeguarding sensitive data and maintaining the integrity of the security monitoring system.
+Enforcing that AWS Lambda functions are in a VPC is essential for enhancing the security and control of serverless applications. This measure ensures that Lambda functions can interact securely with resources within the VPC, utilize VPC security groups and network ACLs, and prevent unauthorized access by restricting outbound internet access, thereby aligning with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for guardduty detectors:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Lambda functions:
 
-- Delete guardduty detectors if not a master or member of a given master account
+- Delete functions that are not in a VPC
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_detectors_membership_restriction/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_functions_to_be_in_vpc/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws-guardduty](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-guardduty)
+  - [@turbot/aws-lambda](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-lambda)
 
 ### Credentials
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardduty/enforce_detectors_membership_restriction
+cd guardrails-samples/policy_packs/aws/lambda/enforce_functions_to_be_in_vpc
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,12 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_volume_approved" {
+resource "turbot_policy_setting" "aws_lambda_function_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
+  type     = "tmod:@turbot/aws-lambda#/policy/types/functionApproved"
   # value    = "Check: Approved"
-  value    =  "Enforce: Detach unapproved if new"
-  # value    =  "Enforce: Detach, snapshot and delete unapproved if new"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

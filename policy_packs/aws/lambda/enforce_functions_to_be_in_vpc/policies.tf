@@ -23,25 +23,25 @@ resource "turbot_policy_setting" "aws_lambda_function_approved_custom" {
     {% if vpcConfig.VpcId -%}
 
       {%- set data = {
-          "title": "Lambda Function in VPC",
+          "title": "Function in VPC",
           "result": "Approved",
-          "message": "Function can access resources within a VPC"
+          "message": "Function is within a VPC"
       } -%}
 
     {%- elif not vpcConfig.VpcId -%}
 
       {%- set data = {
-          "title": "Lambda Function in VPC",
+          "title": "Function in VPC",
           "result": "Not approved",
-          "message": "Function cannot access resources within a VPC"
+          "message": "Function is not within a VPC"
       } -%}
 
     {%- else -%}
 
       {%- set data = {
-         "title": "Lambda Function in VPC",
+         "title": "Function in VPC",
           "result": "Skip",
-          "message": "No data for VPC configuration yet"
+          "message": "No data for VPC yet"
       } -%}
 
     {%- endif -%}
