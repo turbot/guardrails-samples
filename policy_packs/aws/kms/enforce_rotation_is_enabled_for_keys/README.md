@@ -1,6 +1,7 @@
 ---
 categories: ["data protection", "security"]
 primary_category: "data protection"
+type: "featured"
 ---
 
 # Enforce Key Rotation for AWS KMS Keys
@@ -9,7 +10,7 @@ Enforcing key rotation for AWS KMS (Key Management Service) keys is crucial for 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS keys:
 
-- Enforce key rotation for keys
+- Enforce rotation is enabled for keys
 
 ## Documentation
 
@@ -87,11 +88,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_kms_key_rotation_enabled" {
+resource "turbot_policy_setting" "aws_turbot_service_roles_configured" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-kms#/policy/types/keyRotation"
-  # value    = "Check: Enabled"
-  value    = "Enforce: Enabled"
+  type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 ```
 

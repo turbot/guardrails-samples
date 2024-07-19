@@ -1,6 +1,7 @@
 ---
 categories: ["compliance", "security"]
 primary_category: "security"
+type: "featured"
 ---
 
 # Enforce Scan On Push Is Enabled for AWS ECR Repositories
@@ -87,11 +88,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_s3_bucket_access_logging" {
+resource "turbot_policy_setting" "aws_ecr_repository_scan_on_push_enabled" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-s3#/policy/types/bucketAccessLogging"
+  type     = "tmod:@turbot/aws-ecr#/policy/types/repositoryScanOnPush"
   # value    = "Check: Enabled"
-  value    = "Enforce: Enabled to Access Logging > Bucket"
+  value    = "Enforce: Enabled"
 }
 ```
 

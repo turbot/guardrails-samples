@@ -1,6 +1,7 @@
 ---
 categories: ["access management", "security"]
 primary_category: "access management"
+type: "featured"
 ---
 
 # Enforce Service Role for Various Services
@@ -9,10 +10,12 @@ Enforcing the use of service roles for various services is crucial to maintain a
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for following services:
 
-- Enforce service role for services
-- Enforce service role for config service
-- Enforce service role for EC2 service
-- Enforce config role for VPC flow logging service
+- Create all respective service roles that are enabled
+- Enable service role for configuration recording
+- Enable service role for default EC2 instance
+- Enable service role for flow logging
+- Enable service role for SSM notification
+- Enable service role for global event handler
 
 ## Documentation
 
