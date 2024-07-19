@@ -14,7 +14,6 @@ resource "turbot_policy_setting" "azure_securitycenter_defender_plan_resource_ty
   note     = "Azure CIS v2.0.0 - Controls: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8, 2.1.9, 2.1.10, 2.1.11 and 2.1.12"
   value    = <<-EOT
     - "Servers"
-    - "API"
     - "App Service"
     - "Azure SQL Databases"
     - "Cloud Posture"

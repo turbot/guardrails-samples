@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["cis", "compliance", "logging", "networking"]
+primary_category: "compliance"
 ---
 
 # GCP CIS v2.0.0 - Section 2 - Logging and Monitoring
@@ -105,6 +106,14 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
   note     = "GCP CIS v2.0.0 - Control: 2.3"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
+}
+
+resource "turbot_policy_setting" "gcp_project_stack" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/gcp#/policy/types/projectStack"
+  note     = "GCP CIS v2.0.0 - Controls: 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10 and 2.11"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 
 resource "turbot_policy_setting" "gcp_dns_dns_policy_logging" {

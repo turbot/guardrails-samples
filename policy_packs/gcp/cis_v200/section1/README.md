@@ -1,5 +1,6 @@
 ---
-categories: ["CIS"]
+categories: ["access management", "cis", "compliance", "data protection"]
+primary_category: "compliance"
 ---
 
 # GCP CIS v2.0.0 - Section 1 - Identity and Access Management

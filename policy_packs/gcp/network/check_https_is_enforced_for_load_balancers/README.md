@@ -1,5 +1,6 @@
 ---
-categories: ["Networking"]
+categories: ["networking", "security"]
+primary_category: "networking"
 ---
 
 # Check If GCP Network Load Balancers Enforce HTTPS to Manage Encrypted Web Traffic

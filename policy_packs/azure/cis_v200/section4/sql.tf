@@ -13,7 +13,7 @@ resource "turbot_policy_setting" "azure_sql_server_auditing_storage_account" {
   type     = "tmod:@turbot/azure-sql#/policy/types/serverAuditingStorageAccount"
   note     = "Azure CIS v2.0.0 - Control: 4.1.1 and 4.1.6"
   # Your storage account name
-  value = "myStorageAccount"
+  value = "mystorageaccount"
 }
 
 # Azure > SQL > Server > Auditing > Retention Days
@@ -120,7 +120,7 @@ resource "turbot_policy_setting" "azure_sql_server_vulnerability_assessment_stor
   type     = "tmod:@turbot/azure-sql#/policy/types/serverVulnerabilityAssessmentStorageAccount"
   note     = "Azure CIS v2.0.0 - Control: 4.2.2"
   # Your storage account name
-  value = "myStorageAccount"
+  value = "mystorageaccount"
 }
 
 # Azure > SQL > Server > Advanced Data Security > Vulnerability Assessment > Periodic Scans
