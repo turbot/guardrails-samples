@@ -93,7 +93,7 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "turbot_serviceroles_configured" {
+resource "turbot_policy_setting" "aws_turbot_service_roles_configured" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
   # value    = "Check: Configured"
