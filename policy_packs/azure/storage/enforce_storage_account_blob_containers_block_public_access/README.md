@@ -3,15 +3,15 @@ categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Azure Storage Blob Containers Block Public Access
+# Enforce Azure Storage Account Blob Containers Block Public Access
 
-Enforcing Azure Storage Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
+Enforcing Azure Storage Account Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 
 - Enforce block blob public access is set to Enabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_blob_containers_block_public_access/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_storage_account_blob_containers_block_public_access/settings)**
 
 ## Getting Started
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_blob_containers_block_public_access
+cd guardrails-samples/policy_packs/azure/storage/enforce_storage_account_blob_containers_block_public_access
 ```
 
 Run the Terraform to create the policy pack in your workspace:
