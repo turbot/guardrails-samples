@@ -41,8 +41,8 @@ resource "turbot_policy_setting" "aws_s3_bucket_policy_trusted_organizations" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketPolicyTrustedOrganizations"
   value    = <<-EOT
-    - "o-333333333"
-    - "o-333333444"
+    - "o-c3a5x8sd31"
+    - "o-c3a5x8sd11"
     EOT
 }
 
@@ -51,8 +51,8 @@ resource "turbot_policy_setting" "aws_s3_bucket_policy_trusted_organization_path
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-s3#/policy/types/bucketPolicyTrustedOrganizationPaths"
   value    = <<-EOT
-    - "o-333333333/r-wxnb/ou-wxnb-dasdtpaq/ou-*"
-    - "o-444444444/r-wxnb/ou-wxnb-dfadtpaq/*"
+    - "o-c3a5x8sd31/r-wxnb/ou-wxnb-dasdtpaq/ou-*"
+    - "o-c3a5x8sd11/r-wxnb/ou-wxnb-dfadtpaq/*"
     EOT
 }
 
