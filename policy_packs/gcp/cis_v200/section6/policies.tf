@@ -150,7 +150,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_authorized_network_approved_c
   note     = "GCP CIS v2.0.0 - Control: 6.5"
   # List of approved CIDR ranges
   value = <<-EOT
-    - "10.2.1.2"
+    - "10.2.1.2/24"
     - "172.141.23.22/26"
   EOT
 }
