@@ -1,17 +1,17 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: "tagging"
+categories: ["compute", "security"]
+primary_category: "security"
 ---
+# Enforce GCP Compute Engine Instances To Not Use Unapproved Images
 
-# Enforce Creator and Creation Time Labels for GCP Storage Buckets
+Enforcing GCP Compute Engine instances to not use unapproved images is crucial for maintaining security, compliance, and consistency across the infrastructure. It ensures that all instances adhere to organizational standards, reducing the risk of vulnerabilities, unauthorized software, and potential breaches.
 
-Enforcing Creator and Creation Time labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute Engine instances:
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+- Set list of approved image IDs
+- Stop/Terminate instances that use unapproved images
 
-- Enforce `creator` and `creationTime` tags
-
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_and_creationtime_labels_for_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_use_unapproved_images/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-computeengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-computeengine)
 
 ### Credentials
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_creator_and_creationtime_labels_for_buckets
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_unapproved_images
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +85,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
+resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

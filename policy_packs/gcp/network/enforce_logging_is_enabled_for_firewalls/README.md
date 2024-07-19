@@ -1,17 +1,17 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: "tagging"
+categories: ["logging", "networking"]
+primary_category: "logging"
 ---
 
-# Enforce Creator and Creation Time Labels for GCP Storage Buckets
+# Enforce Logging Is Enabled for GCP Network Firewalls
 
-Enforcing Creator and Creation Time labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+Enforcing GCP VPC Network Firewall Logging is essential for maintaining comprehensive visibility and auditing capabilities of network traffic. This control helps detect and investigate security incidents, monitor policy compliance, and ensure timely response to potential threats by capturing detailed logs of all firewall activity.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Network firewalls:
 
-- Enforce `creator` and `creationTime` tags
+- Enable logging
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_and_creationtime_labels_for_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_logging_is_enabled_for_firewall/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
 
 ### Credentials
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_creator_and_creationtime_labels_for_buckets
+cd guardrails-samples/policy_packs/gcp/network/enforce_logging_is_enabled_for_firewall
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
+resource "turbot_policy_setting" "gcp_network_firewall_logging_enabled" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+  type     = "tmod:@turbot/gcp-network#/policy/types/firewallLogging"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 

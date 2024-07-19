@@ -1,25 +1,31 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: "tagging"
+categories: ["access management", "security"]
+primary_category: "access management"
 ---
 
-# Enforce Creator and Creation Time Labels for GCP Storage Buckets
+# Enforce Enable AWS IAM Service Roles
 
-Enforcing Creator and Creation Time labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+Enforcing the enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following for service roles:
 
-- Enforce `creator` and `creationTime` tags
+- Create IAM service role for configuration recording
+- Create IAM service role for default EC2 instance
+- Create IAM service role for flow logging
+- Create IAM service role for SSM notification
+- Create IAM service role for Guardrails global event handlers
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_and_creationtime_labels_for_buckets/settings)**
+## Documentation
+
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_iam_service_roles/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
 
 ### Credentials
 
@@ -51,7 +57,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_creator_and_creationtime_labels_for_buckets
+cd guardrails-samples/policy_packs/aws/guardrails/enforce_enable_iam_service_roles
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -69,6 +75,9 @@ terraform apply
 
 ### Apply Policy Pack
 
+> [!IMPORTANT]
+> Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
+
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
@@ -85,11 +94,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
+resource "turbot_policy_setting" "aws_turbot_service_roles_configured" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+  type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 ```
 

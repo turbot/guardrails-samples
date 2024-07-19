@@ -1,25 +1,25 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: "tagging"
+categories: ["security", "storage"]
+primary_category: "security"
 ---
 
-# Enforce Creator and Creation Time Labels for GCP Storage Buckets
+# Enforce Azure Storage Account Blob Containers Block Public Access
 
-Enforcing Creator and Creation Time labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+Enforcing Azure Storage Account Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
 
-- Enforce `creator` and `creationTime` tags
+- Enforce block blob public access is set to Enabled
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_and_creationtime_labels_for_buckets/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_storage_account_blob_containers_block_public_access/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/azure-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-storage)
 
 ### Credentials
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_creator_and_creationtime_labels_for_buckets
+cd guardrails-samples/policy_packs/azure/storage/enforce_storage_account_blob_containers_block_public_access
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
+resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 

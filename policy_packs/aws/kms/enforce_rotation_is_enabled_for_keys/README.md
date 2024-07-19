@@ -1,25 +1,27 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: "tagging"
+categories: ["data protection", "security"]
+primary_category: "data protection"
 ---
 
-# Enforce Creator and Creation Time Labels for GCP Storage Buckets
+# Enforce Rotation is Enabled on AWS KMS Keys
 
-Enforcing Creator and Creation Time labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+Enforcing rotation for AWS KMS keys is essential for maintaining the security and integrity of encrypted data. Regular key rotation ensures that cryptographic keys are periodically updated, reducing the risk of key compromise and enhancing overall security, while also ensuring compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS keys:
 
-- Enforce `creator` and `creationTime` tags
+- Enable rotation
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_and_creationtime_labels_for_buckets/settings)**
+## Documentation
+
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_rotation_is_enabled_for_keys/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/aws-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-kms)
 
 ### Credentials
 
@@ -51,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_creator_and_creationtime_labels_for_buckets
+cd guardrails-samples/policy_packs/aws/kms/enforce_rotation_is_enabled_for_keys
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
+resource "turbot_policy_setting" "aws_kms_key_rotation_enabled" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+  type     = "tmod:@turbot/aws-kms#/policy/types/keyRotation"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 

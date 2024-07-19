@@ -1,6 +1,6 @@
 ---
 categories: ["cost controls", "storage"]
-primary_category: ["cost controls"]
+primary_category: "cost controls"
 ---
 
 # Enforce GCP Storage Buckets to Not Be Older Than 7 Days

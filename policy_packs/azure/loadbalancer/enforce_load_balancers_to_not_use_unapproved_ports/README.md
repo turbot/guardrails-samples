@@ -1,25 +1,28 @@
 ---
-categories: ["storage", "tagging"]
-primary_category: "tagging"
+categories: ["networking", "security"]
+primary_category: "networking"
 ---
 
-# Enforce Creator and Creation Time Labels for GCP Storage Buckets
+# Enforce Azure Load Balancer to not use Unapproved Network Configuration
 
-Enforcing Creator and Creation Time labels for GCP Storage Buckets is important for effective tracking and auditing of data assets. These labels provide critical metadata that helps in identifying the origin and creation time of storage buckets, enhancing accountability and facilitating compliance with data governance policies.
+Enforcing that Azure Load Balancers do not use unapproved ports is essential for maintaining a secure network environment. This measure ensures that only approved and necessary ports are used, reducing the risk of unauthorized access and potential attacks, and enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for load balancers:
 
-- Enforce `creator` and `creationTime` tags
+- Set a list of unapproved ports
+- Delete load balancers that use unapproved ports
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_creator_and_creationtime_labels_for_buckets/settings)**
+## Documentation
+
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_load_balancers_to_not_use_unapproved_ports/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/azure-loadbalancer](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-loadbalancer)
 
 ### Credentials
 
@@ -51,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_creator_and_creationtime_labels_for_buckets
+cd guardrails-samples/policy_packs/azure/loadbalancer/enforce_load_balancers_to_not_use_unapproved_ports
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,11 +88,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_labels" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketLabels"
-  # value    = "Check: Labels are correct"
-  value    = "Enforce: Set labels"
+resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved" {
+  resource = turbot_smart_folder.main.id
+  type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

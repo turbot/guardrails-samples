@@ -1,6 +1,6 @@
 ---
 categories: ["data protection", "security", "storage"]
-primary_category: ["security"]
+primary_category: "security"
 ---
 
 # Enforce Encryption at Rest is Enabled for GCP Storage Buckets

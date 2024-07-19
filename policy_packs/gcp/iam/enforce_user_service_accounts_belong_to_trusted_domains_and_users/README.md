@@ -1,6 +1,6 @@
 ---
 categories: ["access management", "security"]
-primary_category: ["access management"]
+primary_category: "access management"
 ---
 
 # Enforce GCP IAM User-Managed Service Accounts Belong To Trusted Domains And Users
