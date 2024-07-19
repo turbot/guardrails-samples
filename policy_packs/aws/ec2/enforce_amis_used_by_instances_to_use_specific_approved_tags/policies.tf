@@ -57,7 +57,6 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
         {%- endif -%}
 
       {%- endfor -%}
-
     {%- endif -%}
 
     {%- if tagsLength > 0 and allTagsPresent -%}
