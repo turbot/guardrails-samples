@@ -1,7 +1,6 @@
 ---
 categories: ["data protection", "security"]
 primary_category: "data protection"
-type: "featured"
 ---
 
 # Enforce Key Rotation for AWS KMS Keys
