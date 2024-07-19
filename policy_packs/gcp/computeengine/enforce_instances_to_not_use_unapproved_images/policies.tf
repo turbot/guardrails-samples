@@ -25,7 +25,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
     }
   - |
     {
-      disks: resources(filter: "resourceTypeId:'tmod:@turbot/gcp-computeengine#/resource/types/disk' $.name:{{ $.resource.rootDiskName }} resourceId:{{ $.project.turbot.id }} resourceTypeLevel:self") {
+      disks: resources(filter: "resourceTypeId:'tmod:@turbot/gcp-computeengine#/resource/types/disk' $.name:'{{ $.resource.rootDiskName }}' resourceId:{{ $.project.turbot.id }} resourceTypeLevel:self") {
         items {
           sourceImage: get(path: "sourceImage")
           sourceImageId: get(path: "sourceImageId")
@@ -39,17 +39,17 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved_custom" {
   {%- if $.disks.items | length > 0 and $.disks.items[0].sourceImageId in $.approvedImageIds -%}
 
     {%- set data = {
-        "title": "Image"
-        "result": "Approved"
-        "message": Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is approved for use
+        "title": "Image",
+        "result": "Approved",
+        "message": "Image is approved for use"
     } -%}
 
   {%- elif $.disks.items | length > 0 and $.disks.items[0].sourceImageId not in $.approvedImageIds -%}
 
     {%- set data = {
-        "title": "Image"
-        "result": "Not approved"
-        "message": Image {{ $.disks.items[0].sourceImage.split('/').pop() }} is not approved for use
+        "title": "Image",
+        "result": "Not approved",
+        "message": "Image is not approved for use"
     } -%}
   
   {%- else -%}
