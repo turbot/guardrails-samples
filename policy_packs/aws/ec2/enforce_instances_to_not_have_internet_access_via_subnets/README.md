@@ -1,24 +1,27 @@
 ---
-categories: ["Storage"]
+categories: ["networking", "security"]
+primary_category: "networking"
 ---
 
-# Enforce Azure Storage Blob Containers Block Public Access
+# Enforce AWS EC2 Instances To Not Have Internet Access Via Subnets
 
-Enforcing Azure Storage Blob Containers to not allow public access is crucial for protecting sensitive data from unauthorized access and potential breaches. By restricting public access, organizations can ensure that only authenticated and authorized users can interact with the stored data, thus enhancing security and compliance with data protection regulations.
+Enforcing that AWS EC2 instances do not have internet access via subnets is critical for maintaining a secure and controlled network environment. This measure ensures that instances are isolated from the internet, reducing the risk of unauthorized access and potential data breaches, and enhancing security by restricting outbound traffic to approved and monitored channels.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
 
-- Enforce block blob public access is set to Enabled
+- Stop/Terminate instances that have internet access via subnets
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_blob_containers_block_public_access/settings)**
+## Documentation
+
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_not_have_internet_access_via_subnets/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/azure-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-storage)
+  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
 
 ### Credentials
 
@@ -50,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_blob_containers_block_public_access
+cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_to_not_have_internet_access_via_subnets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -84,11 +87,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_storage_storage_account_blob_public_access" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountPublicAccess"
-  # value    = "Check: Enabled"
-  value    = "Enforce: Enabled"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
+  # value    = "Check: Approved"
+  value    =  "Enforce: Stop unapproved"
+  # value    =  "Enforce: Delete unapproved if new"
 }
 ```
 
