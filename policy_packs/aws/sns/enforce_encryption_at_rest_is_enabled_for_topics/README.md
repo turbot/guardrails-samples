@@ -1,6 +1,6 @@
 ---
-categories: ["security", "data protection"]
-primary_category: "security"
+categories: ["data protection", "security"]
+primary_category: "data protection"
 ---
 
 # Enforce Encryption at Rest Is Enabled for AWS SNS Topics
