@@ -1,7 +1,6 @@
 ---
 categories: ["logging", "networking"]
 primary_category: "logging"
-type: "featured"
 ---
 
 # Enforce Logging Is Enabled for GCP Network Firewall

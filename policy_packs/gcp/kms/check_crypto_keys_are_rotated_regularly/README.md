@@ -1,7 +1,6 @@
 ---
 categories: ["data protection", "security"]
 primary_category: "data protection"
-type: "featured"
 ---
 
 # Enforce GCP KMS Crypto Keys to be rotated on regular basis

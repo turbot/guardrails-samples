@@ -1,7 +1,6 @@
 ---
 categories: ["access management", "security"]
 primary_category: "access management"
-type: "featured"
 ---
 
 # Enforce Service Role for Various Services

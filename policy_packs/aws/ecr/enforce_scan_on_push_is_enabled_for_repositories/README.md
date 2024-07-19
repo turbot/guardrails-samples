@@ -1,7 +1,6 @@
 ---
 categories: ["compliance", "security"]
 primary_category: "security"
-type: "featured"
 ---
 
 # Enforce Scan On Push Is Enabled for AWS ECR Repositories
