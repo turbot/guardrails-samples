@@ -43,12 +43,19 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
     {%- set flag = true -%}
 
     {%- if tagsLength > 0 -%}
+
       {%- for key in inputTagKeys -%}
+
         {%- if flag and key not in tags -%}
+
           {%- set allTagsPresent = false -%}
+
           {%- set flag = false -%}
+
         {%- endif -%}
+
       {%- endfor -%}
+      
     {%- endif -%}
 
     {%- if tagsLength > 0 and allTagsPresent -%}

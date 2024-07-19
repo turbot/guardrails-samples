@@ -39,13 +39,21 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved_custom" {
     {%- set isApproved = true -%}
 
     {%- for item in $.resources.items -%}
+    
       {%- if item.associations == $.item.subnetId -%}
+      
         {%- for gateway in item.routes -%}
+        
           {%- if 'igw' in gateway.GatewayId -%}
+          
             {%- set hasIgw = true -%}
+            
           {%- endif -%}
+          
         {%- endfor -%}
+        
       {%- endif -%}
+      
     {%- endfor -%}
 
     {%- if not hasIgw -%}
