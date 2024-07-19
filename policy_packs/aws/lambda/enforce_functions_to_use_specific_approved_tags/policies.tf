@@ -8,8 +8,9 @@ resource "turbot_policy_setting" "aws_lambda_function_approved" {
 
 # AWS > Lambda > Function > Approved > Custom
 resource "turbot_policy_setting" "aws_lambda_function_approved_custom" {
-  resource       = turbot_policy_pack.main.id
-  type           = "tmod:@turbot/aws-lambda#/policy/types/functionApprovedCustom"
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws-lambda#/policy/types/functionApprovedCustom"
+  # Replace dummy value for inputTagKey in GraphQL query
   template_input = <<-EOT
     {
       inputTagKey: constant(value: "name")

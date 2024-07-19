@@ -3,17 +3,17 @@ categories: ["tagging", "security"]
 primary_category: "tagging"
 ---
 
-# Enforce Tags For AWS Lambda Functions
+# Enforce AWS Lambda Functions To Use Specific Approved Tags
 
 Enforcing approved usage of AWS Lambda functions is crucial to maintain security, compliance, and cost efficiency within an organization. It ensures that only authorized functions are executed, preventing potential vulnerabilities and misuse while optimizing resource allocation and controlling expenses.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for lambda functions:
 
-- Delete lambda functions if specific tag not present
+- Delete lambda functions if specific tags not present
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_tags_for_functions/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_functions_to_use_specific_approved_tags/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/lambda/enforce_tags_for_functions
+cd guardrails-samples/policy_packs/aws/lambda/enforce_functions_to_use_specific_approved_tags
 ```
 
 Run the Terraform to create the policy pack in your workspace:
