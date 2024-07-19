@@ -1,19 +1,19 @@
 ---
 categories: ["networking", "security"]
-primary_category: "networking"
+primary_category: "security"
 ---
 
-# Enforce to Not Use Unapproved Internet Gateways
+# Enforce AWS VPC Internet Gateways to Not Exist
 
-Enforcing the use of only approved Internet Gateways is crucial to maintaining the security and integrity of a network. It helps prevent unauthorized access, ensures compliance with security policies, and mitigates the risk of data breaches by controlling the flow of traffic between the internal network and the internet.
+Enforcing that AWS VPC Internet Gateways do not exist is essential for maintaining a highly secure network environment by preventing direct internet access to and from your VPCs. This measure minimizes the attack surface, reduces the risk of unauthorized access and potential data breaches, and ensures that all external connectivity is tightly controlled and monitored through alternative, more secure methods.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC internet gateways:
 
-- Delete Internet Gateways that is not approved for usage
+- Detach/Delete internet gateways if available
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_usage_restriction_on_all_igws/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_internet_gateways_to_not_exist/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/vpc/enforce_usage_restriction_on_all_igws
+cd guardrails-samples/policy_packs/aws/vpc/enforce_internet_gateways_to_not_exist
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,12 +87,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "vpc_igw_approved" {
+resource "turbot_policy_setting" "vpc_internet_gateway_approved" {
   resource = turbot_smart_folder.vpc_restrict_igw.id
   type     = "tmod:@turbot/aws-vpc-internet#/policy/types/internetGatewayApproved"
   # value    = "Check: Approved"
-  # value    = "Enforce: Detach unapproved"
-  value    = "Enforce: Delete unapproved if new"
+  value    = "Enforce: Detach unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 
 ```

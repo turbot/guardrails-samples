@@ -3,17 +3,17 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce to Not Use Unapproved NAT Gateways
+# Enforce NAT Gateways To Not Exist
 
-Enforcing the use of only approved NAT Gateways is crucial to ensure network security, cost control, and compliance with organizational policies. Unauthorized NAT Gateways can introduce vulnerabilities, increase expenses, and lead to potential breaches of compliance standards.
+Enforcing that NAT Gateways do not exist in your AWS environment is crucial for ensuring that private instances remain completely isolated from the internet. This measure prevents any outbound internet traffic from private subnets, reducing the risk of data exfiltration, unauthorized access, and potential security breaches, thereby enhancing overall network security and compliance with stringent security policies.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC nat gateways:
 
-- Delete Nat Gateways that is not approved for usage
+- Delete Nat Gateways if available
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_usage_restriction_on_all_nat_gateways/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_nat_gateways_to_not_exist/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/vpc/enforce_usage_restriction_on_all_nat_gateways
+cd guardrails-samples/policy_packs/aws/vpc/enforce_nat_gateways_to_not_exist
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,7 +87,7 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "vpc_natgw_approved" {
+resource "turbot_policy_setting" "vpc_nat_gateway_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-internet#/policy/types/natGatewayApproved"
   # value    = "Check: Approved"
