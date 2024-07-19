@@ -24,14 +24,14 @@ resource "turbot_policy_setting" "aws_iam_account_password_policy_settings_hard_
 resource "turbot_policy_setting" "iam_account_password_policy_settings_max_age" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettingsMaxAge"
-  value    = "90" //permitted values are between 1 and 1095
+  value    = 90 //permitted values are between 1 and 1095
 }
 
 # AWS > IAM > Account Password Policy > Settings > Minimum Length
 resource "turbot_policy_setting" "iam_account_password_policy_settings_minimum_length" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettingsMinimumLength"
-  value    = "14" //permitted values are between 6 and 128
+  value    = 14 //permitted values are between 6 and 128
 }
 
 # AWS > IAM > Account Password Policy > Settings > Require Lowercase Characters
@@ -66,5 +66,5 @@ resource "turbot_policy_setting" "iam_account_password_policy_settings_require_u
 resource "turbot_policy_setting" "iam_account_password_policy_settings_reuse_prevention" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/accountPasswordPolicySettingsReusePrevention"
-  value    = "Enabled"
+  value    = 5 //permitted values are between 1 and 24
 }
