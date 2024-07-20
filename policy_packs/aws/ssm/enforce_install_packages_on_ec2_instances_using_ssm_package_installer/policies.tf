@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "aws_ssm_stack" {
 
 # AWS > SSM > Stack > Source
 resource "turbot_policy_setting" "ssm_stack_source" {
-  resource = var.region_resource
+  resource = var.region_arn
   type     = "tmod:@turbot/aws-ssm#/policy/types/ssmStackSource"
   value    = <<-EOT
     # Creates a SSM Command Document which installs package on Linux Instance from OS package source repository
@@ -103,7 +103,7 @@ resource "turbot_policy_setting" "ssm_stack_source" {
             type: String
             description: (Required) The bucket where the package will be stored
             minChars: 1
-        assumeRole: "${var.ssm_document_role}"
+        assumeRole: "${var.ssm_document_role_arn}"
         mainSteps:
           # This script execution runs on Systems Manager sandbox, charges may apply
           - name: DownloadPackageToS3

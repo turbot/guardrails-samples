@@ -3,9 +3,9 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Install Packages On Instances Using AWS SSM Package Installer
+# Enforce Install Packages on AWS EC2 Instances Using AWS SSM Package Installer
 
-Enforcing the installation of packages on instances using the AWS SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
+Enforcing the installation of packages on EC2 instances using the AWS SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
 
@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_install_packages_on_instances_using_ssm_package_installer/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_install_packages_on_ec2_instances_using_ssm_package_installer/settings)**
 - Using the SSM documents
   - There are two entry point types:
     - Turbot-LinuxPackageInstaller-PublicNetwork
@@ -52,8 +52,8 @@ This document should never be directly run but is a helper document to install t
 - Guardrails mods:
   - [@turbot/aws-ssm](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ssm)
 - AWS configuration to run the stack control:
-  - S3 Bucket to store packages
-  - A role for SSM document execution with the following configured permissions:
+  - S3 bucket to store packages
+  - An IAM role for SSM document execution with the following configured permissions:
     - SSM
       - DescribeInstanceInformation
       - ListCommandInvocations
@@ -61,7 +61,7 @@ This document should never be directly run but is a helper document to install t
       - SendCommand
     - S3
       - PutObject
-  - A role for the instance with the following configured polices:
+  - An IAM role for the EC2 instance with the following configured polices:
     - AmazonSSMManagedInstanceCore
     - AmazonS3ReadOnlyAccess
 
@@ -95,7 +95,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ssm/enforce_install_packages_on_instances_using_ssm_package_installer
+cd guardrails-samples/policy_packs/aws/ssm/enforce_install_packages_on_ec2_instances_using_ssm_package_installer
 ```
 
 Set the variable values:
@@ -107,10 +107,10 @@ vi default.tfvars
 
 ```hcl
 # Turbot Resource ARN for the AWS Region where SSM Documents will be placed. For example: 'arn:aws::us-east-1:123456789012'
-region_resource = "<ssm_document_role_arn>"
+region_arn = "<ssm_document_role_arn>"
 
 # AWS IAM Role ARN to be used by SSM to run documents. For example: 'arn:aws:iam::999999999999:role AmazonSSMRoleForAutomationAssumeQuickSetup'
-ssm_document_role = "<ssm_document_role_arn>"
+ssm_document_role_arn = "<ssm_document_role_arn>"
 ```
 
 Run the Terraform to create the policy pack in your workspace:
