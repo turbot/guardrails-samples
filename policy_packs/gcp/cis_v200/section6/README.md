@@ -44,7 +44,8 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 > By default, installed policy packs are not attached to any resources.
 >
 > Policy packs must be attached to resources in order for their policy settings to take effect.
-> Clone:
+
+Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
