@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing encryption by default for AWS EC2 account attributes is crucial for safeguarding sensitive data. It ensures that all data stored on EC2 instances is automatically encrypted, reducing the risk of unauthorized access and enhancing compliance with security standards and regulations.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 account attributes:
 
 - Enforce EC2 account attributes that do not have Encryption by Default enabled
 
@@ -88,7 +88,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_account_attribute_encryption_by_default" {
-  resource = turbot_smart_folder.aws_ec2_encryption_by_default.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2AccountAttributesEbsEncryptionByDefault"
   # value    = "Check: AWS managed key or higher"
   value    = "Enforce: AWS managed key or higher"
