@@ -51,19 +51,61 @@ This document should never be directly run but is a helper document to install t
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
   - [@turbot/aws-ssm](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ssm)
-- AWS configuration to run the stack control:
+- AWS resources to run the stack control:
   - S3 bucket to store packages
   - An IAM role for SSM document execution with the following configured permissions:
-    - SSM
-      - DescribeInstanceInformation
-      - ListCommandInvocations
-      - ListCommands
-      - SendCommand
-    - S3
-      - PutObject
-  - An IAM role for the EC2 instance with the following configured polices:
-    - AmazonSSMManagedInstanceCore
-    - AmazonS3ReadOnlyAccess
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ssm:DescribeInstanceInformation",
+            "ssm:ListCommandInvocations",
+            "ssm:ListCommands",
+            "ssm:SendCommand"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:PutObject"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+    ```
+
+  - An IAM role for the EC2 instance with the following configured permissions:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ssm:DescribeInstanceInformation",
+            "ssm:ListCommandInvocations",
+            "ssm:ListCommands",
+            "ssm:SendCommand"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:PutObject"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+    ```
 
 ### Credentials
 
