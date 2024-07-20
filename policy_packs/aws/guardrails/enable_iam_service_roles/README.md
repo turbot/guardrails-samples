@@ -3,9 +3,9 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce Enable AWS IAM Service Roles
+# Enable AWS IAM Service Roles
 
-Enforcing the enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
+Enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following for service roles:
 
@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_iam_service_roles/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/policy_packs/aws/guardrails/enable_iam_service_roles/settings)**
 
 ## Getting Started
 
@@ -57,7 +57,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/enforce_enable_iam_service_roles
+cd guardrails-samples/policy_packs/aws/guardrails/policy_packs/aws/guardrails/enable_iam_service_roles
 ```
 
 Run the Terraform to create the policy pack in your workspace:
