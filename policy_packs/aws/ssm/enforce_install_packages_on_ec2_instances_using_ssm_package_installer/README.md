@@ -3,9 +3,9 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Install Packages on AWS EC2 Instances Using AWS SSM Package Installer
+# Enforce Install Packages on AWS EC2 Instances Using SSM Package Installer
 
-Enforcing the installation of packages on EC2 instances using the AWS SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
+Enforcing the installation of packages on AWS EC2 instances using the SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
 
@@ -19,30 +19,6 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 ## Documentation
 
 - **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_install_packages_on_ec2_instances_using_ssm_package_installer/settings)**
-- Using the SSM documents
-  - There are two entry point types:
-    - Turbot-LinuxPackageInstaller-PublicNetwork
-    - Turbot-LinuxPackageInstaller-PrivateNetwork
-
-### Turbot-LinuxPackageInstaller-PublicNetwork
-
-Use this entry point type when there is direct access to the package source.
-Using this method, all that is required to the URL of the package to install.
-
-### Turbot-LinuxPackageInstaller-PrivateNetwork
-
-Use this entry point type when there is no direct access to the package source.
-Using this method, it is required that the URL of the package to install and a valid S3 bucket which be used to cache the package.
-
-### Turbot-LinuxS3PackageInstaller
-
-This document should never be directly run but is a helper document to install the package.
-
-### Current limitations
-
-- Currently only Ubuntu is supported. Add support to more Linux flavours and Windows
-- Handle package dependencies when installing through S3
-- Test edge cases
 
 ## Getting Started
 
@@ -60,18 +36,13 @@ This document should never be directly run but is a helper document to install t
       "Version": "2012-10-17",
       "Statement": [
         {
+          "Sid": "SSMDocumentExecutionPermissions",
           "Effect": "Allow",
           "Action": [
             "ssm:DescribeInstanceInformation",
             "ssm:ListCommandInvocations",
             "ssm:ListCommands",
-            "ssm:SendCommand"
-          ],
-          "Resource": "*"
-        },
-        {
-          "Effect": "Allow",
-          "Action": [
+            "ssm:SendCommand",
             "s3:PutObject"
           ],
           "Resource": "*"
@@ -87,18 +58,13 @@ This document should never be directly run but is a helper document to install t
       "Version": "2012-10-17",
       "Statement": [
         {
+          "Sid": "EC2InstancePermissions",
           "Effect": "Allow",
           "Action": [
             "ssm:DescribeInstanceInformation",
             "ssm:ListCommandInvocations",
             "ssm:ListCommands",
-            "ssm:SendCommand"
-          ],
-          "Resource": "*"
-        },
-        {
-          "Effect": "Allow",
-          "Action": [
+            "ssm:SendCommand",
             "s3:PutObject"
           ],
           "Resource": "*"
@@ -106,6 +72,33 @@ This document should never be directly run but is a helper document to install t
       ]
     }
     ```
+
+### Using the SSM Documents
+
+There are two entry point types:
+
+- Turbot-LinuxPackageInstaller-PublicNetwork
+- Turbot-LinuxPackageInstaller-PrivateNetwork
+
+#### Turbot-LinuxPackageInstaller-PublicNetwork
+
+Use this entry point type when there is direct access to the package source.
+Using this method, all that is required to the URL of the package to install.
+
+#### Turbot-LinuxPackageInstaller-PrivateNetwork
+
+Use this entry point type when there is no direct access to the package source.
+Using this method, it is required that the URL of the package to install and a valid S3 bucket which be used to cache the package.
+
+#### Turbot-LinuxS3PackageInstaller
+
+This document should never be directly run but is a helper document to install the package.
+
+#### Current Limitations
+
+- Currently only Ubuntu is supported. Add support to more Linux flavours and Windows
+- Handle package dependencies when installing through S3
+- Test edge cases
 
 ### Credentials
 
