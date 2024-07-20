@@ -3,9 +3,9 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Install Packages On Instances Using SSM Package Installer
+# Enforce Install Packages On Instances Using AWS SSM Package Installer
 
-Enforcing the installation of packages on instances using the SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
+Enforcing the installation of packages on instances using the AWS SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
 
