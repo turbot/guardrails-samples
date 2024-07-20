@@ -8,9 +8,9 @@ type: "featured"
 
 Enabling Azure CIS v2.0.0 is essential for ensuring that your Azure environment adheres to industry-recognized security best practices. This provides a robust framework for identifying and mitigating security risks, enhancing compliance with regulatory requirements, and protecting sensitive data by automatically enforcing the security configurations recommended by the CIS benchmarks.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable Azure CIS v3.0.0 reporting with and without attestation controls in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable Azure CIS v2.0.0 reporting with and without attestation controls in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/cis_v300/enable_reporting_for_cis_v200/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/guardrails/enable_reporting_for_cis_v200/settings)**
 
 ## Getting Started
 

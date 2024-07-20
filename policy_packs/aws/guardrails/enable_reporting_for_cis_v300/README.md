@@ -10,7 +10,7 @@ Enabling AWS CIS v3.0.0 is essential for ensuring that your AWS environment adhe
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable AWS CIS v3.0.0 reporting with and without attestation controls in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/cis_v300/enable_reporting_for_cis_v300/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_reporting_for_cis_v300/settings)**
 
 ## Getting Started
 
