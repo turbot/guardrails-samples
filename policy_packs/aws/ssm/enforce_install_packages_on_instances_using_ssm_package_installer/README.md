@@ -128,9 +128,6 @@ terraform apply
 
 ### Apply Policy Pack
 
-> [!IMPORTANT]
-> Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the contents of the Stack's Source policy to `{}` (empty).
-
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
@@ -145,6 +142,9 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
 
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+
+> [!IMPORTANT]
+> Setting the policy to enforce mode will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the contents of the Stack's Source policy to `{}` (empty).
 
 ```hcl
 resource "turbot_policy_setting" "aws_ssm_stack" {
