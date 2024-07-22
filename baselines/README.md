@@ -1,6 +1,6 @@
 # Baselines
 
-Turbot Baselines provide best-practice configurations and examples for setting Turbot policies. Baselines are implemented with [Terraform](https://www.terraform.io), allowing you to manage and provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.
+Turbot Guardrails Baselines provide best-practice configurations and examples for setting Turbot Guardrails policies. Baselines are implemented with [Terraform](https://www.terraform.io), allowing you to manage and provision Turbot Guardrails with a repeatable, idempotent, versioned infrastructure-as-code approach.
 
 ## Current Baselines
 
@@ -8,29 +8,29 @@ Turbot Baselines provide best-practice configurations and examples for setting T
 | --------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | Local Directory             | [local_directory](./turbot/local_directory)                        | Create local directory and users in your workspace                                                      |
 | AWS Setup                   | [aws_setup](./aws/aws_setup)                                       | Common quickstart setup for AWS - prepare your environment to import an AWS account                     |
-| AWS Account Import          | [aws_account_import](./aws/aws_account_import)                     | Import an AWS Account into Turbot                                                                       |
-| AWS Services                | [aws_services](./aws/aws_services)                                 | Enable/Disable AWS Services in Turbot                                                                   |
+| AWS Account Import          | [aws_account_import](./aws/aws_account_import)                     | Import an AWS Account into Guardrails                                                                       |
+| AWS Services                | [aws_services](./aws/aws_services)                                 | Enable/Disable AWS Services in Guardrails                                                                   |
 | GCP Setup                   | [gcp_setup](./gcp/gcp_setup)                                       | Common quickstart setup for GCP - prepare your environment to import GCP Projects                       |
-| GCP Services                | [gcp_services](./gcp/gcp_services)                                 | Enable/Disable GCP Services in Turbot & also enforce api enabled policy based on service Enable/Disable |
-| Azure Subscription Import   | [azure_sub_import](./azure/azure_sub_import)                       | Import an Azure subscription into Turbot                                                                |
-| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)     | Import an Azure subscription into Turbot with event handler and readonly mode                           |
-| Azure Services              | [azure_services](./azure/azure_services)                           | Enable/Disable Azure Services in Turbot                                                                 |
+| GCP Services                | [gcp_services](./gcp/gcp_services)                                 | Enable/Disable GCP Services in Guardrails & also enforce api enabled policy based on service Enable/Disable |
+| Azure Subscription Import   | [azure_sub_import](./azure/azure_sub_import)                       | Import an Azure subscription into Guardrails                                                                |
+| Azure Subscription Readonly | [azure_sub_import_ro](./azure/azure_sub_create_then_import_ro)     | Import an Azure subscription into Guardrails with event handler and readonly mode                           |
+| Azure Services              | [azure_services](./azure/azure_services)                           | Enable/Disable Azure Services in Guardrails                                                                 |
 | Azure Provider Registration | [azure_provider_registration](./azure/azure_provider_registration) | Set the policy for Azure provider registration                                                          |
 
-## Pre-requisites
+## Prerequisites
 
-To run Turbot baselines, you must install:
+To run Turbot Guardrails baselines, you must install:
 
-- [Terraform](https://www.terraform.io) Version 12
-- [Turbot Terraform Provider](https://turbot.com/v5/docs/reference/terraform/provider)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
+- [Turbot Guardrails Terraform Provider](https://turbot.com/guardrails/docs/reference/terraform)
 
-Additionally, You must set your config.tf or environment variables to connect to your Turbot workspace, as detail in the Turbot Terraform Provider [Installation Instructions](https://turbot.com/v5/docs/reference/terraform/provider)
+Additionally, You must set your `config.tf` or environment variables to connect to your Turbot Guardrails workspace, as detail in the Turbot Guardrails Terraform Provider [Installation Instructions](https://turbot.com/guardrails/docs/reference/terraform/setup)
 
-## Running a baseline
+## Running a Baseline
 
 To run a baseline:
 
-1. Install and configure the [pre-requisites](#pre-requisites)
+1. Install and configure the [prerequisites](#prerequisites)
 1. At the command line, go to the directory for the baseline, for example: `cd mod_install`
 1. Run `terraform init` to initialize terraform in the directory
 1. Edit any variables in the .tf file that you wish to change, or override with [environment variables](https://www.terraform.io/docs/commands/environment-variables.html) or [variable files](https://www.terraform.io/docs/configuration/variables.html#variable-definitions-tfvars-files)
@@ -103,7 +103,7 @@ To maintain consistency between files and modules, we recommend adopting the bel
 - Use 4 hashes for comments that describe a group of resources, or general behavior:
 
   ```terraform
-  #### Set the credentials (Role, external id) for the account via Turbot policies
+  #### Set the credentials (Role, external id) for the account via Guardrails policies
   ```
 
 - All variables should have a description, and as a result should not require individual comments
