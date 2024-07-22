@@ -3,13 +3,13 @@ categories: ["cost controls", "security", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 EBS Volumes To Be Attached To An Instance
+# Enforce AWS EC2 EBS Volumes To Be Attached To Instances
 
-Enforcing that AWS EC2 EBS volumes are attached to an instance is essential for optimizing resource usage and ensuring security. This practice helps avoid unnecessary costs associated with unattached volumes, reduces the risk of data exposure, and ensures that all storage resources are actively managed and utilized as intended.
+Enforcing that AWS EC2 EBS volumes are attached to instances is essential for optimizing resource usage and ensuring security. This practice helps avoid unnecessary costs associated with unattached volumes, reduces the risk of data exposure, and ensures that all storage resources are actively managed and utilized as intended.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
 
-- Detach, snapshot and delete EBS volumes that are not attached to an instance
+- Detach, snapshot and delete EBS volumes that are not attached to instances
 
 ## Documentation
 

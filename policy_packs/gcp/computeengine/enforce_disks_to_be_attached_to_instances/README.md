@@ -3,17 +3,17 @@ categories: ["cost controls", "compute", "security", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce GCP Compute Engine Disks To Be Attached To An Instance
+# Enforce GCP Compute Engine Disks To Be Attached To Instances
 
-Enforcing GCP Compute Engine disks to be attached to an instance is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
+Enforcing GCP Compute Engine disks to be attached to instances is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Compute Engine disks:
 
-- Delete Compute Engine disks that are not attached to an instance
+- Delete disks that have been unattached for 7 or more days
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_computeengine_enforce_disks_to_be_attached_to_an_instance/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_disks_to_be_attached_to_instances/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/computeengine/enforce_disks_to_be_attached_to_an_instance
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_disks_to_be_attached_to_instances
 ```
 
 Run the Terraform to create the policy pack in your workspace:
