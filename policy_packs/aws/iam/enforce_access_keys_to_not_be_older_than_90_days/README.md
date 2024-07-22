@@ -1,6 +1,6 @@
 ---
 categories: ["access management", "security"]
-primary_category: "access management"
+primary_category: "security"
 type: "featured"
 ---
 
