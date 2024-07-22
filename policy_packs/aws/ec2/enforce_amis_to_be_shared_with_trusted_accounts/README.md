@@ -7,10 +7,10 @@ primary_category: "security"
 
 Enforcing EC2 AMIs to be shared only with trusted accounts is crucial for maintaining security and compliance, as it ensures that sensitive or proprietary configurations and data are only accessible to authorized users, reducing the risk of unauthorized access and potential data breaches. This control helps safeguard the integrity and confidentiality of the systems and data deployed in AWS environments.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 amis:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 AMIs:
 
 - Set trusted accounts
-- Revoke untrusted access from amis
+- Revoke untrusted access from AMIs
 
 ## Documentation
 

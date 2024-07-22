@@ -1,19 +1,36 @@
 ---
-categories: ["security"]
+categories: ["access management", "security"]
 primary_category: "security"
 ---
 
-# Enforce Enable Specific Permissions On AWS KMS Keys
+# Enforce AWS KMS Keys To Not Allow Unapproved Action Permissions
 
-Enforcing specific permissions on AWS KMS (Key Management Service) keys is crucial to ensure that only authorized users and applications can access and manage encryption keys. This helps prevent unauthorized data access, ensuring the confidentiality, integrity, and security of sensitive information stored and processed within the AWS environment.
+Enforcing that AWS KMS keys do not allow unapproved action permissions is crucial for maintaining the security and integrity of encrypted data. This measure ensures that only authorized actions can be performed on KMS keys, reducing the risk of unauthorized access and misuse, thereby enhancing overall security and compliance with best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS keys:
 
-- Enforce delete keys that are not allowed to exist on the KMS key policy
+- Revoke policy statements which allow below KMS actions:
+  - Access via Lambda service
+  - Access via Secrets Manager service
+  - ConnectCustomKeyStore
+  - CreateCustomKeyStore
+  - Decrypt
+  - DeleteCustomKeyStore
+  - Describe*
+  - DescribeCustomKeyStores
+  - DisableKeyRotation
+  - DisconnectCustomKeyStore
+  - Encrypt
+  - Get*
+  - GetPublicKey (if asymmetric key)
+  - List*
+  - Sign (if asymmetric key)
+  - UpdateCustomKeyStore
+  - Verify (if asymmetric key)
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_specific_permissions_on_keys/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_keys_to_not_allow_unapproved_action_permissions/settings)**
 
 ## Getting Started
 
@@ -53,7 +70,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/kms/enforce_enable_specific_permissions_on_keys
+cd guardrails-samples/policy_packs/aws/kms/enforce_keys_to_not_allow_unapproved_action_permissions
 ```
 
 Run the Terraform to create the policy pack in your workspace:
