@@ -15,7 +15,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/azure-sql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-sql)
   - [@turbot/azure-mysql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-mysql)
