@@ -7,13 +7,13 @@ primary_category: "security"
 
 Enforcing HTTPS traffic for Azure App Service Web Apps is essential to ensure secure communication between clients and web applications. This measure encrypts data transmitted over the network, protecting it from interception and unauthorized access, thereby enhancing the security and integrity of the web apps and ensuring compliance with security best practices and regulatory standards.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for App Service web apps:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for App Service web apps:
 
 - Enable `HTTPS Only` feature for web apps
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_https_traffic_for_webapps/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_appservice_enforce_https_traffic_for_webapps/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/azure-appservice](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-appservice)
+  - [@turbot/azure-appservice](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-appservice)
 
 ### Credentials
 
@@ -71,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
