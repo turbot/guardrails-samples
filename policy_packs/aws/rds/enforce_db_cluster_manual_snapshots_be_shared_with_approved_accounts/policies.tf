@@ -51,7 +51,7 @@ resource "turbot_policy_setting" "aws_rds_db_cluster_snapshot_manual_approved_cu
         {%- set data = {
             "title": "Shared Accounts",
             "result": "Approved",
-            "message": "Snapshot is not accessible to unapproved accounts"
+            "message": "Snapshot is shared with approved accounts"
         } -%}
 
       {%- else -%}
@@ -59,7 +59,7 @@ resource "turbot_policy_setting" "aws_rds_db_cluster_snapshot_manual_approved_cu
         {%- set data = {
             "title": "Shared Accounts",
             "result": "Not approved",
-            "message": "Snapshot is accessible to unapproved accounts"
+            "message": "Snapshot is not shared with approved accounts"
         } -%}
 
       {%- endif -%}

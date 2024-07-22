@@ -1,20 +1,19 @@
 ---
-categories: ["data protection", "security"]
+categories: ["compute", "networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce Encryption At Rest For RDS Instances
+# Enforce AWS RDS DB Instances To Not Be Publicly Accessible
 
-Ensuring that RDS instances are encrypted at rest is crucial for enhancing data security. This measure helps protect sensitive data stored in RDS instances by encrypting it, thereby reducing the risk of unauthorized access. It ensures compliance with security best practices and regulatory requirements, safeguarding data integrity and confidentiality.
+Enforcing that AWS RDS DB instances are not publicly accessible is crucial for protecting sensitive data and ensuring database security. This measure prevents unauthorized internet access to your RDS instances, reducing the risk of data breaches and enhancing compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for RDS instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for RDS DB instances:
 
-- Set Customer Managed Key to be used for encryption
-- Enable Encryption at Rest for instances
+- Enforce DB instances to not be publicly accessible
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_for_instances/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_db_instances_to_not_be_publicly_accessible/settings)**
 
 ## Getting Started
 
@@ -54,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/rds/enforce_encryption_at_rest_for_instances
+cd guardrails-samples/policy_packs/aws/rds/enforce_db_instances_to_not_be_publicly_accessible
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_rds_db_instance_approved" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+resource "turbot_policy_setting" "aws_rds_db_instance_publicly_accessible" {
+  resource = turbot_smart_folder.rds_public_access.id
+  type     = "tmod:@turbot/aws-rds#/policy/types/dbInstancePubliclyAccessible"
+  # value    = "Check: DB Instance is not publicly accessible"
+  value    = "Enforce: DB Instance is not publicly accessible"
 }
 ```
 

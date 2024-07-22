@@ -1,20 +1,21 @@
 ---
-categories: ["compliance", "security"]
-primary_category: "security"
+categories: ["compute", "cost controls", "storage"]
+primary_category: "cost controls"
 ---
 
-# Enforce Instances to Use Specific Engine and Instance Type
+# Enforce AWS RDS DB Instances to Use Specific Engines and Instance Classes
 
-Ensuring that RDS instances are using a specific engine and instance type is crucial for maintaining consistency and adhering to organizational standards. This measure helps enforce the use of approved database engines and instance types, thereby enhancing compliance with security best practices and organizational policies.
+Enforcing that AWS RDS DB instances use specific engines and instance classes is essential for maintaining a standardized, secure, and optimized database environment. This measure ensures that RDS instances comply with organizational policies, meet performance and security requirements, and align with best practices for cost management and resource utilization.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for RDS instances:
 
-- Enforce the use of specified database engines
-- Enforce the use of specified instance types
+- Set a list of approved engines
+- Set a list of approved instance classes
+- Stop/Terminate DB instances that are not approved for use
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_use_specific_engine_and_instance_type/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_db_instances_to_use_specific_engines_and_instance_classes/settings)**
 
 ## Getting Started
 
@@ -54,7 +55,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/rds/enforce_instances_to_use_specific_engine_and_instance_type
+cd guardrails-samples/policy_packs/aws/rds/enforce_db_instances_to_use_specific_engines_and_instance_classes
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -92,7 +93,8 @@ resource "turbot_policy_setting" "aws_rds_db_instance_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-rds#/policy/types/dbInstanceApproved"
   # value    = "Check: Approved"
-  value    = "Enforce: Snapshot and delete unapproved if new"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

@@ -3,19 +3,18 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Check Cross-Account Access Restrictions for DB Cluster Snapshots
+# Enforce AWS RDS DB Cluster Manual Snapshots Be Shared with Approved Accounts
 
-Ensuring that RDS DB cluster snapshots are not accessible across accounts is crucial for enhancing security and control over data. This measure helps prevent unauthorized access to database snapshots, thereby reducing the risk of data breaches and ensuring compliance with security best practices and organizational policies.
+Enforcing that AWS RDS DB cluster manual snapshots are shared only with approved accounts is crucial for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for RDS DB cluster snapshots:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for RDS DB cluster manual snapshots:
 
-- Check for cross-account access restrictions on DB cluster snapshots
-- Ensure compliance with security best practices and organizational policies
-- Enhance data protection and control over database snapshots
+- Set a list of trusted accounts to which the snapshots can be shared
+- Delete snapshots that are shared with untrusted accounts
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_cross_account_access_restrictions_for_db_cluster_snapshots/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_db_cluster_manual_snapshots_be_shared_with_approved_accounts/settings)**
 
 ## Getting Started
 
@@ -55,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/rds/check_cross_account_access_restrictions_for_db_cluster_snapshots
+cd guardrails-samples/policy_packs/aws/rds/enforce_db_cluster_manual_snapshots_be_shared_with_approved_accounts
 ```
 
 Run the Terraform to create the policy pack in your workspace:
