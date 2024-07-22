@@ -8,13 +8,13 @@ type: "featured"
 
 Enforcing Role-Based Access Control (RBAC) for Azure AKS managed clusters is crucial as it ensures that only authorized users and applications can perform actions within clusters. This granular control enhances security by preventing unauthorized access and modifications, thereby protecting the integrity and availability of the applications and services running in the Kubernetes environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for AKS managed clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for AKS managed clusters:
 
 - Terminate clusters that do not have RBAC enabled
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_rbac_for_managed_clusters/settings)**
+- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_aks_enforce_enable_rbac_for_managed_clusters/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-aks](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-aks)
+  - [@turbot/azure-aks](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-aks)
 
 ### Credentials
 
@@ -72,11 +72,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
