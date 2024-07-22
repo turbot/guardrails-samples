@@ -3,13 +3,17 @@ categories: ["logging", "networking"]
 primary_category: "logging"
 ---
 
-# Enable Event Pollers for Azure Subscriptions in Guardrails
+# Enable Event Poller For Azure Subscriptions In Guardrails
 
-The Guardrails Event Poller are responsible for conveying relevant events from Azure Activity Log back to Guardrails on a schedule, and forward them to the router for further processing.
+The Guardrails Event Poller are responsible polling Audit Logs (Azure Monitor) at intervals specified and retrieves the latest events (Succeeded) for processing.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable Event Pollers for Azure Subscriptions in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Azure Subscriptions in Guardrails:
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/guardrails/enable_event_pollers/settings)**
+- Set a polling interval, i.e. the frequency to poll events from Azure
+- Set a polling interval window
+- Enable Event Poller
+
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/guardrails/enable_event_poller/settings)**
 
 ## Getting Started
 
@@ -49,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/guardrails/enable_event_pollers
+cd guardrails-samples/policy_packs/azure/guardrails/enable_event_poller
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -72,30 +76,3 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
 For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
-
-### Enable Enforcement
-
-> [!TIP]
-> You can also update the policy settings in this policy pack directly in the Guardrails console.
->
-> Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
-
-By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
-
-> [!IMPORTANT]
-> Setting the policy in enforce mode will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
-
-```hcl
-resource "turbot_policy_setting" "azure_turbot_event_poller" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure#/policy/types/eventPoller"
-  value    = "Enabled"
-}
-```
-
-Then re-apply the changes:
-
-```sh
-terraform plan
-terraform apply
-```

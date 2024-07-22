@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "aws_turbot_event_poller" {
 resource "turbot_policy_setting" "aws_turbot_event_poller_interval" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/eventPollerInterval"
-  value    = "Every 2 minutes"
+  value    = "Every 1 minute"
 }
 
 # AWS > Turbot > Event Poller > Interval > Window
