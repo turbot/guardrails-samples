@@ -1,21 +1,19 @@
 ---
-categories: ["security", "performance"]
+categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Check Static Website Hosting Requirement for CloudFront on Bucket
+# Enforce CloudFront Distribution for AWS S3 Buckets is Secured
 
-Ensuring that static website hosting on S3 buckets requires CloudFront is crucial for enhancing security and performance. This measure helps secure S3 bucket content by distributing it through CloudFront, which provides additional layers of security, faster delivery, and caching capabilities.
+Enforcing that CloudFront distributions for AWS S3 buckets are secured is crucial for protecting data and ensuring secure content delivery. This measure ensures that security best practices, such as HTTPS and access controls are applied to CloudFront distributions, reducing the risk of unauthorized access and data breaches while ensuring compliance with regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
-- Check if static website hosting on S3 buckets requires CloudFront
-- Ensure compliance with security and performance best practices
-- Enhance security and performance by using CloudFront
+- Delete empty buckets with CloudFront Distributions not secured
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_static_website_hosting_requirement_for_cloudfront_on_bucket/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_cloudfront_distribution_for_buckets_is_secured/settings)**
 
 ## Getting Started
 
@@ -23,6 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
+  - [@turbot/aws-cloudfront](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-cloudfront)
   - [@turbot/aws-s3](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-s3)
 
 ### Credentials
@@ -55,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/s3/check_static_website_hosting_requirement_for_cloudfront_on_bucket
+cd guardrails-samples/policy_packs/aws/s3/enforce_cloudfront_distribution_for_buckets_is_secured
 ```
 
 Run the Terraform to create the policy pack in your workspace:

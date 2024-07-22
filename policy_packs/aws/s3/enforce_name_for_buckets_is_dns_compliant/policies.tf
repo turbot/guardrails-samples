@@ -18,22 +18,20 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_custom" {
     }
   EOT
   template       = <<-EOT
-    {#- Defined at http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html -#}
-    {#- Implemented based on http://stackoverflow.com/a/106223 -#}
     {%- set dnsNameRegExp = r/^(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])$/g -%}
 
     {%- if $.resource.name == null -%}
 
       {%- set data = {
-          "title": "Bucket",
+          "title": "DNS Compliant",
           "result": "Skip",
-          "message": "Bucket data is not available yet"
+          "message": "No data for bucket yet"
       } -%}
 
     {%- elif $.resource.name | length >= 3 and $.resource.name | length <= 63 and dnsNameRegExp.test($.resource.name) -%}
 
       {%- set data = {
-          "title": "DNS Compliance",
+          "title": "DNS Compliant",
           "result": "Approved",
           "message": "Bucket name is DNS compliant"
       } -%}
@@ -41,7 +39,7 @@ resource "turbot_policy_setting" "aws_s3_bucket_approved_custom" {
     {%- else -%}
 
       {%- set data = {
-          "title": "DNS Compliance",
+          "title": "DNS Compliant",
           "result": "Not approved",
           "message": "Bucket name is not DNS compliant"
       } -%}

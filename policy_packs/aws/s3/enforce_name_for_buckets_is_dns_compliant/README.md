@@ -3,19 +3,17 @@ categories: ["compliance", "storage"]
 primary_category: "compliance"
 ---
 
-# Check DNS Compliance for S3 Bucket Names
+# Enforce Name For AWS S3 Buckets Is DNS Compliant
 
-Ensuring that S3 bucket names are DNS compliant is crucial for maintaining compatibility and avoiding potential issues. This measure helps ensure that bucket names adhere to DNS naming conventions, thereby reducing the risk of operational problems and ensuring compliance with best practices.
+Enforcing that AWS S3 bucket names are DNS compliant is essential for ensuring compatibility with internet standards and services. This measure ensures that bucket names adhere to DNS naming conventions, preventing issues with accessibility and interoperability, and ensuring smooth integration with various AWS services and applications.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
-- Check for DNS compliance of S3 bucket names
-- Ensure compliance with best practices and organizational policies
-- Maintain compatibility and avoid potential operational issues
+- Delete empty buckets with names that are not DNS complaint
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_dns_compliance_for_bucket_names/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_name_for_buckets_is_dns_compliant/settings)**
 
 ## Getting Started
 
@@ -55,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/s3/check_dns_compliance_for_bucket_names
+cd guardrails-samples/policy_packs/aws/s3/enforce_name_for_buckets_is_dns_compliant
 ```
 
 Run the Terraform to create the policy pack in your workspace:
