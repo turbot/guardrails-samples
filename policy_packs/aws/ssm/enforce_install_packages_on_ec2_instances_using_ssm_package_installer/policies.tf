@@ -1,8 +1,16 @@
-# Create
-resource "turbot_policy_setting" "ssmStackSource" {
-  resource = var.region_resource
+# AWS > SSM > Stack
+resource "turbot_policy_setting" "aws_ssm_stack" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws-ssm#/policy/types/ssmStack"
+  value    = "Check: Configured"
+  # value    = "Enforce: Configured"
+}
+
+# AWS > SSM > Stack > Source
+resource "turbot_policy_setting" "ssm_stack_source" {
+  resource = var.region_arn
   type     = "tmod:@turbot/aws-ssm#/policy/types/ssmStackSource"
-  value    = <<EOP
+  value    = <<-EOT
     # Creates a SSM Command Document which installs package on Linux Instance from OS package source repository
     resource "aws_ssm_document" "turbot_linux_package_installer_public_network_document" {
       name            = "Turbot-LinuxPackageInstaller-PublicNetwork"
@@ -32,7 +40,7 @@ resource "turbot_policy_setting" "ssmStackSource" {
                     apt-get update
                     apt-get install -y {{ package }}
                   fi
-    EOC
+      EOC
     }
 
     # Creates a SSM Command Document which installs packages avaiable on S3 buckets.
@@ -75,7 +83,7 @@ resource "turbot_policy_setting" "ssmStackSource" {
                   if [[ $OS =~ "Ubuntu" ]]; then
                     dpkg -i $packageFile
                   fi
-    EOC
+      EOC
     }
 
     # Creates a SSM Automation Document which installs package on Linux Instance inside a private network by storing target package on a S3 bucket
@@ -95,7 +103,7 @@ resource "turbot_policy_setting" "ssmStackSource" {
             type: String
             description: (Required) The bucket where the package will be stored
             minChars: 1
-        assumeRole: "${var.ssm_document_role}"
+        assumeRole: "${var.ssm_document_role_arn}"
         mainSteps:
           # This script execution runs on Systems Manager sandbox, charges may apply
           - name: DownloadPackageToS3
@@ -137,7 +145,7 @@ resource "turbot_policy_setting" "ssmStackSource" {
                 - Key: tag:turbot:InventoryCollection
                   Values:
                     - "true"
-    EOC
+      EOC
     }
-EOP
+  EOT
 }
