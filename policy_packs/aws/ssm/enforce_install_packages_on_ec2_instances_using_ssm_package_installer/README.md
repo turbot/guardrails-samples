@@ -73,33 +73,6 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
     }
     ```
 
-### Using the SSM Documents
-
-There are two entry point types:
-
-- Turbot-LinuxPackageInstaller-PublicNetwork
-- Turbot-LinuxPackageInstaller-PrivateNetwork
-
-#### Turbot-LinuxPackageInstaller-PublicNetwork
-
-Use this entry point type when there is direct access to the package source.
-Using this method, all that is required to the URL of the package to install.
-
-#### Turbot-LinuxPackageInstaller-PrivateNetwork
-
-Use this entry point type when there is no direct access to the package source.
-Using this method, it is required that the URL of the package to install and a valid S3 bucket which be used to cache the package.
-
-#### Turbot-LinuxS3PackageInstaller
-
-This document should never be directly run but is a helper document to install the package.
-
-#### Current Limitations
-
-- Currently only Ubuntu is supported. Add support to more Linux flavours and Windows
-- Handle package dependencies when installing through S3
-- Test edge cases
-
 ### Credentials
 
 To create a policy pack through Terraform:
@@ -196,3 +169,30 @@ Then re-apply the changes:
 terraform plan
 terraform apply
 ```
+
+### Using the SSM Documents
+
+There are two entry point types:
+
+- Turbot-LinuxPackageInstaller-PublicNetwork
+- Turbot-LinuxPackageInstaller-PrivateNetwork
+
+#### Turbot-LinuxPackageInstaller-PublicNetwork
+
+Use this entry point type when there is direct access to the package source.
+Using this method, all that is required to the URL of the package to install.
+
+#### Turbot-LinuxPackageInstaller-PrivateNetwork
+
+Use this entry point type when there is no direct access to the package source.
+Using this method, it is required that the URL of the package to install and a valid S3 bucket which be used to cache the package.
+
+#### Turbot-LinuxS3PackageInstaller
+
+This document should never be directly run but is a helper document to install the package.
+
+#### Current Limitations
+
+- Currently only Ubuntu is supported. Add support to more Linux flavours and Windows
+- Handle package dependencies when installing through S3
+- Test edge cases
