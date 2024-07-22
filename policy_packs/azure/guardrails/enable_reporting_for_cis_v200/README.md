@@ -19,7 +19,7 @@ Enabling Azure CIS v2.0.0 is essential for ensuring that your Azure environment 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable Azure CIS v2.0.0 reporting with and without attestation controls in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/guardrails/enable_reporting_for_cis_v200/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/guardrails/azure_enable_reporting_for_cis_v200/settings)**
 
 ## Getting Started
 
