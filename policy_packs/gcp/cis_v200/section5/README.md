@@ -44,7 +44,8 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 > By default, installed policy packs are not attached to any resources.
 >
 > Policy packs must be attached to resources in order for their policy settings to take effect.
-> Clone:
+
+Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
@@ -78,7 +79,8 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
 >
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
-> By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "gcp_storage_bucket_policy_trusted_access" {

@@ -90,8 +90,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "aws_vpc_security_security_group_ingress_rules_approved" {
   resource = turbot_policy_pack.aws_public_access_block.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
-  value    = "Check: Approved"
-  # value   = "Enforce: Delete unapproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved"
 }
 ```
 
