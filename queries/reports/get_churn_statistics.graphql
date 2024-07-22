@@ -1,28 +1,25 @@
 # Description
 # -----------
 #
-# Retrieves a summary of churn that Turbot saw or generated over a given time period. 
+# Retrieves a summary of churn that Turbot saw or generated over a given time period.
 # Lists number of resources created and destroyed by any actor
 # List number of resources created, updated or destroyed by Turbot.
-# 
-# STEP 1 Get the Turbot Identity resource ID. 
+#
+# STEP 1 Get the Turbot Identity resource ID.
 # STEP 2 Retrieve churn stat
 
 # Prerequisites
 # -------------
 # These queries require Turbot/ReadOnly access to the Turbot console.
-#
-     
-
 
 # Substitute
 # ----------
 #
-# Substitute real values for STEP 2. 
+# Substitute real values for STEP 2.
 #
-# <actor_identity>: 
+# <actor_identity>:
 #    After running the `GetTurbotIdentity` query, use the value of $.resources.items.turbot.id in place of <actor_identity>
-#    This query is required because there is no generic identifier for the Turbot Identity in the notifications table. The resource ID must be used. 
+#    This query is required because there is no generic identifier for the Turbot Identity in the notifications table. The resource ID must be used.
 
 # Use Cases
 # ---------
