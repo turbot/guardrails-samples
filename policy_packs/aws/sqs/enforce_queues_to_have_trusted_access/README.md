@@ -1,19 +1,20 @@
 ---
-categories: ["security", "compliance"]
-primary_category: "security"
+categories: ["access management", "security"]
+primary_category: "access management"
 ---
 
-# Check for Wildcard Actions in SQS Queue Policies
+# Enforce AWS SQS Queues To Have Trusted Access
 
-Ensuring that SQS queue policies do not contain `Action: SQS:\*` is crucial for enhancing security. This measure helps restrict overly permissive actions, thereby reducing the risk of unauthorized access and potential security breaches. It ensures compliance with security best practices and organizational policies.
+Enforcing trusted access for AWS SQS queues is essential for maintaining secure and controlled message handling within your applications. This measure ensures that only authorized entities can interact with your SQS queues, reducing the risk of unauthorized access, message tampering, and potential data breaches, while ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for SQS queue policies:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for SQS queues:
 
-- Check for the presence of wildcard actions in SQS queue policies
-- Ensure compliance with security best practices and organizational policies
-- Enhance security by restricting overly permissive actions
+- Set trusted accounts
+- Set trusted services
+- Set trusted organizations
+- Revoke untrusted access from queues
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_for_wildcard_actions_in_queue_policies/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_queues_to_have_trusted_access/settings)**
 
 ## Getting Started
 
@@ -53,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/sqs/check_for_wildcard_actions_in_queue_policies
+cd guardrails-samples/policy_packs/aws/sqs/enforce_queues_to_have_trusted_access
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,11 +88,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_sqs_approved" {
+resource "turbot_policy_setting" "aws_sqs_queue_policy_trusted_access" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-sqs#/policy/types/queueApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-sqs#/policy/types/queuePolicyTrustedAccess"
+  # value    = "Check: Trusted Access"
+  value    = "Enforce: Revoke untrusted access"
 }
 ```
 
