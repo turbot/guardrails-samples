@@ -3,17 +3,17 @@ categories: ["storage", "data protection"]
 primary_category: "data protection"
 ---
 
-# Enforce AWS DynamoDB Table Continuous Backup with Point-In-Time Recovery
+# Enforce Point-In-Time Recovery Is Enabled For AWS DynamoDB Tables
 
-Enforcing AWS DynamoDB Table Continuous Backup with Point-In-Time Recovery (PITR) is crucial for ensuring data resilience and minimizing data loss. It allows for the restoration of DynamoDB tables to any point in time within the last 35 days, thereby protecting against accidental deletions, corruption, or other data mishaps.
+Enforcing point-in-time recovery (PITR) for AWS DynamoDB tables is crucial for ensuring data durability and protection against accidental deletions or write errors. This measure allows you to restore DynamoDB tables to any point within the last 35 days, enhancing data recovery capabilities and ensuring compliance with data protection best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for DynamoDB tables:
 
-- Enable continuous backup with Point-In-Time recovery for tables
+- Enable Point-In-Time recovery
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_continuous_backups_with_pitr_for_tables/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_point_in_time_recovery_is_enabled_for_tables/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/dynamodb/enforce_continuous_backups_with_pitr_for_tables
+cd guardrails-samples/policy_packs/aws/dynamodb/enforce_point_in_time_recovery_is_enabled_for_tables
 ```
 
 Run the Terraform to create the policy pack in your workspace:
