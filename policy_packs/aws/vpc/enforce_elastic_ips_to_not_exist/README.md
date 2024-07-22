@@ -1,15 +1,15 @@
 ---
-categories: ["networking", "security"]
+categories: ["cost controls", "networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce Elastic IPs To Not Exist
+# Enforce AWS VPC Elastic IPs To Not Exist
 
-Enforcing the non-existence of Elastic IPs is crucial to enhance security and cost management within a cloud environment. By preventing the allocation of Elastic IPs, organizations can reduce the risk of public exposure of their resources and minimize potential attack surfaces, while also controlling unnecessary expenses associated with idle IP addresses.
+Enforcing that AWS VPC Elastic IPs do not exist is essential for maintaining a highly secure network environment by preventing unnecessary public IP addresses. This measure minimizes the attack surface by eliminating potential entry points for unauthorized access and reducing the risk of data breaches, thereby ensuring compliance with security best practices and organizational policies.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC elastic ips:
 
-- Delete Elastic IPs if available
+- Delete elastic IPs if available
 
 ## Documentation
 

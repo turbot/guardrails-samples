@@ -3,9 +3,9 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce Default VPCs To Not Exist
+# Enforce Default AWS VPCs To Not Exist
 
-Enforcing that Default VPCs do not exist is crucial for maintaining network security and control, as default VPCs often come with pre-configured settings that might not align with an organization's specific security and compliance requirements. By removing Default VPCs, administrators can ensure that all VPCs are created with custom configurations tailored to their security policies and operational needs, reducing the risk of unintended exposure or misconfiguration.
+Enforcing that Default AWS VPCs do not exist is crucial for maintaining network security and control, as default VPCs often come with pre-configured settings that might not align with an organization's specific security and compliance requirements. By removing Default VPCs, administrators can ensure that all VPCs are created with custom configurations tailored to their security policies and operational needs, reducing the risk of unintended exposure or misconfiguration.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Default VPCs:
 
