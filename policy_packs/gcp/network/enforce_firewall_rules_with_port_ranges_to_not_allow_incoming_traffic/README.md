@@ -90,7 +90,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
   # value    = "Check: Approved"
-  value  = "Enforce: Delete unapproved"
+  value    = "Enforce: Delete unapproved"
 }
 ```
 

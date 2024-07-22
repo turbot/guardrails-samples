@@ -91,7 +91,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
   # value    = "Check: Approved"
-  value  = "Enforce: Delete unapproved if new"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 
