@@ -1,15 +1,15 @@
 ---
-categories: ["logging"]
+categories: ["logging", "security"]
 primary_category: "logging"
 ---
 
-# Enable Multi-Region Cloud Trails
+# Enable Multi-Region CloudTrails Trails for AWS Accounts
 
-Enabling Multi-Region Cloud Trails in Guardrails is essential to ensure comprehensive monitoring and auditing of all user activities and API calls across all regions. This enhances security and compliance by providing a complete view of account activity, enabling prompt detection and investigation of unauthorized or anomalous actions regardless of the region in which they occur.
+Enabling multi-region CloudTrail trails in AWS accounts is crucial for achieving comprehensive visibility and auditability of API activity across all regions. This ensures that all actions taken within your AWS environment are consistently logged, enhancing security monitoring, supporting incident response, and ensuring compliance with regulatory requirements and best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable Multi-Region Cloud Trails for AWS Accounts in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable multi-region CloudTrail trails in AWS Accounts.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_multi_region_cloud_trails/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_multi_region_cloudtrail_trails/settings)**
 
 ## Getting Started
 
@@ -49,7 +49,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/enable_multi_region_cloud_trails
+cd guardrails-samples/policy_packs/aws/guardrails/enable_multi_region_cloudtrail_trails
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -86,7 +86,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 > Setting the policy in enforce mode will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
 
 ```hcl
-resource "turbot_policy_setting" "turbot_trail_configured" {
+resource "turbot_policy_setting" "aws_turbot_audit_trail" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/auditTrail"
   # value    = "Check: Configured"
