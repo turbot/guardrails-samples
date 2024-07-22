@@ -1,23 +1,18 @@
 ---
-categories: ["access management", "security"]
-primary_category: "access management"
+categories: ["cost controls", "security"]
+primary_category: "cost controls"
 ---
 
-# Enforce Enable AWS IAM Service Roles
+# Enforce AWS EC2 EBS Volumes To Use Specific Volume Types
 
-Enforcing the enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
+Enforcing AWS EC2 EBS volumes to use specific volume types is crucial for optimizing performance, cost, and security. By ensuring that only approved volume types are used, organizations can maintain consistent performance standards, manage expenses effectively, and mitigate risks associated with unauthorized or inappropriate storage configurations.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following for service roles:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
 
-- Create IAM service role for configuration recording
-- Create IAM service role for default EC2 instance
-- Create IAM service role for flow logging
-- Create IAM service role for SSM notification
-- Create IAM service role for Guardrails global event handlers
+- Set a list of specific volume types that are approved for use
+- Detach, snapshot and delete volumes that do not belong to the list of approved volume types
 
-## Documentation
-
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_iam_service_roles/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_ebs_volumes_to_use_specific_volume_types/settings)**
 
 ## Getting Started
 
@@ -25,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
+  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
 
 ### Credentials
 
@@ -57,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/enforce_enable_iam_service_roles
+cd guardrails-samples/policy_packs/aws/ec2/enforce_ebs_volumes_to_use_specific_volume_types
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -75,9 +70,6 @@ terraform apply
 
 ### Apply Policy Pack
 
-> [!IMPORTANT]
-> Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
-
 Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
@@ -94,11 +86,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_turbot_service_roles_configured" {
+resource "turbot_policy_setting" "aws_ec2_volume_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
-  # value    = "Check: Configured"
-  value    = "Enforce: Configured"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/volumeApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Detach unapproved if new"
+  # value    = "Enforce: Detach, snapshot and delete unapproved if new"
 }
 ```
 

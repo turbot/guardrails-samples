@@ -1,16 +1,19 @@
 ---
-categories: ["access management", "cis", "compliance", "logging", "networking", "security", "storage"]
-primary_category: "compliance"
-type: "featured"
+categories: ["security", "storage"]
+primary_category: "security"
 ---
 
-# Enable Reporting for AWS CIS v3.0.0
+# Enforce Encryption By Default is Enabled for AWS EC2 EBS Volumes
 
-Enabling AWS CIS v3.0.0 is essential for ensuring that your AWS environment adheres to industry-recognized security best practices. This provides a robust framework for identifying and mitigating security risks, enhancing compliance with regulatory requirements, and protecting sensitive data by automatically enforcing the security configurations recommended by the CIS benchmarks.
+Enforcing encryption by default for AWS EC2 EBS volumes is essential for protecting sensitive data at rest. This measure ensures that all newly created EBS volumes are automatically encrypted, reducing the risk of unauthorized data access and breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable AWS CIS v3.0.0 reporting with and without attestation controls in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 EBS volumes:
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/cis_v300/enable_cis_in_guardrails/settings)**
+- Enforce encryption by default in a region
+
+## Documentation
+
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_by_default_is_enabled_for_ebs_volumes/settings)**
 
 ## Getting Started
 
@@ -18,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - Guardrails mods:
-  - [@turbot/aws-cisv3-0](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-cisv3-0)
+  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
 
 ### Credentials
 
@@ -45,11 +48,12 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 > By default, installed policy packs are not attached to any resources.
 >
 > Policy packs must be attached to resources in order for their policy settings to take effect.
-> Clone:
+
+Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/cis_v300/enable_cis_in_guardrails
+cd guardrails-samples/policy_packs/aws/ec2/enforce_encryption_by_default_is_enabled_for_ebs_volumes
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -73,19 +77,23 @@ If this policy pack is attached to a Guardrails folder, its policies will be app
 
 For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
+### Enable Enforcement
+
 > [!TIP]
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
 >
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
 
-By default, the policy is set to `Check: All CIS Benchmarks except attestations` which would enable all controls excluding the ones that need attestation. To enable all controls including the ones that need attestation, you can switch the policy setting by adding a comment to the `Check: All CIS Benchmarks except attestations` setting and removing the comment from `Check: All CIS Benchmarks`:
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_cis_v300" {
+resource "turbot_policy_setting" "aws_ec2_account_attribute_encryption_by_default" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-cisv3-0#/policy/types/cis"
-  # value    = "Check: All CIS Benchmarks except attestations"
-  value    = "Check: All CIS Benchmarks"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/ec2AccountAttributesEbsEncryptionByDefault"
+  # value    = "Check: AWS managed key or higher"
+  # value    = "Check: Encryption at Rest > Customer Managed Key"
+  # value    = "Enforce: AWS managed key"
+  value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
 ```
 
