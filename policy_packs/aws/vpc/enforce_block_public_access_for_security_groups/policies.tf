@@ -3,7 +3,7 @@ resource "turbot_policy_setting" "aws_vpc_security_security_group_ingress_rules_
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
   value    = "Check: Approved"
-  # value   = "Enforce: Delete unapproved"
+  # value    = "Enforce: Delete unapproved"
 }
 
 # AWS > VPC > Security Group > Ingress Rules > Approved > Rules
