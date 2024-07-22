@@ -3,13 +3,13 @@ categories: ["logging"]
 primary_category: "logging"
 ---
 
-# Enable Global Cloud Trails in Specific Region in Guardrails
+# Enable Multi-Region Cloud Trails
 
-Enabling Global Cloud Trails in a specific region within Guardrails is crucial for centralized logging and monitoring of all AWS account activities, ensuring comprehensive visibility and compliance across multiple regions. This setup enhances security by providing a unified trail of events, facilitating efficient incident response and regulatory adherence.
+Enabling Multi-Region Cloud Trails in Guardrails is essential to ensure comprehensive monitoring and auditing of all user activities and API calls across all regions. This enhances security and compliance by providing a complete view of account activity, enabling prompt detection and investigation of unauthorized or anomalous actions regardless of the region in which they occur.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable Global Cloud Trails in Specific Region for AWS Accounts in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable Multi-Region Cloud Trails for AWS Accounts in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_global_cloud_trails_in_sepcific_region/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_multi_region_cloud_trails/settings)**
 
 ## Getting Started
 
@@ -49,7 +49,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/enable_global_cloud_trails_in_sepcific_region
+cd guardrails-samples/policy_packs/aws/guardrails/enable_multi_region_cloud_trails
 ```
 
 Run the Terraform to create the policy pack in your workspace:
