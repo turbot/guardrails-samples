@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_functions_to_use_specific_approved_tags/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_lambda_enforce_functions_to_use_specific_approved_tags/settings)**
 
 ## Getting Started
 

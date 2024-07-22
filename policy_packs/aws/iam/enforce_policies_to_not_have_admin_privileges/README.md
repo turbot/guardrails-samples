@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_policies_to_not_have_admin_privileges/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_iam_enforce_policies_to_not_have_admin_privileges/settings)**
 
 ## Getting Started
 

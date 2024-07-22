@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_default_security_groups_to_not_allow_any_access/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_vpc_enforce_default_security_groups_to_not_allow_any_access/settings)**
 
 ## Getting Started
 

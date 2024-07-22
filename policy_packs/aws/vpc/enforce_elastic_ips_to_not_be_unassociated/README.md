@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_elastic_ips_to_not_be_unassociated/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_vpc_enforce_elastic_ips_to_not_be_unassociated/settings)**
 
 ## Getting Started
 

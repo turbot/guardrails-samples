@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_block_actions_from_unapproved_cidrs_for_security_groups/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_vpc_deny_all_iam_actions_from_unapproved_networks/settings)**
 
 ## Getting Started
 
