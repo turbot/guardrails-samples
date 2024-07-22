@@ -1,19 +1,21 @@
 ---
-categories: ["networking", "security"]
-primary_category: "networking"
+categories: ["logging", "networking", "security"]
+primary_category: "logging"
 ---
 
-# Enforce Flow Loggings to not exists in VPCs
+# Enforce Enable Flow Logging To CloudWatch Log Groups For VPCs
 
-Enforcing the non-existence of Flow Loggings in VPCs is crucial to prevent inadvertent exposure of sensitive network traffic data and to avoid potential compliance and security risks. This helps in maintaining the confidentiality and integrity of network information by ensuring that detailed traffic logs are not accessible, thereby reducing the attack surface for malicious actors.
+Enforcing flow logging to CloudWatch Log Groups for VPCs is essential for real-time monitoring and analysis of network traffic within your VPCs. This measure ensures that all network flow logs are captured and stored in CloudWatch Log Groups, enabling efficient detection of anomalous activity, troubleshooting of network issues, and compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPC flow loggings:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPCs:
 
-- Delete Flow Loggings from VPCs
+- Set CloudWatch log group name to which flow logging would be configured
+- Set IAM role name that flow logging will assume to write logs to CloudWatch log group
+- Enable flow logging to CloudWatch log group
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_removing_flow_loggings_from_vpcs/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_flow_logging_to_cloudwatch_log_groups_for_vpcs/settings)**
 
 ## Getting Started
 
@@ -53,7 +55,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/vpc/enforce_removing_flow_loggings_from_vpcs
+cd guardrails-samples/policy_packs/aws/vpc/enforce_enable_flow_logging_to_cloudwatch_log_groups_for_vpcs
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,10 +90,10 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "vpc_flow_logs" {
-  resource = turbot_smart_folder.vpc_flow_logging.id
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcFlowLogging"
-  # value    = "Check: Not configured"
-  value = "Enforce: Not configured"
+  # value    = "Check: Configured per `Flow Logging > *`"
+  value    = "Enforce: Configured per `Flow Logging > *`"
 }
 ```
 
