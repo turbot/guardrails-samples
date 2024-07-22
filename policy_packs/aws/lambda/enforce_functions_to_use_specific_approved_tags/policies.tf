@@ -50,7 +50,7 @@ resource "turbot_policy_setting" "aws_lambda_function_approved_custom" {
       {%- set data = {
           "title": "Approved Tags",
           "result": "Approved",
-          "message": "Function has all approved tags"
+          "message": "Function has approved tags"
       } -%}
 
     {%- elif tagsLength == 0 or not allTagsPresent -%}
@@ -58,7 +58,7 @@ resource "turbot_policy_setting" "aws_lambda_function_approved_custom" {
       {%- set data = {
           "title": "Approved Tags",
           "result": "Not approved",
-          "message": "Function does not have all approved tags"
+          "message": "Function does not have approved tags"
       } -%}
 
     {%- else -%}
