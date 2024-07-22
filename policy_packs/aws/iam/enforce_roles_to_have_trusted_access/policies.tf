@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "aws_iam_role_policy_trusted_access" {
 }
 
 # AWS > IAM > Role > Policy > Trusted Access > Accounts
-resource "turbot_policy_setting" "aws_iam_role_policy_trusted_accounts" {
+resource "turbot_policy_setting" "aws_iam_role_policy_trusted_access_accounts" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedAccounts"
   value    = <<-EOT
@@ -17,7 +17,7 @@ resource "turbot_policy_setting" "aws_iam_role_policy_trusted_accounts" {
 }
 
 # AWS > IAM > Role > Policy > Trusted Access > Services
-resource "turbot_policy_setting" "aws_iam_role_policy_trusted_services" {
+resource "turbot_policy_setting" "aws_iam_role_policy_trusted_access_services" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedServices"
   value    = <<-EOT
@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "aws_iam_role_policy_trusted_services" {
 }
 
 # AWS > IAM > Role > Policy > Trusted Access > Identity Providers
-resource "turbot_policy_setting" "aws_iam_role_policy_trusted_identity_providers" {
+resource "turbot_policy_setting" "aws_iam_role_policy_trusted_access_identity_providers" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedIdentityProviders"
   value    = <<-EOT
@@ -37,7 +37,7 @@ resource "turbot_policy_setting" "aws_iam_role_policy_trusted_identity_providers
 }
 
 # AWS > IAM > Role > Policy > Trusted Access > Organization Restrictions
-resource "turbot_policy_setting" "aws_iam_role_policy_trusted_organizations" {
+resource "turbot_policy_setting" "aws_iam_role_policy_trusted_access_organizations" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedOrganizations"
   value    = <<-EOT
