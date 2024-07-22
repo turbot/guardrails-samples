@@ -3,17 +3,17 @@ categories: ["cost controls", "data protection", "storage"]
 primary_category: "data protection"
 ---
 
-# Enforce Bucket Versioning Is Enabled for AWS S3 Buckets
+# Enforce Versioning Is Enabled For AWS S3 Buckets
 
-Enforcing bucket versioning for AWS S3 buckets is crucial because it provides data protection by maintaining multiple versions of objects, enabling the recovery of previous versions in case of accidental deletions or overwrites. This ensures data integrity, facilitates disaster recovery, and supports compliance with data retention policies.
+Enforcing versioning for AWS S3 buckets is crucial because it provides data protection by maintaining multiple versions of objects, enabling the recovery of previous versions in case of accidental deletions or overwrites. This ensures data integrity, facilitates disaster recovery, and supports compliance with data retention policies.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
 
-- Enforce Bucket Versioning, which ensures that versioning is enabled for data protection.
+- Enable versioning
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_bucket_versioning_is_enabled_for_buckets/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_versioning_is_enabled_for_buckets/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/s3/enforce_bucket_versioning_is_enabled_for_buckets
+cd guardrails-samples/policy_packs/aws/s3/enforce_versioning_is_enabled_for_buckets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
