@@ -114,10 +114,12 @@ vi default.tfvars
 ```
 
 ```hcl
-# Turbot Resource ARN for the AWS Region where SSM Documents will be placed. For example: 'arn:aws::us-east-1:123456789012'
-region_arn = "<ssm_document_role_arn>"
+# Turbot Resource ARN for the AWS Region where SSM Documents will be placed.
+# For example: 'arn:aws::us-east-1:123456789012'
+region_arn = "<region_arn>"
 
-# AWS IAM Role ARN to be used by SSM to run documents. For example: 'arn:aws:iam::999999999999:role AmazonSSMRoleForAutomationAssumeQuickSetup'
+# AWS IAM Role ARN to be used by SSM to run documents.
+# For example: 'arn:aws:iam::999999999999:role AmazonSSMRoleForAutomationAssumeQuickSetup'
 ssm_document_role_arn = "<ssm_document_role_arn>"
 ```
 
