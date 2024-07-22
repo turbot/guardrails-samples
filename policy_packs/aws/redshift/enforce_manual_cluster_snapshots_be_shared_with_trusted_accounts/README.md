@@ -3,17 +3,16 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Check SSL Requirement for Redshift Clusters
+# Enforce AWS Redshift Manual Cluster Snapshots Be Shared With Trusted Accounts
 
-Ensuring that SSL is required for Redshift clusters is crucial for enhancing data security. This measure helps encrypt data in transit, thereby reducing the risk of unauthorized access and ensuring compliance with security best practices and organizational policies.
+Enforcing that AWS Redshift manual cluster snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Redshift clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Redshift manual cluster snapshots:
 
-- Check for the requirement of SSL connections
-- Ensure compliance with security best practices and organizational policies
-- Enhance data protection by encrypting data in transit
+- Set trusted accounts
+- Revoke untrusted access from snapshots
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_ssl_requirement_for_clusters/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_manual_cluster_snapshots_be_shared_with_trusted_accounts/settings)**
 
 ## Getting Started
 
@@ -53,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/redshift/check_ssl_requirement_for_clusters
+cd guardrails-samples/policy_packs/aws/redshift/enforce_manual_cluster_snapshots_be_shared_with_trusted_accounts
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,11 +86,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_redshift_cluster_approved" {
+resource "turbot_policy_setting" "aws_redshift_manual_cluster_snapshot_trusted_access" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-redshift#/policy/types/clusterApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-redshift#/policy/types/clusterSnapshotManualTrustedAccess"
+  value    = "Check: Trusted Access > Accounts"
+  # value    = "Enforce: Trusted Access > Accounts"
 }
 ```
 

@@ -3,17 +3,15 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Check Cross-Account Snapshot Access Restrictions for Redshift Clusters
+# Enforce Encryption in Transit Is Enabled For AWS Redshift Clusters
 
-Ensuring that cross-account access to Redshift snapshots is restricted is crucial for enhancing data security and control. This measure helps prevent unauthorized access to Redshift snapshots, thereby reducing the risk of data breaches and ensuring compliance with security best practices and organizational policies.
+Enforcing encryption in transit for AWS Redshift clusters is crucial for protecting data as it moves between clients and the Redshift service. This measure ensures that all data is encrypted during transmission, safeguarding it from interception and unauthorized access, thereby enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Redshift snapshots:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Redshift clusters:
 
-- Check for cross-account access restrictions on Redshift snapshots
-- Ensure compliance with security best practices and organizational policies
-- Enhance data protection and control over Redshift snapshots
+- Enable Encryption in Transit by changing the `require_ssl` parameter of the attached parameter group. This change will also trigger **reboot** of the cluster.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/check_cross_account_snapshot_access_restrictions/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_in_transit_is_enabled_for_clusters/settings)**
 
 ## Getting Started
 
@@ -53,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/redshift/check_cross_account_snapshot_access_restrictions
+cd guardrails-samples/policy_packs/aws/redshift/enforce_encryption_in_transit_is_enabled_for_clusters
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,11 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_redshift_manual_cluster_snapshot_approved" {
+resource "turbot_policy_setting" "aws_redshift_cluster_encryption_in_transit" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-redshift#/policy/types/clusterSnapshotManualApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-redshift#/policy/types/clusterEncryptionInTransit"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 
