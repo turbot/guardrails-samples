@@ -3,13 +3,13 @@ categories: ["cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce Azure Storage Enable Cool Access Tier for Storage Accounts
+# Enforce Enable Cool Access Tier For Azure Storage Accounts
 
-Enforcing the Cool Access Tier for Azure Storage Accounts is important because it optimizes storage costs by automatically assigning infrequently accessed data to a lower-cost tier, ensuring efficient and cost-effective data management without sacrificing data availability. This practice supports budget-conscious strategies and maximizes the value derived from storage resources.
+Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage accounts:
 
-- Enforce access tier is set to Cool Enabled
+- Enable cool access tier
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_cool_access_tier_for_storage_accounts/settings)**
 
@@ -85,12 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-# Azure > Storage > Container > Public Access Level
-resource "turbot_policy_setting" "azure_storage_account_tier" {
+resource "turbot_policy_setting" "azure_storage_storage_account_access_tier" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessTier"
   # value    = "Check: Cool"
-  vaule    = "Enforce: Cool"
+  value    = "Enforce: Cool"
 }
 ```
 
