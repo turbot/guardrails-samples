@@ -1,6 +1,6 @@
 ---
-categories: ["security"]
-primary_category: "security"
+categories: ["cost controls", "security"]
+primary_category: "cost controls"
 ---
 
 # Enforce AWS EC2 Instances To Use Specific Instance Types
@@ -9,7 +9,8 @@ Enforcing specific AWS EC2 instance types ensures that deployed resources align 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
 
-- Enforce stop/delete instances that do not have specific instance types
+- Set a list of specific instance types that are approved for use
+- Stop/Terminate instances that do not belong to the list of approved instance types
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_use_specific_instance_types/settings)**
 
@@ -89,9 +90,9 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
   # value    = "Check: Approved"
-  # value    = "Enforce: Stop unapproved"
+  value    = "Enforce: Stop unapproved"
   # value    = "Enforce: Stop unapproved if new"
-  value    = "Enforce: Delete unapproved if new"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

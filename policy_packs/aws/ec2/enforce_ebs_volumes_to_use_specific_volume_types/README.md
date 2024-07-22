@@ -1,6 +1,6 @@
 ---
-categories: ["security"]
-primary_category: "security"
+categories: ["cost controls", "security"]
+primary_category: "cost controls"
 ---
 
 # Enforce AWS EC2 EBS Volumes To Use Specific Volume Types
@@ -9,7 +9,8 @@ Enforcing AWS EC2 EBS volumes to use specific volume types is crucial for optimi
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
 
-- Detach, snapshot and delete volumes that do not have specific volume types
+- Set a list of specific volume types that are approved for use
+- Detach, snapshot and delete volumes that do not belong to the list of approved volume types
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_ebs_volumes_to_use_specific_volume_types/settings)**
 

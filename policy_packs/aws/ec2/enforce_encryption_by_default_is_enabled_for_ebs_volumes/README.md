@@ -3,17 +3,17 @@ categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Encryption By Default is Enabled for AWS EC2 Account Attributes
+# Enforce Encryption By Default is Enabled for AWS EC2 EBS Volumes
 
-Enforcing encryption by default for AWS EC2 account attributes is crucial for safeguarding sensitive data. It ensures that all data stored on EC2 instances is automatically encrypted, reducing the risk of unauthorized access and enhancing compliance with security standards and regulations.
+Enforcing encryption by default for AWS EC2 EBS volumes is essential for protecting sensitive data at rest. This measure ensures that all newly created EBS volumes are automatically encrypted, reducing the risk of unauthorized data access and breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 account attributes:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 EBS volumes:
 
-- Enforce EC2 account attributes that do not have Encryption by Default enabled
+- Enforce encryption by default in a region
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_by_default_is_enabled_for_account_attributes/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_by_default_is_enabled_for_ebs_volumes/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_encryption_by_default_is_enabled_for_account_attributes
+cd guardrails-samples/policy_packs/aws/ec2/enforce_encryption_by_default_is_enabled_for_ebs_volumes
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -91,7 +91,9 @@ resource "turbot_policy_setting" "aws_ec2_account_attribute_encryption_by_defaul
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/ec2AccountAttributesEbsEncryptionByDefault"
   # value    = "Check: AWS managed key or higher"
-  value    = "Enforce: AWS managed key or higher"
+  # value    = "Check: Encryption at Rest > Customer Managed Key"
+  # value    = "Enforce: AWS managed key"
+  value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
 ```
 

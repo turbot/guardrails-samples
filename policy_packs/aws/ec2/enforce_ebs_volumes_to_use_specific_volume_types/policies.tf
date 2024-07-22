@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "aws_ec2_volume_approved" {
   # value    = "Enforce: Detach, snapshot and delete unapproved if new"
 }
 
-# A list of volume types that the AWS EC2 volume is approved to use
+# List of volume types that are approved for use
 # AWS > EC2 > Volume > Approved > Volume Types
 resource "turbot_policy_setting" "aws_ec2_volume_approved_volume_types" {
   resource = turbot_policy_pack.main.id

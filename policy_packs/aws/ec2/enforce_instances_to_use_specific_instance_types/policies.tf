@@ -8,7 +8,7 @@ resource "turbot_policy_setting" "aws_ec2_instance_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# A list of instance types that the AWS EC2 instance is approved to use
+# List of instance types that are approved for use
 # AWS > EC2 > Instance > Approved > Instance Types
 resource "turbot_policy_setting" "aws_ec2_instance_approved_volume_types" {
   resource = turbot_policy_pack.main.id

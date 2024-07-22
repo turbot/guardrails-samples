@@ -1,17 +1,17 @@
 ---
-categories: ["security"]
-primary_category: "security"
+categories: ["data protection", "security"]
+primary_category: "data protection"
 ---
 
-# Enforce Termination Protection Enabled For AWS EC2 Instances
+# Enforce Enable Termination Protection For AWS EC2 Instances
 
 Enforcing termination protection for AWS EC2 instances is crucial because it prevents accidental or unauthorized termination of instances, which can lead to data loss, application downtime, and potential security vulnerabilities. By enabling this protection, organizations can ensure the continuity and integrity of their critical workloads and services running on AWS.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
 
-- Enforce termination protection to be Enabled for EC2 instances
+- Enable termination protection
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_termination_protection_enabled_for_instances/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_termination_protection_for_instances/settings)**
 
 ## Getting Started
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_termination_protection_enabled_for_instances
+cd guardrails-samples/policy_packs/aws/ec2/enforce_enable_termination_protection_for_instances
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,8 +88,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "aws_ec2_instance_termination_protection" {
   resource = turbot_smart_folder.ec2_termination_protection.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceTerminationProtection"
-  value    = "Check: Enabled"
-  # value    = "Enforce: Enabled"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 
