@@ -10,28 +10,23 @@ resource "turbot_policy_setting" "aws_redshift_cluster_approved" {
 resource "turbot_policy_setting" "aws_redshift_cluster_approved_custom" {
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-redshift#/policy/types/clusterApprovedCustom"
-  template_input = <<EOT
+  template_input = <<-EOT
   - |
     {
-      item: resource {
+      item: cluster {
         parameterGroupName: get(path: "ClusterParameterGroups[0].ParameterGroupName")
-        turbot {
-          custom
-        }
+        metadata
       }
     }
   - |
     {
-      cluster: resource {
-        parameterGroup: get(path: "ClusterParameterGroups[0]")
-      }
-      parameterGroup: resource (id: "arn:aws:redshift:{{ $.item.turbot.custom.aws.regionName }}:{{ $.item.turbot.custom.aws.accountId }}:parametergroup:{{ $.item.parameterGroupName }}") {
+      clusterParameterGroup: resource (id: "arn:aws:redshift:{{ $.item.metadata.aws.regionName }}:{{ $.item.metadata.aws.accountId }}:parametergroup:{{ $.item.parameterGroupName }}") {
         parameters: get(path:"Parameters")
       }
     }
   EOT
   template       = <<-EOT
-    {%- if $.parameterGroup == null -%}
+    {%- if $.clusterParameterGroup == null -%}
 
       {%- set data = {
           "title": "Require SSL",
@@ -43,7 +38,7 @@ resource "turbot_policy_setting" "aws_redshift_cluster_approved_custom" {
 
       {%- set requireSslParameter = {} -%}
 
-      {%- for parameter in $.parameterGroup.parameters -%}
+      {%- for parameter in $.clusterParameterGroup.parameters -%}
 
         {%- if parameter.ParameterName == 'require_ssl' -%}
 
