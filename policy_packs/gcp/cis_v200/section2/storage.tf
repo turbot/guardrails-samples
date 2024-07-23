@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
 resource "turbot_policy_setting" "gcp_storage_bucket_approved_custom" {
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-storage#/policy/types/bucketApprovedCustom"
-  note           = "Azure CIS v2.0.0 - Control: 2.3"
+  note           = "GCP CIS v2.0.0 - Control: 2.3"
   template_input = <<-EOT
   - |
     {

@@ -3,7 +3,7 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce AWS SQS Queues To Have Trusted Access
+# Enforce AWS SQS Queues to Have Trusted Access
 
 Enforcing trusted access for AWS SQS queues is essential for maintaining secure and controlled message handling within your applications. This measure ensures that only authorized entities can interact with your SQS queues, reducing the risk of unauthorized access, message tampering, and potential data breaches, while ensuring compliance with security best practices and regulatory requirements.
 

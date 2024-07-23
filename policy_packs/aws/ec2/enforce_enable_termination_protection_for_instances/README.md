@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "data protection"
 ---
 
-# Enforce Enable Termination Protection For AWS EC2 Instances
+# Enforce Enable Termination Protection for AWS EC2 Instances
 
 Enforcing termination protection for AWS EC2 instances is crucial because it prevents accidental or unauthorized termination of instances, which can lead to data loss, application downtime, and potential security vulnerabilities. By enabling this protection, organizations can ensure the continuity and integrity of their critical workloads and services running on AWS.
 
@@ -86,7 +86,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_termination_protection" {
-  resource = turbot_smart_folder.ec2_termination_protection.id
+  resource = turbot_policy_pack.ec2_termination_protection.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceTerminationProtection"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"

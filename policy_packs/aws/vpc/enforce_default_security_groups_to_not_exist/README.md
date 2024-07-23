@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS VPC Default Security Groups To Not Exist
+# Enforce AWS VPC Default Security Groups to Not Exist
 
 Enforcing the non-existence of AWS VPC default security groups is crucial to enhance security by ensuring that all security group rules are explicitly defined and managed, preventing unintended or overly permissive access that could arise from default settings. This control helps maintain a strict security posture and reduces the risk of vulnerabilities due to misconfigurations or the use of default rules that may not align with an organization's security policies.
 

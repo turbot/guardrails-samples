@@ -3,7 +3,7 @@ categories: ["storage", "security"]
 primary_category: "security"
 ---
 
-# Enforce Encryption at Rest Is Enabled For Azure Compute Disks
+# Enforce Encryption at Rest Is Enabled for Azure Compute Disks
 
 Enforcing encryption at rest for Azure Compute Disks via Disk Encryption Sets is crucial to protect sensitive data stored on virtual machines from unauthorized access and potential breaches. This security measure ensures that data remains confidential and secure, even if the physical storage media is compromised, by using strong encryption algorithms to render the data unreadable without the appropriate decryption keys.
 

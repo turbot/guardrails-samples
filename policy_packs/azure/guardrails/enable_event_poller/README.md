@@ -3,7 +3,7 @@ categories: ["logging", "networking"]
 primary_category: "logging"
 ---
 
-# Enable Event Poller For Azure Subscriptions In Guardrails
+# Enable Event Poller for Azure Subscriptions in Guardrails
 
 The Guardrails Event Poller are responsible polling Audit Logs (Azure Monitor) at intervals specified and retrieves the latest events (Succeeded) for processing.
 
