@@ -7,14 +7,14 @@ primary_category: "security"
 
 Enforcing Azure Cosmos DB database accounts to be accessible only to selected networks is crucial for enhancing security and controlling access to your data. This measure ensures that only trusted and authorized networks can access the database, reducing the risk of unauthorized access, data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for CosmosDB database accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for CosmosDB database accounts:
 
 - Set required IP ranges that are allowed to access the database account
 - Set required virtual networks that are allowed to access the database account
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_database_accounts_to_be_accessible_to_selected_networks/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cosmosdb_enforce_database_accounts_to_be_accessible_to_selected_networks/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-cosmosdb](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-cosmosdb)
+  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
 
 ### Credentials
 
@@ -72,11 +72,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
