@@ -1,0 +1,70 @@
+# Description
+# -----------
+#
+# CIS controls report (all vendors, all resources)
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_control_summaries_by_control_category.graphql
+#
+
+# Filter
+# ------
+#
+# controlCategory:
+#   AKA or ID for the specific category of control that will be returned.
+#   In example, 'tmod:@turbot/cis#/control/categories/cis' filters the cis control.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controlSummariesByControlCategory: https://turbot.com/v5/docs/reference/graphql/query/controlSummariesByControlCategory
+#
+
+query ListControlSummariesByControlCategory {
+  controlSummariesByControlCategory(filter: "controlCategory:'tmod:@turbot/cis#/control/categories/cis'") {
+    metadata {
+      stats {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+    items {
+      category {
+        turbot {
+          akas
+        }
+        trunk {
+          items {
+            turbot {
+              title
+            }
+          }
+        }
+      }
+      summary {
+        control {
+          total
+          alarm
+          error
+          invalid
+          ok
+          skipped
+          tbd
+        }
+      }
+    }
+  }
+}

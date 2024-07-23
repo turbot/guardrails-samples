@@ -1,0 +1,55 @@
+# Description
+# -----------
+#
+# Using a part of the control category aka to return the nodes of the category tree that match and all its descendants.
+# This method of filtering will return any control category that partially matches the passed in aka.
+# Preferred method of finding the control category tree using the complete aka:
+#   list_control_categories_tree_by_uri.graphql
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_control_categories_tree_by_partial_aka.graphql
+#
+
+# Filter
+# ------
+#
+# controlCategory:
+#   The control category that should be returned.
+#   The matching algorithm will perform a caseless compare of the akas from right to left.
+#   In example, this is set to `turbot`, which will match any item with `turbot` at the end.
+#   Other possibilities are `categories/turbot` and `gories/turbot` which will both return matches.
+#   Matching `categories/turbo` will fail.
+#
+# controlCategoryLevel:
+#   Controls which items to return from the control category hierarchy.
+#   In example only items that match are returned by setting value to `self`
+#
+# sort:
+#   Sets the order of the returned query results.
+#   In this example, it is set to path which will return the results in hierarchical order.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controlCategories: https://turbot.com/v5/docs/reference/graphql/query/controlCategories
+#
+
+query ListControlCategoriesTreeByPartialAka {
+  controlCategories(filter: "controlCategory:turbot controlCategoryLevel:self,descendant sort:path") {
+    items {
+      uri
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

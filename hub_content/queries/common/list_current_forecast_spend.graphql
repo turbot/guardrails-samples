@@ -1,0 +1,42 @@
+# Description
+# -----------
+#
+# List Accounts and their AWS Current and Forecast Spend
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_current_forecast_spend.graphql
+#
+
+# Filter
+# ------
+#
+# resourceType:
+#   Searches for all budget resources
+#   Limits to 500 responses
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resourceTypeId: https://turbot.com/v5/docs/reference/graphql/query/resourceTypeId
+
+
+{
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws#/resource/types/budget' limit:500") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items{
+      CurrentSpend: get(path: "currentMonthActualSpend")
+      ForecastSpend: get(path: "currentMonthForecastSpend")
+      awsAccountId: get(path: "turbot.custom.aws.accountId")
+    }
+  }
+} 

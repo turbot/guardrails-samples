@@ -1,0 +1,64 @@
+# Description
+# -----------
+#
+# Lists all the controls that partially match the passed in resource category aka.
+#
+# Preferred method of finding the control using the complete aka:
+#   list_controls_targeting_resource_category_id.graphql
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_controls_targeting_partial_resource_category_id.graphql
+#
+
+# Filter
+# ------
+#
+# resourceCategory:
+#   The resource category that the control targets.
+#   The matching algorithm will perform a caseless compare of the akas from right to left.
+#   In example, this is set to `turbot`, which will match any item with `turbot` at the end.
+#   Other possibilities are `categories/turbot` and `gories/turbot` which will both return matches.
+#   Matching `categories/turbo` will fail.
+#
+# resourceCategoryLevel:
+#   Controls the level of the resource categories that should be returned resource category hierarchy.
+#   In example only items that match the resource category are returned by setting value to `self`
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL controls: https://turbot.com/v5/docs/reference/graphql/query/controls
+#
+
+query ListControlsTargetingPartialResourceCategoryAka {
+  controls(filter: "resourceCategory:turbot resourceCategoryLevel:self") {
+    items {
+      state
+      reason
+      details
+      type {
+        title
+        controlUri: uri
+        modUri
+        targets
+      }
+      resource {
+        type {
+          uri
+        }
+      }
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

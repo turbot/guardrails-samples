@@ -1,0 +1,4 @@
+# Run a specific control with ID
+mutation {
+  runControl(input: { id: "166875835509027" })
+}
