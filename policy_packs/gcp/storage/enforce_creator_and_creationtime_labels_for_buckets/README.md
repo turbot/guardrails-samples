@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Enforce `creator` and `creationTime` tags
 
-- **[Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_creator_and_creationtime_labels_for_buckets/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_creator_and_creationtime_labels_for_buckets/settings)**
 
 ## Getting Started
 

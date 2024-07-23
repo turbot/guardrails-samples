@@ -12,7 +12,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Set a KMS symmetric crypto key to be used for encryption
 - Enable Encryption at Rest for buckets via Google managed key or KMS crypto key
 
-- **[Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
 
 ## Getting Started
 

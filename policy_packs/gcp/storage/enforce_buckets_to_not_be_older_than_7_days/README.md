@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Delete buckets that are older than 7 days
 
-- **[Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_buckets_to_not_be_older_than_7_days/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_buckets_to_not_be_older_than_7_days/settings)**
 
 ## Getting Started
 

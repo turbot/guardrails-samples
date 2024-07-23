@@ -12,7 +12,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Enforce project wide SSH keys are blocked
 
-- **[Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_computeengine_enforce_block_project_wide_ssh_keys_is_enabled_for_instances/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_computeengine_enforce_block_project_wide_ssh_keys_is_enabled_for_instances/settings)**
 
 ## Getting Started
 
