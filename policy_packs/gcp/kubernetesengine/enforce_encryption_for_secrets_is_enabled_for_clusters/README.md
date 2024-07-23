@@ -8,7 +8,7 @@ type: "featured"
 
 Enforcing encryption for secrets in GCP GKE clusters is critical for protecting sensitive information stored within the cluster. This measure ensures that secrets, such as passwords and API keys, are encrypted, safeguarding them from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for GKE clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GKE clusters:
 
 - Delete clusters that do not have database encryption state set to `ENCRYPTED`
 
@@ -74,7 +74,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

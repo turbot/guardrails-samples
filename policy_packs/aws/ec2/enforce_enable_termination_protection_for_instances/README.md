@@ -7,7 +7,7 @@ primary_category: "data protection"
 
 Enforcing termination protection for AWS EC2 instances is crucial because it prevents accidental or unauthorized termination of instances, which can lead to data loss, application downtime, and potential security vulnerabilities. By enabling this protection, organizations can ensure the continuity and integrity of their critical workloads and services running on AWS.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
 
 - Enable termination protection
 
@@ -73,7 +73,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

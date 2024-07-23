@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing AWS Lambda functions to restrict public access is vital to prevent unauthorized users from invoking functions, which can lead to security vulnerabilities and potential data breaches. By limiting access, you ensure that only authorized entities can execute the functions, thereby maintaining the integrity and confidentiality of your applications and data.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Lambda functions:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Lambda functions:
 
 - Revoke untrusted access from the function's IAM resource policy
 - Set trusted accounts for the IAM resource policy
@@ -77,7 +77,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

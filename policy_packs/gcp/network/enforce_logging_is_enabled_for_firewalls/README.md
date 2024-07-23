@@ -7,7 +7,7 @@ primary_category: "logging"
 
 Enforcing GCP VPC Network Firewall Logging is essential for maintaining comprehensive visibility and auditing capabilities of network traffic. This control helps detect and investigate security incidents, monitor policy compliance, and ensure timely response to potential threats by capturing detailed logs of all firewall activity.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Network firewalls:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Network firewalls:
 
 - Enable logging
 
@@ -73,7 +73,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,7 +7,7 @@ primary_category: "tagging"
 
 Enforcing that AWS EC2 AMIs used by instances have specific approved tags is vital for maintaining resource organization, compliance, and effective management. This practice ensures that all instances are easily identifiable based on their purpose, environment, and other criteria, facilitating cost tracking, security management, and adherence to organizational policies and best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
 
 - Set a list of approved tags for AMIs
 - Stop/Terminate instances if corresponding AMIs do not use specified tags
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing scan on push for AWS ECR (Elastic Container Registry) repositories is crucial for ensuring the security and integrity of container images. This control helps detect vulnerabilities and security issues in images before they are deployed, reducing the risk of running compromised or insecure containers in your environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for ECR repositories:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for ECR repositories:
 
 - Enable scan on push setting
 
@@ -75,7 +75,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

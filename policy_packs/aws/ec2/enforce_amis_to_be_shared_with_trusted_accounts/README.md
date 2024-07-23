@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing EC2 AMIs to be shared only with trusted accounts is crucial for maintaining security and compliance, as it ensures that sensitive or proprietary configurations and data are only accessible to authorized users, reducing the risk of unauthorized access and potential data breaches. This control helps safeguard the integrity and confidentiality of the systems and data deployed in AWS environments.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 AMIs:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 AMIs:
 
 - Set trusted accounts
 - Revoke untrusted access from AMIs
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

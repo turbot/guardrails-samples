@@ -7,7 +7,7 @@ primary_category: "security"
 
 Ensuring Multi-Factor Authentication (MFA) is enabled for AWS IAM root accounts is critical as it provides an additional layer of security beyond just a password, significantly reducing the risk of unauthorized access. This protection helps prevent potential security breaches and enhances overall account security by requiring a second form of verification.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for IAM root accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for IAM root accounts:
 
 - Check and alarm if root accounts do not have MFA enabled
 
@@ -75,4 +75,4 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).

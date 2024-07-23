@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing encryption at rest for RDS DB instances is critical for safeguarding sensitive data stored in your databases. This measure ensures that all data is encrypted when stored, protecting it from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for RDS instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for RDS instances:
 
 - Set Customer Managed Key to be used for encryption
 - Stop/Terminate instances that are not encrypted
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

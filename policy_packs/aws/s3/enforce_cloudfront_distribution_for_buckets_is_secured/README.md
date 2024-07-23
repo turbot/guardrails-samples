@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing that CloudFront distributions for AWS S3 buckets are secured is crucial for protecting data and ensuring secure content delivery. This measure ensures that security best practices, such as HTTPS and access controls are applied to CloudFront distributions, reducing the risk of unauthorized access and data breaches while ensuring compliance with regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for S3 buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for S3 buckets:
 
 - Delete empty buckets with CloudFront Distributions not secured
 
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

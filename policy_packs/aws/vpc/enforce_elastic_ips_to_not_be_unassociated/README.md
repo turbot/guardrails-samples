@@ -7,7 +7,7 @@ primary_category: "cost controls"
 
 Enforcing that AWS VPC Elastic IPs are not unassociated is crucial for optimizing resource usage and maintaining a secure environment. This practice ensures that all allocated Elastic IPs are actively used, reducing the risk of unnecessary costs, potential IP misconfigurations, and security vulnerabilities associated with unused IP addresses.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for VPC elastic IPs:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for VPC elastic IPs:
 
 - Delete non associated elastic IPs
 
@@ -75,7 +75,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

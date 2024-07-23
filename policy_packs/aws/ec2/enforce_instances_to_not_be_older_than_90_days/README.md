@@ -7,7 +7,7 @@ primary_category: "cost controls"
 
 Automatically deleting AWS EC2 instances that have been running for more than 90 days is crucial for resource optimization and cost management. This measure helps in ensuring that long-running instances are periodically reviewed and terminated if no longer needed, thereby reducing unnecessary costs and improving overall resource utilization.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
 
 - Terminate instances that are older than 90 days
 
@@ -73,7 +73,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

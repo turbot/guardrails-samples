@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing the installation of packages on AWS EC2 instances using the SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
 
 - Set the region ARN where the SSM resources will be deployed
 - Set the IAM role ARN to be used by SSM to run documents
@@ -143,7 +143,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

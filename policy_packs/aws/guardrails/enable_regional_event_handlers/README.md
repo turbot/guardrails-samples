@@ -8,7 +8,7 @@ type: "featured"
 
 The Guardrails Event Handlers are responsible for conveying events from AWS CloudTrail back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/aws/event-handlers) for AWS Accounts in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/aws/event-handlers) for AWS Accounts in Guardrails.
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_regional_event_handlers/settings)**
 
@@ -74,7 +74,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

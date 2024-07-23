@@ -7,7 +7,7 @@ primary_category: "networking"
 
 Ensure that your Google Cloud VPC network firewall rules don't have range of ports configured to allow inbound traffic, in order to protect associated virtual machine instances against Denial-of-Service (DoS) attacks or brute-force attacks. To follow cloud security best practices, it is strongly recommended to open only specific ports within your firewall rules, based on your application requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Network firewalls:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Network firewalls:
 
 - Revoke firewall rules that allow incoming traffic from all IP addresses
 - Revoke firewall rules that have port range size of greater than 1
@@ -74,7 +74,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

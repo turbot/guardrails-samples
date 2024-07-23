@@ -7,7 +7,7 @@ primary_category: "tagging"
 
 Enforcing that AWS Lambda functions use specific approved tags is crucial for maintaining organized and compliant cloud environments. This practice ensures proper resource management, cost tracking, and compliance with organizational policies by enabling the identification and classification of Lambda functions based on their purpose, environment, and other relevant criteria.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Lambda functions:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Lambda functions:
 
 - Set a list of approved tags
 - Delete functions if specified tags are not present
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 
