@@ -7,7 +7,7 @@ primary_category: "access management"
 
 Enablement of AWS IAM service roles is critical for securely delegating permissions to AWS services. This measure ensures that service roles are properly configured and used, allowing AWS services to interact with your resources securely, minimizing the risk of unauthorized actions, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following for service roles:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following for service roles:
 
 - Create IAM service role for configuration recording
 - Create IAM service role for default EC2 instance
@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/policy_packs/aws/guardrails/enable_iam_service_roles/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_iam_enable_iam_service_roles/settings)**
 
 ## Getting Started
 
@@ -25,7 +25,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
+  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
 
 ### Credentials
 
@@ -78,11 +78,11 @@ terraform apply
 > [!IMPORTANT]
 > Attaching this policy pack in Guardrails will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

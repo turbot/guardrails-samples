@@ -7,9 +7,9 @@ primary_category: "compliance"
 
 This section contains recommendations for configuring AWS Storage.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of AWS CIS benchmark section 2 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of AWS CIS benchmark section 2 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/cis_v300/section2/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_cis_v300_section2/settings)**
 
 ## Getting Started
 
@@ -17,10 +17,10 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
-  - [@turbot/aws-efs](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-efs)
-  - [@turbot/aws-rds](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-rds)
-  - [@turbot/aws-s3](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-s3)
+  - [@turbot/aws-ec2](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ec2)
+  - [@turbot/aws-efs](https://hub.guardrails.turbot.com/mods/aws/mods/aws-efs)
+  - [@turbot/aws-rds](https://hub.guardrails.turbot.com/mods/aws/mods/aws-rds)
+  - [@turbot/aws-s3](https://hub.guardrails.turbot.com/mods/aws/mods/aws-s3)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,12 +7,12 @@ primary_category: "security"
 
 Enforcing that AWS Redshift manual cluster snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Redshift manual cluster snapshots:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Redshift manual cluster snapshots:
 
 - Set trusted accounts
 - Revoke untrusted access from snapshots
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_manual_cluster_snapshots_be_shared_with_trusted_accounts/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_manual_cluster_snapshots_be_shared_with_trusted_accounts/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - The following Guardrails mods need to be installed:
-  - [@turbot/aws-redshift](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-redshift)
+  - [@turbot/aws-redshift](https://hub.guardrails.turbot.com/mods/aws/mods/aws-redshift)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

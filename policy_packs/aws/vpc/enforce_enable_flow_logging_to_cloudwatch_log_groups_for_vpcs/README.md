@@ -7,7 +7,7 @@ primary_category: "logging"
 
 Enforcing flow logging to CloudWatch Log Groups for VPCs is essential for real-time monitoring and analysis of network traffic within your VPCs. This measure ensures that all network flow logs are captured and stored in CloudWatch Log Groups, enabling efficient detection of anomalous activity, troubleshooting of network issues, and compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for VPCs:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for VPCs:
 
 - Set CloudWatch log group name to which flow logging would be configured
 - Set IAM role name that flow logging will assume to write logs to CloudWatch log group
@@ -15,7 +15,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_flow_logging_to_cloudwatch_log_groups_for_vpcs/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_enable_flow_logging_to_cloudwatch_log_groups_for_vpcs/settings)**
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-vpc-core](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-core)
+  - [@turbot/aws-vpc-core](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-core)
 
 ### Credentials
 
@@ -73,11 +73,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
