@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Delete service account keys that are older than 90 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_computeengine_enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_computeengine_enforce_user_service_account_keys_are_rotated_in_90_days/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-iam)
+  - [@turbot/gcp-iam](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-iam)
 
 ### Credentials
 

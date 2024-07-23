@@ -12,7 +12,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Delete clusters that do not have database encryption state set to `ENCRYPTED`
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_kubernetesengine_enforce_encryption_for_secrets_is_enabled_for_clusters/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_kubernetesengine_enforce_encryption_for_secrets_is_enabled_for_clusters/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-kubernetesengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-kubernetesengine)
+  - [@turbot/gcp-kubernetesengine](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-kubernetesengine)
 
 ### Credentials
 

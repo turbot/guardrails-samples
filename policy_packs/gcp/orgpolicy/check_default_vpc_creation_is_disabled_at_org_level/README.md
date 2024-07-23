@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Checks if the project org policy `Skip default network creation` the creation of default network is set to `On`
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_orgpolicy_check_default_vpc_creation_is_disabled_at_org_level/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_orgpolicy_check_default_vpc_creation_is_disabled_at_org_level/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-orgpolicy](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-orgpolicy)
+  - [@turbot/gcp-orgpolicy](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-orgpolicy)
 
 ### Credentials
 

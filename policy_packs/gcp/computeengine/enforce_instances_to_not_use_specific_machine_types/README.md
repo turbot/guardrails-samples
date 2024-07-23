@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Set unapproved list of instance family
 - Terminate instances that are not approved for use due to unapproved size or family
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_computeengine_enforce_instances_to_not_use_specific_machine_types/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_computeengine_enforce_instances_to_not_use_specific_machine_types/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-computeengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-computeengine)
+  - [@turbot/gcp-computeengine](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-computeengine)
 
 ### Credentials
 

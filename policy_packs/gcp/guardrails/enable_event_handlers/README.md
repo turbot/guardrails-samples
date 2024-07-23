@@ -10,7 +10,7 @@ The Guardrails Event Handlers are responsible for conveying events from GCP Logg
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/gcp/real-time-events) for GCP Projects in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/guardrails/gcp_enable_event_handlers/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp/guardrails/gcp_enable_event_handlers/settings)**
 
 ## Getting Started
 
@@ -18,9 +18,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp)
+  - [@turbot/gcp](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp)
   - [@turbot/gcp-logging](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp-events/mods/gcp-logging)
-  - [@turbot/gcp-pubsub](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-pubsub)
+  - [@turbot/gcp-pubsub](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-pubsub)
 
 ### Credentials
 

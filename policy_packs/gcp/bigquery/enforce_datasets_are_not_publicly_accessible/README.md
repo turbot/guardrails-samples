@@ -12,7 +12,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Enforce public access is disabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_bigquery_enforce_datasets_are_not_publicly_accessible/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_bigquery_enforce_datasets_are_not_publicly_accessible/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-bigquery](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-bigquery)
+  - [@turbot/gcp-bigquery](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-bigquery)
 
 ### Credentials
 

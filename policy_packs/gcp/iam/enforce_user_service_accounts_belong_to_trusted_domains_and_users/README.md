@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Set a list of trusted users
 - Revoke untrusted access from user-managed service accounts
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_iam_enforce_user_service_accounts_belong_to_trusted_domains_and_users/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_iam_enforce_user_service_accounts_belong_to_trusted_domains_and_users/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-iam)
+  - [@turbot/gcp-iam](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-iam)
 
 ### Credentials
 

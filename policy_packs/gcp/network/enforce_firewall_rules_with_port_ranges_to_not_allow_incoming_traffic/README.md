@@ -12,7 +12,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Revoke firewall rules that allow incoming traffic from all IP addresses
 - Revoke firewall rules that have port range size of greater than 1
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_network_enforce_firewall_rules_with_port_ranges_to_not_allow_incoming_traffic/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_network_enforce_firewall_rules_with_port_ranges_to_not_allow_incoming_traffic/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-network)
+  - [@turbot/gcp-network](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-network)
 
 ### Credentials
 
