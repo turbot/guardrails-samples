@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "data protection"
 ---
 
-# Enforce AWS GuardDuty Detectors Have Membership Only To Specific Accounts
+# Enforce AWS GuardDuty Detectors Have Membership Only to Specific Accounts
 
 Enforcing that AWS GuardDuty detectors have membership only to specific accounts is vital for maintaining a controlled and secure threat detection environment. This measure ensures that GuardDuty findings and data are shared only with authorized accounts, enhancing security by preventing unauthorized access to sensitive security information and ensuring compliance with best practices and regulatory requirements.
 

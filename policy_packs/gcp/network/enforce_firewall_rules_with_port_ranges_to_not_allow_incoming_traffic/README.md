@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce Network Firewall Rules with Port Ranges to Not Allow Incoming Traffic
+# Enforce GCP VPC Network Firewall Rules with Port Ranges to Not Allow Incoming Traffic
 
 Ensure that your Google Cloud VPC network firewall rules don't have range of ports configured to allow inbound traffic, in order to protect associated virtual machine instances against Denial-of-Service (DoS) attacks or brute-force attacks. To follow cloud security best practices, it is strongly recommended to open only specific ports within your firewall rules, based on your application requirements.
 

@@ -3,7 +3,7 @@ categories: ["cost controls", "security"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 Instances To Use Specific Instance Types
+# Enforce AWS EC2 Instances to Use Specific Instance Types
 
 Enforcing specific AWS EC2 instance types ensures that deployed resources align with performance, cost, and compliance requirements. This control helps optimize resource utilization, manage expenses, and maintain consistent security and operational standards across the cloud environment.
 

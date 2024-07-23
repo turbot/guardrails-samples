@@ -3,7 +3,7 @@ categories: ["access management", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS KMS Keys To Not Allow Unapproved Action Permissions
+# Enforce AWS KMS Keys to Not Allow Unapproved Action Permissions
 
 Enforcing that AWS KMS keys do not allow unapproved action permissions is crucial for maintaining the security and integrity of encrypted data. This measure ensures that only authorized actions can be performed on KMS keys, reducing the risk of unauthorized access and misuse, thereby enhancing overall security and compliance with best practices and regulatory requirements.
 

@@ -3,7 +3,7 @@ categories: ["cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce Enable Cool Access Tier For Azure Storage Accounts
+# Enforce Enable Cool Access Tier for Azure Storage Accounts
 
 Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
 

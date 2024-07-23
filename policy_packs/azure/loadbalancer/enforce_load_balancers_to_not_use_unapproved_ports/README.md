@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce Azure Load Balancer to not use Unapproved Network Configuration
+# Enforce Azure Load Balancer to Not Use Unapproved Ports
 
 Enforcing that Azure Load Balancers do not use unapproved ports is essential for maintaining a secure network environment. This measure ensures that only approved and necessary ports are used, reducing the risk of unauthorized access and potential attacks, and enhancing overall security and compliance with best practices and regulatory requirements.
 
@@ -88,8 +88,8 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_loadbalancerservice_loadbalancer_approved" {
-  resource = turbot_smart_folder.main.id
+resource "turbot_policy_setting" "azure_loadbalancerservice_loadbalancer_approved" {
+  resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"

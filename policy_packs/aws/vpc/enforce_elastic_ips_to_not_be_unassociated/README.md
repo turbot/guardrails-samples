@@ -3,7 +3,7 @@ categories: ["cost controls", "networking", "security"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS VPC Elastic IPs To Not Be Unassociated
+# Enforce AWS VPC Elastic IPs to Not Be Unassociated
 
 Enforcing that AWS VPC Elastic IPs are not unassociated is crucial for optimizing resource usage and maintaining a secure environment. This practice ensures that all allocated Elastic IPs are actively used, reducing the risk of unnecessary costs, potential IP misconfigurations, and security vulnerabilities associated with unused IP addresses.
 

@@ -23,7 +23,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/azure-compute)
+  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-compute)
 
 ### Credentials
 
