@@ -10,7 +10,7 @@ The Guardrails Event Handlers are responsible for conveying events from GCP Logg
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/gcp/real-time-events) for GCP Projects in Guardrails.
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp/guardrails/enable_event_handlers/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_guardrails_enable_event_handlers/settings)**
 
 ## Getting Started
 
