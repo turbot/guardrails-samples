@@ -7,12 +7,12 @@ primary_category: "security"
 
 Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Storage buckets:
 
 - Set a KMS symmetric crypto key to be used for encryption
 - Enable Encryption at Rest for buckets via Google managed key or KMS crypto key
 
-- **[Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
+- **[Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-storage)
+  - [@turbot/gcp-storage](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-storage)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
@@ -92,7 +92,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
   # value    = "Check: Google managed key"
   # value    = "Check: Customer managed key"
   # value    = "Enforce: Google managed key"
-  value    = "Enforce: Encryption at Rest > Customer Managed Key" 
+  value    = "Enforce: Encryption at Rest > Customer Managed Key"
 }
 ```
 
