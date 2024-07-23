@@ -9,7 +9,7 @@ Enabling multi-region CloudTrail trails in AWS accounts is crucial for achieving
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable multi-region CloudTrail trails in AWS Accounts.
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws/guardrails/enable_multi_region_cloudtrail_trails/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_multi_region_cloudtrail_trails/settings)**
 
 ## Getting Started
 

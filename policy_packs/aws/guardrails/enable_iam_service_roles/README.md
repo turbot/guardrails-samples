@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_iam_enforce_enable_iam_service_roles/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_iam_enable_iam_service_roles/settings)**
 
 ## Getting Started
 

@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Set a polling interval window
 - Enable Event Poller
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws/guardrails/enable_event_poller/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_event_poller/settings)**
 
 ## Getting Started
 

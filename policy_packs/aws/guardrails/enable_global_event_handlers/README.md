@@ -9,7 +9,7 @@ The Guardrails Event Handlers are responsible for conveying events from AWS Clou
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable Global Event Handlers for AWS Accounts in Guardrails.
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_enable_global_event_handlers/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_global_event_handlers/settings)**
 
 ## Getting Started
 
