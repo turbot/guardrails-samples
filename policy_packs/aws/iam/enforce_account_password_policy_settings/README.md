@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing AWS IAM account password policy settings is crucial for ensuring strong authentication and enhancing account security. This measure ensures that passwords meet specific complexity, length, and rotation requirements, reducing the risk of unauthorized access and aligning with best practices and regulatory compliance.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for IAM account password policy:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for IAM account password policy:
 
 - Enable Allow Users to Change
 - Enable Hard Expiry
@@ -83,7 +83,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

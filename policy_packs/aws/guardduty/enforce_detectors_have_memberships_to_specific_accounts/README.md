@@ -7,7 +7,7 @@ primary_category: "data protection"
 
 Enforcing that AWS GuardDuty detectors have membership only to specific accounts is vital for maintaining a controlled and secure threat detection environment. This measure ensures that GuardDuty findings and data are shared only with authorized accounts, enhancing security by preventing unauthorized access to sensitive security information and ensuring compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for GuardDuty detectors:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GuardDuty detectors:
 
 - Set a list of approved accounts
 - Delete detectors if they do not belong to the approved list of accounts
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing the non-existence of AWS VPC default security groups is crucial to enhance security by ensuring that all security group rules are explicitly defined and managed, preventing unintended or overly permissive access that could arise from default settings. This control helps maintain a strict security posture and reduces the risk of vulnerabilities due to misconfigurations or the use of default rules that may not align with an organization's security policies.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for VPC security groups:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for VPC security groups:
 
 - Delete default security groups if available
 
@@ -75,7 +75,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

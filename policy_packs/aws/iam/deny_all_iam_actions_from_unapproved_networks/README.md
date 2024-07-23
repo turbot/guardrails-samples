@@ -7,7 +7,7 @@ primary_category: "networking"
 
 Denying all AWS IAM actions from unapproved networks is vital for protecting your AWS environment from unauthorized access. This measure ensures that IAM actions, such as creating, modifying, or deleting resources, can only be performed from trusted and approved networks, reducing the risk of malicious activity and enhancing overall security and compliance with best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for IAM:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for IAM:
 
 - Create an IAM Boundary policy to allow IAM actions only to RFC 1918 CIDR ranges
 
@@ -78,7 +78,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

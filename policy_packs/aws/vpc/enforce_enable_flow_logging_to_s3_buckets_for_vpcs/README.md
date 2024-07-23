@@ -7,7 +7,7 @@ primary_category: "logging"
 
 Enforcing flow logging to S3 buckets for AWS VPCs is crucial for maintaining comprehensive visibility and auditability of network traffic within your VPCs. This measure ensures that all network flow logs are stored securely in S3 buckets, facilitating detailed analysis, anomaly detection, and compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for VPCs:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for VPCs:
 
 - Set S3 bucket name to which flow logging would be configured
 - Enable flow logging to S3 bucket
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

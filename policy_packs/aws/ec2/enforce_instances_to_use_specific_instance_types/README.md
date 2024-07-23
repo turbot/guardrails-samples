@@ -7,7 +7,7 @@ primary_category: "cost controls"
 
 Enforcing specific AWS EC2 instance types ensures that deployed resources align with performance, cost, and compliance requirements. This control helps optimize resource utilization, manage expenses, and maintain consistent security and operational standards across the cloud environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
 
 - Set a list of specific instance types that are approved for use
 - Stop/Terminate instances that do not belong to the list of approved instance types
@@ -74,7 +74,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

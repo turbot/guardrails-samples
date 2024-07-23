@@ -8,7 +8,7 @@ type: "featured"
 
 Enabling AWS CIS v3.0.0 is essential for ensuring that your AWS environment adheres to industry-recognized security best practices. This provides a robust framework for identifying and mitigating security risks, enhancing compliance with regulatory requirements, and protecting sensitive data by automatically enforcing the security configurations recommended by the CIS benchmarks.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable AWS CIS v3.0.0 reporting with and without attestation controls in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable AWS CIS v3.0.0 reporting with and without attestation controls in Guardrails.
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_reporting_for_cis_v300/settings)**
 
@@ -72,7 +72,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 > [!TIP]
 > You can also update the policy settings in this policy pack directly in the Guardrails console.

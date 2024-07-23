@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing EC2 snapshots to be shared only with trusted accounts is crucial for maintaining data security and compliance. This practice ensures that sensitive information is protected from unauthorized access, reducing the risk of data breaches and maintaining the integrity of your cloud environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 snapshots:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 snapshots:
 
 - Set trusted accounts
 - Revoke untrusted access from snapshots
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

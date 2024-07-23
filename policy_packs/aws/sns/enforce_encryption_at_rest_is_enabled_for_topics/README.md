@@ -7,7 +7,7 @@ primary_category: "data protection"
 
 Enforcing Encryption at Rest for AWS SNS Topics is critical for ensuring that sensitive messages remain secure and protected from unauthorized access. This control helps safeguard data confidentiality by automatically encrypting all messages stored in SNS topics, thereby reducing the risk of data breaches and complying with regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for SNS topics:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for SNS topics:
 
 - Set the Customer Managed Key to be used for encryption
 - Enforce Encryption at Rest via AWS managed key or a customer managed key
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

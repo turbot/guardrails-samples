@@ -7,7 +7,7 @@ primary_category: "networking"
 
 Enforcing GCP network firewalls to not allow any egress access is essential for maintaining a highly secure environment. This measure ensures that no outbound traffic is permitted, preventing data exfiltration and unauthorized communication with external systems, thereby reducing the risk of data breaches and ensuring compliance with strict security policies and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for network load balancers:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for network load balancers:
 
 - Delete firewall network that contain egress allowed rules
 
@@ -73,7 +73,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

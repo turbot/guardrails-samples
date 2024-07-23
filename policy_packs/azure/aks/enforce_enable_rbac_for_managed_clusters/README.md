@@ -8,7 +8,7 @@ type: "featured"
 
 Enforcing Role-Based Access Control (RBAC) for Azure AKS managed clusters is crucial as it ensures that only authorized users and applications can perform actions within clusters. This granular control enhances security by preventing unauthorized access and modifications, thereby protecting the integrity and availability of the applications and services running in the Kubernetes environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for AKS managed clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for AKS managed clusters:
 
 - Terminate clusters that do not have RBAC enabled
 
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing Block Public Access for AWS VPC security groups is essential to prevent unauthorized access and exposure of sensitive data to the public internet. This measure ensures that ingress rules for ports 22 (SSH) and -1 (all ports) from 0.0.0.0/0 and ::/0 are blocked, minimizing the risk of security breaches and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for VPC security groups:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for VPC security groups:
 
 - Reject and revoke unapproved rules that allow ingress for ports 22 (SSH) and -1 (all ports) from 0.0.0.0/0 and ::/0.
 
@@ -75,7 +75,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

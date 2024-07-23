@@ -7,7 +7,7 @@ primary_category: "logging"
 
 Enabling multi-region CloudTrail trails in AWS accounts is crucial for achieving comprehensive visibility and auditability of API activity across all regions. This ensures that all actions taken within your AWS environment are consistently logged, enhancing security monitoring, supporting incident response, and ensuring compliance with regulatory requirements and best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable multi-region CloudTrail trails in AWS Accounts.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable multi-region CloudTrail trails in AWS Accounts.
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_multi_region_cloudtrail_trails/settings)**
 
@@ -71,7 +71,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,7 +7,7 @@ primary_category: "security"
 
 Ensuring that CloudWatch log groups are encrypted at rest is crucial for enhancing security. This measure helps protect log data by encrypting it, thereby reducing the risk of unauthorized access and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for CloudWatch log groups:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for CloudWatch log groups:
 
 - Set Customer Managed Key to be used for encryption
 - Enable Encryption at Rest for log groups
@@ -76,7 +76,7 @@ Log into your Guardrails workspace and [attach the policy pack to a resource](ht
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 
