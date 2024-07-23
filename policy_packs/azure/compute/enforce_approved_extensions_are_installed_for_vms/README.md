@@ -7,21 +7,21 @@ primary_category: "security"
 
 Enforcing that only approved extensions are installed on Azure Compute Virtual Machines is critical for maintaining a secure and controlled environment. This ensures that all installed extensions have been vetted for security and compliance, reducing the risk of vulnerabilities, unauthorized access, and ensuring adherence to organizational policies and security best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Compute virtual machines:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Compute virtual machines:
 
 - Stop/Terminate VMs that do not use approved extensions
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_approved_extensions_are_installed_for_vms/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_approved_extensions_are_installed_for_vms/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-compute)
+  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
 
 ### Credentials
 
@@ -71,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

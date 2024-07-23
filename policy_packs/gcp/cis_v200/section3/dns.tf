@@ -20,7 +20,7 @@ resource "turbot_policy_setting" "gcp_dns_managed_zone_approved" {
 resource "turbot_policy_setting" "gcp_dns_managed_zone_approved_custom" {
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-dns#/policy/types/managedZoneApprovedCustom"
-  note           = "Azure CIS v2.0.0 - Control: 3.4 and 3.5"
+  note           = "GCP CIS v2.0.0 - Control: 3.4 and 3.5"
   template_input = <<-EOT
     {
       managedZone {

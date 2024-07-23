@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing AWS Lambda functions to restrict public access is vital to prevent unauthorized users from invoking functions, which can lead to security vulnerabilities and potential data breaches. By limiting access, you ensure that only authorized entities can execute the functions, thereby maintaining the integrity and confidentiality of your applications and data.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Lambda functions:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Lambda functions:
 
 - Revoke untrusted access from the function's IAM resource policy
 - Set trusted accounts for the IAM resource policy
@@ -15,15 +15,15 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_functions_to_restrict_public_access/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_lambda_enforce_functions_to_restrict_public_access/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-lambda](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-lambda)
+  - [@turbot/aws-lambda](https://hub.guardrails.turbot.com/mods/aws/mods/aws-lambda)
 
 ### Credentials
 
@@ -73,11 +73,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
