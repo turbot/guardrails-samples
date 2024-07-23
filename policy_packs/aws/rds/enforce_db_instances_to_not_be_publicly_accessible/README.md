@@ -3,7 +3,7 @@ categories: ["compute", "networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS RDS DB Instances To Not Be Publicly Accessible
+# Enforce AWS RDS DB Instances to Not Be Publicly Accessible
 
 Enforcing that AWS RDS DB instances are not publicly accessible is crucial for protecting sensitive data and ensuring database security. This measure prevents unauthorized internet access to your RDS instances, reducing the risk of data breaches and enhancing compliance with security best practices and regulatory requirements.
 

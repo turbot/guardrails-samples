@@ -3,13 +3,13 @@ categories: ["storage", "data protection"]
 primary_category: "data protection"
 ---
 
-# Enforce Point-In-Time Recovery Is Enabled For AWS DynamoDB Tables
+# Enforce Point-in-Time Recovery Is Enabled for AWS DynamoDB Tables
 
 Enforcing point-in-time recovery (PITR) for AWS DynamoDB tables is crucial for ensuring data durability and protection against accidental deletions or write errors. This measure allows you to restore DynamoDB tables to any point within the last 35 days, enhancing data recovery capabilities and ensuring compliance with data protection best practices and regulatory requirements.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for DynamoDB tables:
 
-- Enable Point-In-Time recovery
+- Enable Point-in-Time recovery
 
 ## Documentation
 

@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce Azure Load Balancer to not use Unapproved Network Configuration
+# Enforce Azure Load Balancer to Not Use Unapproved Ports
 
 Enforcing that Azure Load Balancers do not use unapproved ports is essential for maintaining a secure network environment. This measure ensures that only approved and necessary ports are used, reducing the risk of unauthorized access and potential attacks, and enhancing overall security and compliance with best practices and regulatory requirements.
 

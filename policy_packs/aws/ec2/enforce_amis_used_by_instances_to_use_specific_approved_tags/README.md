@@ -3,7 +3,7 @@ categories: ["cost controls", "security", "tagging"]
 primary_category: "tagging"
 ---
 
-# Enforce AWS EC2 AMIs Used By Instances To Use Specific Approved Tags
+# Enforce AWS EC2 AMIs Used By Instances to Use Specific Approved Tags
 
 Enforcing that AWS EC2 AMIs used by instances have specific approved tags is vital for maintaining resource organization, compliance, and effective management. This practice ensures that all instances are easily identifiable based on their purpose, environment, and other criteria, facilitating cost tracking, security management, and adherence to organizational policies and best practices.
 

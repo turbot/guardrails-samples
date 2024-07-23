@@ -3,7 +3,7 @@ categories: ["cost controls", "networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS VPC Elastic IPs To Not Exist
+# Enforce AWS VPC Elastic IPs to Not Exist
 
 Enforcing that AWS VPC Elastic IPs do not exist is essential for maintaining a highly secure network environment by preventing unnecessary public IP addresses. This measure minimizes the attack surface by eliminating potential entry points for unauthorized access and reducing the risk of data breaches, thereby ensuring compliance with security best practices and organizational policies.
 

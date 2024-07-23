@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Enforce Encryption in Transit Is Enabled For AWS Redshift Clusters
+# Enforce Encryption in Transit Is Enabled for AWS Redshift Clusters
 
 Enforcing encryption in transit for AWS Redshift clusters is crucial for protecting data as it moves between clients and the Redshift service. This measure ensures that all data is encrypted during transmission, safeguarding it from interception and unauthorized access, thereby enhancing overall security and compliance with best practices and regulatory requirements.
 

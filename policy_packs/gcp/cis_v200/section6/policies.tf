@@ -123,7 +123,7 @@ resource "turbot_policy_setting" "gcp_sql_instance_database_flags_sql_server_tem
   EOT
 }
 
-# GCP > SQL > Instance > Encryption In Transit
+# GCP > SQL > Instance > Encryption in Transit
 resource "turbot_policy_setting" "gcp_sql_instance_encryption_in_transit" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-sql#/policy/types/instanceEncryptionInTransit"

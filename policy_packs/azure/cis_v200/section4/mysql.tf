@@ -1,4 +1,4 @@
-# Azure > MySQL > Server > Encryption In Transit
+# Azure > MySQL > Server > Encryption in Transit
 resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/serverEncryptionInTransit"
@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "azure_mysql_server_encryption_in_transit" {
   # value    = "Enforce: Enabled"
 }
 
-# Azure > MySQL > Flexible Server > Encryption In Transit
+# Azure > MySQL > Flexible Server > Encryption in Transit
 resource "turbot_policy_setting" "azure_mysql_flexible_server_encryption_in_transit" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-mysql#/policy/types/flexibleServerEncryptionInTransit"
