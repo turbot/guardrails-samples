@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
-  - [@turbot/aws-events](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws-events/mods/aws-events)
+  - [@turbot/aws-events](https://hub.guardrails.turbot.com/mods/aws/mods/aws-events)
   - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
 
 ### Credentials

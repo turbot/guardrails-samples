@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
-  - [@turbot/aws-events](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws-events/mods/aws-events)
+  - [@turbot/aws-events](https://hub.guardrails.turbot.com/mods/aws/mods/aws-events)
   - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
 - IAM Role ARN used to forward events from the non-primary regions to the Primary Region. You can use [enable_iam_service_roles](../enable_iam_service_roles/) Policy Pack to create this IAM role
 
