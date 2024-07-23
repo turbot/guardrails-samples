@@ -11,7 +11,7 @@ resource "turbot_policy_setting" "gcp_network_approved" {
 resource "turbot_policy_setting" "gcp_network_approved_custom" {
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-network#/policy/types/networkApprovedCustom"
-  note           = "Azure CIS v2.0.0 - Control: 3.1 and 3.2"
+  note           = "GCP CIS v2.0.0 - Control: 3.1 and 3.2"
   template_input = <<-EOT
     {
       network {
@@ -135,7 +135,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_approved" {
 resource "turbot_policy_setting" "gcp_network_firewall_approved_custom" {
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/gcp-network#/policy/types/firewallApprovedCustom"
-  note           = "Azure CIS v2.0.0 - Control: 3.10"
+  note           = "GCP CIS v2.0.0 - Control: 3.10"
   template_input = <<-EOT
     {
       firewall {

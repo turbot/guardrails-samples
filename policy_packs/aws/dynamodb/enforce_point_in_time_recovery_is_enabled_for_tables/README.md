@@ -88,7 +88,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "dynamodb_point_in_time_recovery_enabled" {
-  resource = turbot_smart_folder.dynamodb_point_in_time_recovery.id
+  resource = turbot_policy_pack.dynamodb_point_in_time_recovery.id
   type     = "tmod:@turbot/aws-dynamodb#/policy/types/tablePointInTimeRecovery"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"

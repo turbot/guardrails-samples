@@ -88,7 +88,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "vpc_internet_gateway_approved" {
-  resource = turbot_smart_folder.vpc_restrict_igw.id
+  resource = turbot_policy_pack.vpc_restrict_igw.id
   type     = "tmod:@turbot/aws-vpc-internet#/policy/types/internetGatewayApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Detach unapproved"

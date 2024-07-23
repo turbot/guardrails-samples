@@ -86,7 +86,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_termination_protection" {
-  resource = turbot_smart_folder.ec2_termination_protection.id
+  resource = turbot_policy_pack.ec2_termination_protection.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceTerminationProtection"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"
