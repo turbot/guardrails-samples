@@ -8,20 +8,20 @@ type: "featured"
 
 Enforcing security groups to reject all ingress, RDP, and SSH inbound access is critical for minimizing the attack surface and protecting systems from unauthorized access. This measure ensures that remote administrative access is blocked unless explicitly allowed, reducing the risk of malicious attacks and enhancing overall security posture.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network security groups:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for network security groups:
 
 - Reject 0.0.0.0/0 ingress traffic
 - Reject inbound access on RDP and SSH ports
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_security_groups_to_reject_all_rdp_ssh_inbound_access/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_network_enforce_security_groups_to_reject_all_rdp_ssh_inbound_access/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure-network)
+  - [@turbot/azure-network](https://hub.guardrails.turbot.com/mods/azure/mods/azure-network)
 
 ### Credentials
 
@@ -71,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

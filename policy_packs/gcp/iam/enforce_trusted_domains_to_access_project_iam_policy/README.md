@@ -7,20 +7,20 @@ primary_category: "access management"
 
 Enforcing trusted domains to access GCP IAM project policies is essential for ensuring that only authorized and verified domains can interact with your project's IAM policies. This measure helps prevent unauthorized access, enhances security by limiting access to trusted entities, and ensures compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for project policy:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for project policy:
 
 - Set a list of trusted domains
 - Revoke untrusted access from project IAM policy
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_trusted_domains_to_access_project_iam_policy/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_iam_enforce_trusted_domains_to_access_project_iam_policy/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-iam)
+  - [@turbot/gcp-iam](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-iam)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
@@ -90,7 +90,7 @@ resource "turbot_policy_setting" "gcp_iam_project_iam_policy_trusted_access" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-iam#/policy/types/projectIamPolicyTrustedAccess"
   # value    = "Check: Trusted Access > *"
-  value = "Enforce: Trusted Access > *"
+  value    = "Enforce: Trusted Access > *"
 }
 ```
 

@@ -3,8 +3,8 @@ resource "turbot_policy_setting" "aws_iam_user_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userApproved"
   value    = "Check: Approved"
-  # value   = "Enforce: Delete unapproved"
-  # value   = "Enforce: Delete unapproved if new"
+  # value    = "Enforce: Delete unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 
 # AWS > IAM > User > Approved > Custom

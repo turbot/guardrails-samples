@@ -9,7 +9,7 @@ resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
 }
 
 # GCP > Storage > Bucket > Encryption at Rest > Customer Managed Key
-resource "turbot_policy_setting" "aws_efs_file_system_approved_encryption_at_rest_customer_managed_key" {
+resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest_customer_managed_key" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-storage#/policy/types/bucketEncryptionAtRestCustomerManagedKey"
   # Your KMS crypto key

@@ -8,19 +8,19 @@ type: "featured"
 
 Enforcing encryption for secrets in GCP GKE clusters is critical for protecting sensitive information stored within the cluster. This measure ensures that secrets, such as passwords and API keys, are encrypted, safeguarding them from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for GKE clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for GKE clusters:
 
 - Delete clusters that do not have database encryption state set to `ENCRYPTED`
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_for_secrets_is_enabled_for_clusters/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_kubernetesengine_enforce_encryption_for_secrets_is_enabled_for_clusters/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-kubernetesengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-kubernetesengine)
+  - [@turbot/gcp-kubernetesengine](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-kubernetesengine)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

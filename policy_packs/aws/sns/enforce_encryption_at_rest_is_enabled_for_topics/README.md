@@ -7,22 +7,22 @@ primary_category: "data protection"
 
 Enforcing Encryption at Rest for AWS SNS Topics is critical for ensuring that sensitive messages remain secure and protected from unauthorized access. This control helps safeguard data confidentiality by automatically encrypting all messages stored in SNS topics, thereby reducing the risk of data breaches and complying with regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for SNS topics:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for SNS topics:
 
 - Set the Customer Managed Key to be used for encryption
 - Enforce Encryption at Rest via AWS managed key or a customer managed key
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_at_rest_is_enabled_for_topics/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_sns_enforce_encryption_at_rest_is_enabled_for_topics/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-sns](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-sns)
+  - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
 
 ### Credentials
 
@@ -72,11 +72,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
