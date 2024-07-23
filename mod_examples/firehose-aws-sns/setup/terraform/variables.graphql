@@ -1,0 +1,9 @@
+{
+  "inputForActionNotify": {
+    "resource": "tmod:@turbot/turbot#",
+    "action": "tmod:@turbot/firehose-aws-sns#/action/types/router",
+    "filters": [
+      "level:self,descendant notificationType:action_notify $.turbot.tags:Environment=Development"
+    ]
+  }
+}
