@@ -1,5 +1,0 @@
-get_available_versions_for_mod.graphql
-install_mod.graphql
-list_installed_mods.graphql
-notes.md
-uninstall_mod.graphql

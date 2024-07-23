@@ -1,0 +1,8 @@
+resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.Versioning.Status:Enabled") {
+  items {
+    turbot {
+      title
+    }
+    object
+  }
+}

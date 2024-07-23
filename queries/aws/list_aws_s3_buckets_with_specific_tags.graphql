@@ -1,0 +1,8 @@
+resources(filter: "resourceTypeId:'tmod:@turbot/aws-s3#/resource/types/bucket' $.turbot.tags.'new':/^tes-/") {
+  items {
+    turbot {
+      title
+    }
+    object
+  }
+}
