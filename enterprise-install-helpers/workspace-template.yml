@@ -1,0 +1,191 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Workspace Manager, manage workspace creation & upgrades
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: "Workspace Data"
+        Parameters:
+          - Name
+          - Version
+          - VersionSafe
+          - Hive
+          - UseRoute53
+          - FoundationStackOutputPrefix
+          - AlternateURL
+          - InstallationDomainSsmValue
+
+Parameters:
+  Name:
+    Type: String
+    Description: Name of workspace
+
+  AlternateURL:
+    Type: String
+    Description: Alternate URL for Workspace (Leave empty if not needed)
+
+  Version:
+    Type: String
+    Description: Version
+    Default: "5.0.0"
+
+  Hive:
+    Type: String
+    Description: Hive Name
+
+  UseRoute53:
+    Description: Use Route 53 DNS Management
+    Default: true
+    Type: String
+    AllowedValues: [true, false]
+
+  # This can be removed for simplicity
+  FoundationStackOutputPrefix:
+    Description: >
+      Name of the resource prefix used by the Turbot Foundation stack, which
+      is a prefix for exported outputs from that stack.
+    Type: String
+    Default: turbot
+
+  InstallationDomainSsmValue:
+    Description: >
+      Name of the SSM Param that holds the installation domain name,
+      which is exported from the TEF foundation stack.
+    Type: "AWS::SSM::Parameter::Value<String>"
+    Default: "/turbot/enterprise/installation_domain"
+
+Conditions:
+  UseRoute53DnsManagement: !Equals [true, !Ref UseRoute53]
+  CreateAlternateUrl: !Not [!Equals ["", !Ref AlternateURL]]
+
+Resources:
+  Workspace:
+    Type: Custom::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::Sub: "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${FoundationStackOutputPrefix}_workspace_manager"
+      WorkspaceId: !Ref Name
+      Version: !Ref Version
+      Hive: !Ref Hive
+      # This section is not normally required
+      Options:
+        FoundationStackOutputPrefix: !Sub "${FoundationStackOutputPrefix}"
+
+  #
+  # Example how to use Route 53 to manage workspace DNS
+  #
+  # This is tricky, nesting Fn::Import within Fn::Sub, this article helps:
+  #
+  # https://www.fischco.org/technica/2017/cloud-formation-sub/
+  #
+  WorkspaceDnsAlias:
+    Type: AWS::Route53::RecordSet
+    Condition: UseRoute53DnsManagement
+    Properties:
+      HostedZoneName:
+        Fn::Sub:
+          - "${hostedZone}."
+          - hostedZone: !Ref InstallationDomainSsmValue
+      Name:
+        Fn::Sub:
+          - "${workspace}.${hostedZone}."
+          - workspace: !Ref Name
+            hostedZone: !Ref InstallationDomainSsmValue
+      Type: CNAME
+      TTL: 30
+      ResourceRecords:
+        - Fn::Sub:
+            - "${FoundationStackOutputPrefix}-${version}.${hostedZone}."
+            - version: !Join ["-", !Split [".", !Ref Version]]
+              hostedZone: !Ref InstallationDomainSsmValue
+
+  #
+  # If the Param AlternateURL is set then create an SSM Parameter to match the url with the workspace.
+  #
+  WorkspaceParam:
+    Type: AWS::SSM::Parameter
+    Condition: CreateAlternateUrl
+    Properties:
+      Description: SSM Parameter the matching a workspace to a url
+      Name: !Sub "/${FoundationStackOutputPrefix}/tenant/${AlternateURL}"
+      Type: String
+      Value:
+        Fn::Sub:
+          - '{"hive":"${Hive}","id":"${Name}.${hostedZone}","name":"${Name}","version":"${Version}","schema":"${Name}","log_level":"debug","trace":"true"}'
+          - hostedZone: !Ref InstallationDomainSsmValue
+
+  #
+  # Minute tick per workspace.
+  #
+  # NOTE: this needs to be replaced with a new design, the current per-workspace minute tick
+  # is not sustainable (limit on the number of rules) and not efficient, each minute we tick
+  # all the workspaces.
+  #
+  WorkspaceMinuteTick:
+    Type: AWS::Events::Rule
+    Properties:
+      Name:
+        Fn::Sub:
+          - "${WorkspaceId}_minute_tick"
+          - WorkspaceId: !Ref Name
+      Description:
+        Fn::Sub:
+          - "Minute tick scheduler for workspace ${WorkspaceId}"
+          - WorkspaceId: !Ref Name
+      ScheduleExpression: "cron(1/1 * * * ? *)"
+      State: ENABLED
+      Targets:
+        - Arn:
+            Fn::Sub:
+              - "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:${FoundationStackOutputPrefix}_${VersionSafe}_events"
+              - VersionSafe: !Join ["_", !Split [".", !Join ["_", !Split ["-", !Ref Version]]]]
+          Id:
+            Fn::Sub:
+              - "${WorkspaceId}_minute_tick"
+              - WorkspaceId: !Ref Name
+          InputTransformer:
+            InputPathsMap:
+              account: "$.account"
+              "detail-type": "$.detail-type"
+              detail: "$.detail"
+              id: "$.id"
+              region: "$.region"
+              resources: "$.resources"
+              source: "$.source"
+              time: "$.time"
+              version: "$.version"
+            InputTemplate:
+              Fn::Sub:
+                - >
+                  {
+                    "time":<time>,
+                    "type": "tick.turbot.com:EveryMinute",
+                    "detail-type": <detail-type>,
+                    "source": <source>,
+                    "account": <account>,
+                    "region": <region>,
+                    "detail": <detail>,
+                    "version": <version>,
+                    "resources": <resources>,
+                    "id": <id>,
+                    "meta": {
+                      "tenantId": "${WorkspaceId}.${InstallationDomain}"
+                    }
+                  }
+                - WorkspaceId: !Ref Name
+                  InstallationDomain: !Ref InstallationDomainSsmValue
+
+Outputs:
+  WorkspaceUrl:
+    Value:
+      Fn::Sub:
+        - "https://${WorkspaceId}.${InstallationDomain}"
+        - WorkspaceId: !Ref Name
+          InstallationDomain: !Ref InstallationDomainSsmValue
+  WorkspaceManagerOutput:
+    Value:
+      Fn::GetAtt:
+        - Workspace
+        - Output
