@@ -15,7 +15,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
   - [@turbot/aws-vpc-core](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-core)
@@ -81,7 +81,8 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
 >
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
-> By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "aws_vpc_network_acl_ingress_rules_approved" {

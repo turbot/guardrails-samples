@@ -9,15 +9,15 @@ This section covers security recommendations to follow for the configuration and
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of Azure CIS benchmark section 8 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_cis_v200_section8/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cis_v200_section8/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-keyvault](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-keyvault)
+  - [@turbot/azure-keyvault](https://hub.guardrails.turbot.com/mods/azure/mods/azure-keyvault)
 
 ### Credentials
 

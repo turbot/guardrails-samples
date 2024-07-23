@@ -9,19 +9,19 @@ This section covers security recommendations to follow to set general database s
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of Azure CIS benchmark section 4 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_cis_v200_section4/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cis_v200_section4/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-sql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-sql)
-  - [@turbot/azure-mysql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-mysql)
-  - [@turbot/azure-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-network)
-  - [@turbot/azure-postgresql](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-postgresql)
-  - [@turbot/azure-cosmosdb](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-cosmosdb)
+  - [@turbot/azure-sql](https://hub.guardrails.turbot.com/mods/azure/mods/azure-sql)
+  - [@turbot/azure-mysql](https://hub.guardrails.turbot.com/mods/azure/mods/azure-mysql)
+  - [@turbot/azure-network](https://hub.guardrails.turbot.com/mods/azure/mods/azure-network)
+  - [@turbot/azure-postgresql](https://hub.guardrails.turbot.com/mods/azure/mods/azure-postgresql)
+  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
 
 ### Credentials
 
@@ -83,7 +83,8 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 > You can also update the policy settings in this policy pack directly in the Guardrails console.
 >
 > Please note your Terraform state file will then become out of sync and the policy settings should then only be managed in the console.
-> By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
+
+By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
 resource "turbot_policy_setting" "azure_sql_server_auditing" {

@@ -13,15 +13,15 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_appservice_enforce_webapps_to_use_managed_service_identity/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_webapps_to_use_managed_service_identity/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-appservice](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-appservice)
+  - [@turbot/azure-appservice](https://hub.guardrails.turbot.com/mods/azure/mods/azure-appservice)
 
 ### Credentials
 

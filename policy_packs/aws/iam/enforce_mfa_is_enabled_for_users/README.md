@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/aws-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-iam)
 
@@ -91,8 +91,8 @@ resource "turbot_policy_setting" "aws_iam_user_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-iam#/policy/types/userApproved"
   # value    = "Check: Approved"
-  # value   = "Enforce: Delete unapproved"
-  value   = "Enforce: Delete unapproved if new"
+  # value    = "Enforce: Delete unapproved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

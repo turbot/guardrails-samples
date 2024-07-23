@@ -14,15 +14,15 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_loadbalancer_enforce_load_balancers_to_not_use_unapproved_ports/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_loadbalancer_enforce_load_balancers_to_not_use_unapproved_ports/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-loadbalancer](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-loadbalancer)
+  - [@turbot/azure-loadbalancer](https://hub.guardrails.turbot.com/mods/azure/mods/azure-loadbalancer)
 
 ### Credentials
 

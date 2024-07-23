@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/aws-vpc-security](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-vpc-security)
 
@@ -90,8 +90,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "aws_vpc_security_security_group_ingress_rules_approved" {
   resource = turbot_policy_pack.aws_public_access_block.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
-  value    = "Check: Approved"
-  # value   = "Enforce: Delete unapproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved"
 }
 ```
 

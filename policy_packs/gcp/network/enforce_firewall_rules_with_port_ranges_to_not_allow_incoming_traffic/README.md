@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
 
@@ -90,7 +90,7 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-network#/policy/types/firewallIngressRulesApproved"
   # value    = "Check: Approved"
-  value  = "Enforce: Delete unapproved"
+  value    = "Enforce: Delete unapproved"
 }
 ```
 

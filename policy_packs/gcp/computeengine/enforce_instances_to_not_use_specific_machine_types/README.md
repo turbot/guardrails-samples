@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
   - [@turbot/gcp-computeengine](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-computeengine)
 
@@ -91,7 +91,7 @@ resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
   # value    = "Check: Approved"
-  value  = "Enforce: Delete unapproved if new"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

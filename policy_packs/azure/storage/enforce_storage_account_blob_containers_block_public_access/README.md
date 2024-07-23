@@ -11,15 +11,15 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Enforce block blob public access is set to Enabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_storage_enforce_storage_account_blob_containers_block_public_access/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_storage_enforce_storage_account_blob_containers_block_public_access/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-storage](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-storage)
+  - [@turbot/azure-storage](https://hub.guardrails.turbot.com/mods/azure/mods/azure-storage)
 
 ### Credentials
 

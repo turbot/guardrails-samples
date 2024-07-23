@@ -9,16 +9,16 @@ This section covers security recommendations to follow in order to set networkin
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of Azure CIS benchmark section 6 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_cis_v200_section6/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cis_v200_section6/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-network)
-  - [@turbot/azure-networkwatcher](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-networkwatcher)
+  - [@turbot/azure-network](https://hub.guardrails.turbot.com/mods/azure/mods/azure-network)
+  - [@turbot/azure-networkwatcher](https://hub.guardrails.turbot.com/mods/azure/mods/azure-networkwatcher)
 
 ### Credentials
 

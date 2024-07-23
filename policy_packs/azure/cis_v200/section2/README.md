@@ -15,15 +15,15 @@ Microsoft Defender products addressed in this section include:
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of Azure CIS benchmark section 2 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_cis_v200_section2/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cis_v200_section2/settings)**
 
 ## Getting Started
 
 ### Requirements
 
-- [Terraform](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-securitycenter](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-securitycenter)
+  - [@turbot/azure-securitycenter](https://hub.guardrails.turbot.com/mods/azure/mods/azure-securitycenter)
 
 ### Credentials
 
