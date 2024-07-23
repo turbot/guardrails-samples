@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_logs_enforce_encryption_at_rest_is_enabled_for_log_groups/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_logs_enforce_encryption_at_rest_is_enabled_for_log_groups/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-logs](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-logs)
+  - [@turbot/aws-logs](https://hub.guardrails.turbot.com/mods/aws/mods/aws-logs)
 
 ### Credentials
 

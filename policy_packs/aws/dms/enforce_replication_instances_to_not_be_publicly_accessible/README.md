@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Stop/Terminate replication instances which have public access enabled
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_dms_enforce_replication_instances_to_not_be_publicly_accessible/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_dms_enforce_replication_instances_to_not_be_publicly_accessible/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - The following Guardrails mods need to be installed:
-  - [@turbot/aws-dms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-dms)
+  - [@turbot/aws-dms](https://hub.guardrails.turbot.com/mods/aws/mods/aws-dms)
 
 ### Credentials
 

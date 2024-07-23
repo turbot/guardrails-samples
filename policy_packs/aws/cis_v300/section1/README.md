@@ -9,7 +9,7 @@ This section contains recommendations for configuring identity and access manage
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of AWS CIS benchmark section 1 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_cis_v300_section1/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_cis_v300_section1/settings)**
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-iam)
+  - [@turbot/aws-iam](https://hub.guardrails.turbot.com/mods/aws/mods/aws-iam)
 
 ### Credentials
 

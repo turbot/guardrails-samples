@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Terminate instances that are older than 90 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_ec2_enforce_instances_to_not_be_older_than_90_days/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_to_not_be_older_than_90_days/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-ec2)
+  - [@turbot/aws-ec2](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ec2)
 
 ### Credentials
 

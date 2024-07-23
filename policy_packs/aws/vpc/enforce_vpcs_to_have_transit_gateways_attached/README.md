@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_vpc_enforce_vpcs_to_have_transit_gateways_attached/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_vpc_enforce_vpcs_to_have_transit_gateways_attached/settings)**
 
 ## Getting Started
 
@@ -21,8 +21,8 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-vpc-core](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-vpc-core)
-  - [@turbot/aws-vpc-connect](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-vpc-connect)
+  - [@turbot/aws-vpc-core](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-core)
+  - [@turbot/aws-vpc-connect](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-connect)
 
 ### Credentials
 

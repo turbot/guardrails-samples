@@ -9,7 +9,7 @@ The Guardrails Event Handlers are responsible for conveying events from AWS Clou
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable Global Event Handlers for AWS Accounts in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_enable_global_event_handlers/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_enable_global_event_handlers/settings)**
 
 ## Getting Started
 
@@ -17,9 +17,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws)
+  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
   - [@turbot/aws-events](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws-events/mods/aws-events)
-  - [@turbot/aws-sns](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-sns)
+  - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
 - IAM Role ARN used to forward events from the non-primary regions to the Primary Region. You can use [enable_iam_service_roles](../enable_iam_service_roles/) Policy Pack to create this IAM role
 
   - The below permissions are needed at minimum to allow the role to forward events to the Primary Region correctly:

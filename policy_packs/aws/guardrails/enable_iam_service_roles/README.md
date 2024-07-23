@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_iam_enforce_enable_iam_service_roles/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_iam_enforce_enable_iam_service_roles/settings)**
 
 ## Getting Started
 
@@ -25,7 +25,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws)
+  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
 
 ### Credentials
 

@@ -7,13 +7,13 @@ primary_category: "data protection"
 
 Enforcing versioning for AWS S3 buckets is crucial because it provides data protection by maintaining multiple versions of objects, enabling the recovery of previous versions in case of accidental deletions or overwrites. This ensures data integrity, facilitates disaster recovery, and supports compliance with data retention policies.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for S3 buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for S3 buckets:
 
 - Enable versioning
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_versioning_is_enabled_for_buckets/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_versioning_is_enabled_for_buckets/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-s3](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-s3)
+  - [@turbot/aws-s3](https://hub.guardrails.turbot.com/mods/aws/mods/aws-s3)
 
 ### Credentials
 
@@ -71,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

@@ -7,11 +7,11 @@ primary_category: "security"
 
 Enforcing encryption in transit for AWS Redshift clusters is crucial for protecting data as it moves between clients and the Redshift service. This measure ensures that all data is encrypted during transmission, safeguarding it from interception and unauthorized access, thereby enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Redshift clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Redshift clusters:
 
 - Enable Encryption in Transit by changing the `require_ssl` parameter of the attached parameter group. This change will also trigger **reboot** of the cluster.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_encryption_in_transit_is_enabled_for_clusters/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_encryption_in_transit_is_enabled_for_clusters/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - The following Guardrails mods need to be installed:
-  - [@turbot/aws-redshift](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-redshift)
+  - [@turbot/aws-redshift](https://hub.guardrails.turbot.com/mods/aws/mods/aws-redshift)
 
 ### Credentials
 
@@ -69,11 +69,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

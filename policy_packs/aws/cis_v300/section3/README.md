@@ -10,7 +10,7 @@ This section contains recommendations for configuring AWS logging features.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of AWS CIS benchmark section 3 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_cis_v300_section3/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_cis_v300_section3/settings)**
 
 ## Getting Started
 
@@ -18,11 +18,11 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-cloudtrail](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-cloudtrail)
-  - [@turbot/aws-config](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-config)
-  - [@turbot/aws-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-kms)
-  - [@turbot/aws-s3](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-s3)
-  - [@turbot/aws-vpc-core](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-vpc-core)
+  - [@turbot/aws-cloudtrail](https://hub.guardrails.turbot.com/mods/aws/mods/aws-cloudtrail)
+  - [@turbot/aws-config](https://hub.guardrails.turbot.com/mods/aws/mods/aws-config)
+  - [@turbot/aws-kms](https://hub.guardrails.turbot.com/mods/aws/mods/aws-kms)
+  - [@turbot/aws-s3](https://hub.guardrails.turbot.com/mods/aws/mods/aws-s3)
+  - [@turbot/aws-vpc-core](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-core)
 
 ### Credentials
 

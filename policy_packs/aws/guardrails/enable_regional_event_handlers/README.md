@@ -10,7 +10,7 @@ The Guardrails Event Handlers are responsible for conveying events from AWS Clou
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/aws/event-handlers) for AWS Accounts in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_enable_regional_event_handlers/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_enable_regional_event_handlers/settings)**
 
 ## Getting Started
 
@@ -18,9 +18,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws)
+  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
   - [@turbot/aws-events](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws-events/mods/aws-events)
-  - [@turbot/aws-sns](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-sns)
+  - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
 
 ### Credentials
 

@@ -15,7 +15,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_s3_enforce_trusted_access_for_acls_on_buckets/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_s3_enforce_trusted_access_for_acls_on_buckets/settings)**
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-s3](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-s3)
+  - [@turbot/aws-s3](https://hub.guardrails.turbot.com/mods/aws/mods/aws-s3)
 
 ### Credentials
 

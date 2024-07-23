@@ -7,12 +7,12 @@ primary_category: "cost controls"
 
 Enforcing AWS EC2 EBS volumes to use specific volume types is crucial for optimizing performance, cost, and security. By ensuring that only approved volume types are used, organizations can maintain consistent performance standards, manage expenses effectively, and mitigate risks associated with unauthorized or inappropriate storage configurations.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EBS volumes:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EBS volumes:
 
 - Set a list of specific volume types that are approved for use
 - Detach, snapshot and delete volumes that do not belong to the list of approved volume types
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_ebs_volumes_to_use_specific_volume_types/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_ebs_volumes_to_use_specific_volume_types/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
+  - [@turbot/aws-ec2](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ec2)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

@@ -15,7 +15,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_lambda_enforce_functions_to_restrict_public_access/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_lambda_enforce_functions_to_restrict_public_access/settings)**
 
 ## Getting Started
 
@@ -23,7 +23,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-lambda](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-lambda)
+  - [@turbot/aws-lambda](https://hub.guardrails.turbot.com/mods/aws/mods/aws-lambda)
 
 ### Credentials
 

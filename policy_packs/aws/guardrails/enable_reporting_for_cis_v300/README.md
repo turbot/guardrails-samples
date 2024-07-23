@@ -1,5 +1,14 @@
 ---
-categories: ["access management", "cis", "compliance", "logging", "networking", "security", "storage"]
+categories:
+  [
+    "access management",
+    "cis",
+    "compliance",
+    "logging",
+    "networking",
+    "security",
+    "storage",
+  ]
 primary_category: "compliance"
 type: "featured"
 ---
@@ -10,7 +19,7 @@ Enabling AWS CIS v3.0.0 is essential for ensuring that your AWS environment adhe
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable AWS CIS v3.0.0 reporting with and without attestation controls in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_enable_reporting_for_cis_v300/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_enable_reporting_for_cis_v300/settings)**
 
 ## Getting Started
 
@@ -18,7 +27,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-cisv3-0](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-cisv3-0)
+  - [@turbot/aws-cisv3-0](https://hub.guardrails.turbot.com/mods/aws/mods/aws-cisv3-0)
 
 ### Credentials
 

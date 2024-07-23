@@ -10,7 +10,7 @@ Metric filter-related recommendations in this section are dependent on the Ensur
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of AWS CIS benchmark section 4 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_cis_v300_section4/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_cis_v300_section4/settings)**
 
 ## Getting Started
 
@@ -18,10 +18,10 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-cloudtrail](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-cloudtrail)
-  - [@turbot/aws-cloudwatch](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-cloudwatch)
-  - [@turbot/aws-logs](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-logs)
-  - [@turbot/aws-securityhub](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-securityhub)
+  - [@turbot/aws-cloudtrail](https://hub.guardrails.turbot.com/mods/aws/mods/aws-cloudtrail)
+  - [@turbot/aws-cloudwatch](https://hub.guardrails.turbot.com/mods/aws/mods/aws-cloudwatch)
+  - [@turbot/aws-logs](https://hub.guardrails.turbot.com/mods/aws/mods/aws-logs)
+  - [@turbot/aws-securityhub](https://hub.guardrails.turbot.com/mods/aws/mods/aws-securityhub)
 
 ### Credentials
 

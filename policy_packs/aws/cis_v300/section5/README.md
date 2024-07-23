@@ -9,7 +9,7 @@ This section contains recommendations for configuring security-related aspects o
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of AWS CIS benchmark section 5 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_cis_v300_section5/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_cis_v300_section5/settings)**
 
 ## Getting Started
 
@@ -17,9 +17,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-ec2)
-  - [@turbot/aws-vpc-core](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-vpc-core)
-  - [@turbot/aws-vpc-security](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-vpc-security)
+  - [@turbot/aws-ec2](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ec2)
+  - [@turbot/aws-vpc-core](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-core)
+  - [@turbot/aws-vpc-security](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-security)
 
 ### Credentials
 

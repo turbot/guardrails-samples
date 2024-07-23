@@ -7,9 +7,9 @@ primary_category: "logging"
 
 Enabling multi-region CloudTrail trails in AWS accounts is crucial for achieving comprehensive visibility and auditability of API activity across all regions. This ensures that all actions taken within your AWS environment are consistently logged, enhancing security monitoring, supporting incident response, and ensuring compliance with regulatory requirements and best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable multi-region CloudTrail trails in AWS Accounts.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable multi-region CloudTrail trails in AWS Accounts.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_multi_region_cloudtrail_trails/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws/guardrails/enable_multi_region_cloudtrail_trails/settings)**
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
+  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
 
 ### Credentials
 
@@ -67,11 +67,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

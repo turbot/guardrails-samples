@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws_guardduty_enforce_detectors_have_memberships_to_specific_accounts/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardduty_enforce_detectors_have_memberships_to_specific_accounts/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-guardduty](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/aws/mods/aws-guardduty)
+  - [@turbot/aws-guardduty](https://hub.guardrails.turbot.com/mods/aws/mods/aws-guardduty)
 
 ### Credentials
 
