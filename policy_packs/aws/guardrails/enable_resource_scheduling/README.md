@@ -7,12 +7,12 @@ primary_category: "logging"
 
 Enabling resource scheduling in guardrails is crucial to ensure optimal allocation and utilization of resources, thereby preventing overallocation or underutilization. This strategic control helps in maintaining efficiency, meeting project deadlines, and balancing workloads effectively across the organization.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for AWS Accounts Guardrails Logging Bucket stack in Guardrails:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for AWS Accounts in Guardrails:
 
-- Set EC2 Instance schedule
-- Set RDS DB Cluster schedule
-- Set RDS DB Instance schedule
-- Set Redshift Cluster schedule
+- Set EC2 instance schedule
+- Set RDS db cluster schedule
+- Set RDS db instance schedule
+- Set Redshift cluster schedule
 
 **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_resource_scheduling/settings)**
 
@@ -75,11 +75,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

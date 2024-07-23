@@ -7,7 +7,7 @@ primary_category: "logging"
 
 The Guardrails Event Poller are responsible polling Audit Logs (Azure Monitor) at intervals specified and retrieves the latest events (Succeeded) for processing.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Azure Subscriptions in Guardrails:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Azure Subscriptions in Guardrails:
 
 - Set a polling interval, i.e. the frequency to poll events from Azure
 - Set a polling interval window
