@@ -1,0 +1,110 @@
+# Description
+# -----------
+#
+# Retrieves a summary of churn that Turbot saw or generated over a given time period. 
+# Lists number of resources created and destroyed by any actor
+# List number of resources created, updated or destroyed by Turbot.
+# 
+# STEP 1 Get the Turbot Identity resource ID. 
+# STEP 2 Retrieve churn stat
+
+# Prerequisites
+# -------------
+# These queries require Turbot/ReadOnly access to the Turbot console.
+#
+     
+
+
+# Substitute
+# ----------
+#
+# Substitute real values for STEP 2. 
+#
+# <actor_identity>: 
+#    After running the `GetTurbotIdentity` query, use the value of $.resources.items.turbot.id in place of <actor_identity>
+#    This query is required because there is no generic identifier for the Turbot Identity in the notifications table. The resource ID must be used. 
+
+# Use Cases
+# ---------
+#
+#   STEP 1
+#   ------
+#     1. Get the Resource ID
+#
+#   STEP 2
+#   ------
+#     1. Get the Turbot Identity resource ID from STEP 1 and replace <actor_identity>
+#     2. Excute STEP 2 GraphQL script.
+
+# Documentation
+# -------------
+#
+# For full documentation to check how the import work and details on mutation:
+# - Account Import: https://turbot.com/v5/docs/integrations/aws/import-aws-account
+# - Mutations: https://turbot.com/v5/docs/reference/graphql/mutation
+
+#################################  STEP 1  #################################
+####### Get Turbot Identity ID  #######
+
+query GetTurbotIdentity {
+  turbot_identity: resources(
+    filter: "resourceTypeId:'tmod:@turbot/turbot-iam#/resource/types/turbotIdentity'"
+  ) {
+    items {
+      turbot {
+        id
+      }
+    }
+  }
+}
+
+
+#################################  STEP 2  #################################
+# Add the Turbot Identity resource ID from the first query into <actor_identity>.
+query Notifications {
+  created_resource: notifications(
+    filter: "timestamp:>=T-7d notificationType:resource_created"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+  deleted_resource: notifications(
+    filter: "timestamp:>=T-7d notificationType:resource_deleted"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+  turbot_deleted: notifications(
+    filter: "actorIdentityId:'<actor_identity>' timestamp:>=T-7d notificationType:resource_deleted"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+    turbot_created: notifications(
+    filter: "actorIdentityId:'<actor_identity>' timestamp:>=T-7d notificationType:resource_created"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+      turbot_updated: notifications(
+    filter: "actorIdentityId:'<actor_identity>' timestamp:>=T-7d notificationType:resource_updated"
+  ) {
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

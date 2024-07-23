@@ -1,0 +1,45 @@
+# Description
+# -----------
+#
+# List the entire policy type hierarchy.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_policy_types.graphql
+#
+
+# Filter
+# ------
+#
+# is:
+#   To match a specific type of entry in the list of returned entries.
+#   In this example, this is set to control type which filters away the resources in the control type hierarchy to give just the control types.
+#
+# sort:
+#   Sets the order of the returned query results.
+#   In this example, it is set to path which will return the results in hierarchical order.
+#
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL policyTypes: https://turbot.com/v5/docs/reference/graphql/query/policyTypes
+#
+
+query ListPolicyTypes {
+  policyTypes(filter: "is:policyType sort:path") {
+    items {
+      uri
+    }
+
+    metadata {
+      stats {
+        total
+      }
+    }
+  }
+}

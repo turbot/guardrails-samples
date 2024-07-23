@@ -1,0 +1,92 @@
+# AWS SNS Topic for Section 4
+sns_topic = "aws_cis_v300_s4_sns_topic"
+
+# Log Metric Filter name for control 4.1
+log_metric_filter_name_4_1 = "unauthorized_api_calls_filter"
+
+# Log Metric Alarm name for control 4.1
+log_metric_alarm_name_4_1 = "unauthorized_api_calls_alarm"
+
+# Log Metric Filter name for control 4.2
+log_metric_filter_name_4_2 = "no_mfa_console_signin_filter"
+
+# Log Metric Alarm name for control 4.2
+log_metric_alarm_name_4_2 = "no_mfa_console_signin_alarm"
+
+# Log Metric Filter name for control 4.3
+log_metric_filter_name_4_3 = "root_usage_filter"
+
+# Log Metric Alarm name for control 4.3
+log_metric_alarm_name_4_3 = "root_usage_alarm"
+
+# Log Metric Filter name for control 4.4
+log_metric_filter_name_4_4 = "iam_policy_changes_filter"
+
+# Log Metric Alarm name for control 4.4
+log_metric_alarm_name_4_4 = "iam_policy_changes_alarm"
+
+# Log Metric Filter name for control 4.5
+log_metric_filter_name_4_5 = "cloudtrail_cfg_changes_filter"
+
+# Log Metric Alarm name for control 4.5
+log_metric_alarm_name_4_5 = "cloudtrail_cfg_changes_alarm"
+
+# Log Metric Filter name for control 4.6
+log_metric_filter_name_4_6 = "console_signin_failure_metric"
+
+# Log Metric Alarm name for control 4.6
+log_metric_alarm_name_4_6 = "console_signin_failure_alarm"
+
+# Log Metric Filter name for control 4.7
+log_metric_filter_name_4_7 = "disable_or_delete_cmk_changes_metric"
+
+# Log Metric Alarm name for control 4.7
+log_metric_alarm_name_4_7 = "disable_or_delete_cmk_changes_alarm"
+
+# Log Metric Filter name for control 4.8
+log_metric_filter_name_4_8 = "s3_bucket_policy_changes_metric"
+
+# Log Metric Alarm name for control 4.8
+log_metric_alarm_name_4_8 = "s3_bucket_policy_changes_alarm"
+
+# Log Metric Filter name for control 4.9
+log_metric_filter_name_4_9 = "aws_config_changes_metric"
+
+# Log Metric Alarm name for control 4.9
+log_metric_alarm_name_4_9 = "aws_config_changes_alarm"
+
+# Log Metric Filter name for control 4.10
+log_metric_filter_name_4_10 = "security_group_changes_metric"
+
+# Log Metric Alarm name for control 4.10
+log_metric_alarm_name_4_10 = "security_group_changes_alarm"
+
+# Log Metric Filter name for control 4.11
+log_metric_filter_name_4_11 = "nacl_changes_metric"
+
+# Log Metric Alarm name for control 4.11
+log_metric_alarm_name_4_11 = "nacl_changes_alarm"
+
+# Log Metric Filter name for control 4.12
+log_metric_filter_name_4_12 = "network_gw_changes_metric"
+
+# Log Metric Alarm name for control 4.12
+log_metric_alarm_name_4_12 = "network_gw_changes_alarm"
+
+# Log Metric Filter name for control 4.13
+log_metric_filter_name_4_13 = "route_table_changes_metric"
+
+# Log Metric Alarm name for control 4.13
+log_metric_alarm_name_4_13 = "route_table_changes_alarm"
+
+# Log Metric Filter name for control 4.14
+log_metric_filter_name_4_14 = "vpc_changes_metric"
+
+# Log Metric Alarm name for control 4.14
+log_metric_alarm_name_4_14 = "vpc_changes_alarm"
+
+# Log Metric Filter name for control 4.15
+log_metric_filter_name_4_15 = "organizations_changes_metric"
+
+# Log Metric Alarm name for control 4.15
+log_metric_alarm_name_4_15 = "organizations_changes_alarm"
