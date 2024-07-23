@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Reject 0.0.0.0/0 ingress traffic
 - Reject inbound access on RDP and SSH ports
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_network_enforce_security_groups_to_reject_all_rdp_ssh_inbound_access/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_network_enforce_security_groups_to_reject_all_rdp_ssh_inbound_access/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-network)
+  - [@turbot/azure-network](https://hub.guardrails.turbot.com/mods/azure/mods/azure-network)
 
 ### Credentials
 

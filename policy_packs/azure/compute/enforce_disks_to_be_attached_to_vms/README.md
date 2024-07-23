@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_disks_to_be_attached_to_vms/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_disks_to_be_attached_to_vms/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-compute)
+  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
 
 ### Credentials
 

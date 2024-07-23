@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_compute_enforce_encryption_at_rest_is_enabled_for_disks/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_encryption_at_rest_is_enabled_for_disks/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-compute)
+  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
 
 ### Credentials
 

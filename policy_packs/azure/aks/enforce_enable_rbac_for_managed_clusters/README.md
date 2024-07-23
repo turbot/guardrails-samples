@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_aks_enforce_enable_rbac_for_managed_clusters/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_aks_enforce_enable_rbac_for_managed_clusters/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-aks](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-aks)
+  - [@turbot/azure-aks](https://hub.guardrails.turbot.com/mods/azure/mods/azure-aks)
 
 ### Credentials
 

@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure_cosmosdb_enforce_database_accounts_to_be_accessible_to_selected_networks/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cosmosdb_enforce_database_accounts_to_be_accessible_to_selected_networks/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-cosmosdb](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/azure/mods/azure-cosmosdb)
+  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
 
 ### Credentials
 
