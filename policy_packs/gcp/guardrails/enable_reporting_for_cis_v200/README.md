@@ -1,14 +1,5 @@
 ---
-categories:
-  [
-    "access management",
-    "cis",
-    "compliance",
-    "logging",
-    "networking",
-    "security",
-    "storage",
-  ]
+categories: ["access management", "cis", "compliance", "logging", "networking", "security", "storage"]
 primary_category: "compliance"
 type: "featured"
 ---
