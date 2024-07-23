@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 - Set a polling interval window
 - Enable Event Poller
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/azure/guardrails/enable_event_poller/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_guardrails_enable_event_poller/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/azure/mods/azure)
+  - [@turbot/azure](https://hub.guardrails.turbot.com/mods/azure/mods/azure)
 
 ### Credentials
 
