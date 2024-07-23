@@ -8,9 +8,9 @@ type: "featured"
 
 The Guardrails Event Handlers are responsible for conveying events from GCP Logging back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/gcp/real-time-events) for GCP Projects in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable regional [Event Handlers](https://turbot.com/guardrails/docs/integrations/gcp/real-time-events) for GCP Projects in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/guardrails/enable_event_handlers/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_guardrails_enable_event_handlers/settings)**
 
 ## Getting Started
 
@@ -18,9 +18,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp)
-  - [@turbot/gcp-logging](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp-events/mods/gcp-logging)
-  - [@turbot/gcp-pubsub](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-pubsub)
+  - [@turbot/gcp](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp)
+  - [@turbot/gcp-logging](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-logging)
+  - [@turbot/gcp-pubsub](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-pubsub)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

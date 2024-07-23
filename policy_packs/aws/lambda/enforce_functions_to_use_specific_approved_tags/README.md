@@ -3,18 +3,18 @@ categories: ["cost controls", "tagging", "security"]
 primary_category: "tagging"
 ---
 
-# Enforce AWS Lambda Functions To Use Specific Approved Tags
+# Enforce AWS Lambda Functions to Use Specific Approved Tags
 
 Enforcing that AWS Lambda functions use specific approved tags is crucial for maintaining organized and compliant cloud environments. This practice ensures proper resource management, cost tracking, and compliance with organizational policies by enabling the identification and classification of Lambda functions based on their purpose, environment, and other relevant criteria.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Lambda functions:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Lambda functions:
 
 - Set a list of approved tags
 - Delete functions if specified tags are not present
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_functions_to_use_specific_approved_tags/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_lambda_enforce_functions_to_use_specific_approved_tags/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-lambda](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-lambda)
+  - [@turbot/aws-lambda](https://hub.guardrails.turbot.com/mods/aws/mods/aws-lambda)
 
 ### Credentials
 
@@ -72,11 +72,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

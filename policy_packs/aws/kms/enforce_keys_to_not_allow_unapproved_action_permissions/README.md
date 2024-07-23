@@ -3,11 +3,11 @@ categories: ["access management", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS KMS Keys To Not Allow Unapproved Action Permissions
+# Enforce AWS KMS Keys to Not Allow Unapproved Action Permissions
 
 Enforcing that AWS KMS keys do not allow unapproved action permissions is crucial for maintaining the security and integrity of encrypted data. This measure ensures that only authorized actions can be performed on KMS keys, reducing the risk of unauthorized access and misuse, thereby enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for KMS keys:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for KMS keys:
 
 - Revoke policy statements which allow below KMS actions:
   - Access via Lambda service
@@ -16,21 +16,21 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
   - CreateCustomKeyStore
   - Decrypt
   - DeleteCustomKeyStore
-  - Describe*
+  - Describe\*
   - DescribeCustomKeyStores
   - DisableKeyRotation
   - DisconnectCustomKeyStore
   - Encrypt
-  - Get*
+  - Get\*
   - GetPublicKey (if asymmetric key)
-  - List*
+  - List\*
   - Sign (if asymmetric key)
   - UpdateCustomKeyStore
   - Verify (if asymmetric key)
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_keys_to_not_allow_unapproved_action_permissions/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_keys_to_not_allow_unapproved_action_permissions/settings)**
 
 ## Getting Started
 
@@ -38,7 +38,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-kms)
+  - [@turbot/aws-kms](https://hub.guardrails.turbot.com/mods/aws/mods/aws-kms)
 
 ### Credentials
 
@@ -88,11 +88,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

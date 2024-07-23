@@ -3,15 +3,15 @@ categories: ["data protection", "networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce GCP Network Firewall To Not Allow Any Egress Access
+# Enforce GCP Network Firewall to Not Allow Any Egress Access
 
 Enforcing GCP network firewalls to not allow any egress access is essential for maintaining a highly secure environment. This measure ensures that no outbound traffic is permitted, preventing data exfiltration and unauthorized communication with external systems, thereby reducing the risk of data breaches and ensuring compliance with strict security policies and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for network load balancers:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for network load balancers:
 
 - Delete firewall network that contain egress allowed rules
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_firewall_to_not_allow_egress_access/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_network_enforce_firewall_to_not_allow_egress_access/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-network](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-network)
+  - [@turbot/gcp-network](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-network)
 
 ### Credentials
 
@@ -69,11 +69,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

@@ -8,9 +8,9 @@ primary_category: "compliance"
 This section contains recommendations for configuring AWS to assist with monitoring and responding to account activities.
 Metric filter-related recommendations in this section are dependent on the Ensure CloudTrail is enabled in all regions and Ensure CloudTrail trails are integrated with CloudWatch Logs recommendation in the Logging section.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you automate the enforcement of AWS CIS benchmark section 4 best practices.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of AWS CIS benchmark section 4 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/cis_v300/section4/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_cis_v300_section4/settings)**
 
 ## Getting Started
 
@@ -18,10 +18,10 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-cloudtrail](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-cloudtrail)
-  - [@turbot/aws-cloudwatch](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-cloudwatch)
-  - [@turbot/aws-logs](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-logs)
-  - [@turbot/aws-securityhub](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-securityhub)
+  - [@turbot/aws-cloudtrail](https://hub.guardrails.turbot.com/mods/aws/mods/aws-cloudtrail)
+  - [@turbot/aws-cloudwatch](https://hub.guardrails.turbot.com/mods/aws/mods/aws-cloudwatch)
+  - [@turbot/aws-logs](https://hub.guardrails.turbot.com/mods/aws/mods/aws-logs)
+  - [@turbot/aws-securityhub](https://hub.guardrails.turbot.com/mods/aws/mods/aws-securityhub)
 
 ### Credentials
 
@@ -71,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

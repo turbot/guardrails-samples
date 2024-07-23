@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing the installation of packages on AWS EC2 instances using the SSM Package Installer is crucial for maintaining a consistent, secure, and automated software deployment process. This measure ensures that all package installations are managed and logged through AWS Systems Manager, enhancing security, compliance, and operational efficiency by providing centralized control and monitoring of software installations.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) is designed to allow package installation on instances with or without direct access to original package source and can help you configure the following settings for SSM documents:
 
 - Set the region ARN where the SSM resources will be deployed
 - Set the IAM role ARN to be used by SSM to run documents
@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_install_packages_on_ec2_instances_using_ssm_package_installer/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_install_packages_on_ec2_instances_using_ssm_package_installer/settings)**
 
 ## Getting Started
 
@@ -26,8 +26,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ssm](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ssm)
+  - [@turbot/aws-ssm](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ssm)
 - AWS resources to run the stack control:
+
   - S3 bucket to store packages
   - An IAM role for SSM document execution with the following configured permissions:
 
@@ -138,11 +139,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

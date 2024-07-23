@@ -8,9 +8,9 @@ type: "featured"
 
 Enabling GCP CIS v2.0.0 is essential for ensuring that your GCP environment adheres to industry-recognized security best practices. This provides a robust framework for identifying and mitigating security risks, enhancing compliance with regulatory requirements, and protecting sensitive data by automatically enforcing the security configurations recommended by the CIS benchmarks.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you enable GCP CIS v2.0.0 reporting with and without attestation controls in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you enable GCP CIS v2.0.0 reporting with and without attestation controls in Guardrails.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp/guardrails/enable_reporting_for_cis_v200/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_guardrails_enable_reporting_for_cis_v200/settings)**
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-cisv2-0](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/gcp/mods/gcp-cisv2-0)
+  - [@turbot/gcp-cisv2-0](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-cisv2-0)
 
 ### Credentials
 
@@ -68,11 +68,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 > [!TIP]
 > You can also update the policy settings in this policy pack directly in the Guardrails console.

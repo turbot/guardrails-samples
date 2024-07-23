@@ -1,4 +1,4 @@
-# Azure > PostgreSQL > Server > Encryption In Transit
+# Azure > PostgreSQL > Server > Encryption in Transit
 resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/serverEncryptionInTransit"
@@ -7,7 +7,7 @@ resource "turbot_policy_setting" "azure_postgresql_server_encryption_in_transit"
   # value    = "Enforce: Enabled"
 }
 
-# Azure > PostgreSQL > Flexible Server > Encryption In Transit
+# Azure > PostgreSQL > Flexible Server > Encryption in Transit
 resource "turbot_policy_setting" "azure_postgresql_flexible_server_encryption_in_transit" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-postgresql#/policy/types/flexibleServerEncryptionInTransit"

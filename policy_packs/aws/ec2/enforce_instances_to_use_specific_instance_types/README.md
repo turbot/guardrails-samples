@@ -3,16 +3,16 @@ categories: ["cost controls", "security"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 Instances To Use Specific Instance Types
+# Enforce AWS EC2 Instances to Use Specific Instance Types
 
 Enforcing specific AWS EC2 instance types ensures that deployed resources align with performance, cost, and compliance requirements. This control helps optimize resource utilization, manage expenses, and maintain consistent security and operational standards across the cloud environment.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 instances:
 
 - Set a list of specific instance types that are approved for use
 - Stop/Terminate instances that do not belong to the list of approved instance types
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_instances_to_use_specific_instance_types/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_instances_to_use_specific_instance_types/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
+  - [@turbot/aws-ec2](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ec2)
 
 ### Credentials
 
@@ -70,11 +70,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 

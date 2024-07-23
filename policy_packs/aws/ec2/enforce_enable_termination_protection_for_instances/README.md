@@ -3,15 +3,15 @@ categories: ["data protection", "security"]
 primary_category: "data protection"
 ---
 
-# Enforce Enable Termination Protection For AWS EC2 Instances
+# Enforce Enable Termination Protection for AWS EC2 Instances
 
 Enforcing termination protection for AWS EC2 instances is crucial because it prevents accidental or unauthorized termination of instances, which can lead to data loss, application downtime, and potential security vulnerabilities. By enabling this protection, organizations can ensure the continuity and integrity of their critical workloads and services running on AWS.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for EC2 instances:
 
 - Enable termination protection
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_enable_termination_protection_for_instances/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_enable_termination_protection_for_instances/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-ec2](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-ec2)
+  - [@turbot/aws-ec2](https://hub.guardrails.turbot.com/mods/aws/mods/aws-ec2)
 
 ### Credentials
 
@@ -69,11 +69,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
@@ -86,7 +86,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_ec2_instance_termination_protection" {
-  resource = turbot_smart_folder.ec2_termination_protection.id
+  resource = turbot_policy_pack.ec2_termination_protection.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceTerminationProtection"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"

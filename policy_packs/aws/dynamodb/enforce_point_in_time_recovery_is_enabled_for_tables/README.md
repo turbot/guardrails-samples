@@ -3,17 +3,17 @@ categories: ["storage", "data protection"]
 primary_category: "data protection"
 ---
 
-# Enforce Point-In-Time Recovery Is Enabled For AWS DynamoDB Tables
+# Enforce Point-in-Time Recovery Is Enabled for AWS DynamoDB Tables
 
 Enforcing point-in-time recovery (PITR) for AWS DynamoDB tables is crucial for ensuring data durability and protection against accidental deletions or write errors. This measure allows you to restore DynamoDB tables to any point within the last 35 days, enhancing data recovery capabilities and ensuring compliance with data protection best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for DynamoDB tables:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for DynamoDB tables:
 
-- Enable Point-In-Time recovery
+- Enable Point-in-Time recovery
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_point_in_time_recovery_is_enabled_for_tables/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_point_in_time_recovery_is_enabled_for_tables/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/aws-dynamodb](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws-dynamodb)
+  - [@turbot/aws-dynamodb](https://hub.guardrails.turbot.com/mods/aws/mods/aws-dynamodb)
 
 ### Credentials
 
@@ -71,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
@@ -88,7 +88,7 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "dynamodb_point_in_time_recovery_enabled" {
-  resource = turbot_smart_folder.dynamodb_point_in_time_recovery.id
+  resource = turbot_policy_pack.dynamodb_point_in_time_recovery.id
   type     = "tmod:@turbot/aws-dynamodb#/policy/types/tablePointInTimeRecovery"
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"
