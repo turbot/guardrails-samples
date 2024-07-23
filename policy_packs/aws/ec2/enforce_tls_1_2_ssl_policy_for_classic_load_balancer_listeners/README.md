@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_tls_1_2_ssl_policy_for_classic_load_balancer_listener/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_tls_1_2_ssl_policy_for_classic_load_balancer_listeners/settings)**
 
 ## Getting Started
 
