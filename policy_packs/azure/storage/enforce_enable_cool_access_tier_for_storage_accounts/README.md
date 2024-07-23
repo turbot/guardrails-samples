@@ -7,7 +7,7 @@ primary_category: "cost controls"
 
 Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you configure the following settings for Storage accounts:
 
 - Enable cool access tier
 
@@ -69,11 +69,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/policy-packs).
 
 ### Enable Enforcement
 
