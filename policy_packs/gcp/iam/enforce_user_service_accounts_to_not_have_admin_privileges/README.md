@@ -12,7 +12,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Delete service accounts that have `roles/owner`, `roles/admin` or `roles/editor` privileges
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_iam_enforce_user_service_accounts_to_not_have_admin_privileges/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_iam_enforce_user_service_accounts_to_not_have_admin_privileges/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-iam](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-iam)
+  - [@turbot/gcp-iam](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-iam)
 
 ### Credentials
 

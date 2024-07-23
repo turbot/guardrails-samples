@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - Check and alarm if crypto keys have rotation period of more than 90 days
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_kms_check_crypto_keys_are_rotated_regularly/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_kms_check_crypto_keys_are_rotated_regularly/settings)**
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-kms)
+  - [@turbot/gcp-kms](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-kms)
 
 ### Credentials
 

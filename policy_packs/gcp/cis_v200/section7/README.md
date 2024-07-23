@@ -9,7 +9,7 @@ This section addresses Google CloudPlatform BigQuery. BigQuery is a serverless, 
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-packs) can help you automate the enforcement of GCP CIS benchmark section 7 best practices.
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_cis_v200_section7/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_cis_v200_section7/settings)**
 
 ## Getting Started
 
@@ -17,7 +17,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-bigquery](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-bigquery)
+  - [@turbot/gcp-bigquery](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-bigquery)
 
 ### Credentials
 

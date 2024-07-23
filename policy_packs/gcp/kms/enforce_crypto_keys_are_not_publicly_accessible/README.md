@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 - Do not allow `allUsers` access to crypto keys
 - Do not allow `allAuthenticatedUsers` access to crypto keys
 
-**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/gcp_kms_enforce_crypto_keys_are_not_publicly_accessible/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_kms_enforce_crypto_keys_are_not_publicly_accessible/settings)**
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/policy-
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-kms](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/mods/gcp/mods/gcp-kms)
+  - [@turbot/gcp-kms](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-kms)
 
 ### Credentials
 
