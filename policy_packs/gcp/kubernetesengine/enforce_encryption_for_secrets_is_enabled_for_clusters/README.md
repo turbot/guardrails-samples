@@ -4,7 +4,7 @@ primary_category: "data protection"
 type: "featured"
 ---
 
-# Enforce Encryption for Secrets is Enabled for GCP GKE Clusters
+# Enforce Encryption for Secrets Is Enabled for GCP GKE Clusters
 
 Enforcing encryption for secrets in GCP GKE clusters is critical for protecting sensitive information stored within the cluster. This measure ensures that secrets, such as passwords and API keys, are encrypted, safeguarding them from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 

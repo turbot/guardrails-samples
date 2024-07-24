@@ -3,7 +3,7 @@ categories: ["security", "networking"]
 primary_category: "security"
 ---
 
-# Enforce GCP Compute Engine Instances to Not Use External IP Addresses
+# Enforce GCP Compute Engine Instances Do Not Use External IP Addresses
 
 Enforcing GCP Compute Engine instances to not use external IP addresses is vital for reducing the attack surface and enhancing security. By restricting instances to internal IP addresses, it minimizes exposure to the internet, thereby protecting sensitive data and systems from unauthorized access and potential threats.
 

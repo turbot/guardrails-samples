@@ -3,7 +3,7 @@ categories: ["compute", "cost controls"]
 primary_category: "cost controls"
 ---
 
-# Enforce GCP Compute Engine Disks to Not Be Older Than 7 Days
+# Enforce GCP Compute Engine Disks Are Not Older Than 7 Days
 
 Enforcing GCP Compute Engine Disks to not be older than 7 days is critical to ensure that data storage is continuously refreshed and aligned with the latest security and performance standards. This practice helps prevent the accumulation of outdated and potentially vulnerable disks, thereby enhancing overall data integrity and security.
 

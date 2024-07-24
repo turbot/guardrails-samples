@@ -3,7 +3,7 @@ categories: ["cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce GCP Storage Buckets to Not Be Older Than 7 Days
+# Enforce GCP Storage Buckets Are Not Older Than 7 Days
 
 Enforcing that GCP storage buckets are not older than 7 days is crucial for maintaining an up-to-date and secure storage environment. This practice ensures that only recently created buckets are in use, reducing the risk of using outdated configurations and improving data security and compliance with best practices.
 

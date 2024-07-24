@@ -3,7 +3,7 @@ categories: ["cost controls", "compute", "security", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce GCP Compute Engine Disks to Be Attached to Instances
+# Enforce GCP Compute Engine Disks Are Attached to Instances
 
 Enforcing GCP Compute Engine disks to be attached to instances is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
 

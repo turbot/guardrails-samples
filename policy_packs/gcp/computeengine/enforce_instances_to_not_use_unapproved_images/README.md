@@ -3,7 +3,7 @@ categories: ["compute", "security"]
 primary_category: "security"
 ---
 
-# Enforce GCP Compute Engine Instances to Not Use Unapproved Images
+# Enforce GCP Compute Engine Instances Use Only Approved Images
 
 Enforcing GCP Compute Engine instances to not use unapproved images is crucial for maintaining security, compliance, and consistency across the infrastructure. It ensures that all instances adhere to organizational standards, reducing the risk of vulnerabilities, unauthorized software, and potential breaches.
 
