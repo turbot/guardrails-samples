@@ -3,7 +3,7 @@ categories: ["cost controls", "security"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 EBS Volumes to Use Specific Volume Types
+# Enforce AWS EBS Volumes Use Specific Volume Types
 
 Enforcing AWS EC2 EBS volumes to use specific volume types is crucial for optimizing performance, cost, and security. By ensuring that only approved volume types are used, organizations can maintain consistent performance standards, manage expenses effectively, and mitigate risks associated with unauthorized or inappropriate storage configurations.
 

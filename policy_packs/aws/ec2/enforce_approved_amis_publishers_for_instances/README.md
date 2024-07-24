@@ -3,7 +3,7 @@ categories: ["compute", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS EC2 Instances to Use Approved AMIs and/or Publisher Accounts
+# Enforce AWS EC2 Instances To Use Approved AMIs and/or Publisher Accounts
 
 Enforcing AWS EC2 instances to use approved AMIs and/or publisher accounts is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
 

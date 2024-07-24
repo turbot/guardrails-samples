@@ -3,7 +3,7 @@ categories: ["cost controls", "security", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 EBS Volumes to Be Attached to Instances
+# Enforce AWS EBS Volumes Are Attached to EC2 Instances
 
 Enforcing that AWS EC2 EBS volumes are attached to instances is essential for optimizing resource usage and ensuring security. This practice helps avoid unnecessary costs associated with unattached volumes, reduces the risk of data exposure, and ensures that all storage resources are actively managed and utilized as intended.
 

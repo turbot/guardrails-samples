@@ -3,7 +3,7 @@ categories: ["logging", "networking", "security"]
 primary_category: "logging"
 ---
 
-# Enforce Enable Flow Logging to CloudWatch Log Groups for AWS VPCs
+# Enforce Flow Logging to CloudWatch Log Groups for AWS VPCs
 
 Enforcing flow logging to CloudWatch Log Groups for VPCs is essential for real-time monitoring and analysis of network traffic within your VPCs. This measure ensures that all network flow logs are captured and stored in CloudWatch Log Groups, enabling efficient detection of anomalous activity, troubleshooting of network issues, and compliance with security best practices and regulatory requirements.
 

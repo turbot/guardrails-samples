@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Enforce Scan On Push Is Enabled for AWS ECR Repositories
+# Enforce Scan on Push Is Enabled for AWS ECR Repositories
 
 Enforcing scan on push for AWS ECR (Elastic Container Registry) repositories is crucial for ensuring the security and integrity of container images. This control helps detect vulnerabilities and security issues in images before they are deployed, reducing the risk of running compromised or insecure containers in your environment.
 

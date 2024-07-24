@@ -3,7 +3,7 @@ categories: ["compliance", "storage"]
 primary_category: "compliance"
 ---
 
-# Enforce Name for AWS S3 Buckets Is DNS Compliant
+# Enforce DNS-Compliant Names for AWS S3 Buckets
 
 Enforcing that AWS S3 bucket names are DNS compliant is essential for ensuring compatibility with internet standards and services. This measure ensures that bucket names adhere to DNS naming conventions, preventing issues with accessibility and interoperability, and ensuring smooth integration with various AWS services and applications.
 

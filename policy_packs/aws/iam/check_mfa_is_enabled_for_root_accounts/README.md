@@ -3,7 +3,7 @@ categories: ["access management", "security"]
 primary_category: "security"
 ---
 
-# Check MFA is Enabled for AWS IAM Root Accounts
+# Check MFA Is Enabled for AWS IAM Root Accounts
 
 Ensuring Multi-Factor Authentication (MFA) is enabled for AWS IAM root accounts is critical as it provides an additional layer of security beyond just a password, significantly reducing the risk of unauthorized access. This protection helps prevent potential security breaches and enhances overall account security by requiring a second form of verification.
 

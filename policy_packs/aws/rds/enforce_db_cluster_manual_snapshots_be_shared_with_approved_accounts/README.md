@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS RDS DB Cluster Manual Snapshots Be Shared with Approved Accounts
+# Enforce AWS RDS DB Cluster Manual Snapshots Are Shared With Approved Accounts
 
 Enforcing that AWS RDS DB cluster manual snapshots are shared only with approved accounts is crucial for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 

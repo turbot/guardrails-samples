@@ -3,7 +3,7 @@ categories: ["cost controls", "tagging", "security"]
 primary_category: "tagging"
 ---
 
-# Enforce AWS Lambda Functions to Use Specific Approved Tags
+# Enforce AWS Lambda Functions Use Specific Approved Tags
 
 Enforcing that AWS Lambda functions use specific approved tags is crucial for maintaining organized and compliant cloud environments. This practice ensures proper resource management, cost tracking, and compliance with organizational policies by enabling the identification and classification of Lambda functions based on their purpose, environment, and other relevant criteria.
 

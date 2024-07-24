@@ -3,7 +3,7 @@ categories: ["cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 EBS Volumes to Not Be Older Than 90 Days
+# Enforce AWS EBS Volumes Are Not Older Than 90 Days
 
 Automatically deleting AWS EC2 volumes that have been active for more than 90 days is crucial for resource optimization and cost management. This measure helps in ensuring that long-running volumes are periodically reviewed and terminated if no longer needed, thereby reducing unnecessary costs and improving overall resource utilization.
 

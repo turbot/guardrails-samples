@@ -3,7 +3,7 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce AWS IAM Policies to Not Have Admin Privileges
+# Enforce AWS IAM Policies Do Not Have Admin Privileges
 
 Enforcing AWS IAM policies to not have admin privileges is essential to adhere to the principle of least privilege. This control minimizes the risk of accidental or intentional misuse of powerful permissions, reducing the potential impact of security breaches by ensuring that users and roles have only the permissions necessary to perform their specific tasks.
 

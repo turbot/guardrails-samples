@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce AWS EC2 Instances to Not Have Internet Access Via Subnets
+# Enforce AWS EC2 Instances Do Not Have Internet Access Via Subnets
 
 Enforcing that AWS EC2 instances do not have internet access via subnets is critical for maintaining a secure and controlled network environment. This measure ensures that instances are isolated from the internet, reducing the risk of unauthorized access and potential data breaches, and enhancing security by restricting outbound traffic to approved and monitored channels.
 

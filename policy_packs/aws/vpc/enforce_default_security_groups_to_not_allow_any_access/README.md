@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS VPC Default Security Groups to Not Allow Any Access
+# Enforce AWS VPC Default Security Groups to Deny All Access
 
 Enforcing that AWS VPC default security groups do not allow any access is crucial because it prevents unintended network exposure and potential security vulnerabilities. Default security groups, if left open, could inadvertently permit unrestricted inbound and outbound traffic, leading to unauthorized access and exploitation of resources within the VPC.
 

@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce Block Unapproved Network Access for AWS VPC Security Groups
+# Enforce Approved Network Access for AWS VPC Security Groups
 
 Enforcing Block Unapproved Network Access for AWS VPC security groups is crucial to ensure that only specific, approved ingress rules are allowed. This measure restricts access to only the necessary ports (22, 443, 3389) from individual IP addresses with a bitmask of /32 and specific CIDRs. By doing so, it minimizes the risk of unauthorized access and potential security breaches, thereby ensuring compliance with security best practices and regulatory requirements.
 

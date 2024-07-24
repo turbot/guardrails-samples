@@ -3,7 +3,7 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce AWS EC2 AMIs to Be Shared With Trusted Accounts
+# Enforce AWS EC2 AMIs To Be Shared With Trusted Accounts
 
 Enforcing EC2 AMIs to be shared only with trusted accounts is crucial for maintaining security and compliance, as it ensures that sensitive or proprietary configurations and data are only accessible to authorized users, reducing the risk of unauthorized access and potential data breaches. This control helps safeguard the integrity and confidentiality of the systems and data deployed in AWS environments.
 

@@ -3,7 +3,7 @@ categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Encryption at Rest is Enabled for AWS EFS File Systems
+# Enforce Encryption at Rest Is Enabled for AWS EFS File Systems
 
 Enforcing encryption at rest for AWS EFS File Systems is crucial because it ensures that all data stored within the file system is automatically encrypted, protecting it from unauthorized access and potential data breaches. This measure helps maintain data confidentiality and integrity, meeting compliance requirements and safeguarding sensitive information.
 

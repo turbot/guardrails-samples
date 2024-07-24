@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "data protection"
 ---
 
-# Enforce Rotation is Enabled on AWS KMS Keys
+# Enforce Rotation Is Enabled on AWS KMS Keys
 
 Enforcing rotation for AWS KMS keys is essential for maintaining the security and integrity of encrypted data. Regular key rotation ensures that cryptographic keys are periodically updated, reducing the risk of key compromise and enhancing overall security, while also ensuring compliance with best practices and regulatory requirements.
 

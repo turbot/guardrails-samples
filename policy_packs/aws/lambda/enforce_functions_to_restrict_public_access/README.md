@@ -3,7 +3,7 @@ categories: ["security", "compute"]
 primary_category: "security"
 ---
 
-# Enforce AWS Lambda Functions to Restrict Public Access
+# Enforce AWS Lambda Functions Restrict Public Access
 
 Enforcing AWS Lambda functions to restrict public access is vital to prevent unauthorized users from invoking functions, which can lead to security vulnerabilities and potential data breaches. By limiting access, you ensure that only authorized entities can execute the functions, thereby maintaining the integrity and confidentiality of your applications and data.
 

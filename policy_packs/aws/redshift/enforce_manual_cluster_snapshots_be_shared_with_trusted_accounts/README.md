@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS Redshift Manual Cluster Snapshots Be Shared With Trusted Accounts
+# Enforce AWS Redshift Manual Cluster Snapshots Are Shared With Trusted Accounts
 
 Enforcing that AWS Redshift manual cluster snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 

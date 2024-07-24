@@ -3,7 +3,7 @@ categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Encryption By Default is Enabled for AWS EC2 EBS Volumes
+# Enforce Encryption by Default Is Enabled for AWS EC2 EBS Volumes
 
 Enforcing encryption by default for AWS EC2 EBS volumes is essential for protecting sensitive data at rest. This measure ensures that all newly created EBS volumes are automatically encrypted, reducing the risk of unauthorized data access and breaches, and ensuring compliance with security best practices and regulatory requirements.
 

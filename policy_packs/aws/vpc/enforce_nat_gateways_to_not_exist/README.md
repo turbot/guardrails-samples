@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce NAT Gateways to Not Exist
+# Enforce Removal of NAT Gateways
 
 Enforcing that NAT Gateways do not exist in your AWS environment is crucial for ensuring that private instances remain completely isolated from the internet. This measure prevents any outbound internet traffic from private subnets, reducing the risk of data exfiltration, unauthorized access, and potential security breaches, thereby enhancing overall network security and compliance with stringent security policies.
 

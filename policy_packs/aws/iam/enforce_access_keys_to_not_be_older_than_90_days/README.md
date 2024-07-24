@@ -4,7 +4,7 @@ primary_category: "security"
 type: "featured"
 ---
 
-# Enforce AWS IAM Access Keys to Not Be Older Than 90 Days
+# Enforce AWS IAM Access Keys Are Not Older Than 90 Days
 
 Enforcing AWS IAM access keys to not be older than 90 days is important because it reduces the risk of compromised credentials by ensuring keys are regularly rotated. Regular key rotation minimizes exposure time for potentially compromised keys, enhancing the security posture and reducing the likelihood of unauthorized access.
 

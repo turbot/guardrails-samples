@@ -3,7 +3,7 @@ categories: ["cost controls", "security", "tagging"]
 primary_category: "tagging"
 ---
 
-# Enforce Tags on AMIs if They Are Older Than 14 Days
+# Enforce Tags on AMIs If They Are Older Than 14 Days
 
 Enforcing tags on AMIs if they are older than 14 days is important for maintaining effective resource management and tracking. This practice ensures that aged AMIs are properly identified and classified, facilitating their management, compliance with organizational policies, and aiding in decisions related to their retention or deprecation.
 

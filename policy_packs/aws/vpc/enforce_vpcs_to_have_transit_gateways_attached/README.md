@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS VPCs to have Transit Gateways Attached
+# Enforce AWS VPCs to Have Transit Gateways Attached
 
 Enforcing AWS VPCs to have a Transit Gateway attached is crucial for ensuring secure and efficient inter-VPC communication and centralized network management. This practice enhances network scalability, simplifies complex network architectures, and improves overall security by providing a single point of control for routing and connectivity.
 

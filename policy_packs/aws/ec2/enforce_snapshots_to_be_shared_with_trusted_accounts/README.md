@@ -3,7 +3,7 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce AWS EC2 Snapshots to Be Shared With Trusted Accounts
+# Enforce AWS EC2 Snapshots Are Shared With Trusted Accounts
 
 Enforcing EC2 snapshots to be shared only with trusted accounts is crucial for maintaining data security and compliance. This practice ensures that sensitive information is protected from unauthorized access, reducing the risk of data breaches and maintaining the integrity of your cloud environment.
 

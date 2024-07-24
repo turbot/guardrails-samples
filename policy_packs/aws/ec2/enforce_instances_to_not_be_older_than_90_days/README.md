@@ -3,7 +3,7 @@ categories: ["compute", "cost controls"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 Instances to Not Be Older Than 90 Days
+# Enforce AWS EC2 Instances Are Not Older Than 90 Days
 
 Automatically deleting AWS EC2 instances that have been running for more than 90 days is crucial for resource optimization and cost management. This measure helps in ensuring that long-running instances are periodically reviewed and terminated if no longer needed, thereby reducing unnecessary costs and improving overall resource utilization.
 

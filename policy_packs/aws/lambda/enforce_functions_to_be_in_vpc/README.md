@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS Lambda Functions to be in a VPC
+# Enforce AWS Lambda Functions Are in a VPC
 
 Enforcing that AWS Lambda functions are in a VPC is essential for enhancing the security and control of serverless applications. This measure ensures that Lambda functions can interact securely with resources within the VPC, utilize VPC security groups and network ACLs, and prevent unauthorized access by restricting outbound internet access, thereby aligning with best practices and regulatory requirements.
 

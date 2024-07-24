@@ -3,7 +3,7 @@ categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Block Public Access Is Enabled for AWS S3 Accounts
+# Enforce Block Public Access Is Enabled for AWS S3 Buckets
 
 Enforcing Block Public Access for AWS S3 accounts is crucial to prevent unauthorized access and exposure of sensitive data at the S3 account level. This measure ensures that all S3 buckets within an account have restricted access settings, minimizing the risk of data breaches and ensuring compliance with security best practices and regulatory requirements.
 

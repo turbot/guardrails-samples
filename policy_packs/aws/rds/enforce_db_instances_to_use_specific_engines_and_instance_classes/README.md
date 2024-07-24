@@ -3,7 +3,7 @@ categories: ["compute", "cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS RDS DB Instances to Use Specific Engines and Instance Classes
+# Enforce AWS RDS DB Instances Use Specific Engines and Instance Classes
 
 Enforcing that AWS RDS DB instances use specific engines and instance classes is essential for maintaining a standardized, secure, and optimized database environment. This measure ensures that RDS instances comply with organizational policies, meet performance and security requirements, and align with best practices for cost management and resource utilization.
 

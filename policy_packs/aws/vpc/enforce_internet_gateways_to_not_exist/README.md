@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS VPC Internet Gateways to Not Exist
+# Enforce Removal of AWS VPC Internet Gateways
 
 Enforcing that AWS VPC Internet Gateways do not exist is essential for maintaining a highly secure network environment by preventing direct internet access to and from your VPCs. This measure minimizes the attack surface, reduces the risk of unauthorized access and potential data breaches, and ensures that all external connectivity is tightly controlled and monitored through alternative, more secure methods.
 

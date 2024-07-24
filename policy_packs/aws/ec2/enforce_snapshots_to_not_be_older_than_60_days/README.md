@@ -3,7 +3,7 @@ categories: ["cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 Snapshots to Not Be Older Than 60 Days
+# Enforce AWS EC2 Snapshots Are Not Older Than 60 Days
 
 Automatically deleting AWS EC2 snapshots that have been active for more than 60 days is crucial for resource optimization and cost management. This measure helps in ensuring that old snapshots are periodically reviewed and deleted if no longer needed, thereby reducing unnecessary storage costs and improving overall resource management.
 

@@ -3,7 +3,7 @@ categories: ["access management", "security"]
 primary_category: "access management"
 ---
 
-# Enforce AWS IAM Roles to Have Trusted Access
+# Enforce Trusted Access for AWS IAM Roles
 
 Enforcing that AWS IAM roles have trusted access is essential for ensuring that only authorized entities can assume roles and access resources. This measure restricts role assumption to trusted accounts and services, reducing the risk of unauthorized access, enhancing security, and ensuring compliance with organizational policies and best practices.
 
