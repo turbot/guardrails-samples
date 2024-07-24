@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_versioning_is_enabled_for_buckets/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_s3_enforce_versioning_is_enabled_for_buckets/settings)**
 
 ## Getting Started
 

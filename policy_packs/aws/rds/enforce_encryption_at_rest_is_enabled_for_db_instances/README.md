@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_encryption_at_rest_is_enabled_for_db_instances/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_rds_enforce_encryption_at_rest_is_enabled_for_db_instances/settings)**
 
 ## Getting Started
 
