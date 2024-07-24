@@ -3,7 +3,7 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Azure App Service Web Apps to Not Use Outdated Java/PHP/Python Versions
+# Enforce Azure App Service Web Apps to Use Supported Java, PHP, and Python Versions
 
 Enforcing Azure App Service Web Apps to not use outdated Java, PHP, or Python versions is crucial to maintain security and performance. This ensures that applications run on supported, secure versions of these languages, reducing the risk of vulnerabilities, enhancing stability, and ensuring compliance with best practices and regulatory requirements.
 

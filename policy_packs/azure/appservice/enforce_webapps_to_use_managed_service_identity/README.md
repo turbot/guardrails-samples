@@ -3,7 +3,7 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Azure App Service Web Apps to Use Managed Service Identity
+# Enforce Managed Service Identity for Azure App Service Web Apps
 
 Enforcing Azure App Service Web Apps to use Managed Service Identity (MSI) is essential for enhancing security and simplifying access management. This measure allows web apps to securely access Azure resources without the need for hard-coded credentials, reducing the risk of credential exposure and ensuring compliance with security best practices and regulatory requirements.
 

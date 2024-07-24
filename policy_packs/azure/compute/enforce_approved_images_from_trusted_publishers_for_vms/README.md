@@ -4,7 +4,7 @@ primary_category: "security"
 type: "featured"
 ---
 
-# Enforce Azure Compute Virtual Machines to Use Approved AMIs from Trusted Publishers
+# Enforce Azure Compute Virtual Machines Use Approved AMIs From Trusted Publishers
 
 Enforcing Azure compute instances to use approved AMIs from trusted publishers is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
 

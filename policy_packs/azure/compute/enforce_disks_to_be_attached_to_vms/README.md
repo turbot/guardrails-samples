@@ -3,7 +3,7 @@ categories: ["cost controls", "compute", "security", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce Azure Compute Disks to Be Attached to Virtual Machines
+# Enforce Azure Compute Disks Are Attached to Virtual Machines
 
 Enforcing Azure Compute disks to be attached to virtual machines is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
 
