@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Enable cool access tier
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_enable_cool_access_tier_for_storage_accounts/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_storage_enforce_enable_cool_access_tier_for_storage_accounts/settings)**
 
 ## Getting Started
 
