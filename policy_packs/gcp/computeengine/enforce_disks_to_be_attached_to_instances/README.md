@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_disks_to_be_attached_to_instances/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_computeengine_enforce_disks_to_be_attached_to_instances/settings)**
 
 ## Getting Started
 
