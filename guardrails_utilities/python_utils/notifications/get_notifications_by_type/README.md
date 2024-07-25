@@ -5,14 +5,14 @@ This script will return a filtered collection of notifications the notification 
 The example has returns more data than is necessary as different fields are populated in GraphQL when using differing
 notification class values.
 
-| Notification type  | Fields returned         |
-|--------------------|-------------------------|
-| resource_*         | resource                |
-| policy_value_*     | resource, policyValue   |
-| policy_setting_*   | resource, policySetting |
-| control_*          | resource, control       |
-| grant-*            | resource, grant         |
-| active_grants_*    | resource                |
+| Notification type | Fields returned         |
+| ----------------- | ----------------------- |
+| resource\_\*      | resource                |
+| policy*value*\*   | resource, policyValue   |
+| policy*setting*\* | resource, policySetting |
+| control\_\*       | resource, control       |
+| grant-\*          | resource, grant         |
+| active*grants*\*  | resource                |
 
 By default the script will return all notifications that were returned over the last 10 days.
 For more information on how to use [datetime filters](https://turbot.com/v5/docs/reference/filter#datetime-filters).
@@ -108,7 +108,7 @@ To run a the Python script:
 ### Synopsis
 
 ```shell
-python3 get-notifications-by-type.py [options]
+python3 get_notifications_by_type.py [options]
 ```
 
 ### Options
@@ -146,7 +146,7 @@ python3 get-notifications-by-type.py [options]
 Returns all `resource` notifications for the last 10 days returning latest first.
 
 ```shell
-python3 get-notifications-by-type.py 
+python3 get_notifications_by_type.py
 ```
 
 ##### Example 2
@@ -154,7 +154,7 @@ python3 get-notifications-by-type.py
 Using a different notification type.
 
 ```shell
-python3 get-notifications-by-type.py -t "policy_setting_created,policy_setting_updated,policy_setting_deleted"
+python3 get_notifications_by_type.py -t "policy_setting_created,policy_setting_updated,policy_setting_deleted"
 ```
 
 ##### Example 3
@@ -162,7 +162,7 @@ python3 get-notifications-by-type.py -t "policy_setting_created,policy_setting_u
 Run returning oldest entries first.
 
 ```shell
-python3 get-notifications-by-type.py -s "timestamp"
+python3 get_notifications_by_type.py -s "timestamp"
 ```
 
 ##### Example 4
@@ -170,7 +170,7 @@ python3 get-notifications-by-type.py -s "timestamp"
 Return entries older than 5 days.
 
 ```shell
-python3 get-notifications-by-type.py -d >T-5d
+python3 get_notifications_by_type.py -d >T-5d
 ```
 
 ##### Example 5
@@ -178,7 +178,7 @@ python3 get-notifications-by-type.py -d >T-5d
 Return entries withing the last two hours.
 
 ```shell
-python3 get-notifications-by-type.py -d <>T-2h
+python3 get_notifications_by_type.py -d <>T-2h
 ```
 
 ##### Example 6
@@ -186,7 +186,7 @@ python3 get-notifications-by-type.py -d <>T-2h
 Run the script using credentials given in a credential file `credentials.yml`.
 
 ```shell
-python3 get-notifications-by-type.py -c .config/turbot/credentials.yml
+python3 get_notifications_by_type.py -c .config/turbot/credentials.yml
 ```
 
 ##### Example 7
@@ -194,7 +194,7 @@ python3 get-notifications-by-type.py -c .config/turbot/credentials.yml
 Run the script using a credentials file and using the credential details using the profile `env`.
 
 ```shell
-python3 get-notifications-by-type.py -c .config/turbot/credentials.yml -p env --notification_class resource
+python3 get_notifications_by_type.py -c .config/turbot/credentials.yml -p env --notification_class resource
 ```
 
 ## Virtual environments deactivation

@@ -5,17 +5,17 @@ which is returned from Turbot.
 
 ### Available scripts
 
-| Title | Description |
-| ----- | ----------- |
-| [AWS Account Import](./aws_import/README.md) | Import an existing AWS account into Turbot. |
-| [Get notifications by notification class](./get-notifications-by-class/README.md) | Return a filtered collection of notifications for end user provided notification classes to filter results. |
-| [Get notifications by notification type](./get-notifications-by-type/README.md) | Return a filtered collection of notifications for end user provided notification types to filter results. |
-| [Get notifications for resource](./get-notifications-for-resource/README.md) | Return notifications for an end user specified to filter results. |
-| [Run controls](./run_controls/README.md) | Runs all controls that match the end user provided filter. |
-| [Run controls in batches](./run_controls_batches/README.md) | Runs all controls in batches with a cool down period that match the end user provided filter. |
-| [Run policies](./run_policies/README.md) | Runs all policies that match the end user provided filter. |
-| [Run policies in batches](./run_policies_batches/README.md) | Runs all policies in batches with a cool down period that match the end user provided filter. |
-| [Turbot configuration library](./turbot/README.md) | Turbot configuration library which is used by example Python scripts. |
+| Title                                                                             | Description                                                                                                 |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [AWS Account Import](./aws_import/README.md)                                      | Import an existing AWS account into Turbot.                                                                 |
+| [Get notifications by notification class](./get_notifications_by_class/README.md) | Return a filtered collection of notifications for end user provided notification classes to filter results. |
+| [Get notifications by notification type](./get_notifications_by_type/README.md)   | Return a filtered collection of notifications for end user provided notification types to filter results.   |
+| [Get notifications for resource](./get_notifications_for_resource/README.md)      | Return notifications for an end user specified to filter results.                                           |
+| [Run controls](./run_controls/README.md)                                          | Runs all controls that match the end user provided filter.                                                  |
+| [Run controls in batches](./run_controls_batches/README.md)                       | Runs all controls in batches with a cool down period that match the end user provided filter.               |
+| [Run policies](./run_policies/README.md)                                          | Runs all policies that match the end user provided filter.                                                  |
+| [Run policies in batches](./run_policies_batches/README.md)                       | Runs all policies in batches with a cool down period that match the end user provided filter.               |
+| [Turbot configuration library](./turbot/README.md)                                | Turbot configuration library which is used by example Python scripts.                                       |
 
 ## Prerequisites
 

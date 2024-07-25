@@ -12,9 +12,9 @@ resource "aws_lambda_function" "lambda_function_for_cache" {
   role             = aws_iam_role.turbot_firehose_lamdba_role.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.7"
-  filename         = "deployment-package.zip"
+  filename         = "deployment_package.zip"
   function_name    = "turbot-firehose-to-sec-hub-write-to-security-hub"
-  source_code_hash = base64sha256("deployment-package.zip")
+  source_code_hash = base64sha256("deployment_package.zip")
   description      = "Transform notifications from Turbot to finding for SecurityHub"
 
   vpc_config {
@@ -42,9 +42,9 @@ resource "aws_lambda_function" "lambda_function_no_cache" {
   role             = aws_iam_role.turbot_firehose_lamdba_role.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.7"
-  filename         = "deployment-package.zip"
+  filename         = "deployment_package.zip"
   function_name    = "turbot-firehose-to-sec-hub-write-to-security-hub"
-  source_code_hash = base64sha256("deployment-package.zip")
+  source_code_hash = base64sha256("deployment_package.zip")
   description      = "Transform notifications from Turbot to finding for SecurityHub"
 
   environment {

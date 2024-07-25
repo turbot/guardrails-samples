@@ -29,5 +29,5 @@ export TURBOT_SECRET_ACCESS_KEY=12345678-1a2b-3c4b-5e6f-111222333444
 And run the example:
 
 ```shell
-python simple-query.py
+python simple-simple_query.py
 ```

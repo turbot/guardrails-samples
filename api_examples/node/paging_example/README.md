@@ -1,4 +1,4 @@
-# Paging graphql query example using node.js 
+# Paging graphql query example using node.js
 
 Lists all policies in the target Turbot environment
 
@@ -27,5 +27,5 @@ export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 And run the example:
 
 ```shell
-node list-all-policies-in-environment.js
+node list_all_policies_in_environment.js
 ```

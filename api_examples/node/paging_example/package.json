@@ -1,5 +1,5 @@
 {
-  "name": "list-all-policies-in-environment",
+  "name": "list_all_policies_in_environment",
   "dependencies": {
     "btoa": "^1.2.1",
     "graphql-request": "^3.3.0",
