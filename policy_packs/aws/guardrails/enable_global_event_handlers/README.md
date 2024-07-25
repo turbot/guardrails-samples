@@ -3,11 +3,11 @@ categories: ["logging"]
 primary_category: "logging"
 ---
 
-# Enable Global Event Handlers for AWS Accounts in Guardrails
+# Enable Global Event Handlers for AWS Accounts
 
 The Guardrails Event Handlers are responsible for conveying events from AWS CloudTrail back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable Global Event Handlers for AWS Accounts in Guardrails.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable Global Event Handlers for AWS Accounts.
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_global_event_handlers/settings)**
 
@@ -20,10 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
   - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
   - [@turbot/aws-events](https://hub.guardrails.turbot.com/mods/aws/mods/aws-events)
   - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
-- IAM Role ARN used to forward events from the non-primary regions to the Primary Region. You can use [enable_iam_service_roles](../enable_iam_service_roles/) Policy Pack to create this IAM role
-
-  - The below permissions are needed at minimum to allow the role to forward events to the Primary Region correctly:
-
+- An IAM Role used by the EventBridge service  to forward events from the non-primary regions to the Primary Region. Guardrails can provision this role for you using the `AWS > Turbot > Service Roles` control. The required policy settings are contained in this policy pack. Alternatively, the IAM role can be provisioned some other way.  It must have `events:PutEvents` permissions to the default bus in the primary region.  Example permissions JSON is provided below. 
     ```json
     {
       "Statement": [
