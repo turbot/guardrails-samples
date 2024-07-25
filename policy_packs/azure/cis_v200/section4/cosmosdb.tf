@@ -23,8 +23,8 @@ resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_ip_ra
   note     = "Azure CIS v2.0.0 - Control: 4.5.1"
   # Required IP ranges that can access the Cosmos DB account
   value    = <<-EOT
-    - "45.127.45.223"
-    - "45.127.45.221"
+    - "45.127.45.223/24"
+    - "45.127.45.221/24"
   EOT
 }
 

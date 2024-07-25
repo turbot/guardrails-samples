@@ -93,6 +93,12 @@ resource "turbot_policy_setting" "awx_vpc_elastic_ip_approved" {
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }
+resource "turbot_policy_setting" "aws_vpc_elastic_ip_active" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws-vpc-internet#/policy/types/elasticIpActive"
+  # value    = "Check: Active"
+  value    = "Enforce: Delete inactive with 7 days warning"
+}
 ```
 
 Then re-apply the changes:

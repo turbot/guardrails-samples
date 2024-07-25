@@ -3,9 +3,9 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce Block Public Access for AWS VPC Security Groups
+# Enforce Removal of Common Admin Ports Open to the Internet for AWS VPC Security Groups
 
-Enforcing Block Public Access for AWS VPC security groups is essential to prevent unauthorized access and exposure of sensitive data to the public internet. This measure ensures that ingress rules for ports 22 (SSH) and -1 (all ports) from 0.0.0.0/0 and ::/0 are blocked, minimizing the risk of security breaches and ensuring compliance with security best practices and regulatory requirements.
+Enforcing the removal of common admin ports (e.g., 22, 3389) open to the internet for AWS VPC security groups is crucial to mitigate potential security vulnerabilities. Open admin ports can be exploited by malicious actors to gain unauthorized access, leading to data breaches and compromising the integrity of the cloud infrastructure.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for VPC security groups:
 
@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_vpc_enforce_block_public_access_for_security_groups/settings)**
+- **[Review Policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/enforce_removal_of_common_admin_ports_open_to_internet_for_security_groups/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/vpc/enforce_block_public_access_for_security_groups
+cd guardrails-samples/policy_packs/aws/vpc/enforce_removal_of_common_admin_ports_open_to_internet_for_security_groups
 ```
 
 Run the Terraform to create the policy pack in your workspace:

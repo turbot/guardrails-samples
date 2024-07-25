@@ -1,5 +1,5 @@
 ---
-categories: ["networking", "security"]
+categories: ["networking", "security", "access management"]
 primary_category: "networking"
 ---
 

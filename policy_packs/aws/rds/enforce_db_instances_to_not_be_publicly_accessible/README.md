@@ -1,5 +1,5 @@
 ---
-categories: ["compute", "networking", "security"]
+categories: ["networking", "security", "storage", "data protection"]
 primary_category: "security"
 ---
 

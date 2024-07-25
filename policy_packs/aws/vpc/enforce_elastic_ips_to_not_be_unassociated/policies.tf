@@ -52,3 +52,18 @@ resource "turbot_policy_setting" "aws_vpc_elastic_ip_approved_custom" {
     {{ data | json }}
   EOT
 }
+
+# AWS > VPC > Elastic IP > Active
+resource "turbot_policy_setting" "aws_vpc_elastic_ip_active" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws-vpc-internet#/policy/types/elasticIpActive"
+  value    = "Check: Active"
+  # value    = "Enforce: Delete inactive with 7 days warning"
+}
+
+# AWS > VPC > Elastic IP > Active > Attached
+resource "turbot_policy_setting" "aws_vpc_elastic_ip_active_attached" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws-vpc-internet#/policy/types/elasticIpActiveAttached"
+  value    = "Force inactive if unattached"
+}

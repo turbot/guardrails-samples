@@ -12,7 +12,8 @@ resource "turbot_policy_setting" "aws_vpc_security_security_group_ingress_rules_
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApprovedRules"
   value    = <<-EOT
     # Reject port 22 from internet
-    REJECT $.turbot.fromPort:=22 $.turbot.toPort:=22 $.turbot.cidr:0.0.0.0/0,::/0
+    REJECT $.turbot.fromPort:<=22 $.turbot.toPort:>=22 $.turbot.cidr:0.0.0.0/0,::/0
+    REJECT $.turbot.fromPort:<=3389 $.turbot.toPort:>=3389 $.turbot.cidr:0.0.0.0/0,::/0
     REJECT $.turbot.portRangeSize:-1  $.turbot.cidr:0.0.0.0/0,::/0
 
     # APPROVE unmatched rules
