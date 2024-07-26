@@ -7,7 +7,7 @@ primary_category: "logging"
 
 The Guardrails Event Handlers are responsible for conveying events from AWS CloudTrail back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable Global Event Handlers for AWS Accounts.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you enable Global Event Handlers for AWS Accounts.  These policies **should never** be enabled at the same time as the AWS event poller policy pack or the AWS Event Handlers policy pack.  This causes Guardrails to handle duplicate events. 
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_enable_global_event_handlers/settings)**
 
@@ -20,19 +20,22 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
   - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
   - [@turbot/aws-events](https://hub.guardrails.turbot.com/mods/aws/mods/aws-events)
   - [@turbot/aws-sns](https://hub.guardrails.turbot.com/mods/aws/mods/aws-sns)
-- An IAM Role used by the EventBridge service  to forward events from the non-primary regions to the Primary Region. Guardrails can provision this role for you using the `AWS > Turbot > Service Roles` control. The required policy settings are contained in this policy pack. Alternatively, the IAM role can be provisioned some other way.  It must have `events:PutEvents` permissions to the default bus in the primary region.  Example permissions JSON is provided below. 
-    ```json
-    {
-      "Statement": [
-        {
-          "Action": ["events:PutEvents"],
-          "Effect": "Allow",
-          "Resource": "arn:<partition>:events:<region>:<accountId>:event-bus/default"
-        }
-      ],
-      "Version": "2012-10-17"
-    }
-    ```
+- An enabled CloudTrail trail in every region that Guardrails will cover.  This can be a regional trail, global trail or organizational trail. Without a deployed trail, Guardrails will not receive events from that region.
+- An IAM Role used by the EventBridge service  to forward events from the non-primary regions to the Primary Region. 
+  - Guardrails can provision this role for you using the `AWS > Turbot > Service Roles` control. The required policy settings are contained in this policy pack.  Guardrails must have sufficient IAM permissions in the target AWS account to create the IAM role.  
+  - Alternatively, the IAM role can be provisioned some other way.  It must have `events:PutEvents` permissions to the default bus in the primary region.  An example permissions JSON is provided below. 
+      ```json
+      {
+        "Statement": [
+          {
+            "Action": ["events:PutEvents"],
+            "Effect": "Allow",
+            "Resource": "arn:<partition>:events:<region>:<accountId>:event-bus/default"
+          }
+        ],
+        "Version": "2012-10-17"
+      }
+      ```
 
 ### Credentials
 
@@ -106,6 +109,18 @@ resource "turbot_policy_setting" "aws_turbot_event_handlers_global" {
   type     = "tmod:@turbot/aws#/policy/types/eventHandlersGlobal"
   # value    = "Check: Configured"
   value    = "Enforce: Configured"
+  # value    = "Check: Not onfigured"
+  # value    = "Enforce: Not configured"
+}
+
+# AWS > Turbot > Service Roles
+resource "turbot_policy_setting" "aws_service_roles" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
+  # value    = "Check: Not configured"
+  # value    = "Enforce: Not configured"
 }
 ```
 
@@ -115,3 +130,13 @@ Then re-apply the changes:
 terraform plan
 terraform apply
 ```
+
+
+## Decommission Global Event Handlers
+Simply removing the Global Event Handlers policy settings will not remove the deployed infrastructure.  Execute the following process to gracefully decommission the Global Event Handlers.
+
+- Set the value of the Global Event Handlers policy setting to "Enforce: Not configured".
+- Set the value of the Service Roles policy setting to "Enforce: Not configured".
+- Run `terraform apply` to commit the changes.
+- It may take some time for the Global Event Handlers and Service Roles to finish the work of decommissioning.
+- Verify in the Guardrails console that there are no Global Event Handler or Service Roles controls in `error` states.

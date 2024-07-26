@@ -4,6 +4,8 @@ resource "turbot_policy_setting" "aws_turbot_event_handlers_global" {
   type     = "tmod:@turbot/aws#/policy/types/eventHandlersGlobal"
   value    = "Check: Configured"
   # value    = "Enforce: Configured"
+  # value    = "Check: Not configured"
+  # value    = "Enforce: Not configured"
 }
 
 # AWS > Turbot > Event Handlers [Global] > Primary Region
@@ -50,7 +52,9 @@ resource "turbot_policy_setting" "aws_service_roles" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/serviceRoles"
   value    = "Check: Configured"
-  #  value    = "Enforce: Configured"
+  # value    = "Enforce: Configured"
+  # value    = "Check: Not configured"
+  # value    = "Enforce: Not configured"
 }
 
 # AWS > Turbot > Service Roles > SSM Notifications
