@@ -7,11 +7,12 @@ primary_category: "data protection"
 
 Enforcing backups of EBS volumes provides a crucial defense against lost data. Guardrails uses the AWS Backup service to create and manage backups of EBS volumes. 
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings to create the required Backup IAM role, Backup Vaults, Backup Plans and Backup Selections. 
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for AWS Backup: 
+- Create the required IAM role for AWS Backup to use.
+- Create Backup Vaults, Backup Plans and Backup Selections. 
 
-- Stop/Terminate replication instances which have public access enabled
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_dms_enforce_replication_instances_to_not_be_publicly_accessible/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_backup_enforce_ebs_volume_backups/settings)**
 
 ## Getting Started
 
@@ -20,8 +21,8 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - The following Guardrails mods need to be installed:
   - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
-  - [@turbot/aws-iam](https://hub.guardrails.turbot.com/mods/aws/mods/aws-iam)
   - [@turbot/aws-backup](https://hub.guardrails.turbot.com/mods/aws/mods/aws-backup)
+  - [@turbot/aws-iam](https://hub.guardrails.turbot.com/mods/aws/mods/aws-iam)
 
 ### Credentials
 
@@ -87,13 +88,20 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_dms_replication_instance_approved" {
+# AWS > Backup > Stack
+resource "turbot_policy_setting" "aws_backup_stack" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-dms#/policy/types/replicationInstanceApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
-  # value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-backup#/policy/types/backupStack"
+  #value    = "Check: Configured"
+  value    = "Enforce: Configured"
+}
+
+# AWS > IAM > Stack > Source
+resource "turbot_policy_setting" "aws_iam_iam_stack" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/aws-iam#/policy/types/iamStack"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 ```
 
@@ -104,10 +112,25 @@ terraform plan
 terraform apply
 ```
 
-## Decommission the Backups.
-1. Edit the Backup > Stack > Source policy setting in the policy pack.
-   1. **Flush Backups**: To flush the current backups, set the retention period to one day, as shown below. 
-  2. **Prevent new backups**: Remove the Backup Selection from the `AWS > Backup > Stack > Source`.  This will prevent new backups from happening.
+## Disable Backups
+- To stop backups from happening while preserving the existing backups, remove this resource definition from the `AWS > Backup > Stack > Source` policy setting. With no resource
+```hcl
+    resource "aws_backup_selection" "ebs_resource_assignment" {
+      iam_role_arn = "arn:aws:iam::{{ $.account.id }}:role/turbot/core/guardrails_backup_service_role"
+      name         = "guardrails-ebs-resource-assignment"
+      plan_id      = aws_backup_plan.guardrails_ebs_backups.id
+      resources = ["arn:aws:ec2:*:*:volume/*"]
+    }
+```
+- Commit the updated policy setting via Terraform then let the `AWS > Backup > Stack` make the changes. 
+
+
+## Decommission the Backup Vault
+To completely remove a Backup Vault and all backups, execute the following steps:
+
+- Edit the Backup > Stack > Source policy setting in the policy pack.
+  - To flush the current backups, set the retention period to one day, as shown below. 
+  - Remove the Backup Selection from the `AWS > Backup > Stack > Source`.  This will prevent new backups from happening.
 
 When the changes are complete the `template` attribute for `Backup > Stack > Source` should look like this. 
 ```hcl
@@ -136,8 +159,8 @@ When the changes are complete the `template` attribute for `Backup > Stack > Sou
     }
 ```
 
-2. **Apply the policy pack changes**: Wait a day or two for the backups to be flushed from the Guardrails Backup vault.  AWS will not allow a vault to be destroyed when backups are still present. 
-3. **Decommission the Backup Vault**: This is most easily done by replacing `template` and `template_input` attributes of `Backup > Stack > Source` as shown below. The `[]` value instructs the `Backup > Stack` control to destroy all managed resources. Apply the changes to the Policy Pack.
+- Wait a day or two for the backups to be flushed from the Guardrails Backup vault.  AWS will not allow a vault to be destroyed when backups are still present. 
+- This is most easily done by replacing `template` and `template_input` attributes of `Backup > Stack > Source` as shown below. The `[]` value instructs the `Backup > Stack` control to destroy all managed resources. Apply the changes to the Policy Pack.
 ```hcl
 # AWS > Backup > Stack > Source
 resource "turbot_policy_setting" "aws_backup_stack_source" {
@@ -146,8 +169,8 @@ resource "turbot_policy_setting" "aws_backup_stack_source" {
   value    = "[]"  
 }
 ```
-4. **Verify Vault Decommission**: Verify that all the `Backup > Stack` controls have gone into an `ok` state.  If they go into `error`, the `Backup > Stack` control logs should give a good indication of what's wrong.
-5. **Remove Backup IAM Role**: Set the `AWS > IAM > Stack > Source` policy to the below Terraform:  This will remove the Backup IAM role.
+- Verify that all the `Backup > Stack` controls have gone into an `ok` state.  If they go into `error`, the `Backup > Stack` control logs should give a good indication of what's wrong.
+- Set the `AWS > IAM > Stack > Source` policy to the below Terraform:  This will remove the Backup IAM role.
 ```hcl
 # AWS > IAM > Stack > Source
 resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
@@ -156,5 +179,5 @@ resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
   value    = "[]"
 }
 ```
-6. **Verify IAM Role Decommission**: Verify that all the `IAM > Stack` controls are in `ok`.
-7. **Remove Policy Pack**: Remove the policy pack from your Guardrails workspace. 
+- Verify that all the `IAM > Stack` controls are in `ok`.
+- Remove the policy pack from your Guardrails workspace. 
