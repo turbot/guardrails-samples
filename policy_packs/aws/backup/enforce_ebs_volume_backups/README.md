@@ -11,7 +11,6 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 - Create the required IAM role for AWS Backup to use.
 - Create Backup Vaults, Backup Plans and Backup Selections. 
 
-
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_backup_enforce_ebs_volume_backups/settings)**
 
 ## Getting Started
