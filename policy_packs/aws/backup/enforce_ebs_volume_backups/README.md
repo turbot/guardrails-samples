@@ -9,7 +9,7 @@ Enforcing backups of EBS volumes provides a crucial defense against lost data. G
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for AWS Backup: 
 - Create the required IAM role for AWS Backup to use.
-- Create Backup Vaults, Backup Plans and Backup Selections. 
+- Create Backup vaults, plans, and selections to backup EBS volumes.
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_backup_enforce_ebs_volume_backups/settings)**
 
