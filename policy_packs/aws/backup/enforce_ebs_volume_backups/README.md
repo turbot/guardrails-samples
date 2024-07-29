@@ -122,7 +122,11 @@ To stop backups from happening while preserving the existing backups, remove thi
       resources = ["arn:aws:ec2:*:*:volume/*"]
     }
 ```
-- Commit the updated policy setting via Terraform then let the `AWS > Backup > Stack` make the changes. 
+Then re-apply the changes:
+
+```sh
+terraform plan
+terraform apply
 
 
 ## Decommission the Backup Vault
