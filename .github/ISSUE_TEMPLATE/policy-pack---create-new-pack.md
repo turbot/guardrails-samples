@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Control objective***
+**Control objective**
 A clear and concise description of what the control objective is and why it's important.
 
 **Remediation**
