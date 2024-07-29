@@ -113,7 +113,8 @@ terraform apply
 ```
 
 ## Disable Backups
-- To stop backups from happening while preserving the existing backups, remove this resource definition from the `AWS > Backup > Stack > Source` policy setting. With no resource
+
+To stop backups from happening while preserving the existing backups, remove this resource definition from the `AWS > Backup > Stack > Source` policy setting:
 ```hcl
     resource "aws_backup_selection" "ebs_resource_assignment" {
       iam_role_arn = "arn:aws:iam::{{ $.account.id }}:role/turbot/core/guardrails_backup_service_role"
