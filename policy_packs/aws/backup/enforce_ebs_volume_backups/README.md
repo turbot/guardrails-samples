@@ -127,12 +127,13 @@ Then re-apply the changes:
 ```sh
 terraform plan
 terraform apply
-
+````
 
 ## Decommission the Backup Vault
-To completely remove a Backup Vault and all backups, execute the following steps:
+To completely remove a Backup Vault and all backups, execute the following steps.
 
-- Edit the Backup > Stack > Source policy setting in the policy pack.
+### Delete EBS Volume Backups
+ Edit the Backup > Stack > Source policy setting in the policy pack.
   - To flush the current backups, set the retention period to one day, as shown below. 
   - Remove the Backup Selection from the `AWS > Backup > Stack > Source`.  This will prevent new backups from happening.
 
@@ -163,8 +164,16 @@ When the changes are complete the `template` attribute for `Backup > Stack > Sou
     }
 ```
 
-- Wait a day or two for the backups to be flushed from the Guardrails Backup vault.  AWS will not allow a vault to be destroyed when backups are still present. 
-- This is most easily done by replacing `template` and `template_input` attributes of `Backup > Stack > Source` as shown below. The `[]` value instructs the `Backup > Stack` control to destroy all managed resources. Apply the changes to the Policy Pack.
+Apply the changes:
+
+```sh
+terraform plan
+terraform apply
+````
+
+### Delete Backup Vault
+Wait a day or two for the backups to be flushed from the Guardrails Backup vault.  AWS will not allow a vault to be destroyed when backups are still present. 
+This is most easily done by replacing `template` and `template_input` attributes of `Backup > Stack > Source` as shown below. The `[]` value instructs the `Backup > Stack` control to destroy all managed resources. Apply the changes to the Policy Pack.
 ```hcl
 # AWS > Backup > Stack > Source
 resource "turbot_policy_setting" "aws_backup_stack_source" {
@@ -173,8 +182,16 @@ resource "turbot_policy_setting" "aws_backup_stack_source" {
   value    = "[]"  
 }
 ```
-- Verify that all the `Backup > Stack` controls have gone into an `ok` state.  If they go into `error`, the `Backup > Stack` control logs should give a good indication of what's wrong.
-- Set the `AWS > IAM > Stack > Source` policy to the below Terraform:  This will remove the Backup IAM role.
+Apply the changes:
+
+```sh
+terraform plan
+terraform apply
+````
+Verify that all the `Backup > Stack` controls have gone into an `ok` state.  If they go into `error`, the `Backup > Stack` control logs should give a good indication of what's wrong.
+
+### Delete Backup IAM Role
+Set the `AWS > IAM > Stack > Source` policy to the below Terraform:  This will remove the Backup IAM role.
 ```hcl
 # AWS > IAM > Stack > Source
 resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
@@ -183,5 +200,12 @@ resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
   value    = "[]"
 }
 ```
-- Verify that all the `IAM > Stack` controls are in `ok`.
-- Remove the policy pack from your Guardrails workspace. 
+Re-apply the changes:
+
+```sh
+terraform plan
+terraform apply
+````
+ 
+Verify that all the `IAM > Stack` controls are in `ok`.  Resolve any controls in an `error` state. 
+Remove the policy pack from your Guardrails workspace using `terraform destroy`. 
