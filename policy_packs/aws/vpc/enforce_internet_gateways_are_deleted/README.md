@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# [Enforce Removal of AWS VPC Internet Gateways](../enforce_enable_flow_logging_to_s3_buckets_is_enabled_for_vpcs)
+# Enforce AWS VPC Internet Gateways Are Deleted
 
 Enforcing that AWS VPC Internet Gateways do not exist is essential for maintaining a highly secure network environment by preventing direct internet access to and from your VPCs. This measure minimizes the attack surface, reduces the risk of unauthorized access and potential data breaches, and ensures that all external connectivity is tightly controlled and monitored through alternative, more secure methods.
 

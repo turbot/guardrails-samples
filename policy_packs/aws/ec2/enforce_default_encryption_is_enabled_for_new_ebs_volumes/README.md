@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_default_encryption_is_enabled_for_ebs_volumes/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_default_encryption_is_enabled_for_new_ebs_volumes/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_default_encryption_is_enabled_for_ebs_volumes
+cd guardrails-samples/policy_packs/aws/ec2/enforce_default_encryption_is_enabled_for_new_ebs_volumes
 ```
 
 Run the Terraform to create the policy pack in your workspace:
