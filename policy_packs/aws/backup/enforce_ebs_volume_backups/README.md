@@ -114,6 +114,7 @@ terraform apply
 ## Disable Backups
 
 To stop backups from happening while preserving the existing backups, remove this resource definition from the `AWS > Backup > Stack > Source` policy setting:
+
 ```hcl
     resource "aws_backup_selection" "ebs_resource_assignment" {
       iam_role_arn = "arn:aws:iam::{{ $.account.id }}:role/turbot/core/guardrails_backup_service_role"
@@ -122,7 +123,8 @@ To stop backups from happening while preserving the existing backups, remove thi
       resources = ["arn:aws:ec2:*:*:volume/*"]
     }
 ```
-Then re-apply the changes:
+
+Then apply the changes:
 
 ```sh
 terraform plan
@@ -130,14 +132,17 @@ terraform apply
 ````
 
 ## Decommission the Backup Vault
+
 To completely remove a Backup Vault and all backups, execute the following steps.
 
 ### Delete EBS Volume Backups
- Edit the Backup > Stack > Source policy setting in the policy pack.
+
+Edit the `Backup > Stack > Source` policy setting in the policy pack.
   - To flush the current backups, set the retention period to one day, as shown below. 
   - Remove the Backup Selection from the `AWS > Backup > Stack > Source`.  This will prevent new backups from happening.
 
-When the changes are complete the `template` attribute for `Backup > Stack > Source` should look like this. 
+When the changes are complete the `template` attribute for `Backup > Stack > Source` should look like this:
+ 
 ```hcl
     |
     resource "aws_backup_vault" "vault" {
@@ -164,7 +169,7 @@ When the changes are complete the `template` attribute for `Backup > Stack > Sou
     }
 ```
 
-Apply the changes:
+Then apply the changes:
 
 ```sh
 terraform plan
@@ -172,8 +177,11 @@ terraform apply
 ````
 
 ### Delete Backup Vault
-Wait a day or two for the backups to be flushed from the Guardrails Backup vault.  AWS will not allow a vault to be destroyed when backups are still present. 
-This is most easily done by replacing `template` and `template_input` attributes of `Backup > Stack > Source` as shown below. The `[]` value instructs the `Backup > Stack` control to destroy all managed resources. Apply the changes to the Policy Pack.
+
+Wait a day or two for the backups to be flushed from the Guardrails Backup vault. AWS will not allow a vault to be destroyed when backups are still present.
+
+This is most easily done by replacing `template` and `template_input` attributes of `Backup > Stack > Source` as shown below. The `[]` value instructs the `Backup > Stack` control to destroy all managed resources.
+
 ```hcl
 # AWS > Backup > Stack > Source
 resource "turbot_policy_setting" "aws_backup_stack_source" {
@@ -182,16 +190,20 @@ resource "turbot_policy_setting" "aws_backup_stack_source" {
   value    = "[]"  
 }
 ```
-Apply the changes:
+
+Then apply the changes:
 
 ```sh
 terraform plan
 terraform apply
 ````
+
 Verify that all the `Backup > Stack` controls have gone into an `ok` state.  If they go into `error`, the `Backup > Stack` control logs should give a good indication of what's wrong.
 
 ### Delete Backup IAM Role
-Set the `AWS > IAM > Stack > Source` policy to the below Terraform:  This will remove the Backup IAM role.
+
+Edit the `AWS > IAM > Stack > Source` policy to the following:
+
 ```hcl
 # AWS > IAM > Stack > Source
 resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
@@ -200,12 +212,18 @@ resource "turbot_policy_setting" "aws_iam_iam_stack_source" {
   value    = "[]"
 }
 ```
-Re-apply the changes:
+
+Then apply the changes:
 
 ```sh
 terraform plan
 terraform apply
 ````
  
-Verify that all the `IAM > Stack` controls are in `ok`.  Resolve any controls in an `error` state. 
-Remove the policy pack from your Guardrails workspace using `terraform destroy`. 
+Verify that all the `IAM > Stack` controls are in `ok`.  Resolve any controls in an `error` state.
+
+Finally, remove the policy pack from your Guardrails workspace:
+
+```sh
+terraform destroy
+```
