@@ -13,7 +13,7 @@ resource "turbot_policy_setting" "aws_backup_stack_source" {
   template_input = <<-EOT
     {
       account {
-        id: Id
+        id: get(path: "Id")
       }
     }
   EOT
