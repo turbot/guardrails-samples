@@ -1,0 +1,22 @@
+mod_list = [
+  "azure",
+  "azure-activedirectory",
+  "azure-aks",
+  "azure-applicationgateway",
+  "azure-applicationinsights",
+  "azure-cisv2-0",
+  "azure-compute",
+  "azure-dns",
+  "azure-firewall",
+  "azure-iam",
+  "azure-keyvault",
+  "azure-loadbalancer",
+  "azure-monitor",
+  "azure-mysql",
+  "azure-network",
+  "azure-networkwatcher",
+  "azure-postgresql",
+  "azure-provider",
+  "azure-sql",
+  "azure-storage"
+]

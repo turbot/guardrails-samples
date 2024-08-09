@@ -1,0 +1,20 @@
+mod_list = [
+  "gcp",
+  "gcp-appengine",
+  "gcp-bigquery",
+  "gcp-bigtable",
+  "gcp-build",
+  "gcp-cisv2-0",
+  "gcp-computeengine",
+  "gcp-functions",
+  "gcp-iam",
+  "gcp-kms",
+  "gcp-kubernetesengine",
+  "gcp-logging",
+  "gcp-monitoring",
+  "gcp-network",
+  "gcp-orgpolicy",
+  "gcp-pubsub",
+  "gcp-sql",
+  "gcp-storage"
+]
