@@ -93,7 +93,7 @@ To run a the Python script:
 ### Synopsis
 
 ```shell
-python3 get-notifications-for-resource.py [options]
+python3 get_notifications_for_resource.py [options]
 ```
 
 ### Options
@@ -127,16 +127,16 @@ python3 get-notifications-for-resource.py [options]
 Returns the last notification for the resource `tmod:@turbot/turbot#/`.
 
 ```shell
-python3 get-notifications-for-resource.py 
+python3 get_notifications_for_resource.py
 ```
 
 ##### Example 2
 
-Returns the last notification for a different resource 
+Returns the last notification for a different resource
 `tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved`.
 
 ```shell
-python3 get-notifications-for-resource.py -i "tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved"
+python3 get_notifications_for_resource.py -i "tmod:@turbot/aws-iam#/control/types/roleInlinePolicyStatementsApproved"
 ```
 
 ##### Example 3
@@ -144,7 +144,7 @@ python3 get-notifications-for-resource.py -i "tmod:@turbot/aws-iam#/control/type
 Run returning the latest 10 notification
 
 ```shell
-python3 get-notifications-for-resource.py -l 10
+python3 get_notifications_for_resource.py -l 10
 ```
 
 ##### Example 4
@@ -152,7 +152,7 @@ python3 get-notifications-for-resource.py -l 10
 Run the script using credentials given in a credential file `credentials.yml`.
 
 ```shell
-python3 get-notifications-for-resource.py -c .config/turbot/credentials.yml
+python3 get_notifications_for_resource.py -c .config/turbot/credentials.yml
 ```
 
 ##### Example 5
@@ -160,7 +160,7 @@ python3 get-notifications-for-resource.py -c .config/turbot/credentials.yml
 Run the script using a credentials file and using the credential details using the profile `env`.
 
 ```shell
-python3 get-notifications-for-resource.py -c .config/turbot/credentials.yml -p env --notification_class resource
+python3 get_notifications_for_resource.py -c .config/turbot/credentials.yml -p env --notification_class resource
 ```
 
 ## Virtual environments deactivation

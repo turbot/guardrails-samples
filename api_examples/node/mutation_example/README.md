@@ -1,8 +1,7 @@
-# Simple query
+# GraphQL mutation example using node.js
 
-A example of a basic GraphQL query to a Turbot environment
-
-## Example
+This example queries all policy values that match a specific filter state
+and then iterate through and re-run the policy value using a GraphQL mutation.
 
 ### Dependencies
 
@@ -27,5 +26,5 @@ export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 And run the example:
 
 ```shell
-node simple-query.js
+node calculate_policy_values_for_filter.js
 ```

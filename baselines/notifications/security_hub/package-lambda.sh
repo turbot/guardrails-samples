@@ -5,9 +5,9 @@ source .packaging/bin/activate
 pip3 install pymemcache
 deactivate
 
-rm deployment-package.zip
+rm deployment_package.zip
 cd .packaging/lib/python3.8/site-packages
-zip -r ../../../../deployment-package.zip .
+zip -r ../../../../deployment_package.zip .
 cd -
-zip -g deployment-package.zip lambda_function.py logic/*
+zip -g deployment_package.zip lambda_function.py logic/*
 rm -rf .packaging

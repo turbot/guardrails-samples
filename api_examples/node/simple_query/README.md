@@ -9,9 +9,7 @@ A example of a basic GraphQL query to a Turbot environment
 Install the dependencies:
 
 ```shell
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+npm install
 ```
 
 ### Turbot configuration
@@ -20,8 +18,8 @@ Setup environment variables for your Turbot installation:
 
 ```shell
 export TURBOT_GRAPHQL_ENDPOINT="https://demo-acme.cloud.turbot.com/api/latest/graphql"
-export TURBOT_ACCESS_KEY_ID=12345678-1a2b-3c4b-5e6f-111222333444
-export TURBOT_SECRET_ACCESS_KEY=12345678-1a2b-3c4b-5e6f-111222333444
+export TURBOT_ACCESS_KEY_ID=ac61d2e4-730c-4b54-8c3c-6ef180150814
+export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 ```
 
 ### Running the example
@@ -29,5 +27,5 @@ export TURBOT_SECRET_ACCESS_KEY=12345678-1a2b-3c4b-5e6f-111222333444
 And run the example:
 
 ```shell
-python simple-query.py
+node simple_query.js
 ```

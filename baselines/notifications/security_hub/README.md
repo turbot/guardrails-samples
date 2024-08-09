@@ -27,7 +27,7 @@ The Security Hub Lambda must be able to talk to the following services:
 - SNS
 - SQS
 - STS
-  
+
 Customers are free to use a VPC with NAT/IGWs or transit gateways. Either approach that has internet access will
 work.  The provided Terraform will create a new VPC with NAT/IGWs.
 
@@ -53,9 +53,9 @@ work.  The provided Terraform will create a new VPC with NAT/IGWs.
 ### Fatal Errors
 
 There are a number of circumstances where this integration will discard a notification. The below conditions are
-considered as terminal errors.  **Any finding that encounters one of the below problems will be discarded.** 
+considered as terminal errors.  **Any finding that encounters one of the below problems will be discarded.**
 
-- *Access Denied* to the target account. Typically, this is when the integration cannot assume into the specified role. 
+- *Access Denied* to the target account. Typically, this is when the integration cannot assume into the specified role.
 - *Invalid Access* to the target account. If Security Hub is not enabled for this account, then findings cannot be
   submitted.
 - *Turbot Findings are not enabled*. This happens when Security Hub is enabled, but Turbot findings are not enabled.
@@ -95,7 +95,7 @@ on each customer's individual situation.  Deploying in the same account as the F
 A role must exist in each managed account with sufficient permissions to import and update findings in Security Hub.
 The role must also allow `sts:AssumeRole` by the Security Hub integration lambda. This integration assumes a uniform role name for all managed accounts.  The specified role is appended to the arn, like so: `arn:aws:iam::{account_id}:role/{role_id}`.
 
-Note: For customers with multiple Turbot environments hosted in separate accounts, it is possible, perhaps desirable, to send all Security Hub findings through a single integration point.  Such a configuration is supported with the requirement that cross-account access be granted to the integration. Assuming the reuse of the `turbot_superuser` role, cross-account access is typically only granted to a single Turbot Master account.  If this integration is servicing multiple Turbot Masters, the `turbot_superuser` role would require additional trust configuration. 
+Note: For customers with multiple Turbot environments hosted in separate accounts, it is possible, perhaps desirable, to send all Security Hub findings through a single integration point.  Such a configuration is supported with the requirement that cross-account access be granted to the integration. Assuming the reuse of the `turbot_superuser` role, cross-account access is typically only granted to a single Turbot Master account.  If this integration is servicing multiple Turbot Masters, the `turbot_superuser` role would require additional trust configuration.
 
 Below are the minimum permissions required to work with findings in Security Hub.
 
@@ -164,7 +164,7 @@ Watches, see the [Turbot Notifications Guide](https://turbot.com/v5/docs/guides/
 
 If using multiple watches in a single workspace, ensure that each watch is performing as expected.  Avoid duplication in watches where possible.
 
-From `create-watch-mutation-input.json`, we see the watch definition.
+From `create_watch_mutation_input.json`, we see the watch definition.
 
 ```json
 {
@@ -191,8 +191,8 @@ aws configure
 turbot configure --profile {profile}
 ```
 
-3. Adapt the provided terraform to meet environmental needs. 
-   
+3. Adapt the provided terraform to meet environmental needs.
+
 4. Initialize Terraform
 ```shell
 terraform init
@@ -200,9 +200,9 @@ terraform init
 
 5. Create and populate a `.tfvars` file with the appropriate values.
 
-6.  Generate a TF plan 
+6.  Generate a TF plan
 ```shell
-terraform plan -var-file={environment}.tfvars 
+terraform plan -var-file={environment}.tfvars
 ```
 Check the plan to ensure proper deployment.
 
@@ -212,13 +212,13 @@ terraform apply -var-file={environment}.tfvars
 ```
 The default TF will deploy the AWS resources then set the appropriate Turbot policies.
 
-8. Test the setup by altering controls in Turbot then checking in Security Hub for the findings to arrive.  Be aware there will be some latency between when Turbot updates a control and when it shows up in Security Hub.  In quiet environments, latency of 30 to 90 seconds is normal.  High load on Turbot may introduce additional delay in delivery of Firehose notifications. 
+8. Test the setup by altering controls in Turbot then checking in Security Hub for the findings to arrive.  Be aware there will be some latency between when Turbot updates a control and when it shows up in Security Hub.  In quiet environments, latency of 30 to 90 seconds is normal.  High load on Turbot may introduce additional delay in delivery of Firehose notifications.
 
 ### Deploying Updated Lambda code
 Should you need to update the Lambda code but leave all other infrastructure intact, you can deploy a code update using the AWS CLI.  From the [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/latest/dg/python-package-update.html), use the following to update the Lambda code with whatever changes you've made.
 ```shell
 package-lambda.sh
-aws lambda update-function-code --function-name turbot-firehose-to-sec-hub-write-to-security-hub --zip-file fileb://deployment-package.zip
+aws lambda update-function-code --function-name turbot-firehose-to-sec-hub-write-to-security-hub --zip-file fileb://deployment_package.zip
 ```
 
 
@@ -230,7 +230,7 @@ terraform destroy -var-file={environment}.tfvars
 ```
 
 ## Monitoring
-Watch the Cloudwatch logs and Function Monitoring for the integration lambda `turbot-firehose-to-sec-hub-write-to-security-hub`. 
+Watch the Cloudwatch logs and Function Monitoring for the integration lambda `turbot-firehose-to-sec-hub-write-to-security-hub`.
 
 ## Troubleshooting
 Refer to the [Data Flow Path](#data-flow-for-a-notification) to track down which part of the path has broken down.
