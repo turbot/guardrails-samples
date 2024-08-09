@@ -1,17 +1,21 @@
 ---
-categories: ["cost controls", "storage"]
-primary_category: "cost controls"
+categories: ["logging", "networking"]
+primary_category: "logging"
 ---
 
-# Enforce Enable Cool Access Tier for Azure Storage Accounts
+# Enable Logging Bucket Stack in Guardrails
 
-Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
+The Guardrails Logging Bucket stack configures an AWS S3 Bucket for use as a destination for logs from other AWS services.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for AWS Accounts Guardrails Logging Bucket stack in Guardrails:
 
-- Enable cool access tier
+- Set logging bucket stack
+- Set a logging bucket access logging
+- Set a logging bucket default encryption
+- Set a logging bucket region
+- Set a logging bucket versioning
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_enable_cool_access_tier_for_storage_accounts/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_logging_bucket_stack/settings)**
 
 ## Getting Started
 
@@ -19,7 +23,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-storage](https://hub.guardrails.turbot.com/mods/azure/mods/azure-storage)
+  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
 
 ### Credentials
 
@@ -51,7 +55,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_enable_cool_access_tier_for_storage_accounts
+cd guardrails-samples/policy_packs/aws/guardrails/enable_logging_bucket_stack
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -69,11 +73,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 
@@ -84,12 +88,15 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
+> [!IMPORTANT]
+> Setting the policy in enforce mode will result in creation of resources in the target account. However, it is easy to remove those resources later, by setting the Stack's policy to `Enforce: Not configured`.
+
 ```hcl
-resource "turbot_policy_setting" "azure_storage_storage_account_access_tier" {
+resource "turbot_policy_setting" "aws_turbot_logging_bucket" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessTier"
-  # value    = "Check: Cool"
-  value    = "Enforce: Cool"
+  type     = "tmod:@turbot/aws#/policy/types/loggingBucket"
+  # value    = "Check: Configured"
+  value    = "Enforce: Configured"
 }
 ```
 
