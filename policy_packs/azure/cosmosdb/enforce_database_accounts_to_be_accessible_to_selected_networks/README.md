@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce Azure Cosmos DB Database Accounts to be Accessible to Selected Networks
+# Enforce Azure Cosmos DB Database Accounts Are Accessible to Selected Networks
 
 Enforcing Azure Cosmos DB database accounts to be accessible only to selected networks is crucial for enhancing security and controlling access to your data. This measure ensures that only trusted and authorized networks can access the database, reducing the risk of unauthorized access, data breaches, and ensuring compliance with security best practices and regulatory requirements.
 

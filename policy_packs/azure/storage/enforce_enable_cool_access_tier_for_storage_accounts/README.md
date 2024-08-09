@@ -3,7 +3,7 @@ categories: ["cost controls", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce Enable Cool Access Tier for Azure Storage Accounts
+# Enforce Cool Access Tier for Azure Storage Accounts
 
 Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
 
@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - Enable cool access tier
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_enable_cool_access_tier_for_storage_accounts/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_storage_enforce_enable_cool_access_tier_for_storage_accounts/settings)**
 
 ## Getting Started
 

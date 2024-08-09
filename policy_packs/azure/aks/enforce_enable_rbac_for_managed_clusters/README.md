@@ -4,7 +4,7 @@ primary_category: "security"
 type: "featured"
 ---
 
-# Enforce Enable RBAC for Azure AKS Managed Clusters
+# Enforce RBAC for Azure AKS Managed Clusters
 
 Enforcing Role-Based Access Control (RBAC) for Azure AKS managed clusters is crucial as it ensures that only authorized users and applications can perform actions within clusters. This granular control enhances security by preventing unauthorized access and modifications, thereby protecting the integrity and availability of the applications and services running in the Kubernetes environment.
 

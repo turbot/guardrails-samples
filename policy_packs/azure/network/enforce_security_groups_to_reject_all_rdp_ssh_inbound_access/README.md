@@ -4,7 +4,7 @@ primary_category: "networking"
 type: "featured"
 ---
 
-# Enforce Azure Network Security Groups to Reject All Ingress, RDP and SSH Inbound Access
+# Enforce Azure Network Security Groups to Reject All Ingress, RDP, and SSH Inbound Access
 
 Enforcing security groups to reject all ingress, RDP, and SSH inbound access is critical for minimizing the attack surface and protecting systems from unauthorized access. This measure ensures that remote administrative access is blocked unless explicitly allowed, reducing the risk of malicious attacks and enhancing overall security posture.
 
