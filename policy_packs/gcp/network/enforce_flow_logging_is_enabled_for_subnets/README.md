@@ -3,17 +3,17 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Enforce Enable VPC Flow Logs for Subnets in GCP VPC Network
+# Enforce Flow Logging is Enabled for GCP VPC Subnetworks
 
-Enforcing the enablement of VPC Flow Logs for subnets in a GCP VPC network is crucial for maintaining visibility and security. It allows organizations to monitor and analyze network traffic, detect anomalies, troubleshoot issues, and ensure compliance with security policies by providing detailed insights into the traffic flowing in and out of the network.
+Enforcing flow logging for GCP VPC subnetworks is essential for monitoring and analyzing network traffic, helping to identify potential security threats, performance issues, and ensuring compliance with security policies. This logging provides visibility into the network's activity, enabling better security and operational insights.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for network subnetworks:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for subnetworks:
 
-- Enforce VPC flow logs for subnets is set to be Enabled
+- Enable flow logging
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_vpc_flow_logs_is_enabled_for_subnets/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_flow_logging_is_enabled_for_subnets/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/network/enforce_vpc_flow_logs_is_enabled_for_subnets
+cd guardrails-samples/policy_packs/gcp/network/enforce_flow_logging_is_enabled_for_subnets
 ```
 
 Run the Terraform to create the policy pack in your workspace:
