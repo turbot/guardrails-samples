@@ -1,12 +1,11 @@
 terraform {
   required_providers {
     turbot = {
-      source = "turbot/turbot"
+      source  = "turbot/turbot"
+      version = ">= 1.11.0"
     }
   }
-  required_version = ">= 0.13"
 }
 
 provider "turbot" {
-  profile = var.turbot_profile
 }

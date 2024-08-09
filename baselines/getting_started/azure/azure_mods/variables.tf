@@ -1,5 +1,6 @@
 variable "mod_list" {
-  type = "list"
+  type        = list(string)
+  description = "The list of Azure Mods to install."
   default = [
     "azure",
     "azure-activedirectory",
@@ -8,7 +9,10 @@ variable "mod_list" {
     "azure-applicationgateway",
     "azure-applicationinsights",
     "azure-appservice",
+    "azure-automation",
     "azure-cisv1",
+    "azure-cisv1-2",
+    "azure-cisv2-0",
     "azure-compute",
     "azure-cosmosdb",
     "azure-databricks",
@@ -27,15 +31,14 @@ variable "mod_list" {
     "azure-postgresql",
     "azure-provider",
     "azure-recoveryservice",
+    "azure-relay",
     "azure-searchmanagement",
     "azure-securitycenter",
+    "azure-servicebus",
+    "azure-signalr",
     "azure-sql",
+    "azure-sqlvirtualmachine",
     "azure-storage",
     "azure-synapseanalytics"
   ]
-}
-
-variable "turbot_profile" {
-  type        = string
-  description = "Turbot profile for the workspace where this terraform code will be executed"
 }
