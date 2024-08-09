@@ -104,6 +104,15 @@ resource "turbot_policy_setting" "gcp_network_firewall_ingress_rules_approved_ru
   EOT
 }
 
+# GCP > Network > Subnetwork > Flow Log
+resource "turbot_policy_setting" "gcp_network_subnetwork_flow_log" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/gcp-network#/policy/types/subnetworkFlowLog"
+  note     = "GCP CIS v2.0.0 - Control: 3.8"
+  value    = "Check: Enabled"
+  # value    = "Enforce: Enabled"
+}
+
 # GCP > Network > SSL Policy > Minimum TLS Version
 resource "turbot_policy_setting" "gcp_network_ssl_policy_minimum_tls_version" {
   resource = turbot_policy_pack.main.id
