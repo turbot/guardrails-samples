@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "data protection"
 ---
 
-# Enforce GCP KMS Crypto Keys to be rotated on regular basis
+# Check If GCP KMS Crypto Keys Are Rotated Regularly
 
 KMS Crypto Keys should be rotated on regular basis. A rotation schedule defines the frequency of rotation, and optionally the date and time when the first rotation occurs. The rotation schedule can be based on either the key's age or the number or volume of messages encrypted with a key version. Enforcing regular rotation of GCP KMS crypto keys is essential for maintaining the security and integrity of encrypted data. Regular key rotation mitigates the risk of key compromise, ensuring that even if a key is exposed, its usage window is limited, thereby enhancing overall security and ensuring compliance with best practices and regulatory requirements.
 

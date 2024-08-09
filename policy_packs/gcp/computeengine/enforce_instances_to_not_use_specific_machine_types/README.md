@@ -3,7 +3,7 @@ categories: ["compute", "cost controls", "security"]
 primary_category: "cost controls"
 ---
 
-# Enforce GCP Compute Engine Instances to Not Use Specific Machine Types
+# Enforce GCP Compute Engine Instances Do Not Use Specific Machine Types
 
 Enforcing GCP Compute Engine Instances to not use specific machine types is important to ensure compliance with organizational policies and cost management strategies. This control helps prevent the use of machine types that may be unsuitable for certain workloads, excessively costly, or lacking necessary security features, thereby optimizing resource utilization and maintaining a secure environment.
 

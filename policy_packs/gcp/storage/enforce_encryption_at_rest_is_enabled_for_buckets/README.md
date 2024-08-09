@@ -3,7 +3,7 @@ categories: ["data protection", "security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Encryption at Rest is Enabled for GCP Storage Buckets
+# Enforce Encryption at Rest Is Enabled for GCP Storage Buckets
 
 Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
 

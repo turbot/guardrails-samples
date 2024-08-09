@@ -3,7 +3,7 @@ categories: ["logging", "networking"]
 primary_category: "logging"
 ---
 
-# Enable Event Poller for GCP Projects in Guardrails
+# Enable Event Poller for GCP Projects
 
 The Guardrails Event Poller are responsible polling GCP Logging at intervals specified and retrieves the latest events for processing.
 

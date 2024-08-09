@@ -4,7 +4,7 @@ primary_category: "access management"
 type: "featured"
 ---
 
-# Enforce GCP IAM User-Managed Service Accounts to Not Have Admin Privileges
+# Enforce GCP IAM User-Managed Service Accounts Do Not Have Admin Privileges
 
 Enforcing that GCP IAM user-managed service accounts do not have admin privileges is essential for maintaining the principle of least privilege. This minimizes the risk of unauthorized access and potential misuse of administrative capabilities, enhancing security by ensuring that service accounts only have the permissions necessary to perform their specific tasks.
 

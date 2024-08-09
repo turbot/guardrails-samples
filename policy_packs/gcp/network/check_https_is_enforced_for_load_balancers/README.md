@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Check If GCP Network Load Balancers Enforce HTTPS to Manage Encrypted Web Traffic
+# Check GCP Network Load Balancers Enforce HTTPS for Encrypted Web Traffic
 
 Ensure that GCP Network Load Balancers are configured to use valid SSL/TLS certificates in order to handle encrypted web traffic. SSL certificate resources contain SSL certificate information that the load balancer uses to terminate SSL/TLS when HTTPS clients connect to it. This practice guarantees that data transmitted between clients and load-balanced applications is encrypted, protecting it from interception and unauthorized access, thereby enhancing security and compliance with regulatory requirements and best practices.
 

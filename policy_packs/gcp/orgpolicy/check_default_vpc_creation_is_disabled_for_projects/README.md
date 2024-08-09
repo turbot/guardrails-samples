@@ -3,7 +3,7 @@ categories: ["networking", "security"]
 primary_category: "networking"
 ---
 
-# Check If Creation of Default VPC Network Is Disabled for GCP Projects
+# Check Creation of Default VPC Network Is Disabled for GCP Projects
 
 Checking if the creation of the default VPC network is disabled at the GCP project level is important for enforcing a secure and customized network architecture. This practice ensures that all projects within the organization use purpose-built VPC networks with specific configurations and security controls, reducing the risk of misconfigurations and enhancing overall network security and compliance with best practices.
 
