@@ -3,7 +3,7 @@ categories: ["logging", "networking"]
 primary_category: "logging"
 ---
 
-# Enable Event Poller for AWS Accounts in Guardrails
+# Enable Event Poller for AWS Accounts
 
 The Guardrails Event Poller is an alternative to the Event Handlers, and is a polling mechanism for obtaining relevant events from AWS and updating CMDB.
 

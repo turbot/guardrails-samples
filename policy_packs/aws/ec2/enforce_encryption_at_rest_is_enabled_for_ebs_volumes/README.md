@@ -3,7 +3,7 @@ categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce Encryption at Rest is Enabled for AWS EBS Volumes
+# Enforce Encryption at Rest Is Enabled for AWS EBS Volumes
 
 Enforcing encryption at rest for AWS EBS volumes is critical to protect sensitive data from unauthorized access and potential breaches. This measure ensures that data stored on EBS volumes is encrypted, thereby enhancing data security and compliance with regulatory requirements.
 

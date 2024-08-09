@@ -3,7 +3,7 @@ categories: ["logging", "networking"]
 primary_category: "logging"
 ---
 
-# Enable Global Event Handlers for AWS Accounts in Guardrails
+# Enable Global Event Handlers for AWS Accounts
 
 The Guardrails Event Handlers are responsible for conveying events from AWS CloudTrail back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 

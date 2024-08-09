@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Enforce CloudFront Distribution for AWS S3 Buckets is Secured
+# Enforce CloudFront Distribution for AWS S3 Buckets Is Secured
 
 Enforcing that CloudFront distributions for AWS S3 buckets are secured is crucial for protecting data and ensuring secure content delivery. This measure ensures that security best practices, such as HTTPS and access controls are applied to CloudFront distributions, reducing the risk of unauthorized access and data breaches while ensuring compliance with regulatory requirements.
 
@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_cloudfront_distribution_for_buckets_is_secured/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_s3_enforce_cloudfront_distribution_for_buckets_is_secured/settings)**
 
 ## Getting Started
 
