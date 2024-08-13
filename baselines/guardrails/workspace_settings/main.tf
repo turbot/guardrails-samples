@@ -42,13 +42,6 @@ resource "turbot_policy_setting" "turbot_stack_terraform_version" {
   value    = "0.15.*"
 }
 
-# https://hub.guardrails.turbot.com/mods/turbot/policies/turbot-iam/turbotConsoleSessionTimeoutMins
-resource "turbot_policy_setting" "turbot_iam_turbot_console_session_timeout_mins" {
-  resource = "tmod:@turbot/turbot#/"
-  type     = "tmod:@turbot/turbot-iam#/policy/types/turbotConsoleSessionTimeoutMins"
-  value    = 540
-}
-
 # https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/modAutoUpdate
 resource "turbot_policy_setting" "turbot_mod_auto_update" {
   resource = "tmod:@turbot/turbot#/"
@@ -67,11 +60,3 @@ resource "turbot_policy_setting" "turbot_mod_change_window_schedule" {
       duration: 12
     EOT
 }
-
-# https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/notifications
-# # Turbot > Notifications
-# resource "turbot_policy_setting" "turbot_notifications" {
-#   resource = "tmod:@turbot/turbot#/"
-#   type     = "tmod:@turbot/turbot#/policy/types/notifications"
-#   value    = "Enabled"
-# }
