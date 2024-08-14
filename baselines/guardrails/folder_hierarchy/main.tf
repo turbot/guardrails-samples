@@ -1,14 +1,9 @@
-data "turbot_policy_value" "example" {
-  type     = "tmod:@turbot/turbot#/policy/types/workspaceUrl"
-  resource = "tmod:@turbot/turbot#/"
-}
-
 # Base folder (Turbot > workspacename)
 resource "turbot_folder" "workspace_base_folder" {
   parent      = "tmod:@turbot/turbot#/"
-  title       = element(split(".", element(split("/", data.turbot_policy_value.example.value), 2)), 0)
-  description = "Base folder for the workspace"
-  akas        = ["workspace_base_folder"]
+  title       = var.base_folder_name
+  description = "Base folder for the Workspace"
+  akas        = ["base_folder"]
 }
 
 # AWS Base folder (Turbot > workspacename > AWS)

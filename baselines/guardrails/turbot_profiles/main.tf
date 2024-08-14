@@ -14,11 +14,6 @@ resource "turbot_turbot_directory" "turbot_dir" {
   server              = "turbot.com"
 }
 
-variable "user_profile" {
-  description = "Map of the list of turbot.com profileIds. Update in terraform.tfvars"
-  type        = map(any)
-}
-
 # Creates profiles in an exisiting turbot.com defined in terraform.tfvars
 # Will grant the Turbot/Owner role to each profile at the Turbot root level
 # Will activate each Turbot/Owner grant to each profile
