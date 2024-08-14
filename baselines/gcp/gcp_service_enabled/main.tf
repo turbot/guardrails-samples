@@ -20,7 +20,10 @@ resource "turbot_policy_setting" "gcp_api_enable" {
   value    = "Enforce: ${lookup(var.service_status, "${element(keys(var.service_status), count.index)}")}"
 }
 
+# Here the "resource" is the AKA of the [Base Folder](../../guardrails/folder_hierarchy/) to which you want to attached the Policy Pack. 
+# The base folder is created as part of script from [Base Folder](../../guardrails/folder_hierarchy/)
+# The resource should be created first.
 resource "turbot_policy_pack_attachment" "gcp_enable_attachment" {
-  resource    = "workspace_base_folder"
+  resource    = "base_folder"
   policy_pack = turbot_policy_pack.gcp_enabled_baseline_pack.id
 }
