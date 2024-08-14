@@ -1,8 +1,3 @@
----
-categories: ["aws", "infrastructure"]
-primary_category: "infrastructure"
----
-
 # AWS Mods Installation
 
 Turbot provides numerous AWS mods, covering a wide range of AWS resources with thousands of policies and controls. By default, mods are installed with the top Turbot resource as the parent, meaning administrators must have Turbot/Owner permissions at the Turbot resource level to install, uninstall, or update mods in the environment.
@@ -47,41 +42,39 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
    terraform init
    ```
 
-
-
-### Deploying Demo Example
+### Deploying Default Example
 
 1. Navigate to the `aws_mods` folder.
 2. Initialize Terraform.
-3. Apply the installation using the demo input variable file [demo.tfvars](demo.tfvars).
+3. Apply the installation using the default input variable file [default.tfvars](default.tfvars).
 
 On the terminal, this will look like:
 
 ```sh
 cd <mod_install_folder>
 terraform init
-terraform apply --var-file=demo.tfvars
+terraform apply --var-file=default.tfvars
 ```
 
 ### Input Variable Files
 
 Input variable files allow users to configure settings for multiple environments in different files.
 
-This script comes with an example input variable file called [demo.tfvars](demo.tfvars).
+This script comes with an example input variable file called [default.tfvars](default.tfvars).
 
-The variables that can be overridden by the input variable files (e.g., [demo.tfvars](demo.tfvars)) are defined in the [variables.tf](variables.tf) file.
+The variables that can be overridden by the input variable files (e.g., [default.tfvars](default.tfvars)) are defined in the [variables.tf](variables.tf) file.
 
 For more details, see the official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
 
 ### Apply Installation Using Input Variable Files
 
-If you want to apply the installation using an input variable file, such as [demo.tfvars](demo.tfvars):
+If you want to apply the installation using an input variable file, such as [default.tfvars](default.tfvars):
 
 1. Navigate to the folder containing the installation configuration.
 2. Run the command:
 
    ```sh
-   terraform apply --var-file=demo.tfvars
+   terraform apply --var-file=default.tfvars
    ```
 
 ### Apply Installation Without Input Variable File
@@ -111,13 +104,13 @@ To destroy the installation without using an input variable file:
 
 ### Destroy Using Input Variable Files
 
-If you want to destroy the installation configuration using an input variable file, such as [demo.tfvars](demo.tfvars):
+If you want to destroy the installation configuration using an input variable file, such as [default.tfvars](default.tfvars):
 
 1. Navigate to the folder containing the installation configuration.
 2. Run the command:
 
    ```sh
-   terraform destroy --var-file=demo.tfvars
+   terraform destroy --var-file=default.tfvars
    ```
 
 ## Commenting Strategy
@@ -132,7 +125,3 @@ These links provide further details about:
 - Category information
 - Target information
 - All valid values
-
----
-
-This updated README follows the standards and format from the provided example, ensuring consistency and clarity across your documentation.

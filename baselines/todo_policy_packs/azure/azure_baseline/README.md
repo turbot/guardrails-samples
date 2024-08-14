@@ -75,7 +75,7 @@ terraform apply --var-file demo.tfvars
 **Note** 
 - Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
 
-- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
+- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default variable file.
 
 ### Input variable files
 

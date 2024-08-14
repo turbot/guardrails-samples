@@ -1,130 +1,117 @@
-# Baseline - AWS Baseline Policies
+# AWS Service Enabled Policies
 
-AWS Baseline Policies focuses on base minimum set of example policies & services to start with.
+The AWS Baseline Policies provide a minimal set of example policies and services to get started with AWS in Turbot Guardrails. These policies focus on enabling essential services and APIs.
 
-## Overview
+## Getting Started
 
-Baseline policies are initial set of policies recommended to start with while using Turbot. These policies mostly focuses on enabling services, frequently used policies to run in check mode & enabling security features such as various encryption standards. Baseline TF scripts allows you to toggle the value to apply or ignore. See the below sections for more information.
+### Requirements
 
-Some of these policies overlap with other set of baselines. Hence Turbot provided set of baseline TF files are executed in separate [Smart Folder](https://turbot.com/v5/docs/getting-started/smart_folder). The advantage of setting up of each baseline in their own Smart Folder prevents conflicting with the policy settings created by other baseline scripts.
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 
-This baseline will not attach to a resource by default. This needs to be done manually using the Turbot UI.
+### Credentials
 
-## Requirements
+To install AWS mods using Terraform:
 
-- Terraform v0.13 or greater installed
-- Valid Turbot configuration credentials
+- Ensure you have `Turbot/Owner` permissions (or higher) in Guardrails.
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails.
 
-For further information on configuring Turbot credentials can be found [here](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials).
+Then set your credentials:
 
-## Applying baseline
+```sh
+export TURBOT_WORKSPACE=myworkspace.acme.com
+export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
+export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
+```
 
-The baseline is defined by a set of files which together define the configuration of the baseline.
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
-### Initialize baseline
+## Usage
 
-If not previously run, Initialize Terraform to get all necessary providers for the baseline.
+### Initialize Terraform
 
-1. Navigate to the folder containing the baseline configuration.
+1. Navigate to the `aws_service_enabled` folder.
 2. Run the command:
 
-   ```shell
+   ```sh
    terraform init
    ```
-### Profile name as input
 
-The baseline example set requires you to provide `turbot_profile` name as input. This is to help in case you are having more profiles than only `default`. In case it's default, specify name as default.
+### Deploying Default Example
 
-```shell
-var.turbot_profile
-  Enter profile matching your turbot cli credentials.
-  Enter a value: <Enter name of the profile>
-```
+1. Navigate to the `aws_service_enabled` folder.
+2. Initialize Terraform.
+3. Apply the installation using the default input variable file [default.tfvars](default.tfvars).
 
-### Deploying demo example
+On the terminal, this will look like:
 
-1. Navigate to the folder of the baseline
-2. Initialize Terraform
-3. Apply the baseline using the demo input variable file [demo.tfvars](demo.tfvars)
-
-On the terminal this will look like:
-
-```shell
-cd <baseline_folder>
+```sh
+cd <mod_install_folder>
 terraform init
-terraform apply --var-file demo.tfvars
+terraform apply --var-file=default.tfvars
 ```
-**Note** 
-- Most of the variables in demo.tfvars are marked as `false`, as they are not part of required initial policies. This can be made `true` based on need.
 
-- Some of the baseline scripts may not have the `demo.tfvars`, you may execute only with default varialble file.
+### Input Variable Files
 
-### Input variable files
+Input variable files allow users to configure settings for multiple environments in different files.
 
-Input variable files allow for the user to configure configuration definitions for multiple environments in different files.
+This script comes with an example input variable file called [default.tfvars](default.tfvars).
 
-This baseline comes with an example input variable file called [demo.tfvars](demo.tfvars).
+The variables that can be overridden by the input variable files (e.g., [default.tfvars](default.tfvars)) are defined in the [variables.tf](variables.tf) file.
 
-It will be used to define which parts of the baseline to apply and which to ignore.
+For more details, see the official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
 
-The variables that can be overwritten by the input variable files i.e. [demo.tfvars](demo.tfvars) are defined in the [variables.tf](variables.tf) file.
+### Apply Installation Using Input Variable Files
 
-Further details found in official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
+If you want to apply the installation using an input variable file, such as [default.tfvars](default.tfvars):
 
-### Apply baseline using input variable files
-
-If seeking to apply the baseline using an input variable file such as [demo.tfvars](demo.tfvars).
-
-1. Navigate to the folder containing the baseline configuration.
+1. Navigate to the folder containing the installation configuration.
 2. Run the command:
 
-   ```shell
-   terraform apply --var-file=demo.tfvars
+   ```sh
+   terraform apply --var-file=default.tfvars
    ```
-### Apply baseline without input variable file
 
-The baseline can be applied without an input variable file.
+### Apply Installation Without Input Variable File
 
-1. By this time Terraform initialization is done as mentioned above.
-3. Prefer to check the outcome by running the Terraform plan
-3. Apply the Terraform
-4. Run the command:
+The installation can also be applied without an input variable file.
 
-```shell
-cd <baseline_folder>
-terraform plan
-terraform apply
-```
+1. Ensure Terraform initialization is done as mentioned above.
+2. Optionally, check the outcome by running `terraform plan`.
+3. Apply the Terraform configuration:
 
-`This may prompt the user applying the baseline to enter values for variables that do not have default values.`
+   ```sh
+   cd <mod_install_folder>
+   terraform plan
+   terraform apply
+   ```
 
-### Destroy baseline without input variable file
+### Destroy Installation Without Input Variable File
 
-If seeking to apply the baseline without using an input variable file.
+To destroy the installation without using an input variable file:
 
-1. Navigate to the folder containing the baseline configuration.
+1. Navigate to the folder containing the installation configuration.
 2. Run the command:
 
-   ```shell
+   ```sh
    terraform destroy
    ```
 
-### Destroy using input variable files
+### Destroy Using Input Variable Files
 
-If seeking to destoy the baseline configuration using an input variable file such as [demo.tfvars](demo.tfvars).
+If you want to destroy the installation configuration using an input variable file, such as [default.tfvars](default.tfvars):
 
-1. Navigate to the folder containing the baseline configuration.
+1. Navigate to the folder containing the installation configuration.
 2. Run the command:
 
-   ```shell
-   terraform destroy --var-file=demo.tfvars
+   ```sh
+   terraform destroy --var-file=default.tfvars
    ```
 
-## Commenting strategy
+## Commenting Strategy
 
-All Turbot policies used by the baselines will have a link to the official Turbot Mods documentation.
+All Turbot policies used in the installation include links to the official Turbot Mods documentation.
 
-Opening the links will give you further details about:
+These links provide further details about:
 
 - The purpose of the policy
 - Policy URI name
