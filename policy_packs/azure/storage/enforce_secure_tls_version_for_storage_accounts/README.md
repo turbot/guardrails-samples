@@ -3,15 +3,15 @@ categories: ["data protection", "security", "storage"]
 primary_category: "data protection"
 ---
 
-# Enforce Azure Storage Containers Block Public Access
+# Enforce Azure Storage Accounts Use Minimum TLS Version
 
-Enforcing Azure Storage Containers to block public access is crucial to prevent unauthorized access and potential data breaches. By ensuring that storage containers are not publicly accessible, organizations can safeguard sensitive data, maintain compliance with security standards, and reduce the risk of exposure to cyber threats.
+Enforce Azure Storage Accounts Use Minimum TLS Version is critical to secure communication between clients and storage accounts. This measure protects data by using strong encryption protocols, reducing the risk of vulnerabilities associated with older TLS versions, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Storage containers:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Storage Accounts:
 
-- Enable Private (No anonymous access)
+- Minimum TLS Version
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_storage_enforce_containers_block_public_access/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_storage_account_minimum_tls_version/settings)**
 
 ## Getting Started
 
@@ -51,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_containers_block_public_access
+cd guardrails-samples/policy_packs/azure/storage/enforce_secure_tls_version_for_storage_accounts
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -85,12 +85,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-# Azure > Storage > Container > Public Access Level
-resource "turbot_policy_setting" "azure_storage_container_approved_not_public" {
+# Azure > Storage > Storage Account > Minimum TLS Version
+resource "turbot_policy_setting" "azure_storage_account_minimum_tls_version" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/containerPublicAccessLevel"
-  # value    = "Check: Private (No anonymous access)"
-  value    = "Enforce: Private (No anonymous access)"
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountMinimumTlsVersion"
+  # value    = "Check: TLS 1.2"
+  value    = "Enforce: TLS 1.2"
 }
 ```
 
