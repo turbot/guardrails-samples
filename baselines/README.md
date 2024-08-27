@@ -28,7 +28,7 @@ Turbot Guardrails Baselines provide best-practice configurations and examples fo
 
 To create a policy pack through Terraform:
 
-- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
+- Ensure you have `Turbot/Owner` permissions in Guardrails
 - [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
 
 And then set your credentials:

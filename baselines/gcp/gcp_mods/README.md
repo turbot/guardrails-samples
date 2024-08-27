@@ -18,7 +18,7 @@ More information can be found [here](https://turbot.com/guardrails/docs/mods).
 
 To install GCP mods using Terraform:
 
-- Ensure you have `Turbot/Owner` permissions (or higher) in Guardrails.
+- Ensure you have `Turbot/Owner` permissions in Guardrails.
 - [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails.
 
 Then set your credentials:
@@ -42,76 +42,45 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
    terraform init
    ```
 
-### Deploying Default Example
+### Install
 
-1. Navigate to the `gcp_mods` folder.
-2. Initialize Terraform.
-3. Apply the installation using the default input variable file [default.tfvars](default.tfvars).
+After initializing Terraform, you can apply the mods in one of two ways, depending on your needs:
 
-On the terminal, this will look like:
+### 1. Using an Input Variable File
+
+By default, the `default.tfvars` file is configured to install all the mods necessary for CIS (Center for Internet Security) compliance. You can further customize this file to include additional mods as needed. To apply the mods using this specific input variable file, run the following command:
 
 ```sh
-cd <mod_install_folder>
-terraform init
-terraform apply --var-file=default.tfvars
+terraform apply --var-file=default.tfvars -parallelism=1
 ```
 
-### Input Variable Files
+### 2. Without an Input Variable File
 
-Input variable files allow users to configure settings for multiple environments in different files.
+If you choose not to use an input variable file, the command will install **all** available AWS mods. To proceed with this option, run:
 
-This script comes with an example input variable file called [default.tfvars](default.tfvars).
+```sh
+terraform apply -parallelism=1
+```
 
-The variables that can be overridden by the input variable files (e.g., [default.tfvars](default.tfvars)) are defined in the [variables.tf](variables.tf) file.
+### Destroy 
 
-For more details, see the official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
+You can destroy the mods in one of two ways:
 
-### Apply Installation Using Input Variable Files
+### 1. Using an Input Variable File
 
-If you want to apply the installation using an input variable file, such as [default.tfvars](default.tfvars):
+Run the following command to destroy the mods using a specific input variable file:
 
-1. Navigate to the folder containing the installation configuration.
-2. Run the command:
+```sh
+terraform destroy --var-file=default.tfvars -parallelism=1
+```
 
-   ```sh
-   terraform apply --var-file=default.tfvars
-   ```
+### 2. Without an Input Variable File
 
-### Apply Installation Without Input Variable File
+Run the following command to destroy the mods without using an input variable file:
 
-The installation can also be applied without an input variable file.
-
-1. Ensure Terraform initialization is done as mentioned above.
-2. Optionally, check the outcome by running `terraform plan`.
-3. Apply the Terraform configuration:
-
-   ```sh
-   cd <mod_install_folder>
-   terraform plan
-   terraform apply
-   ```
-
-### Destroy Installation Without Input Variable File
-
-To destroy the installation without using an input variable file:
-
-1. Navigate to the folder containing the installation configuration.
-2. Run the command:
-
-   ```sh
-   terraform destroy
-   ```
-
-### Destroy Using Input Variable Files
-
-If you want to destroy the installation configuration using an input variable file, such as [default.tfvars](default.tfvars):
-
-1. Navigate to the folder containing the installation configuration.
-2. Run the command:
-
-   ```sh
-   terraform destroy --var-file=default.tfvars
-   ```
+```sh
+terraform destroy -parallelism=1
+```
 
 ## Commenting Strategy
 
