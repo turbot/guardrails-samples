@@ -4,28 +4,6 @@ Turbot Guardrails Baselines provide best-practice configurations and examples fo
 
 ## Current Baselines
 
-## Mods
-A common list of mods to install
-- [AWS](./aws/aws_mods)
-- [Azure](./azure/azure_mods)
-- [GCP](./gcp/gcp_mods)
-- [Guardrails](./guardrails/guardrails_mods)
-
-## Service Enabled
-Enable or disable, Register or Deregister services and APIs in Guardrails
-- [AWS](./aws/aws_service_enabled)
-- [Azure](./azure/azure_service_enabled)
-- [GCP](./gcp/gcp_service_enabled)
-
-## Directories
-Create Local/Turbot directory and users in your workspace
-- [Local](./guardrails/local_directory)
-- [Turbot](./guardrails/turbot_profiles)
-
-## Others
-- [Workspace Settings](./guardrails/workspace_settings)
-- [Folder Hierarchy](./guardrails/folder_hierarchy)
-
 | Baseline              | Path                                                   | Description                                                                      |
 |-----------------------|--------------------------------------------------------|----------------------------------------------------------------------------------|
 | AWS Mods              | [aws_mods](./aws/aws_mods)                             | A common list of AWS mods to install                                             |
