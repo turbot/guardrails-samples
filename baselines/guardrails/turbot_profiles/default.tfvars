@@ -1,7 +1,3 @@
-# Exisiting directory id which profiles are being created in
-# e.g. "123456789012345"
-# directory_id = "123456789012345"  # replace with the Directory Id you are using
-
 # Update this profile list to add in profiles into the directory
 # For a turbot.com directory, the profileId would be the turbot.com username
 # Name is the Full Name, the profile logic just assumes a First and Last Name separated by a space

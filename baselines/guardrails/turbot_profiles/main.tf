@@ -1,11 +1,4 @@
-# Adding additional Profiles to the Turbot.com Directory
-# This baseline is specifically to create profiles in an existing turbot.com
-# Will grant the Turbot/Owner role to each profile at the Turbot root level
-# Will activate each Turbot/Owner grant to each profile
-######################
-# Directory Creation #
-######################
-
+# Directory Creation 
 resource "turbot_turbot_directory" "turbot_dir" {
   parent              = "tmod:@turbot/turbot#/"
   title               = "Turbot SAML"
@@ -14,7 +7,7 @@ resource "turbot_turbot_directory" "turbot_dir" {
   server              = "turbot.com"
 }
 
-# Creates profiles in an exisiting turbot.com defined in terraform.tfvars
+# Creates profiles defined in terraform.tfvars
 # Will grant the Turbot/Owner role to each profile at the Turbot root level
 # Will activate each Turbot/Owner grant to each profile
 resource "turbot_profile" "create_profile" {
@@ -42,4 +35,3 @@ resource "turbot_grant_activation" "activate_turbot_owner_grant" {
   resource = "tmod:@turbot/turbot#/"
   grant    = turbot_grant.profile_grant_turbot_owner[each.key].id
 }
-

@@ -1,4 +1,4 @@
-# https://turbot.com/v5/mods/turbot/cis
+# https://hub.guardrails.turbot.com/mods/turbot/mods/cis
 resource "turbot_mod" "cis" {
   parent  = "tmod:@turbot/turbot#/"
   org     = "turbot"

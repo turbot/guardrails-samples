@@ -45,7 +45,7 @@ terraform init
 
 After initializing Terraform, you can apply the Enabled policies in one of two ways, depending on your needs:
 
-### 1. Using an Input Variable File
+#### 1. Using an Input Variable File
 
 By default, the `default.tfvars` file is configured to install all the Enabled policies for the mods necessary for CIS (Center for Internet Security) compliance. You can further customize this file to include additional services as needed provided the mods are installed prior. To apply the Enabled policies using this specific input variable file, run the following command:
 
@@ -53,7 +53,7 @@ By default, the `default.tfvars` file is configured to install all the Enabled p
 terraform apply --var-file=default.tfvars 
 ```
 
-### 2. Without an Input Variable File
+#### 2. Without an Input Variable File
 
 If you choose not to use an input variable file, the command will install **all** available Enabled policies. Please ensure, you have installed the necessary mods for this. To proceed with this option, run:
 
@@ -65,7 +65,7 @@ terraform apply
 
 You can destroy the mods in one of two ways:
 
-### 1. Using an Input Variable File
+#### 1. Using an Input Variable File
 
 Run the following command to destroy the mods using a specific input variable file:
 
@@ -73,7 +73,7 @@ Run the following command to destroy the mods using a specific input variable fi
 terraform destroy --var-file=default.tfvars
 ```
 
-### 2. Without an Input Variable File
+#### 2. Without an Input Variable File
 
 Run the following command to destroy the mods without using an input variable file:
 

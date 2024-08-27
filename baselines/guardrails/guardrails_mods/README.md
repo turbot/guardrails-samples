@@ -1,69 +1,105 @@
-# CIS - Mods install
+# Guardrails Mods Installation
 
-Turbot provides CIS mod, covering CIS policies and controls definition, mods are installed with the top Turbot resource as the parent. This means that administrators must be at the Turbot resource level with Turbot/Owner permissions to make modifications, installing, uninstalling, or updating, to mods in the environment.
+Turbot Guardrails provides a set of mods that enforce best practices, security controls, and compliance frameworks across your cloud environment. This README guides you through the process of installing Guardrails mods using Terraform. The example provided installs the CIS (Center for Internet Security) mod, which is designed to help you achieve and maintain CIS compliance across your resources.
 
-More information can be found [here](https://turbot.com/v5/docs/mods)
+## Documentation
 
-## Requirements
+- **[Review Guardrails Mods Documentation →](https://hub.guardrails.turbot.com/mods/turbot/mods/cis)**
 
-- Terraform v0.13 or greater installed
-- Valid Turbot configuration credentials
+## Getting Started
 
-For further information on configuring Turbot credentials can be found [here](https://turbot.com/v5/docs/reference/cli/installation#setup-your-turbot-credentials).
+### Requirements
 
-### Initialize
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 
-1. Navigate to the cis_mod folder.
-2. Run the command:
+### Credentials
 
-   ```shell
-   terraform init
-   ```
+To install Guardrails mods using Terraform:
 
-### Profile name as input
+- Ensure you have `Turbot/Owner` permissions in Guardrails.
+- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails.
 
-This set requires you to provide `turbot_profile` name as input. This is to help in case you are having more profiles than only `default`. In case it's default, specify name as default.
+Then set your credentials:
 
-```shell
-var.turbot_profile
-  Enter profile matching your turbot cli credentials.
-  Enter a value: <Enter name of the profile>
+```sh
+export TURBOT_WORKSPACE=myworkspace.acme.com
+export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
+export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
 ```
 
-### Apply installation
+Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
-The installation can be applied without an input variable file.
+## Usage
 
-1. By this time Terraform initialization is done as mentioned above.
-3. Prefer to check the outcome by running the Terraform plan
-3. Apply the Terraform
-4. Run the command:
+### Initialize Terraform
 
-```shell
-cd <mod_install_folder>
-terraform plan
-terraform apply
-```
-
-### Destroy installation
-
-If seeking to apply the installation without using an input variable file.
-
-1. Navigate to the folder containing the installation configuration.
+1. Navigate to the `guardrails_mods` folder.
 2. Run the command:
 
-   ```shell
-   terraform destroy
-   ```
+```sh
+terraform init
+```
 
-## Commenting strategy
+### Install
 
-All Turbot policies used by the installation will have a link to the official Turbot Mods documentation.
+After initializing Terraform, you can apply the Guardrails mod:
 
-Opening the links will give you further details about:
+#### 1. Using an Input Variable File (If Applicable)
 
-- The purpose of the policy
-- Policy URI name
+If you have customized a `default.tfvars` file with specific parameters for the CIS mod or additional mods, you can apply the configuration as follows:
+
+```sh
+terraform apply --var-file=default.tfvars -parallelism=1
+```
+
+#### 2. Without an Input Variable File
+
+To install the guardrails mods mod without using an input variable file, run:
+
+```sh
+terraform apply -parallelism=1
+```
+
+### Destroy
+
+You can remove the Guardrails mod in one of two ways:
+
+#### 1. Using an Input Variable File
+
+Run the following command to destroy the Guardrails mod configuration using a specific input variable file:
+
+```sh
+terraform destroy --var-file=default.tfvars -parallelism=1
+```
+
+#### 2. Without an Input Variable File
+
+Run the following command to destroy the Guardrails mod configuration without using an input variable file:
+
+```sh
+terraform destroy -parallelism=1
+```
+
+## Overview of Guardrails Mods Configuration
+
+This setup installs the CIS mod within your Turbot Guardrails environment:
+
+### 1. CIS Mod Installation
+
+- **Mod**: `turbot_mod.cis`
+- **Description**: This mod applies CIS (Center for Internet Security) benchmarks to your cloud resources, ensuring they meet rigorous security and compliance standards.
+- **Version**: `>=5.0.0`
+
+This mod helps you automate compliance with the CIS benchmarks, providing continuous monitoring and enforcement across your AWS environment.
+
+## Commenting Strategy
+
+All Turbot policies and mods include links to the official Turbot Mods documentation.
+
+These links provide further details about:
+
+- The purpose of the policy or mod
+- Policy URI name or Mod details
 - Parent information
 - Category information
 - Target information

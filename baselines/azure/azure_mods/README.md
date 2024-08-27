@@ -2,8 +2,6 @@
 
 Turbot provides numerous Azure mods, covering a wide range of Azure resources with thousands of policies and controls. By default, mods are installed with the top Turbot resource as the parent, meaning administrators must have Turbot/Owner permissions at the Turbot resource level to install, uninstall, or update mods in the environment.
 
-More information can be found [here](https://turbot.com/guardrails/docs/mods).
-
 ## Documentation
 
 - **[Review Mods Documentation →](https://turbot.com/guardrails/docs/mods)**
@@ -46,7 +44,7 @@ terraform init
 
 After initializing Terraform, you can apply the mods in one of two ways, depending on your needs:
 
-### 1. Using an Input Variable File
+#### 1. Using an Input Variable File
 
 By default, the `default.tfvars` file is configured to install all the mods necessary for CIS (Center for Internet Security) compliance. You can further customize this file to include additional mods as needed. To apply the mods using this specific input variable file, run the following command:
 
@@ -54,7 +52,7 @@ By default, the `default.tfvars` file is configured to install all the mods nece
 terraform apply --var-file=default.tfvars -parallelism=1
 ```
 
-### 2. Without an Input Variable File
+#### 2. Without an Input Variable File
 
 If you choose not to use an input variable file, the command will install **all** available AWS mods. To proceed with this option, run:
 
@@ -66,7 +64,7 @@ terraform apply -parallelism=1
 
 You can destroy the mods in one of two ways:
 
-### 1. Using an Input Variable File
+#### 1. Using an Input Variable File
 
 Run the following command to destroy the mods using a specific input variable file:
 
@@ -74,7 +72,7 @@ Run the following command to destroy the mods using a specific input variable fi
 terraform destroy --var-file=default.tfvars -parallelism=1
 ```
 
-### 2. Without an Input Variable File
+#### 2. Without an Input Variable File
 
 Run the following command to destroy the mods without using an input variable file:
 
