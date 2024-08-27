@@ -2,20 +2,25 @@
 
 The AWS Baseline Policies provide a minimal set of example policies and services to get started with AWS in Turbot Guardrails. These policies focus on enabling essential services and APIs.
 
+## Documentation
+
+- **[Review Policies Documentation →](https://hub.guardrails.turbot.com/mods/aws/policies)**
+
 ## Getting Started
 
 ### Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
+- [Guardrails AWS mods](../aws_mods/)
 
 ### Credentials
 
-To install AWS mods using Terraform:
+To create AWS Service Enabled Baseline policy pack through Terraform:
 
-- Ensure you have `Turbot/Owner` permissions (or higher) in Guardrails.
+- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails.
 - [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails.
 
-Then set your credentials:
+And then set your credentials:
 
 ```sh
 export TURBOT_WORKSPACE=myworkspace.acme.com
@@ -32,90 +37,54 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 1. Navigate to the `aws_service_enabled` folder.
 2. Run the command:
 
-   ```sh
-   terraform init
-   ```
-
-### Deploying Default Example
-
-1. Navigate to the `aws_service_enabled` folder.
-2. Initialize Terraform.
-3. Apply the installation using the default input variable file [default.tfvars](default.tfvars).
-
-On the terminal, this will look like:
-
 ```sh
-cd <mod_install_folder>
 terraform init
-terraform apply --var-file=default.tfvars
 ```
 
-### Input Variable Files
+### Install
 
-Input variable files allow users to configure settings for multiple environments in different files.
+After initializing Terraform, you can apply the Enabled policies in one of two ways, depending on your needs:
 
-This script comes with an example input variable file called [default.tfvars](default.tfvars).
+### 1. Using an Input Variable File
 
-The variables that can be overridden by the input variable files (e.g., [default.tfvars](default.tfvars)) are defined in the [variables.tf](variables.tf) file.
+By default, the `default.tfvars` file is configured to install all the Enabled policies for the mods necessary for CIS (Center for Internet Security) compliance. You can further customize this file to include additional services as needed provided the mods are installed prior. To apply the Enabled policies using this specific input variable file, run the following command:
 
-For more details, see the official [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html).
+```sh
+terraform apply --var-file=default.tfvars 
+```
 
-### Apply Installation Using Input Variable Files
+### 2. Without an Input Variable File
 
-If you want to apply the installation using an input variable file, such as [default.tfvars](default.tfvars):
+If you choose not to use an input variable file, the command will install **all** available Enabled policies. Please ensure, you have installed the necessary mods for this. To proceed with this option, run:
 
-1. Navigate to the folder containing the installation configuration.
-2. Run the command:
+```sh
+terraform apply
+```
 
-   ```sh
-   terraform apply --var-file=default.tfvars
-   ```
+### Destroy 
 
-### Apply Installation Without Input Variable File
+You can destroy the mods in one of two ways:
 
-The installation can also be applied without an input variable file.
+### 1. Using an Input Variable File
 
-1. Ensure Terraform initialization is done as mentioned above.
-2. Optionally, check the outcome by running `terraform plan`.
-3. Apply the Terraform configuration:
+Run the following command to destroy the mods using a specific input variable file:
 
-   ```sh
-   cd <mod_install_folder>
-   terraform plan
-   terraform apply
-   ```
+```sh
+terraform destroy --var-file=default.tfvars
+```
 
-### Destroy Installation Without Input Variable File
+### 2. Without an Input Variable File
 
-To destroy the installation without using an input variable file:
+Run the following command to destroy the mods without using an input variable file:
 
-1. Navigate to the folder containing the installation configuration.
-2. Run the command:
+```sh
+terraform destroy
+```
 
-   ```sh
-   terraform destroy
-   ```
+### Apply Policy Pack
 
-### Destroy Using Input Variable Files
+By default, this Policy Pack is attached to the Base Folder created as part of [Folder Hierarchy](../../guardrails/folder_hierarchy/). If you wish to attach to a different resource, then log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
-If you want to destroy the installation configuration using an input variable file, such as [default.tfvars](default.tfvars):
+If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-1. Navigate to the folder containing the installation configuration.
-2. Run the command:
-
-   ```sh
-   terraform destroy --var-file=default.tfvars
-   ```
-
-## Commenting Strategy
-
-All Turbot policies used in the installation include links to the official Turbot Mods documentation.
-
-These links provide further details about:
-
-- The purpose of the policy
-- Policy URI name
-- Parent information
-- Category information
-- Target information
-- All valid values
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).

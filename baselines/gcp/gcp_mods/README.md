@@ -38,9 +38,9 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 1. Navigate to the `gcp_mods` folder.
 2. Run the command:
 
-   ```sh
-   terraform init
-   ```
+```sh
+terraform init
+```
 
 ### Install
 
