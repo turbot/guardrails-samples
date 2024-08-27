@@ -49,7 +49,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/baselines/aws/aws_mods
+cd guardrails-samples/baselines/guardrails/local_directory
 ```
 
 Run the Terraform to create the policy pack in your workspace:
