@@ -1,5 +1,5 @@
 ---
-categories: ["logging", "networking"]
+categories: ["logging"]
 primary_category: "logging"
 ---
 

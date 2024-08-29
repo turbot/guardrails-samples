@@ -89,18 +89,54 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 
 ```hcl
 resource "turbot_policy_setting" "aws_vpc_security_group_ingress_rules_approved" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved"
-}
+  resource       = turbot_policy_pack.main.id
+  type           = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupIngressRulesApproved"
+  template_input = <<-EOT
+    {   
+      resource {
+        name: get(path: "GroupName")
+      }
+    }
+  EOT
+  template       = <<-EOT
+    {%- if $.resource.name == "default" -%}
+
+      {# "Check: Approved" #}
+      "Enforce: Delete unapproved"
+
+    {%- else -%}
+
+      "Skip"
+
+    {%- endif -%}
+  EOT
+} 
+
 
 resource "turbot_policy_setting" "aws_vpc_security_group_egress_rules_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupEgressRulesApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved"
-}
+  template_input = <<-EOT
+    {   
+      resource {
+        name: get(path: "GroupName")
+      }
+    }
+  EOT
+  template       = <<-EOT
+    {%- if $.resource.name == "default" -%}
+
+      {# "Check: Approved" #}
+      "Enforce: Delete unapproved"
+
+    {%- else -%}
+
+      "Skip"
+      
+    {%- endif -%}
+  EOT
+} 
+
 ```
 
 Then re-apply the changes:

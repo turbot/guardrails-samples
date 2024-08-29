@@ -12,6 +12,9 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_guardrails_enable_event_handlers/settings)**
 
+> [!WARNING]
+> Event Handlers and Event Pollers should never be enabled simultaneously as this can cause conflicts and unexpected behavior.
+
 ## Getting Started
 
 ### Requirements

@@ -90,9 +90,27 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "aws_vpc_security_group_approved" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-security#/policy/types/securityGroupApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
-}
+  template_input = <<-EOT
+    {   
+      resource {
+        name: get(path: "GroupName")
+      }
+    }
+  EOT
+  template       = <<-EOT
+    {%- if $.resource.name == "default" -%}
+
+      {# "Check: Approved" #}
+      "Enforce: Delete unapproved if new"
+
+    {%- else -%}
+
+      "Skip"
+      
+    {%- endif -%}
+  EOT
+} 
+
 ```
 
 Then re-apply the changes:
