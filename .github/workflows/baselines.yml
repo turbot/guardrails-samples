@@ -1,0 +1,52 @@
+name: Baselines
+
+on:
+  workflow_dispatch:
+    inputs:
+      dryRun:
+        description: Set to true for a dry run
+        required: false
+        default: "false"
+        type: string
+  push:
+    paths:
+      - baselines/**
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        # with:
+        # terraform_version: 1.4.6
+
+      - name: Set Turbot credentials
+        run: |
+          echo "TURBOT_WORKSPACE=${{ secrets.TURBOT_WORKSPACE }}" >> $GITHUB_ENV
+          echo "TURBOT_ACCESS_KEY=${{ secrets.TURBOT_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "TURBOT_SECRET_KEY=${{ secrets.TURBOT_SECRET_KEY }}" >> $GITHUB_ENV
+
+      - name: Find all Terraform folders
+        id: find_folders
+        run: |
+          folders=$(find baselines -type d -name "*.tf" -exec dirname {} \; | sort -u)
+          echo "folders=$folders" >> $GITHUB_ENV
+          echo "::set-output name=folders::$folders"
+
+      - name: Run Terraform
+        run: |
+          for folder in ${{ steps.find_folders.outputs.folders }}; do
+            cd $folder
+            terraform init
+            if [[ "$folder" == *"mods"* ]]; then
+              terraform apply -auto-approve -parallelism=1
+            else
+              terraform apply -auto-approve
+            fi
+            cd - > /dev/null
+          done
