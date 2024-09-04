@@ -1,2 +1,0 @@
-## Control Objectives
-Includes policy configurations (including some calculated policies) for implementing best-practice control objectives across cloud service platforms and services.  The Control Objectives are implemented with [Terraform](https://www.terraform.io), allowing you to manage and provision Turbot with a repeatable, idempotent, versioned infrastructure-as-code approach.

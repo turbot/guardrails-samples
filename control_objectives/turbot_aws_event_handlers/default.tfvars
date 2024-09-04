@@ -1,1 +1,0 @@
-smart_folder_title = "Turbot AWS Event Handlers"

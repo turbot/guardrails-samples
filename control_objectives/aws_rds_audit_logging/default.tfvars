@@ -1,1 +1,0 @@
-smart_folder_title = "AWS RDS Enforce Audit Logging"

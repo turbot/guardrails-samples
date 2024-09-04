@@ -1,0 +1,5 @@
+PyYAML>=5.3
+requests>=2.24.0
+click>=7.1.2
+xdg>=4.0.1
+../turbot

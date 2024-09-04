@@ -1,0 +1,75 @@
+# GCP > Storage > Bucket > Approved
+resource "turbot_policy_setting" "gcp_storage_bucket_approved" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketApproved"
+  note     = "GCP CIS v2.0.0 - Control: 2.3"
+  value    = "Check: Approved"
+  # value    = "Enforce: Delete unapproved if new"
+}
+
+# GCP > Storage > Bucket > Approved > Custom
+resource "turbot_policy_setting" "gcp_storage_bucket_approved_custom" {
+  resource       = turbot_policy_pack.main.id
+  type           = "tmod:@turbot/gcp-storage#/policy/types/bucketApprovedCustom"
+  note           = "GCP CIS v2.0.0 - Control: 2.3"
+  template_input = <<-EOT
+  - |
+    {
+      project {
+        turbot {
+          id
+        }
+      }
+
+      item: bucket {
+        name: get(path: "name")
+      }
+    }
+  - |
+    {
+      item: bucket {
+        name: get(path: "name")
+        retentionPolicy: get(path: "retentionPolicy")
+      }
+
+      sinkDetails: resources(filter: "resourceId:{{ $.project.turbot.id }} resourceTypeId:'tmod:@turbot/gcp-logging#/resource/types/sink' resourceTypeLevel:self $.destination:'storage.googleapis.com/{{ $.item.name }}' limit:5000") {
+        items {
+          name: get(path: "name")
+          destination: get(path: "destination")
+        }
+      }
+    }
+  EOT
+  template       = <<-EOT
+    {%- if $.sinkDetails.items -%}
+
+      {%- if $.sinkDetails.items.length > 0 and $.item.retentionPolicy and $.item.retentionPolicy.isLocked -%}
+
+        {%- set data = {
+            "title": "Retention Policy for Bucket Lock",
+            "result": "Approved",
+            "message": "Retention policy for bucket lock is enabled"
+        } -%}
+
+      {%- else -%}
+
+        {%- set data = {
+            "title": "Retention Policy for Bucket Lock",
+            "result": "Not approved",
+            "message": "Retention policy for bucket lock is not enabled"
+        } -%}
+
+      {%- endif -%}
+
+    {%- else -%}
+
+      {%- set data = {
+          "title": "Retention Policy for Bucket Lock",
+          "result": "Skip",
+          "message": "Not data for bucket lock yet"
+      } -%}
+
+    {%- endif -%}
+    {{ data | json }}
+    EOT
+}

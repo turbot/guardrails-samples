@@ -1,0 +1,4 @@
+Click>=8.1.6
+requests>=2.31.0
+xdg>=6.0.0
+PyYAML>=6.0.1

@@ -1,3 +1,0 @@
-Click==8.1.6
-sgqlc==16.3
-../turbot
