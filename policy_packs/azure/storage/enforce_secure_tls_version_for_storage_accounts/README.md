@@ -3,7 +3,7 @@ categories: ["data protection", "security", "storage"]
 primary_category: "data protection"
 ---
 
-# Enforce Azure Storage Accounts Use Minimum TLS Version
+# Enforce Secure TLS Version for Azure Storage Accounts
 
 Enforce Azure Storage Accounts Use Minimum TLS Version is critical to secure communication between clients and storage accounts. This measure protects data by using strong encryption protocols, reducing the risk of vulnerabilities associated with older TLS versions, and ensuring compliance with security best practices and regulatory requirements.
 
