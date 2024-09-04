@@ -3,7 +3,7 @@ categories: ["logging", "security"]
 primary_category: "logging"
 ---
 
-# Enable Multi-Region CloudTrails Trails for AWS Accounts
+# Enable Multi-Region CloudTrail Trails for AWS Accounts
 
 Enabling multi-region CloudTrail trails in AWS accounts is crucial for achieving comprehensive visibility and auditability of API activity across all regions. This ensures that all actions taken within your AWS environment are consistently logged, enhancing security monitoring, supporting incident response, and ensuring compliance with regulatory requirements and best practices.
 

@@ -4,7 +4,7 @@ primary_category: "logging"
 type: "featured"
 ---
 
-# Enable Regional Event Handlers for AWS Accounts in Guardrails
+# Enable Regional Event Handlers for AWS Accounts
 
 The Guardrails Event Handlers are responsible for conveying events from AWS CloudTrail back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 
