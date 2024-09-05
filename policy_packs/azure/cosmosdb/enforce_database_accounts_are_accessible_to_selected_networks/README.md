@@ -1,20 +1,20 @@
 ---
 categories: ["networking", "security"]
-primary_category: "networking"
+primary_category: "security"
 ---
 
-# Enforce Azure Load Balancer to Use Only Approved Ports
+# Enforce Azure Cosmos DB Database Accounts Are Accessible to Selected Networks
 
-Enforcing that Azure Load Balancers do not use unapproved ports is essential for maintaining a secure network environment. This measure ensures that only approved and necessary ports are used, reducing the risk of unauthorized access and potential attacks, and enhancing overall security and compliance with best practices and regulatory requirements.
+Enforcing Azure Cosmos DB database accounts to be accessible only to selected networks is crucial for enhancing security and controlling access to your data. This measure ensures that only trusted and authorized networks can access the database, reducing the risk of unauthorized access, data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for load balancers:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for CosmosDB database accounts:
 
-- Set a list of unapproved ports
-- Delete load balancers that use unapproved ports
+- Set required IP ranges that are allowed to access the database account
+- Set required virtual networks that are allowed to access the database account
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_loadbalancer_enforce_load_balancers_to_not_use_unapproved_ports/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cosmosdb_enforce_database_accounts_are_accessible_to_selected_networks/settings)**
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-loadbalancer](https://hub.guardrails.turbot.com/mods/azure/mods/azure-loadbalancer)
+  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
 
 ### Credentials
 
@@ -54,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/loadbalancer/enforce_load_balancers_to_not_use_unapproved_ports
+cd guardrails-samples/policy_packs/azure/cosmosdb/enforce_database_accounts_to_be_accessible_to_selected_networks
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,11 +88,25 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_loadbalancerservice_loadbalancer_approved" {
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewall"
+  # value    = "Check: Allow only approved virtual networks and IP ranges"
+  value    = "Enforce: Allow only approved virtual networks and IP ranges"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_ip_ranges_required" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallIpRangesRequired"
+  # value    = "Check: Required > Items"
+  value    = "Enforce: Required > Items"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_virtual_networks_required" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallVirtualNetworksRequired"
+  # value    = "Check: Required > Items"
+  value    = "Enforce: Required > Items"
 }
 ```
 

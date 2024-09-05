@@ -1,19 +1,20 @@
 ---
-categories: ["security"]
-primary_category: "security"
+categories: ["networking", "security"]
+primary_category: "networking"
 ---
 
-# Enforce Managed Service Identity for Azure App Service Web Apps
+# Enforce Azure Load Balancer to Use Only Approved Ports
 
-Enforcing Azure App Service Web Apps to use Managed Service Identity (MSI) is essential for enhancing security and simplifying access management. This measure allows web apps to securely access Azure resources without the need for hard-coded credentials, reducing the risk of credential exposure and ensuring compliance with security best practices and regulatory requirements.
+Enforcing that Azure Load Balancers do not use unapproved ports is essential for maintaining a secure network environment. This measure ensures that only approved and necessary ports are used, reducing the risk of unauthorized access and potential attacks, and enhancing overall security and compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for App Service web apps:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for load balancers:
 
-- Delete web apps that do not use managed service identity
+- Set a list of unapproved ports
+- Delete load balancers that use unapproved ports
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_webapps_to_use_managed_service_identity/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_loadbalancer_enforce_load_balancers_use_only_approved_ports/settings)**
 
 ## Getting Started
 
@@ -21,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-appservice](https://hub.guardrails.turbot.com/mods/azure/mods/azure-appservice)
+  - [@turbot/azure-loadbalancer](https://hub.guardrails.turbot.com/mods/azure/mods/azure-loadbalancer)
 
 ### Credentials
 
@@ -53,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/appservice/enforce_webapps_to_use_managed_service_identity
+cd guardrails-samples/policy_packs/azure/loadbalancer/enforce_load_balancers_to_not_use_unapproved_ports
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,9 +88,9 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
+resource "turbot_policy_setting" "azure_loadbalancerservice_loadbalancer_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
+  type     = "tmod:@turbot/azure-loadbalancer#/policy/types/loadBalancerApproved"
   # value    = "Check: Approved"
   value    = "Enforce: Delete unapproved if new"
 }

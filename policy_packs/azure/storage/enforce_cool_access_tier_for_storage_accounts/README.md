@@ -1,21 +1,17 @@
 ---
-categories: ["compute", "security"]
-primary_category: "security"
-type: "featured"
+categories: ["cost controls", "storage"]
+primary_category: "cost controls"
 ---
 
-# Enforce Azure Compute Virtual Machines Use Approved AMIs From Trusted Publishers
+# Enforce Cool Access Tier for Azure Storage Accounts
 
-Enforcing Azure compute instances to use approved AMIs from trusted publishers is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
+Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute virtual machines:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage accounts:
 
-- Stop/Terminate VMs that do not use approved AMIs from trusted publishers
-- Set the image IDs that are approved for use
+- Enable cool access tier
 
-## Documentation
-
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_approved_images_from_trusted_publishers_for_vms/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_storage_enforce_cool_access_tier_for_storage_accounts/settings)**
 
 ## Getting Started
 
@@ -23,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
+  - [@turbot/azure-storage](https://hub.guardrails.turbot.com/mods/azure/mods/azure-storage)
 
 ### Credentials
 
@@ -55,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/compute/enforce_approved_amis_publishers_for_vms
+cd guardrails-samples/policy_packs/azure/storage/enforce_enable_cool_access_tier_for_storage_accounts
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -73,11 +69,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
 
 ### Enable Enforcement
 
@@ -89,12 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
+resource "turbot_policy_setting" "azure_storage_storage_account_access_tier" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessTier"
+  # value    = "Check: Cool"
+  value    = "Enforce: Cool"
 }
 ```
 

@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_webapps_to_not_use_outdated_java_php_python/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_webapps_to_use_supported_java_php_python_versions/settings)**
 
 ## Getting Started
 

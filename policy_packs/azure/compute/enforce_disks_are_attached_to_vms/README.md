@@ -1,20 +1,19 @@
 ---
-categories: ["networking", "security"]
-primary_category: "security"
+categories: ["cost controls", "compute", "security", "storage"]
+primary_category: "cost controls"
 ---
 
-# Enforce Azure Cosmos DB Database Accounts Are Accessible to Selected Networks
+# Enforce Azure Compute Disks Are Attached to Virtual Machines
 
-Enforcing Azure Cosmos DB database accounts to be accessible only to selected networks is crucial for enhancing security and controlling access to your data. This measure ensures that only trusted and authorized networks can access the database, reducing the risk of unauthorized access, data breaches, and ensuring compliance with security best practices and regulatory requirements.
+Enforcing Azure Compute disks to be attached to virtual machines is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for CosmosDB database accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute disks:
 
-- Set required IP ranges that are allowed to access the database account
-- Set required virtual networks that are allowed to access the database account
+- Delete disks that have been unattached for 7 or more days
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cosmosdb_enforce_database_accounts_to_be_accessible_to_selected_networks/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_disks_are_attached_to_vms/settings)**
 
 ## Getting Started
 
@@ -22,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
+  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
 
 ### Credentials
 
@@ -54,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/cosmosdb/enforce_database_accounts_to_be_accessible_to_selected_networks
+cd guardrails-samples/policy_packs/azure/compute/enforce_disks_to_be_attached_to_vms
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,25 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall" {
+resource "turbot_policy_setting" "azure_compute_disk_active" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewall"
-  # value    = "Check: Allow only approved virtual networks and IP ranges"
-  value    = "Enforce: Allow only approved virtual networks and IP ranges"
-}
-
-resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_ip_ranges_required" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallIpRangesRequired"
-  # value    = "Check: Required > Items"
-  value    = "Enforce: Required > Items"
-}
-
-resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_virtual_networks_required" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallVirtualNetworksRequired"
-  # value    = "Check: Required > Items"
-  value    = "Enforce: Required > Items"
+  type     = "tmod:@turbot/azure-compute#/policy/types/diskActive"
+  # value    = "Check: Active"
+  value    = "Enforce: Delete inactive with 7 days warning"
 }
 ```
 
