@@ -1,18 +1,18 @@
 ---
-categories: ["data protection", "security", "storage"]
+categories: ["compute", "security"]
 primary_category: "security"
 ---
 
-# Enforce Encryption at Rest Is Enabled for GCP Storage Buckets
+# Enforce GCP Compute Engine Instances Use Only Approved Images
 
-Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
+Enforcing GCP Compute Engine instances to not use unapproved images is crucial for maintaining security, compliance, and consistency across the infrastructure. It ensures that all instances adhere to organizational standards, reducing the risk of vulnerabilities, unauthorized software, and potential breaches.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute Engine instances:
 
-- Set a KMS symmetric crypto key to be used for encryption
-- Enable Encryption at Rest for buckets via Google managed key or KMS crypto key
+- Set list of approved image IDs
+- Stop/Terminate instances that use unapproved images
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_computeengine_enforce_instances_use_only_approved_images/settings)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-storage)
+  - [@turbot/gcp-computeengine](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-computeengine)
 
 ### Credentials
 
@@ -52,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_encryption_at_rest_is_enabled_for_buckets
+cd guardrails-samples/policy_packs/gcp/computeengine/enforce_instances_to_not_use_unapproved_images
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -86,13 +86,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
+resource "turbot_policy_setting" "gcp_computeengine_instance_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketEncryptionAtRest"
-  # value    = "Check: Google managed key"
-  # value    = "Check: Customer managed key"
-  # value    = "Enforce: Google managed key"
-  value    = "Enforce: Encryption at Rest > Customer Managed Key"
+  type     = "tmod:@turbot/gcp-computeengine#/policy/types/instanceApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

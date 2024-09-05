@@ -4,7 +4,7 @@ primary_category: "logging"
 type: "featured"
 ---
 
-# Enable Event Handlers for GCP Projects in Guardrails
+# Enable Event Handlers for GCP Projects
 
 The Guardrails Event Handlers are responsible for conveying events from GCP Logging back to Guardrails for processing. This is a requirement for Guardrails to process and respond in real-time.
 

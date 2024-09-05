@@ -1,18 +1,17 @@
 ---
-categories: ["data protection", "security", "storage"]
-primary_category: "security"
+categories: ["networking", "security"]
+primary_category: "networking"
 ---
 
-# Enforce Encryption at Rest Is Enabled for GCP Storage Buckets
+# Enforce Default VPC Network Is Not Used in GCP Projects
 
-Enforcing Encryption at Rest for GCP Storage Buckets is essential to protect sensitive data from unauthorized access and potential breaches by ensuring that all data is automatically encrypted before being stored. This measure safeguards data confidentiality and integrity, even if physical security measures are compromised.
+Enforcing that the default VPC network is not used within GCP projects is essential for maintaining a secure and customized network environment. This practice encourages the creation of tailored VPC networks with specific configurations and security controls, reducing the risk of misconfigurations and enhancing overall network security and compliance with best practices.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Storage buckets:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for VPC networks:
 
-- Set a KMS symmetric crypto key to be used for encryption
-- Enable Encryption at Rest for buckets via Google managed key or KMS crypto key
+- Remove default networks that are used within projects
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_storage_enforce_encryption_at_rest_is_enabled_for_buckets/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/gcp_network_enforce_default_vpc_network_is_not_used_in_projects/settings)**
 
 ## Getting Started
 
@@ -20,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/gcp-storage](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-storage)
+  - [@turbot/gcp-network](https://hub.guardrails.turbot.com/mods/gcp/mods/gcp-network)
 
 ### Credentials
 
@@ -52,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/gcp/storage/enforce_encryption_at_rest_is_enabled_for_buckets
+cd guardrails-samples/policy_packs/gcp/network/enforce_default_vpc_network_is_not_used_for_projects
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -86,13 +85,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "gcp_storage_bucket_encryption_at_rest" {
+resource "turbot_policy_setting" "gcp_network_network_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/gcp-storage#/policy/types/bucketEncryptionAtRest"
-  # value    = "Check: Google managed key"
-  # value    = "Check: Customer managed key"
-  # value    = "Enforce: Google managed key"
-  value    = "Enforce: Encryption at Rest > Customer Managed Key"
+  type     = "tmod:@turbot/gcp-network#/policy/types/networkApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 
