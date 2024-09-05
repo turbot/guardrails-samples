@@ -1,5 +1,3 @@
-
-
 # AWS > Account > Budget > Enabled
 resource "turbot_policy_setting" "aws_account_budget_enabled" {
   resource = turbot_policy_pack.main.id
@@ -11,7 +9,7 @@ resource "turbot_policy_setting" "aws_account_budget_enabled" {
 resource "turbot_policy_setting" "aws_account_budget_limit" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws#/policy/types/accountBudgetLimit"
-  value    = 500
+  value    = var.aws_account_budget_target
 }
 
 # Turbot > Notifications
