@@ -1,19 +1,17 @@
 ---
-categories: ["logging", "networking"]
+categories: ["logging"]
 primary_category: "logging"
 ---
 
-# Enable Event Poller for Azure Subscriptions in Guardrails
+# Enable Regions for AWS Accounts in Guardrails
 
-The Guardrails Event Poller are responsible polling Audit Logs (Azure Monitor) at intervals specified and retrieves the latest events (Succeeded) for processing.
+The Guardrails Regions for AWS Accounts in which resources are recorded.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Azure Subscriptions in Guardrails:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for AWS Accounts Guardrails Regions in Guardrails:
 
-- Set a polling interval, i.e. the frequency to poll events from Azure
-- Set a polling interval window
-- Enable Event Poller
+- Set a list of default regions in which AWS resources are recorded
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_guardrails_enable_event_poller/settings)**
+**[Review policy settings →](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/policy-packs/aws/guardrails/enable_regions/settings)**
 
 ## Getting Started
 
@@ -21,7 +19,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure](https://hub.guardrails.turbot.com/mods/azure/mods/azure)
+  - [@turbot/aws](https://hub-guardrails-turbot-com-git-development-turbot.vercel.app/aws/mods/aws)
 
 ### Credentials
 
@@ -53,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/guardrails/enable_event_poller
+cd guardrails-samples/policy_packs/aws/guardrails/enable_regions
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -71,8 +69,8 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
