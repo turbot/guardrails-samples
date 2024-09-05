@@ -1,19 +1,20 @@
 ---
-categories: ["security"]
+categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce Azure App Service Web Apps to Not Use Outdated Java/PHP/Python Versions
+# Enforce Azure Cosmos DB Database Accounts Are Accessible to Selected Networks
 
-Enforcing Azure App Service Web Apps to not use outdated Java, PHP, or Python versions is crucial to maintain security and performance. This ensures that applications run on supported, secure versions of these languages, reducing the risk of vulnerabilities, enhancing stability, and ensuring compliance with best practices and regulatory requirements.
+Enforcing Azure Cosmos DB database accounts to be accessible only to selected networks is crucial for enhancing security and controlling access to your data. This measure ensures that only trusted and authorized networks can access the database, reducing the risk of unauthorized access, data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for App Service web apps:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for CosmosDB database accounts:
 
-- Delete web apps that use outdated Java, PHP or Python versions
+- Set required IP ranges that are allowed to access the database account
+- Set required virtual networks that are allowed to access the database account
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_webapps_to_not_use_outdated_java_php_python/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cosmosdb_enforce_database_accounts_are_accessible_to_selected_networks/settings)**
 
 ## Getting Started
 
@@ -21,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-appservice](https://hub.guardrails.turbot.com/mods/azure/mods/azure-appservice)
+  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
 
 ### Credentials
 
@@ -53,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/appservice/enforce_webapps_to_not_use_outdated_java_php_python
+cd guardrails-samples/policy_packs/azure/cosmosdb/enforce_database_accounts_to_be_accessible_to_selected_networks
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,11 +88,25 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewall"
+  # value    = "Check: Allow only approved virtual networks and IP ranges"
+  value    = "Enforce: Allow only approved virtual networks and IP ranges"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_ip_ranges_required" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallIpRangesRequired"
+  # value    = "Check: Required > Items"
+  value    = "Enforce: Required > Items"
+}
+
+resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_virtual_networks_required" {
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallVirtualNetworksRequired"
+  # value    = "Check: Required > Items"
+  value    = "Enforce: Required > Items"
 }
 ```
 

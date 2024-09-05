@@ -1,17 +1,19 @@
 ---
-categories: ["cost controls", "storage"]
+categories: ["cost controls", "compute", "security", "storage"]
 primary_category: "cost controls"
 ---
 
-# Enforce Enable Cool Access Tier for Azure Storage Accounts
+# Enforce Azure Compute Disks Are Attached to Virtual Machines
 
-Enforcing the use of the cool access tier for Azure Storage accounts is important for optimizing storage costs and efficiency. This measure ensures that infrequently accessed data is stored in a cost-effective manner, reducing overall storage expenses while maintaining accessibility, and aligning with best practices for data management and cost optimization.
+Enforcing Azure Compute disks to be attached to virtual machines is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-folders) can help you configure the following settings for Storage accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute disks:
 
-- Enable cool access tier
+- Delete disks that have been unattached for 7 or more days
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_enable_cool_access_tier_for_storage_accounts/settings)**
+## Documentation
+
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_disks_are_attached_to_vms/settings)**
 
 ## Getting Started
 
@@ -19,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/resources/smart-f
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-storage](https://hub.guardrails.turbot.com/mods/azure/mods/azure-storage)
+  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
 
 ### Credentials
 
@@ -51,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/storage/enforce_enable_cool_access_tier_for_storage_accounts
+cd guardrails-samples/policy_packs/azure/compute/enforce_disks_to_be_attached_to_vms
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -69,11 +71,11 @@ terraform apply
 
 ### Apply Policy Pack
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/working-with-folders/smart#attach-a-smart-folder-to-a-resource).
+Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
 
 If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/resources/smart-folders).
+For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 
@@ -85,11 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_storage_storage_account_access_tier" {
+resource "turbot_policy_setting" "azure_compute_disk_active" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountAccessTier"
-  # value    = "Check: Cool"
-  value    = "Enforce: Cool"
+  type     = "tmod:@turbot/azure-compute#/policy/types/diskActive"
+  # value    = "Check: Active"
+  value    = "Enforce: Delete inactive with 7 days warning"
 }
 ```
 

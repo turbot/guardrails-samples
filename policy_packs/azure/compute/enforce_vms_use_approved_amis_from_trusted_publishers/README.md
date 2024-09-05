@@ -1,19 +1,21 @@
 ---
-categories: ["cost controls", "compute", "security", "storage"]
-primary_category: "cost controls"
+categories: ["compute", "security"]
+primary_category: "security"
+type: "featured"
 ---
 
-# Enforce Azure Compute Disks to Be Attached to Virtual Machines
+# Enforce Azure Compute Virtual Machines Use Approved AMIs From Trusted Publishers
 
-Enforcing Azure Compute disks to be attached to virtual machines is important for optimizing resource utilization and cost management. This control ensures that all allocated storage is actively used and monitored, reducing the risk of unnecessary expenses and potential security vulnerabilities associated with unattached disks.
+Enforcing Azure compute instances to use approved AMIs from trusted publishers is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute disks:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute virtual machines:
 
-- Delete disks that have been unattached for 7 or more days
+- Stop/Terminate VMs that do not use approved AMIs from trusted publishers
+- Set the image IDs that are approved for use
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_disks_to_be_attached_to_vms/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_vms_use_approved_amis_from_trusted_publishers/settings)**
 
 ## Getting Started
 
@@ -53,7 +55,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/compute/enforce_disks_to_be_attached_to_vms
+cd guardrails-samples/policy_packs/azure/compute/enforce_approved_amis_publishers_for_vms
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -87,11 +89,12 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_compute_disk_active" {
+resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-compute#/policy/types/diskActive"
-  # value    = "Check: Active"
-  value    = "Enforce: Delete inactive with 7 days warning"
+  type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Stop unapproved"
+  # value    = "Enforce: Delete unapproved if new"
 }
 ```
 

@@ -1,20 +1,19 @@
 ---
-categories: ["networking", "security"]
+categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Azure Cosmos DB Database Accounts to be Accessible to Selected Networks
+# Enforce Managed Service Identity for Azure App Service Web Apps
 
-Enforcing Azure Cosmos DB database accounts to be accessible only to selected networks is crucial for enhancing security and controlling access to your data. This measure ensures that only trusted and authorized networks can access the database, reducing the risk of unauthorized access, data breaches, and ensuring compliance with security best practices and regulatory requirements.
+Enforcing Azure App Service Web Apps to use Managed Service Identity (MSI) is essential for enhancing security and simplifying access management. This measure allows web apps to securely access Azure resources without the need for hard-coded credentials, reducing the risk of credential exposure and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for CosmosDB database accounts:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for App Service web apps:
 
-- Set required IP ranges that are allowed to access the database account
-- Set required virtual networks that are allowed to access the database account
+- Delete web apps that do not use managed service identity
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_cosmosdb_enforce_database_accounts_to_be_accessible_to_selected_networks/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_managed_service_identity_for_web_apps/settings)**
 
 ## Getting Started
 
@@ -22,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-cosmosdb](https://hub.guardrails.turbot.com/mods/azure/mods/azure-cosmosdb)
+  - [@turbot/azure-appservice](https://hub.guardrails.turbot.com/mods/azure/mods/azure-appservice)
 
 ### Credentials
 
@@ -54,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/cosmosdb/enforce_database_accounts_to_be_accessible_to_selected_networks
+cd guardrails-samples/policy_packs/azure/appservice/enforce_webapps_to_use_managed_service_identity
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -88,25 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall" {
+resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewall"
-  # value    = "Check: Allow only approved virtual networks and IP ranges"
-  value    = "Enforce: Allow only approved virtual networks and IP ranges"
-}
-
-resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_ip_ranges_required" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallIpRangesRequired"
-  # value    = "Check: Required > Items"
-  value    = "Enforce: Required > Items"
-}
-
-resource "turbot_policy_setting" "azure_cosmosdb_database_account_firewall_virtual_networks_required" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-cosmosdb#/policy/types/databaseAccountFirewallVirtualNetworksRequired"
-  # value    = "Check: Required > Items"
-  value    = "Enforce: Required > Items"
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
+  # value    = "Check: Approved"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 

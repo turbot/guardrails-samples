@@ -1,21 +1,19 @@
 ---
-categories: ["compute", "security"]
+categories: ["security"]
 primary_category: "security"
-type: "featured"
 ---
 
-# Enforce Azure Compute Virtual Machines to Use Approved AMIs from Trusted Publishers
+# Enforce Azure App Service Web Apps to Use Supported Java, PHP, and Python Versions
 
-Enforcing Azure compute instances to use approved AMIs from trusted publishers is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
+Enforcing Azure App Service Web Apps to not use outdated Java, PHP, or Python versions is crucial to maintain security and performance. This ensures that applications run on supported, secure versions of these languages, reducing the risk of vulnerabilities, enhancing stability, and ensuring compliance with best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Compute virtual machines:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for App Service web apps:
 
-- Stop/Terminate VMs that do not use approved AMIs from trusted publishers
-- Set the image IDs that are approved for use
+- Delete web apps that use outdated Java, PHP or Python versions
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_compute_enforce_approved_images_from_trusted_publishers_for_vms/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/azure_appservice_enforce_webapps_to_use_supported_java_php_python_versions/settings)**
 
 ## Getting Started
 
@@ -23,7 +21,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/azure-compute](https://hub.guardrails.turbot.com/mods/azure/mods/azure-compute)
+  - [@turbot/azure-appservice](https://hub.guardrails.turbot.com/mods/azure/mods/azure-appservice)
 
 ### Credentials
 
@@ -55,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/azure/compute/enforce_approved_amis_publishers_for_vms
+cd guardrails-samples/policy_packs/azure/appservice/enforce_webapps_to_not_use_outdated_java_php_python
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -89,12 +87,11 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "azure_compute_virtual_machine_approved" {
+resource "turbot_policy_setting" "azure_appservice_webapp_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineApproved"
+  type     = "tmod:@turbot/azure-appservice#/policy/types/webAppApproved"
   # value    = "Check: Approved"
-  value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Delete unapproved if new"
+  value    = "Enforce: Delete unapproved if new"
 }
 ```
 
