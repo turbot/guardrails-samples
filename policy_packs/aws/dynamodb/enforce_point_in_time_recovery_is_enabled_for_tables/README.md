@@ -13,7 +13,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_point_in_time_recovery_is_enabled_for_tables/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_dynamodb_enforce_point_in_time_recovery_is_enabled_for_tables/settings)**
 
 ## Getting Started
 

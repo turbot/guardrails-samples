@@ -3,7 +3,7 @@ categories: ["data protection", "security"]
 primary_category: "security"
 ---
 
-# Enforce Encryption At Rest Is Enabled for RDS DB Instances
+# Enforce Encryption at Rest Is Enabled for RDS DB Instances
 
 Enforcing encryption at rest for RDS DB instances is critical for safeguarding sensitive data stored in your databases. This measure ensures that all data is encrypted when stored, protecting it from unauthorized access and potential breaches, and ensuring compliance with security best practices and regulatory requirements.
 
@@ -14,7 +14,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_encryption_at_rest_is_enabled_for_db_instances/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_rds_enforce_encryption_at_rest_is_enabled_for_db_instances/settings)**
 
 ## Getting Started
 

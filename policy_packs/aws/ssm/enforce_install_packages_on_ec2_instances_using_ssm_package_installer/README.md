@@ -18,7 +18,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) is 
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_install_packages_on_ec2_instances_using_ssm_package_installer/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ssm_enforce_install_packages_on_ec2_instances_using_ssm_package_installer/settings)**
 
 ## Getting Started
 

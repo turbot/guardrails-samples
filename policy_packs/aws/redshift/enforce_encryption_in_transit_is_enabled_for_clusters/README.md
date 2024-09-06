@@ -11,7 +11,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - Enable Encryption in Transit by changing the `require_ssl` parameter of the attached parameter group. This change will also trigger **reboot** of the cluster.
 
-**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/enforce_encryption_in_transit_is_enabled_for_clusters/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_redshift_enforce_encryption_in_transit_is_enabled_for_clusters/settings)**
 
 ## Getting Started
 
