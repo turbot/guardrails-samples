@@ -164,6 +164,8 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 > By default, installed policy packs are not attached to any resources.
 >
 > Policy packs must be attached to resources in order for their policy settings to take effect.
+>
+> The `Turbot > Notifications` policy and its associated sub-policies are applied at the Turbot level. As a result, only two policy settings will be visible when viewing the policy pack.
 
 Clone:
 
