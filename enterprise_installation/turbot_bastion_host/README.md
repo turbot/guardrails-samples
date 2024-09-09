@@ -48,8 +48,28 @@ In addition to the above, it also compliments the Session Manager capabilities s
 ## FAQ
 
 - How do I connect to my RDS Instance?
-
+    The `db-connect.sh` script provides a list of RDS instances in a given region and makes it easy to connect.
+    **db-connect.sh**
     ```shell
+    sh-5.2$ db-connect.sh
+    AWS region could not be detected. Please enter the AWS region: us-east-2
+    Available RDS Instances in region us-east-2:
+    lancer-hubble   lancer-pluto
+    Enter the DBInstanceIdentifier you want to connect to: lancer-pluto
+    Using RDS host: lancer-pluto.abcdefghij.us-east-2.rds.amazonaws.com
+    Connecting to the database using psql...
+    psql (15.8, server 13.16)
+    SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, compression: off)
+    Type "help" for help.
+    turbot=>
+    ```
+
+    If `db-connect.sh` doesn't work for some reason, the steps can be carried out manually as shown below. 
+    **manually**
+    ```shell
+    aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier'
+    aws rds describe-db-instances --db-instance-identifier <DBInstanceIdentifier> --query 'DBInstances[0].Endpoint.Address'
+
       export RDSHOST=<Enter the RDS endpoint, example: turbot-boltzman.cpnkkknwkny9.us-east-2.rds.amazonaws.com>
       export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region <AWS region of the DB, example: us-east-1> --username turbot )"
       psql -h $RDSHOST  -d turbot -U turbot
@@ -60,6 +80,8 @@ In addition to the above, it also compliments the Session Manager capabilities s
   <!-- - Capture the Redis user password from AWS SSM Parameters Store with parameter name /<prefix>/hive/<hive_name>/redisUser -->
 
     ```shell
+      aws elasticache describe-cache-clusters --show-cache-node-info --query 'CacheClusters[?Engine==`redis`].CacheNodes[*].Endpoint' --output text
+
       redis-cli -h <Redis Primary endpoint example: master.turbot-hive-cache-cluster.xyzxyz.use2.cache.amazonaws.com> --tls -p 6379
       AUTH <password>
     ```

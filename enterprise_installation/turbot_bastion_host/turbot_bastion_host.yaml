@@ -262,6 +262,9 @@ Resources:
               - "s3:GetEncryptionConfiguration"
               - "logs:DescribeLogGroups"
               - "logs:DescribeLogStreams"
+              - "rds:DescribeDBInstances"      # Added permission for listing RDS instances
+              - "rds:DescribeDBClusters"       # Added permission for listing RDS clusters
+              - "elasticache:DescribeCacheClusters"  # Added permission for listing ElastiCache clusters
             Effect: Allow
             Resource: "*"
           - Action:
@@ -364,17 +367,35 @@ Resources:
               echo "Unsupported Linux distribution"
             fi
 
-      Tags:
-        - Key: Name
-          Value: !Ref BastionHostName
-        - Key: cfn_stack_name
-          Value: !Ref AWS::StackName
-        - Key: Vendor
-          Value: "Turbot HQ Inc"
-        - Key: Product
-          Value: "Turbot Bastion Host"
-        - Key: Version
-          Value: "1.3.0"
+            # Step to add the db-connect.sh script
+            cat > /usr/local/bin/db-connect.sh << 'EOF'
+            #!/bin/bash
+            # Discover RDS instances and connect via psql
+            AWS_REGION=$(aws configure get region)
+
+            if [ -z "$AWS_REGION" ]; then
+              read -p "AWS region could not be detected. Please enter the AWS region: " AWS_REGION
+            fi
+
+            echo "Available RDS Instances in region $AWS_REGION:"
+            aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier' --output text --region $AWS_REGION
+
+            read -p "Enter the DBInstanceIdentifier you want to connect to: " DBInstanceIdentifier
+
+            RDSHOST=$(aws rds describe-db-instances --db-instance-identifier "$DBInstanceIdentifier" --query 'DBInstances[0].Endpoint.Address' --output text --region $AWS_REGION)
+
+            echo "Using RDS host: $RDSHOST"
+            export RDSHOST
+
+            export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region $AWS_REGION --username turbot)"
+
+            echo "Connecting to the database using psql..."
+            psql -h $RDSHOST -d turbot -U turbot
+            EOF
+
+            # Make the db-connect.sh script executable
+            chmod +x /usr/local/bin/db-connect.sh
+
 
 Outputs:
   BastionHostRole:
