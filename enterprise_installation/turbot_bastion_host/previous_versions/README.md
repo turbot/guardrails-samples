@@ -5,10 +5,11 @@ It leverages AWS EC2 instance(s) managed by [Session Manager](https://docs.aws.a
 
 - Eliminates the need for IAM users and SSH keys.
 - Eliminates the need for Inbound Security Group rules over port 22.
-- Grabs the latest Amazon Linux 2023 AMI using SSM Parameters.
+- Grabs the latest Amazon Linux2 AMI using SSM Parameters.
 - Gives the ability to use custom configurations for AMIs and IAM Roles.
 - Self-destructs after the desired number of hours.
-- Comes with psql v15.x and redis-cli v6.x
+- Choose between postgresql11, postgresql12, postgresql13 or postgresql14 client installation. Defaults to postgresql14.
+- Comes with redis-cli v6.x
 
 In addition to the above, it also compliments the Session Manager capabilities such as
 
@@ -26,7 +27,7 @@ In addition to the above, it also compliments the Session Manager capabilities s
 - **VPCId:** The ID of the Amazon Virtual Private Cloud (Amazon VPC) in which Turbot is hosted (e.g., vpc-1a2b3c4d or vpc-1234567890abcdef0).
 - **PublicSubnetId:** The ID of the Public Subnet in which the bastion host will be launched (e.g., subnet-a0246dcd or subnet-1234567890abcdef0).
 - **PublicIPv4Address:** The bastion host instance needs connectivity to the Gateway endpoints for Systems Manager. If your organization has a dedicated network connection to AWS, you can make use of Private IPv4 otherwise, use a Public IPv4 address.
-- **LatestAmiId:** The AWS SSM Parameter Store [namespace](https://aws.amazon.com/blogs/compute/query-for-the-latest-amazon-linux-ami-ids-using-aws-systems-manager-parameter-store/) of the AMI. Defaults to Amazon Linux 2023 distribution. Leave it as it is, incase if you want to use your golden AMIs.
+- **LatestAmiId:** The AWS SSM Parameter Store [namespace](https://aws.amazon.com/blogs/compute/query-for-the-latest-amazon-linux-ami-ids-using-aws-systems-manager-parameter-store/) of the AMI. Defaults to Amazon Linux 2 distribution. Leave it as it is, incase if you want to use your golden AMIs.
 - **BastionInstanceType:** AWS EC2 instance type for the bastion host.
 - **RootVolumeSize:** The root volume size in GB for the bastion host. Should always be greater than the size of the AMI used. Is encrypted and makes use of gp3 volume type.
 - **OSImageOverride:** In case if you want to use a custom golden AMI instead of the default Amazon Linux 2 AMIs, please enter the AMI ID (e.g., ami-1a2b3c4d or ami-1234567890abcdef0). Leave empty if no alternative configuration is needed.
@@ -60,10 +61,9 @@ In addition to the above, it also compliments the Session Manager capabilities s
   <!-- - Capture the Redis user password from AWS SSM Parameters Store with parameter name /<prefix>/hive/<hive_name>/redisUser -->
 
     ```shell
-      redis-cli -h <Redis Primary endpoint example: master.turbot-hive-cache-cluster.xyzxyz.use2.cache.amazonaws.com> --tls -p 6379
+      redis-cli -h <Redis Primary endpoint example: master.turbot-hive-cache-cluster.xyzxyz.use2.cache.amazonaws.com --tls -p 6379
       AUTH <password>
     ```
-    Please note the primary endpoint above should not include the port number.
 
 - Why does my session timeout every 20 min?
 
