@@ -1,3 +1,7 @@
+# 1.3.0 (2024-09-09)
+  - Defaults to Amazon Linux 2023 AMI.
+  - Comes with Postgresql 15.x client and Redis 6.x client
+
 # 1.2.0 (2023-03-15)
   - Add support for redis-cli v6.x from amazon-linux-extras.
   - Removed EnvironmentVariables parameter from simplicity.

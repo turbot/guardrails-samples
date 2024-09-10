@@ -5,10 +5,11 @@ It leverages AWS EC2 instance(s) managed by [Session Manager](https://docs.aws.a
 
 - Eliminates the need for IAM users and SSH keys.
 - Eliminates the need for Inbound Security Group rules over port 22.
-- Grabs the latest Amazon Linux 2023 AMI using SSM Parameters.
+- Grabs the latest Amazon Linux2 AMI using SSM Parameters.
 - Gives the ability to use custom configurations for AMIs and IAM Roles.
 - Self-destructs after the desired number of hours.
-- Comes with psql v15.x and redis-cli v6.x
+- Choose between postgresql11, postgresql12, postgresql13 or postgresql14 client installation. Defaults to postgresql14.
+- Comes with redis-cli v6.x
 
 In addition to the above, it also compliments the Session Manager capabilities such as
 
@@ -26,7 +27,7 @@ In addition to the above, it also compliments the Session Manager capabilities s
 - **VPCId:** The ID of the Amazon Virtual Private Cloud (Amazon VPC) in which Turbot is hosted (e.g., vpc-1a2b3c4d or vpc-1234567890abcdef0).
 - **PublicSubnetId:** The ID of the Public Subnet in which the bastion host will be launched (e.g., subnet-a0246dcd or subnet-1234567890abcdef0).
 - **PublicIPv4Address:** The bastion host instance needs connectivity to the Gateway endpoints for Systems Manager. If your organization has a dedicated network connection to AWS, you can make use of Private IPv4 otherwise, use a Public IPv4 address.
-- **LatestAmiId:** The AWS SSM Parameter Store [namespace](https://aws.amazon.com/blogs/compute/query-for-the-latest-amazon-linux-ami-ids-using-aws-systems-manager-parameter-store/) of the AMI. Defaults to Amazon Linux 2023 distribution. Leave it as it is, incase if you want to use your golden AMIs.
+- **LatestAmiId:** The AWS SSM Parameter Store [namespace](https://aws.amazon.com/blogs/compute/query-for-the-latest-amazon-linux-ami-ids-using-aws-systems-manager-parameter-store/) of the AMI. Defaults to Amazon Linux 2 distribution. Leave it as it is, incase if you want to use your golden AMIs.
 - **BastionInstanceType:** AWS EC2 instance type for the bastion host.
 - **RootVolumeSize:** The root volume size in GB for the bastion host. Should always be greater than the size of the AMI used. Is encrypted and makes use of gp3 volume type.
 - **OSImageOverride:** In case if you want to use a custom golden AMI instead of the default Amazon Linux 2 AMIs, please enter the AMI ID (e.g., ami-1a2b3c4d or ami-1234567890abcdef0). Leave empty if no alternative configuration is needed.
@@ -48,28 +49,8 @@ In addition to the above, it also compliments the Session Manager capabilities s
 ## FAQ
 
 - How do I connect to my RDS Instance?
-    The `db-connect.sh` script provides a list of RDS instances in a given region and makes it easy to connect.
-    **db-connect.sh**
-    ```shell
-    sh-5.2$ db-connect.sh
-    AWS region could not be detected. Please enter the AWS region: us-east-2
-    Available RDS Instances in region us-east-2:
-    lancer-hubble   lancer-pluto
-    Enter the DBInstanceIdentifier you want to connect to: lancer-pluto
-    Using RDS host: lancer-pluto.abcdefghij.us-east-2.rds.amazonaws.com
-    Connecting to the database using psql...
-    psql (15.8, server 13.16)
-    SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, compression: off)
-    Type "help" for help.
-    turbot=>
-    ```
 
-    If `db-connect.sh` doesn't work for some reason, the steps can be carried out manually as shown below. 
-    **manually**
     ```shell
-    aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier'
-    aws rds describe-db-instances --db-instance-identifier <DBInstanceIdentifier> --query 'DBInstances[0].Endpoint.Address'
-
       export RDSHOST=<Enter the RDS endpoint, example: turbot-boltzman.cpnkkknwkny9.us-east-2.rds.amazonaws.com>
       export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region <AWS region of the DB, example: us-east-1> --username turbot )"
       psql -h $RDSHOST  -d turbot -U turbot
@@ -80,12 +61,9 @@ In addition to the above, it also compliments the Session Manager capabilities s
   <!-- - Capture the Redis user password from AWS SSM Parameters Store with parameter name /<prefix>/hive/<hive_name>/redisUser -->
 
     ```shell
-      aws elasticache describe-cache-clusters --show-cache-node-info --query 'CacheClusters[?Engine==`redis`].CacheNodes[*].Endpoint' --output text
-
-      redis-cli -h <Redis Primary endpoint example: master.turbot-hive-cache-cluster.xyzxyz.use2.cache.amazonaws.com> --tls -p 6379
+      redis-cli -h <Redis Primary endpoint example: master.turbot-hive-cache-cluster.xyzxyz.use2.cache.amazonaws.com --tls -p 6379
       AUTH <password>
     ```
-    Please note the primary endpoint above should not include the port number.
 
 - Why does my session timeout every 20 min?
 
