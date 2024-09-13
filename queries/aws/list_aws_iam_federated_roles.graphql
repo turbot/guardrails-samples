@@ -1,0 +1,50 @@
+# Description
+# -----------
+#
+# List all federated IAM roles with the attached IAM policies.
+#
+
+# Usage
+# -----
+#
+# turbot graphql --query ./list_aws_iam_federated_roles.graphql
+#
+
+# Filter
+# ------
+#
+# resourceTypeId:
+#   Filter resources of a specific resource type.
+#   In example, the resources type 'tmod:@turbot/aws-iam#/resource/types/role' is used
+#   which is the resource type`uri` for IAM roles.
+#
+# level:self:
+#   Return only IAM roles, not IAM role attachment reosurces too.
+#
+# saml:
+#   searches for the word `saml` in the IAM roles. Matches nicely on federated roles.
+
+# Documentation
+# -------------
+#
+# For full documentation see:
+# - Filter documentation: https://turbot.com/v5/docs/reference/filter
+# - GraphQL resources: https://turbot.com/v5/docs/reference/graphql/query/resources
+#
+
+
+query FederatedRoles {
+  resources(filter: "resourceTypeId:'tmod:@turbot/aws-iam#/resource/types/role' saml level:self limit:5000") {
+    metadata {
+      stats {
+        total
+      }
+    }
+    items {
+      Role:get(path:"RoleName")
+      AttachedPolicies:get(path:"AttachedPolicies")
+      metadata
+    }
+
+  }
+}
