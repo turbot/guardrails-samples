@@ -231,7 +231,7 @@ resource "turbot_mod" "azure-frontdoorservice" {
 # https://hub.guardrails.turbot.com/mods/azure/mods/azure-iam
 resource "turbot_mod" "azure-iam" {
   parent     = "tmod:@turbot/turbot#/"
-  depends_on = [turbot_mod.azure]
+  depends_on = [turbot_mod.azure, turbot_mod.azure-provider]
   org        = "turbot"
   mod        = "azure-iam"
   version    = ">=5.0.0"
