@@ -8,6 +8,11 @@ on:
         required: false
         default: "false"
         type: string
+      runType:
+        description: "Run type: 'all' to run for all folders, 'changed' to run for only changed folders"
+        required: false
+        default: "changed"
+        type: string
   push:
     branches:
       - main # Trigger only on pushes to the main branch
@@ -28,8 +33,6 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-        # with:
-        # terraform_version: 1.6.6
 
       - name: "Configure AWS credentials for Remote State"
         id: configure-aws-creds
@@ -49,31 +52,34 @@ jobs:
           DYNAMODB_TABLE: ${{ secrets.BASELINES_DYNAMODB_TABLE }}
           AWS_REGION: ${{ secrets.BASELINES_AWS_REGION }}
           USER_PROFILE: ${{ secrets.BASELINES_USER_PROFILE }}
-
         run: |
 
           # Store the root directory
           root_dir=$(pwd)
 
-          # # Detect changes between the current branch and the main branch
-          # if git rev-parse origin/main >/dev/null 2>&1; then
-          #   # Compare the current branch with the main branch
-          #   echo "Running git diff between the current branch and origin/main for baselines/*..."
-          #   changed_folders=$(git diff --name-only origin/main HEAD -- 'baselines/*' | xargs -n1 dirname | sort -u)
-          # else
-          #   # If origin/main doesn't exist, it's likely the first commit
-          #   echo "Running git diff against empty tree for baselines/*..."
-          #   changed_folders=$(git diff --name-only $(git hash-object -t tree /dev/null) HEAD -- 'baselines/*' | xargs -n1 dirname | sort -u)
-          # fi
+          # Get the dryRun input (default is "false")
+          dry_run="${{ github.event.inputs.dryRun }}"
+          echo "Dry run mode: $dry_run"
 
-          # # Debug output: Show what was detected as changed folders
-          # echo "Detected changed folders: $changed_folders"
+          # Get the run type input from workflow_dispatch or default to 'changed'
+          run_type="${{ github.event.inputs.runType }}"
+          echo "Run type: $run_type"
 
-          # For the initial run, bypass git diff and force processing all folders
-          echo "Processing all folders in baselines/* for the initial run..."
-          changed_folders=$(find baselines -type d | sort -u)
+          # Detect changed folders or run all folders based on runType
+          if [ "$run_type" = "all" ]; then
+            echo "Processing all folders in baselines/*..."
+            changed_folders=$(find baselines -type d | sort -u)
+          else
+            if git rev-parse origin/main >/dev/null 2>&1; then
+              echo "Running git diff between the current branch and origin/main for baselines/*..."
+              changed_folders=$(git diff --name-only origin/main HEAD -- 'baselines/*' | xargs -n1 dirname | sort -u)
+            else
+              echo "Running git diff against empty tree for baselines/*..."
+              changed_folders=$(git diff --name-only $(git hash-object -t tree /dev/null) HEAD -- 'baselines/*' | xargs -n1 dirname | sort -u)
+            fi
+          fi
 
-          # Debug output: Show what was detected as changed folders
+          # Debug output: Show what was detected as folders to process
           echo "Detected folders: $changed_folders"
 
           # Check if changed_folders is truly empty or contains valid paths
@@ -110,7 +116,7 @@ jobs:
           EOF
 
             terraform init
-            
+
             # Check if the folder name ends with _mods
             if [[ "$folder_path" == *"_mods" ]]; then
               parallelism_flag="-parallelism=1"
@@ -118,16 +124,31 @@ jobs:
               parallelism_flag=""
             fi
 
-            # Check if var_value is provided
-            if [ -n "$var_value" ]; then
-              # If var_value ends with .tfvars, use --var-file, otherwise use -var
-              if [[ "$var_value" == *.tfvars ]]; then
-                terraform apply --var-file="$var_value" --auto-approve $parallelism_flag
+            # Run plan or apply based on dryRun
+            if [ "$dry_run" = "true" ]; then
+              echo "Running terraform plan in $folder_path (dry run)..."
+              if [ -n "$var_value" ]; then
+                # If var_value ends with .tfvars, use --var-file, otherwise use -var
+                if [[ "$var_value" == *.tfvars ]]; then
+                  terraform plan --var-file="$var_value" $parallelism_flag
+                else
+                  terraform plan -var "$var_flag=$var_value" $parallelism_flag
+                fi
               else
-                terraform apply -var "$var_flag=$var_value" --auto-approve $parallelism_flag
+                terraform plan $parallelism_flag
               fi
             else
-              terraform apply --auto-approve $parallelism_flag
+              echo "Running terraform apply in $folder_path..."
+              if [ -n "$var_value" ]; then
+                # If var_value ends with .tfvars, use --var-file, otherwise use -var
+                if [[ "$var_value" == *.tfvars ]]; then
+                  terraform apply --var-file="$var_value" --auto-approve $parallelism_flag
+                else
+                  terraform apply -var "$var_flag=$var_value" --auto-approve $parallelism_flag
+                fi
+              else
+                terraform apply --auto-approve $parallelism_flag
+              fi
             fi
 
             # Return to the root directory
@@ -138,10 +159,9 @@ jobs:
           echo "Processing guardrails folders first..."
           process_folder "baselines/guardrails/folder_hierarchy" "base_folder_name" "SandBox"
           process_folder "baselines/guardrails/turbot_profiles" "user_profile" "$USER_PROFILE"
-          process_folder "baselines/guardrails/guardrails_mods"
 
-          # Process _mods folders if they had changes
-          echo "Processing changed _mods folders first..."
+          # Process _mods folders
+          echo "Processing _mods folders..."
           for folder_path in $(echo "$changed_folders" | grep '_mods'); do
             if ls "$folder_path"/*.tf >/dev/null 2>&1; then
               if [ -f "$folder_path/default.tfvars" ]; then
@@ -153,7 +173,7 @@ jobs:
           done
 
           # Process remaining folders
-          echo "Processing remaining changed folders..."
+          echo "Processing remaining folders..."
           for folder_path in $changed_folders; do
             # Skip already processed _mods folders and specific guardrails folders
             if [[ "$folder_path" == "baselines/guardrails/folder_hierarchy" || "$folder_path" == "baselines/guardrails/turbot_profiles" || "$folder_path" == *"_mods" ]]; then
