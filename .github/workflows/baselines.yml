@@ -9,7 +9,7 @@ on:
         default: "false"
         type: string
       runType:
-        description: "Run type: 'all' to run for all folders, 'changed' to run for only changed folders"
+        description: "Run type: 'all' to run for all baseline folders, 'changed' to run for only changed baseline folders"
         required: false
         default: "changed"
         type: string
@@ -41,7 +41,7 @@ jobs:
           aws-region: ${{ secrets.BASELINES_AWS_REGION }}
           role-to-assume: ${{ secrets.BASELINES_IAM_ROLE_TO_ASSUME }}
           role-session-name: "baselines-role-for-ga"
-          role-duration-seconds: 1200 # 20min
+          role-duration-seconds: 900 # 15min
 
       - name: Run Terraform
         env:
