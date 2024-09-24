@@ -138,6 +138,7 @@ jobs:
           echo "Processing guardrails folders first..."
           process_folder "baselines/guardrails/folder_hierarchy" "base_folder_name" "SandBox"
           process_folder "baselines/guardrails/turbot_profiles" "user_profile" "$USER_PROFILE"
+          process_folder "baselines/guardrails/guardrails_mods"
 
           # Process _mods folders if they had changes
           echo "Processing changed _mods folders first..."
