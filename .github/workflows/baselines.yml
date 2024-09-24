@@ -9,44 +9,162 @@ on:
         default: "false"
         type: string
   push:
+    branches:
+      - main # Trigger only on pushes to the main branch
     paths:
-      - baselines/**
+      - baselines/** # Limit to specific file paths
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
-  terraform:
+  baselines:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         # with:
-        # terraform_version: 1.4.6
+        # terraform_version: 1.6.6
 
-      - name: Set Turbot credentials
-        run: |
-          echo "TURBOT_WORKSPACE=${{ secrets.TURBOT_WORKSPACE }}" >> $GITHUB_ENV
-          echo "TURBOT_ACCESS_KEY=${{ secrets.TURBOT_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "TURBOT_SECRET_KEY=${{ secrets.TURBOT_SECRET_KEY }}" >> $GITHUB_ENV
-
-      - name: Find all Terraform folders
-        id: find_folders
-        run: |
-          folders=$(find baselines -type d -name "*.tf" -exec dirname {} \; | sort -u)
-          echo "folders=$folders" >> $GITHUB_ENV
-          echo "::set-output name=folders::$folders"
+      - name: "Configure AWS credentials for Remote State"
+        id: configure-aws-creds
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.BASELINES_AWS_REGION }}
+          role-to-assume: ${{ secrets.BASELINES_IAM_ROLE_TO_ASSUME }}
+          role-session-name: "baselines-role-for-ga"
+          role-duration-seconds: 1200 # 20min
 
       - name: Run Terraform
+        env:
+          TURBOT_WORKSPACE: ${{ secrets.BASELINES_TURBOT_WORKSPACE }}
+          TURBOT_ACCESS_KEY: ${{ secrets.BASELINES_TURBOT_ACCESS_KEY }}
+          TURBOT_SECRET_KEY: ${{ secrets.BASELINES_TURBOT_SECRET_KEY }}
+          S3_BUCKET: ${{ secrets.BASELINES_S3_BUCKET }}
+          DYNAMODB_TABLE: ${{ secrets.BASELINES_DYNAMODB_TABLE }}
+          AWS_REGION: ${{ secrets.BASELINES_AWS_REGION }}
+          USER_PROFILE: ${{ secrets.BASELINES_USER_PROFILE }}
+
         run: |
-          for folder in ${{ steps.find_folders.outputs.folders }}; do
-            cd $folder
+
+          # Store the root directory
+          root_dir=$(pwd)
+
+          # # Detect changes between the current branch and the main branch
+          # if git rev-parse origin/main >/dev/null 2>&1; then
+          #   # Compare the current branch with the main branch
+          #   echo "Running git diff between the current branch and origin/main for baselines/*..."
+          #   changed_folders=$(git diff --name-only origin/main HEAD -- 'baselines/*' | xargs -n1 dirname | sort -u)
+          # else
+          #   # If origin/main doesn't exist, it's likely the first commit
+          #   echo "Running git diff against empty tree for baselines/*..."
+          #   changed_folders=$(git diff --name-only $(git hash-object -t tree /dev/null) HEAD -- 'baselines/*' | xargs -n1 dirname | sort -u)
+          # fi
+
+          # # Debug output: Show what was detected as changed folders
+          # echo "Detected changed folders: $changed_folders"
+
+          # For the initial run, bypass git diff and force processing all folders
+          echo "Processing all folders in baselines/* for the initial run..."
+          changed_folders=$(find baselines -type d | sort -u)
+
+          # Debug output: Show what was detected as changed folders
+          echo "Detected folders: $changed_folders"
+
+          # Check if changed_folders is truly empty or contains valid paths
+          if [ -z "$(echo "$changed_folders" | xargs)" ]; then
+            echo "No changes detected in baselines/* folders."
+            exit 0
+          fi
+
+          # Function to process Terraform commands for a given folder
+          process_folder() {
+            folder_path=$1
+            var_flag=$2
+            var_value=$3
+            
+            echo "Processing folder $folder_path..."
+            cd "$folder_path" || exit 1  # Exits if the cd command fails
+
+            # Generate dynamic key from the folder path (replace '/' with '-')
+            key=$(echo "$folder_path")/terraform.tfstate
+
+            echo "Using S3 Key $key"
+
+            # Create backend.tf dynamically with S3 backend configuration
+            cat <<-EOF > backend.tf
+              terraform {
+                backend "s3" {
+                bucket         = "$S3_BUCKET"
+                key            = "$key"
+                region         = "$AWS_REGION"
+                dynamodb_table = "$DYNAMODB_TABLE"
+                encrypt        = true
+                }
+              }
+          EOF
+
             terraform init
-            if [[ "$folder" == *"mods"* ]]; then
-              terraform apply -auto-approve -parallelism=1
+            
+            # Check if the folder name ends with _mods
+            if [[ "$folder_path" == *"_mods" ]]; then
+              parallelism_flag="-parallelism=1"
             else
-              terraform apply -auto-approve
+              parallelism_flag=""
             fi
-            cd - > /dev/null
+
+            # Check if var_value is provided
+            if [ -n "$var_value" ]; then
+              # If var_value ends with .tfvars, use --var-file, otherwise use -var
+              if [[ "$var_value" == *.tfvars ]]; then
+                terraform apply --var-file="$var_value" --auto-approve $parallelism_flag
+              else
+                terraform apply -var "$var_flag=$var_value" --auto-approve $parallelism_flag
+              fi
+            else
+              terraform apply --auto-approve $parallelism_flag
+            fi
+
+            # Return to the root directory
+            cd "$root_dir" || exit 1
+          }
+
+          # Process the guardrails folder first
+          echo "Processing guardrails folders first..."
+          process_folder "baselines/guardrails/folder_hierarchy" "base_folder_name" "SandBox"
+          process_folder "baselines/guardrails/turbot_profiles" "user_profile" "$USER_PROFILE"
+
+          # Process _mods folders if they had changes
+          echo "Processing changed _mods folders first..."
+          for folder_path in $(echo "$changed_folders" | grep '_mods'); do
+            if ls "$folder_path"/*.tf >/dev/null 2>&1; then
+              if [ -f "$folder_path/default.tfvars" ]; then
+                process_folder "$folder_path" "" "default.tfvars"
+              else
+                process_folder "$folder_path"
+              fi
+            fi
+          done
+
+          # Process remaining folders
+          echo "Processing remaining changed folders..."
+          for folder_path in $changed_folders; do
+            # Skip already processed _mods folders and specific guardrails folders
+            if [[ "$folder_path" == "baselines/guardrails/folder_hierarchy" || "$folder_path" == "baselines/guardrails/turbot_profiles" || "$folder_path" == *"_mods" ]]; then
+              continue
+            fi
+
+            # Check if the folder contains .tf files (meaning it's a Terraform folder)
+            if ls "$folder_path"/*.tf >/dev/null 2>&1; then
+              if [ -f "$folder_path/default.tfvars" ]; then
+                process_folder "$folder_path" "" "default.tfvars"
+              else
+                process_folder "$folder_path"
+              fi
+            fi
           done
