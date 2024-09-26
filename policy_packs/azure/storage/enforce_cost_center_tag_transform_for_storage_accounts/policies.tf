@@ -19,7 +19,8 @@ resource "turbot_file" "azure_tag_transform_rules" {
 resource "turbot_policy_setting" "azure_storage_storage_account_tags" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountTags"
-  value    = "Enforce: Set tags"
+  value    = "Check: Tags are correct"
+  # value    = "Enforce: Set tags"
 }
 
 # Azure > Storage > Storage Account > Tags > Template
