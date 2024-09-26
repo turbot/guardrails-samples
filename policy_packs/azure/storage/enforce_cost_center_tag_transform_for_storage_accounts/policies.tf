@@ -29,7 +29,7 @@ resource "turbot_policy_setting" "azure_storage_account_tags_template" {
   type           = "tmod:@turbot/azure-storage#/policy/types/storageAccountTagsTemplate"
   template_input = <<-EOT
     {
-      rules: resource(id:"tag_transform_rules") {
+      rules: resource(id:"azure_tag_transform_rules") {
         data
       }
       resource {
