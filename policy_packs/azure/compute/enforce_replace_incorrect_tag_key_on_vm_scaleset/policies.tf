@@ -1,37 +1,17 @@
-locals {
-  yaml_string = <<-EOT
-    Cost_Center:
-      incorrectKeys:
-        - /.*cost.*cent.*/gi
-      replacementValue: undefined
-    EOT
-}
-
-# Turbot > File
-resource "turbot_file" "azure_tag_transform_rules" {
-  parent  = "tmod:@turbot/turbot#/"
-  title   = "Azure Tag Transform Rules"
-  akas    = ["azure_tag_transform_rules"]
-  content = jsonencode(yamldecode(local.yaml_string))
-}
-
-# Azure > Storage > Storage Account > Tags
-resource "turbot_policy_setting" "azure_storage_storage_account_tags" {
+# Azure > Compute > VM Scale Set > Tags
+resource "turbot_policy_setting" "azure_compute_virtual_machine_scale_set_tags" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-storage#/policy/types/storageAccountTags"
+  type     = "tmod:@turbot/azure-compute#/policy/types/virtualMachineScaleSetTags"
   value    = "Check: Tags are correct"
   # value    = "Enforce: Set tags"
 }
 
-# Azure > Storage > Storage Account > Tags > Template
-resource "turbot_policy_setting" "azure_storage_account_tags_template" {
+# Azure > Compute > VM Scale Set > Tags > Template
+resource "turbot_policy_setting" "azure_compute_virtual_machine_scale_set_tags_template" {
   resource       = turbot_policy_pack.main.id
-  type           = "tmod:@turbot/azure-storage#/policy/types/storageAccountTagsTemplate"
+  type           = "tmod:@turbot/azure-compute#/policy/types/virtualMachineScaleSetTagsTemplate"
   template_input = <<-EOT
-    {
-      rules: resource(id:"azure_tag_transform_rules") {
-        data
-      }
+    { 
       resource {
         turbot {
           tags
@@ -40,12 +20,28 @@ resource "turbot_policy_setting" "azure_storage_account_tags_template" {
     }
     EOT
   template       = <<-EOT
-    {%- set tags_map = $.resource.turbot.tags -%}
-    {%- set rules = $.rules.data -%}
-
-    {% for key,value in transformMap(tags_map, rules) -%}
-    - "{{key}}": "{{value}}"
-    {% endfor -%}
-
+    {%- set cleanTags = [ "Cost_Center" ] -%}
+    {%- set tag_map = {} -%}
+    {%- if $.resource.turbot.tags -%}
+      {%- for clean_tag_key in cleanTags -%}
+        {%- set found_tag = false -%}
+        {%- for curr_tag_key, curr_tag_value in $.resource.turbot.tags -%}
+          {%- if ((curr_tag_key | lower) == (clean_tag_key | lower)) -%}
+            {%- set found_tag = true -%}
+            {%- if curr_tag_key != clean_tag_key -%}
+              {%- set tag_map = setAttribute(tag_map, curr_tag_key, null) -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if not found_tag -%}
+          {%- set tag_map = setAttribute(tag_map, clean_tag_key, "abc123") -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if tag_map | length < 1 -%}
+    []
+    {%- else -%}
+    {{ tag_map | json }}
+    {%- endif -%}
     EOT
 }
