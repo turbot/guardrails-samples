@@ -5,9 +5,9 @@ primary_category: "security"
 
 # Enforce AWS RDS Manual DB Instance Snapshots Are Shared With Trusted Accounts
 
-Enforcing that AWS RDS manual db instance snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
+Enforcing that AWS RDS manual DB instance snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for RDS manual db instance snapshots:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for RDS manual DB instance snapshots:
 
 - Set trusted accounts
 - Revoke untrusted access from snapshots
