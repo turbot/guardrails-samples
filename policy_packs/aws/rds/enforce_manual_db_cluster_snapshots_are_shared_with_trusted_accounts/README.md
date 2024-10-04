@@ -5,9 +5,9 @@ primary_category: "security"
 
 # Enforce AWS RDS Manual DB Cluster Snapshots Are Shared With Trusted Accounts
 
-Enforcing that AWS RDS manual db cluster snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
+Enforcing that AWS RDS manual DB cluster snapshots are shared only with trusted accounts is vital for maintaining data security and access control. This measure ensures that sensitive data within snapshots is accessible only to authorized accounts, reducing the risk of unauthorized access and data breaches, and ensuring compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for RDS manual db cluster snapshots:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for RDS manual DB cluster snapshots:
 
 - Set trusted accounts
 - Revoke untrusted access from snapshots
@@ -89,8 +89,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "aws_rds_db_cluster_snapshot_manual_trusted_access" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-rds#/policy/types/dbClusterSnapshotManualTrustedAccess"
-  value    = "Check: Trusted Access > Accounts"
-  # value    = "Enforce: Trusted Access > Accounts"
+  # value    = "Check: Trusted Access > Accounts"
+  value    = "Enforce: Trusted Access > Accounts"
 }
 ```
 
