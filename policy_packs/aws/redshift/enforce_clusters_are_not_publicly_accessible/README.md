@@ -7,7 +7,7 @@ primary_category: "security"
 
 Enforcing that AWS Redshift Clusters are not publicly accessible is crucial for protecting sensitive data and ensuring database security. This measure prevents unauthorized internet access to your Redshift clusters, reducing the risk of data breaches and enhancing compliance with security best practices and regulatory requirements.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Redshift Clusters:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Redshift clusters:
 
 - Enforce Redshift clusters to not be publicly accessible
 
