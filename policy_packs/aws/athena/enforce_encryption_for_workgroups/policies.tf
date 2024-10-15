@@ -6,7 +6,6 @@ resource "turbot_policy_setting" "aws_athena_workgroup_approved" {
   # value    = "Enforce: Delete unapproved if new"
 }
 
-# 29 Ensure that AWS Athena query results stored in Amazon S3 are encrypted at rest.
 # AWS > Athena > Workgroup > Approved > Custom
 resource "turbot_policy_setting" "aws_athena_workgroup_approved_custom" {
   resource       = turbot_policy_pack.main.id
