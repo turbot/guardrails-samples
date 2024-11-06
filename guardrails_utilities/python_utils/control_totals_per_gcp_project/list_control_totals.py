@@ -54,19 +54,33 @@ def run_project_controls(config_file, profile):
 
     # Subquery to get control counts for each project
     controls_query = '''
-    query ControlsByProject($projectId: ID!) {
-      resource(id: $projectId) {
-        turbot {
+    query ControlsByProject($projectId: ID!) {{
+      resource(id: $projectId) {{
+        turbot {{
           title
           id
-        }
+        }}
         akas
-        total: controls(filter: "")                { metadata { stats { total } } }
-        ok: controls(filter: "state:ok")           { metadata { stats { total } } }
-        alarm: controls(filter: "state:alarm")     { metadata { stats { total } } }
-        error: controls(filter: "state:error")     { metadata { stats { total } } }
-        invalid: controls(filter: "state:invalid") { metadata { stats { total } } }
-        tbd: controls(filter: "state:tbd")         { metadata { stats { total } } }
+        total: controls(filter: "controlTypeId:'{controlTypeId}'")                {{ metadata {{ stats {{ total }} }} }}
+        ok: controls(filter: "controlTypeId:'{controlTypeId}' state:ok")           {{ metadata {{ stats {{ total }} }} }}
+        alarm: controls(filter: "controlTypeId:'{controlTypeId}' state:alarm")     {{ metadata {{ stats {{ total }} }} }}
+        error: controls(filter: "controlTypeId:'{controlTypeId}' state:error")     {{ metadata {{ stats {{ total }} }} }}
+        invalid: controls(filter: "controlTypeId:'{controlTypeId}' state:invalid") {{ metadata {{ stats {{ total }} }} }}
+        tbd: controls(filter: "controlTypeId:'{controlTypeId}' state:tbd")         {{ metadata {{ stats {{ total }} }} }}
+      }}
+    }}
+    '''
+
+    control_types_query = '''
+    query ControlTypesByProject($projectId: ID!) {
+      policyTypes(filter: "resourceId:173363252776638") {
+        items {
+          uri
+          title
+          trunk {
+            title
+          }
+        }
       }
     }
     '''
@@ -75,31 +89,43 @@ def run_project_controls(config_file, profile):
     for project in projects:
         project_id = project['turbot']['id']
         variables = {'projectId': project_id}
-        result = endpoint(controls_query, variables)
 
-        if "errors" in result:
-            print(f"Error fetching controls for project {project_id}:")
+        control_types_result = endpoint(control_types_query, variables)
+        if "errors" in control_types_result:
+            print(f"Error fetching control types for project {project_id}:")
             for error in result['errors']:
                 print(error)
             continue
+        
+        for control_type in control_types_result['data']['policyTypes']['items']:
 
-        resource = result['data']['resource']
-        title = resource['turbot']['title']
-        akas = resource.get('akas', [])
-        total_controls = resource['total']['metadata']['stats']['total']
-        ok_controls = resource['ok']['metadata']['stats']['total']
-        alarm_controls = resource['alarm']['metadata']['stats']['total']
-        error_controls = resource['error']['metadata']['stats']['total']
-        invalid_controls = resource['invalid']['metadata']['stats']['total']
-        tbd_controls = resource['tbd']['metadata']['stats']['total']
+          result = endpoint(controls_query.format(controlTypeId=control_type['uri']), variables)
 
-        print(f"Project: {title} ({project_id})")
-        print(f"  Total Controls: {total_controls}")
-        print(f"    OK: {ok_controls}")
-        print(f"    Alarm: {alarm_controls}")
-        print(f"    Error: {error_controls}")
-        print(f"    Invalid: {invalid_controls}")
-        print(f"    TBD: {tbd_controls}\n")
+          if "errors" in result:
+              print(f"Error fetching controls for project {project_id}:")
+              for error in result['errors']:
+                  print(error)
+              continue
+
+          resource = result['data']['resource']
+          title = resource['turbot']['title']
+          akas = resource.get('akas', [])
+          control_type_title = control_type['title']
+          total_controls = resource['total']['metadata']['stats']['total']
+          ok_controls = resource['ok']['metadata']['stats']['total']
+          alarm_controls = resource['alarm']['metadata']['stats']['total']
+          error_controls = resource['error']['metadata']['stats']['total']
+          invalid_controls = resource['invalid']['metadata']['stats']['total']
+          tbd_controls = resource['tbd']['metadata']['stats']['total']
+
+          print(f"Project: {title} ({project_id})")
+          print(f"Control Type: {control_type_title} ")
+          print(f"  Total Controls: {total_controls}")
+          print(f"    OK: {ok_controls}")
+          print(f"    Alarm: {alarm_controls}")
+          print(f"    Error: {error_controls}")
+          print(f"    Invalid: {invalid_controls}")
+          print(f"    TBD: {tbd_controls}\n")
 
 if __name__ == "__main__":
     try:
