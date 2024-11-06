@@ -72,8 +72,8 @@ def run_project_controls(config_file, profile):
     '''
 
     control_types_query = '''
-    query ControlTypesByProject($projectId: ID!) {
-      policyTypes(filter: "resourceId:173363252776638") {
+    query ControlTypesByProject($filter: [String!]!) {
+      policyTypes(filter: $filter) {
         items {
           uri
           title
@@ -88,7 +88,7 @@ def run_project_controls(config_file, profile):
     # Iterate over each project and run the subquery
     for project in projects:
         project_id = project['turbot']['id']
-        variables = {'projectId': project_id}
+        variables = {'filter': f"resourceId:{project_id} limit:2000"}
 
         control_types_result = endpoint(control_types_query, variables)
         if "errors" in control_types_result:
@@ -97,8 +97,9 @@ def run_project_controls(config_file, profile):
                 print(error)
             continue
         
+        variables = {'projectId': project_id}
         for control_type in control_types_result['data']['policyTypes']['items']:
-
+          print("inloop")
           result = endpoint(controls_query.format(controlTypeId=control_type['uri']), variables)
 
           if "errors" in result:
