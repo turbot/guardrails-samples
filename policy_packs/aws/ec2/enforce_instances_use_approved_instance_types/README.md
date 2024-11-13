@@ -86,13 +86,13 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_approved" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved_instance_type" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-  # value    = "Check: Approved"
-  value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
-  # value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedInstanceType"
+  # value    = "Check: Approved instance type"
+  value    = "Enforce: Stop if unapproved instance type"
+  # value    = "Enforce: Stop if unapproved instance type and new"
+  # value    = "Enforce: Delete if unapproved instance type and new"
 }
 ```
 

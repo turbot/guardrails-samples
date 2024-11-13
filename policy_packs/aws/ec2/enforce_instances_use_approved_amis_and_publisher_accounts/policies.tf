@@ -1,21 +1,11 @@
-# AWS > EC2 > Instance > Approved
-resource "turbot_policy_setting" "aws_ec2_instance_approved" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-  value    = "Check: Approved"
-  # value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
-  # value    = "Enforce: Delete unapproved if new"
-}
-
 # AWS > EC2 > Instance > Approved > Image
 resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
-  value    = "Approved if ImageId in Image > AMI IDs and Owner in Image > Publishers"
-  # value    = "Approved if ImageId in Image > AMI IDs"
-  # value    = "Approved if Owner in Image > Publishers"
-  # value    = "Approved if ImageId in Image > AMI IDs or Owner in Image > Publisher"
+  value    = "Check: Approved AMI ID or approved publisher"
+  # value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher"
+  # value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher (if new)"
+  # value    = "Enforce: Delete if unapproved AMI ID or unapproved publisher (if new)"
 }
 
 # AWS > EC2 > Instance > Approved > Image > AMI IDs

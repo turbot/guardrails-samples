@@ -1,21 +1,18 @@
 ---
-categories: ["compute", "security"]
-primary_category: "security"
+categories: ["cost controls", "security"]
+primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 Instances Use Approved AMIs and Publisher Accounts
+# Enforce AWS EC2 Instances Are Launched In Approved Regions
 
-Enforcing AWS EC2 instances to use approved AMIs and/or publisher accounts is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
+Enforcing that AWS EC2 instances are launched only in approved regions helps maintain compliance with organizational policies, data residency requirements, and regulatory standards. By restricting instances to specific regions, you can control where data is stored and processed, reducing exposure to regions with higher security risks and ensuring adherence to legal and compliance obligations.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
 
-- Set the AMI IDs that are approved for use
-- Set the publisher account IDs that are approved for use
-- Stop/Terminate instances that do not use approved AMIs and/or publisher accounts
+- Set a list regions in which instances are approved to launch
+- Stop/Terminate instances that are launched in unapproved regions
 
-## Documentation
-
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_use_approved_amis_and_publisher_accounts/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_are_launched_in_approved_regions/settings)**
 
 ## Getting Started
 
@@ -55,7 +52,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_use_approved_amis_and_publisher_accounts
+cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_are_launched_in_approved_regions
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -89,13 +86,13 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved_region" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
-  # value    = "Check: Approved AMI ID or approved publisher"
-  value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher"
-  # value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher (if new)"
-  # value    = "Enforce: Delete if unapproved AMI ID or unapproved publisher (if new)"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedRegion"
+  # value    = "Check: Approved region"
+  value    = "Enforce: Stop if unapproved region"
+  # value    = "Enforce: Stop if unapproved region and new"
+  # value    = "Enforce: Delete if unapproved region and new"
 }
 ```
 

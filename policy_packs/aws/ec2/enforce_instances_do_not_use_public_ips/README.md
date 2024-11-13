@@ -1,21 +1,17 @@
 ---
-categories: ["compute", "security"]
-primary_category: "security"
+categories: ["cost controls", "security"]
+primary_category: "cost controls"
 ---
 
-# Enforce AWS EC2 Instances Use Approved AMIs and Publisher Accounts
+# Enforce AWS EC2 Instances Do Not Use Public IPs
 
-Enforcing AWS EC2 instances to use approved AMIs and/or publisher accounts is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
+Enforcing AWS EC2 instances to avoid using public IPs is important for enhancing security and reducing exposure to the internet, minimizing the risk of unauthorized access. By restricting instances to private IPs, you ensure that they can only be accessed through secure internal networks or via controlled mechanisms, such as VPNs or bastion hosts, thereby strengthening your network’s security posture.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
 
-- Set the AMI IDs that are approved for use
-- Set the publisher account IDs that are approved for use
-- Stop/Terminate instances that do not use approved AMIs and/or publisher accounts
+- Stop/Terminate instances that use Public IPs
 
-## Documentation
-
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_use_approved_amis_and_publisher_accounts/settings)**
+**[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_do_not_use_public_ips/settings)**
 
 ## Getting Started
 
@@ -55,7 +51,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_use_approved_amis_and_publisher_accounts
+cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_do_not_use_public_ips
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -89,13 +85,13 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
+resource "turbot_policy_setting" "aws_ec2_instance_approved_public_ip" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
-  # value    = "Check: Approved AMI ID or approved publisher"
-  value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher"
-  # value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher (if new)"
-  # value    = "Enforce: Delete if unapproved AMI ID or unapproved publisher (if new)"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedPublicIp"
+  # value    = "Check: Not public"
+  value    = "Enforce: Stop if public"
+  # value    = "Enforce: Stop if public and new"
+  # value    = "Enforce: Delete if public and new"
 }
 ```
 

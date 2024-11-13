@@ -1,18 +1,18 @@
-# AWS > EC2 > Instance > Approved
-resource "turbot_policy_setting" "aws_ec2_instance_approved" {
+# AWS > EC2 > Instance > Approved > Instance Type
+resource "turbot_policy_setting" "aws_ec2_instance_approved_instance_type" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApproved"
-  value    = "Check: Approved"
-  # value    = "Enforce: Stop unapproved"
-  # value    = "Enforce: Stop unapproved if new"
-  # value    = "Enforce: Delete unapproved if new"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedInstanceType"
+  value    = "Check: Approved instance type"
+  # value    = "Enforce: Stop if unapproved instance type"
+  # value    = "Enforce: Stop if unapproved instance type and new"
+  # value    = "Enforce: Delete if unapproved instance type and new"
 }
 
 # List of instance types that are approved for use
-# AWS > EC2 > Instance > Approved > Instance Types
-resource "turbot_policy_setting" "aws_ec2_instance_approved_volume_types" {
+# AWS > EC2 > Instance > Approved > Instance Type > Types
+resource "turbot_policy_setting" "aws_ec2_instance_approved_instance_type_types" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedInstanceTypes"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedInstanceTypeTypes"
   value    = <<-EOT
     - "t3.*"
     - "m5.xlarge"

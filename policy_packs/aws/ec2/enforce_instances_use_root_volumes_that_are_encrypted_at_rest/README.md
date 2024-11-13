@@ -1,21 +1,20 @@
 ---
-categories: ["compute", "security"]
+categories: ["security", "storage"]
 primary_category: "security"
 ---
 
-# Enforce AWS EC2 Instances Use Approved AMIs and Publisher Accounts
+# Enforce AWS EC2 Instances Use Root Volumes That Are Encrypted At Rest
 
-Enforcing AWS EC2 instances to use approved AMIs and/or publisher accounts is vital for maintaining a secure and standardized environment. This practice ensures that only trusted, validated images are used, reducing the risk of security vulnerabilities and ensuring compliance with organizational policies and security standards.
+Enforcing encryption at rest for root volumes on AWS EC2 instances is crucial for protecting sensitive data from unauthorized access. By ensuring that root volumes are encrypted, you add a layer of security that safeguards data stored on instances, reducing the risk of data breaches in case of unauthorized access to the physical storage or backups.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EC2 instances:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EBS volumes:
 
-- Set the AMI IDs that are approved for use
-- Set the publisher account IDs that are approved for use
-- Stop/Terminate instances that do not use approved AMIs and/or publisher accounts
+- Set Customer Managed Key which should be used to encrypt volumes
+- Stop/Terminate instances that have root volumes with unapproved encryption level
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_use_approved_amis_and_publisher_accounts/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_instances_use_root_volumes_that_are_encrypted_at_rest/settings)**
 
 ## Getting Started
 
@@ -55,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_use_approved_amis_and_publisher_accounts
+cd guardrails-samples/policy_packs/aws/ec2/enforce_instances_use_root_volumes_that_are_encrypted_at_rest
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -89,13 +88,13 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 By default, the policies are set to `Check` in the pack's policy settings. To enable automated enforcements, you can switch these policies settings by adding a comment to the `Check` setting and removing the comment from one of the listed enforcement options:
 
 ```hcl
-resource "turbot_policy_setting" "aws_ec2_instance_approved_image" {
+resource "turbot_policy_setting" "aws_ec2_volume_approved_root_volume_encryption_at_rest" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedImage"
-  # value    = "Check: Approved AMI ID or approved publisher"
-  value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher"
-  # value    = "Enforce: Stop if unapproved AMI ID or unapproved publisher (if new)"
-  # value    = "Enforce: Delete if unapproved AMI ID or unapproved publisher (if new)"
+  type     = "tmod:@turbot/aws-ec2#/policy/types/instanceApprovedRootVolumeEncryptionAtRest"
+  # value    = "Check: Approved encryption level"
+  value    =  "Enforce: Stop if unapproved encryption level"
+  # value    =  "Enforce: Stop if unapproved encryption level and new"
+  # value    =  "Enforce: Delete if unapproved encryption level and new"
 }
 ```
 
