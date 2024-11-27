@@ -1,19 +1,21 @@
 import click
 import turbot
-from sgqlc.endpoint.http import HTTPEndpoint
+import requests
 import time
+from datetime import datetime
 
 
 @click.command()
 @click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
 @click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
-@click.option('-f', '--filter', default="state:tbd", help="Used to filter out matching policies.")
-@click.option('-b', '--batch', default=100, help="[Int] The number of policies to run before cooldown per cycle")
-@click.option('-s', '--start-index', default=0, help="[Int] Sets the starting point in the returned control collection. All policies starting at the starting point will be run.")
+@click.option('-f', '--filter', default="state:tbd", help="[String] Used to filter out matching policies.")
+@click.option('-b', '--batch', default=100, help="[Int] The number of policies to run before cooldown per cycle.")
+@click.option('-s', '--start-index', default=0, help="[Int] Sets the starting point in the returned policy collection. All policies starting at the starting point will be run.")
 @click.option('-d', '--cooldown', default=120, help="[Int] Number of seconds to pause before the next batch of policies are run. Setting this value to `0` will disable cooldown.")
 @click.option('-m', '--max-batch', default=-1, help="[Int] The maximum number of batches to run. The value `-1` will run all the returned policies from the starting point.")
 @click.option('-e', '--execute', is_flag=True, help="Will re-run policies when found.")
-def run_policies(config_file, profile, filter, batch, start_index, cooldown, max_batch, execute):
+@click.option('-i', '--insecure', is_flag=True, help="Disable SSL certificate verification.")
+def run_policies(config_file, profile, filter, batch, start_index, cooldown, max_batch, execute, insecure):
     """ Finds all policies matching the provided filter, then re-runs them if --execute is set."""
     """
         Example Filters
@@ -24,10 +26,35 @@ def run_policies(config_file, profile, filter, batch, start_index, cooldown, max
         Re-run CMDB policies:                   "controlCategoryId:'tmod:@turbot/turbot#/control/categories/cmdb'"
         Re-run policies that match policy type: "policyTypeId:'tmod:@turbot/azure-activedirectory#/policy/types/directoryCmdb'"
     """
+    start_time = datetime.now()  # Record script start time
 
-    config = turbot.Config(config_file, profile)
-    headers = {'Authorization': 'Basic {}'.format(config.auth_token)}
-    endpoint = HTTPEndpoint(config.graphql_endpoint, headers)
+    # Validate the profile and connection
+    try:
+        config = turbot.Config(config_file, profile)
+        headers = {'Authorization': f'Basic {config.auth_token}'}
+        endpoint_url = config.graphql_endpoint
+        # print(f"Testing connection to {endpoint_url} ...")
+        # print("Connection successful!\n")
+    except KeyError:
+        print(f"Error: The profile '{profile}' does not exist in the configuration file.")
+        print("Please check your configuration file or specify a valid profile using the -p option.")
+        return
+    except requests.exceptions.RequestException as e:
+        print(f"Error: Unable to connect to the endpoint. {e}")
+        return
+    except Exception as e:
+        print(f"Error: Unable to load configuration or connect to the endpoint. {e}")
+        return
+
+    # Set up a requests session
+    session = requests.Session()
+    session.verify = not insecure  # Disable SSL verification if insecure is True
+
+    if insecure:
+        requests.packages.urllib3.disable_warnings()
+
+    print(f"\nUsing the filter: {filter}")
+    print("Looking for targets...")
 
     query = '''
       query Targets($filter: [String!]!, $paging: String) {
@@ -46,56 +73,87 @@ def run_policies(config_file, profile, filter, batch, start_index, cooldown, max
 
     targets = []
     paging = None
-    print("Looking for targets...")
 
     while True:
         variables = {'filter': filter, 'paging': paging}
-        result = endpoint(query, variables)
+        try:
+            response = session.post(
+                endpoint_url,
+                json={'query': query, 'variables': variables},
+                headers=headers
+            )
+            response.raise_for_status()
+            result = response.json()
 
-        if "errors" in result:
-            for error in result['errors']:
-                print(error)
-            break
+            if "errors" in result:
+                for error in result["errors"]:
+                    print(f"Error: {error['message']}")
+                print("Query failed. Please check the filter or query syntax and try again.")
+                return
 
-        for item in result['data']['targets']['items']:
-            targets.append(item)
-        if not result['data']['targets']['paging']['next']:
-            break
-        else:
-            print("{} found...".format(len(targets)))
-            paging = result['data']['targets']['paging']['next']
+            for item in result['data']['targets']['items']:
+                targets.append(item)
+            if not result['data']['targets']['paging']['next']:
+                break
+            else:
+                print("{} found...".format(len(targets)))
+                paging = result['data']['targets']['paging']['next']
 
-    print("\nFound {} Total Targets".format(len(targets)))
+        except requests.exceptions.RequestException as e:
+            print(f"Error occurred during request: {e}")
+            return
+
+    total_targets = len(targets)
+    print(f"\nFound {total_targets} Total Targets")
 
     if not execute:
-        print("\n --execute flag not set... exiting.")
-    else:
-        mutation = '''
-          mutation RunPolicy($input: RunPolicyInput!) {
-            runPolicy(input: $input) {
-              turbot {
-                id
-              }
-            }
+        print("\n --execute flag not set. Exiting.")
+        return
+
+    mutation = '''
+      mutation RunPolicy($input: RunPolicyInput!) {
+        runPolicy(input: $input) {
+          turbot {
+            id
           }
-        '''
+        }
+      }
+    '''
 
-        total_batches = 0
-        for index in range(start_index, len(targets)):
-            control = targets[index]
-            vars = {'input': {'id': control['turbot']['id']}}
-            print(vars)
-            try:
-                run = endpoint(mutation, vars)
-                print(run)
-            except Exception as e:
-                print(e)
+    completed_policies = 0
+    for index in range(start_index, total_targets):
+        policy = targets[index]
+        vars = {'input': {'id': policy['turbot']['id']}}
+        try:
+            response = session.post(
+                endpoint_url,
+                json={'query': mutation, 'variables': vars},
+                headers=headers
+            )
+            response.raise_for_status()
+            result = response.json()
 
-            if ((index - start_index + 1) % batch == 0):
-                total_batches = total_batches + 1
+            policy_id = policy['turbot']['id']
+            process_id = result['data']['runPolicy']['turbot']['id']
+            print(f'{{"policyId": "{policy_id}", "processId": "{process_id}"}}')
+            completed_policies += 1
+        except requests.exceptions.RequestException as e:
+            print(f"Error occurred during mutation: {e}")
+
+        # Check if end of batch or last policy
+        if (completed_policies % batch == 0 or completed_policies == total_targets):
+            print(f"Triggered {completed_policies} of {total_targets} policies.", end="")
+            if completed_policies < total_targets and cooldown > 0:
+                print(f" Waiting for {cooldown} seconds before running the next batch...")
                 time.sleep(cooldown)
-                if (total_batches == max_batch):
-                    break
+            else:
+                print()
+
+    end_time = datetime.now()  # Record script end time
+    elapsed_time = (end_time - start_time).total_seconds()
+
+    print(f"Total Targets: {total_targets}")
+    print(f"Total Time taken: {elapsed_time:.2f} seconds")
 
 
 if __name__ == "__main__":
