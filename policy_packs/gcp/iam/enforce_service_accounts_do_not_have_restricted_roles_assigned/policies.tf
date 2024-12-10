@@ -27,7 +27,7 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
     }
     EOT
   template       = <<-EOT
-    {%- set disallowedRoles = [
+    {%- set restrictedRoles = [
         "roles/editor", 
         "roles/owner", 
         "roles/viewer", 
@@ -39,14 +39,14 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
 
     {%- set email = $.resource.email -%}
     {%- set isDisabled = $.resource.disabled == true -%}
-    {%- set assignedDisallowedRoles = [] -%}
+    {%- set assignedRestrictedRoles = [] -%}
 
-    {%- if not isDisabled -%} {# If the service account is not disabled, check for disallowed roles #}
+    {%- if not isDisabled -%} {# If the service account is not disabled, check for restricted roles #}
       {%- for binding in $.resources.items[0].projectBindings -%}
-        {%- if binding.role in disallowedRoles -%}
+        {%- if binding.role in restrictedRoles -%}
           {%- for member in binding.members -%}
             {%- if member == "serviceAccount:" + email -%}
-              {%- set assignedDisallowedRoles = assignedDisallowedRoles.concat([binding.role]) -%}
+              {%- set assignedRestrictedRoles = assignedRestrictedRoles.concat([binding.role]) -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endif -%}
@@ -57,14 +57,14 @@ resource "turbot_policy_setting" "gcp_iam_service_account_approved_custom" {
     - "title": "Role Bindings"
       "result": "Approved"
       "message": "The service account is disabled."
-    {%- elif assignedDisallowedRoles | length > 0 -%}
+    {%- elif assignedRestrictedRoles | length > 0 -%}
     - "title": "Role Bindings"
       "result": "Not approved"
-      "message": "The service account has disallowed role(s): {{ assignedDisallowedRoles | join(", ") }} assigned."
+      "message": "The service account has restricted role(s): {{ assignedRestrictedRoles | join(", ") }} assigned."
     {%- else -%}
     - "title": "Role Bindings"
       "result": "Approved"
-      "message": "The service account does not have any disallowed roles assigned."
+      "message": "The service account does not have any restricted roles assigned."
     {%- endif -%}
     EOT
 }
