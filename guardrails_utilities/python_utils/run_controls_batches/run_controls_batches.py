@@ -120,9 +120,23 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
     '''
 
     completed_controls = 0
+    skipped_controls = 0
     for index in range(start_index, total_targets):
         control = targets[index]
-        vars = {'input': {'id': control['turbot']['id']}}
+
+        # Validate control object
+        if control is None:
+            print(f"Skipping control at index {index} due to being None.")
+            skipped_controls += 1
+            continue
+        if 'turbot' not in control or 'id' not in control['turbot']:
+            print(f"Skipping control at index {index} due to missing required keys.")
+            skipped_controls += 1
+            continue
+
+        control_id = control['turbot']['id']
+        vars = {'input': {'id': control_id}}
+        
         try:
             response = session.post(
                 endpoint_url,
@@ -132,17 +146,39 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
             response.raise_for_status()
             result = response.json()
 
-            control_id = control['turbot']['id']
+            # Check for errors in the response
+            if "errors" in result:
+                for error in result["errors"]:
+                    print(f"Skipping control ID {control_id} due to {error['message']}")
+                skipped_controls += 1
+                continue
+
+            # Ensure runControl is not None
+            if 'data' not in result or 'runControl' not in result['data'] or result['data']['runControl'] is None:
+                print(f"Skipping control ID {control_id} due to missing mutation data.")
+                skipped_controls += 1
+                continue
+
             process_id = result['data']['runControl']['turbot']['id']
             print(f'{{"controlId": "{control_id}", "processId": "{process_id}"}}')
             completed_controls += 1
-        except requests.exceptions.RequestException as e:
-            print(f"Error occurred during mutation: {e}")
 
-        # Check if end of batch or last control
-        if (completed_controls % batch == 0 or completed_controls == total_targets):
-            print(f"Triggered {completed_controls} of {total_targets} controls.", end="")
-            if completed_controls < total_targets and cooldown > 0:
+        except requests.exceptions.RequestException as e:
+            print(f"Error occurred during mutation for control ID {control_id}: {e}")
+            skipped_controls += 1
+            continue
+        except Exception as e:
+            print(f"Unexpected error during mutation for control ID {control_id}: {e}")
+            skipped_controls += 1
+            continue
+
+        # Batch and cooldown handling
+        if (completed_controls % batch == 0 or completed_controls + skipped_controls == total_targets):
+            print(
+                f"Triggered {completed_controls} of {total_targets} controls. "
+                f"Skipped {skipped_controls} so far.", end=""
+            )
+            if completed_controls + skipped_controls < total_targets and cooldown > 0:
                 print(f" Waiting for {cooldown} seconds before running the next batch...")
                 time.sleep(cooldown)
             else:
@@ -151,9 +187,11 @@ def run_controls(config_file, profile, filter, batch, start_index, cooldown, max
     end_time = datetime.now()  # Record script end time
     elapsed_time = (end_time - start_time).total_seconds()
 
-    print(f"Total Targets: {total_targets}")
-    print(f"Total Time taken: {elapsed_time:.2f} seconds")
-
+    print("\nSummary:")
+    print(f"Total Targets Retrieved: {total_targets}")
+    print(f"Total Controls Triggered: {completed_controls}")
+    print(f"Total Controls Skipped: {skipped_controls}")
+    print(f"Total Time Taken: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
     try:
