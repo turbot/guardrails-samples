@@ -121,9 +121,23 @@ def run_policies(config_file, profile, filter, batch, start_index, cooldown, max
     '''
 
     completed_policies = 0
+    skipped_policies = 0
     for index in range(start_index, total_targets):
         policy = targets[index]
-        vars = {'input': {'id': policy['turbot']['id']}}
+
+        # Validate policy object
+        if policy is None:
+            print(f"Skipping policy at index {index} due to being None.")
+            skipped_policies += 1
+            continue
+        if 'turbot' not in policy or 'id' not in policy['turbot']:
+            print(f"Skipping policy at index {index} due to missing required keys.")
+            skipped_policies += 1
+            continue
+
+        policy_id = policy['turbot']['id']
+        vars = {'input': {'id': policy_id}}
+
         try:
             response = session.post(
                 endpoint_url,
@@ -133,17 +147,39 @@ def run_policies(config_file, profile, filter, batch, start_index, cooldown, max
             response.raise_for_status()
             result = response.json()
 
-            policy_id = policy['turbot']['id']
+            # Check for errors in the response
+            if "errors" in result:
+                for error in result["errors"]:
+                    print(f"Skipping policy ID {policy_id} due to {error['message']}")
+                skipped_policies += 1
+                continue
+
+            # Ensure runPolicy is not None
+            if 'data' not in result or 'runPolicy' not in result['data'] or result['data']['runPolicy'] is None:
+                print(f"Skipping policy ID {policy_id} due to missing mutation data.")
+                skipped_policies += 1
+                continue
+
             process_id = result['data']['runPolicy']['turbot']['id']
             print(f'{{"policyId": "{policy_id}", "processId": "{process_id}"}}')
             completed_policies += 1
-        except requests.exceptions.RequestException as e:
-            print(f"Error occurred during mutation: {e}")
 
-        # Check if end of batch or last policy
-        if (completed_policies % batch == 0 or completed_policies == total_targets):
-            print(f"Triggered {completed_policies} of {total_targets} policies.", end="")
-            if completed_policies < total_targets and cooldown > 0:
+        except requests.exceptions.RequestException as e:
+            print(f"Error occurred during mutation for policy ID {policy_id}: {e}")
+            skipped_policies += 1
+            continue
+        except Exception as e:
+            print(f"Unexpected error during mutation for policy ID {policy_id}: {e}")
+            skipped_policies += 1
+            continue
+
+        # Batch and cooldown handling
+        if (completed_policies % batch == 0 or completed_policies + skipped_policies == total_targets):
+            print(
+                f"Triggered {completed_policies} of {total_targets} policies. "
+                f"Skipped {skipped_policies} so far.", end=""
+            )
+            if completed_policies + skipped_policies < total_targets and cooldown > 0:
                 print(f" Waiting for {cooldown} seconds before running the next batch...")
                 time.sleep(cooldown)
             else:
@@ -152,8 +188,11 @@ def run_policies(config_file, profile, filter, batch, start_index, cooldown, max
     end_time = datetime.now()  # Record script end time
     elapsed_time = (end_time - start_time).total_seconds()
 
-    print(f"Total Targets: {total_targets}")
-    print(f"Total Time taken: {elapsed_time:.2f} seconds")
+    print("\nSummary:")
+    print(f"Total Policies Retrieved: {total_targets}")
+    print(f"Total Policies Triggered: {completed_policies}")
+    print(f"Total Policies Skipped: {skipped_policies}")
+    print(f"Total Time Taken: {elapsed_time:.2f} seconds")
 
 
 if __name__ == "__main__":
