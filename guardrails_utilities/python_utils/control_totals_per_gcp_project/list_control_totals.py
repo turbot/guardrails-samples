@@ -73,7 +73,7 @@ def run_project_controls(config_file, profile):
 
     control_types_query = '''
     query ControlTypesByProject($filter: [String!]!) {
-      policyTypes(filter: $filter) {
+      controlTypes(filter: $filter) {
         items {
           uri
           title
@@ -98,7 +98,7 @@ def run_project_controls(config_file, profile):
             continue
         
         variables = {'projectId': project_id}
-        for control_type in control_types_result['data']['policyTypes']['items']:
+        for control_type in control_types_result['data']['controlTypes']['items']:
           print("inloop")
           result = endpoint(controls_query.format(controlTypeId=control_type['uri']), variables)
 
