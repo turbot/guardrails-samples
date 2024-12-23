@@ -56,15 +56,15 @@ resource "turbot_policy_setting" "azure_network_virtual_network_approved_custom"
           {%- if matchedFlowLog.enabled %}
             - title: Flow Log
               result: Approved
-              message: "Flow log '{{ matchedFlowLog.name }}' is configured"
+              message: "Flow log '{{ matchedFlowLog.name }}' is enabled"
           {%- else %}
             - title: Flow Log
               result: Not approved
-              message: "Flow log '{{ matchedFlowLog.name }}' is configured but currently disabled"
+              message: "Flow log '{{ matchedFlowLog.name }}' is configured but not enabled"
           {%- endif %}
         {%- else %}
           - title: Flow Log
-            result: Not approved
+            result: Skip
             message: "Flow log is configured, but the resource '{{ vnetFlowLog.id.split('/').pop() }}' is not in CMDB. Please run the Flow Log Discovery controls within the Subscription"
         {%- endif %}
       {%- endfor %}
