@@ -95,12 +95,12 @@ resource "turbot_policy_setting" "azure_sql_server_auditing" {
   value    = "Enforce: Enabled"
 }
 
-resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
+resource "turbot_policy_setting" "azure_sql_server_firewall_ip_ranges_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverFirewallIpRangesApproved"
   note     = "Azure CIS v2.0.0 - Control: 4.1.2"
-  # value   = "Check: Approved"
-  value    = "Enforce: Delete unapproved if new"
+  value    = "Check: Approved"
+  # value    = "Enforce: Delete unapproved"
 }
 
 resource "turbot_policy_setting" "azure_sql_server_active_directory_administrator" {
