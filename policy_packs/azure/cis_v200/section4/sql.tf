@@ -24,25 +24,25 @@ resource "turbot_policy_setting" "azure_sql_server_auditing_retention_days" {
   value    = "90"
 }
 
-# Azure > Network > Network Security Group > Ingress Rules > Approved
-resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved" {
+# Azure > SQL > Server > Firewall > IP Ranges > Approved
+resource "turbot_policy_setting" "azure_sql_server_firewall_ip_ranges_approved" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApproved"
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverFirewallIpRangesApproved"
   note     = "Azure CIS v2.0.0 - Control: 4.1.2"
   value    = "Check: Approved"
   # value    = "Enforce: Delete unapproved"
 }
 
-# Azure > Network > Network Security Group > Ingress Rules > Approved > Rules
-resource "turbot_policy_setting" "azure_network_network_security_group_ingress_rules_approved_rules" {
+# Azure > SQL > Server > Firewall > IP Ranges > Approved > Rules
+resource "turbot_policy_setting" "azure_sql_server_firewall_ip_ranges_approved_rules" {
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/azure-network#/policy/types/networkSecurityGroupIngressRulesApprovedRules"
+  type     = "tmod:@turbot/azure-sql#/policy/types/serverFirewallIpRangesApprovedRules"
   note     = "Azure CIS v2.0.0 - Control: 4.1.2"
-  value    = <<EOT
-    REJECT $.turbot.cidr:0.0.0.0/0
+  value    = <<-EOT
+    REJECT $.turbot.startIpAddress:0.0.0.0 $.turbot.endIpAddress:0.0.0.0
 
-    APPROVE *
-  EOT
+    APPROVE * 
+    EOT
 }
 
 # Azure > SQL > Database > Encryption At Rest
