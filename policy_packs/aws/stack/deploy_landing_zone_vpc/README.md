@@ -1,5 +1,5 @@
 ---
-categories: ["networking"] # "stacks"?? "landing zones" ???
+categories: ["networking", "stacks"]
 primary_category: "networking"
 ---
 
