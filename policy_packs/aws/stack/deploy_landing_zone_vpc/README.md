@@ -5,17 +5,17 @@ primary_category: "networking"
 
 # Deploy Landing Zone VPCs
 
-A **Landing Zone VPC** is a pre-configured, user-defined standard network environment in AWS, designed to serve as the foundation for deploying and managing resources. It ensures consistency, governance, and compliance by implementing standard configurations, security controls, and policies. By centralizing management and adhering to best practices, a Landing Zone VPC minimizes risks, optimizes costs, and provides a solid framework for cloud operations from day one.
+A **Landing Zone VPC** is a pre-configured, user-defined standard network environment in AWS, designed to serve as the foundation for deploying and managing resources. It ensures consistency, governance, and compliance by implementing standard configurations. By centralizing management and adhering to best practices, a Landing Zone VPC minimizes risks, optimizes costs, and provides a solid framework for cloud operations from day one.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) helps you configure a landing zone VPC using the `AWS > VPC > Stack [Native]` control. You can customize the `Source`, but the example will create:
 - A VPC
 - An Internet Gateway
 - 0 or more private subnets (default 2)
 - 0 or more public subnets (default 2)
-- 0 or more nat gateways (default 2)
+- 0 or more NAT gateways (default 2)
 - Routing tables and associations
 
-The IP address assignments are read from the `ip_assignments` variable, which contains map of ip addresses to assign, by account-alias and region. *You must add entries to the map for your specific account aliases and regions*.  In this example, an entry isn't found in the map for a given account/region, it will not create any resource but the control will remain in OK state.
+The IP address assignments are read from the `ip_assignments` variable, which contains map of ip addresses to assign, by account-alias and region. *You must add entries to the map for your specific account aliases and regions*.  In this example, if an entry isn't found in the map for a given account/region, it will not create any resource but the control will remain in OK state.
 
 
 ## Documentation

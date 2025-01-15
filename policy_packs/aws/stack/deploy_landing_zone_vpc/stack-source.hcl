@@ -6,13 +6,14 @@ variable "tag_prefix" {
 
 variable "ip_assignments" {
   type        = map
-  description = "A map of ip addresses to assign, by account-alias and region"
+  description = "A map of ip addresses to assign, by account-alias or id and region"
 
   default = {
-    account-1-us-east-1 = "1.2.3.0/24"
-    account-1-us-east-2 = "1.2.4.0/24"
-    account-2-us-west-1 = "1.2.5.0/24"
-    account-3-eu-east-1 = "1.2.6.0/24",
+    account-1-us-east-1      = "1.2.3.0/24"
+    account-1-us-east-2      = "1.2.4.0/24"
+    account-2-us-west-1      = "1.2.5.0/24"
+    account-3-eu-east-1      = "1.2.6.0/24"
+    "123456789012-us-east-1" = "1.2.7.0/24"
   }
 }
 
@@ -34,7 +35,7 @@ variable "max_azs" {
   default     = 2
 }
 
-# Declare the data source
+# Data sources
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -43,25 +44,37 @@ data "aws_region" "current" {}
 
 data "aws_iam_account_alias" "current" {}
 
+data "aws_caller_identity" "current" {}
 
+
+# local variables
 locals {
-  # If there is no entry for this account-region in the ip_assignments map, we wont create any resources
-  unassigned    = !can(var.ip_assignments["${data.aws_iam_account_alias.current.account_alias}-${data.aws_region.current.name}"])
   total_subnets = var.public_subnet_count + var.private_subnet_count
   newbits       = ceil(log(local.total_subnets, 2))  # Calculate the newbits required for the cidrsubnet function based on number of subnets
   az_count      = var.max_azs > length(data.aws_availability_zones.available.names) ? length(data.aws_availability_zones.available.names) : var.max_azs
   az_list       = slice(data.aws_availability_zones.available.names, 0, local.az_count )
+
+  account_title = coalesce(data.aws_iam_account_alias.current.account_alias, data.aws_caller_identity.current.account_id)
+
+  cidr_block   =  try( 
+      var.ip_assignments["${data.aws_iam_account_alias.current.account_alias}-${data.aws_region.current.name}"],
+      var.ip_assignments["${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"],
+      null
+  )
+  # If there is no entry for this account-region in the ip_assignments map, we wont create any resources
+  unassigned = local.cidr_block == null ? true : false
+
 }
 
 # VPC
 resource "aws_vpc" "turbot_default" {
-  cidr_block            =  lookup(var.ip_assignments, "${data.aws_iam_account_alias.current.account_alias}-${data.aws_region.current.name}")
+  cidr_block            =  local.cidr_block
   instance_tenancy      = "default"
   enable_dns_support    = true
   enable_dns_hostnames  = true
 
   tags = {
-    Name	= "${var.tag_prefix}${data.aws_iam_account_alias.current.account_alias}-${data.aws_region.current.name}"
+    Name	= "${var.tag_prefix}${local.account_title}-${data.aws_region.current.name}"
   }
 
   count = local.unassigned ? 0 : 1
@@ -80,7 +93,7 @@ resource "aws_subnet" "turbot_public" {
   cidr_block        = cidrsubnet(local.my_vpc.cidr_block, local.newbits, count.index)
 
   tags  = {
-      Name          =  "${var.tag_prefix}public-${local.az_list[count.index % length(local.az_list)]}-${data.aws_iam_account_alias.current.account_alias}"
+      Name          =  "${var.tag_prefix}public-${local.az_list[count.index % length(local.az_list)]}-${local.account_title}"
   }
 }
 
@@ -91,7 +104,7 @@ resource "aws_subnet" "turbot_private" {
   cidr_block        = cidrsubnet(local.my_vpc.cidr_block, local.newbits, var.public_subnet_count + count.index )
 
   tags  = {
-      Name          =  "${var.tag_prefix}private-${local.az_list[count.index % length(local.az_list)]}-${data.aws_iam_account_alias.current.account_alias}"
+      Name          =  "${var.tag_prefix}private-${local.az_list[count.index % length(local.az_list)]}-${local.account_title}"
   }
 }
 
@@ -102,7 +115,7 @@ resource "aws_internet_gateway" "turbot_igw" {
   count  = local.unassigned ? 0 : 1
 
   tags   = {
-      Name =  "${var.tag_prefix}igw-${data.aws_iam_account_alias.current.account_alias}-${data.aws_region.current.name}"
+      Name =  "${var.tag_prefix}igw-${local.account_title}-${data.aws_region.current.name}"
   }
 }
 
@@ -111,7 +124,7 @@ resource "aws_eip" "nat_eip" {
   count = local.unassigned ? 0 : var.public_subnet_count
 
   tags  = {
-    Name =  "${var.tag_prefix}eip-nat-${local.az_list[count.index % length(local.az_list)]}-${data.aws_iam_account_alias.current.account_alias}"
+    Name =  "${var.tag_prefix}eip-nat-${local.az_list[count.index % length(local.az_list)]}-${local.account_title}"
   }
 }
 
@@ -122,7 +135,7 @@ resource "aws_nat_gateway" "turbot_nat_gw" {
   depends_on    = [ aws_internet_gateway.turbot_igw ]
 
   tags  = {
-    Name =  "${var.tag_prefix}natgw-${data.aws_availability_zones.available.names[count.index]}-${data.aws_iam_account_alias.current.account_alias}"
+    Name =  "${var.tag_prefix}natgw-${data.aws_availability_zones.available.names[count.index]}-${local.account_title}"
   }
 }
 
@@ -137,7 +150,7 @@ resource "aws_route_table" "public" {
   }
 
   tags  = {
-    Name =  "${var.tag_prefix}public-rtb-${data.aws_iam_account_alias.current.account_alias}-${data.aws_region.current.name}"
+    Name =  "${var.tag_prefix}public-rtb-${local.account_title}-${data.aws_region.current.name}"
   }
 }
 
@@ -155,7 +168,7 @@ resource "aws_route_table" "private" {
   count  = local.unassigned ? 0 : var.public_subnet_count
 
   tags   = {
-    Name =  "${var.tag_prefix}private-rtb-${data.aws_availability_zones.available.names[count.index]}-${data.aws_iam_account_alias.current.account_alias}"
+    Name =  "${var.tag_prefix}private-rtb-${data.aws_availability_zones.available.names[count.index]}-${local.account_title}"
   }
 }
 
