@@ -1,4 +1,4 @@
-# AWS > VPC > VPC > Stack [Native]
+# AWS > VPC > Stack [Native]
 resource "turbot_policy_setting" "aws_vpc_stack" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcServiceStackNative"
@@ -6,7 +6,7 @@ resource "turbot_policy_setting" "aws_vpc_stack" {
   # value    = "Enforce: Configured"
 }
 
-# AWS > VPC > VPC > Stack [Native] > Variables
+# AWS > VPC > Stack [Native] > Variables
 resource "turbot_policy_setting" "aws_vpc_stack_variables" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcServiceStackNativeVariables"
@@ -30,9 +30,9 @@ resource "turbot_policy_setting" "aws_vpc_stack_variables" {
   EOT
 }
 
-#AWS > VPC > VPC > Stack [Native] > Source
+#AWS > VPC > Stack [Native] > Source
 resource "turbot_policy_setting" "aws_vpc_stack_source" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcServiceStackNativeSource"
-  value    = file("./stack-source.hcl")
+  value    = file("./stack/stack-source.hcl")
 }
