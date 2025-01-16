@@ -93,7 +93,6 @@ resource "turbot_policy_setting" "github_repository_code_security_secret_scannin
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
-
 ```
 
 Then re-apply the changes:
