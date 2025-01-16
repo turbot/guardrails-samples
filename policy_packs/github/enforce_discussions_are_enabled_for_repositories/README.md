@@ -93,7 +93,6 @@ resource "turbot_policy_setting" "github_repository_discussion_enabled" {
   # value    = "Check: Enabled"
   value    = "Enforce: Enabled"
 }
-
 ```
 
 Then re-apply the changes:
