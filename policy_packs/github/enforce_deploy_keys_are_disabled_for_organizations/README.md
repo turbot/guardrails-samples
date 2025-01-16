@@ -5,7 +5,7 @@ primary_category: "security"
 
 # Enforce Deploy Keys Are Disabled for GitHub Organizations
 
-Ensuring deploy keys are disabled for GitHub organizations is essential to prevent unauthorized access and maintain strict control over repository permissions. This enhances security by requiring proper authentication methods for repository interactions.
+Enforcing deploy keys are disabled for GitHub organizations is essential to prevent unauthorized access and maintain strict control over repository permissions. This enhances security by requiring proper authentication methods for repository interactions.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 

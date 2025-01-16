@@ -5,7 +5,7 @@ primary_category: "security"
 
 # Enforce Repository Creation is Disabled for GitHub Organizations
 
-Ensuring member privileges repository creation is disabled for GitHub organizations helps maintain control over organizational repositories, preventing unauthorized or untracked repositories. This enhances security, compliance, and alignment with organizational policies.
+Enforcing member privileges repository creation is disabled for GitHub organizations helps maintain control over organizational repositories, preventing unauthorized or untracked repositories. This enhances security, compliance, and alignment with organizational policies.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 

@@ -5,11 +5,11 @@ primary_category: "security"
 
 # Enforce Unwanted Users Are Blocked from GitHub Organizations
 
-Ensuring unwanted users are blocked from GitHub organizations is vital for maintaining security and preventing unauthorized access. This measure helps safeguard repositories, sensitive data, and organizational workflows by enforcing strict access control policies.
+Enforcing unwanted users are blocked from GitHub organizations is vital for maintaining security and preventing unauthorized access. This measure helps safeguard repositories, sensitive data, and organizational workflows by enforcing strict access control policies.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 
-- Block unwanted uses using usernames
+- Block unwanted users using usernames
 
 ## Documentation
 

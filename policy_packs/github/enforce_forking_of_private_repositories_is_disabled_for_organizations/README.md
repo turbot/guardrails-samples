@@ -5,7 +5,7 @@ primary_category: "security"
 
 # Enforce Forking of Private Repositories is Disabled for GitHub Organizations
 
-Ensuring that member privileges forking of private repositories is disabled for GitHub organizations is essential to prevent unauthorized duplication of sensitive code. This measure enhances security by restricting the distribution of proprietary or confidential information outside the organization.
+Enforcing that member privileges forking of private repositories is disabled for GitHub organizations is essential to prevent unauthorized duplication of sensitive code. This measure enhances security by restricting the distribution of proprietary or confidential information outside the organization.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 

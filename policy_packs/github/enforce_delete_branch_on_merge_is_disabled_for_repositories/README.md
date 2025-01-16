@@ -5,7 +5,7 @@ primary_category: "security"
 
 # Enforce Delete Branch On Merge is Disabled for GitHub Repositories
 
-Ensuring that the pull requests delete branch on merge option is disabled for GitHub repositories prevents the accidental deletion of branches after merging. This practice helps preserve branch history, supports collaboration, and maintains a robust audit trail for development activities.
+Enforcing that the pull requests delete branch on merge option is disabled for GitHub repositories prevents the accidental deletion of branches after merging. This practice helps preserve branch history, supports collaboration, and maintains a robust audit trail for development activities.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub repositories:
 

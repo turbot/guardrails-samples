@@ -5,7 +5,7 @@ primary_category: "security"
 
 # Enforce Pages Creation is Disabled for GitHub Organizations
 
-Ensuring that member privileges pages creation is disabled for GitHub organizations is essential to prevent unauthorized publication of sensitive information. This measure helps maintain control over content visibility and ensures adherence to organizational policies and security best practices.
+Enforcing that member privileges pages creation is disabled for GitHub organizations is essential to prevent unauthorized publication of sensitive information. This measure helps maintain control over content visibility and ensures adherence to organizational policies and security best practices.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 

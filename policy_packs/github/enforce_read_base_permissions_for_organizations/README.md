@@ -5,7 +5,7 @@ primary_category: "security"
 
 # Enforce Forking of Private Repositories is Disabled for GitHub Organizations
 
-Ensuring read only member privileges base permissions are enforced for GitHub organizations is essential to maintain consistent access control. This practice provides baseline visibility while minimizing unauthorized access to sensitive repositories, enhancing security and compliance with organizational policies.
+Enforcing read member privileges base permissions are enforced for GitHub organizations is essential to maintain consistent access control. This practice provides baseline visibility while minimizing unauthorized access to sensitive repositories, enhancing security and compliance with organizational policies.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 
