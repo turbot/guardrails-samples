@@ -1,6 +1,6 @@
 ---
-categories: ["cost controls", "security", "storage"]
-primary_category: "cost controls"
+categories: ["security"]
+primary_category: "security"
 ---
 
 # Enforce Secret Scanning Is Enabled for GitHub Repositories
