@@ -3,7 +3,7 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Discussions Is Enabled for GitHub Repositories
+# Enforce Discussions Are Enabled for GitHub Repositories
 
 Enforcing that GitHub repositories have discussions provide a collaborative space where team members and contributors can engage in open conversations, ask questions, share ideas, and provide feedback related to the project.
 
