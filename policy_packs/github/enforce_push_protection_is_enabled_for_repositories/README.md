@@ -9,7 +9,7 @@ Enforcing that GitHub repositories have push protection enabled automatically sc
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce push protection is enabled for repositories
+- Enforce push protection is enabled
 
 ## Documentation
 
