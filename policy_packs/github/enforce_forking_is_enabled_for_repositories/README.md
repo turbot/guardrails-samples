@@ -9,7 +9,7 @@ Enforcing that GitHub repositories have forking enabled allows users to create a
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce forking is enabled for repositories
+- Enforce forking is enabled
 
 ## Documentation
 
