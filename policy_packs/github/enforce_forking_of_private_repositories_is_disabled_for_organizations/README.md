@@ -9,7 +9,7 @@ Enforcing that member privileges forking of private repositories is disabled for
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 
-- Deny forking of private repositories
+- Disable forking of private repositories
 
 ## Documentation
 
