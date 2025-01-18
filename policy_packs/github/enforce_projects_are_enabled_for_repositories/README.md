@@ -1,5 +1,5 @@
 ---
-categories: ["access management", "data protection", "security"]
+categories: ["access management"]
 primary_category: "access management"
 ---
 
