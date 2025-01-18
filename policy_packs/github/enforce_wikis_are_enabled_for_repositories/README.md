@@ -9,7 +9,7 @@ Enforcing that GitHub repositories have wikis enabled, allow repository collabor
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce wikis are enabled for repositories
+- Enforce wikis are enabled
 
 ## Documentation
 
