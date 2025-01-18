@@ -1,6 +1,6 @@
 ---
-categories: ["security"]
-primary_category: "security"
+categories: ["compliance"]
+primary_category: "compliance"
 ---
 
 # Enforce Discussions Are Enabled for GitHub Repositories
