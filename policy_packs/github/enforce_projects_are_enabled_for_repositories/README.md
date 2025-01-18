@@ -9,7 +9,7 @@ Enforcing that GitHub repositories have projects enabled provides a flexible and
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce projects are enabled for repositories
+- Enforce projects are enabled
 
 ## Documentation
 
