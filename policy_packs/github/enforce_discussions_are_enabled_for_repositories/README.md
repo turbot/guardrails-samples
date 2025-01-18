@@ -9,7 +9,7 @@ Enforcing that GitHub repositories have discussions provide a collaborative spac
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce discussions are enabled for repositories
+- Enforce discussions are enabled
 
 ## Documentation
 
