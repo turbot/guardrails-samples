@@ -9,7 +9,7 @@ Enforcing that GitHub repositories have secret scanning enabled detects sensitiv
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce secret scanning is enabled for repositories
+- Enforce secret scanning is enabled
 
 ## Documentation
 
