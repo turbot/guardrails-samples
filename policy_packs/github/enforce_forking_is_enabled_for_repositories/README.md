@@ -1,6 +1,6 @@
 ---
-categories: ["data protection", "security"]
-primary_category: "security"
+categories: ["access management"]
+primary_category: "access management"
 ---
 
 # Enforce Forking Is Enabled for GitHub Repositories
