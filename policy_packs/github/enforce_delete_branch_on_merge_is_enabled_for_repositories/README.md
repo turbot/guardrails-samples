@@ -9,7 +9,7 @@ Enforcing that the pull requests delete branch on merge option enabled for GitHu
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub repositories:
 
-- Enable delete branch on merge pull requests
+- Enable delete branch on merging pull requests
 
 ## Documentation
 
