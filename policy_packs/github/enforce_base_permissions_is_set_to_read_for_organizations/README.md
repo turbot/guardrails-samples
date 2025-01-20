@@ -3,17 +3,17 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Forking of Private Repositories is Disabled for GitHub Organizations
+# Enforce Base Permissions Is Set to Read for GitHub Organizations
 
-Enforcing read member privileges base permissions are enforced for GitHub organizations is essential to maintain consistent access control. This practice provides baseline visibility while minimizing unauthorized access to sensitive repositories, enhancing security and compliance with organizational policies.
+Enforcing that the base permissions for GitHub organizations are set to read helps limit access to repositories by default, reducing the risk of unauthorized changes. This measure enhances security by enforcing the principle of least privilege while maintaining visibility.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 
-- Setting base permission as read
+- Set base permissions as read
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_read_base_permissions_for_organizations/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_base_permissions_is_set_to_read_for_organizations/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/github/enforce_read_base_permissions_for_organizations
+cd guardrails-samples/policy_packs/github/enforce_base_permissions_is_set_to_read_for_organizations
 ```
 
 Run the Terraform to create the policy pack in your workspace:
