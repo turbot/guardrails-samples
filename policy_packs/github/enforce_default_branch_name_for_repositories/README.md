@@ -1,6 +1,6 @@
 ---
-categories: ["security"]
-primary_category: "security"
+categories: ["compliance"]
+primary_category: "compliance"
 ---
 
 # Enforce Default Branch Name for GitHub Repositories
@@ -9,11 +9,11 @@ Enforcing a default branch name for GitHub repositories ensures consistency, imp
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub repositories:
 
-- Setting default branch name
+- Enforce a default branch name
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_enforce_default_branch_name_for_repositories/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_default_branch_name_for_repositories/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/github/enforce_enforce_default_branch_name_for_repositories
+cd guardrails-samples/policy_packs/github/enforce_default_branch_name_for_repositories
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -92,12 +92,6 @@ resource "turbot_policy_setting" "github_repository_default_branch" {
   type     = "tmod:@turbot/github#/policy/types/repositoryDefaultBranch"
   # value    = "Check: Set to `Default Branch > Name`"
   value    = "Enforce: Set to `Default Branch > Name`"
-}
-
-resource "turbot_policy_setting" "github_repository_default_branch_name" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/github#/policy/types/repositoryDefaultBranchName"
-  value    = "main"
 }
 ```
 
