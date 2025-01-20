@@ -3,17 +3,17 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Dependabot Alerts Are Disabled for GitHub Repositories
+# Enforce Dependabot Alerts Are Enabled for GitHub Repositories
 
-Enforcing that Dependabot alerts are disabled for GitHub repositories helps maintain control over dependency management notifications, preventing unnecessary alerts and aligning with organizational policies. This measure ensures a streamlined approach to dependency tracking and security management.
+Enforcing that Dependabot alerts are enabled for GitHub repositories is essential for identifying and addressing vulnerabilities in dependencies. This measure helps maintain the security and integrity of the codebase by providing timely notifications about potential risks and ensuring compliance with best practices for dependency management.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub repositories:
 
-- Disable dependabot alerts
+- Enable dependabot alerts
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_dependabot_alerts_are_disabled_for_repositories/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_dependabot_alerts_are_enabled_for_repositories/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/github/enforce_dependabot_alerts_are_disabled_for_repositories
+cd guardrails-samples/policy_packs/github/enforce_dependabot_alerts_are_enabled_for_repositories
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -90,8 +90,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "github_repository_dependabot_alerts" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/github#/policy/types/repositoryDependabotAlerts"
-  # value    = "Check: Disabled"
-  value    = "Enforce: Disabled"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 

@@ -3,17 +3,17 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Delete Branch On Merge is Disabled for GitHub Repositories
+# Enforce Delete Branch On Merge is Enabled for GitHub Repositories
 
-Enforcing that the pull requests delete branch on merge option is disabled for GitHub repositories prevents the accidental deletion of branches after merging. This practice helps preserve branch history, supports collaboration, and maintains a robust audit trail for development activities.
+Enforcing that the pull requests delete branch on merge option enabled for GitHub repositories helps maintain a clean and organized codebase by automatically removing merged branches. This practice improves repository management, reduces clutter, and supports efficient collaboration.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub repositories:
 
-- Disable delete branch on merge pull requests
+- Enable delete branch on merge pull requests
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_delete_branch_on_merge_is_disabled_for_repositories/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_delete_branch_on_merge_is_enabled_for_repositories/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/github/enforce_delete_branch_on_merge_is_disabled_for_repositories
+cd guardrails-samples/policy_packs/github/enforce_delete_branch_on_merge_is_enabled_for_repositories
 ```
 
 Run the Terraform to create the policy pack in your workspace:

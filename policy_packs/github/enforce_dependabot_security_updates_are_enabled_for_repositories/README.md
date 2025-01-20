@@ -3,17 +3,17 @@ categories: ["security"]
 primary_category: "security"
 ---
 
-# Enforce Dependabot Security Updates Are Disabled for GitHub Repositories
+# Enforce Dependabot Security Updates Are Enabled for GitHub Repositories
 
-Enforcing dependabot security updates are disabled for GitHub repositories helps prevent automated dependency updates that may conflict with organizational policies or custom workflows. This measure provides better control over dependency management and aligns with organizational security and compliance requirements.
+Enforcing dependabot security updates are enabled for GitHub repositories is essential to automatically detect and address vulnerabilities in dependencies. This practice enhances the security of the codebase, reduces the risk of exploitation, and helps maintain compliance with security best practices.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub repositories:
 
-- Disable dependabot security updates
+- Enable dependabot security updates
 
 ## Documentation
 
-- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_dependabot_security_updates_are_disabled_for_repositories/settings)**
+- **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/github_enforce_dependabot_security_updates_are_enabled_for_repositories/settings)**
 
 ## Getting Started
 
@@ -53,7 +53,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/github/enforce_dependabot_security_updates_are_disabled_for_repositories
+cd guardrails-samples/policy_packs/github/enforce_dependabot_security_updates_are_enabled_for_repositories
 ```
 
 Run the Terraform to create the policy pack in your workspace:
@@ -90,8 +90,8 @@ By default, the policies are set to `Check` in the pack's policy settings. To en
 resource "turbot_policy_setting" "github_repository_dependabot_security_updates" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/github#/policy/types/repositoryDependabotSecurityUpdates"
-  # value    = "Check: Disabled"
-  value    = "Enforce: Disabled"
+  # value    = "Check: Enabled"
+  value    = "Enforce: Enabled"
 }
 ```
 
