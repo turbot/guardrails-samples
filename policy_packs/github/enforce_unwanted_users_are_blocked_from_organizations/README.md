@@ -9,7 +9,8 @@ Enforcing unwanted users are blocked from GitHub organizations is vital for main
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for GitHub organizations:
 
-- Block unwanted users using usernames
+- Set usernames of unwanted users to be blocked
+- Block unwanted users
 
 ## Documentation
 
@@ -92,14 +93,6 @@ resource "turbot_policy_setting" resource "turbot_policy_setting" "github_organi
   type     = "tmod:@turbot/github#/policy/types/organizationBlockedUsers"
   # value    = "Check: Block Users"
   value    = "Enforce: Block Users"
-}
-
-resource "turbot_policy_setting" "github_organization_blocked_users_usernames" {
-  resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/github#/policy/types/organizationBlockedUsersUsernames"
-  value = <<-EOT
-    - "octocat"
-    EOT
 }
 ```
 
