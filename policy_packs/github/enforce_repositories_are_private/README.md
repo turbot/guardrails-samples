@@ -9,7 +9,7 @@ Enforcing that GitHub repositories are private ensures that all GitHub repositor
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Github repositories:
 
-- Enforce private visibility for repositories
+- Enforce private visibility
 
 ## Documentation
 
