@@ -5,6 +5,8 @@ primary_category: "stacks"
 
 # Deploy AWS IAM Stack
 
+Deploy and manage AWS IAM resources using OpenTofu with `AWS > IAM > Stack [Native]` control.
+
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) helps you deploy, configure, and manage standard account-level IAM resources using the `AWS > IAM > Stack [Native]` control. You can customize the `Source`, but the example will create a simple IAM role.
 
 ## Documentation
@@ -18,7 +20,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) hel
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 
 - Guardrails mods:
-  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
+  - [@turbot/aws-iam](https://hub.guardrails.turbot.com/mods/aws/mods/aws-iam)
 
 ### Credentials
 
@@ -71,7 +73,7 @@ There are additional stack-related example policies that are commented out in th
 - `AWS > IAM > Stack [Native] > Drift Detection > Interval`
  
 
-When you are ready to install the policy pack, run the Terraform commands to create the policy pack in your workspace:
+Run the Terraform to create the policy pack in your workspace:
 
 ```sh
 terraform init
