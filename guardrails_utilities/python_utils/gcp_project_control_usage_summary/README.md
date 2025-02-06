@@ -2,7 +2,7 @@
 
 Retrieves all GCP projects and runs a subquery on each to get control counts and other details.
 
-For further reference, see [Turbot's GraphQL API documentation](https://turbot.com/v5/docs/reference/graphql/overview).
+For further reference, see [Turbot's GraphQL API documentation](https://turbot.com/guardrails/docs/reference/graphql#graphql).
 
 ## Prerequisites
 
@@ -79,7 +79,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 
 To run a the Python script:
 
-1. Install and configure the [pre-requisites](#pre-requisites)
+1. Install and configure the [prerequisites](#prerequisites)
 1. Using the command line, navigate to the directory for the Python script
 1. Create and activate the Python virtual environment
 1. Install dependencies
