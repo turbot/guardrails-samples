@@ -89,7 +89,7 @@ To run the script:
 --dry-run
 
 > [Integer] Controls whether the batch run should actually run the controls when set to `false` or to simply display which controls will be run when set to `true`.
-> Defaults to false
+> Defaults to `true`
 
 --help
 
