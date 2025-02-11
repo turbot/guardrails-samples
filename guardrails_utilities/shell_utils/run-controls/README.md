@@ -89,7 +89,7 @@ To run the script:
 --dry-run
 
 > [Integer] Controls whether the batch run should actually run the controls when set to `false` or to simply display which controls will be run when set to `true`.
-> Defaults to false
+> Defaults to `true`
 
 --help
 
@@ -97,7 +97,7 @@ To run the script:
 
 #### Example usage
 
-##### Example 1
+##### Example 1:
 
 List all controls that will be run in state of error.
 
@@ -105,28 +105,42 @@ List all controls that will be run in state of error.
 ./run_controls.sh --filter 'state:error'
 ```
 
-##### Example 2
+##### Example 2:
 
 Re-runs all the controls that will are in state of error.
-
-List all controls that will be run in error
 
 ```shell
 ./run_controls.sh --filter 'state:error' --dry-run false
 ```
+**Note:** *If you do not provide `--dry-run false`, it will default to `--dry-run true` resulting listing of controls as mentioned in Example 1.*
 
-##### Example 3
+##### Example 3:
 
 Changing the batch size to 10.
+
+In this example, it will `list` the controls in the batch size of 10.
 
 ```shell
 ./run_controls.sh --filter 'state:error' --batch-size 10
 ```
 
-##### Example 4
+##### Example 4:
 
-Changing the back off time to 60 seconds.
+Listing specific control with batch size of 25
 
 ```shell
-./run_controls.sh --filter 'state:error' --sleep-time 10
+./run-controls.sh --filter 'state:error controlTypeId:tmod:@turbot/aws-ec2#/control/types/snapshotActive' --batch-size 25
+```
+Re-run specific control with batch size of 25
+
+```shell
+./run-controls.sh --filter 'state:error controlTypeId:tmod:@turbot/aws-ec2#/control/types/snapshotActive' --dry-run false --batch-size 25
+```
+
+##### Example 5:
+
+Changing the back off time to 20 seconds.
+
+```shell
+./run_controls.sh --filter 'state:error' --sleep-time 20
 ```
