@@ -120,13 +120,12 @@ In this example it will `list` the controls in the batch size of 10.
 
 ##### Example 4: Executing specific control
 
-Listing with batch size of 25
+Listing specific control with batch size of 25
 
 ```shell
 /run-controls.sh --filter 'state:error controlTypeId:tmod:@turbot/aws-ec2#/control/types/snapshotActive' --dry-run true --batch-size 25
 ```
-
-Executing controls with batch size of 25
+Executing specific control with batch size of 25
 
 ```shell
 /run-controls.sh --filter 'state:error controlTypeId:tmod:@turbot/aws-ec2#/control/types/snapshotActive' --dry-run true --batch-size 25
