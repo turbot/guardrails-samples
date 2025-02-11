@@ -131,8 +131,8 @@ Executing specific control with batch size of 25
 /run-controls.sh --filter 'state:error controlTypeId:tmod:@turbot/aws-ec2#/control/types/snapshotActive' --dry-run true --batch-size 25
 ```
 
-##### Example 5: Changing the back off time to 60 seconds.
+##### Example 5: Changing the back off time to 20 seconds.
 
 ```shell
-./run_controls.sh --filter 'state:error' --sleep-time 10
+./run_controls.sh --filter 'state:error' --sleep-time 20
 ```
