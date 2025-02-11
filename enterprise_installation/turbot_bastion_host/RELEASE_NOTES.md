@@ -4,6 +4,7 @@
 - Integrated EC2 Launch Template to support IMDSv2 and streamline instance configurations.
 - Added support for Graviton instance types, enabling cost-efficient ARM-based deployments.
 - Expanded IAM permissions to include elasticache:Connect, allowing secure ElastiCache access.
+- Updated default PostgreSQL client to version 16.x for improved database compatibility.
 
 # 1.3.0 (2024-09-09)
 
