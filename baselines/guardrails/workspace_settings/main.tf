@@ -39,7 +39,7 @@ resource "turbot_policy_setting" "turbot_resource_purge_limit" {
 resource "turbot_policy_setting" "turbot_activity_retention" {
   resource = "tmod:@turbot/turbot#/"
   type     = "tmod:@turbot/turbot#/policy/types/activityRetention"
-  value    = "30 days"
+  value    = "90 days"
   # Minimum: "30 days"
   # Default: None
 }
@@ -57,7 +57,7 @@ resource "turbot_policy_setting" "turbot_activity_purge_limit" {
 resource "turbot_policy_setting" "account_statistics_retention" {
   resource = "tmod:@turbot/turbot#/"
   type     = "tmod:@turbot/turbot#/policy/types/accountStatisticsRetention"
-  value    = "30 days"
+  value    = "90 days"
   # Minimum: "30 days"
   # Default: "30 days"
 }
