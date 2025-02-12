@@ -79,17 +79,17 @@ To run the script:
 --sleep-time (Optional)
 
 > [Integer] Time to back off during batches given in seconds.
-> Defaults to 10 seconds.
+> Default is set to 10 seconds.
 
 --batch-size
 
 > [Integer] The maximum size of the batch to run next.
-> Defaults to 20 items.
+> Default is set to 20 items.
 
 --dry-run
 
 > [Integer] policies whether the batch run should actually run the policies when set to `false` or to simply display which policies will be run when set to `true`.
-> Defaults to false
+> Default is set to true
 
 --help
 
@@ -109,8 +109,6 @@ List all policies that will be run in state of error.
 
 Re-runs all the policies that will are in state of error.
 
-List all policies that will be run in error
-
 ```shell
 ./run_policies.sh --filter 'state:error' --dry-run false
 ```
@@ -125,8 +123,8 @@ Changing the batch size to 10.
 
 ##### Example 4
 
-Changing the back off time to 60 seconds.
+Changing the back off time to 20 seconds.
 
 ```shell
-./run_policies.sh --filter 'state:error' --sleep-time 10
+./run_policies.sh --filter 'state:error' --sleep-time 20
 ```
