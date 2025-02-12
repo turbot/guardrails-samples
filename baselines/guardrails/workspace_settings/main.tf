@@ -35,6 +35,42 @@ resource "turbot_policy_setting" "turbot_resource_purge_limit" {
   # Default: 30
 }
 
+# https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/activityRetention
+resource "turbot_policy_setting" "turbot_activity_retention" {
+  resource = "tmod:@turbot/turbot#/"
+  type     = "tmod:@turbot/turbot#/policy/types/activityRetention"
+  value    = "90 days"
+  # Minimum: "30 days"
+  # Default: None
+}
+
+# https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/activityPurgeLimit
+resource "turbot_policy_setting" "turbot_activity_purge_limit" {
+  resource = "tmod:@turbot/turbot#/"
+  type     = "tmod:@turbot/turbot#/policy/types/activityPurgeLimit"
+  value    = 100
+  # Minimum: 1
+  # Default: 100
+}
+
+# https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/accountStatisticsRetention
+resource "turbot_policy_setting" "account_statistics_retention" {
+  resource = "tmod:@turbot/turbot#/"
+  type     = "tmod:@turbot/turbot#/policy/types/accountStatisticsRetention"
+  value    = "90 days"
+  # Minimum: "30 days"
+  # Default: "30 days"
+}
+
+# https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/accountStatisticsRetentionPurgeLimit
+resource "turbot_policy_setting" "account_statistics_retention_purge_limit" {
+  resource = "tmod:@turbot/turbot#/"
+  type     = "tmod:@turbot/turbot#/policy/types/accountStatisticsRetentionPurgeLimit"
+  value    = 100
+  # Minimum: 1
+  # Default: 100
+}
+
 # https://hub.guardrails.turbot.com/mods/turbot/policies/turbot/stackTerraformVersion
 resource "turbot_policy_setting" "turbot_stack_terraform_version" {
   resource = "tmod:@turbot/turbot#/"
