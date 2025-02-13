@@ -1,6 +1,6 @@
 # Delete Resources in batches from Guardrails
 
-This script first disables discovery-related policies for targeted resources that are planned for removal from Guardrails. This prevents discovery controls from re-running and re-adding the resources to the Guardrails CMDB.
+This script first disables discovery-related policies for targeted resources that are planned for removal from Guardrails. This prevents discovery controls from re-running and re-adding the resources to the Guardrails [CMDB](https://turbot.com/guardrails/docs/reference/glossary#cmdb).
 
 When executed with the `--disable` flag, the script disables discovery policies for the specified resources and then deletes them **along with their descendants**.
 
