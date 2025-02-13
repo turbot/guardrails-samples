@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Turbot Bastion Host v1.3.0
+Description: "Turbot Bastion Host v1.4.0"
 Metadata:
   "AWS::CloudFormation::Interface":
     ParameterGroups:
@@ -97,49 +97,77 @@ Parameters:
   BastionInstanceType:
     AllowedValues:
       # General Purpose
-      - t3.small
       - t3.medium
       - t3.large
       - t3.xlarge
       - t3.2xlarge
+      - t4g.medium
+      - t4g.large
+      - t4g.xlarge
+      - t4g.2xlarge
+      - t4g.4xlarge
+      - m8g.medium
+      - m8g.large
+      - m8g.xlarge
+      - m8g.2xlarge
+      - m8g.4xlarge
       # Compute Optimized
       - c5.large
       - c5.xlarge
       - c5.2xlarge
       - c5.4xlarge
+      - c8g.medium
+      - c8g.large
+      - c8g.xlarge
+      - c8g.2xlarge
+      - c8g.4xlarge
       # Memory Optimized
       - r5.large
       - r5.xlarge
       - r5.2xlarge
       - r5.4xlarge
       - r5.8xlarge
-    Default: t3.medium
+      - r8g.medium
+      - r8g.large
+      - r8g.xlarge
+      - r8g.2xlarge
+      - r8g.4xlarge
+    Default: t3.large
     Description: Amazon EC2 instance type
     Type: String
   RootVolumeSize:
     Description: The root EBS volume size in GB
     Type: Number
-    Default: "10"
+    Default: "100"
   KMSEncryptionKeyArn:
     Default: ""
-    Description:
-      Session Manager can be configured to use AWS Key Management Service (AWS KMS) key encryption to provide additional protection to the data transmitted between client machines and managed instances.
-      If KMS Encryption is configured then enter the KMS Key full ARN used in your AWS Systems Manager > Session Manager > Preferences. (e.g., "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"). Please make sure the user with which you logged into the console is listed as "Key Users" for it.
-      Leave empty if KMS Encryption is disabled.
+    Description: Session Manager can be configured to use AWS Key Management Service
+      (AWS KMS) key encryption to provide additional protection to the data
+      transmitted between client machines and managed instances. If KMS
+      Encryption is configured then enter the KMS Key full ARN used in your AWS
+      Systems Manager > Session Manager > Preferences. (e.g.,
+      "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab").
+      Please make sure the user with which you logged into the console is listed
+      as "Key Users" for it. Leave empty if KMS Encryption is disabled.
     Type: String
   CloudWatchLogGroupName:
     Default: ""
-    Description:
-      Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group.
-      If Cloudwatch Logging is enabled, then enter the "CloudWatch log group" name from AWS Systems Manager > Session Manager > Preferences. (e.g., my-sessionmanager-loggroup).
-      Leave empty if CloudWatch Logging is disabled.
+    Description: Session Manager can be configured to create and send session
+      history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an
+      Amazon CloudWatch Logs log group. If Cloudwatch Logging is enabled, then
+      enter the "CloudWatch log group" name from AWS Systems Manager > Session
+      Manager > Preferences. (e.g., my-sessionmanager-loggroup). Leave empty if
+      CloudWatch Logging is disabled.
     Type: String
   S3BucketWithPrefix:
     Default: ""
-    Description:
-      Session Manager can be configured to create and send session history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon CloudWatch Logs log group.
-      If S3 Logging is enabled, then enter the "S3 bucket" followed by "S3 prefix" from AWS Systems Manager > Session Manager > Preferences. (e.g., my-sessionmanager-logs-bucket/my-sub-folder/).
-      Leave empty if S3 Logging is disabled.
+    Description: Session Manager can be configured to create and send session
+      history logs to an Amazon Simple Storage Service (Amazon S3) bucket or an
+      Amazon CloudWatch Logs log group. If S3 Logging is enabled, then enter the
+      "S3 bucket" followed by "S3 prefix" from AWS Systems Manager > Session
+      Manager > Preferences. (e.g.,
+      my-sessionmanager-logs-bucket/my-sub-folder/). Leave empty if S3 Logging
+      is disabled.
     Type: String
 
   OSImageOverride:
@@ -208,12 +236,16 @@ Resources:
       Tags:
         - Key: cfn_stack_name
           Value: !Ref AWS::StackName
+        - Key: Name
+          Value: !Sub "${AWS::StackName}"
+        - Key: cfn_stack_id
+          Value: !Ref AWS::StackId
         - Key: Vendor
           Value: "Turbot HQ Inc"
         - Key: Product
           Value: "Turbot Bastion Host"
         - Key: Version
-          Value: "1.3.0"
+          Value: "1.4.0"
 
   BastionHostPolicy:
     Type: "AWS::IAM::Policy"
@@ -228,70 +260,80 @@ Resources:
         Version: 2012-10-17
         Statement:
           - Action:
-              - "rds-db:connect"
+              - rds-db:connect
             Effect: Allow
             Resource:
-              - !Join ["", [!Sub "arn:${AWS::Partition}:rds-db:*:${AWS::AccountId}", ":dbuser:*/turbot"]]
+              - !Join ["", [!Sub "arn:${AWS::Partition}:rds-db:${AWS::Region}:${AWS::AccountId}", ":dbuser:*/turbot"]]
+          - Action:
+              - elasticache:Connect
+            Effect: Allow
+            Resource:
+              - !Sub "arn:${AWS::Partition}:elasticache:${AWS::Region}:${AWS::AccountId}:user:turbot*"
+              - !Sub "arn:${AWS::Partition}:elasticache:${AWS::Region}:${AWS::AccountId}:replicationgroup:turbot*"
           - !If
             - UseKMSEncryption
             - Action:
-                - "kms:Decrypt"
-                - "kms:GenerateDataKey"
+                - kms:Decrypt
+                - kms:GenerateDataKey
               Effect: Allow
               Resource:
                 - !Ref KMSEncryptionKeyArn
-            - !Ref "AWS::NoValue"
+            - !Ref AWS::NoValue
           - !If
             - UseCloudWatchLogging
             - Action:
-                - "logs:CreateLogStream"
-                - "logs:PutLogEvents"
+                - logs:CreateLogStream
+                - logs:PutLogEvents
               Effect: Allow
               Resource:
                 !Join ["", [!Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:", !Ref "CloudWatchLogGroupName", ":*"]]
-            - !Ref "AWS::NoValue"
+            - !Ref AWS::NoValue
           - !If
             - UseS3Logging
             - Action:
-                - "s3:PutObject"
+                - s3:PutObject
               Effect: Allow
               Resource: !Join ["", [!Sub "arn:${AWS::Partition}:s3:::", !Ref "S3BucketWithPrefix", "*"]]
-            - !Ref "AWS::NoValue"
+            - !Ref AWS::NoValue
           - Action:
-              - "ec2:DescribeInstances"
-              - "s3:GetEncryptionConfiguration"
-              - "logs:DescribeLogGroups"
-              - "logs:DescribeLogStreams"
-              - "rds:DescribeDBInstances"      # Added permission for listing RDS instances
-              - "rds:DescribeDBClusters"       # Added permission for listing RDS clusters
-              - "elasticache:DescribeCacheClusters"  # Added permission for listing ElastiCache clusters
+              - ec2:DescribeInstances
+              - s3:GetEncryptionConfiguration
+              - logs:DescribeLogGroups
+              - logs:DescribeLogStreams
+              - rds:DescribeDBInstances # Added permission for listing RDS instances
+              - rds:DescribeDBClusters # Added permission for listing RDS clusters
+              - elasticache:DescribeCacheClusters # Added permission for listing ElastiCache clusters
             Effect: Allow
             Resource: "*"
           - Action:
-              - "cloudformation:DeleteStack"
+              - cloudformation:DeleteStack
             Effect: Allow
             Resource: !Ref AWS::StackId
           - Action:
-              - "ec2:TerminateInstances"
-              - "ec2:DisassociateIamInstanceProfile"
+              - ec2:TerminateInstances
+              - ec2:DisassociateIamInstanceProfile
             Effect: Allow
             Resource: !Join ["", [!Sub "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:instance/*"]]
-            Condition: { "StringEquals": { "ec2:ResourceTag/cfn_stack_name": !Ref AWS::StackName } }
+            Condition:
+              StringEquals:
+                ec2:ResourceTag/cfn_stack_name: !Ref AWS::StackName
           - Action:
-              - "iam:DeleteRolePolicy"
-              - "iam:DetachRolePolicy"
-              - "iam:DeleteRole"
+              - iam:DeleteRolePolicy
+              - iam:DetachRolePolicy
+              - iam:DeleteRole
             Effect: Allow
             Resource: !Join ["", [!Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/*"]]
-            Condition: { "StringEquals": { "iam:ResourceTag/cfn_stack_name": !Ref AWS::StackName } }
+            Condition:
+              StringEquals:
+                iam:ResourceTag/cfn_stack_name: !Ref AWS::StackName
           - Action:
-              - "iam:RemoveRoleFromInstanceProfile"
-              - "iam:DeleteInstanceProfile"
+              - iam:RemoveRoleFromInstanceProfile
+              - iam:DeleteInstanceProfile
             Effect: Allow
             Resource: !Join ["", [!Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:instance-profile/*"]]
   BastionHostProfile:
     DependsOn: BastionHostPolicy
-    Type: "AWS::IAM::InstanceProfile"
+    Type: AWS::IAM::InstanceProfile
     Properties:
       Roles:
         - !If
@@ -300,102 +342,110 @@ Resources:
           - !Ref AlternativeIAMRole
       Path: /
 
+  BastionLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: !If
+          - UseOSImageOverride
+          - !Ref OSImageOverride
+          - !Ref LatestAmiId
+        InstanceType: !Ref BastionInstanceType
+        BlockDeviceMappings:
+          - DeviceName: /dev/xvda
+            Ebs:
+              VolumeSize: !Ref RootVolumeSize
+              VolumeType: gp3
+              Encrypted: true
+              DeleteOnTermination: true
+        MetadataOptions:
+          HttpTokens: required # Enforces IMDSv2
+          HttpPutResponseHopLimit: 1 # Restricts metadata access to only the instance itself
+          HttpEndpoint: enabled
+        TagSpecifications:
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: !Sub "${AWS::StackName}"
+              - Key: cfn_stack_name
+                Value: !Ref AWS::StackName
+              - Key: cfn_stack_id
+                Value: !Ref AWS::StackId
+              - Key: Vendor
+                Value: "Turbot HQ Inc"
+              - Key: Product
+                Value: "Turbot Bastion Host"
+              - Key: Version
+                Value: "1.4.0"
+
   BastionInstance:
     Type: AWS::EC2::Instance
     Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref BastionLaunchTemplate
+        Version: !GetAtt BastionLaunchTemplate.LatestVersionNumber
       IamInstanceProfile: !Ref BastionHostProfile
-      ImageId: !If
-        - UseOSImageOverride
-        - !Ref OSImageOverride
-        - !Ref LatestAmiId
-      InstanceType: !Ref BastionInstanceType
-      BlockDeviceMappings:
-        - DeviceName: /dev/xvda
-          Ebs:
-            VolumeSize: !Ref RootVolumeSize
-            VolumeType: gp3
-            Encrypted: true
-            DeleteOnTermination: true
-      NetworkInterfaces: !If
-        - UsePublicIPv4Address
-        - - AssociatePublicIpAddress: true
-            DeviceIndex: 0
-            SubnetId: !Ref PublicSubnetId
-        - - AssociatePublicIpAddress: false
-            DeviceIndex: 0
-            SubnetId: !Ref PublicSubnetId
-      UserData:
-        Fn::Base64:
-          Fn::Sub: |
-            #!/bin/bash
-            # Script to delete the stack after x hours
-            touch /etc/profile.d/load_env.log
-            cat > /etc/profile.d/load_env.sh << 'EOF'
-            #!/bin/bash
-            export ACCOUNT_ID=${AWS::AccountId}
-            export REGION=${AWS::Region}
-            export CFN_STACK_NAME=${AWS::StackName}
-            export TIME_TO_LIVE=${TimeToLive}h
-
-            if [ "${TimeToLive}" == "Do not delete the stack" ] ; then
-              echo "$(date): Stack will live forever young!"
-            else
-              echo "$(date): Self destruct will be initiated in: $TIME_TO_LIVE"
-              sleep $TIME_TO_LIVE && aws --region $REGION cloudformation delete-stack --stack-name $CFN_STACK_NAME
-            fi
-            EOF
-            nohup sh /etc/profile.d/load_env.sh >> /etc/profile.d/load_env.log 2>&1 &
-
-            # Detect the operating system version correctly
-            source /etc/os-release
-
-            if [ "$VERSION_ID" == "2" ]; then
-              echo "Amazon Linux 2 detected"
-              # Amazon Linux 2 specific package installations
-              sudo amazon-linux-extras install -y postgresql14
-              sudo amazon-linux-extras install -y redis6
-
-            elif [ "$VERSION_ID" == "2023" ]; then
-              echo "Amazon Linux 2023 detected"
-              # Amazon Linux 2023 specific package installations
-              sudo dnf install -y postgresql15.x86_64
-              sudo dnf install -y redis6.x86_64
-
-              # Creating symbolic link for redis-cli to work as redis6-cli
-              sudo ln -s /usr/bin/redis6-cli /usr/local/bin/redis-cli
-            else
-              echo "Unsupported Linux distribution"
-            fi
-
-            # Step to add the db-connect.sh script
-            cat > /usr/local/bin/db-connect.sh << 'EOF'
-            #!/bin/bash
-            # Discover RDS instances and connect via psql
-            AWS_REGION=$(aws configure get region)
-
-            if [ -z "$AWS_REGION" ]; then
-              read -p "AWS region could not be detected. Please enter the AWS region: " AWS_REGION
-            fi
-
-            echo "Available RDS Instances in region $AWS_REGION:"
-            aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier' --output text --region $AWS_REGION
-
-            read -p "Enter the DBInstanceIdentifier you want to connect to: " DBInstanceIdentifier
-
-            RDSHOST=$(aws rds describe-db-instances --db-instance-identifier "$DBInstanceIdentifier" --query 'DBInstances[0].Endpoint.Address' --output text --region $AWS_REGION)
-
-            echo "Using RDS host: $RDSHOST"
-            export RDSHOST
-
-            export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region $AWS_REGION --username turbot)"
-
-            echo "Connecting to the database using psql..."
-            psql -h $RDSHOST -d turbot -U turbot
-            EOF
-
-            # Make the db-connect.sh script executable
-            chmod +x /usr/local/bin/db-connect.sh
-
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: !If [UsePublicIPv4Address, true, false]
+          DeviceIndex: 0
+          SubnetId: !Ref PublicSubnetId
+      UserData: !Base64
+        Fn::Sub: |
+          #!/bin/bash
+          # Script to delete the stack after x hours
+          touch /etc/profile.d/load_env.log
+          cat > /etc/profile.d/load_env.sh << 'EOF'
+          #!/bin/bash
+          export ACCOUNT_ID=${AWS::AccountId}
+          export REGION=${AWS::Region}
+          export CFN_STACK_NAME=${AWS::StackName}
+          export TIME_TO_LIVE=${TimeToLive}h
+          if [ "${TimeToLive}" == "Do not delete the stack" ] ; then
+            echo "$(date): Stack will live forever young!"
+          else
+            echo "$(date): Self destruct will be initiated in: $TIME_TO_LIVE"
+            sleep $TIME_TO_LIVE && aws --region $REGION cloudformation delete-stack --stack-name $CFN_STACK_NAME
+          fi
+          EOF
+          nohup sh /etc/profile.d/load_env.sh >> /etc/profile.d/load_env.log 2>&1 &
+          # Detect the operating system version correctly
+          source /etc/os-release
+          if [ "$VERSION_ID" == "2" ]; then
+            echo "Amazon Linux 2 detected"
+            # Amazon Linux 2 specific package installations
+            sudo amazon-linux-extras install -y postgresql14
+            sudo amazon-linux-extras install -y redis6
+          elif [ "$VERSION_ID" == "2023" ]; then
+            echo "Amazon Linux 2023 detected"
+            # Amazon Linux 2023 specific package installations
+            # sudo dnf install -y postgresql15.x86_64
+            sudo dnf install -y postgresql16.x86_64
+            sudo dnf install -y redis6.x86_64
+            # Creating symbolic link for redis-cli to work as redis6-cli
+            sudo ln -s /usr/bin/redis6-cli /usr/local/bin/redis-cli
+          else
+            echo "Unsupported Linux distribution"
+          fi
+          # Step to add the db-connect.sh script
+          cat > /usr/local/bin/db-connect.sh << 'EOF'
+          #!/bin/bash
+          # Discover RDS instances and connect via psql
+          AWS_REGION=$(aws configure get region)
+          if [ -z "$AWS_REGION" ]; then
+            read -p "AWS region could not be detected. Please enter the AWS region: " AWS_REGION
+          fi
+          echo "Available RDS Instances in region $AWS_REGION:"
+          aws rds describe-db-instances --query 'DBInstances[*].DBInstanceIdentifier' --output text --region $AWS_REGION
+          read -p "Enter the DBInstanceIdentifier you want to connect to: " DBInstanceIdentifier
+          RDSHOST=$(aws rds describe-db-instances --db-instance-identifier "$DBInstanceIdentifier" --query 'DBInstances[0].Endpoint.Address' --output text --region $AWS_REGION)
+          echo "Using RDS host: $RDSHOST"
+          export RDSHOST
+          export PGPASSWORD="$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region $AWS_REGION --username turbot)"
+          echo "Connecting to the database using psql..."
+          psql -h $RDSHOST -d turbot -U turbot
+          EOF
+          # Make the db-connect.sh script executable
+          chmod +x /usr/local/bin/db-connect.sh
 
 Outputs:
   BastionHostRole:
@@ -405,14 +455,15 @@ Outputs:
       - !Ref BastionHostRole
       - !Ref AlternativeIAMRole
     Export:
-      Name: !Sub "${AWS::StackName}-BastionHostRole"
+      Name: !Sub ${AWS::StackName}-BastionHostRole
   BastionInstance:
     Description: Bastion Host Instance
     Value: !Ref BastionInstance
     Export:
-      Name: !Sub "${AWS::StackName}-BastionInstance"
+      Name: !Sub ${AWS::StackName}-BastionInstance
   SessionsList:
-    Description: The URL to the Session Management Console listing all instances it is aware of
+    Description: The URL to the Session Management Console listing all instances it
+      is aware of
     Value: !If
       - GovCloudAccount
       - !Sub https://console.amazonaws-us-gov.com/systems-manager/session-manager/start-session?region=${AWS::Region}
