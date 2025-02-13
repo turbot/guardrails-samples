@@ -1,8 +1,12 @@
-# Delete Resources in batches
+# Delete Resources in batches from Guardrails
 
-This script disables discovery-related policies for a specified resource (when --disable is passed) and deletes the resource along with its descendants. Deletion is performed in batches, with optional cooldowns between batches to avoid overwhelming the system.
+This script first disables discovery-related policies for targeted resources that are planned for removal from Guardrails. This prevents discovery controls from re-running and re-adding the resources to the Guardrails CMDB.
 
-For further reference, see [filtering resources](https://turbot.com/guardrails/docs/reference/filter/resources).
+When executed with the `--disable` flag, the script disables discovery policies for the specified resources and then deletes them **along with their descendants**.
+
+Deletion is performed in batches, with an optional `cooldown` period between batches to prevent system overload.
+
+For more details, refer to [Filtering Resources](https://turbot.com/guardrails/docs/reference/filter/resources).
 
 ## Prerequisites
 
@@ -15,7 +19,7 @@ To run the scripts, you must have:
 
 This sections details how to set up an environment in order to run the script.
 
-### Virtual environments activation
+### Virtual Environments Activation
 
 We recommend the use of [virtual environment](https://docs.python.org/3/library/venv.html).
 
@@ -39,12 +43,12 @@ Then install Python library dependencies:
 pip3 install -r requirements.txt
 ```
 
-### Turbot configuration
+### Turbot Configuration
 
 Credentials and end point details need to be configure before being able to connect to a Turbot installation.
 This configuration can be entered either using environment variables or a configuration file.
 
-#### Environment variables
+#### Environment Variables
 
 Use either configuration for your Turbot installation:
 
@@ -62,7 +66,7 @@ export TURBOT_ACCESS_KEY_ID=ac61d2e4-730c-4b54-8c3c-6ef180150814
 export TURBOT_SECRET_ACCESS_KEY=151b296b-0694-4a28-94c4-4767fa82bb2c
 ```
 
-#### Configuration file
+#### Configuration File
 
 Example configuration file:
 
@@ -75,7 +79,7 @@ default:
 
 This script will automatically search for a `credentials.yml` file in `~/.config/turbot/` or you can save the yaml configuration file anywhere and provide the `--config /path/to/config.yml --profile default` as a command line option.
 
-## Executing the script
+## Executing the Script
 
 To run a the Python script:
 
@@ -128,7 +132,7 @@ python3 delete_resources_batches.py [options]
 
 > Lists all the options and their usages.
 
-#### Example usage
+#### Example Usage
 
 ##### Example 1: Simulate Deletion
 
@@ -162,15 +166,13 @@ Runs the script using credentials specified in a configuration file.
 python3 delete_resources_batches.py --config ~/.config/turbot/credentials.yml --profile default --resource-id <resource_id> --execute
 ```
 
-##### Example 5
-
-Re-run controls in multiple states.
+##### Example 5: Re-run controls in Multiple States
 
 ```shell
 python3 run_controls_batches.py -f "state:tbd,error,alarm"
 ```
 
-## Virtual environments deactivation
+## Virtual Environments Deactivation
 
 Once the script has been run, it is advised to deactivate the virtual environment if a virtual environment was used
 to install the script dependencies.
