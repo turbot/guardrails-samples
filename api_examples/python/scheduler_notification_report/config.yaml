@@ -1,0 +1,8 @@
+workspace-url: "https://turbot-demo.cloud.turbot.com"
+api-access-key: ""
+api-secret-key: ""
+before-date: "2025-02-10"
+after-date: "2025-02-12"
+turbot-id: "252412664611559"
+resource-type-filter: "'tmod:@turbot/aws-ec2#/resource/types/instance'"
+poller-rate: 200
