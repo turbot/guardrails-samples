@@ -65,6 +65,7 @@ while True:
   variables = {
     "filter": [
       "notificationType:action_notify",
+      "resourceTypeLevel:self",
       f"resourceTypeId:{resource_type_filter}",
       f"actorIdentityId:{turbot_id}",
       f"timestamp:>{before_date} timestamp:<{after_date}",
