@@ -1,14 +1,14 @@
 locals {
-  # Transform the trusted_access_exceptions_config from the structured format
+  # Transform the trusted_access_exceptions from the structured format
   # into the flattened format needed for the file
   trusted_access_exceptions_json = {
-    baseline = var.trusted_access_exceptions_config.baseline
+    baseline = var.trusted_access_exceptions.baseline
   }
 
   # Merge the accounts from the variable into the JSON structure
   trusted_access_exceptions_json_with_accounts = merge(
     local.trusted_access_exceptions_json,
-    var.trusted_access_exceptions_config.accounts
+    var.trusted_access_exceptions.accounts
   )
 }
 

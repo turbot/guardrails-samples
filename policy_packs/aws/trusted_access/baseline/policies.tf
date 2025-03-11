@@ -1,24 +1,17 @@
 # Create policy settings for Trusted Access policies
+# Change action (Skip, Check, Enforce in terraform.tfvars)
 resource "turbot_policy_setting" "trusted_access_policy" {
-  for_each = var.trusted_access_policies
-  
-  resource = var.target_resource
-  type     = each.key
-  value    = each.value
-  precedence = "REQUIRED"
-  
-  # Uncomment to enforce rather than just check
-  # template_input = jsonencode({
-  #   mode = var.policy_setting
-  # })
+  for_each = var.trusted_access_controls
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/${var.policy_map[each.key].service}#/policy/types/${var.policy_map[each.key].resourceName}TrustedAccess"
+  value    = var.policy_map[each.key][each.value]
 }
 
 # Create policy settings for Trusted Access > Accounts policies with calculated values
 resource "turbot_policy_setting" "trusted_access_accounts_policy" {
-  for_each = var.trusted_access_policies
-
-  resource = var.target_resource
-  type     = var.trusted_access_accounts_policies[each.key]
+  for_each = var.trusted_access_controls
+  resource = turbot_policy_pack.main.id
+  type     = "tmod:@turbot/${var.policy_map[each.key].service}#/policy/types/${var.policy_map[each.key].resourceName}${var.policy_map[each.key].acctPolicy}"
   
   template = <<-EOT
     {%- set approved_accounts = $.exceptions_config.data.baseline | default([]) -%}
@@ -42,6 +35,4 @@ resource "turbot_policy_setting" "trusted_access_accounts_policy" {
       }
     }
   EOT
-  
-  precedence = "REQUIRED"
 }

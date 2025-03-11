@@ -1,66 +1,150 @@
-# Example variable values
-policy_setting = "Check"
-target_resource = "tmod:@turbot/turbot#/"
-
-# Example list of trusted account IDs
-trusted_account_ids = [
-  "123456789012",  # Example Account 1
-  "234567890123"   # Example Account 2
-]
-
-# Map of trusted access policy types to their policy values
-# For any resource types you don't want to include, just comment out the line here
-trusted_access_policies = {
-  # Policy resources - use "Check: Trusted Access"
-  "tmod:@turbot/aws-s3#/policy/types/bucketPolicyTrustedAccess" = "Check: Trusted Access"
-  "tmod:@turbot/aws-s3#/policy/types/bucketAclTrustedAccess" = "Check: Trusted Access"
-  "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedAccess" = "Check: Trusted Access"
-  "tmod:@turbot/aws-lambda#/policy/types/functionPolicyTrustedAccess" = "Check: Trusted Access"
-  "tmod:@turbot/aws-sns#/policy/types/topicPolicyTrustedAccess" = "Check: Trusted Access"
-  "tmod:@turbot/aws-sqs#/policy/types/queuePolicyTrustedAccess" = "Check: Trusted Access"
-  
-  # Resource sharing - use "Check: Trusted Access > Accounts"
-  "tmod:@turbot/aws-ec2#/policy/types/snapshotTrustedAccess" = "Check: Trusted Access > Accounts"
-  "tmod:@turbot/aws-ec2#/policy/types/amiTrustedAccess" = "Check: Trusted Access > Accounts"
-  "tmod:@turbot/aws-rds#/policy/types/dbSnapshotManualTrustedAccess" = "Check: Trusted Access > Accounts"
-  "tmod:@turbot/aws-rds#/policy/types/dbClusterSnapshotManualTrustedAccess" = "Check: Trusted Access > Accounts"
-  "tmod:@turbot/aws-redshift#/policy/types/clusterSnapshotManualTrustedAccess" = "Check: Trusted Access > Accounts"
+## Modify this list to change the enforcement type ["skip", "check" or "enforce"] (Case sensitive)
+## Comment out any policies type where you do not want the stack to create the policy settings.
+trusted_access_controls = {
+  ec2-ami                     = "check"
+  ec2-snapshot                = "check"
+  rds-clusterSnapshot         = "check"
+  rds-dbSnaphot               = "check"
+  redshift-snapshot           = "check"
+  secretsmanager-secretPolicy = "check"
+  glacier-vaultPolicy         = "check"
+  iam-rolePolicy              = "check"
+  lambda-functionPolicy       = "check"
+  lambda-versionPolicy        = "check"
+  s3-bucketPolicy             = "check"
+  sns-topicPolicy             = "check"
+  sqs-queuePolicy             = "check"
+  vpc-endpointPolicy          = "check"
 }
 
-# Map of trusted access policy types to their corresponding accounts policy types
-trusted_access_accounts_policies = {
-  "tmod:@turbot/aws-s3#/policy/types/bucketPolicyTrustedAccess" = "tmod:@turbot/aws-s3#/policy/types/bucketPolicyTrustedAccessAccounts"
-  "tmod:@turbot/aws-s3#/policy/types/bucketAclTrustedAccess" = "tmod:@turbot/aws-s3#/policy/types/bucketAclTrustedAccessAccounts"
-  "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedAccess" = "tmod:@turbot/aws-iam#/policy/types/rolePolicyTrustedAccessAccounts"
-  "tmod:@turbot/aws-lambda#/policy/types/functionPolicyTrustedAccess" = "tmod:@turbot/aws-lambda#/policy/types/functionPolicyTrustedAccessAccounts"
-  "tmod:@turbot/aws-sns#/policy/types/topicPolicyTrustedAccess" = "tmod:@turbot/aws-sns#/policy/types/topicPolicyTrustedAccessAccounts"
-  "tmod:@turbot/aws-sqs#/policy/types/queuePolicyTrustedAccess" = "tmod:@turbot/aws-sqs#/policy/types/queuePolicyTrustedAccessAccounts"
-  "tmod:@turbot/aws-ec2#/policy/types/snapshotTrustedAccess" = "tmod:@turbot/aws-ec2#/policy/types/snapshotTrustedAccessAccounts"
-  "tmod:@turbot/aws-ec2#/policy/types/amiTrustedAccess" = "tmod:@turbot/aws-ec2#/policy/types/amiTrustedAccessAccounts"
-  "tmod:@turbot/aws-rds#/policy/types/dbSnapshotManualTrustedAccess" = "tmod:@turbot/aws-rds#/policy/types/dbSnapshotManualTrustedAccessAccounts"
-  "tmod:@turbot/aws-rds#/policy/types/dbClusterSnapshotManualTrustedAccess" = "tmod:@turbot/aws-rds#/policy/types/dbClusterSnapshotManualTrustedAccessAccounts"
-  "tmod:@turbot/aws-redshift#/policy/types/clusterSnapshotManualTrustedAccess" = "tmod:@turbot/aws-redshift#/policy/types/clusterSnapshotManualTrustedAccessAccounts"
+## Do not modify the policy_map. These are static reference values that do not change
+policy_map = {
+  ec2-ami = {
+    service      = "aws-ec2"
+    resourceName = "ami"
+    acctPolicy   = "TrustedAccessAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access > Accounts"
+    enforce      = "Enforce: Trusted Access > Accounts"
+  }
+  ec2-snapshot = {
+    service      = "aws-ec2"
+    resourceName = "snapshot"
+    acctPolicy   = "TrustedAccessAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access > Accounts"
+    enforce      = "Enforce: Trusted Access > Accounts"
+  }
+  rds-clusterSnapshot = {
+    service      = "aws-rds"
+    resourceName = "dbClusterSnapshotManual"
+    acctPolicy   = "TrustedAccessAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access > Accounts"
+    enforce      = "Enforce: Trusted Access > Accounts"
+  }
+  rds-dbSnaphot = {
+    service      = "aws-rds"
+    resourceName = "dbSnapshotManual"
+    acctPolicy   = "TrustedAccessAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access > Accounts"
+    enforce      = "Enforce: Trusted Access > Accounts"
+  }
+  redshift-snapshot = {
+    service      = "aws-redshift"
+    resourceName = "clusterSnapshotManual"
+    acctPolicy   = "TrustedAccessAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access > Accounts"
+    enforce      = "Enforce: Trusted Access > Accounts"
+  }
+  secretsmanager-secretPolicy = {
+    service      = "aws-secretsmanager"
+    resourceName = "secretPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  glacier-vaultPolicy = {
+    service      = "aws-glacier"
+    resourceName = "vaultPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  iam-rolePolicy = {
+    service      = "aws-iam"
+    resourceName = "rolePolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  lambda-functionPolicy = {
+    service      = "aws-lambda"
+    resourceName = "functionPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  lambda-versionPolicy = {
+    service      = "aws-lambda"
+    resourceName = "functionVersionPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  s3-bucketPolicy = {
+    service      = "aws-s3"
+    resourceName = "bucketPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  sns-topicPolicy = {
+    service      = "aws-sns"
+    resourceName = "topicPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  sqs-queuePolicy = {
+    service      = "aws-sqs"
+    resourceName = "queuePolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
+  vpc-endpointPolicy = {
+    service      = "aws-vpc-internet"
+    resourceName = "vpcEndpointPolicy"
+    acctPolicy   = "TrustedAccounts"
+    skip         = "Skip"
+    check        = "Check: Trusted Access"
+    enforce      = "Enforce: Revoke untrusted access"
+  }
 }
 
 # Configuration for trusted access exceptions
-trusted_access_exceptions_config = {
+trusted_access_exceptions = {
   # Baseline trusted account IDs that apply to all accounts
   baseline = [
-    "123456789012",  # Example Account 1
-    "234567890123"   # Example Account 2
+    "123456789012"  # Example Account 1
   ]
   
   # Account-specific trusted access configurations
   accounts = {
     "111122223333" = [  # Example AWS Account
       "123456789012",   # Example Account 1
-      "234567890123",   # Example Account 2
       "345678901234"    # Example Account 3 (only trusted for this account)
-    ],
-    "444455556666" = [  # Example AWS Account 2
-      "123456789012",   # Example Account 1
-      "234567890123",   # Example Account 2
-      "456789012345"    # Example Account 4 (only trusted for this account)
     ]
   }
 }

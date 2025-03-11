@@ -6,17 +6,15 @@ categories:
 primary_category: aws
 ---
 
-# Baseline for Trusted Access Exception Management
+# Baseline for AWS Trusted Access Exception Management
 
-This policy pack provides a baseline for managing exceptions to Trusted Access controls in AWS. It enables you to standardize how exceptions are handled across your cloud resources, ensuring that proper governance and documentation are in place when trusted access policies need exceptions.
+This policy pack provides a comprehensive approach to managing exceptions for AWS Trusted Access controls. It enables centralized configuration of trusted accounts across your AWS environment while supporting account-specific exceptions where needed.
 
-This policy pack can help you:
-- Define a centralized configuration for trusted access exceptions
-- Apply baseline trusted accounts across all AWS accounts
-- Configure account-specific exceptions for different AWS accounts
-- Automatically implement trusted access policies with calculated policies
-
-For more information on Guardrails policy packs, see the [documentation](https://turbot.com/guardrails/docs) or [contact Guardrails support](https://turbot.com/guardrails/support).
+The policy pack implements a flexible, map-based configuration that allows you to:
+- Define which AWS resource types should have trusted access controls enabled
+- Set policy enforcement levels (Skip, Check, Enforce) for each resource type
+- Configure baseline trusted accounts that apply organization-wide
+- Define account-specific exceptions for special use cases
 
 ## Getting Started
 
@@ -58,70 +56,79 @@ Initialize with Terraform:
 terraform init
 ```
 
-### Configure Trusted Access Exceptions
+### Configure Trusted Access Controls
 
-This policy pack uses a centralized configuration file to manage trusted access exceptions. Edit the `terraform.tfvars` file to configure:
+This policy pack uses a centralized configuration approach. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and customize it for your environment.
 
-1. **Baseline trusted accounts** - Applied to all AWS accounts
-2. **Account-specific exceptions** - Additional trusted accounts for specific AWS accounts
+The configuration has three main components:
 
-Example configuration:
+1. **trusted_access_controls**: Map that defines which resource types to enable trusted access for and at what enforcement level
+   ```hcl
+   trusted_access_controls = {
+     "ec2-ami"                  = "Check"
+     "s3-bucketPolicy"          = "Enforce"
+     "iam-rolePolicy"           = "Check"
+     # Add or remove resource types as needed
+   }
+   ```
 
-```hcl
-trusted_access_exceptions_config = {
-  # Baseline trusted account IDs applied to all accounts
-  baseline = [
-    "123456789012",  # Example Account 1
-    "234567890123"   # Example Account 2
-  ]
-  
-  # Account-specific trusted access configurations
-  accounts = {
-    "111122223333" = [  # AWS Account ID
-      "345678901234"    # Additional trusted account for this specific account
-    ]
-  }
-}
-```
+2. **policy_map**: Reference data that maps resource types to their service, resource name, and policy values
+   (This should not be modified as it contains static reference data)
+
+3. **trusted_access_exceptions**: Configuration for baseline and account-specific trusted accounts
+   ```hcl
+   trusted_access_exceptions = {
+     # Baseline trusted accounts applied to all AWS accounts
+     baseline = [
+       "123456789012",  # Example Account 1
+       "234567890123"   # Example Account 2
+     ]
+     
+     # Account-specific trusted access configurations
+     accounts = {
+       "111122223333" = [  # AWS Account ID
+         "345678901234"    # Additional trusted account for this specific account
+       ]
+     }
+   }
+   ```
 
 ### Apply Policy Pack
 
-Apply to all resources in a Guardrails resource:
+Apply to a resource in your Guardrails workspace:
 
 ```bash
-terraform plan -var target_resource="tmod:@turbot/turbot#/"
-terraform apply -var target_resource="tmod:@turbot/turbot#/"
-```
-
-Apply to a specific resource:
-
-```bash
-terraform plan -var target_resource="tmod:@turbot/turbot#/control/types/AWS/S3"
-terraform apply -var target_resource="tmod:@turbot/turbot#/control/types/AWS/S3"
-```
-
-> [!NOTE]
-> Use terraform plan before applying to review the proposed policy settings.
-
-### Enable Enforcement
-
-Policies are created in `Check` mode by default. To switch to `Enforce` mode, set the `policy_setting` variable to `Enforce`:
-
-```bash
-terraform plan -var policy_setting="Enforce" -var target_resource="tmod:@turbot/turbot#/"
-terraform apply -var policy_setting="Enforce" -var target_resource="tmod:@turbot/turbot#/"
+terraform plan
+terraform apply
 ```
 
 ## How It Works
 
-This policy pack uses calculated policies to dynamically determine which accounts should be trusted based on:
+This policy pack uses a combination of standard and calculated policies:
 
-1. The baseline trusted accounts defined in the configuration
-2. Any account-specific additional trusted accounts for the current AWS account
+1. **trusted_access_policy**: Sets the enforcement level (Skip, Check, Enforce) for each resource type
 
-When evaluating trusted access for a resource, the policy will:
-- Start with the baseline trusted accounts
-- Add any account-specific exceptions for the current AWS account
-- Apply the combined list to the trusted access policy
+2. **trusted_access_accounts_policy**: Uses a calculated policy to dynamically determine the list of trusted accounts for each AWS account by:
+   - Starting with the baseline trusted accounts
+   - Adding any account-specific exceptions for the current AWS account
+   - Applying the combined list to the trusted access policy
 
-This enables consistent baseline security with the flexibility to handle legitimate exceptions on a per-account basis.
+3. **trusted_access_exceptions**: Stores the configuration in a Guardrails file resource that can be referenced by calculated policies
+
+This approach provides:
+- Consistent baseline security across your AWS environment
+- Flexibility to handle legitimate exceptions on a per-account basis
+- Clear documentation of approved exceptions
+- Simplified management through centralized configuration
+
+## Customizing the Policy Pack
+
+To customize this policy pack for your environment:
+
+1. Review and update the `trusted_access_controls` map to include only the resource types you want to manage
+2. Set appropriate enforcement levels based on your security requirements
+3. Configure your baseline trusted accounts that should apply organization-wide
+4. Add account-specific exceptions only where absolutely necessary
+
+> [!NOTE]
+> The `policy_map` should not be modified as it contains the mapping of resource types to their service and resource names in the Guardrails schema.
