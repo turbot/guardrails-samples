@@ -1,0 +1,38 @@
+# The policy settings below define which resource types to enable and at what enforcement level
+# - Use "check" for detection only (won't alter resources)
+# - Use "enforce" to actively restrict and revoke untrusted access
+# - Use "skip" to disable checking for a particular resource type
+# - Comment out any policies type where you do not want the stack to create any policy settings.
+
+trusted_access_controls = {
+  ec2-ami                     = "check"
+  ec2-snapshot                = "check"
+  rds-clusterSnapshot         = "check"
+  rds-dbSnaphot               = "check"
+  redshift-snapshot           = "check"
+  secretsmanager-secretPolicy = "check"
+  glacier-vaultPolicy         = "check"
+  iam-rolePolicy              = "check"
+  lambda-functionPolicy       = "check"
+  lambda-versionPolicy        = "check"
+  s3-bucketPolicy             = "check"
+  sns-topicPolicy             = "check"
+  sqs-queuePolicy             = "check"
+  vpc-endpointPolicy          = "check"
+}
+
+# Configuration for trusted access exceptions
+trusted_access_exceptions = {
+  # Baseline trusted account IDs that apply to all accounts
+  baseline = [
+    "123456789012"  # Example Account 1
+  ]
+  
+  # Account-specific trusted access configurations
+  accounts = {
+    "111122223333" = [  # Example AWS Account
+      "123456789012",   # Example Account 1
+      "345678901234"    # Example Account 3 (only trusted for this account)
+    ]
+  }
+}
