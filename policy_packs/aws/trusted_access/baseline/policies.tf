@@ -1,5 +1,5 @@
 # Create policy settings for Trusted Access policies
-# Change action (Skip, Check, Enforce in terraform.tfvars)
+# Change action (skip, check, enforce in terraform.tfvars)
 resource "turbot_policy_setting" "trusted_access_policy" {
   for_each = var.trusted_access_controls
   resource = turbot_policy_pack.main.id

@@ -1,5 +1,9 @@
-## Modify this list to change the enforcement type ["skip", "check" or "enforce"] (Case sensitive)
-## Comment out any policies type where you do not want the stack to create the policy settings.
+# The policy settings below define which resource types to enable and at what enforcement level
+# - Use "check" for detection only (won't alter resources)
+# - Use "enforce" to actively restrict and revoke untrusted access
+# - Use "skip" to disable checking for a particular resource type
+# - Comment out any policies type where you do not want the stack to create any policy settings.
+
 trusted_access_controls = {
   ec2-ami                     = "check"
   ec2-snapshot                = "check"
@@ -16,11 +20,6 @@ trusted_access_controls = {
   sqs-queuePolicy             = "check"
   vpc-endpointPolicy          = "check"
 }
-
-# The policy settings below define which resource types to enable and at what enforcement level
-# - Use "check" for detection only (won't alter resources)
-# - Use "enforce" to actively restrict and revoke untrusted access
-# - Use "skip" to disable checking for a particular resource type
 
 # Configuration for trusted access exceptions
 trusted_access_exceptions = {
