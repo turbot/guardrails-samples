@@ -3,15 +3,15 @@
 resource "turbot_policy_setting" "trusted_access_policy" {
   for_each = var.trusted_access_controls
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/${var.policy_map[each.key].service}#/policy/types/${var.policy_map[each.key].resourceName}TrustedAccess"
-  value    = var.policy_map[each.key][each.value]
+  type     = "tmod:@turbot/${local.policy_map[each.key].service}#/policy/types/${local.policy_map[each.key].resourceName}TrustedAccess"
+  value    = local.policy_map[each.key][each.value]
 }
 
 # Create policy settings for Trusted Access > Accounts policies with calculated values
 resource "turbot_policy_setting" "trusted_access_accounts_policy" {
   for_each = var.trusted_access_controls
   resource = turbot_policy_pack.main.id
-  type     = "tmod:@turbot/${var.policy_map[each.key].service}#/policy/types/${var.policy_map[each.key].resourceName}${var.policy_map[each.key].acctPolicy}"
+  type     = "tmod:@turbot/${local.policy_map[each.key].service}#/policy/types/${local.policy_map[each.key].resourceName}${local.policy_map[each.key].acctPolicy}"
   
   template = <<-EOT
     {%- set approved_accounts = $.exceptions_config.data.baseline | default([]) -%}

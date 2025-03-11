@@ -3,18 +3,6 @@ variable "trusted_access_controls" {
   type = map(string)
 }
 
-variable "policy_map" {
-  description = "Static mapping of resource types to their service, resource name, and policy values (should not be modified)"
-  type = map(object({
-    service      = string
-    resourceName = string
-    acctPolicy   = string
-    skip         = string
-    check        = string
-    enforce      = string
-  }))
-}
-
 variable "trusted_access_exceptions" {
   description = "Configuration for trusted access exceptions with baseline and account-specific settings"
   type = object({

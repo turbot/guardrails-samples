@@ -60,22 +60,19 @@ terraform init
 
 This policy pack uses a centralized configuration approach. Copy the `terraform.tfvars.example` file to `terraform.tfvars` and customize it for your environment.
 
-The configuration has three main components:
+The configuration has two main components:
 
 1. **trusted_access_controls**: Map that defines which resource types to enable trusted access for and at what enforcement level
    ```hcl
    trusted_access_controls = {
-     "ec2-ami"                  = "Check"
-     "s3-bucketPolicy"          = "Enforce"
-     "iam-rolePolicy"           = "Check"
+     "ec2-ami"                  = "check"
+     "s3-bucketPolicy"          = "enforce"
+     "iam-rolePolicy"           = "check"
      # Add or remove resource types as needed
    }
    ```
 
-2. **policy_map**: Reference data that maps resource types to their service, resource name, and policy values
-   (This should not be modified as it contains static reference data)
-
-3. **trusted_access_exceptions**: Configuration for baseline and account-specific trusted accounts
+2. **trusted_access_exceptions**: Configuration for baseline and account-specific trusted accounts
    ```hcl
    trusted_access_exceptions = {
      # Baseline trusted accounts applied to all AWS accounts
@@ -104,16 +101,19 @@ terraform apply
 
 ## How It Works
 
-This policy pack uses a combination of standard and calculated policies:
+This policy pack uses a combination of standard and calculated policies with an internal resource mapping:
 
-1. **trusted_access_policy**: Sets the enforcement level (Skip, Check, Enforce) for each resource type
+1. **policy_map**: A local variable that contains the mapping between resource types and their service names, policy types, and values
+   - This is defined as a local variable to prevent accidental modification
 
-2. **trusted_access_accounts_policy**: Uses a calculated policy to dynamically determine the list of trusted accounts for each AWS account by:
+2. **trusted_access_policy**: Sets the enforcement level (skip, check, enforce) for each resource type
+
+3. **trusted_access_accounts_policy**: Uses a calculated policy to dynamically determine the list of trusted accounts for each AWS account by:
    - Starting with the baseline trusted accounts
    - Adding any account-specific exceptions for the current AWS account
    - Applying the combined list to the trusted access policy
 
-3. **trusted_access_exceptions**: Stores the configuration in a Guardrails file resource that can be referenced by calculated policies
+4. **trusted_access_exceptions**: Stores the configuration in a Guardrails file resource that can be referenced by calculated policies
 
 This approach provides:
 - Consistent baseline security across your AWS environment
@@ -126,9 +126,8 @@ This approach provides:
 To customize this policy pack for your environment:
 
 1. Review and update the `trusted_access_controls` map to include only the resource types you want to manage
-2. Set appropriate enforcement levels based on your security requirements
+2. Set appropriate enforcement levels based on your security requirements (skip, check, enforce)
 3. Configure your baseline trusted accounts that should apply organization-wide
 4. Add account-specific exceptions only where absolutely necessary
 
-> [!NOTE]
-> The `policy_map` should not be modified as it contains the mapping of resource types to their service and resource names in the Guardrails schema.
+The internal `policy_map` contains the mapping of resource types to their service and resource names in the Guardrails schema. This is defined as a local variable in the code and should not be modified.
