@@ -1,6 +1,6 @@
 variable "trusted_access_controls" {
   description = "List of resource types for trusted access policies and which enforcement option to choose."
-  type = map(string)
+  type        = map(string)
 }
 
 variable "trusted_access_exceptions" {
