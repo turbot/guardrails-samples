@@ -1,0 +1,7 @@
+Click>=8.1.6
+sgqlc>=16.3
+PyYAML>=6.0.1
+requests>=2.31.0
+xdg>=6.0.0
+urllib3==1.25.10
+../turbot
