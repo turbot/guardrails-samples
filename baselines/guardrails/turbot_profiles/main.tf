@@ -3,7 +3,7 @@ resource "turbot_turbot_directory" "turbot_dir" {
   parent              = "tmod:@turbot/turbot#/"
   title               = "Turbot SAML"
   description         = "Allow login through turbot directory to turbot workspaces."
-  profile_id_template = "turbot.directory.{{profile.$source.name}}"
+  profile_id_template = "turbot.{{profile.$source.name}}"
   server              = "turbot.com"
 }
 
