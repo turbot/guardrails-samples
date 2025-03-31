@@ -19,7 +19,7 @@ resource "turbot_profile" "create_profile" {
   given_name   = element(split(" ", each.value.name), 0)
   family_name  = element(split(" ", each.value.name), 1)
   status       = "Active"
-  profile_id   = "turbot.directory.${each.key}"
+  profile_id   = "turbot.${each.key}"
 }
 
 resource "turbot_grant" "profile_grant_turbot_owner" {
