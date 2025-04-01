@@ -3,7 +3,7 @@ resource "turbot_turbot_directory" "turbot_dir" {
   parent              = "tmod:@turbot/turbot#/"
   title               = "Turbot SAML"
   description         = "Allow login through turbot directory to turbot workspaces."
-  profile_id_template = "turbot.directory.{{profile.$source.name}}"
+  profile_id_template = "turbot.{{profile.$source.name}}"
   server              = "turbot.com"
 }
 
@@ -19,7 +19,7 @@ resource "turbot_profile" "create_profile" {
   given_name   = element(split(" ", each.value.name), 0)
   family_name  = element(split(" ", each.value.name), 1)
   status       = "Active"
-  profile_id   = "turbot.directory.${each.key}"
+  profile_id   = "turbot.${each.key}"
 }
 
 resource "turbot_grant" "profile_grant_turbot_owner" {
