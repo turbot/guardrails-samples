@@ -4,14 +4,16 @@ primary_category: "security"
 type: "featured"
 ---
 
-# Block Public Access for AWS EKS Clusters
+# Block Unrestricted Public Access for AWS EKS Clusters
 
-Blocking public access for AWS EKS clusters enhances security by requiring private network connectivity for cluster management, reducing the attack surface by preventing unauthorized access from the public internet. This helps ensure that only authorized applications and users within your private network can access and manage the Kubernetes control plane.
+This policy pack helps secure AWS EKS clusters by enforcing controlled public access configurations. It ensures that clusters either have public access disabled or restricted to specific CIDR ranges, preventing unrestricted public access (0.0.0.0/0) that could expose the Kubernetes API server to potential security risks.
 
 This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for EKS clusters:
 
-- Block EKS clusters with public endpoint access enabled
-- Enforce private-only access to Kubernetes API servers
+- Block EKS clusters with unrestricted public endpoint access (0.0.0.0/0)
+- Allow EKS clusters with restricted public access (specific CIDR ranges)
+- Allow EKS clusters with private-only access
+- Monitor and enforce public access configurations
 
 ## Getting Started
 
@@ -77,8 +79,41 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 
 ### Implementation Details
 
-This policy pack uses the `AWS > EKS > Cluster > Approved > Custom` policy to evaluate whether EKS clusters have public endpoint access enabled. If a cluster has `endpointPublicAccess` set to `true`, the policy will mark it as "Not approved", triggering the action defined in the `AWS > EKS > Cluster > Approved` policy.
+This policy pack implements two policies:
+
+1. `AWS > EKS > Cluster > Approved`
+
+   - Controls enforcement actions for non-compliant clusters
+   - Default: "Check: Approved" (monitoring mode)
+   - Optional: "Enforce: Delete unapproved if new" (enforcement mode)
+
+2. `AWS > EKS > Cluster > Approved > Custom`
+   - Evaluates cluster public access configuration
+   - Checks `endpointPublicAccess` and `publicAccessCidrs` settings
+   - Approves clusters with:
+     - Public access disabled
+     - Public access restricted to specific CIDR ranges
+   - Rejects clusters with unrestricted public access (0.0.0.0/0)
+
+### Policy Results
+
+The policy will report one of three results:
+
+1. **Approved**
+
+   - Public access is disabled
+   - Public access is restricted to specific CIDR ranges
+
+2. **Not Approved**
+
+   - Public access is unrestricted (0.0.0.0/0)
+
+3. **Skip**
+   - No action needed. 
 
 ### AWS Best Practices
 
-AWS recommends limiting public access to EKS clusters. For more details, see [Amazon EKS Security Best Practices](https://docs.aws.amazon.com/eks/latest/userguide/security-best-practices.html) in the AWS documentation.
+AWS recommends limiting public access to EKS clusters. When public access is required, it should be restricted to specific CIDR ranges. For more details, see:
+
+- [Amazon EKS cluster endpoint access control](https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html)
+- [Amazon EKS Security Best Practices](https://docs.aws.amazon.com/eks/latest/userguide/security-best-practices.html)
