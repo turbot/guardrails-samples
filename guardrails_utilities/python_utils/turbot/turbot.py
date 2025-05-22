@@ -99,7 +99,7 @@ class Config:
 
     def test_health(self):
         try:
-            r = requests.get(self.health_endpoint)
+            r = requests.get(self.health_endpoint, verify=False)
         except requests.exceptions.ConnectionError:
             print("Failed to connect, exiting.")
             exit()
