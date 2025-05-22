@@ -40,7 +40,6 @@ resource "turbot_policy_setting" "aws_efs_mount_target_approved_custom" {
     }
     EOT
   template       = <<-EOT
-    title: "EFS Filesystem Encryption"
     {%- if $.mountTarget.parent.encrypted -%}
 
       {%- set data = {
