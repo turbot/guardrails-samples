@@ -3,17 +3,18 @@ categories: ["networking", "security"]
 primary_category: "security"
 ---
 
-# Enforce AWS Application Load Balancer Listeners Use HTTPS
+# Enforce AWS Load Balancer Listeners Do Not Use HTTP
 
-Enforcing that AWS Application Load Balancer listeners use HTTPS protocol instead of HTTP is essential for improving security posture and protecting data in transit. This practice helps ensure that all communication between clients and load balancers is encrypted, preventing data interception and man-in-the-middle attacks.
+Enforcing that AWS (Application and Network) Load Balancer listeners do not use HTTP protocol helps improve security posture and protect data in transit. This practice ensures that listeners only use secure protocols like HTTPS, preventing data interception and man-in-the-middle attacks by blocking insecure HTTP connections.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Application Load Balancer Listeners:
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for Load Balancer Listeners:
 
-- Delete Application Load Balancer Listeners that use HTTP protocol instead of HTTPS
+- Block Load Balancer Listeners that use HTTP protocol by only allowing secure protocols (HTTPS, TCP, TLS, UDP, TCP_UDP)
+- Restrict listeners to secure ports (443 for HTTPS and registered ports 1024-49151)
 
 ## Documentation
 
-- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_application_load_balancer_listeners_use_https/settings)**
+- **[Review Policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_ec2_enforce_load_balancer_listeners_do_not_use_http/settings)**
 
 ## Getting Started
 
@@ -53,7 +54,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/ec2/enforce_application_load_balancer_listeners_use_https
+cd guardrails-samples/policy_packs/aws/ec2/enforce_load_balancer_listeners_do_not_use_http
 ```
 
 Run the Terraform to create the policy pack in your workspace:
