@@ -25,8 +25,8 @@ resource "turbot_policy_setting" "aws_ec2_load_balancer_listener_approved_ports"
   type     = "tmod:@turbot/aws-ec2#/policy/types/loadBalancerListenerApprovedPorts"
   value    = <<-EOT
     # HTTPS port
-    - 443
+    - "443"
     # Registered ports
-    - 1024-49151
+    - "1024-49151"
     EOT
 }
