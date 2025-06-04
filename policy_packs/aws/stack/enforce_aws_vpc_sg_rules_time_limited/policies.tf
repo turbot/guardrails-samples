@@ -2,12 +2,14 @@
 resource "turbot_policy_setting" "aws_vpc_core_vpc_stack_native" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcStackNative"
-  value    = "Check: Configured"
-  # value = "Enforce: Configured"
+  # value    = "Check: Configured"
+  value = "Enforce: Configured"
 }
 
-# AWS > VPC > VPC > Stack [Native] > Variables
-resource "turbot_policy_setting" "aws_vpc_core_vpc_stack_native_variables" {
+# AWS > VPC > VPC > Stack [Native] > Variables (Time-Limited)
+# This policy setting provides variables with time-limited expiration
+resource "turbot_policy_setting" "aws_vpc_core_vpc_stack_native_variables_with_exceptions" {
+  count          = var.enable_time_limited_exceptions ? 1 : 0
   resource       = turbot_policy_pack.main.id
   type           = "tmod:@turbot/aws-vpc-core#/policy/types/vpcStackNativeVariables"
   template_input = <<-EOT
@@ -28,19 +30,38 @@ resource "turbot_policy_setting" "aws_vpc_core_vpc_stack_native_variables" {
     sg_tag_value = "Test"
 
     EOT
+
+  # Set expiration timestamp on the variables
+  valid_to_timestamp = timeadd(timestamp(), "${var.exception_duration_hours}h")
 }
 
+# AWS > VPC > VPC > Stack [Native] > Variables (No Exceptions - Permanent)
+# This policy setting provides empty variables (no exceptions)
+resource "turbot_policy_setting" "aws_vpc_core_vpc_stack_native_variables_no_exceptions" {
+  count          = var.enable_time_limited_exceptions ? 0 : 1
+  resource       = turbot_policy_pack.main.id
+  type           = "tmod:@turbot/aws-vpc-core#/policy/types/vpcStackNativeVariables"
+  template_input = <<-EOT
+    {
+      resource {
+        vpcId: get(path: "VpcId")
+      }
+    }
+    EOT
+  template       = <<-EOT
+    {# No variables provided - will result in empty stack #}
+    
+    EOT
+}
 
-# AWS > VPC > VPC > Stack [Native] > Source
+# AWS > VPC > VPC > Stack [Native] > Source (Always Present)
+# This policy setting contains the source code and always exists
 resource "turbot_policy_setting" "aws_vpc_core_vpc_stack_native_source" {
   resource = turbot_policy_pack.main.id
   type     = "tmod:@turbot/aws-vpc-core#/policy/types/vpcStackNativeSource"
 
-  # Create a stack, using the ./stack/source.tofu
+  # Always use the same source file - behavior controlled by variables
   value = file("./stack/source.tofu")
-
-  # Destroy all resources in the stack
-  # value = "{}"
 }
 
 # AWS > VPC > VPC > Stack [Native] > Secret Variables

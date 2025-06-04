@@ -1,23 +1,23 @@
 ---
-categories: ["networking", "stacks"]
-primary_category: "stacks"
+categories: ["networking", "security", "stacks"]
+primary_category: "networking"
 ---
 
-# Configure VPC Security Group Rules Stack
+# Enforce AWS VPC Security Group Rules with Time-Limited Exceptions
 
-Apply ingress and egress rules to existing security groups in a VPC using OpenTofu with `AWS > VPC > VPC > Stack [Native]` control.
+Apply temporary ingress and egress rules to existing security groups in a VPC using OpenTofu with `AWS > VPC > VPC > Stack [Native]` control with **time-limited exceptions**.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) helps you securely configure existing AWS security groups by attaching controlled ingress and egress rules using the `AWS > VPC > VPC > Stack [Native]` control. You can customize the `Source`, but the example will apply port 22 and 3389 ingress from internal CIDRs, and egress for ports 443 and 80.
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) helps you securely configure existing AWS security groups by attaching controlled ingress and egress rules using the `AWS > VPC > VPC > Stack [Native]` control. Rules are automatically removed after the specified time duration for compliance automation.
 
-## Documentation
-
-- **[Review Policy Settings →](https://hub.guardrails.turbot.com/policy-packs/aws_vpc_configure_vpc_sg_rules_stack/settings)**
+> [!IMPORTANT]
+> This policy pack expects **clean security groups** with no existing SSH (port 22) or RDP (port 3389) rules. Conflicting rules will cause `InvalidPermission.Duplicate` errors, which is expected behavior. To extend expiration time, update `exception_duration_hours` and run `terraform apply`.
 
 ## Getting Started
 
 ### Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
+- Clean security groups with no conflicting SSH/RDP rules
 
 - Guardrails mods:
   - [@turbot/aws-vpc-core](https://hub.guardrails.turbot.com/mods/aws/mods/aws-vpc-core)
@@ -53,30 +53,33 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/stack/configure_vpc_sg_rules_stack
+cd guardrails-samples/policy_packs/aws/stack/enforce_aws_vpc_sg_rules_time_limited
 ```
 
-The example `Source` applies the following to all or filtered security groups in a VPC:
+Configure time-limited exceptions in `terraform.tfvars`:
 
-- Ingress: Port 22 and 3389 from internal (RFC1918) IP ranges
-- Egress: Port 443 and 80 to 0.0.0.0/0
+```hcl
+# Enable time-limited exceptions for SSH (port 22) and RDP (port 3389) access
+enable_time_limited_exceptions = true
 
-You must set the following variable (in the `stack/variables.auto.tfvars` file):
+# Duration in hours (1-168 hours, default: 4)
+exception_duration_hours = 4
+```
+
+Set the VPC ID in `stack/variables.auto.tfvars`:
 
 ```hcl
 vpc_id = "vpc-0123456789abcdef0"
-```
 
-Optionally, set these to filter security groups:
-
-```hcl
+# Optional: Filter security groups by tags (if specified, only matching SGs are updated)
+# If no tags specified, ALL security groups in the VPC are updated
 sg_tag_key = "Environment"
 sg_tag_value = "Test"
 ```
 
-Alternatively, modify the `Source` policy (in the `stack/source.tofu` file) and/or `Variables` policy (in the `stack/variables.auto.tfvars` file) to suit your use case.
+> [!TIP] > **Security Group Targeting**: Specify `sg_tag_key` and `sg_tag_value` to target only security groups with matching tags. Leave empty to apply rules to **all** security groups in the VPC.
 
-Run the Terraform to create the policy pack in your workspace:
+Deploy the policy pack:
 
 ```sh
 terraform init
@@ -84,16 +87,7 @@ terraform plan
 terraform apply
 ```
 
-### Apply Policy Pack
-
-> [!IMPORTANT]
-> Attaching this policy pack in Guardrails will result in security group rule changes in the target account. You can later remove them by setting the Stack's Source policy to `{}` (empty).
-
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
-
-If this policy pack is attached to a Guardrails folder, its policies will be applied to all VPCs in that folder. The policy pack can also be attached to individual VPC resources.
-
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
+Attach the policy pack to resources in your Guardrails workspace. For more information, see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
 ### Enable Enforcement
 

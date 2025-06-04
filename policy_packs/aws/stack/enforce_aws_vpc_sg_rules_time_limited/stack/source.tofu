@@ -1,20 +1,26 @@
 variable "vpc_id" {
   description = "ID of the existing VPC"
   type        = string
+  default     = ""
 }
 
 variable "sg_tag_key" {
   description = "Optional tag key to filter security groups (case-insensitive)"
   type        = string
+  default     = ""
 }
 
 variable "sg_tag_value" {
   description = "Optional tag value to filter security groups (case-insensitive)"
   type        = string
+  default     = ""
 }
 
 # Discover all security groups in the specified VPC
+# Only run if vpc_id is provided (not empty)
 data "aws_security_groups" "vpc_sgs" {
+  count = var.vpc_id != "" ? 1 : 0
+  
   filter {
     name   = "vpc-id"
     values = [var.vpc_id]
@@ -22,13 +28,17 @@ data "aws_security_groups" "vpc_sgs" {
 }
 
 # Fetch full metadata for each SG (to access tags)
+# Only run if vpc_id is provided (not empty)
 data "aws_security_group" "detailed" {
-  for_each = toset(data.aws_security_groups.vpc_sgs.ids)
+  for_each = var.vpc_id != "" ? toset(data.aws_security_groups.vpc_sgs[0].ids) : toset([])
   id       = each.value
 }
 
 locals {
-  ingress_rules = [
+  # Only proceed if vpc_id is provided
+  should_create_rules = var.vpc_id != ""
+  
+  desired_ingress_rules = [
     {
       cidr        = "10.0.0.0/8"
       port        = 22
@@ -67,7 +77,7 @@ locals {
     }
   ]
 
-  egress_rules = [
+  desired_egress_rules = [
     {
       cidr        = "0.0.0.0/0"
       port        = 443
@@ -85,7 +95,8 @@ locals {
   lowercase_tag_key   = lower(var.sg_tag_key)
   lowercase_tag_value = lower(var.sg_tag_value)
 
-  selected_sg_ids = [
+  # Select security groups based on tag filtering
+  selected_sg_ids = local.should_create_rules ? [
     for sg in data.aws_security_group.detailed :
     sg.id
     if(
@@ -97,29 +108,34 @@ locals {
         ])
       )
     )
-  ]
+  ] : []
 
-  expanded_ingress_rules = flatten([
+  # Create ingress rules for each security group
+  ingress_rules_to_create = local.should_create_rules ? flatten([
     for sg_id in local.selected_sg_ids : [
-      for rule in local.ingress_rules : merge(rule, {
+      for rule in local.desired_ingress_rules : merge(rule, {
         sg_id = sg_id
+        rule_key = "${rule.protocol}-${rule.port}-${rule.port}-${rule.cidr}"
       })
     ]
-  ])
+  ]) : []
 
-  expanded_egress_rules = flatten([
+  # Create egress rules for each security group  
+  egress_rules_to_create = local.should_create_rules ? flatten([
     for sg_id in local.selected_sg_ids : [
-      for rule in local.egress_rules : merge(rule, {
+      for rule in local.desired_egress_rules : merge(rule, {
         sg_id = sg_id
+        rule_key = "${rule.protocol}-${rule.port}-${rule.port}-${rule.cidr}"
       })
     ]
-  ])
+  ]) : []
 }
 
+# Create ingress rules
 resource "aws_vpc_security_group_ingress_rule" "internal_access" {
   for_each = {
-    for pair in local.expanded_ingress_rules :
-    "${pair.sg_id}-${pair.protocol}-${pair.port}-${replace(replace(pair.cidr, ".", "_"), "/", "_")}" => pair
+    for rule in local.ingress_rules_to_create :
+    "${rule.sg_id}-${rule.protocol}-${rule.port}-${replace(replace(rule.cidr, ".", "_"), "/", "_")}" => rule
   }
 
   security_group_id = each.value.sg_id
@@ -130,14 +146,17 @@ resource "aws_vpc_security_group_ingress_rule" "internal_access" {
   ip_protocol       = each.value.protocol
 
   tags = {
-    Managedby = "Guardrails"
+    Managedby     = "Guardrails"
+    TemporaryRule = "true"
+    CreatedBy     = "TimeSpecificException"
   }
 }
 
+# Create egress rules
 resource "aws_vpc_security_group_egress_rule" "outbound_access" {
   for_each = {
-    for pair in local.expanded_egress_rules :
-    "${pair.sg_id}-${pair.protocol}-${pair.port}-${replace(replace(pair.cidr, ".", "_"), "/", "_")}" => pair
+    for rule in local.egress_rules_to_create :
+    "${rule.sg_id}-${rule.protocol}-${rule.port}-${replace(replace(rule.cidr, ".", "_"), "/", "_")}" => rule
   }
 
   security_group_id = each.value.sg_id
@@ -148,7 +167,9 @@ resource "aws_vpc_security_group_egress_rule" "outbound_access" {
   ip_protocol       = each.value.protocol
 
   tags = {
-    Managedby = "Guardrails"
+    Managedby     = "Guardrails"
+    TemporaryRule = "true"
+    CreatedBy     = "TimeSpecificException"
   }
 }
 
@@ -181,7 +202,13 @@ output "egress_rules_created" {
   }
 }
 
-output "total_rules_created" {
-  description = "Total number of security group rules created"
-  value       = length(aws_vpc_security_group_ingress_rule.internal_access) + length(aws_vpc_security_group_egress_rule.outbound_access)
+output "rules_summary" {
+  description = "Summary of rule management"
+  value = {
+    total_security_groups = length(local.selected_sg_ids)
+    ingress_rules_created = length(aws_vpc_security_group_ingress_rule.internal_access)
+    egress_rules_created = length(aws_vpc_security_group_egress_rule.outbound_access)
+    vpc_id_provided = var.vpc_id != ""
+    rules_creation_enabled = local.should_create_rules
+  }
 }
