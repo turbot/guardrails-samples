@@ -1,0 +1,25 @@
+ControlObjective,ResourceType,CSP,policy_pack_name
+EBS volume should have recent snapshots,AWS EC2 Volume (EBS),AWS,enforce_ebs_volumes_have_recent_snapshots
+IAM Resource Policy with 'Allow' effect does not have a condition from the listed conditions,AWS IAM Resource Policy,AWS,enforce_iam_resource_policies_with_allow_have_conditions
+IAM Role should not be inactive for more than 90 days,AWS IAM Role,AWS,enforce_iam_roles_are_not_inactive_for_more_than_90_days
+CloudWatch Log Group retention period should be specified,AWS CloudWatch Log Group,AWS,enforce_cloudwatch_log_groups_have_retention_period_specified
+S3 Bucket logging should be enabled,AWS S3 Bucket,AWS,enforce_access_logging_is_enabled_for_buckets
+S3 Bucket should have at least one replication rule enabled ,AWS S3 Bucket,AWS,enforce_replication_is_enabled_for_buckets
+Secret automatic rotation should be enabled,AWS Secret,AWS,enforce_automatic_rotation_is_enabled_for_secrets
+EC2 instance should have a response hop limit of 1,AWS ECS Instance,AWS,enforce_ec2_instances_have_response_hop_limit_of_1
+Resource policy should not allow all actions,AWS IAM Resource Policy,AWS,enforce_resource_policies_do_not_allow_all_actions
+EC2 Security Group outbound rules should not allow all protocols,AWS EC2 Security Group,AWS,enforce_security_groups_outbound_rules_restrict_protocols
+EC2 instance should use IMDSv2,AWS EC2 Instance,AWS,enforce_imdsv2_for_instances
+Secret unused for 90 days or more should be removed,AWS Secret,AWS,enforce_unused_secrets_are_removed_after_90_days
+EC2 Security Group should restrict outbound traffic to all ports,AWS EC2 Security Group,AWS,enforce_security_groups_restrict_outbound_traffic_to_all_ports
+EC2 Security Group should not allow access to a wide private network,AWS EC2 Security Group,AWS,enforce_security_groups_restrict_private_network_access
+S3 Bucket policy should deny HTTP requests,AWS S3 Bucket,AWS,enforce_bucket_policies_deny_http_requests
+CloudFront distribution logging should be enabled,AWS CloudFront Distribution,AWS,enforce_logging_is_enabled_for_cloudfront_distributions
+S3 Bucket versioning should be enabled,AWS S3 Bucket,AWS,enforce_versioning_is_enabled_for_buckets
+IAM assumed role cross account should have an external ID or MFA,AWS IAM Role,AWS,enforce_cross_account_roles_require_external_id_or_mfa
+Network Watcher is disabled,Azure Location,Azure,enforce_network_watcher_is_enabled
+Virtual Machine Diagnostic logs should be enabled,Azure Compute Virtual Machine,Azure,enforce_diagnostic_logs_are_enabled_for_vms
+Virtual Machine Boot Diagnostics should be enabled,Azure Scale Set Virtual Machine and Azure Compute Virtual Machine,Azure,enforce_boot_diagnostics_are_enabled_for_vms
+EC2 Security Group should restrict outbound traffic to all ports,Azure Network Security Group,Azure,enforce_security_groups_restrict_outbound_traffic
+EC2 Security Group outbound rules should not allow all protocols,Azure Network Security Group,Azure,enforce_security_groups_outbound_rules_restrict_protocols
+Disk public network access should be disabled,Azure Disk,Azure,enforce_disks_block_public_network_access
