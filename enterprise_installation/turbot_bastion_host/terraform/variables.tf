@@ -17,6 +17,7 @@ variable "public_subnet_id" {
 variable "latest_ami_ssm_param" {
   description = "SSM Parameter name for the latest AMI ID"
   type        = string
+  default     = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
 }
 
 variable "bastion_instance_type" {

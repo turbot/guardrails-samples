@@ -18,7 +18,11 @@ resource "aws_launch_template" "bastion_template" {
   name_prefix   = replace("${var.bastion_host_name}-lt", "[^a-zA-Z0-9()_.-/]", "-")
   image_id      = data.aws_ssm_parameter.ami.value
   instance_type = var.bastion_instance_type
-  user_data     = base64encode(templatefile("${path.module}/userdata.sh", { lifetime_hours = var.lifetime_hours }))
+  user_data     = base64encode(templatefile("${path.module}/userdata.sh", {
+    stack_name     = var.bastion_host_name
+    time_to_live   = var.lifetime_hours
+    lifetime_hours = var.lifetime_hours
+  }))
   iam_instance_profile {
     name = var.alternative_iam_role != "" ? null : aws_iam_instance_profile.bastion_profile[0].name
   }
@@ -52,7 +56,11 @@ resource "aws_instance" "bastion" {
   instance_type               = var.bastion_instance_type
   subnet_id                   = var.public_subnet_id
   associate_public_ip_address = local.use_public_ipv4_address
-  user_data_base64            = base64encode(templatefile("${path.module}/userdata.sh", { lifetime_hours = var.lifetime_hours }))
+  user_data_base64            = base64encode(templatefile("${path.module}/userdata.sh", {
+    stack_name     = var.bastion_host_name
+    time_to_live   = var.lifetime_hours
+    lifetime_hours = var.lifetime_hours
+  }))
   iam_instance_profile        = var.alternative_iam_role != "" ? null : aws_iam_instance_profile.bastion_profile[0].name
   root_block_device {
     volume_size = var.root_volume_size
