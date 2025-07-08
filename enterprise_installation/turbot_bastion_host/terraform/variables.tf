@@ -5,8 +5,9 @@ variable "bastion_host_name" {
 }
 
 variable "region" {
-  description = "AWS region to deploy the Bastion Host into"
+  description = "AWS region to deploy the Bastion Host into. If not specified, Terraform will use the region from the AWS_REGION environment variable, or (if not set) from your AWS CLI config or profile."
   type        = string
+  default     = null
 }
 
 variable "public_subnet_id" {
@@ -30,12 +31,6 @@ variable "root_volume_size" {
   description = "Size (in GB) of the root EBS volume for the Bastion Host"
   type        = number
   default     = 100
-}
-
-variable "lifetime_hours" {
-  description = "Number of hours after which the instance will shut down"
-  type        = number
-  default     = 6
 }
 
 variable "alternative_iam_role" {

@@ -33,20 +33,20 @@ Create a `terraform.tfvars` file and define the required variables. Below is an 
 ```hcl
 # Required variables
 bastion_host_name       = "turbot-bastion-host"
-region                  = "us-east-1"
+# region is optional; see below for details
+# region                  = "us-east-1"
 public_subnet_id        = "subnet-xxxxx"
 latest_ami_ssm_param    = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 
 # Optional variables
 bastion_instance_type   = "t3.large"
 root_volume_size        = 100
-lifetime_hours          = 6
 alternative_iam_role    = ""
 ```
 
 > Replace `public_subnet_id` with the subnet-id of the public subnet you want to deploy the bastion into. 
 
-> Replace `region` with the AWS Region code you're deploying the bastion in. 
+> If you do not specify `region`, Terraform will use the region from the `AWS_REGION` environment variable, or (if not set) from your AWS CLI config or profile.
 
 Alternatively, if you're good with the default values for the other variables, you can skip creating the `terraform.tfvars` file and instead provide the `public-subnet-id` and `region` values on the command-line:
 
@@ -79,12 +79,11 @@ terraform apply
 | Variable Name           | Required | Default                                                                 | Description                                                                 |
 |------------------------|----------|-------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | `public_subnet_id`      | Yes      |                                                                         | Subnet ID to deploy the Bastion Host into (must be a public subnet).        |
-| `region`                | Yes      |                                                                         | AWS region for deployment.                                                  |
+| `region`                | No       | `null`                                                                  | AWS region for deployment. If not specified, Terraform uses the region from the `AWS_REGION` environment variable, or (if not set) from your AWS CLI config or profile. |
 | `alternative_iam_role`  | No       | `""`                                                                    | Optional IAM role name to attach instead of creating a new role.            |
 | `bastion_host_name`     | No       | `t3.large`                                                              | The name for the Bastion Host resources. Will be sanitized.                 |
 | `bastion_instance_type` | No       | `t3.large`                                                              | EC2 instance type.                                                          |
 | `latest_ami_ssm_param`  | No       | `/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64` | SSM parameter name for the AMI.                                             |
-| `lifetime_hours`        | No       | `6`                                                                     | Time in hours before the Bastion Host shuts itself down.                    |
 | `public_ipv4_address`   | No       | `True`                                                                  | Determines whether the bastion host is assigned a public IPv4 address.      |
 | `root_volume_size`      | No       | `100`                                                                   | Root EBS volume size in GB.                                                 |
 

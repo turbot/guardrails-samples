@@ -1,13 +1,13 @@
 # Required variables
 bastion_host_name       = "turbot-bastion-host"
-region                  = "us-east-1"
 public_subnet_id        = "subnet-0c9196c716c39a909"
 latest_ami_ssm_param    = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 
 # Optional variables
+# region is optional; if not set, Terraform will use AWS_REGION env var or your AWS CLI config/profile
+region                  = "us-east-1"
 bastion_instance_type   = "t3.large"
 root_volume_size        = 100
-lifetime_hours          = 6
 alternative_iam_role    = ""
 use_public_ipv4_address = true
 cloudwatch_log_group_name = ""
