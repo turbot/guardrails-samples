@@ -3,13 +3,17 @@ categories: ["access management", "security"]
 primary_category: "security"
 ---
 
-# Check MFA Is Enabled for AWS IAM Root Accounts
+# Check Root Account Access Usage
 
-Ensuring Multi-Factor Authentication (MFA) is enabled for AWS IAM root accounts is critical as it provides an additional layer of security beyond just a password, significantly reducing the risk of unauthorized access. This protection helps prevent potential security breaches and enhances overall account security by requiring a second form of verification.
+Monitoring access activity for AWS IAM root accounts is essential for maintaining a secure cloud environment. This policy checks for critical access indicators that could pose security risks if left unmonitored — including MFA status, recent usage of the root password, and access key activity.
 
-This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can help you configure the following settings for IAM root accounts:
+Root accounts are highly privileged and should ideally remain unused. This policy ensures that any recent access patterns — whether via password or keys — are detected and flagged if they fall outside the approved window.
 
-- Check and alarm if root accounts do not have MFA enabled
+This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) helps you enforce the following controls on IAM root accounts:
+	- Check and alert if MFA is not enabled
+	- Detect if the root password was used in the last 14 days
+	- Check if Access Key 1 or Access Key 2 was used within the last 14 days
+	- Identify active access keys that are unused but still present
 
 ## Documentation
 
@@ -53,7 +57,7 @@ Clone:
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/iam/check_mfa_is_enabled_for_root_accounts
+cd guardrails-samples/policy_packs/aws/iam/check_root_account_access_usage
 ```
 
 Run the Terraform to create the policy pack in your workspace:
