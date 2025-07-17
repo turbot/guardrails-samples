@@ -1,0 +1,18 @@
+# Time-Limited Security Group Exceptions Configuration
+
+# Enable time-limited exceptions for SSH (port 22) and RDP (port 3389) access
+enable_time_limited_exceptions = true
+
+# Duration in hours for how long the exceptions should remain active
+# After this time, the security group rules will be automatically removed
+exception_duration_hours = 4
+
+# Examples of different time periods:
+# exception_duration_hours = 1   # 1 hour
+# exception_duration_hours = 8   # 8 hours (full work day)
+# exception_duration_hours = 24  # 24 hours (1 day)
+# exception_duration_hours = 72  # 72 hours (3 days)
+# exception_duration_hours = 168 # 168 hours (1 week - maximum allowed)
+
+# To disable time limits and keep rules permanently:
+# enable_time_limited_exceptions = false 
