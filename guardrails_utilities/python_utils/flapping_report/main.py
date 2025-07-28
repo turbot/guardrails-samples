@@ -826,7 +826,7 @@ def generate_flapping_report_from_notifications(notifications, filters=None, out
     return flapping_resources
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate Turbot flapping report')
+    parser = argparse.ArgumentParser(description='Generate Turbot flapping report.')
     parser.add_argument('--filter', default='timestamp:>=T-24h', 
                        help='Filters (e.g., timestamp:>=T-24h, tags:Environment=Production). Default: timestamp:>=T-24h')
     parser.add_argument('--two-phase', action='store_true',
@@ -835,14 +835,18 @@ def main():
                        help='Export query results to CSV file')
     parser.add_argument('--debug', action='store_true', 
                        help='Enable debug output')
-    parser.add_argument('--limit', type=int, default=100,
-                       help='Number of events per page (default: 100)')
+    parser.add_argument('--limit', type=int, default=500,
+                       help='GraphQL query result page size (default: 500)')
     parser.add_argument('--save-config', action='store_true',
                        help='Save current arguments to configuration file')
     parser.add_argument('--load-config', action='store_true',
                        help='Load arguments from configuration file')
     parser.add_argument('--output', type=str,
-                       help='Save report to file (e.g., report.md or report.html)')
+                       help='Save report to file (only .md and .html supported, e.g., report.md or report.html)')
+    parser.add_argument('--config', type=str,
+                       help='Path to Turbot credentials file (default: ~/.config/turbot/credentials.yml)')
+    parser.add_argument('--profile', type=str, default='default',
+                       help='Profile name to use from credentials file (default: default)')
     
     args = parser.parse_args()
     
@@ -875,7 +879,9 @@ def main():
             'two_phase': args.two_phase,
             'csv': args.csv,
             'debug': args.debug,
-            'limit': args.limit
+            'limit': args.limit,
+            'config': args.config,
+            'profile': args.profile
         }
         save_config(config_to_save)
         print("💡 Configuration saved! Use --load-config to load these settings next time.")
@@ -889,7 +895,7 @@ def main():
     
     # Load Turbot configuration
     try:
-        config = Config(None, "default", debug=args.debug)
+        config = Config(None, args.profile, debug=args.debug, custom_credentials_file=args.config)
     except Exception as e:
         print(f"❌ Configuration error: {e}")
         return

@@ -9,11 +9,15 @@ class Config:
     """ Locates the users Turbot credentials, verifies connectivity to
         the specified Turbot workspace and instantiates a config object. """
 
-    def __init__(self, custom_config_file, config_profile, debug=False):
+    def __init__(self, custom_config_file, config_profile, debug=False, custom_credentials_file=None):
 
         config_dict = {}
         config_fail = ""
-        turbot_config = "{}/turbot/credentials.yml".format(XDG_CONFIG_HOME)
+        # Use custom credentials file if provided, otherwise use default
+        if custom_credentials_file:
+            turbot_config = custom_credentials_file
+        else:
+            turbot_config = "{}/turbot/credentials.yml".format(XDG_CONFIG_HOME)
         graphql_path = 'api/latest/graphql'
         health_path = 'api/latest/turbot/health'
 

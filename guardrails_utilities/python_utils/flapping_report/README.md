@@ -46,13 +46,37 @@ The tool supports multiple authentication methods:
    export TURBOT_WORKSPACE="https://your-workspace.turbot.com"
    ```
 
-2. **Configuration File**:
+2. **Default Configuration File**:
    Create `~/.config/turbot/credentials.yml`:
    ```yaml
    default:
      workspace: "https://your-workspace.turbot.com"
      accessKey: "your_access_key"
      secretKey: "your_secret_key"
+   
+   # Additional profiles for different environments
+   production:
+     workspace: "https://prod-workspace.turbot.com"
+     accessKey: "your_prod_access_key"
+     secretKey: "your_prod_secret_key"
+   
+   staging:
+     workspace: "https://staging-workspace.turbot.com"
+     accessKey: "your_staging_access_key"
+     secretKey: "your_staging_secret_key"
+   ```
+
+3. **Custom Configuration File**:
+   Use the `--config` option to specify a different credentials file:
+   ```bash
+   python main.py --config /path/to/custom/credentials.yml
+   ```
+
+4. **Custom Profile**:
+   Use the `--profile` option to specify a different profile from the credentials file:
+   ```bash
+   python main.py --profile production
+   python main.py --profile staging --config /path/to/custom/credentials.yml
    ```
 
 ## Usage
@@ -66,7 +90,7 @@ python main.py
 # Custom time period (last 2 hours)
 python main.py --filter "timestamp:>=T-2h"
 
-# Export to CSV
+# Export raw query results to CSV for external analysis
 python main.py --csv
 
 # Debug mode with verbose output
@@ -79,20 +103,20 @@ python main.py --debug
 python main.py [OPTIONS]
 ```
 
-**Filtering:**
-- `--filter FILTERS` - Filters (default: timestamp:>=T-24h)
+### Filtering
+- `--filter FILTERS` - Filters (default: timestamp:>=T-24h). See [Turbot Filter Rules](https://turbot.com/guardrails/docs/guides/using-guardrails/notifications/filter-rules) for detailed syntax.
 - `--two-phase` - Use two-phase query for large environments
-- `--limit N` - Number of events per page (default: 100)
-- `--csv` - Export query results to CSV file
-- `--debug` - Enable debug output
+- `--limit N` - GraphQL query result page size (default: 500)
 
-**Configuration:**
+### Configuration
+- `--config PATH` - Path to Turbot credentials file (default: ~/.config/turbot/credentials.yml)
+- `--profile NAME` - Profile name to use from credentials file (default: default)
 - `--save-config` - Save current arguments to configuration file
 - `--load-config` - Load arguments from configuration file
 
-**Output Options:**
+### Output Options
 - `--csv` - Export query results to CSV file
-- `--output FILENAME` - Save report to file (e.g., report.md or report.html)
+- `--output FILENAME` - Save report to file (only .md and .html supported, e.g., report.md or report.html)
 - `--debug` - Enable debug output
 
 ### Examples
@@ -157,6 +181,27 @@ python main.py --output report.md --filter "timestamp:>=T-7d"
 
 # Save report with custom settings
 python main.py --output weekly_report.md --filter "timestamp:>=T-7d" --two-phase --limit 250
+
+# Use custom credentials file
+python main.py --config /path/to/custom/credentials.yml
+
+# Use custom credentials with filters
+python main.py --config /path/to/custom/credentials.yml --filter "timestamp:>=T-7d"
+
+# Use custom credentials with all options
+python main.py --config /path/to/custom/credentials.yml --filter "timestamp:>=T-24h" --two-phase --csv --debug
+
+# Use different profile from default credentials file
+python main.py --profile production
+
+# Use different profile with custom credentials file
+python main.py --profile staging --config /path/to/custom/credentials.yml
+
+# Use different profile with filters
+python main.py --profile production --filter "timestamp:>=T-7d"
+
+# Use different profile with all options
+python main.py --profile staging --config /path/to/custom/credentials.yml --filter "timestamp:>=T-24h" --two-phase --csv --debug
 ```
 
 ## Flapping Detection Logic
@@ -281,7 +326,7 @@ python main.py --filter "timestamp:>=T-24h"
 
 ## Tag Filtering
 
-The tool supports filtering by tags to focus analysis on specific resources. Tag filters use Turbot's native tag filtering syntax and can be combined with timestamp filters:
+The tool supports filtering by tags to focus analysis on specific resources. Tag filters use Turbot's native tag filtering syntax and can be combined with timestamp filters. See [Turbot Tag Filtering Documentation](https://turbot.com/guardrails/docs/reference/filter#tag-filters) for detailed syntax and examples.
 
 ### Filter Examples:
 
@@ -362,6 +407,15 @@ python main.py --load-config --csv
 
 # Load config but use standard mode instead of two-phase
 python main.py --load-config --two-phase
+
+# Load config but use different credentials file
+python main.py --load-config --config /path/to/different/credentials.yml
+
+# Load config but use different profile
+python main.py --load-config --profile production
+
+# Load config but use different profile and credentials file
+python main.py --load-config --profile staging --config /path/to/different/credentials.yml
 ```
 
 **Priority Order:**
@@ -379,7 +433,9 @@ The tool automatically loads saved configuration as defaults when no explicit ar
   "two_phase": true,
   "csv": false,
   "debug": false,
-  "limit": 250
+  "limit": 250,
+  "config": "/path/to/custom/credentials.yml",
+  "profile": "production"
 }
 ```
 
