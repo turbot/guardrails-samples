@@ -174,6 +174,8 @@ def detect_flapping(events, filters=None):
     if len(categories['turbot']) < MIN_TURBOT_REMEDIATIONS:
         return False, []
     
+
+    
     # Sort events by timestamp
     sorted_events = sorted(events, key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
     
@@ -264,26 +266,52 @@ def detect_flapping(events, filters=None):
                     return True, property_events
     
     # 4. Check for alternating user/Turbot patterns in non-lifecycle events
+    # BUT only if we have actual configuration-related messages
     non_lifecycle_events = [e for e in sorted_events if e not in lifecycle_events]
     
     if len(non_lifecycle_events) >= 3:
-        user_events = [e for e in non_lifecycle_events if e.get('actor', {}).get('identity', {}).get('title', '') != 'Turbot Identity']
-        turbot_events = [e for e in non_lifecycle_events if e.get('actor', {}).get('identity', {}).get('title', '') == 'Turbot Identity']
+        # Check if any events have meaningful configuration messages or tag changes
+        has_config_messages = False
+        for event in non_lifecycle_events:
+            message = event.get('message', '')
+            data = event.get('data', {})
+            
+            # Check for configuration keywords in message
+            if message and message != 'None' and message.lower() != 'no message or data available':
+                config_keywords = ['set', 'enabled', 'disabled', 'enforce', 'require', 'versioning', 
+                                 'encryption', 'https', 'ssl', 'tls', 'logging', 'compliance', 
+                                 'security', 'backup', 'retention', 'policy', 'rule', 'setting']
+                if any(keyword in message.lower() for keyword in config_keywords):
+                    has_config_messages = True
+                    break
+            
+            # Check for tag changes in data
+            if data and isinstance(data, dict):
+                # Look for tag-related data structures
+                if 'tagsToCreate' in data or 'tagsToDelete' in data or 'tagsToUpdate' in data:
+    
+                    has_config_messages = True
+                    break
         
-        if len(user_events) >= 2 and len(turbot_events) >= 1:
-            # Check for alternating pattern
-            all_events = sorted(non_lifecycle_events, key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
+        # Only proceed if we have actual configuration messages
+        if has_config_messages:
+            user_events = [e for e in non_lifecycle_events if e.get('actor', {}).get('identity', {}).get('title', '') != 'Turbot Identity']
+            turbot_events = [e for e in non_lifecycle_events if e.get('actor', {}).get('identity', {}).get('title', '') == 'Turbot Identity']
             
-            alternating_count = 0
-            for i in range(len(all_events) - 1):
-                current_actor = all_events[i].get('actor', {}).get('identity', {}).get('title', '')
-                next_actor = all_events[i + 1].get('actor', {}).get('identity', {}).get('title', '')
+            if len(user_events) >= 2 and len(turbot_events) >= 1:
+                # Check for alternating pattern
+                all_events = sorted(non_lifecycle_events, key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
                 
-                if current_actor != next_actor:
-                    alternating_count += 1
-            
-            if alternating_count >= 2:  # At least 2 alternations
-                return True, all_events
+                alternating_count = 0
+                for i in range(len(all_events) - 1):
+                    current_actor = all_events[i].get('actor', {}).get('identity', {}).get('title', '')
+                    next_actor = all_events[i + 1].get('actor', {}).get('identity', {}).get('title', '')
+                    
+                    if current_actor != next_actor:
+                        alternating_count += 1
+                
+                if alternating_count >= 2:  # At least 2 alternations
+                    return True, all_events
     
     return False, []
 
@@ -331,6 +359,82 @@ def analyze_pattern(events):
         return "User Only - Frequent user modifications"
     else:
         return "Unknown pattern"
+
+def categorize_flapping_events(events):
+    """Categorize flapping events by type (tags, versioning, etc.)"""
+    if not events:
+        return []
+    
+    # Sort events by timestamp
+    sorted_events = sorted(events, key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
+    
+    # Group events by flapping type
+    flapping_types = {}
+    
+    for event in sorted_events:
+        message = event.get('message', '')
+        if message is None:
+            message = ''
+        message = message.lower()
+        data = event.get('data', {})
+        if data is None:
+            data = {}
+        
+        # Determine flapping type based on message and data
+        flapping_type = 'unknown'
+        
+        # Check for tag-related events FIRST (since they're more common)
+        if 'tag' in message or 'updated tags' in message or ('tagsToCreate' in data or 'tagsToDelete' in data):
+            flapping_type = 'tag'
+        # Check for versioning events SECOND (before encryption)
+        elif 'version' in message or 'versioning' in message:
+            flapping_type = 'versioning'
+        # Check for encryption events
+        elif 'encryption' in message or 'encrypt' in message:
+            flapping_type = 'encryption'
+        # Also check for encryption in data structures and resource properties
+        elif isinstance(data, dict):
+            # Look for encryption-related data structures
+            data_str = str(data).lower()
+            if 'encryption' in data_str or 'encrypt' in data_str or 'sse' in data_str:
+                flapping_type = 'encryption'
+        # Check for other configuration types
+        elif 'logging' in message:
+            flapping_type = 'logging'
+        elif 'https' in message or 'ssl' in message or 'tls' in message:
+            flapping_type = 'security'
+        elif 'backup' in message or 'retention' in message:
+            flapping_type = 'backup'
+        else:
+            # Try to infer from data structure
+            if isinstance(data, dict):
+                if 'tagsToCreate' in data or 'tagsToDelete' in data:
+                    flapping_type = 'tag'
+                elif 'versioning' in str(data).lower():
+                    flapping_type = 'versioning'
+                elif 'policy' in str(data).lower() or 'statement' in str(data).lower():
+                    flapping_type = 'encryption'
+                else:
+                    # Skip events with no specific type - they're just side effects
+                    continue
+        
+
+        
+        if flapping_type not in flapping_types:
+            flapping_types[flapping_type] = []
+        flapping_types[flapping_type].append(event)
+    
+    # Return only flapping types with multiple events (indicating actual flapping)
+    result = []
+    for flapping_type, type_events in flapping_types.items():
+        if len(type_events) >= 3:  # At least 3 events to be considered flapping
+            result.append({
+                'type': flapping_type,
+                'events': type_events,
+                'count': len(type_events)
+            })
+    
+    return result
 
 def export_to_csv(notifications, filename=None):
     """Export query results to CSV file"""
@@ -459,6 +563,7 @@ def get_query_results_efficient(filters, turbot_config, limit=100):
     action_filters.append("notificationType:action_notify")
     
     action_resources = set()
+    action_notifications = []  # Store action_notify events from Phase 1
     paging_token = None
     page_count = 0
     
@@ -475,11 +580,12 @@ def get_query_results_efficient(filters, turbot_config, limit=100):
             page_data = response['data']['notifications']
             page_notifications = page_data['items']
             
-            # Extract resource IDs from action_notify events
+            # Extract resource IDs and store action_notify events
             for notification in page_notifications:
                 resource_id = notification.get('resource', {}).get('turbot', {}).get('id')
                 if resource_id:
                     action_resources.add(resource_id)
+                    action_notifications.append(notification)
             
             print(f"📊 Phase 1 - Page {page_count}: Found {len(page_notifications)} action events")
             
@@ -496,17 +602,17 @@ def get_query_results_efficient(filters, turbot_config, limit=100):
             print("✅ No action events found.")
             return []
         
-        # Phase 2: Get resource_updated events only for relevant resources
+        # Phase 2: Get resource_updated events for relevant resources
         print("⏳ Phase 2: Fetching resource_updated events for relevant resources...")
         
-        all_notifications = []
+        resource_updated_notifications = []
         resource_count = 0
         
         for resource_id in action_resources:
             resource_count += 1
             print(f"📄 Phase 2 - Resource {resource_count}/{len(action_resources)}: {resource_id}")
             
-            # Create resource-specific filter
+            # Create resource-specific filter for resource_updated only
             resource_filters = [f for f in query_filters if not f.startswith('notificationType:')]
             resource_filters.append("notificationType:resource_updated")
             resource_filters.append(f"resourceId:{resource_id}")
@@ -525,7 +631,7 @@ def get_query_results_efficient(filters, turbot_config, limit=100):
                 page_data = response['data']['notifications']
                 page_notifications = page_data['items']
                 
-                all_notifications.extend(page_notifications)
+                resource_updated_notifications.extend(page_notifications)
                 
                 if page_count == 1:
                     print(f"   📊 Found {len(page_notifications)} resource_updated events")
@@ -536,7 +642,10 @@ def get_query_results_efficient(filters, turbot_config, limit=100):
                 if not paging_token:
                     break
         
-        print(f"📊 Phase 2 - Total: Found {len(all_notifications)} resource_updated events")
+        # Combine action_notify events from Phase 1 with resource_updated events from Phase 2
+        all_notifications = action_notifications + resource_updated_notifications
+        
+        print(f"📊 Phase 2 - Total: Found {len(resource_updated_notifications)} resource_updated events")
         print(f"📊 Total: Found {len(all_notifications)} events across {len(action_resources)} resources")
         
         return all_notifications
@@ -558,7 +667,7 @@ def get_query_results_efficient(filters, turbot_config, limit=100):
         print("   - Network connectivity issues")
         return []
 
-def generate_flapping_report_from_notifications(notifications, filters=None, output_file=None):
+def generate_flapping_report_from_notifications(notifications, filters=None, output_file=None, config=None, debug=False):
     """Generate flapping report from notifications"""
     if not notifications:
         print("✅ No activity found.")
@@ -574,7 +683,9 @@ def generate_flapping_report_from_notifications(notifications, filters=None, out
     def add_line(line="", html_class=None):
         """Add a line to both console and report"""
         nonlocal in_list
-        print(line)
+        # Only print to console if no output file is specified
+        if not output_file:
+            print(line)
         if output_file:
             if is_html:
                 # Convert markdown to HTML
@@ -622,6 +733,9 @@ def generate_flapping_report_from_notifications(notifications, filters=None, out
         
         # Convert inline code
         html_text = re.sub(r'`([^`]+)`', r'<code>\1</code>', html_text)
+        
+        # Convert markdown links [text](url) to HTML links
+        html_text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank">\1</a>', html_text)
         
         # Convert emojis to HTML entities or keep as is
         emoji_map = {
@@ -697,10 +811,47 @@ def generate_flapping_report_from_notifications(notifications, filters=None, out
     
     add_line(f"## Analysis Summary", 'summary')
     add_line(f"- **Total Resources**: {len(grouped_by_resource)}")
-    add_line(f"- **Analysis Period**: {filters[0] if filters else 'Default'}")
-    add_line()
     
-    add_line(f"## Resource Analysis")
+    # Extract and display the actual time period from filters
+    time_period = "Default (24 hours)"
+    if filters:
+        for filter_str in filters:
+            if filter_str.startswith('timestamp:>='):
+                time_part = filter_str.replace('timestamp:>=', '')
+                if time_part.startswith('T-'):
+                    time_value = time_part[2:]
+                    if time_value.endswith('h'):
+                        hours = int(time_value[:-1])
+                        if hours == 24:
+                            time_period = f"Last {hours} hours"
+                        else:
+                            time_period = f"Last {hours} hours"
+                    elif time_value.endswith('d'):
+                        days = int(time_value[:-1])
+                        if days == 1:
+                            time_period = f"Last {days} day"
+                        else:
+                            time_period = f"Last {days} days"
+                    elif time_value.endswith('w'):
+                        weeks = int(time_value[:-1])
+                        if weeks == 1:
+                            time_period = f"Last {weeks} week"
+                        else:
+                            time_period = f"Last {weeks} weeks"
+                    elif time_value.endswith('m'):
+                        minutes = int(time_value[:-1])
+                        time_period = f"Last {minutes} minutes"
+                elif time_part == 'yesterday':
+                    time_period = "Yesterday"
+                elif time_part == 'now':
+                    time_period = "Last hour"
+                else:
+                    # Handle ISO date format
+                    time_period = f"Since {time_part}"
+                break
+    
+    add_line(f"- **Analysis Period**: {time_period}")
+    add_line()
     
     flapping_resources = []
     
@@ -717,57 +868,42 @@ def generate_flapping_report_from_notifications(notifications, filters=None, out
         is_flapping, flapping_events = detect_flapping(events, filters)
         
         if is_flapping:
-            add_line(f"### 📦 {resource_title}")
-            add_line(f"- **Total Events**: {len(events)}")
-            add_line(f"- **User Events**: {len(categories['user'])}")
-            add_line(f"- **Turbot Events**: {len(categories['turbot'])}")
+            # Categorize all events by type (not just detected flapping events)
+            flapping_categories = categorize_flapping_events(sorted_events)
             
-            add_line(f"- **Recent Events**:")
-            for event in sorted_events[-5:]:  # Last 5 events
-                timestamp = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
-                actor = event.get('actor', {}).get('identity', {}).get('title', 'Unknown')
-                message = event.get('message', 'No message')
-                notification_type = event.get('notificationType', 'Unknown')
-                data = event.get('data', {})
-                
-                # Show data if message is null/empty
-                if not message or message == 'None':
-                    if data:
-                        message = f"Data: {json.dumps(data, indent=2)}"
-                    else:
-                        message = "No message or data available"
-                
-                add_line(f"  - `{timestamp.strftime('%Y-%m-%d %H:%M:%S')}` **{actor}** ({notification_type}): {message}")
-            
-            # Add blank line after events
-            add_line()
-            
-            add_line(f"🚨 **FLAPPING DETECTED!**")
             resource_info = {
                 'title': resource_title,
                 'path': first_event.get('resource', {}).get('turbot', {}).get('path', 'Unknown'),
                 'type': first_event.get('resource', {}).get('type', {}).get('uri', 'Unknown'),
                 'total_events': len(events),
                 'flapping_events': flapping_events,
-                'pattern': analyze_pattern(flapping_events)
+                'flapping_categories': flapping_categories,
+                'pattern': analyze_pattern(flapping_events),
+                'categories': categories,
+                'recent_events': sorted_events  # Show all events for flapping resources
             }
             flapping_resources.append(resource_info)
-            add_line()
+        elif debug and 's3' in first_event.get('resource', {}).get('type', {}).get('uri', '').lower():
+            # Debug: Show S3 bucket events that aren't being detected as flapping
+            print(f"Debug: S3 bucket '{resource_title}' has {len(events)} events but no flapping detected")
+            print(f"Debug: Categories - User: {len(categories['user'])}, Turbot: {len(categories['turbot'])}")
+            print(f"Debug: All events for {resource_title}:")
+            for event in sorted_events:
+                timestamp = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
+                actor = event.get('actor', {}).get('identity', {}).get('title', 'Unknown')
+                message = event.get('message', 'No message')
+                data = event.get('data', {})
+                print(f"Debug:   {timestamp.strftime('%H:%M:%S')} {actor}: {message}")
+                if data:
+                    print(f"Debug:     Data: {data}")
     
-    # Only add a line break if we found flapping resources
-    if not flapping_resources:
-        add_line()
-    
-    # Generate report
-    add_line(f"## Flapping Report Summary")
+    # Generate combined report
+    add_line(f"## 🚨 Resources with Configuration Flapping")
     add_line(f"- **Total Resources**: {len(grouped_by_resource)}")
     add_line(f"- **Resources with Flapping**: {len(flapping_resources)}")
     add_line()
     
     if flapping_resources:
-        add_line(f"## 🚨 Resources with Configuration Flapping")
-        add_line()
-        
         for resource in flapping_resources:
             add_line(f"### 🔸 {resource['title']}")
             add_line(f"- **Path**: `{resource['path']}`")
@@ -776,20 +912,221 @@ def generate_flapping_report_from_notifications(notifications, filters=None, out
             add_line(f"- **Total Events**: {resource['total_events']}")
             add_line(f"- **Flapping Events**: {len(resource['flapping_events'])}")
             
-            add_line(f"- **Recent Activity**:")
-            for event in resource['flapping_events'][-5:]:  # Last 5 events
-                timestamp = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
-                actor = event.get('actor', {}).get('identity', {}).get('title', 'Unknown')
-                message = event.get('message', 'No message')
+            # Show categorized flapping if available
+            if resource.get('flapping_categories'):
+                add_line(f"- **Flapping Types**:")
+                for category in resource['flapping_categories']:
+                    add_line(f"  - **{category['type'].title()} Flapping**: {category['count']} events")
+                add_line()
                 
-                # Show data if message is null/empty
-                if not message or message == 'None':
-                    data = event.get('data', {})
-                    if data:
-                        message = f"Data: {json.dumps(data)}"
-                
-                add_line(f"  - `{timestamp.strftime('%Y-%m-%d %H:%M:%S')}` **{actor}**: {message}")
+                                # Show complete timeline organized by flapping type
+                for category in resource['flapping_categories']:
+                    # Get all events and filter by type, then sort chronologically
+                    all_events = resource['recent_events']
+                    type_events = []
+                    
+                    for event in all_events:
+                        message = event.get('message', '')
+                        if message is None:
+                            message = ''
+                        message = message.lower()
+                        data = event.get('data', {})
+                        if data is None:
+                            data = {}
+                        actor = event.get('actor', {}).get('identity', {}).get('title', 'Unknown')
+                        
+                        # Check if this event is related to the flapping type
+                        is_related = False
+                        if category['type'] == 'tag':
+                            # Include tag-related events and user actions that happen close to them
+                            if 'tag' in message or 'updated tags' in message or ('tagsToCreate' in data or 'tagsToDelete' in data):
+                                is_related = True
+                            elif 'scott kellish' in actor.lower() or 'unidentified identity' in actor.lower():
+                                # Check if this user action is close to a tag event
+                                for tag_event in category['events']:
+                                    tag_time = parse_timestamp(tag_event.get('turbot', {}).get('createTimestamp'))
+                                    event_time = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
+                                    time_diff = abs((event_time - tag_time).total_seconds())
+                                    if time_diff < 300:  # Within 5 minutes
+                                        is_related = True
+                                        break
+                        elif category['type'] == 'versioning':
+                            # Include versioning events and user actions that happen close to them
+                            if 'version' in message or 'versioning' in message:
+                                is_related = True
+                            elif 'scott kellish' in actor.lower() or 'unidentified identity' in actor.lower():
+                                # Check if this user action is close to a versioning event
+                                for version_event in category['events']:
+                                    version_time = parse_timestamp(version_event.get('turbot', {}).get('createTimestamp'))
+                                    event_time = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
+                                    time_diff = abs((event_time - version_time).total_seconds())
+                                    if time_diff < 300:  # Within 5 minutes
+                                        is_related = True
+                                        break
+                        elif category['type'] == 'encryption':
+                            # Include encryption events and user actions that happen close to them
+                            if 'encryption' in message or 'encrypt' in message or 'bucket policy' in message:
+                                is_related = True
+                            elif 'scott kellish' in actor.lower() or 'unidentified identity' in actor.lower():
+                                # Check if this user action is close to an encryption event
+                                for encryption_event in category['events']:
+                                    encryption_time = parse_timestamp(encryption_event.get('turbot', {}).get('createTimestamp'))
+                                    event_time = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
+                                    time_diff = abs((event_time - encryption_time).total_seconds())
+                                    if time_diff < 300:  # Within 5 minutes
+                                        is_related = True
+                                        break
+                        elif category['type'] == 'unknown':
+                            # Skip unknown category - these are likely normal lifecycle events, not flapping
+                            continue
+                        
+                        if is_related:
+                            type_events.append(event)
+                    
+                    # Sort by timestamp and show the complete pattern
+                    type_events.sort(key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
+                    
+                    # Only show timeline if there are events to display
+                    if type_events:
+                        add_line(f"  **{category['type'].title()} Flapping Timeline**:")
+                        for event in type_events:
+                            timestamp = parse_timestamp(event.get('turbot', {}).get('createTimestamp'))
+                            actor = event.get('actor', {}).get('identity', {}).get('title', 'Unknown')
+                            message = event.get('message', 'No message')
+                            notification_type = event.get('notificationType', 'Unknown')
+                            data = event.get('data', {})
+                            
+                            # Show data if message is null/empty
+                            if not message or message == 'None':
+                                if data:
+                                    message = f"Data: {json.dumps(data, indent=2)}"
+                                else:
+                                    message = "No message or data available"
+                            
+                            add_line(f"    - `{timestamp.strftime('%Y-%m-%d %H:%M:%S')}` **{actor}** ({notification_type}): {message}")
+                        
+                        # Add specific Guardrails URL for this flapping type
+                        if config and hasattr(config, 'workspace'):
+                            # Use the resource's turbot.id field for the URL
+                            first_event = category['events'][0] if category['events'] else None
+                            if first_event:
+                                resource_turbot_id = first_event.get('resource', {}).get('turbot', {}).get('id')
+                                resource_id = resource_turbot_id if resource_turbot_id else resource['path']
+                            else:
+                                resource_id = resource['path']
+                            
+                            # Create type-specific filter with timestamp range
+                            # Calculate time range from category events
+                            if category['events']:
+                                # Sort events by timestamp
+                                sorted_category_events = sorted(category['events'], 
+                                            key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
+                                
+                                # Get start and end times with buffer
+                                start_time = parse_timestamp(sorted_category_events[0].get('turbot', {}).get('createTimestamp'))
+                                end_time = parse_timestamp(sorted_category_events[-1].get('turbot', {}).get('createTimestamp'))
+                                
+                                # Add buffer hours to ensure we capture all events
+                                from datetime import timedelta
+                                start_time = start_time - timedelta(hours=1)
+                                end_time = end_time + timedelta(hours=1)
+                                
+                                # Format timestamps for URL with full datetime
+                                start_datetime = start_time.strftime('%Y-%m-%dT%H:%M:%S')
+                                end_datetime = end_time.strftime('%Y-%m-%dT%H:%M:%S')
+                                
+                                if category['type'] == 'tag':
+                                    filter_params = f"resourceId%3A{resource_id}+timestamp%3A%3E%3D{start_datetime}+timestamp%3A%3C%3D{end_datetime}"
+                                elif category['type'] == 'versioning':
+                                    filter_params = f"resourceId%3A{resource_id}+timestamp%3A%3E%3D{start_datetime}+timestamp%3A%3C%3D{end_datetime}"
+                                elif category['type'] == 'encryption':
+                                    filter_params = f"resourceId%3A{resource_id}+timestamp%3A%3E%3D{start_datetime}+timestamp%3A%3C%3D{end_datetime}"
+                                else:
+                                    filter_params = f"resourceId%3A{resource_id}+timestamp%3A%3E%3D{start_datetime}+timestamp%3A%3C%3D{end_datetime}"
+                            else:
+                                # Fallback without timestamp if no events
+                                if category['type'] == 'tag':
+                                    filter_params = f"resourceId%3A{resource_id}"
+                                elif category['type'] == 'versioning':
+                                    filter_params = f"resourceId%3A{resource_id}"
+                                elif category['type'] == 'encryption':
+                                    filter_params = f"resourceId%3A{resource_id}"
+                                else:
+                                    filter_params = f"resourceId%3A{resource_id}"
+                            
+                            # Removed individual timeline links - keeping only the general activity link at the bottom
+                            add_line()
+                            add_line()
+                        
+                        add_line()
+            
             add_line()
+            
+            # Generate general Guardrails activity ledger link
+            if config and hasattr(config, 'workspace'):
+                # Use the resource's turbot.id field for the URL
+                first_event = resource['flapping_events'][0] if resource['flapping_events'] else None
+                if first_event:
+                    resource_turbot_id = first_event.get('resource', {}).get('turbot', {}).get('id')
+                    resource_id = resource_turbot_id if resource_turbot_id else resource['path']
+                else:
+                    resource_id = resource['path']
+                
+                # Calculate time range from flapping events
+                if resource['flapping_events']:
+                    # Sort events by timestamp
+                    sorted_events = sorted(resource['flapping_events'], 
+                                        key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
+                    
+                    # Get start and end times
+                    start_time = parse_timestamp(sorted_events[0].get('turbot', {}).get('createTimestamp'))
+                    end_time = parse_timestamp(sorted_events[-1].get('turbot', {}).get('createTimestamp'))
+                    
+                    # Format dates for URL (YYYY-MM-DD)
+                    start_date = start_time.strftime('%Y-%m-%d')
+                    end_date = end_time.strftime('%Y-%m-%d')
+                    
+                    # Add time filter to URL (using + for filter separation)
+                    # Calculate time range from flapping events
+                    if resource['flapping_events']:
+                        # Sort events by timestamp
+                        sorted_events = sorted(resource['flapping_events'], 
+                                            key=lambda x: parse_timestamp(x.get('turbot', {}).get('createTimestamp')))
+                        
+                        # Get start and end times
+                        start_time = parse_timestamp(sorted_events[0].get('turbot', {}).get('createTimestamp'))
+                        end_time = parse_timestamp(sorted_events[-1].get('turbot', {}).get('createTimestamp'))
+                        
+                        # Add buffer hours to ensure we capture all events
+                        from datetime import timedelta
+                        start_time = start_time - timedelta(hours=1)
+                        end_time = end_time + timedelta(hours=1)
+                        
+                        # Format dates for URL (YYYY-MM-DD)
+                        start_date = start_time.strftime('%Y-%m-%d')
+                        end_date = end_time.strftime('%Y-%m-%d')
+                        
+                        # Try different timestamp format - use ISO format with time
+                        start_datetime = start_time.strftime('%Y-%m-%dT%H:%M:%S')
+                        end_datetime = end_time.strftime('%Y-%m-%dT%H:%M:%S')
+                        
+                        # Add timestamp filter to URL with full datetime
+                        start_datetime = start_time.strftime('%Y-%m-%dT%H:%M:%S')
+                        end_datetime = end_time.strftime('%Y-%m-%dT%H:%M:%S')
+                        activity_ledger_url = f"{config.workspace}/apollo/reports/activity-ledger?filter=resourceId%3A{resource_id}+notificationType%3Aresource_updated%2Caction_notify+timestamp%3A%3E%3D{start_datetime}+timestamp%3A%3C%3D{end_datetime}"
+                    else:
+                        # Fallback without time filter if no flapping events
+                        activity_ledger_url = f"{config.workspace}/apollo/reports/activity-ledger?filter=resourceId%3A{resource_id}+notificationType%3Aresource_updated%2Caction_notify"
+                else:
+                    # Fallback without time filter if no flapping events
+                    activity_ledger_url = f"{config.workspace}/apollo/reports/activity-ledger?filter=resourceId%3A{resource_id}+notificationType%3Aresource_updated%2Caction_notify"
+                
+                if is_html:
+                    add_line(f"- **🔗 <a href=\"{activity_ledger_url}\" target=\"_blank\">View Activity in Guardrails</a>**")
+                else:
+                    add_line(f"- **🔗 [View Activity in Guardrails]({activity_ledger_url})**")
+            
+
     else:
         add_line(f"## ✅ No Configuration Flapping Detected")
         add_line()
@@ -942,7 +1279,7 @@ def main():
     
     # Generate flapping report (if --output is specified or no --csv)
     if args.output or not args.csv:
-        generate_flapping_report_from_notifications(notifications, filters, args.output)
+        generate_flapping_report_from_notifications(notifications, filters, args.output, config, args.debug)
 
 if __name__ == "__main__":
     main()

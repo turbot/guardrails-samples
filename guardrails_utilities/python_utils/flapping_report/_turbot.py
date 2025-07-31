@@ -18,11 +18,13 @@ class Config:
             turbot_config = custom_credentials_file
         else:
             turbot_config = "{}/turbot/credentials.yml".format(XDG_CONFIG_HOME)
+        
+
         graphql_path = 'api/latest/graphql'
         health_path = 'api/latest/turbot/health'
 
         # Option 1: Use custom yaml configuration file.
-        if custom_config_file:
+        if custom_config_file is not None:
             with open(custom_config_file, 'r') as stream:
                 try:
                     config_dict = yaml.safe_load(stream)
