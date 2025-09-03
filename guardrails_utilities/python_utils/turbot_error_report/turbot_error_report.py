@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import datetime as dt
 import argparse
 import sys
@@ -21,6 +22,7 @@ Examples:
   %(prog)s --output json             # JSON output format
   %(prog)s --quiet                   # Only show count
   %(prog)s --no-timestamp            # Don't filter by time
+  %(prog)s --insecure                # Disable SSL certificate verification
         """
     )
     
@@ -78,6 +80,12 @@ Examples:
         "--debug",
         action="store_true",
         help="Enable debug output"
+    )
+    
+    parser.add_argument(
+        "--insecure", "-i",
+        action="store_true",
+        help="Disable SSL certificate verification"
     )
     
     return parser.parse_args()
@@ -192,7 +200,7 @@ def main():
     }
     
     # Initialize Turbot configuration
-    config = Config(None, "default")
+    config = Config(None, "default", debug=args.debug, insecure=args.insecure)
     
     def run_query(q, v):
         result = config.graphql_query(q, v)

@@ -9,7 +9,7 @@ class Config:
     """ Locates the users Turbot credentials, verifies connectivity to
         the specified Turbot workspace and instantiates a config object. """
 
-    def __init__(self, custom_config_file, config_profile, debug=False, custom_credentials_file=None):
+    def __init__(self, custom_config_file, config_profile, debug=False, custom_credentials_file=None, insecure=False):
 
         config_dict = {}
         config_fail = ""
@@ -91,6 +91,12 @@ class Config:
                 self.health_endpoint = "{}/{}".format(
                     self.workspace, health_path)
 
+            # Set up SSL verification before health check
+            self.verify_ssl = not insecure
+            if insecure:
+                import urllib3
+                urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
             if debug:
                 print("Testing connection to {} ...".format(self.workspace))
             self.test_health(debug)
@@ -119,7 +125,7 @@ class Config:
         if debug:
             print(f"Testing health endpoint: {self.health_endpoint}")
         try:
-            r = requests.get(self.health_endpoint, timeout=5)
+            r = requests.get(self.health_endpoint, timeout=5, verify=self.verify_ssl)
         except requests.exceptions.ConnectionError as e:
             print("Failed to connect to the endpoint.")
             if debug:
@@ -180,7 +186,8 @@ class Config:
                 self.graphql_endpoint,
                 json=payload,
                 headers=headers,
-                timeout=timeout
+                timeout=timeout,
+                verify=self.verify_ssl
             )
             response.raise_for_status()
             
