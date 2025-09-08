@@ -124,7 +124,7 @@ def build_filters(args):
     
     # Timestamp filter
     if not args.no_timestamp:
-        filters.append(f"timestamp:>=T-{args.hours}h")
+        filters.append(f"stateChangeTimestamp:>=T-{args.hours}h")
     
     # Resource type filter (full URI only)
     if args.resource_type:

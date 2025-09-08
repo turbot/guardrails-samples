@@ -141,7 +141,7 @@ class TestFilterBuilding:
             
             expected = [
                 "state:error,alarm",
-                "timestamp:>=T-24h"
+                "stateChangeTimestamp:>=T-24h"
             ]
             assert filters == expected
     
@@ -153,7 +153,7 @@ class TestFilterBuilding:
             
             expected = [
                 "state:error,ok",
-                "timestamp:>=T-24h"
+                "stateChangeTimestamp:>=T-24h"
             ]
             assert filters == expected
     
@@ -165,7 +165,7 @@ class TestFilterBuilding:
             
             expected = [
                 "state:error,alarm",
-                "timestamp:>=T-48h"
+                "stateChangeTimestamp:>=T-48h"
             ]
             assert filters == expected
     
@@ -201,7 +201,7 @@ class TestFilterBuilding:
             
             expected = [
                 "state:error,alarm",
-                "timestamp:>=T-24h",
+                "stateChangeTimestamp:>=T-24h",
                 "resourceTypeId:tmod:@turbot/aws-s3#/resource/types/bucket"
             ]
             assert filters == expected
