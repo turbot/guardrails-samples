@@ -14,17 +14,24 @@ def parse_arguments():
 Examples:
   %(prog)s                           # Default: errors/alarms in last 24h
   %(prog)s --hours 48                # Last 48 hours
-  %(prog)s --states error            # Only ERROR states
-  %(prog)s --states alarm            # Only ALARM states
-  %(prog)s --states error,alarm      # Both ERROR and ALARM states
-  %(prog)s --resource-type s3        # Only S3 resources (short form)
-  %(prog)s --resource-type "tmod:@turbot/aws-s3#/resource/types/bucket"  # Specific S3 bucket type
+  %(prog)s --states error            # Single state (from error, alarm, ok, skipped, tbd)
+  %(prog)s --states error,alarm      # Multiple states (comma-separated, default)
+  %(prog)s --resource-type "tmod:@turbot/aws-s3#/resource/types/bucket"  # S3 bucket resources
+  %(prog)s --resource-type "tmod:@turbot/aws-ec2#/resource/types/instance"  # EC2 instance resources
   %(prog)s --output json             # JSON output format
   %(prog)s --quiet                   # Only show count
   %(prog)s --no-timestamp            # Don't filter by time
   %(prog)s --insecure                # Disable SSL certificate verification
         """
     )
+    
+    # Override the error handler to add help instruction
+    def error_handler(message):
+        print(f"Error: {message}")
+        print("For full help: python3 turbot_error_report.py -h")
+        sys.exit(2)
+    
+    parser.error = error_handler
     
     parser.add_argument(
         "--hours",
@@ -41,7 +48,7 @@ Examples:
     
     parser.add_argument(
         "--resource-type", "-r",
-        help="Filter by resource type. Can use short form (s3, ec2, iam) or full URI (tmod:@turbot/aws-s3#/resource/types/bucket)"
+        help="Filter by resource type. Use full URI format (e.g., tmod:@turbot/aws-s3#/resource/types/bucket)"
     )
     
     # Note: Cloud provider filtering not available in controls API
@@ -90,26 +97,43 @@ Examples:
     
     return parser.parse_args()
 
+def validate_states(states_str):
+    """Validate state values and provide helpful error message."""
+    valid_states = {"error", "alarm", "ok", "skipped", "tbd"}
+    states = [s.strip() for s in states_str.split(",")]
+    
+    # Check for invalid states (case-sensitive)
+    invalid_states = [s for s in states if s not in valid_states]
+    if invalid_states:
+        print(f"Error: Invalid state(s): {', '.join(invalid_states)}")
+        print(f"Valid states are: {', '.join(sorted(valid_states))}")
+        print("Use comma-separated values like: error,alarm")
+        print("For full help: python3 turbot_error_report.py -h")
+        sys.exit(1)
+    
+    return states_str
+
 def build_filters(args):
     """Build filter list based on command line arguments."""
     filters = []
     
     # State filter
     if args.states:
-        filters.append(f"state:{args.states}")
+        validated_states = validate_states(args.states)
+        filters.append(f"state:{validated_states}")
     
     # Timestamp filter
     if not args.no_timestamp:
         filters.append(f"timestamp:>=T-{args.hours}h")
     
-    # Resource type filter (supports both short form and full URI)
+    # Resource type filter (full URI only)
     if args.resource_type:
-        if args.resource_type.startswith("tmod:"):
-            # Full URI format: tmod:@turbot/aws-s3#/resource/types/bucket
-            filters.append(f"resourceTypeId:{args.resource_type}")
-        else:
-            # Short form: s3, ec2, iam
-            filters.append(f"resourceType:{args.resource_type}")
+        if not args.resource_type.startswith("tmod:"):
+            print(f"Error: Resource type must be a full URI starting with 'tmod:'")
+            print(f"Example: tmod:@turbot/aws-s3#/resource/types/bucket")
+            print("For full help: python3 turbot_error_report.py -h")
+            sys.exit(1)
+        filters.append(f"resourceTypeId:{args.resource_type}")
     
     # Note: Cloud provider filtering not available in controls API
     # if args.cloud_provider:

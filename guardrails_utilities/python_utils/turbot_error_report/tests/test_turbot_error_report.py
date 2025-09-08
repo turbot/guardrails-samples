@@ -4,7 +4,61 @@ Tests for turbot_error_report.py main script.
 import pytest
 import sys
 from unittest.mock import patch, Mock
-from turbot_error_report import parse_arguments, build_filters, format_output
+from turbot_error_report import parse_arguments, build_filters, format_output, validate_states
+
+
+class TestStateValidation:
+    """Test state validation functionality."""
+    
+    def test_validate_states_single_valid(self):
+        """Test validation with single valid state."""
+        result = validate_states("error")
+        assert result == "error"
+    
+    def test_validate_states_multiple_valid(self):
+        """Test validation with multiple valid states."""
+        result = validate_states("error,alarm")
+        assert result == "error,alarm"
+    
+    def test_validate_states_all_valid(self):
+        """Test validation with all valid states."""
+        result = validate_states("error,alarm,ok,skipped,tbd")
+        assert result == "error,alarm,ok,skipped,tbd"
+    
+    def test_validate_states_with_spaces(self):
+        """Test validation with spaces around states."""
+        result = validate_states(" error , alarm ")
+        assert result == " error , alarm "
+    
+    def test_validate_states_invalid_uppercase(self, capsys):
+        """Test validation rejects uppercase states."""
+        with pytest.raises(SystemExit) as exc_info:
+            validate_states("ALARM")
+        assert exc_info.value.code == 1
+        
+        captured = capsys.readouterr()
+        assert "Error: Invalid state(s): ALARM" in captured.out
+        assert "Valid states are: alarm, error, ok, skipped, tbd" in captured.out
+        assert "For full help: python3 turbot_error_report.py -h" in captured.out
+    
+    def test_validate_states_invalid_value(self, capsys):
+        """Test validation rejects invalid state values."""
+        with pytest.raises(SystemExit) as exc_info:
+            validate_states("invalid")
+        assert exc_info.value.code == 1
+        
+        captured = capsys.readouterr()
+        assert "Error: Invalid state(s): invalid" in captured.out
+        assert "Valid states are: alarm, error, ok, skipped, tbd" in captured.out
+    
+    def test_validate_states_mixed_valid_invalid(self, capsys):
+        """Test validation with mix of valid and invalid states."""
+        with pytest.raises(SystemExit) as exc_info:
+            validate_states("error,INVALID,alarm")
+        assert exc_info.value.code == 1
+        
+        captured = capsys.readouterr()
+        assert "Error: Invalid state(s): INVALID" in captured.out
 
 
 class TestArgumentParsing:
@@ -126,18 +180,18 @@ class TestFilterBuilding:
             ]
             assert filters == expected
     
-    def test_build_filters_resource_type_short_form(self):
-        """Test building filters with short form resource type."""
+    def test_build_filters_resource_type_invalid_short_form(self, capsys):
+        """Test building filters rejects short form resource type."""
         with patch.object(sys, 'argv', ['turbot_error_report.py', '--resource-type', 's3']):
             args = parse_arguments()
-            filters = build_filters(args)
+            with pytest.raises(SystemExit) as exc_info:
+                build_filters(args)
+            assert exc_info.value.code == 1
             
-            expected = [
-                "state:error,alarm",
-                "timestamp:>=T-24h",
-                "resourceType:s3"
-            ]
-            assert filters == expected
+            captured = capsys.readouterr()
+            assert "Error: Resource type must be a full URI starting with 'tmod:'" in captured.out
+            assert "Example: tmod:@turbot/aws-s3#/resource/types/bucket" in captured.out
+            assert "For full help: python3 turbot_error_report.py -h" in captured.out
     
     def test_build_filters_resource_type_full_uri(self):
         """Test building filters with full URI resource type."""
@@ -158,7 +212,7 @@ class TestFilterBuilding:
             'turbot_error_report.py',
             '--states', 'error',
             '--hours', '12',
-            '--resource-type', 'ec2',
+            '--resource-type', 'tmod:@turbot/aws-ec2#/resource/types/instance',
             '--no-timestamp'
         ]):
             args = parse_arguments()
@@ -166,7 +220,7 @@ class TestFilterBuilding:
             
             expected = [
                 "state:error",
-                "resourceType:ec2"
+                "resourceTypeId:tmod:@turbot/aws-ec2#/resource/types/instance"
             ]
             assert filters == expected
 

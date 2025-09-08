@@ -10,7 +10,7 @@ This script queries the Turbot Guardrails API to identify controls in ERROR or A
 
 - **Flexible Time Windows**: Report errors from the last 24 hours (default) or any custom time period
 - **State Filtering**: Filter by control states (error, alarm, ok, skipped, tbd)
-- **Resource Type Filtering**: Focus on specific resource types (S3, EC2, IAM, etc.)
+- **Resource Type Filtering**: Focus on specific resource types using full URIs
 - **Multiple Output Formats**: Text (default), JSON, or CSV output
 - **SSL Certificate Verification**: Option to disable SSL verification for self-signed certificates
 - **Pagination Support**: Automatically handles large result sets
@@ -72,7 +72,7 @@ python3 turbot_error_report.py
 |--------|-------|-------------|---------|
 | `--hours` | | Time window in hours | 24 |
 | `--states` | `-s` | Control states to include (error, alarm, ok, skipped, tbd) | error,alarm |
-| `--resource-type` | `-r` | Filter by resource type (short form: s3, ec2, iam OR full URI: tmod:@turbot/aws-s3#/resource/types/bucket) | None |
+| `--resource-type` | `-r` | Filter by resource type using full URI (e.g., tmod:@turbot/aws-s3#/resource/types/bucket) | None |
 | `--output` | `-o` | Output format (text, json, csv) | text |
 | `--quiet` | `-q` | Only show count, no details | False |
 | `--no-timestamp` | | Don't filter by timestamp | False |
@@ -111,19 +111,16 @@ python3 turbot_error_report.py --states error,alarm,ok,skipped,tbd
 
 #### Resource Type Filtering
 ```bash
-# S3 resources only (short form)
-python3 turbot_error_report.py --resource-type s3
-
-# EC2 resources only (short form)
-python3 turbot_error_report.py --resource-type ec2
-
-# IAM resources only (short form)
-python3 turbot_error_report.py --resource-type iam
-
-# Specific AWS S3 Bucket type (full URI from Guardrails Hub)
+# AWS S3 Bucket resources (full URI required)
 python3 turbot_error_report.py --resource-type "tmod:@turbot/aws-s3#/resource/types/bucket"
 
-# Specific Azure Storage Account type (full URI - if available in your workspace)
+# AWS EC2 Instance resources (full URI required)
+python3 turbot_error_report.py --resource-type "tmod:@turbot/aws-ec2#/resource/types/instance"
+
+# AWS IAM Role resources (full URI required)
+python3 turbot_error_report.py --resource-type "tmod:@turbot/aws-iam#/resource/types/role"
+
+# Azure Storage Account resources (full URI - if available in your workspace)
 python3 turbot_error_report.py --resource-type "tmod:@turbot/azure-storage#/resource/types/storageAccount"
 ```
 
@@ -163,7 +160,7 @@ python3 turbot_error_report.py --insecure --debug --limit 5
 #### Combined Examples
 ```bash
 # S3 alarms from last 7 days, JSON output
-python3 turbot_error_report.py --hours 168 --states alarm --resource-type s3 --output json
+python3 turbot_error_report.py --hours 168 --states alarm --resource-type "tmod:@turbot/aws-s3#/resource/types/bucket" --output json
 
 # Specific AWS S3 Bucket type, last 48 hours
 python3 turbot_error_report.py --hours 48 --resource-type "tmod:@turbot/aws-s3#/resource/types/bucket"
@@ -241,11 +238,10 @@ tmod:@turbot/azure-storage#/resource/types/storageAccount
 tmod:@turbot/gcp-compute#/resource/types/instance
 ```
 
-### Short Form vs Full URI
-- **Short Form**: `s3` (gets AWS S3-related controls in your workspace)
-- **Full URI**: `tmod:@turbot/aws-s3#/resource/types/bucket` (gets only AWS S3 Bucket controls specifically)
-
+### Finding Resource Type URIs
 **Note**: Available resource types depend on your workspace configuration. Use `turbot graphql --query 'query { resourceTypes { items { trunk { title } uri } } }'` to see what's available.
+
+**Important**: Only full URIs are supported. Short forms like `s3` or `ec2` are no longer accepted.
 
 ## Understanding the Results
 
