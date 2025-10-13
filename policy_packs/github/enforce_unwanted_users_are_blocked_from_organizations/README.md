@@ -22,7 +22,7 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) can
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - Guardrails mods:
-  - [@turbot/github](https://hub.guardrails.turbot.com/mods/github)
+  - [@turbot/github](https://hub.guardrails.turbot.com/mods/github/mods/github)
 
 ### Credentials
 
