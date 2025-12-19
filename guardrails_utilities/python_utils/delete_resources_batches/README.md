@@ -6,6 +6,12 @@ When executed with the `--disable` flag, the script disables discovery policies 
 
 Deletion is performed in batches, with an optional `cooldown` period between batches to prevent system overload.
 
+**Features:**
+- **Dry-run mode**: Run without `--execute` flag to see how many resources would be deleted without making changes
+- **Graceful error handling**: Automatically skips resources that are already deleted or not found, allowing the script to complete successfully
+- **Summary report**: Provides a detailed summary showing successfully deleted, skipped, and failed resources
+- **Batch processing**: Processes deletions in configurable batches with cooldown periods to prevent system overload
+
 For more details, refer to [Filtering Resources](https://turbot.com/guardrails/docs/reference/filter/resources).
 
 ## Prerequisites
@@ -114,15 +120,15 @@ python3 delete_resources_batches.py [options]
 
 -b, --batch
 
-> [Int] The number of controls to run before cooldown per cycle
+> [Int] The number of resources to delete before cooldown per cycle. Default: 100
 
 -d, --cooldown
 
-> [Int] Number of seconds to pause before the next batch of controls are run. Setting this value to `0` will disable cooldown.
+> [Int] Number of seconds to pause before the next batch of resources are deleted. Setting this value to `0` will disable cooldown. Default: 30
 
 -e, --execute
 
-> Will re-run controls when found.
+> **Required flag** to actually perform the deletion. Without this flag, the script will run in dry-run mode and only show how many resources would be deleted.
 
 –disable
 
@@ -134,12 +140,20 @@ python3 delete_resources_batches.py [options]
 
 #### Example Usage
 
-##### Example 1: Simulate Deletion
+##### Example 1: Dry-Run (Simulate Deletion)
 
-Simulates the deletion process without making any changes.
+Simulates the deletion process without making any changes. Shows how many resources would be deleted.
 
 ```shell
 python3 delete_resources_batches.py --resource-id <resource_id>
+```
+
+**Output example:**
+```
+Fetching descendants for deletion...
+Found 150 resources (including parent) to delete.
+
+--execute flag not set. Exiting without deletion.
 ```
 
 ##### Example 2: Delete Resources and Disable Policies
@@ -166,11 +180,40 @@ Runs the script using credentials specified in a configuration file.
 python3 delete_resources_batches.py --config ~/.config/turbot/credentials.yml --profile default --resource-id <resource_id> --execute
 ```
 
-##### Example 5: Re-run controls in Multiple States
+##### Example 5: Dry-Run with Configuration File
+
+Run a dry-run using a specific profile from your credentials file.
 
 ```shell
-python3 run_controls_batches.py -f "state:tbd,error,alarm"
+python3 delete_resources_batches.py --config ~/.config/turbot/credentials.yml --profile shaktiman --resource-id <resource_id>
 ```
+
+## Output and Error Handling
+
+The script provides detailed output during execution:
+
+- **Progress**: Shows each resource being deleted
+- **Warnings**: Displays warnings for resources that are already deleted (skipped)
+- **Errors**: Shows errors for resources that fail to delete (non-blocking)
+- **Summary**: Provides a final summary report with counts
+
+**Example Summary Output:**
+```
+============================================================
+Deletion Summary:
+  ✅ Successfully deleted: 145 resources
+  ⚠️  Skipped (not found): 5 resources
+  ❌ Failed: 0 resources
+  📊 Total processed: 150 / 150 resources
+============================================================
+```
+
+**Note:** The script gracefully handles "Not Found" errors, which can occur when:
+- A resource was already deleted manually
+- A parent resource deletion cascades to children
+- Resources are deleted between fetching the list and deletion
+
+The script will continue processing all resources even if some are not found, ensuring maximum cleanup.
 
 ## Virtual Environments Deactivation
 
