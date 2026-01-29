@@ -161,7 +161,7 @@ function main {
             -d|--dry-run)
                 if [[ -n "$2" ]] && [[ ${2:0:1} != "-" ]]
                 then
-                    if [[ ${2,,} = "false" ]]
+                    if [[ $(echo "$2" | tr '[:upper:]' '[:lower:]') = "false" ]]
                     then
                         local DRY_RUN=false
                     fi
