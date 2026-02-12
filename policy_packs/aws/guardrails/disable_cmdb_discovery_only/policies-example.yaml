@@ -1,0 +1,108 @@
+# =============================================================================
+# CMDB Policy Configuration
+# =============================================================================
+# This YAML file defines which policies to enable/disable
+# Consumed by Terraform using yamldecode()
+# =============================================================================
+
+# Critical infrastructure (always enabled)
+event_handlers:
+  regional:
+    type: "tmod:@turbot/aws#/policy/types/eventHandlers"
+    value: "Enforce: Configured"
+    note: "REQUIRED for real-time event processing"
+  global:
+    type: "tmod:@turbot/aws#/policy/types/eventHandlersGlobal"
+    value: "Enforce: Configured"
+    note: "REQUIRED for global event routing"
+
+# Prevention discovery (enabled)
+prevention_cmdb:
+  scp:
+    type: "tmod:@turbot/aws-iam#/policy/types/serviceControlPolicyCmdb"
+    value: "Enforce: Enabled"
+    note: "Required for SCP prevention discovery"
+  rcp:
+    type: "tmod:@turbot/aws-iam#/policy/types/resourceControlPolicyCmdb"
+    value: "Enforce: Enabled"
+    note: "Required for RCP prevention discovery"
+
+# Service resource CMDB (disabled for cost)
+service_cmdb_skip:
+  # EC2 Resources
+  ec2_instance:
+    type: "tmod:@turbot/aws-ec2#/policy/types/instanceCmdb"
+    note: "EC2 Instances - 75k controls in Procare"
+  ec2_volume:
+    type: "tmod:@turbot/aws-ec2#/policy/types/volumeCmdb"
+    note: "EBS Volumes"
+  ec2_snapshot:
+    type: "tmod:@turbot/aws-ec2#/policy/types/snapshotCmdb"
+    note: "EBS Snapshots"
+  ec2_ami:
+    type: "tmod:@turbot/aws-ec2#/policy/types/imageCmdb"
+    note: "AMIs"
+  ec2_security_group:
+    type: "tmod:@turbot/aws-ec2#/policy/types/securityGroupCmdb"
+    note: "Security Groups"
+  ec2_vpc:
+    type: "tmod:@turbot/aws-ec2#/policy/types/vpcCmdb"
+    note: "VPCs"
+  ec2_subnet:
+    type: "tmod:@turbot/aws-ec2#/policy/types/subnetCmdb"
+    note: "Subnets"
+
+  # S3 Resources
+  s3_bucket:
+    type: "tmod:@turbot/aws-s3#/policy/types/bucketCmdb"
+    note: "S3 Buckets"
+
+  # RDS Resources
+  rds_db_instance:
+    type: "tmod:@turbot/aws-rds#/policy/types/dbInstanceCmdb"
+    note: "RDS DB Instances"
+  rds_db_cluster:
+    type: "tmod:@turbot/aws-rds#/policy/types/dbClusterCmdb"
+    note: "RDS DB Clusters"
+
+  # Lambda Resources
+  lambda_function:
+    type: "tmod:@turbot/aws-lambda#/policy/types/functionCmdb"
+    note: "Lambda Functions"
+
+  # IAM Resources
+  iam_user:
+    type: "tmod:@turbot/aws-iam#/policy/types/userCmdb"
+    note: "IAM Users - 450 controls in Procare"
+  iam_role:
+    type: "tmod:@turbot/aws-iam#/policy/types/roleCmdb"
+    note: "IAM Roles"
+  iam_group:
+    type: "tmod:@turbot/aws-iam#/policy/types/groupCmdb"
+    note: "IAM Groups"
+  iam_policy:
+    type: "tmod:@turbot/aws-iam#/policy/types/policyCmdb"
+    note: "IAM Policies"
+
+  # DynamoDB Resources
+  dynamodb_table:
+    type: "tmod:@turbot/aws-dynamodb#/policy/types/tableCmdb"
+    note: "DynamoDB Tables"
+
+  # ECS Resources
+  ecs_cluster:
+    type: "tmod:@turbot/aws-ecs#/policy/types/clusterCmdb"
+    note: "ECS Clusters"
+  ecs_service:
+    type: "tmod:@turbot/aws-ecs#/policy/types/serviceCmdb"
+    note: "ECS Services"
+
+  # CodeBuild Resources
+  codebuild_project:
+    type: "tmod:@turbot/aws-codebuild#/policy/types/projectCmdb"
+    note: "CodeBuild Projects - 20k controls in Procare"
+
+  # CloudWatch Logs
+  logs_log_group:
+    type: "tmod:@turbot/aws-logs#/policy/types/logGroupCmdb"
+    note: "CloudWatch Log Groups"
