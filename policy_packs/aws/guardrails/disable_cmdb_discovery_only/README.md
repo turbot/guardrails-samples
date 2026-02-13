@@ -23,20 +23,32 @@ Perfect for customers who want to:
 
 ## Cost Impact
 
-**Example: Customer with 250,000 billable controls**
+Based on [Guardrails pricing](https://turbot.com/guardrails/pricing) of **$0.05 per control per month** (Cloud Plan):
 
-Before (full CMDB enabled):
-- EC2 Instances: 75,000 controls
-- S3 Buckets: 5,000 controls
-- RDS: 2,000 controls
-- IAM: 450 controls
-- **Total: 250,000 controls → ~$6,000/month**
+**Example: Large enterprise with full CMDB enabled**
+
+Before (all service mods with CMDB):
+- EC2 resources: 75,000 controls
+- S3 resources: 5,000 controls
+- RDS resources: 2,000 controls
+- Other services: 168,000 controls
+- **Total: 250,000 controls → $12,500/month ($150K/year)**
+
+After (this policy pack - discovery only):
+- Infrastructure: ~100 controls (accounts, event handlers, SCPs)
+- **Total: ~100 controls → $5/month ($60/year)**
+- **Savings: $12,440/month (99.96% reduction)**
+
+**Example: Mid-size company with selective CMDB**
+
+Before (moderate service coverage):
+- Mixed resources: 25,000 controls
+- **Total: 25,000 controls → $1,250/month ($15K/year)**
 
 After (this policy pack):
-- Account/Org/OU: ~50 controls
-- Event Handlers: ~30 controls
-- SCPs/RCPs: ~20 controls
-- **Total: ~100 controls → ~$50/month (98% reduction)**
+- Infrastructure only: ~100 controls
+- **Total: ~100 controls → $5/month ($60/year)**
+- **Savings: $1,245/month (99.6% reduction)**
 
 ## Getting Started
 
@@ -136,9 +148,10 @@ For more information, please see [Policy Packs](https://turbot.com/guardrails/do
 Watch the control count drop in the [billing portal](https://guardrails.turbot.com):
 
 ```sh
-# Before: 250,000 controls
-# After:  ~100-200 controls
-# Savings: ~98% cost reduction
+# Example results:
+# Before: 250,000 controls ($12,500/month)
+# After:  ~100 controls ($5/month)
+# Savings: 99.96% cost reduction
 ```
 
 ## Multi-Workspace Deployment
@@ -238,7 +251,10 @@ If you're following a prevention-first approach:
 5. Create SCPs/RCPs based on Pipes findings
 6. Later, selectively install service mods as needed
 
-This reduces costs to ~$50-100/month vs $6,000/month with full service mods.
+**Cost comparison** (based on $0.05/control/month):
+- Minimal install: ~100 controls = **$5/month** ($60/year)
+- Full service mods: ~250,000 controls = **$12,500/month** ($150K/year)
+- **Savings: 99.96% reduction**
 
 ## Troubleshooting
 
