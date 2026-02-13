@@ -46,15 +46,24 @@ def get_workspace_from_profile(profile_name):
     if not config:
         return None
 
+    # Try new format first (profiles.profile_name.workspace)
     profiles = config.get('profiles', {})
-    profile = profiles.get(profile_name, {})
+    if profiles:
+        profile = profiles.get(profile_name, {})
+        workspace = profile.get('workspace')
+        if workspace:
+            return workspace.replace('https://', '').replace('http://', '')
+
+    # Fall back to flat format (profile_name.workspace)
+    profile = config.get(profile_name, {})
     workspace = profile.get('workspace')
 
     if not workspace:
         print(f"# Warning: Profile '{profile_name}' not found or has no workspace", file=sys.stderr)
         return None
 
-    return workspace
+    # Strip protocol if present
+    return workspace.replace('https://', '').replace('http://', '')
 
 def get_default_workspace():
     """Get default workspace from Turbot CLI configuration."""
@@ -62,24 +71,41 @@ def get_default_workspace():
     if not config:
         return None
 
-    # Get default profile name
+    # Try new format first (default -> profiles[default].workspace)
     default_profile = config.get('default')
-    if not default_profile:
-        return None
+    if default_profile:
+        # Check if default_profile is itself a dict (flat format where 'default' is a profile)
+        if isinstance(default_profile, dict):
+            workspace = default_profile.get('workspace')
+            if workspace:
+                return workspace.replace('https://', '').replace('http://', '')
 
-    # Get workspace from default profile
-    profiles = config.get('profiles', {})
-    profile = profiles.get(default_profile, {})
-    workspace = profile.get('workspace')
+        # Otherwise it's a profile name, look it up
+        workspace = get_workspace_from_profile(default_profile)
+        if workspace:
+            return workspace
 
-    return workspace
+    # No default found
+    return None
 
-def query_graphql(workspace, query):
-    """Execute GraphQL query against workspace."""
-    # If workspace is None, let turbot CLI use its default
-    cmd = ["turbot", "graphql", "--query", query]
-    if workspace:
-        cmd.insert(2, workspace)
+def query_graphql(profile=None, workspace=None, query=None):
+    """Execute GraphQL query against workspace.
+
+    Args:
+        profile: Profile name to use (takes precedence)
+        workspace: Workspace URL (used if no profile)
+        query: GraphQL query string
+    """
+    cmd = ["turbot", "graphql"]
+
+    if profile:
+        cmd.extend(["--profile", profile])
+    elif workspace:
+        # For explicit workspace, check if there's a matching profile
+        # Otherwise turbot CLI might not have credentials
+        cmd.extend(["--workspace", workspace])
+
+    cmd.extend(["--query", query])
 
     result = subprocess.run(
         cmd,
@@ -93,7 +119,7 @@ def query_graphql(workspace, query):
 
     return json.loads(result.stdout)
 
-def get_cmdb_policy_types(workspace):
+def get_cmdb_policy_types(profile=None, workspace=None):
     """Get all CMDB policy types from installed mods."""
     query = """
     {
@@ -114,8 +140,8 @@ def get_cmdb_policy_types(workspace):
       }
     }
     """
-    
-    data = query_graphql(workspace, query)
+
+    data = query_graphql(profile=profile, workspace=workspace, query=query)
     
     # Categorize policies
     critical_keywords = ["Account", "Region", "Organization", "Event Handler"]
@@ -244,21 +270,34 @@ To set a default workspace:
 
     args = parser.parse_args()
 
-    # Determine workspace with precedence: --profile > explicit workspace > default
+    # Track both profile and workspace
+    # Precedence: --profile > explicit workspace > default profile
+    profile = None
     workspace = None
 
     if args.profile:
-        # Use profile to look up workspace
-        workspace = get_workspace_from_profile(args.profile)
+        # Use specified profile
+        profile = args.profile
+        workspace = get_workspace_from_profile(profile)
         if not workspace:
-            print(f"Error: Could not get workspace from profile '{args.profile}'", file=sys.stderr)
+            print(f"Error: Could not get workspace from profile '{profile}'", file=sys.stderr)
             sys.exit(1)
     elif args.workspace:
-        # Use explicit workspace argument
+        # Use explicit workspace argument (no profile)
         workspace = args.workspace
     else:
-        # Try default workspace from config
-        workspace = get_default_workspace()
+        # Try default profile from config
+        config = get_credentials_config()
+        if config:
+            default_profile = config.get('default')
+            if default_profile and isinstance(default_profile, dict):
+                # Flat format: 'default' is itself a profile
+                profile = 'default'
+                workspace = default_profile.get('workspace', '').replace('https://', '').replace('http://', '')
+            elif default_profile:
+                # New format: 'default' points to a profile name
+                profile = default_profile
+                workspace = get_workspace_from_profile(profile)
 
     if not workspace:
         print("Error: No workspace specified and no default workspace found", file=sys.stderr)
@@ -273,8 +312,10 @@ To set a default workspace:
         sys.exit(1)
 
     print(f"# Using workspace: {workspace}", file=sys.stderr)
+    if profile:
+        print(f"# Using profile: {profile}", file=sys.stderr)
     print(f"# Discovering CMDB policies...", file=sys.stderr)
-    categories = get_cmdb_policy_types(workspace)
+    categories = get_cmdb_policy_types(profile=profile, workspace=workspace)
 
     prevention_count = len(categories["prevention_cmdb"])
     service_count = len(categories["service_cmdb_skip"])
