@@ -4,27 +4,68 @@ Complete solution: Discover installed mods and generate YAML config
 that Terraform can consume dynamically.
 
 Usage:
-    ./discover_and_generate.py <workspace> > policies.yaml
-    terraform apply
+    ./discover.py                    # Uses default workspace from ~/.config/turbot/credentials.yml
+    ./discover.py <workspace>        # Uses specified workspace
+    ./discover.py > policies.yaml    # Save to file
 """
 
 import subprocess
 import json
 import sys
+from pathlib import Path
 from datetime import datetime
+
+def get_default_workspace():
+    """Get default workspace from Turbot CLI configuration."""
+    config_path = Path.home() / ".config" / "turbot" / "credentials.yml"
+
+    if not config_path.exists():
+        return None
+
+    try:
+        import yaml
+    except ImportError:
+        print(f"# Note: PyYAML not installed, cannot read {config_path}", file=sys.stderr)
+        print(f"# Install with: pip install -r requirements.txt", file=sys.stderr)
+        print(f"# Or specify workspace explicitly: ./discover.py <workspace>", file=sys.stderr)
+        return None
+
+    try:
+        with open(config_path, 'r') as f:
+            config = yaml.safe_load(f)
+
+        # Get default profile name
+        default_profile = config.get('default')
+        if not default_profile:
+            return None
+
+        # Get workspace from default profile
+        profiles = config.get('profiles', {})
+        profile = profiles.get(default_profile, {})
+        workspace = profile.get('workspace')
+
+        return workspace
+    except Exception as e:
+        print(f"# Warning: Could not read Turbot credentials config: {e}", file=sys.stderr)
+        return None
 
 def query_graphql(workspace, query):
     """Execute GraphQL query against workspace."""
+    # If workspace is None, let turbot CLI use its default
+    cmd = ["turbot", "graphql", "--query", query]
+    if workspace:
+        cmd.insert(2, workspace)
+
     result = subprocess.run(
-        ["turbot", "graphql", workspace, "--query", query],
+        cmd,
         capture_output=True,
         text=True
     )
-    
+
     if result.returncode != 0:
         print(f"Error: {result.stderr}", file=sys.stderr)
         sys.exit(1)
-    
+
     return json.loads(result.stdout)
 
 def get_cmdb_policy_types(workspace):
@@ -152,30 +193,49 @@ service_cmdb_skip:
     return yaml
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: discover_and_generate.py <workspace>", file=sys.stderr)
-        print("Example: discover_and_generate.py procare-production.turbot.com > policies.yaml", file=sys.stderr)
+    # Try to get workspace from argument, then from config
+    workspace = None
+    if len(sys.argv) > 1:
+        workspace = sys.argv[1]
+    else:
+        workspace = get_default_workspace()
+
+    if not workspace:
+        print("Error: No workspace specified and no default workspace found", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("Usage:", file=sys.stderr)
+        print("  ./discover.py                    # Uses default from ~/.config/turbot/credentials.yml", file=sys.stderr)
+        print("  ./discover.py <workspace>        # Uses specified workspace", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("Examples:", file=sys.stderr)
+        print("  ./discover.py                              # Use default workspace", file=sys.stderr)
+        print("  ./discover.py myworkspace.turbot.com       # Use specific workspace", file=sys.stderr)
+        print("  ./discover.py > policies.yaml              # Save to file", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("To set a default workspace:", file=sys.stderr)
+        print("  turbot workspace set <workspace>", file=sys.stderr)
         sys.exit(1)
-    
-    workspace = sys.argv[1]
-    
-    print(f"# Discovering CMDB policies in {workspace}...", file=sys.stderr)
+
+    print(f"# Using workspace: {workspace}", file=sys.stderr)
+    print(f"# Discovering CMDB policies...", file=sys.stderr)
     categories = get_cmdb_policy_types(workspace)
-    
+
     prevention_count = len(categories["prevention_cmdb"])
     service_count = len(categories["service_cmdb_skip"])
     print(f"# Found {prevention_count} prevention policies, {service_count} service policies", file=sys.stderr)
     print(f"# Generating YAML...", file=sys.stderr)
-    
-    yaml = generate_yaml(workspace, categories)
-    print(yaml)
-    
+
+    yaml_output = generate_yaml(workspace, categories)
+    print(yaml_output)
+
     print(f"", file=sys.stderr)
+    print(f"# Generated successfully!", file=sys.stderr)
+    print(f"#", file=sys.stderr)
     print(f"# Next steps:", file=sys.stderr)
-    print(f"#   1. Review the generated policies.yaml", file=sys.stderr)
-    print(f"#   2. Customize if needed (add/remove entries)", file=sys.stderr)
-    print(f"#   3. Run: terraform init && terraform plan", file=sys.stderr)
-    print(f"#   4. Run: terraform apply", file=sys.stderr)
+    print(f"#   1. Review the generated output", file=sys.stderr)
+    print(f"#   2. Save to file: ./discover.py > policies.yaml", file=sys.stderr)
+    print(f"#   3. Customize if needed (edit policies.yaml)", file=sys.stderr)
+    print(f"#   4. Deploy: terraform init && terraform plan && terraform apply", file=sys.stderr)
 
 if __name__ == "__main__":
     main()

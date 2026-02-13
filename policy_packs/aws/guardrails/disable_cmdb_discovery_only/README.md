@@ -55,7 +55,8 @@ After (this policy pack):
 ### Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/install)
-- [Turbot CLI](https://turbot.com/guardrails/docs/reference/cli)
+- [Turbot CLI](https://turbot.com/guardrails/docs/reference/cli) configured with credentials
+- Python 3.7+ with PyYAML: `pip install -r requirements.txt`
 - Guardrails mods:
   - [@turbot/turbot](https://hub.guardrails.turbot.com/mods/turbot/mods/turbot)
   - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
@@ -82,13 +83,28 @@ Please see [Turbot Guardrails Provider authentication](https://registry.terrafor
 
 ### Step 1: Auto-Discover Installed Mods
 
-The discovery script queries your workspace to find all installed mods and generates a workspace-specific configuration:
+The discovery script queries your workspace to find all installed mods and generates a workspace-specific configuration.
+
+**First time setup:**
 
 ```sh
 git clone https://github.com/turbot/guardrails-samples.git
 cd guardrails-samples/policy_packs/aws/guardrails/disable_cmdb_discovery_only
 
-# Generate configuration for your workspace
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Set your default workspace (uses Turbot CLI credentials)
+turbot workspace set myworkspace.turbot.com
+```
+
+**Generate configuration:**
+
+```sh
+# Option 1: Use default workspace from ~/.config/turbot/credentials.yml
+./discover.py > policies.yaml
+
+# Option 2: Specify workspace explicitly
 ./discover.py your-workspace.turbot.com > policies.yaml
 ```
 
@@ -159,11 +175,16 @@ Watch the control count drop in the [billing portal](https://guardrails.turbot.c
 Generate configurations for multiple workspaces:
 
 ```sh
-# Production workspace
-./discover.py mycompany-production.turbot.com > policies-production.yaml
+# Generate config for production
+turbot workspace set mycompany-production.turbot.com
+./discover.py > policies-production.yaml
 
-# Sandbox workspace
-./discover.py mycompany-sandbox.turbot.com > policies-sandbox.yaml
+# Generate config for sandbox
+turbot workspace set mycompany-sandbox.turbot.com
+./discover.py > policies-sandbox.yaml
+
+# Or specify explicitly without changing default
+./discover.py mycompany-third.turbot.com > policies-third.yaml
 
 # Deploy to production
 terraform workspace new production
