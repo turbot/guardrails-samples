@@ -195,6 +195,30 @@ The auto-discovery script automatically categorizes policies:
 4. **Terraform** reads the YAML and creates policy settings dynamically
 5. **for_each** loops create settings from the YAML structure
 
+## Works With or Without Prevention Mod
+
+This solution is **discovery-based** and works in all scenarios:
+
+**Scenario 1: With Prevention Mod** (`@turbot/aws-prevention` installed)
+- SCPs/RCPs discovered and tracked
+- AI-powered prevention extraction and objective mapping
+- Service resource CMDB disabled (cost savings)
+- Result: Prevention recommendations + cost optimization
+
+**Scenario 2: Without Prevention Mod** (minimal install)
+- SCPs/RCPs still discovered and tracked via `@turbot/aws-iam`
+- No AI analysis or objective mapping (prevention mod features)
+- Service resource CMDB disabled (or not installed)
+- Result: Basic SCP visibility + maximum cost optimization
+
+**Scenario 3: Service Mods Without Prevention**
+- All service mods installed, no prevention mod
+- Service CMDB disabled via this policy pack
+- No SCP/RCP tracking (aws-iam not required)
+- Result: Discovery-only mode for all services
+
+The discovery script automatically detects what's installed and generates appropriate configuration for your specific setup.
+
 ## Files
 
 - `main.tf` - Terraform configuration (reads policies.yaml)
