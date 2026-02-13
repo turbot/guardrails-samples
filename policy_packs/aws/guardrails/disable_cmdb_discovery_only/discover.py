@@ -96,7 +96,7 @@ def query_graphql(profile=None, workspace=None, query=None):
         workspace: Workspace URL (used if no profile)
         query: GraphQL query string
     """
-    cmd = ["turbot", "graphql"]
+    cmd = ["turbot", "graphql", "--format", "json"]
 
     if profile:
         cmd.extend(["--profile", profile])
@@ -115,66 +115,76 @@ def query_graphql(profile=None, workspace=None, query=None):
 
     if result.returncode != 0:
         print(f"Error: {result.stderr}", file=sys.stderr)
+        if result.stdout:
+            print(f"Output: {result.stdout}", file=sys.stderr)
         sys.exit(1)
 
-    return json.loads(result.stdout)
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to parse GraphQL response as JSON: {e}", file=sys.stderr)
+        print(f"Response: {result.stdout[:500]}", file=sys.stderr)
+        sys.exit(1)
 
 def get_cmdb_policy_types(profile=None, workspace=None):
     """Get all CMDB policy types from installed mods."""
     query = """
     {
-      policyTypes(filter: "title:CMDB modType:aws") {
+      policyTypes(filter: "title:CMDB") {
         items {
           uri
           title
-          mod {
-            uri
-            title
-          }
-          parent {
-            trunk {
-              title
-            }
-          }
+          modUri
         }
       }
     }
     """
 
     data = query_graphql(profile=profile, workspace=workspace, query=query)
-    
-    # Categorize policies
+
+    # Categorize policies based on title and URI
     critical_keywords = ["Account", "Region", "Organization", "Event Handler"]
-    prevention_keywords = ["Service Control Policy", "Resource Control Policy"]
-    
+    prevention_keywords = ["Service Control Policy", "Resource Control Policy", "SCP", "RCP"]
+
     categories = {
         "event_handlers": {},
         "prevention_cmdb": {},
         "service_cmdb_skip": {}
     }
-    
+
     for policy in data["policyTypes"]["items"]:
-        resource_path = " > ".join([t["title"] for t in policy["parent"]["trunk"]])
         uri = policy["uri"]
-        
-        # Skip critical infrastructure
-        if any(keyword in resource_path for keyword in critical_keywords):
+        title = policy.get("title", "")
+        mod_uri = policy.get("modUri", "")
+
+        # Filter for AWS mods only (exclude benchmark mods like aws-cis, aws-nist, etc.)
+        if not mod_uri.startswith("tmod:@turbot/aws"):
             continue
-        
-        # Categorize prevention-related
-        if any(keyword in resource_path for keyword in prevention_keywords):
+
+        # Skip benchmark mods
+        if any(benchmark in mod_uri for benchmark in ["-cis", "-nist", "-pci", "-hipaa", "-soc2"]):
+            continue
+
+        # Skip critical infrastructure based on title/URI
+        if any(keyword in title for keyword in critical_keywords):
+            continue
+        if any(keyword in uri for keyword in ["account", "region", "organization", "eventHandler"]):
+            continue
+
+        # Categorize prevention-related (SCPs/RCPs)
+        if any(keyword in title for keyword in prevention_keywords):
             key = uri.split("/")[-1].replace("Cmdb", "").lower()
             categories["prevention_cmdb"][key] = {
                 "type": uri,
                 "value": "Enforce: Enabled",
-                "note": f"{resource_path}"
+                "note": f"{title}"
             }
         else:
             # Service resources
             key = uri.split("/")[-1].replace("Cmdb", "").lower()
             categories["service_cmdb_skip"][key] = {
                 "type": uri,
-                "note": f"{resource_path}"
+                "note": f"{title}"
             }
     
     # Add event handlers explicitly
