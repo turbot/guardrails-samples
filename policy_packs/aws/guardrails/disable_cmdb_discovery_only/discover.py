@@ -4,19 +4,21 @@ Complete solution: Discover installed mods and generate YAML config
 that Terraform can consume dynamically.
 
 Usage:
-    ./discover.py                    # Uses default workspace from ~/.config/turbot/credentials.yml
-    ./discover.py <workspace>        # Uses specified workspace
-    ./discover.py > policies.yaml    # Save to file
+    ./discover.py                           # Uses default workspace from ~/.config/turbot/credentials.yml
+    ./discover.py <workspace>               # Uses specified workspace
+    ./discover.py --profile production      # Uses workspace from 'production' profile
+    ./discover.py > policies.yaml           # Save to file
 """
 
 import subprocess
 import json
 import sys
+import argparse
 from pathlib import Path
 from datetime import datetime
 
-def get_default_workspace():
-    """Get default workspace from Turbot CLI configuration."""
+def get_credentials_config():
+    """Load Turbot CLI credentials configuration."""
     config_path = Path.home() / ".config" / "turbot" / "credentials.yml"
 
     if not config_path.exists():
@@ -33,21 +35,44 @@ def get_default_workspace():
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
-
-        # Get default profile name
-        default_profile = config.get('default')
-        if not default_profile:
-            return None
-
-        # Get workspace from default profile
-        profiles = config.get('profiles', {})
-        profile = profiles.get(default_profile, {})
-        workspace = profile.get('workspace')
-
-        return workspace
+        return config
     except Exception as e:
         print(f"# Warning: Could not read Turbot credentials config: {e}", file=sys.stderr)
         return None
+
+def get_workspace_from_profile(profile_name):
+    """Get workspace from a specific profile in credentials config."""
+    config = get_credentials_config()
+    if not config:
+        return None
+
+    profiles = config.get('profiles', {})
+    profile = profiles.get(profile_name, {})
+    workspace = profile.get('workspace')
+
+    if not workspace:
+        print(f"# Warning: Profile '{profile_name}' not found or has no workspace", file=sys.stderr)
+        return None
+
+    return workspace
+
+def get_default_workspace():
+    """Get default workspace from Turbot CLI configuration."""
+    config = get_credentials_config()
+    if not config:
+        return None
+
+    # Get default profile name
+    default_profile = config.get('default')
+    if not default_profile:
+        return None
+
+    # Get workspace from default profile
+    profiles = config.get('profiles', {})
+    profile = profiles.get(default_profile, {})
+    workspace = profile.get('workspace')
+
+    return workspace
 
 def query_graphql(workspace, query):
     """Execute GraphQL query against workspace."""
@@ -193,24 +218,55 @@ service_cmdb_skip:
     return yaml
 
 def main():
-    # Try to get workspace from argument, then from config
+    parser = argparse.ArgumentParser(
+        description='Discover installed mods and generate YAML config for Terraform',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  ./discover.py                                # Use default workspace from credentials
+  ./discover.py myworkspace.turbot.com         # Use specific workspace
+  ./discover.py --profile production           # Use workspace from 'production' profile
+  ./discover.py > policies.yaml                # Save output to file
+
+To set a default workspace:
+  turbot workspace set <workspace>
+        """
+    )
+    parser.add_argument(
+        'workspace',
+        nargs='?',
+        help='Workspace URL (e.g., myworkspace.turbot.com)'
+    )
+    parser.add_argument(
+        '--profile', '-p',
+        help='Profile name from ~/.config/turbot/credentials.yml'
+    )
+
+    args = parser.parse_args()
+
+    # Determine workspace with precedence: --profile > explicit workspace > default
     workspace = None
-    if len(sys.argv) > 1:
-        workspace = sys.argv[1]
+
+    if args.profile:
+        # Use profile to look up workspace
+        workspace = get_workspace_from_profile(args.profile)
+        if not workspace:
+            print(f"Error: Could not get workspace from profile '{args.profile}'", file=sys.stderr)
+            sys.exit(1)
+    elif args.workspace:
+        # Use explicit workspace argument
+        workspace = args.workspace
     else:
+        # Try default workspace from config
         workspace = get_default_workspace()
 
     if not workspace:
         print("Error: No workspace specified and no default workspace found", file=sys.stderr)
         print("", file=sys.stderr)
         print("Usage:", file=sys.stderr)
-        print("  ./discover.py                    # Uses default from ~/.config/turbot/credentials.yml", file=sys.stderr)
-        print("  ./discover.py <workspace>        # Uses specified workspace", file=sys.stderr)
-        print("", file=sys.stderr)
-        print("Examples:", file=sys.stderr)
-        print("  ./discover.py                              # Use default workspace", file=sys.stderr)
-        print("  ./discover.py myworkspace.turbot.com       # Use specific workspace", file=sys.stderr)
-        print("  ./discover.py > policies.yaml              # Save to file", file=sys.stderr)
+        print("  ./discover.py                           # Uses default from ~/.config/turbot/credentials.yml", file=sys.stderr)
+        print("  ./discover.py <workspace>               # Uses specified workspace", file=sys.stderr)
+        print("  ./discover.py --profile production      # Uses workspace from profile", file=sys.stderr)
         print("", file=sys.stderr)
         print("To set a default workspace:", file=sys.stderr)
         print("  turbot workspace set <workspace>", file=sys.stderr)

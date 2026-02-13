@@ -106,6 +106,9 @@ turbot workspace set myworkspace.turbot.com
 
 # Option 2: Specify workspace explicitly
 ./discover.py your-workspace.turbot.com > policies.yaml
+
+# Option 3: Use a specific profile from credentials
+./discover.py --profile production > policies.yaml
 ```
 
 This creates a `policies.yaml` file with three sections:
@@ -175,15 +178,16 @@ Watch the control count drop in the [billing portal](https://guardrails.turbot.c
 Generate configurations for multiple workspaces:
 
 ```sh
-# Generate config for production
+# Using --profile (recommended - no need to change default)
+./discover.py --profile production > policies-production.yaml
+./discover.py --profile sandbox > policies-sandbox.yaml
+./discover.py --profile dev > policies-dev.yaml
+
+# Or by changing default workspace
 turbot workspace set mycompany-production.turbot.com
 ./discover.py > policies-production.yaml
 
-# Generate config for sandbox
-turbot workspace set mycompany-sandbox.turbot.com
-./discover.py > policies-sandbox.yaml
-
-# Or specify explicitly without changing default
+# Or specify workspace explicitly
 ./discover.py mycompany-third.turbot.com > policies-third.yaml
 
 # Deploy to production
