@@ -111,6 +111,8 @@ turbot workspace set myworkspace.turbot.com
 ./discover.py --profile production > policies.yaml
 ```
 
+**Note**: The discovery script queries all policy types in your workspace (typically 2,000-3,000+ items). This takes 2-3 minutes due to API pagination. Progress is displayed as it runs. This is a one-time cost - the generated YAML can be reused.
+
 This creates a `policies.yaml` file with three sections:
 - `event_handlers` - Event handlers (always enabled)
 - `prevention_cmdb` - SCP/RCP CMDB (enabled for prevention discovery)
