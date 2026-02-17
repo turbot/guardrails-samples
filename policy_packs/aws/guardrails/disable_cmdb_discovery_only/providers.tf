@@ -6,3 +6,7 @@ terraform {
     }
   }
 }
+
+provider "turbot" {
+  profile = var.turbot_profile
+}

@@ -1,26 +1,18 @@
 # =============================================================================
 # YAML-Driven Policy Pack
 # =============================================================================
-# Reads configuration from policies.yaml
+# Reads configuration from cmdb-policies.yaml
 # Enables easy customization per workspace without changing Terraform
 # =============================================================================
 
-terraform {
-  required_providers {
-    turbot {
-      source = "turbot/turbot"
-    }
-  }
-}
-
 # Load configuration from YAML
 locals {
-  policies = yamldecode(file("${path.module}/policies.yaml"))
+  policies = yamldecode(file("${path.module}/cmdb-policies.yaml"))
 }
 
 resource "turbot_policy_pack" "main" {
-  title       = "YAML-Driven CMDB Configuration"
-  description = "Configuration loaded from policies.yaml"
+  title       = "Disable CMDB Controls (Cost Optimization)"
+  description = "Disables service CMDB controls while preserving critical infrastructure and prevention discovery. Configuration loaded from cmdb-policies.yaml."
 }
 
 # =============================================================================
@@ -28,7 +20,7 @@ resource "turbot_policy_pack" "main" {
 # =============================================================================
 
 resource "turbot_policy_setting" "event_handlers" {
-  for_each = local.policies.event_handlers
+  for_each = local.policies.event_handlers != null ? local.policies.event_handlers : {}
 
   resource = turbot_policy_pack.main.id
   type     = each.value.type
@@ -41,7 +33,7 @@ resource "turbot_policy_setting" "event_handlers" {
 # =============================================================================
 
 resource "turbot_policy_setting" "prevention_cmdb" {
-  for_each = local.policies.prevention_cmdb
+  for_each = local.policies.prevention_cmdb != null ? local.policies.prevention_cmdb : {}
 
   resource = turbot_policy_pack.main.id
   type     = each.value.type
@@ -54,7 +46,7 @@ resource "turbot_policy_setting" "prevention_cmdb" {
 # =============================================================================
 
 resource "turbot_policy_setting" "service_cmdb_skip" {
-  for_each = local.policies.service_cmdb_skip
+  for_each = local.policies.service_cmdb_skip != null ? local.policies.service_cmdb_skip : {}
 
   resource = turbot_policy_pack.main.id
   type     = each.value.type
@@ -92,10 +84,10 @@ resource "turbot_policy_setting" "service_cmdb_skip" {
 # Example usage with multiple workspaces:
 #
 # terraform workspace new production
-# ln -s policies-production.yaml policies.yaml
+# ln -s cmdb-policies-production.yaml cmdb-policies.yaml
 # terraform apply
 #
 # terraform workspace new sandbox
-# ln -s policies-sandbox.yaml policies.yaml
+# ln -s cmdb-policies-sandbox.yaml cmdb-policies.yaml
 # terraform apply
 #

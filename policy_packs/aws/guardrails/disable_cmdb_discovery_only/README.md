@@ -12,16 +12,96 @@ This [policy pack](https://turbot.com/guardrails/docs/concepts/policy-packs) use
 
 **[Review policy settings →](https://hub.guardrails.turbot.com/policy-packs/aws_guardrails_disable_cmdb_discovery_only/settings)**
 
-## Use Case
+## Quick Start
 
-Perfect for customers who want to:
-- Start with discovery-only visibility (low cost)
-- Use Turbot Pipes for resource visibility
-- Defer detailed CMDB tracking until governance needs are defined
-- Operate in prevention-first mode (SCPs/RCPs instead of runtime controls)
-- Reduce costs during initial onboarding
+**Get started in 5 minutes - the happy path for most customers:**
 
-## Cost Impact
+### 1. Prerequisites
+
+```sh
+# Clone the repository
+git clone https://github.com/turbot/guardrails-samples.git
+cd guardrails-samples/policy_packs/aws/guardrails/disable_cmdb_discovery_only
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Ensure you have Turbot CLI configured
+turbot workspace set myworkspace.turbot.com
+```
+
+**Requirements:**
+- [Turbot CLI](https://turbot.com/guardrails/docs/reference/cli) configured with workspace credentials
+- [Terraform](https://developer.hashicorp.com/terraform/install)
+- Python 3.7+
+- `Turbot/Admin` permissions in your Guardrails workspace
+
+### 2. Generate Configuration
+
+```sh
+# Auto-discover CMDB policies from your workspace
+./discover.py --profile myprofile
+```
+
+This creates `cmdb-policies.yaml` with all CMDB policies found in your workspace.
+
+### 3. Deploy Policy Pack
+
+```sh
+# Initialize and deploy
+terraform init
+terraform apply -var="turbot_profile=myprofile"
+```
+
+### 4. Attach Policy Pack
+
+1. Log into Guardrails console
+2. Go to **Policies → Policy Packs**
+3. Find: **"Disable CMDB Controls (Cost Optimization)"**
+4. Click **Attach** → Select a folder (e.g., "Turbot")
+5. Click **Attach**
+
+### 5. Verify Deployment
+
+```sh
+# Check deployment status
+./verify.py --profile myprofile
+```
+
+**Done!** Your CMDB controls will transition to "Skip" state over the next 15-30 minutes. Monitor your [billing portal](https://guardrails.turbot.com) to see control counts drop.
+
+**💡 Tip:** Most customers should use the generated configuration as-is. You can always customize later by editing `cmdb-policies.yaml` and running `terraform apply` again.
+
+---
+
+## What This Does
+
+### What Gets Disabled vs Enabled
+
+The auto-discovery script automatically categorizes policies:
+
+**✅ Always Enabled (Critical Infrastructure):**
+- Event Handlers (regional and global)
+- Account CMDB
+- Organization/OU CMDB
+- SCP/RCP CMDB (for prevention discovery)
+
+**❌ Disabled by Default (Service Resources):**
+- EC2 resources (Instances, Volumes, AMIs, etc.)
+- S3 Buckets
+- RDS DB Instances/Clusters
+- Lambda Functions
+- IAM Users/Roles/Groups/Policies
+- DynamoDB Tables
+- ECS Clusters/Services
+- And all other service resource CMDB controls
+
+**⚙️ Customizable:**
+- Use `--interactive` mode to select which policies to keep enabled
+- Edit `cmdb-policies.yaml` to customize before or after deployment
+- See [Customization](#customization) section for details
+
+### Cost Impact
 
 Based on [Guardrails pricing](https://turbot.com/guardrails/pricing) of **$0.05 per control per month** (Cloud Plan):
 
@@ -50,126 +130,425 @@ After (this policy pack):
 - **Total: ~100 controls → $5/month ($60/year)**
 - **Savings: $1,245/month (99.6% reduction)**
 
-## Getting Started
+### Works With or Without Prevention Mod
 
-### Requirements
+This solution is **discovery-based** and works in all scenarios:
 
-- [Terraform](https://developer.hashicorp.com/terraform/install)
-- [Turbot CLI](https://turbot.com/guardrails/docs/reference/cli) configured with credentials
-- Python 3.7+ with PyYAML: `pip install -r requirements.txt`
-- Guardrails mods:
-  - [@turbot/turbot](https://hub.guardrails.turbot.com/mods/turbot/mods/turbot)
-  - [@turbot/aws](https://hub.guardrails.turbot.com/mods/aws/mods/aws)
-  - Any AWS service mods already installed
+**Scenario 1: With Prevention Mod** (`@turbot/aws-prevention` installed)
+- SCPs/RCPs discovered and tracked
+- AI-powered prevention extraction and objective mapping
+- Service resource CMDB disabled (cost savings)
+- Result: Prevention recommendations + cost optimization
 
-### Credentials
+**Scenario 2: Without Prevention Mod** (minimal install)
+- SCPs/RCPs still discovered and tracked via `@turbot/aws-iam`
+- No AI analysis or objective mapping (prevention mod features)
+- Service resource CMDB disabled (or not installed)
+- Result: Basic SCP visibility + maximum cost optimization
 
-To create a policy pack through Terraform:
+**Scenario 3: Service Mods Without Prevention**
+- All service mods installed, no prevention mod
+- Service CMDB disabled via this policy pack
+- No SCP/RCP tracking (aws-iam not required)
+- Result: Discovery-only mode for all services
 
-- Ensure you have `Turbot/Admin` permissions (or higher) in Guardrails
-- [Create access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key) in Guardrails
+The discovery script automatically detects what's installed and generates appropriate configuration for your specific setup.
 
-And then set your credentials:
+---
+
+## How It Works
+
+### Overview
+
+1. **Discovery Script** (`discover.py`) queries your workspace via GraphQL
+2. **Filters** installed mods by category (critical vs service)
+3. **Generates** workspace-specific YAML configuration
+4. **Terraform** reads the YAML and creates policy settings dynamically
+5. **for_each** loops create settings from the YAML structure
+
+### discover.py Flow
+
+```mermaid
+flowchart TD
+    Start([Start discover.py]) --> Args[Parse Arguments<br/>--profile or workspace<br/>--interactive flag<br/>--output filename]
+    Args --> Query[Query GraphQL<br/>Get all CMDB policy types<br/>from workspace]
+
+    Query --> Filter{Filter & Categorize<br/>Policy Types}
+
+    Filter -->|Event Handlers| EventHandlers[Event Handlers<br/>✅ Always Enabled<br/>Regional/Global handlers]
+    Filter -->|Prevention CMDB| Prevention[Prevention CMDB<br/>✅ Always Enabled<br/>SCP/RCP discovery]
+    Filter -->|Service Resources| Service[Service CMDB<br/>❌ To Be Disabled<br/>EC2, S3, RDS, etc.]
+
+    Service --> Interactive{Interactive<br/>Mode?}
+
+    Interactive -->|No| AutoYAML[Auto-generate YAML<br/>All service CMDB → Skip<br/>Event handlers → Enabled<br/>Prevention → Enabled]
+
+    Interactive -->|Yes| Extract[Extract Labels<br/>Service name from URI<br/>Resource from policy type<br/>Format: Service > Resource CMDB]
+
+    Extract --> UI[Interactive Checkbox UI<br/>User selects policies<br/>to KEEP ENABLED<br/>Arrow keys + Spacebar]
+
+    UI --> CustomYAML[Generate Custom YAML<br/>Selected → Commented out<br/>Unselected → Skip<br/>Event handlers → Enabled<br/>Prevention → Enabled]
+
+    AutoYAML --> Write[Write YAML File<br/>Default: cmdb-policies.yaml]
+    CustomYAML --> Write
+
+    EventHandlers --> Write
+    Prevention --> Write
+
+    Write --> Success([Success<br/>Ready for terraform apply])
+
+    style EventHandlers fill:#90EE90
+    style Prevention fill:#90EE90
+    style Service fill:#FFB6C6
+    style Success fill:#87CEEB
+```
+
+**Key Decision Points:**
+
+1. **Policy Categorization:** Policies are automatically sorted into three groups based on their URI and policy type
+2. **Interactive Mode:** Enables custom selection with visual checkbox UI showing "Service > Resource CMDB" labels
+3. **YAML Generation:** Creates configuration that Terraform can read with for_each loops
+
+### verify.py Flow
+
+```mermaid
+flowchart TD
+    Start([Start verify.py]) --> Args[Parse Arguments<br/>--profile or workspace]
+    Args --> Queries[Run GraphQL Queries<br/>1. Policy pack status<br/>2. Total CMDB policy types<br/>3. Policy values enabled/skipped<br/>4. AWS accounts count<br/>5. Control states]
+
+    Queries --> Extract[Extract Data<br/>Pack exists?<br/>Pack attached?<br/>AWS accounts?<br/>Controls skipped?]
+
+    Extract --> PackExists{Policy Pack<br/>Exists?}
+
+    PackExists -->|No| Before[❌ BEFORE DEPLOYMENT<br/>Pack not found<br/>Show expected changes<br/>Exit code: 1]
+
+    PackExists -->|Yes| Attached{Pack<br/>Attached?}
+
+    Attached -->|No| NotAttached[⚠️ DEPLOYED - NOT ATTACHED<br/>Pack exists but not attached<br/>Show attach instructions<br/>Exit code: 1]
+
+    Attached -->|Yes| HasAccounts{AWS Accounts<br/>Imported?}
+
+    HasAccounts -->|No| AwaitingAccounts[✅ DEPLOYED - AWAITING IMPORT<br/>Pack ready, no resources yet<br/>Show next steps<br/>Exit code: 0]
+
+    HasAccounts -->|Yes| CheckControls{Controls<br/>Skipped Count}
+
+    CheckControls -->|> 50| Success[✅ AFTER DEPLOYMENT<br/>Controls transitioning to Skip<br/>Show before/after stats<br/>Exit code: 0]
+
+    CheckControls -->|< 50| Partial[⚠️ PARTIAL DEPLOYMENT<br/>Some skipped but not enough<br/>May still be propagating<br/>Exit code: 1]
+
+    Before --> Stats[Show Statistics<br/>Total policies available<br/>Current enabled/skipped<br/>Cost impact estimate]
+    NotAttached --> Stats
+    AwaitingAccounts --> Stats
+    Success --> Stats
+    Partial --> Stats
+
+    Stats --> End([End])
+
+    style Before fill:#FFB6C6
+    style NotAttached fill:#FFE4B5
+    style AwaitingAccounts fill:#90EE90
+    style Success fill:#90EE90
+    style Partial fill:#FFE4B5
+```
+
+**Verification Scenarios:**
+
+1. **BEFORE DEPLOYMENT**: Policy pack not found - shows what will happen after deployment
+2. **DEPLOYED - NOT ATTACHED**: Pack exists but needs to be attached to a resource
+3. **DEPLOYED - AWAITING ACCOUNT IMPORT**: Pack ready, waiting for AWS accounts to be imported
+4. **PARTIAL DEPLOYMENT**: Some controls skipped, may still be propagating (< 50 controls)
+5. **AFTER DEPLOYMENT**: Successfully deployed, controls actively being skipped (> 50 controls)
+
+**Propagation Time**: In large workspaces (50+ accounts, 100K+ controls), it may take 15-30 minutes for all controls to transition from "ok" to "skipped" state. Run verify.py periodically to monitor progress.
+
+---
+
+## Detailed Setup & Customization
+
+### Credentials Configuration
+
+To create a policy pack through Terraform, you need `Turbot/Admin` permissions and [access keys](https://turbot.com/guardrails/docs/guides/iam/access-keys#generate-a-new-guardrails-api-access-key).
+
+**Option 1: Use Turbot CLI Profile (Recommended)**
+
+If you already have Turbot CLI configured with profiles in `~/.config/turbot/credentials.yml`:
+
+```sh
+# Set up your profile with Turbot CLI (one-time setup)
+turbot workspace set myworkspace.turbot.com
+
+# Or configure manually in ~/.config/turbot/credentials.yml
+# Then use the profile name with both discover.py and Terraform:
+./discover.py --profile myprofile
+terraform apply -var="turbot_profile=myprofile"
+```
+
+**Option 2: Use Environment Variables**
 
 ```sh
 export TURBOT_WORKSPACE=myworkspace.acme.com
 export TURBOT_ACCESS_KEY=acce6ac5-access-key-here
 export TURBOT_SECRET_KEY=a8af61ec-secret-key-here
+
+./discover.py myworkspace.acme.com
+terraform apply
+```
+
+**Option 3: Create terraform.tfvars file**
+
+To avoid repeating `-var` every time:
+
+```hcl
+turbot_profile = "myprofile"
+```
+
+Then run:
+```sh
+terraform plan
+terraform apply
 ```
 
 Please see [Turbot Guardrails Provider authentication](https://registry.terraform.io/providers/turbot/turbot/latest/docs#authentication) for additional authentication methods.
 
-## Usage
+**Important:** Use the same profile/workspace for both discovery and deployment to ensure the policy pack matches your installed mods.
 
-### Step 1: Auto-Discover Installed Mods
+### Discovery Options
 
-The discovery script queries your workspace to find all installed mods and generates a workspace-specific configuration.
-
-**First time setup:**
-
-```sh
-git clone https://github.com/turbot/guardrails-samples.git
-cd guardrails-samples/policy_packs/aws/guardrails/disable_cmdb_discovery_only
-
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Set your default workspace (uses Turbot CLI credentials)
-turbot workspace set myworkspace.turbot.com
-```
-
-**Generate configuration:**
+**Basic Usage:**
 
 ```sh
 # Option 1: Use default workspace from ~/.config/turbot/credentials.yml
-./discover.py > policies.yaml
+./discover.py
 
 # Option 2: Specify workspace explicitly
-./discover.py your-workspace.turbot.com > policies.yaml
+./discover.py your-workspace.turbot.com
 
 # Option 3: Use a specific profile from credentials
-./discover.py --profile production > policies.yaml
+./discover.py --profile production
 ```
 
-**Note**: The discovery script queries CMDB policy types using the control category filter (typically 100-150 items). This takes 10-15 seconds. Progress is displayed as it runs. This is a one-time cost - the generated YAML can be reused.
+All commands automatically write to `cmdb-policies.yaml` (the file Terraform expects).
 
-This creates a `policies.yaml` file with three sections:
-- `event_handlers` - Event handlers (always enabled)
-- `prevention_cmdb` - SCP/RCP CMDB (enabled for prevention discovery)
-- `service_cmdb_skip` - Service resource CMDB (disabled to reduce cost)
+**Note**: The discovery script queries CMDB policy types using the control category filter with limit:1000 (typically 100-150 total items, 1-2 API calls). This takes 5-10 seconds. Progress is displayed as it runs. This is a one-time cost - the generated YAML can be reused.
 
-### Step 2: Review and Customize
+### Customization
 
-Review the generated `policies.yaml`:
+#### Using As-Is (Recommended)
+
+**Most customers should use the generated file without changes:**
+- ✅ Disables all discovered CMDB policies (maximum cost savings)
+- ✅ Keeps event handlers enabled (critical infrastructure)
+- ✅ Can customize later by editing `cmdb-policies.yaml` and re-running `terraform apply`
+
+**Proceed directly to deployment if using as-is.**
+
+#### Interactive Mode - Select Policies Upfront
+
+Use interactive mode to choose which policies to keep enabled before deployment:
 
 ```sh
-cat policies.yaml
+# Option 1: Interactive mode with default workspace
+./discover.py --interactive
+
+# Option 2: Interactive mode with specific profile
+./discover.py -i --profile production
 ```
 
-**Optional**: Comment out any policies you want to keep enabled:
+**Interactive UI:**
+
+When you use interactive mode, the script will:
+1. Discover all CMDB policies from your workspace
+2. Present an interactive checkbox list of service resource policies
+3. Let you select which policies to **keep enabled** (using arrow keys and spacebar)
+4. Generate YAML with:
+   - Selected policies commented out (remain enabled)
+   - Unselected policies active in the pack (will be disabled)
+
+**Example interactive UI:**
+```
+[?] Select policies to KEEP ENABLED (use SPACE to select, ENTER when done):
+ > [ ] EC2 > Instance CMDB
+   [ ] EC2 > Volume CMDB
+   [X] S3 > Bucket CMDB                    ← Selected (will stay enabled)
+   [ ] RDS > DB Instance CMDB
+   [X] IAM > User CMDB                     ← Selected (will stay enabled)
+   [X] IAM > Role CMDB                     ← Selected (will stay enabled)
+   [ ] Lambda > Function CMDB
+   [ ] DynamoDB > Table CMDB
+```
+
+Policies are displayed as **"Service > Resource CMDB"** for clarity. Policies are automatically sorted by service name, then resource type, grouping related items together.
+
+**Important:** Prevention-related policies (SCPs/RCPs) are automatically kept enabled and won't appear in this list.
+
+#### Manual YAML Editing
+
+**To keep specific CMDB policies enabled**, edit `cmdb-policies.yaml` and comment them out before deploying:
 
 ```yaml
 service_cmdb_skip:
-  # Keep S3 CMDB enabled for governance
-  # s3_bucket:
+  # Keep S3 bucket tracking for governance
+  # bucket:
   #   type: "tmod:@turbot/aws-s3#/policy/types/bucketCmdb"
-  #   note: "S3 Buckets"
+  #   note: "CMDB"
+
+  # Keep IAM user tracking for security
+  # user:
+  #   type: "tmod:@turbot/aws-iam#/policy/types/userCmdb"
+  #   note: "CMDB"
 
   # Disable everything else
-  ec2_instance:
+  instance:
     type: "tmod:@turbot/aws-ec2#/policy/types/instanceCmdb"
-    note: "EC2 Instances"
+    note: "CMDB"
+  queue:
+    type: "tmod:@turbot/aws-sqs#/policy/types/queueCmdb"
+    note: "CMDB"
+  # ... (rest of policies)
 ```
 
-### Step 3: Deploy Policy Pack
+**How it works:**
+- Policies **in** `service_cmdb_skip` → Set to "Skip" (disabled)
+- Policies **commented out** → Not in policy pack, remain enabled
 
-Run the Terraform to create the policy pack in your workspace:
+#### Customizing After Deployment
+
+**Scenario 1: Disable a policy that was kept enabled**
+
+1. Edit `cmdb-policies.yaml` - uncomment the policy:
+   ```yaml
+   service_cmdb_skip:
+     # Now disabling S3
+     bucket:
+       type: "tmod:@turbot/aws-s3#/policy/types/bucketCmdb"
+       note: "CMDB"
+   ```
+
+2. Review and apply:
+   ```sh
+   terraform plan   # Shows: "1 to add"
+   terraform apply  # Adds S3 policy to pack (disables it)
+   ```
+
+**Scenario 2: Re-enable a policy that was disabled**
+
+1. Edit `cmdb-policies.yaml` - comment out the policy:
+   ```yaml
+   service_cmdb_skip:
+     # Re-enabling S3 (removing from policy pack)
+     # bucket:
+     #   type: "tmod:@turbot/aws-s3#/policy/types/bucketCmdb"
+     #   note: "CMDB"
+   ```
+
+2. Review and apply:
+   ```sh
+   terraform plan   # Shows: "1 to destroy"
+   terraform apply  # Removes S3 policy from pack (re-enables it)
+   ```
+
+**Scenario 3: Change multiple policies at once**
+
+Edit `cmdb-policies.yaml` with all changes, then run `terraform apply` once:
 
 ```sh
-terraform init
+# Edit cmdb-policies.yaml (comment/uncomment as needed)
+vim cmdb-policies.yaml
+
+# Review all changes
 terraform plan
-```
+# Shows: X to add, Y to destroy
 
-Review the plan to ensure it matches your expectations, then apply:
-
-```sh
+# Apply all changes
 terraform apply
 ```
 
-### Step 4: Attach Policy Pack
+#### Common Customization Examples
 
-Log into your Guardrails workspace and [attach the policy pack to a resource](https://turbot.com/guardrails/docs/guides/policy-packs#attach-a-policy-pack-to-a-resource).
+**Keep only S3 and IAM tracking:**
+```yaml
+service_cmdb_skip:
+  # Keep these enabled (commented out)
+  # bucket:
+  #   type: "tmod:@turbot/aws-s3#/policy/types/bucketCmdb"
+  # user:
+  #   type: "tmod:@turbot/aws-iam#/policy/types/userCmdb"
+  # role:
+  #   type: "tmod:@turbot/aws-iam#/policy/types/roleCmdb"
 
-If this policy pack is attached to a Guardrails folder, its policies will be applied to all accounts and resources in that folder. The policy pack can also be attached to multiple resources.
+  # Disable everything else (uncommented)
+  instance: ...
+  volume: ...
+  # ... (all other policies)
+```
 
-For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
+**Phased rollout - Start with non-critical resources:**
+```yaml
+# Phase 1: Disable non-critical resources only
+service_cmdb_skip:
+  # Keep critical resources enabled for now
+  # instance: ...  (EC2)
+  # bucket: ...    (S3)
+  # dbinstance: ... (RDS)
 
-### Step 5: Verify Policy Pack Applied
+  # Disable non-critical first
+  ami: ...              (EC2 AMIs)
+  snapshot: ...         (EC2 Snapshots)
+  loggroup: ...         (CloudWatch Logs)
+  # ... (other non-critical)
+```
+
+Then later, disable critical resources:
+```sh
+# Uncomment critical resources in cmdb-policies.yaml
+# Run terraform apply to disable them
+```
+
+#### Custom Output File
+
+By default, `discover.py` writes to `cmdb-policies.yaml`. To use a different filename:
+
+```sh
+./discover.py --profile production -o custom-name.yaml
+```
+
+**⚠️ Important:** If you use a custom filename, you must also update `main.tf`:
+
+```hcl
+locals {
+  policies = yamldecode(file("${path.module}/custom-name.yaml"))  # Update this line
+}
+```
+
+For most users, using the default `cmdb-policies.yaml` is recommended to avoid this extra step.
+
+### Multi-Workspace Deployment
+
+Generate configurations for multiple workspaces:
+
+```sh
+# Generate separate configs for each workspace (using -o for custom filenames)
+./discover.py --profile production -o cmdb-policies-production.yaml
+./discover.py --profile sandbox -o cmdb-policies-sandbox.yaml
+./discover.py --profile dev -o cmdb-policies-dev.yaml
+
+# Deploy to production
+terraform workspace new production
+ln -sf cmdb-policies-production.yaml cmdb-policies.yaml
+terraform apply -var="turbot_profile=production"
+
+# Deploy to sandbox
+terraform workspace new sandbox
+ln -sf cmdb-policies-sandbox.yaml cmdb-policies.yaml
+terraform apply -var="turbot_profile=sandbox"
+```
+
+### Verification Details
 
 After deployment, verify CMDB policies are disabled:
 
 ```sh
-# Option 1: Use verification script
+# Option 1: Use verification script (recommended)
 ./verify.py --profile <profile-name>
 
 # Option 2: Manual GraphQL query
@@ -194,7 +573,7 @@ turbot graphql --profile <profile-name> --query '
 
 The verification script (`verify.py`) provides a formatted report and returns exit code 0 on success.
 
-### Step 6: Monitor Control Count
+**Monitor Control Count:**
 
 Watch the control count drop in the [billing portal](https://guardrails.turbot.com):
 
@@ -205,106 +584,117 @@ Watch the control count drop in the [billing portal](https://guardrails.turbot.c
 # Savings: 99.96% cost reduction
 ```
 
-## Multi-Workspace Deployment
+---
 
-Generate configurations for multiple workspaces:
+## Maintenance
+
+### When New Mods Are Installed
+
+**Scenario:** You install a new mod (e.g., `@turbot/aws-sagemaker`) after deploying this policy pack.
+
+**What happens:**
+- New CMDB policies from the mod are **NOT in your policy pack** (they weren't discovered when you generated `cmdb-policies.yaml`)
+- They default to **"Enforce: Enabled"** - CMDB tracking starts immediately
+- **Control count increases** - costs go up unexpectedly
+
+**Solution - Update the policy pack:**
 
 ```sh
-# Using --profile (recommended - no need to change default)
-./discover.py --profile production > policies-production.yaml
-./discover.py --profile sandbox > policies-sandbox.yaml
-./discover.py --profile dev > policies-dev.yaml
+# 1. Regenerate configuration (discovers new mod's policies)
+./discover.py --profile production
 
-# Or by changing default workspace
-turbot workspace set mycompany-production.turbot.com
-./discover.py > policies-production.yaml
+# 2. Review what will be added
+terraform plan
+# Output shows: "X to add" (new CMDB policies from new mods)
 
-# Or specify workspace explicitly
-./discover.py mycompany-third.turbot.com > policies-third.yaml
-
-# Deploy to production
-terraform workspace new production
-ln -sf policies-production.yaml policies.yaml
-terraform apply
-
-# Deploy to sandbox
-terraform workspace new sandbox
-ln -sf policies-sandbox.yaml policies.yaml
+# 3. Apply to disable the new policies
 terraform apply
 ```
 
-## What Gets Disabled
+**Best practice:** Re-run discovery whenever you install new mods to keep costs controlled.
 
-The auto-discovery script automatically categorizes policies:
+### When Mods Are Removed
 
-**✅ Always Enabled (Critical Infrastructure):**
-- Event Handlers (regional and global)
-- Account CMDB
-- Organization/OU CMDB
-- SCP/RCP CMDB (for prevention discovery)
+**Scenario:** You uninstall a mod that has policies in your policy pack.
 
-**❌ Disabled by Default (Service Resources):**
-- EC2 resources (Instances, Volumes, AMIs, etc.)
-- S3 Buckets
-- RDS DB Instances/Clusters
-- Lambda Functions
-- IAM Users/Roles/Groups/Policies
-- DynamoDB Tables
-- ECS Clusters/Services
-- And all other service resource CMDB controls
+**What happens:**
+- `terraform plan` will show errors: "Policy type not found"
+- The policy pack can't set policies that don't exist
 
-**⚠️ Customizable:**
-- Edit `policies.yaml` to selectively enable specific resource types
-- Comment out entries to keep CMDB enabled for those resources
+**Solution - Clean up the policy pack:**
 
-## How It Works
+```sh
+# 1. Regenerate configuration (excludes removed mod's policies)
+./discover.py --profile production
 
-1. **Discovery Script** (`discover.py`) queries your workspace via GraphQL
-2. **Filters** installed mods by category (critical vs service)
-3. **Generates** workspace-specific YAML configuration
-4. **Terraform** reads the YAML and creates policy settings dynamically
-5. **for_each** loops create settings from the YAML structure
+# 2. Review what will be removed
+terraform plan
+# Output shows: "X to destroy" (policies from removed mods)
 
-## Works With or Without Prevention Mod
+# 3. Apply to clean up the policy pack
+terraform apply
+```
 
-This solution is **discovery-based** and works in all scenarios:
+### Checking for Drift
 
-**Scenario 1: With Prevention Mod** (`@turbot/aws-prevention` installed)
-- SCPs/RCPs discovered and tracked
-- AI-powered prevention extraction and objective mapping
-- Service resource CMDB disabled (cost savings)
-- Result: Prevention recommendations + cost optimization
+**To check if your policy pack is out of sync with installed mods:**
 
-**Scenario 2: Without Prevention Mod** (minimal install)
-- SCPs/RCPs still discovered and tracked via `@turbot/aws-iam`
-- No AI analysis or objective mapping (prevention mod features)
-- Service resource CMDB disabled (or not installed)
-- Result: Basic SCP visibility + maximum cost optimization
+```sh
+# Backup current configuration
+cp cmdb-policies.yaml cmdb-policies-backup.yaml
 
-**Scenario 3: Service Mods Without Prevention**
-- All service mods installed, no prevention mod
-- Service CMDB disabled via this policy pack
-- No SCP/RCP tracking (aws-iam not required)
-- Result: Discovery-only mode for all services
+# Regenerate from current installed mods
+./discover.py --profile production
 
-The discovery script automatically detects what's installed and generates appropriate configuration for your specific setup.
+# Compare changes
+diff cmdb-policies-backup.yaml cmdb-policies.yaml
 
-## Files
+# If changes look good, apply them
+terraform plan
+terraform apply
 
-- `main.tf` - Terraform configuration (reads policies.yaml)
-- `providers.tf` - Terraform provider configuration
-- `discover.py` - Auto-discovery script (Python 3)
-- `verify.py` - Post-deployment verification script
-- `policies-example.yaml` - Example configuration
-- `requirements.txt` - Python dependencies (PyYAML)
-- `README.md` - This file
+# Otherwise restore backup
+# mv cmdb-policies-backup.yaml cmdb-policies.yaml
+```
 
-## Prevention-First Mode
+### Automated Maintenance
+
+**For production environments, consider scheduling regular updates:**
+
+```sh
+#!/bin/bash
+# update-cmdb-policy-pack.sh
+
+# Regenerate configuration
+./discover.py --profile production
+
+# Check for changes
+terraform plan -detailed-exitcode
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 2 ]; then
+  echo "Changes detected - updating policy pack"
+  terraform apply -auto-approve
+elif [ $EXIT_CODE -eq 0 ]; then
+  echo "No changes needed"
+else
+  echo "Error running terraform plan"
+  exit 1
+fi
+```
+
+Run weekly or after mod updates to keep the policy pack synchronized.
+
+---
+
+## Advanced Topics
+
+### Prevention-First Mode
 
 If you're following a prevention-first approach:
 
 1. Install minimal mods: `@turbot/turbot`, `@turbot/aws`, `@turbot/aws-iam`
-2. Generate minimal config: `./discover.py workspace > policies.yaml`
+2. Generate minimal config: `./discover.py --profile myprofile`
 3. Deploy this policy pack (only ~5-10 policies)
 4. Use Turbot Pipes for visibility
 5. Create SCPs/RCPs based on Pipes findings
@@ -315,26 +705,7 @@ If you're following a prevention-first approach:
 - Full service mods: ~250,000 controls = **$12,500/month** ($150K/year)
 - **Savings: 99.96% reduction**
 
-## Troubleshooting
-
-**Q: Terraform errors on missing policy types**
-
-A: The policy type doesn't exist because the mod isn't installed. Either:
-- Install the mod: `turbot install @turbot/aws-<service>`
-- Remove the entry from `policies.yaml`
-
-**Q: How do I re-enable CMDB for specific resources?**
-
-A: Either:
-- Remove the policy setting from the pack
-- Create a second policy pack that sets it to "Enforce: Enabled"
-- Set it directly in the Guardrails console (overrides pack)
-
-**Q: Will this break my existing controls?**
-
-A: No. Setting CMDB to "Skip" pauses updates but doesn't delete existing data. Controls that depend on CMDB will show as "TBD" until CMDB is re-enabled.
-
-## Advanced: Programmatic Updates
+### Programmatic Updates
 
 Re-generate configurations as mods change:
 
@@ -342,14 +713,75 @@ Re-generate configurations as mods change:
 #!/bin/bash
 # regenerate-configs.sh
 
-for workspace in production sandbox dev; do
-  echo "Regenerating config for $workspace..."
-  ./discover.py mycompany-$workspace.turbot.com > policies-$workspace.yaml
-done
+# Generate configs for multiple workspaces
+./discover.py --profile production -o cmdb-policies-production.yaml
+./discover.py --profile sandbox -o cmdb-policies-sandbox.yaml
+./discover.py --profile dev -o cmdb-policies-dev.yaml
 
+# Deploy to production
 terraform workspace select production
+ln -sf cmdb-policies-production.yaml cmdb-policies.yaml
 terraform plan
 ```
+
+---
+
+## Troubleshooting
+
+**Q: Terraform errors on missing policy types**
+
+A: The policy type doesn't exist because the mod isn't installed. Either:
+- Install the mod: `turbot install @turbot/aws-<service>`
+- Remove the entry from `cmdb-policies.yaml`
+- Re-run `./discover.py` to regenerate based on currently installed mods
+
+**Q: How do I re-enable CMDB for specific resources?**
+
+A: Either:
+- Comment out the policy in `cmdb-policies.yaml` and run `terraform apply` (removes it from pack)
+- Create a second policy pack that sets it to "Enforce: Enabled"
+- Set it directly in the Guardrails console (overrides pack)
+
+**Q: Will this break my existing controls?**
+
+A: No. Setting CMDB to "Skip" pauses updates but doesn't delete existing data. Controls that depend on CMDB will show as "TBD" until CMDB is re-enabled.
+
+**Q: Why does verify.py show 0 policies skipped after deployment?**
+
+A: Policy packs use inheritance - policies are set at the pack level but may not create explicit policy values at the resource level. Check control states instead:
+
+```sh
+turbot graphql --profile myprofile --query '
+{
+  skipped: controls(filter: "controlCategoryId:\"tmod:@turbot/turbot#/control/categories/cmdb\" state:skipped") {
+    metadata { stats { total } }
+  }
+}'
+```
+
+**Q: How long does it take for controls to transition to Skip?**
+
+A: In large workspaces (50+ accounts, 100K+ controls), propagation can take 15-30 minutes. Monitor progress with `./verify.py` or the GraphQL query above.
+
+**Q: Can I deploy this to multiple workspaces from the same directory?**
+
+A: Yes! Use Terraform workspaces and symlinks to manage multiple deployments. See [Multi-Workspace Deployment](#multi-workspace-deployment).
+
+---
+
+## Files
+
+- `main.tf` - Terraform configuration (reads cmdb-policies.yaml)
+- `providers.tf` - Terraform provider configuration
+- `variables.tf` - Terraform variables (turbot_profile)
+- `discover.py` - Auto-discovery script (Python 3)
+- `verify.py` - Post-deployment verification script
+- `cmdb-policies.yaml` - Generated configuration (created by discover.py)
+- `policies-example.yaml` - Example configuration
+- `requirements.txt` - Python dependencies (PyYAML, inquirer)
+- `README.md` - This file
+
+---
 
 ## Support
 

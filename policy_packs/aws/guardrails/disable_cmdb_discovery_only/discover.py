@@ -18,6 +18,13 @@ import time
 from pathlib import Path
 from datetime import datetime
 
+# Import inquirer for interactive mode (optional)
+try:
+    import inquirer
+    INQUIRER_AVAILABLE = True
+except ImportError:
+    INQUIRER_AVAILABLE = False
+
 def get_credentials_config():
     """Load Turbot CLI credentials configuration."""
     config_path = Path.home() / ".config" / "turbot" / "credentials.yml"
@@ -140,12 +147,11 @@ def get_cmdb_policy_types(profile=None, workspace=None):
 
     while True:
         page_count += 1
-        if paging:
-            query = f"""
+        paging_arg = f'\n                paging: "{paging}"' if paging else ""
+        query = f"""
             {{
               policyTypes(
-                filter: "Cmdb controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\""
-                paging: "{paging}"
+                filter: "Cmdb controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" limit:100"{paging_arg}
               ) {{
                 items {{
                   uri
@@ -157,23 +163,6 @@ def get_cmdb_policy_types(profile=None, workspace=None):
                 }}
               }}
             }}
-            """
-        else:
-            query = """
-            {
-              policyTypes(
-                filter: "Cmdb controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\""
-              ) {
-                items {
-                  uri
-                  title
-                  modUri
-                }
-                paging {
-                  next
-                }
-              }
-            }
             """
 
         try:
@@ -228,6 +217,10 @@ def get_cmdb_policy_types(profile=None, workspace=None):
         if any(keyword in uri.lower() for keyword in ["account", "region", "organization", "eventhandler"]):
             continue
 
+        # Skip Attributes policies (they have different value formats)
+        if "attributes" in uri.lower() or "Attributes" in uri:
+            continue
+
         # Categorize prevention-related (SCPs/RCPs)
         if any(keyword in title for keyword in prevention_keywords):
             key = uri.split("/")[-1].replace("Cmdb", "").lower()
@@ -260,7 +253,111 @@ def get_cmdb_policy_types(profile=None, workspace=None):
     
     return categories
 
-def generate_yaml(workspace, categories):
+def extract_service_name(policy_uri):
+    """Extract service name from policy URI.
+
+    Example: tmod:@turbot/aws-ec2#/policy/types/instanceCmdb -> EC2
+    """
+    try:
+        # Extract the mod portion: @turbot/aws-ec2
+        mod_part = policy_uri.split('#')[0].split('/')[-1]  # aws-ec2
+
+        # Remove 'aws-' prefix and capitalize
+        if mod_part.startswith('aws-'):
+            service = mod_part[4:]  # Remove 'aws-'
+            # Convert hyphenated names to proper case (e.g., 'elastic-cache' -> 'ElastiCache')
+            parts = service.split('-')
+            service = ''.join(word.capitalize() for word in parts)
+            return service
+        return mod_part.upper()
+    except:
+        return "Unknown"
+
+def extract_resource_name(policy_uri):
+    """Extract resource type name from policy URI.
+
+    Example: tmod:@turbot/aws-ec2#/policy/types/instanceCmdb -> Instance
+    """
+    try:
+        # Get the policy type name from the URI (e.g., "instanceCmdb")
+        policy_type = policy_uri.split('/')[-1]
+
+        # Remove "Cmdb" suffix and any other suffixes
+        resource_name = policy_type.replace('Cmdb', '').replace('cmdb', '')
+
+        # Handle camelCase by inserting spaces (e.g., "dbInstance" -> "DB Instance")
+        import re
+        # Insert space before uppercase letters that follow lowercase letters
+        resource_name = re.sub(r'([a-z])([A-Z])', r'\1 \2', resource_name)
+        # Insert space before uppercase letters that follow multiple uppercase (e.g., "DBInstance" -> "DB Instance")
+        resource_name = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', resource_name)
+
+        # Capitalize first letter of each word
+        resource_name = ' '.join(word.capitalize() for word in resource_name.split())
+
+        return resource_name if resource_name else "Unknown"
+    except:
+        return "Unknown"
+
+def prompt_interactive_selection(categories):
+    """Interactively prompt user to select which policies to keep enabled.
+
+    Returns a set of policy keys that should be kept enabled (commented out in YAML).
+    """
+    if not INQUIRER_AVAILABLE:
+        print("Error: inquirer library not installed", file=sys.stderr)
+        print("Install with: pip install -r requirements.txt", file=sys.stderr)
+        sys.exit(1)
+
+    service_policies = categories["service_cmdb_skip"]
+
+    if not service_policies:
+        print("# No service CMDB policies found to configure", file=sys.stderr)
+        return set()
+
+    # Create choices sorted by service name then resource type for better UX
+    choices = []
+    for key, value in sorted(service_policies.items(), key=lambda x: (extract_service_name(x[1]['type']), extract_resource_name(x[1]['type']))):
+        service = extract_service_name(value['type'])
+        resource = extract_resource_name(value['type'])
+        # Format: "EC2 > Instance CMDB" for clarity
+        # Note: inquirer format is (display_label, return_value)
+        choices.append((f"{service} > {resource} CMDB", key))
+
+    print("\n" + "=" * 70, file=sys.stderr)
+    print("INTERACTIVE POLICY SELECTION", file=sys.stderr)
+    print("=" * 70, file=sys.stderr)
+    print(f"\nFound {len(service_policies)} service CMDB policies", file=sys.stderr)
+    print("\nSelect policies to KEEP ENABLED:", file=sys.stderr)
+    print("  - Use arrow keys to navigate", file=sys.stderr)
+    print("  - Press SPACE to select/deselect", file=sys.stderr)
+    print("  - Press ENTER when done", file=sys.stderr)
+    print("\nPolicies NOT selected will be disabled (set to Skip)", file=sys.stderr)
+    print("=" * 70 + "\n", file=sys.stderr)
+
+    questions = [
+        inquirer.Checkbox(
+            'keep_enabled',
+            message="Select policies to KEEP ENABLED (use SPACE to select, ENTER when done)",
+            choices=choices,
+        ),
+    ]
+
+    answers = inquirer.prompt(questions)
+
+    if answers is None:
+        # User cancelled (Ctrl+C)
+        print("\n# Interactive selection cancelled", file=sys.stderr)
+        sys.exit(0)
+
+    keep_enabled = set(answers['keep_enabled'])
+
+    print(f"\n# Selected {len(keep_enabled)} policies to keep enabled", file=sys.stderr)
+    print(f"# Will disable {len(service_policies) - len(keep_enabled)} policies", file=sys.stderr)
+
+    return keep_enabled
+
+def generate_yaml(workspace, categories, keep_enabled=None):
     """Generate YAML configuration."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
@@ -289,25 +386,61 @@ event_handlers:
 # Prevention discovery (enabled)
 prevention_cmdb:
 """
-    
-    for key, value in categories["prevention_cmdb"].items():
-        yaml += f"""  {key}:
+
+    if categories["prevention_cmdb"]:
+        for key, value in categories["prevention_cmdb"].items():
+            yaml += f"""  {key}:
     type: "{value['type']}"
     value: "{value['value']}"
     note: "{value['note']}"
 """
-    
+    else:
+        yaml += """  {}  # Empty - no prevention policies found
+"""
+
     yaml += """
 # Service resource CMDB (disabled for cost)
 service_cmdb_skip:
 """
-    
-    for key, value in categories["service_cmdb_skip"].items():
-        yaml += f"""  {key}:
+
+    if keep_enabled is None:
+        keep_enabled = set()
+
+    # Separate into kept (commented) and disabled (active) policies
+    kept_policies = {k: v for k, v in categories["service_cmdb_skip"].items() if k in keep_enabled}
+    disabled_policies = {k: v for k, v in categories["service_cmdb_skip"].items() if k not in keep_enabled}
+
+    # First output commented policies (kept enabled)
+    if kept_policies:
+        yaml += """
+  # =============================================================================
+  # Policies below are COMMENTED OUT and will remain ENABLED
+  # To disable them later, uncomment and run: terraform apply
+  # =============================================================================
+
+"""
+        for key, value in sorted(kept_policies.items()):
+            yaml += f"""  # {key}:
+  #   type: "{value['type']}"
+  #   note: "{value['note']}"
+
+"""
+
+    # Then output active policies (will be disabled)
+    if disabled_policies:
+        if kept_policies:
+            yaml += """  # =============================================================================
+  # Policies below will be DISABLED (set to Skip)
+  # To re-enable them later, comment out and run: terraform apply
+  # =============================================================================
+
+"""
+        for key, value in sorted(disabled_policies.items()):
+            yaml += f"""  {key}:
     type: "{value['type']}"
     note: "{value['note']}"
 """
-    
+
     return yaml
 
 def main():
@@ -316,10 +449,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  ./discover.py                                # Use default workspace from credentials
-  ./discover.py myworkspace.turbot.com         # Use specific workspace
-  ./discover.py --profile production           # Use workspace from 'production' profile
-  ./discover.py > policies.yaml                # Save output to file
+  ./discover.py                        # Use default workspace, writes to policies.yaml
+  ./discover.py --profile production   # Use profile, writes to policies.yaml
+  ./discover.py -i                     # Interactive mode, writes to policies.yaml
+  ./discover.py -i -p production       # Interactive with profile
+  ./discover.py -o custom.yaml         # Write to different file
 
 To set a default workspace:
   turbot workspace set <workspace>
@@ -333,6 +467,16 @@ To set a default workspace:
     parser.add_argument(
         '--profile', '-p',
         help='Profile name from ~/.config/turbot/credentials.yml'
+    )
+    parser.add_argument(
+        '--interactive', '-i',
+        action='store_true',
+        help='Interactively select which policies to keep enabled (requires inquirer library)'
+    )
+    parser.add_argument(
+        '--output', '-o',
+        default='cmdb-policies.yaml',
+        help='Output file path (default: cmdb-policies.yaml)'
     )
 
     args = parser.parse_args()
@@ -387,19 +531,31 @@ To set a default workspace:
     prevention_count = len(categories["prevention_cmdb"])
     service_count = len(categories["service_cmdb_skip"])
     print(f"# Found {prevention_count} prevention policies, {service_count} service policies", file=sys.stderr)
-    print(f"# Generating YAML...", file=sys.stderr)
 
-    yaml_output = generate_yaml(workspace, categories)
-    print(yaml_output)
+    # Interactive mode - let user select which policies to keep enabled
+    keep_enabled = None
+    if args.interactive:
+        keep_enabled = prompt_interactive_selection(categories)
+
+    print(f"# Generating YAML...", file=sys.stderr)
+    yaml_output = generate_yaml(workspace, categories, keep_enabled=keep_enabled)
+
+    # Write output to file (default: policies.yaml)
+    try:
+        with open(args.output, 'w') as f:
+            f.write(yaml_output)
+        print(f"# Written to: {args.output}", file=sys.stderr)
+    except Exception as e:
+        print(f"Error writing to file {args.output}: {e}", file=sys.stderr)
+        sys.exit(1)
 
     print(f"", file=sys.stderr)
     print(f"# Generated successfully!", file=sys.stderr)
     print(f"#", file=sys.stderr)
     print(f"# Next steps:", file=sys.stderr)
-    print(f"#   1. Review the generated output", file=sys.stderr)
-    print(f"#   2. Save to file: ./discover.py > policies.yaml", file=sys.stderr)
-    print(f"#   3. Customize if needed (edit policies.yaml)", file=sys.stderr)
-    print(f"#   4. Deploy: terraform init && terraform plan && terraform apply", file=sys.stderr)
+    print(f"#   1. Review the generated file: cat {args.output}", file=sys.stderr)
+    print(f"#   2. Customize if needed (edit {args.output})", file=sys.stderr)
+    print(f"#   3. Deploy: terraform init && terraform plan && terraform apply", file=sys.stderr)
 
 if __name__ == "__main__":
     main()

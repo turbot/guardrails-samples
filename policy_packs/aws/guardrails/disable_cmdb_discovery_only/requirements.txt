@@ -1,1 +1,2 @@
 PyYAML>=6.0
+inquirer>=3.0

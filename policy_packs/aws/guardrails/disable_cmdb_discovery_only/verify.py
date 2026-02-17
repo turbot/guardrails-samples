@@ -2,13 +2,11 @@
 """
 Verify CMDB Policy Pack Deployment
 
-Checks that CMDB policies have been successfully disabled after deploying
-the policy pack. Reports how many are still enabled vs. now skipped.
+Shows before/after stats for CMDB policies and estimates cost impact.
 
 Usage:
-    ./verify.py                      # Uses default workspace
-    ./verify.py <workspace>          # Uses specified workspace
     ./verify.py --profile procare    # Uses profile from credentials
+    ./verify.py myworkspace.turbot.com
 """
 
 import subprocess
@@ -40,12 +38,51 @@ def query_graphql(profile=None, workspace=None, query=None):
     return json.loads(result.stdout)
 
 def verify_cmdb_disabled(profile=None, workspace=None):
-    """Verify CMDB policies are disabled."""
+    """Verify CMDB policies are disabled and show before/after stats."""
 
-    query = """
+    # Query 1: Check if policy pack exists and is attached
+    pack_query = """
     {
-      stillEnabled: policyValues(
-        filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" value:\\"Enforce: Enabled\\""
+      policyPacks(filter: "title:\\"Disable CMDB Controls (Cost Optimization)\\"") {
+        items {
+          title
+          policySettings {
+            metadata {
+              stats {
+                total
+              }
+            }
+          }
+          attachedResources {
+            items {
+              title
+            }
+          }
+        }
+      }
+    }
+    """
+
+    # Query 2: Total CMDB policy types available (baseline)
+    policy_types_query = """
+    {
+      policyTypes(
+        filter: "Cmdb controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" limit:1000"
+      ) {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
+    }
+    """
+
+    # Query 3: Current policy value settings
+    policy_values_query = """
+    {
+      enabled: policyValues(
+        filter: "policyTypeId:Cmdb value:\\"Enforce: Enabled\\""
       ) {
         items {
           type {
@@ -65,8 +102,8 @@ def verify_cmdb_disabled(profile=None, workspace=None):
           }
         }
       }
-      nowSkipped: policyValues(
-        filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" value:Skip"
+      skipped: policyValues(
+        filter: "policyTypeId:Cmdb value:Skip"
       ) {
         metadata {
           stats {
@@ -77,55 +114,152 @@ def verify_cmdb_disabled(profile=None, workspace=None):
     }
     """
 
-    print(f"# Querying policy values...", file=sys.stderr)
-    data = query_graphql(profile=profile, workspace=workspace, query=query)
+    # Query 4: Check if any AWS accounts exist
+    accounts_query = """
+    {
+      resources(filter: "resourceTypeId:tmod:@turbot/aws#/resource/types/account limit:1") {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
+    }
+    """
 
-    still_enabled_count = data["stillEnabled"]["metadata"]["stats"]["total"]
-    now_skipped_count = data["nowSkipped"]["metadata"]["stats"]["total"]
+    print(f"# Querying CMDB policies and deployment status...", file=sys.stderr)
+
+    pack_data = query_graphql(profile=profile, workspace=workspace, query=pack_query)
+    types_data = query_graphql(profile=profile, workspace=workspace, query=policy_types_query)
+    values_data = query_graphql(profile=profile, workspace=workspace, query=policy_values_query)
+    accounts_data = query_graphql(profile=profile, workspace=workspace, query=accounts_query)
+
+    # Extract data
+    pack_items = pack_data["policyPacks"]["items"]
+    pack_exists = len(pack_items) > 0
+    pack_attached = pack_exists and len(pack_items[0]["attachedResources"]["items"]) > 0
+    pack_settings_count = pack_items[0]["policySettings"]["metadata"]["stats"]["total"] if pack_exists else 0
+
+    total_policies = types_data["policyTypes"]["metadata"]["stats"]["total"]
+    enabled_count = values_data["enabled"]["metadata"]["stats"]["total"]
+    skipped_count = values_data["skipped"]["metadata"]["stats"]["total"]
+    accounts_count = accounts_data["resources"]["metadata"]["stats"]["total"]
+
+    # Calculate before/after
+    not_explicitly_set = total_policies - enabled_count - skipped_count
 
     print("\n" + "=" * 70)
-    print("CMDB POLICY PACK VERIFICATION")
+    print("CMDB POLICY PACK - BEFORE/AFTER COMPARISON")
     print("=" * 70)
-    print(f"\n✓ CMDB policies now set to Skip:      {now_skipped_count}")
-    print(f"✗ CMDB policies still Enforce Enabled: {still_enabled_count}")
 
-    if still_enabled_count == 0:
-        print("\n✅ SUCCESS! All CMDB policies are disabled (or only critical infrastructure)")
-        print("\nExpected next steps:")
-        print("  - Controls will start transitioning to 'Skipped' state")
-        print("  - Control count should drop significantly within hours")
-        print("  - Monitor billing portal for cost reduction")
-    elif still_enabled_count <= 5:
-        print(f"\n⚠️  WARNING: {still_enabled_count} CMDB policies still enabled")
-        print("\nThis is likely expected if they are critical infrastructure:")
-        print("  - Event Handlers (regional/global)")
-        print("  - Account/Region/Organization CMDB")
-        print("\nStill enabled policies:")
-        for item in data["stillEnabled"]["items"]:
-            resource_path = " > ".join([t["title"] for t in item["resource"]["trunk"]])
-            print(f"  - {item['type']['title']}")
-            print(f"    Resource: {resource_path} > {item['resource']['title']}")
-            print(f"    Type: {item['type']['uri']}")
+    print("\n📦 POLICY PACK STATUS:")
+    if pack_exists:
+        print(f"   Policy pack: ✅ Deployed ({pack_settings_count} settings)")
+        if pack_attached:
+            attach_to = pack_items[0]["attachedResources"]["items"][0]["title"]
+            print(f"   Attached to: ✅ {attach_to}")
+        else:
+            print(f"   Attached to: ❌ Not attached")
     else:
-        print(f"\n❌ ERROR: {still_enabled_count} CMDB policies still enabled")
-        print("\nThis suggests the policy pack may not have been attached correctly.")
-        print("\nCheck:")
-        print("  1. Policy pack is attached to the correct resource")
-        print("  2. Policy pack precedence is set correctly")
-        print("  3. Review policies still enabled:")
-        print()
-        for item in data["stillEnabled"]["items"][:10]:
+        print(f"   Policy pack: ❌ Not found")
+
+    print(f"\n📊 WORKSPACE STATISTICS:")
+    print(f"   AWS accounts imported:             {accounts_count}")
+    print(f"   Total CMDB policy types available: {total_policies}")
+    print(f"   Policies explicitly enabled:       {enabled_count}")
+    print(f"   Policies set to Skip:              {skipped_count}")
+    print(f"   Using inherited/default:           {not_explicitly_set}")
+
+    # Determine deployment status
+    if pack_exists and pack_attached and accounts_count == 0:
+        status = "DEPLOYED - AWAITING ACCOUNT IMPORT"
+        print(f"\n📍 STATUS: {status}")
+        print(f"\n✅ Policy pack is deployed and ready!")
+        print(f"\n   No AWS accounts detected yet.")
+        print(f"   When you import AWS accounts:")
+        print(f"   - Discovery will find resources (EC2, S3, RDS, etc.)")
+        print(f"   - CMDB controls will be automatically disabled by the pack")
+        print(f"   - You'll avoid CMDB costs from day one!")
+        print(f"\n   Next steps:")
+        print(f"   1. Import AWS accounts into the '{attach_to}' folder")
+        print(f"   2. Wait for discovery to complete")
+        print(f"   3. Run ./verify.py again to see policies being skipped")
+        return 0  # Success - pack is deployed correctly
+
+    elif not pack_exists:
+        status = "BEFORE DEPLOYMENT"
+        print(f"\n📍 STATUS: {status}")
+        print(f"\n⚠️  Policy pack not found in workspace")
+        print(f"\n   Run: terraform apply -var=\"turbot_profile=<profile>\"")
+        print(f"\n   Expected after deployment:")
+        print(f"   - ~{total_policies - 10} policies will be set to Skip")
+        print(f"   - ~5-10 critical policies will remain enabled")
+        print(f"   - Significant cost reduction")
+
+    elif pack_exists and not pack_attached:
+        status = "DEPLOYED - NOT ATTACHED"
+        print(f"\n📍 STATUS: {status}")
+        print(f"\n⚠️  Policy pack exists but is not attached to any resource")
+        print(f"\n   Next steps:")
+        print(f"   1. Log into Guardrails console")
+        print(f"   2. Go to Policies → Policy Packs")
+        print(f"   3. Find: 'Disable CMDB Controls (Cost Optimization)'")
+        print(f"   4. Click 'Attach' and select a folder/resource")
+        return 1
+    elif skipped_count > 50:
+        status = "AFTER DEPLOYMENT"
+        print(f"\n📍 STATUS: {status}")
+        print(f"\n✅ Policy pack appears to be deployed!")
+
+        if enabled_count <= 10:
+            print(f"\n✓ SUCCESS! CMDB controls are disabled")
+            print(f"  - {skipped_count} policies set to Skip (disabled)")
+            print(f"  - {enabled_count} policies still enabled (likely critical infrastructure)")
+        else:
+            print(f"\n⚠️  WARNING: More policies enabled than expected")
+            print(f"  - {skipped_count} policies set to Skip")
+            print(f"  - {enabled_count} policies still enabled (expected ≤10)")
+    else:
+        status = "PARTIAL DEPLOYMENT"
+        print(f"\n📍 STATUS: {status}")
+        print(f"\n⚠️  Policy pack may be partially deployed")
+        print(f"   - {skipped_count} policies set to Skip (expected ~{total_policies - 10})")
+        print(f"   - {enabled_count} policies still enabled")
+
+    # Cost impact estimation
+    print(f"\n💰 ESTIMATED COST IMPACT (at $0.05/control/month):")
+    if skipped_count == 0:
+        print(f"   Current state:  ~{total_policies * 1000:,} controls")
+        print(f"   After deploy:   ~100 controls")
+        monthly_savings = (total_policies * 1000 * 0.05) - (100 * 0.05)
+        print(f"   Monthly savings: ~${monthly_savings:,.2f}")
+        print(f"   Annual savings:  ~${monthly_savings * 12:,.2f}")
+    else:
+        disabled_policies = skipped_count
+        enabled_policies = enabled_count + not_explicitly_set
+        print(f"   Disabled: {disabled_policies} policies → ~0 controls")
+        print(f"   Enabled:  {enabled_policies} policies → ~100 controls")
+        print(f"   Estimated cost: ~${100 * 0.05:,.2f}/month (${100 * 0.05 * 12:,.2f}/year)")
+
+    # Show still-enabled details if needed
+    if enabled_count > 0 and enabled_count <= 20:
+        print(f"\n📋 POLICIES STILL ENABLED:")
+        for item in values_data["enabled"]["items"][:20]:
             resource_path = " > ".join([t["title"] for t in item["resource"]["trunk"]])
-            print(f"  - {item['type']['title']}")
-            print(f"    Resource: {resource_path} > {item['resource']['title']}")
+            print(f"   • {item['type']['title']}")
+            print(f"     Resource: {resource_path} > {item['resource']['title']}")
 
     print("\n" + "=" * 70 + "\n")
 
-    return still_enabled_count
+    # Return status code based on state
+    if skipped_count > 50:
+        return 0  # Success - deployed
+    else:
+        return 1  # Not deployed or partial
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Verify CMDB policy pack deployment',
+        description='Verify CMDB policy pack deployment with before/after stats',
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument(
@@ -151,8 +285,8 @@ def main():
         print("  ./verify.py myworkspace.turbot.com", file=sys.stderr)
         sys.exit(1)
 
-    still_enabled = verify_cmdb_disabled(profile=profile, workspace=workspace)
-    sys.exit(0 if still_enabled <= 5 else 1)
+    exit_code = verify_cmdb_disabled(profile=profile, workspace=workspace)
+    sys.exit(exit_code)
 
 if __name__ == "__main__":
     main()
