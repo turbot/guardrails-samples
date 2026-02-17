@@ -164,7 +164,37 @@ If this policy pack is attached to a Guardrails folder, its policies will be app
 
 For more information, please see [Policy Packs](https://turbot.com/guardrails/docs/concepts/policy-packs).
 
-### Step 5: Monitor Results
+### Step 5: Verify Policy Pack Applied
+
+After deployment, verify CMDB policies are disabled:
+
+```sh
+# Option 1: Use verification script
+./verify.py --profile <profile-name>
+
+# Option 2: Manual GraphQL query
+turbot graphql --profile <profile-name> --query '
+{
+  stillEnabled: policyValues(
+    filter: "controlCategoryId:\"tmod:@turbot/turbot#/control/categories/cmdb\" value:\"Enforce: Enabled\""
+  ) {
+    metadata { stats { total } }
+  }
+  nowSkipped: policyValues(
+    filter: "controlCategoryId:\"tmod:@turbot/turbot#/control/categories/cmdb\" value:Skip"
+  ) {
+    metadata { stats { total } }
+  }
+}'
+```
+
+**Expected results:**
+- `stillEnabled.total`: **0** (or ≤5 for critical infrastructure like Event Handlers)
+- `nowSkipped.total`: **~112** (number of CMDB policies disabled)
+
+The verification script (`verify.py`) provides a formatted report and returns exit code 0 on success.
+
+### Step 6: Monitor Control Count
 
 Watch the control count drop in the [billing portal](https://guardrails.turbot.com):
 
@@ -264,7 +294,9 @@ The discovery script automatically detects what's installed and generates approp
 - `main.tf` - Terraform configuration (reads policies.yaml)
 - `providers.tf` - Terraform provider configuration
 - `discover.py` - Auto-discovery script (Python 3)
+- `verify.py` - Post-deployment verification script
 - `policies-example.yaml` - Example configuration
+- `requirements.txt` - Python dependencies (PyYAML)
 - `README.md` - This file
 
 ## Prevention-First Mode
