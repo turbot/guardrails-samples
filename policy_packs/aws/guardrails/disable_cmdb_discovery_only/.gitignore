@@ -1,0 +1,26 @@
+# Generated policy configuration (workspace-specific)
+cmdb-policies.yaml
+cmdb-policies-*.yaml
+
+# Troubleshooting/debugging files
+categories.json
+controls_sample*.json
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Terraform state files
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Terraform variable files (may contain sensitive data)
+terraform.tfvars
+*.auto.tfvars
+
+# OS files
+.DS_Store
+Thumbs.db

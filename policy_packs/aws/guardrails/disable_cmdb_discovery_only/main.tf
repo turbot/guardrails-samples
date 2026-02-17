@@ -12,7 +12,7 @@ locals {
 
 resource "turbot_policy_pack" "main" {
   title       = "Disable CMDB Controls (Cost Optimization)"
-  description = "Disables service CMDB controls while preserving critical infrastructure and prevention discovery. Configuration loaded from cmdb-policies.yaml."
+  description = "Disables service CMDB controls while preserving critical infrastructure and prevention discovery. Source: github.com/turbot/guardrails-samples/policy_packs/aws/guardrails/disable_cmdb_discovery_only"
 }
 
 # =============================================================================

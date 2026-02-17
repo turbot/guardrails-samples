@@ -127,12 +127,40 @@ def verify_cmdb_disabled(profile=None, workspace=None):
     }
     """
 
+    # Query 5: Check actual control states (most accurate for policy packs)
+    control_states_query = """
+    {
+      skipped: controls(filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" state:skipped") {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
+      ok: controls(filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" state:ok") {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
+      total: controls(filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\"") {
+        metadata {
+          stats {
+            total
+          }
+        }
+      }
+    }
+    """
+
     print(f"# Querying CMDB policies and deployment status...", file=sys.stderr)
 
     pack_data = query_graphql(profile=profile, workspace=workspace, query=pack_query)
     types_data = query_graphql(profile=profile, workspace=workspace, query=policy_types_query)
     values_data = query_graphql(profile=profile, workspace=workspace, query=policy_values_query)
     accounts_data = query_graphql(profile=profile, workspace=workspace, query=accounts_query)
+    controls_data = query_graphql(profile=profile, workspace=workspace, query=control_states_query)
 
     # Extract data
     pack_items = pack_data["policyPacks"]["items"]
@@ -144,6 +172,11 @@ def verify_cmdb_disabled(profile=None, workspace=None):
     enabled_count = values_data["enabled"]["metadata"]["stats"]["total"]
     skipped_count = values_data["skipped"]["metadata"]["stats"]["total"]
     accounts_count = accounts_data["resources"]["metadata"]["stats"]["total"]
+
+    # Control states (actual runtime state - most accurate)
+    controls_skipped = controls_data["skipped"]["metadata"]["stats"]["total"]
+    controls_ok = controls_data["ok"]["metadata"]["stats"]["total"]
+    controls_total = controls_data["total"]["metadata"]["stats"]["total"]
 
     # Calculate before/after
     not_explicitly_set = total_policies - enabled_count - skipped_count
@@ -166,9 +199,22 @@ def verify_cmdb_disabled(profile=None, workspace=None):
     print(f"\n📊 WORKSPACE STATISTICS:")
     print(f"   AWS accounts imported:             {accounts_count}")
     print(f"   Total CMDB policy types available: {total_policies}")
-    print(f"   Policies explicitly enabled:       {enabled_count}")
-    print(f"   Policies set to Skip:              {skipped_count}")
-    print(f"   Using inherited/default:           {not_explicitly_set}")
+
+    print(f"\n📋 POLICY CONFIGURATION:")
+    if pack_exists and pack_attached:
+        print(f"   Policy pack settings:              {pack_settings_count} policies configured")
+        print(f"   Policies inheriting from pack:     {not_explicitly_set} of {total_policies}")
+        print(f"   Policies with explicit overrides:  {enabled_count} enabled / {skipped_count} skipped")
+    else:
+        print(f"   Total CMDB policy types:           {total_policies}")
+        print(f"   Policies explicitly enabled:       {enabled_count}")
+        print(f"   Policies set to Skip:              {skipped_count}")
+        print(f"   Not explicitly configured:         {not_explicitly_set}")
+
+    print(f"\n🎯 CONTROL STATES (actual runtime state):")
+    print(f"   Controls in 'skipped' state:       {controls_skipped:,}")
+    print(f"   Controls in 'ok' state:            {controls_ok:,}")
+    print(f"   Total CMDB controls:               {controls_total:,}")
 
     # Determine deployment status
     if pack_exists and pack_attached and accounts_count == 0:
@@ -206,40 +252,70 @@ def verify_cmdb_disabled(profile=None, workspace=None):
         print(f"   3. Find: 'Disable CMDB Controls (Cost Optimization)'")
         print(f"   4. Click 'Attach' and select a folder/resource")
         return 1
-    elif skipped_count > 50:
+    elif pack_exists and pack_attached and controls_total > 0 and controls_skipped > (controls_total * 0.90):
+        # If pack is attached and >90% of controls are skipped, it's working
         status = "AFTER DEPLOYMENT"
         print(f"\n📍 STATUS: {status}")
-        print(f"\n✅ Policy pack appears to be deployed!")
+        print(f"\n✅ SUCCESS! CMDB controls are disabled")
 
-        if enabled_count <= 10:
-            print(f"\n✓ SUCCESS! CMDB controls are disabled")
-            print(f"  - {skipped_count} policies set to Skip (disabled)")
-            print(f"  - {enabled_count} policies still enabled (likely critical infrastructure)")
-        else:
-            print(f"\n⚠️  WARNING: More policies enabled than expected")
-            print(f"  - {skipped_count} policies set to Skip")
-            print(f"  - {enabled_count} policies still enabled (expected ≤10)")
+        skipped_percentage = (controls_skipped / controls_total * 100) if controls_total > 0 else 0
+        print(f"\n   Control breakdown:")
+        print(f"   - {controls_skipped:,} controls skipped ({skipped_percentage:.1f}%)")
+        print(f"   - {controls_ok:,} controls active (critical infrastructure)")
+        print(f"   - {controls_total:,} total CMDB controls")
+
+        if skipped_count == 0:
+            print(f"\n   ℹ️  Note: Policy pack uses inheritance - no explicit policy")
+            print(f"      values are created, but policies are enforced via the pack.")
+    elif pack_exists and pack_attached and controls_total > 0 and controls_skipped > 100:
+        # Pack attached, some controls skipped but not >90% - still propagating
+        status = "PARTIAL DEPLOYMENT"
+        print(f"\n📍 STATUS: {status}")
+        print(f"\n⏳ Policy pack is deployed but still propagating")
+
+        skipped_percentage = (controls_skipped / controls_total * 100) if controls_total > 0 else 0
+        print(f"\n   Current progress:")
+        print(f"   - {controls_skipped:,} controls skipped ({skipped_percentage:.1f}%)")
+        print(f"   - {controls_ok:,} controls still active")
+        print(f"   - {controls_total:,} total CMDB controls")
+        print(f"\n   ⏱️  Large workspaces can take 15-30 minutes to fully propagate.")
+        print(f"   Run this script again in a few minutes to check progress.")
     else:
         status = "PARTIAL DEPLOYMENT"
         print(f"\n📍 STATUS: {status}")
         print(f"\n⚠️  Policy pack may be partially deployed")
-        print(f"   - {skipped_count} policies set to Skip (expected ~{total_policies - 10})")
-        print(f"   - {enabled_count} policies still enabled")
+        if controls_total == 0:
+            print(f"\n   No CMDB controls found yet. This could mean:")
+            print(f"   - No AWS accounts imported")
+            print(f"   - Resources haven't been discovered yet")
+            print(f"   - No service mods installed")
+        else:
+            print(f"   - {controls_skipped:,} controls skipped")
+            print(f"   - {controls_ok:,} controls still active (expected ~5-10% of total)")
 
     # Cost impact estimation
-    print(f"\n💰 ESTIMATED COST IMPACT (at $0.05/control/month):")
-    if skipped_count == 0:
-        print(f"   Current state:  ~{total_policies * 1000:,} controls")
-        print(f"   After deploy:   ~100 controls")
-        monthly_savings = (total_policies * 1000 * 0.05) - (100 * 0.05)
-        print(f"   Monthly savings: ~${monthly_savings:,.2f}")
-        print(f"   Annual savings:  ~${monthly_savings * 12:,.2f}")
+    print(f"\n💰 COST IMPACT (at $0.05/control/month):")
+    if controls_total > 0:
+        # Use actual control counts
+        current_cost = controls_ok * 0.05
+        before_cost = controls_total * 0.05
+        savings_monthly = before_cost - current_cost
+        savings_annual = savings_monthly * 12
+
+        print(f"   Before deployment:  {controls_total:,} controls = ${before_cost:,.2f}/month")
+        print(f"   After deployment:   {controls_ok:,} controls = ${current_cost:,.2f}/month")
+        print(f"   Monthly savings:    ${savings_monthly:,.2f}")
+        print(f"   Annual savings:     ${savings_annual:,.2f}")
+
+        if controls_total > 0:
+            reduction_pct = (controls_skipped / controls_total * 100)
+            print(f"   Cost reduction:     {reduction_pct:.1f}%")
     else:
-        disabled_policies = skipped_count
-        enabled_policies = enabled_count + not_explicitly_set
-        print(f"   Disabled: {disabled_policies} policies → ~0 controls")
-        print(f"   Enabled:  {enabled_policies} policies → ~100 controls")
-        print(f"   Estimated cost: ~${100 * 0.05:,.2f}/month (${100 * 0.05 * 12:,.2f}/year)")
+        # No controls yet - show estimates
+        print(f"   No controls found yet - showing estimates:")
+        print(f"   Expected before:  ~{total_policies * 1000:,} controls → ~${total_policies * 1000 * 0.05:,.2f}/month")
+        print(f"   Expected after:   ~100 controls → ~$5/month")
+        print(f"   Expected savings: ~${(total_policies * 1000 * 0.05) - 5:,.2f}/month")
 
     # Show still-enabled details if needed
     if enabled_count > 0 and enabled_count <= 20:
@@ -252,8 +328,10 @@ def verify_cmdb_disabled(profile=None, workspace=None):
     print("\n" + "=" * 70 + "\n")
 
     # Return status code based on state
-    if skipped_count > 50:
-        return 0  # Success - deployed
+    if pack_exists and pack_attached and controls_total > 0 and controls_skipped > (controls_total * 0.90):
+        return 0  # Success - deployed and >90% controls skipped
+    elif pack_exists and pack_attached and accounts_count == 0:
+        return 0  # Success - deployed and ready for accounts
     else:
         return 1  # Not deployed or partial
 
