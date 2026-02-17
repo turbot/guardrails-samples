@@ -299,6 +299,86 @@ def extract_resource_name(policy_uri):
     except:
         return "Unknown"
 
+def detect_currently_enabled_policies(profile=None, workspace=None, categories=None):
+    """Detect which CMDB policies currently have controls in active (non-skipped) state.
+
+    Returns a set of policy keys that should be kept enabled (commented out in YAML)
+    to preserve current deployment state.
+    """
+    if not categories or not categories.get("service_cmdb_skip"):
+        return set()
+
+    print("# Detecting current policy state...", file=sys.stderr)
+
+    # Query CMDB controls grouped by state
+    query = """
+    {
+      skippedControls: controls(filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" state:skipped limit:5000") {
+        items {
+          type {
+            uri
+          }
+        }
+      }
+      activeControls: controls(filter: "controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\" state:-skipped limit:5000") {
+        items {
+          type {
+            uri
+          }
+        }
+      }
+    }
+    """
+
+    try:
+        data = query_graphql(profile=profile, workspace=workspace, query=query)
+    except Exception as e:
+        print(f"# Warning: Could not query control states: {e}", file=sys.stderr)
+        print(f"# Continuing without state detection", file=sys.stderr)
+        return set()
+
+    # Build sets of policy type URIs for skipped vs active controls
+    skipped_policy_uris = set()
+    active_policy_uris = set()
+
+    for control in data.get("skippedControls", {}).get("items", []):
+        uri = control.get("type", {}).get("uri", "")
+        if uri:
+            skipped_policy_uris.add(uri)
+
+    for control in data.get("activeControls", {}).get("items", []):
+        uri = control.get("type", {}).get("uri", "")
+        if uri:
+            active_policy_uris.add(uri)
+
+    # Determine which service CMDB policies should be kept enabled
+    keep_enabled = set()
+    service_policies = categories["service_cmdb_skip"]
+
+    for key, value in service_policies.items():
+        policy_uri = value["type"]
+
+        # Convert policy type URI to control type URI pattern
+        # e.g., "tmod:@turbot/aws-ec2#/policy/types/instanceCmdb"
+        #    -> "tmod:@turbot/aws-ec2#/control/types/instanceCmdb"
+        control_type_uri = policy_uri.replace("/policy/types/", "/control/types/")
+
+        # Check if this policy's controls are mostly active (not skipped)
+        if control_type_uri in active_policy_uris and control_type_uri not in skipped_policy_uris:
+            # Controls exist and are active - keep this policy enabled
+            keep_enabled.add(key)
+            service = extract_service_name(policy_uri)
+            resource = extract_resource_name(policy_uri)
+            print(f"# Found active: {service} > {resource} CMDB (will preserve)", file=sys.stderr)
+
+    if keep_enabled:
+        print(f"# Detected {len(keep_enabled)} policies currently enabled", file=sys.stderr)
+        print(f"# These will be commented out to preserve current state", file=sys.stderr)
+    else:
+        print(f"# No currently-enabled policies detected", file=sys.stderr)
+
+    return keep_enabled
+
 def prompt_interactive_selection(categories):
     """Interactively prompt user to select which policies to keep enabled.
 
@@ -449,11 +529,19 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  ./discover.py                        # Use default workspace, writes to policies.yaml
-  ./discover.py --profile production   # Use profile, writes to policies.yaml
-  ./discover.py -i                     # Interactive mode, writes to policies.yaml
+  ./discover.py                        # Auto-detect current state, writes to cmdb-policies.yaml
+  ./discover.py --profile production   # Use profile, auto-detect current state
+  ./discover.py -i                     # Interactive mode + auto-detect
   ./discover.py -i -p production       # Interactive with profile
+  ./discover.py --no-detect            # Fresh config (ignore current state)
   ./discover.py -o custom.yaml         # Write to different file
+
+Smart Detection:
+  By default, discover.py detects which CMDB policies currently have active
+  controls and preserves them (comments them out in YAML). This prevents
+  accidentally changing deployed state when re-running discover.py.
+
+  Use --no-detect to generate a fresh configuration that disables all policies.
 
 To set a default workspace:
   turbot workspace set <workspace>
@@ -472,6 +560,11 @@ To set a default workspace:
         '--interactive', '-i',
         action='store_true',
         help='Interactively select which policies to keep enabled (requires inquirer library)'
+    )
+    parser.add_argument(
+        '--no-detect',
+        action='store_true',
+        help='Disable smart detection of currently-enabled policies (generate fresh config)'
     )
     parser.add_argument(
         '--output', '-o',
@@ -532,10 +625,26 @@ To set a default workspace:
     service_count = len(categories["service_cmdb_skip"])
     print(f"# Found {prevention_count} prevention policies, {service_count} service policies", file=sys.stderr)
 
+    # Detect currently enabled policies (preserve existing state) unless disabled
+    keep_enabled = set()
+    if not args.no_detect:
+        keep_enabled = detect_currently_enabled_policies(
+            profile=profile,
+            workspace=workspace,
+            categories=categories
+        )
+    else:
+        print(f"# Smart detection disabled (--no-detect)", file=sys.stderr)
+
     # Interactive mode - let user select which policies to keep enabled
-    keep_enabled = None
     if args.interactive:
-        keep_enabled = prompt_interactive_selection(categories)
+        interactive_selection = prompt_interactive_selection(categories)
+        # Merge: union of detected + interactively selected
+        if keep_enabled and interactive_selection:
+            print(f"# Merging detected ({len(keep_enabled)}) + interactive ({len(interactive_selection)}) selections", file=sys.stderr)
+            keep_enabled = keep_enabled | interactive_selection
+        elif interactive_selection:
+            keep_enabled = interactive_selection
 
     print(f"# Generating YAML...", file=sys.stderr)
     yaml_output = generate_yaml(workspace, categories, keep_enabled=keep_enabled)

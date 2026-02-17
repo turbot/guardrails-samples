@@ -161,10 +161,31 @@ The discovery script automatically detects what's installed and generates approp
 ### Overview
 
 1. **Discovery Script** (`discover.py`) queries your workspace via GraphQL
-2. **Filters** installed mods by category (critical vs service)
-3. **Generates** workspace-specific YAML configuration
-4. **Terraform** reads the YAML and creates policy settings dynamically
-5. **for_each** loops create settings from the YAML structure
+2. **Detects current state** (smart detection) to preserve existing enabled policies
+3. **Filters** installed mods by category (critical vs service)
+4. **Generates** workspace-specific YAML configuration
+5. **Terraform** reads the YAML and creates policy settings dynamically
+6. **for_each** loops create settings from the YAML structure
+
+### Smart State Detection
+
+**New in this version:** `discover.py` automatically detects which CMDB policies are currently enabled and preserves them when generating configuration.
+
+**How it works:**
+1. Queries current control states for all CMDB policies
+2. Identifies policies with active (non-skipped) controls
+3. Comments out those policies in generated YAML
+4. Preserves your current deployment state
+
+**Why this matters:**
+- **Safe re-runs**: You can re-run `discover.py` without accidentally changing deployed state
+- **Preserves manual changes**: If you enabled S3 CMDB after deployment, it stays enabled
+- **Prevents surprises**: No accidental overwrites of intentional configuration
+
+**Disable if needed:**
+```sh
+./discover.py --no-detect    # Generate fresh config, ignore current state
+```
 
 ### discover.py Flow
 
