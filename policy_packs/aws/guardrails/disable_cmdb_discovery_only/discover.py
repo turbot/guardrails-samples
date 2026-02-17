@@ -130,9 +130,10 @@ def query_graphql(profile=None, workspace=None, query=None):
 def get_cmdb_policy_types(profile=None, workspace=None):
     """Get all CMDB policy types from installed mods."""
 
-    print(f"# Fetching all policy types (this may take a moment)...", file=sys.stderr)
+    print(f"# Fetching CMDB policy types...", file=sys.stderr)
 
-    # Fetch ALL policy types with pagination (no filter to avoid empty results)
+    # Fetch CMDB policy types using controlCategoryId filter
+    # This is much faster than fetching all policy types
     all_policies = []
     paging = None
     page_count = 0
@@ -142,7 +143,10 @@ def get_cmdb_policy_types(profile=None, workspace=None):
         if paging:
             query = f"""
             {{
-              policyTypes(paging: "{paging}") {{
+              policyTypes(
+                filter: "Cmdb controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\""
+                paging: "{paging}"
+              ) {{
                 items {{
                   uri
                   title
@@ -157,7 +161,9 @@ def get_cmdb_policy_types(profile=None, workspace=None):
         else:
             query = """
             {
-              policyTypes {
+              policyTypes(
+                filter: "Cmdb controlCategoryId:\\"tmod:@turbot/turbot#/control/categories/cmdb\\""
+              ) {
                 items {
                   uri
                   title
@@ -190,8 +196,8 @@ def get_cmdb_policy_types(profile=None, workspace=None):
             print(f"# Continuing with {len(all_policies)} policies fetched so far...", file=sys.stderr)
             break
 
-    print(f"# Total policy types fetched: {len(all_policies)}", file=sys.stderr)
-    print(f"# Filtering for AWS CMDB policies...", file=sys.stderr)
+    print(f"# Total CMDB policy types fetched: {len(all_policies)}", file=sys.stderr)
+    print(f"# Categorizing policies...", file=sys.stderr)
 
     # Categorize policies based on title and URI
     critical_keywords = ["Account", "Region", "Organization", "Event Handler"]
@@ -207,10 +213,6 @@ def get_cmdb_policy_types(profile=None, workspace=None):
         uri = policy["uri"]
         title = policy.get("title", "")
         mod_uri = policy.get("modUri", "")
-
-        # Filter for policies with "Cmdb" in the URI (that's where CMDB policies are identified)
-        if "Cmdb" not in uri and "CMDB" not in uri:
-            continue
 
         # Filter for AWS mods only (exclude benchmark mods like aws-cis, aws-nist, etc.)
         if not mod_uri.startswith("tmod:@turbot/aws"):
