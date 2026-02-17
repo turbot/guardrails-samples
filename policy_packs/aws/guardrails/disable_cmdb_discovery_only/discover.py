@@ -14,6 +14,7 @@ import subprocess
 import json
 import sys
 import argparse
+import time
 from pathlib import Path
 from datetime import datetime
 
@@ -169,16 +170,25 @@ def get_cmdb_policy_types(profile=None, workspace=None):
             }
             """
 
-        data = query_graphql(profile=profile, workspace=workspace, query=query)
-        items = data.get("policyTypes", {}).get("items", [])
-        all_policies.extend(items)
-        print(f"# Fetched page {page_count}: {len(items)} items ({len(all_policies)} total)...", file=sys.stderr)
+        try:
+            data = query_graphql(profile=profile, workspace=workspace, query=query)
+            items = data.get("policyTypes", {}).get("items", [])
+            all_policies.extend(items)
+            print(f"# Fetched page {page_count}: {len(items)} items ({len(all_policies)} total)...", file=sys.stderr)
 
-        # Check if there are more pages
-        next_page = data.get("policyTypes", {}).get("paging", {}).get("next")
-        if not next_page:
+            # Check if there are more pages
+            next_page = data.get("policyTypes", {}).get("paging", {}).get("next")
+            if not next_page:
+                break
+            paging = next_page
+
+            # Add small delay to avoid rate limits
+            time.sleep(0.1)
+
+        except Exception as e:
+            print(f"# Warning: Error fetching page {page_count}: {e}", file=sys.stderr)
+            print(f"# Continuing with {len(all_policies)} policies fetched so far...", file=sys.stderr)
             break
-        paging = next_page
 
     print(f"# Total policy types fetched: {len(all_policies)}", file=sys.stderr)
     print(f"# Filtering for AWS CMDB policies...", file=sys.stderr)
