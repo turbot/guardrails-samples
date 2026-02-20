@@ -32,7 +32,7 @@ service_cmdb_skip:
   # EC2 Resources
   ec2_instance:
     type: "tmod:@turbot/aws-ec2#/policy/types/instanceCmdb"
-    note: "EC2 Instances - 75k controls in Procare"
+    note: "EC2 Instances"
   ec2_volume:
     type: "tmod:@turbot/aws-ec2#/policy/types/volumeCmdb"
     note: "EBS Volumes"
@@ -73,7 +73,7 @@ service_cmdb_skip:
   # IAM Resources
   iam_user:
     type: "tmod:@turbot/aws-iam#/policy/types/userCmdb"
-    note: "IAM Users - 450 controls in Procare"
+    note: "IAM Users"
   iam_role:
     type: "tmod:@turbot/aws-iam#/policy/types/roleCmdb"
     note: "IAM Roles"
@@ -100,7 +100,7 @@ service_cmdb_skip:
   # CodeBuild Resources
   codebuild_project:
     type: "tmod:@turbot/aws-codebuild#/policy/types/projectCmdb"
-    note: "CodeBuild Projects - 20k controls in Procare"
+    note: "CodeBuild Projects"
 
   # CloudWatch Logs
   logs_log_group:

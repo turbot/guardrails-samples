@@ -5,7 +5,7 @@ Verify CMDB Policy Pack Deployment
 Shows before/after stats for CMDB policies and estimates cost impact.
 
 Usage:
-    ./verify.py --profile procare    # Uses profile from credentials
+    ./verify.py --profile myprofile  # Uses profile from credentials
     ./verify.py myworkspace.turbot.com
 """
 
@@ -292,30 +292,6 @@ def verify_cmdb_disabled(profile=None, workspace=None):
         else:
             print(f"   - {controls_skipped:,} controls skipped")
             print(f"   - {controls_ok:,} controls still active (expected ~5-10% of total)")
-
-    # Cost impact estimation
-    print(f"\n💰 COST IMPACT (at $0.05/control/month):")
-    if controls_total > 0:
-        # Use actual control counts
-        current_cost = controls_ok * 0.05
-        before_cost = controls_total * 0.05
-        savings_monthly = before_cost - current_cost
-        savings_annual = savings_monthly * 12
-
-        print(f"   Before deployment:  {controls_total:,} controls = ${before_cost:,.2f}/month")
-        print(f"   After deployment:   {controls_ok:,} controls = ${current_cost:,.2f}/month")
-        print(f"   Monthly savings:    ${savings_monthly:,.2f}")
-        print(f"   Annual savings:     ${savings_annual:,.2f}")
-
-        if controls_total > 0:
-            reduction_pct = (controls_skipped / controls_total * 100)
-            print(f"   Cost reduction:     {reduction_pct:.1f}%")
-    else:
-        # No controls yet - show estimates
-        print(f"   No controls found yet - showing estimates:")
-        print(f"   Expected before:  ~{total_policies * 1000:,} controls → ~${total_policies * 1000 * 0.05:,.2f}/month")
-        print(f"   Expected after:   ~100 controls → ~$5/month")
-        print(f"   Expected savings: ~${(total_policies * 1000 * 0.05) - 5:,.2f}/month")
 
     # Show still-enabled details if needed
     if enabled_count > 0 and enabled_count <= 20:
