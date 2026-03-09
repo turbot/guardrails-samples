@@ -1,0 +1,29 @@
+workspaces:
+  vaec1:
+    db_host: "your-rds-host.us-gov-west-1.rds.amazonaws.com"
+    db_port: 5432
+    db_name: "turbot"
+    db_user: "turbot"
+    db_schema: "vaec1"
+    region: "us-gov-west-1"
+  vaec2:
+    db_host: "your-rds-host.us-gov-west-1.rds.amazonaws.com"
+    db_port: 5432
+    db_name: "turbot"
+    db_user: "turbot"
+    db_schema: "vaec2"
+    region: "us-gov-west-1"
+  vaec3:
+    db_host: "your-rds-host.us-gov-west-1.rds.amazonaws.com"
+    db_port: 5432
+    db_name: "turbot"
+    db_user: "turbot"
+    db_schema: "vaec3"
+    region: "us-gov-west-1"
+  rasp:
+    db_host: "your-rds-host.us-gov-west-1.rds.amazonaws.com"
+    db_port: 5432
+    db_name: "turbot"
+    db_user: "turbot"
+    db_schema: "rasp"
+    region: "us-gov-west-1"
