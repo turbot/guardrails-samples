@@ -1,0 +1,16 @@
+workspaces:
+  acme_prod:
+    db_host: "your-rds-instance.xxxxxxxxxxxx.us-east-1.rds.amazonaws.com"
+    db_port: 5432
+    db_name: "turbot"
+    db_user: "turbot"
+    db_schema: "acme_prod"
+    region: "us-east-1"
+
+  acme_dev:
+    db_host: "your-dev-rds.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
+    db_port: 5432
+    db_name: "turbot"
+    db_user: "turbot"
+    db_schema: "acme_dev"
+    region: "us-west-2"

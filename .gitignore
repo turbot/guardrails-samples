@@ -296,8 +296,9 @@ $RECYCLE.BIN/
 !default.tfvars
 !demo*.tfvars
 
-# trimbot virtual environment
+# virtual environments
 .venv
+venv
 .packaging
 
 # debuggers

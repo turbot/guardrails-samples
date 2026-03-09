@@ -42,6 +42,9 @@ MAX_TICK_DELAY_SECONDS = 100
 PROCESSING_BUFFER_SECONDS = 300  # 5 minutes
 GRACE_PERIOD_SECONDS = MAX_TICK_DELAY_SECONDS + PROCESSING_BUFFER_SECONDS
 
+# Minimum interval between summary log writes (seconds)
+SUMMARY_MIN_INTERVAL = 30
+
 # Root logger configuration
 logging.basicConfig(
     level=logging.INFO,
@@ -194,6 +197,18 @@ def get_policy_values_count(conn, schema, policy_type_id):
         return cur.fetchone()[0]
 
 
+def rerun_control(conn, schema, control_id):
+    """Set next_tick_timestamp on a control to trigger re-evaluation."""
+    sql = f"""
+        UPDATE {schema}.controls
+        SET next_tick_timestamp = {schema}.now_ms()
+        WHERE id = %s
+    """
+    with conn.cursor() as cur:
+        cur.execute(sql, (control_id,))
+        return cur.rowcount
+
+
 def update_policy_values(conn, schema, policy_type_id):
     """Update policy values to trigger re-processing. Returns count of updated rows."""
     sql = f"""
@@ -221,32 +236,33 @@ def update_policy_values(conn, schema, policy_type_id):
 def process_policy_type(policy_type_id, ws_config, schema, max_attempts):
     """
     Process a single policy_type_id:
-      1. Run UPDATE to set next_tick_timestamp
-      2. Wait grace period, check count
-      3. If count is 0 → success
-      4. If count hasn't decreased → re-run UPDATE and check again
-      5. After max_attempts with no progress → give up
+      1. Check policy_values count
+      2. If already 0 → return "already_zero" (control needs re-trigger)
+      3. Run UPDATE to set next_tick_timestamp
+      4. Wait grace period, check count
+      5. If count reaches 0 → return "resolved"
+      6. After max_attempts with no progress → return "stalled"
 
-    Returns True on success (count reached 0), False if stalled.
+    Returns: "already_zero", "resolved", "stalled", or "error"
     """
     ptlog = logging.getLogger(f"mat-fix.pt-{policy_type_id}")
-    ptlog.info("Starting policy_type_id %s", policy_type_id)
+    ptlog.debug("Starting policy_type_id %s", policy_type_id)
 
     db = DBConnection(ws_config, ptlog)
     try:
         db.get()
     except Exception as e:
         ptlog.error("Connection failed: %s", e)
-        return False
+        return "error"
 
     try:
         # Check initial count
         pv_count = get_policy_values_count(db.get(), schema, policy_type_id)
-        ptlog.info("policy_values count: %d", pv_count)
+        ptlog.debug("policy_values count: %d", pv_count)
 
         if pv_count == 0:
-            ptlog.info("Already at 0, nothing to do.")
-            return True
+            ptlog.debug("Already at 0 — control needs re-trigger.")
+            return "already_zero"
 
         stall_count = 0
         while stall_count < max_attempts:
@@ -257,9 +273,9 @@ def process_policy_type(policy_type_id, ws_config, schema, max_attempts):
                        updated, stall_count, max_attempts)
 
             # Wait grace period for async workers to process
-            ptlog.info("Waiting %ds for async processing (max tick %ds + buffer %ds)...",
-                       GRACE_PERIOD_SECONDS, MAX_TICK_DELAY_SECONDS,
-                       PROCESSING_BUFFER_SECONDS)
+            ptlog.debug("Waiting %ds for async processing (max tick %ds + buffer %ds)...",
+                        GRACE_PERIOD_SECONDS, MAX_TICK_DELAY_SECONDS,
+                        PROCESSING_BUFFER_SECONDS)
             time.sleep(GRACE_PERIOD_SECONDS)
 
             # Check count
@@ -278,8 +294,8 @@ def process_policy_type(policy_type_id, ws_config, schema, max_attempts):
             ptlog.info("policy_values remaining: %d (was %d)", count, pv_count)
 
             if count == 0:
-                ptlog.info("Drained.")
-                return True
+                ptlog.info("Resolved — policy_values drained to 0.")
+                return "resolved"
 
             if count < pv_count:
                 ptlog.info("Progress made (%d -> %d). Resetting stall counter.",
@@ -293,11 +309,11 @@ def process_policy_type(policy_type_id, ws_config, schema, max_attempts):
 
         ptlog.error("Gave up after %d consecutive stalled attempts. Count stuck at %d.",
                      max_attempts, pv_count)
-        return False
+        return "stalled"
 
     except Exception as e:
         ptlog.error("Unexpected error: %s", e)
-        return False
+        return "error"
     finally:
         db.close()
 
@@ -386,17 +402,19 @@ def run(ws_config, max_attempts=3, parallel=5, display_limit=20):
     start_time = time.time()
 
     iteration = 0
-    total_drained = 0
+    total_resolved = 0
+    total_already_zero = 0
     total_stalled = 0
+    last_summary_time = 0
+    last_log_iteration = 0
+    prev_error_count = None
+    initial_pv_counts = {}  # policy_type_id -> first-seen pv_count
 
     try:
         while True:
             iteration += 1
-            elapsed = int(time.time() - start_time)
-            log.info("=" * 60)
-            log.info("Iteration %d  (elapsed: %dh %dm)",
-                     iteration, elapsed // 3600, (elapsed % 3600) // 60)
-            log.info("=" * 60)
+            iteration_start = time.time()
+            elapsed = int(iteration_start - start_time)
 
             # Get error controls
             try:
@@ -411,40 +429,93 @@ def run(ws_config, max_attempts=3, parallel=5, display_limit=20):
                     time.sleep(30)
                     continue
 
-            log.info("Materialize controls in error state: %d", len(error_controls))
-
             if not error_controls:
                 log.info("No error controls found. Done!")
                 summary_log.info(
                     "COMPLETE  | iteration=%-4d | elapsed=%dh %dm | "
-                    "total_drained=%-4d | total_stalled=%-4d | errors_remaining=0",
+                    "total_resolved=%-4d | total_retriggered=%-4d | "
+                    "total_stalled=%-4d",
                     iteration, elapsed // 3600, (elapsed % 3600) // 60,
-                    total_drained, total_stalled,
+                    total_resolved, total_already_zero, total_stalled,
                 )
                 return True
 
-            # Collect unique policy_type_ids (resource_id from each control)
+            # Collect unique policy_type_ids and map to their control_ids
             policy_type_ids = list({rid for _, rid in error_controls})
-            log.info("Unique policy_type_ids to process: %d", len(policy_type_ids))
+            pt_to_controls = {}
+            for ctrl_id, rid in error_controls:
+                pt_to_controls.setdefault(rid, []).append(ctrl_id)
 
-            summary_log.info(
-                "ITERATION | iteration=%-4d | elapsed=%dh %dm | "
-                "error_controls=%-4d | unique_policy_types=%-4d",
-                iteration, elapsed // 3600, (elapsed % 3600) // 60,
-                len(error_controls), len(policy_type_ids),
-            )
+            # Get current pv counts for each policy_type and track initial counts
+            pv_counts = {}
+            for pt_id in policy_type_ids:
+                try:
+                    pv_counts[pt_id] = get_policy_values_count(
+                        db.get(), schema, pt_id)
+                except Exception:
+                    pv_counts[pt_id] = -1  # unknown
+                if pt_id not in initial_pv_counts and pv_counts[pt_id] > 0:
+                    initial_pv_counts[pt_id] = pv_counts[pt_id]
 
-            for ctrl_id, resource_id in error_controls[:display_limit]:
-                log.info("  Control id=%s, policy_type_id=%s", ctrl_id, resource_id)
-            if len(error_controls) > display_limit:
-                log.info("  ... and %d more", len(error_controls) - display_limit)
+            # Throttle logging: only emit if state changed or interval elapsed
+            now = time.time()
+            state_changed = len(error_controls) != prev_error_count
+            should_log = state_changed or (now - last_summary_time) >= SUMMARY_MIN_INTERVAL
+            prev_error_count = len(error_controls)
+
+            if should_log:
+                iters_since = iteration - last_log_iteration
+                last_summary_time = now
+                last_log_iteration = iteration
+
+                log.info("--- Iteration %d | elapsed: %dh %dm | %d error controls ---",
+                         iteration, elapsed // 3600, (elapsed % 3600) // 60,
+                         len(error_controls))
+
+                # Per-control progress table
+                row = "  %-18s %-18s %-14s %s"
+                log.info(row, "control_id", "policy_type_id",
+                         "pv_complete", "status")
+                log.info(row, "-" * 18, "-" * 18, "-" * 14, "-" * 14)
+                shown = 0
+                for ctrl_id, pt_id in error_controls:
+                    if shown >= display_limit:
+                        log.info("  ... and %d more",
+                                 len(error_controls) - display_limit)
+                        break
+                    remaining = pv_counts.get(pt_id, -1)
+                    initial = initial_pv_counts.get(pt_id, 0)
+                    if remaining < 0:
+                        complete_str = "?"
+                    elif initial:
+                        complete = max(0, initial - remaining)
+                        complete_str = "%d/%d" % (complete, initial)
+                    else:
+                        complete_str = "0/0"
+                    if remaining == 0:
+                        status = "re-trigger"
+                    elif remaining < 0:
+                        status = "unknown"
+                    else:
+                        status = "processing"
+                    log.info(row, ctrl_id, pt_id, complete_str, status)
+                    shown += 1
+
+                summary_log.info(
+                    "PROGRESS  | iteration=%-4d | elapsed=%dh %dm | "
+                    "error_controls=%-4d | policy_types=%-4d | "
+                    "resolved=%-4d | retriggered=%-4d | stalled=%-4d",
+                    iteration, elapsed // 3600, (elapsed % 3600) // 60,
+                    len(error_controls), len(policy_type_ids),
+                    total_resolved, total_already_zero, total_stalled,
+                )
 
             # Process policy_type_ids in parallel, up to --parallel at a time
-            all_succeeded = True
+            all_results = {}
             for batch_start in range(0, len(policy_type_ids), parallel):
                 batch = policy_type_ids[batch_start:batch_start + parallel]
-                log.info("Processing batch: %d policy_type_ids in parallel [%s]",
-                         len(batch), ", ".join(str(pt) for pt in batch))
+                log.debug("Processing batch: %d policy_type_ids in parallel [%s]",
+                          len(batch), ", ".join(str(pt) for pt in batch))
 
                 results = {}
 
@@ -462,28 +533,44 @@ def run(ws_config, max_attempts=3, parallel=5, display_limit=20):
                 for t in threads:
                     t.join()
 
-                batch_ok = sum(1 for ok in results.values() if ok)
-                batch_fail = sum(1 for ok in results.values() if not ok)
-                total_drained += batch_ok
-                total_stalled += batch_fail
-                log.info("Batch complete: %d drained, %d stalled", batch_ok, batch_fail)
+                all_results.update(results)
 
-                elapsed = int(time.time() - start_time)
-                summary_log.info(
-                    "BATCH     | iteration=%-4d | elapsed=%dh %dm | "
-                    "batch_drained=%-4d | batch_stalled=%-4d | "
-                    "cumulative_drained=%-4d | cumulative_stalled=%-4d",
-                    iteration, elapsed // 3600, (elapsed % 3600) // 60,
-                    batch_ok, batch_fail, total_drained, total_stalled,
-                )
+            # Tally results
+            iter_resolved = sum(1 for s in all_results.values() if s == "resolved")
+            iter_already_zero = sum(1 for s in all_results.values() if s == "already_zero")
+            iter_stalled = sum(1 for s in all_results.values()
+                               if s in ("stalled", "error"))
+            total_resolved += iter_resolved
+            total_already_zero += iter_already_zero
+            total_stalled += iter_stalled
 
-                if batch_fail:
-                    failed = [pt for pt, ok in results.items() if not ok]
-                    log.warning("Stalled policy_type_ids: %s", failed)
-                    all_succeeded = False
+            log.debug("Batch results: resolved=%d, already_zero=%d, stalled=%d",
+                      iter_resolved, iter_already_zero, iter_stalled)
 
-            if not all_succeeded:
-                # Check if ANY progress was made this iteration
+            if iter_stalled:
+                failed = [pt for pt, s in all_results.items()
+                          if s in ("stalled", "error")]
+                log.warning("Stalled policy_type_ids: %s", failed)
+
+            # Re-trigger controls whose policy_values are already at 0
+            if iter_already_zero:
+                retriggered = 0
+                for pt_id, status in all_results.items():
+                    if status != "already_zero":
+                        continue
+                    for ctrl_id in pt_to_controls.get(pt_id, []):
+                        try:
+                            rerun_control(db.get(), schema, ctrl_id)
+                            retriggered += 1
+                        except Exception as e:
+                            log.warning("Failed to re-trigger control %s: %s",
+                                        ctrl_id, e)
+                log.info("Re-triggered %d controls (policy_values already at 0). "
+                         "Waiting 30s for re-evaluation...", retriggered)
+                time.sleep(30)
+
+            # If everything stalled (nothing resolved or re-triggered), check progress
+            if iter_stalled and iter_resolved == 0 and iter_already_zero == 0:
                 remaining = None
                 try:
                     remaining = get_error_controls(db.get(), schema, control_type_id)
@@ -501,16 +588,18 @@ def run(ws_config, max_attempts=3, parallel=5, display_limit=20):
                               len(error_controls), len(remaining))
                     summary_log.info(
                         "STALLED   | iteration=%-4d | elapsed=%dh %dm | "
-                        "errors_remaining=%-4d | total_drained=%-4d | total_stalled=%-4d",
+                        "errors_remaining=%-4d | total_resolved=%-4d | "
+                        "total_retriggered=%-4d | total_stalled=%-4d",
                         iteration, elapsed // 3600, (elapsed % 3600) // 60,
-                        len(remaining), total_drained, total_stalled,
+                        len(remaining), total_resolved,
+                        total_already_zero, total_stalled,
                     )
                     return False
                 if remaining is not None:
                     log.warning("Partial progress (%d -> %d errors). Continuing...",
                                 len(error_controls), len(remaining))
 
-            log.info("Starting next iteration...")
+            log.debug("Starting next iteration...")
     finally:
         db.close()
 
