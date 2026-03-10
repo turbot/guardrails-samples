@@ -303,3 +303,6 @@ venv
 
 # debuggers
 .vscode
+
+# Claude Code
+.claude/
