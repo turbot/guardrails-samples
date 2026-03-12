@@ -16,7 +16,7 @@ import time
 @click.option('-i', '--insecure', is_flag=True, help="Disable SSL certificate verification.")
 def delete_resources(config_file, profile, resource_id, batch, cooldown, execute, disable, insecure):
     """
-    This script optionally disables discovery-related policies for a resource (--disable) 
+    This script optionally disables discovery-related policies for a resource (--disable)
     and then deletes the resource and its descendants.
     """
     start_time = time.time()
@@ -216,21 +216,46 @@ def delete_resources_in_batches(endpoint, headers, resources, batch_size, cooldo
     }
     '''
     total_resources = len(resources)
-    completed = 0
+    deleted = 0
+    skipped = 0
+    failed = 0
 
     for index, resource in enumerate(resources):
         resource_id = resource['turbot']['id']
         variables = {'input': {'id': resource_id}}
         print(f"Deleting resource {resource_id}...")
-        run_query(endpoint, headers, mutation, variables)
-        completed += 1
+
+        try:
+            run_query(endpoint, headers, mutation, variables)
+            deleted += 1
+        except Exception as e:
+            error_msg = str(e)
+            # Handle "Not Found" errors gracefully - resource may have been deleted already
+            # or deleted as a child of a parent resource
+            if "Not Found" in error_msg or "not found" in error_msg.lower():
+                print(f"  ⚠️  Resource {resource_id} not found (may have been already deleted) - skipping...")
+                skipped += 1
+            else:
+                # Re-raise other errors (permissions, network, etc.)
+                print(f"  ❌ Failed to delete resource {resource_id}: {error_msg}")
+                failed += 1
+                # Continue processing other resources instead of crashing
+                # Uncomment the line below if you want to stop on any non-Not-Found error:
+                # raise
 
         # Cooldown logic
-        if completed % batch_size == 0 and completed < total_resources:
+        processed = deleted + skipped + failed
+        if processed % batch_size == 0 and processed < total_resources:
             print(f"Cooldown: Waiting {cooldown} seconds before the next batch...")
             time.sleep(cooldown)
 
-    print(f"Deleted {completed} resources.")
+    print(f"\n{'='*60}")
+    print(f"Deletion Summary:")
+    print(f"  ✅ Successfully deleted: {deleted} resources")
+    print(f"  ⚠️  Skipped (not found): {skipped} resources")
+    print(f"  ❌ Failed: {failed} resources")
+    print(f"  📊 Total processed: {deleted + skipped + failed} / {total_resources} resources")
+    print(f"{'='*60}")
 
 
 def run_query(endpoint, headers, query, variables):
@@ -239,7 +264,25 @@ def run_query(endpoint, headers, query, variables):
     """
     response = requests.post(endpoint, headers=headers, json={'query': query, 'variables': variables}, verify=False)
     if response.status_code == 200:
-        return response.json()
+        result = response.json()
+        # Check for GraphQL errors in the response
+        if 'errors' in result:
+            error_messages = [err.get('message', str(err)) for err in result['errors']]
+            raise Exception(f"GraphQL errors: {'; '.join(error_messages)}")
+        return result
+    elif response.status_code == 401:
+        error_text = response.text
+        if "PingFed" in error_text or "SSO" in error_text or "Directory" in error_text:
+            raise Exception(
+                f"Authentication failed (401): This workspace requires SSO/SAML authentication.\n"
+                f"The script currently only supports API key (Basic) authentication.\n"
+                f"Error details: {error_text}\n"
+                f"Please contact your Guardrails administrator to:\n"
+                f"  1. Generate API keys for programmatic access, OR\n"
+                f"  2. Configure SSO to allow API key authentication"
+            )
+        else:
+            raise Exception(f"Authentication failed (401): {error_text}")
     else:
         raise Exception(f"Query failed with status code {response.status_code}: {response.text}")
 
