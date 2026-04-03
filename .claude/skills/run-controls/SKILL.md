@@ -1,3 +1,9 @@
+---
+description: Run Guardrails controls in batches using run_controls_batches.py
+user-invocable: true
+disable-model-invocation: true
+---
+
 Help the user run the `run_controls_batches.py` utility to re-run Guardrails controls in batches.
 
 Based on the user's description, build the correct command: $ARGUMENTS

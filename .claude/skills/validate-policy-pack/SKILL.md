@@ -1,3 +1,8 @@
+---
+description: Validate policy packs for correctness, structure, and naming conventions
+user-invocable: true
+---
+
 Validate one or more policy packs for correctness and consistency.
 
 If a path is provided, validate that pack: $ARGUMENTS

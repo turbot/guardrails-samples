@@ -1,3 +1,8 @@
+---
+description: Scaffold a new Guardrails policy pack following repo conventions
+user-invocable: true
+---
+
 Create a new Guardrails policy pack based on the user's description: $ARGUMENTS
 
 Follow the established patterns in this repo exactly:

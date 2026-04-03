@@ -1,3 +1,8 @@
+---
+description: Search the repo for Guardrails tmod policy type URIs by keyword
+user-invocable: true
+---
+
 Search the repository to find the correct Guardrails policy type URI for: $ARGUMENTS
 
 1. Search all `policies.tf` and `main.tf` files across `policy_packs/` for `tmod:@turbot/` URIs matching the user's query (service name, resource type, or keyword).
