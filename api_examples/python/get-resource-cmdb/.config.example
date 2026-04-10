@@ -1,0 +1,46 @@
+# Guardrails CMDB Lookup Configuration
+#
+# Defines the workspaces to search when looking up resources.
+# Workspaces are searched in order; the search stops at the first match.
+#
+# Auth types:
+#   profile  - Use a named profile from ~/.config/turbot/credentials.yml
+#   keys     - Inline access key and secret key
+#   env      - Read from environment variables (configurable per workspace)
+#
+# Providers: aws, azure, gcp, oci
+#   Used to skip workspaces that can't contain the requested resource.
+#   For example, an ARN lookup skips workspaces that don't include "aws".
+
+workspaces:
+  - name: aws-prod
+    url: "https://aws-prod.cloud.turbot.com"
+    auth: profile
+    profile: aws-prod
+    providers:
+      - aws
+
+  - name: aws-staging
+    url: "https://aws-staging.cloud.turbot.com"
+    auth: keys
+    access_key: "your-access-key-here"
+    secret_key: "your-secret-key-here"
+    providers:
+      - aws
+
+  - name: azure-prod
+    url: "https://azure-prod.cloud.turbot.com"
+    auth: env
+    access_key_var: AZURE_PROD_TURBOT_ACCESS_KEY  # defaults to TURBOT_ACCESS_KEY_ID if omitted
+    secret_key_var: AZURE_PROD_TURBOT_SECRET_KEY  # defaults to TURBOT_SECRET_ACCESS_KEY if omitted
+    providers:
+      - azure
+
+  - name: multi-cloud
+    url: "https://multi.cloud.turbot.com"
+    auth: profile
+    profile: multi
+    providers:
+      - aws
+      - azure
+      - gcp
