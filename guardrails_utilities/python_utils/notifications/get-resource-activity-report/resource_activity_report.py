@@ -134,7 +134,7 @@ def graphql_request(config, query, variables=None):
         config["endpoint"],
         json=payload,
         headers=config["headers"],
-        timeout=180,
+        timeout=300,
     )
     response.raise_for_status()
     result = response.json()
@@ -175,16 +175,19 @@ def fetch_all_pages(config, filter_str):
         page_num += 1
         variables = {"filter": filter_str, "paging": next_page}
 
-        try:
-            result = graphql_request(config, NOTIFICATIONS_QUERY, variables)
-        except requests.exceptions.Timeout:
-            print(f"  Page {page_num}: timeout — retrying in 10s...")
-            time.sleep(10)
+        max_retries = 3
+        for attempt in range(1, max_retries + 1):
             try:
                 result = graphql_request(config, NOTIFICATIONS_QUERY, variables)
-            except requests.exceptions.Timeout:
-                print(f"  Page {page_num}: timeout again — stopping")
                 break
+            except requests.exceptions.Timeout:
+                if attempt < max_retries:
+                    wait = attempt * 15
+                    print(f"  Page {page_num}: timeout (attempt {attempt}/{max_retries}) — retrying in {wait}s...")
+                    time.sleep(wait)
+                else:
+                    print(f"  Page {page_num}: timeout after {max_retries} attempts — stopping")
+                    return all_items
 
         data = result.get("data") or {}
         notifications = data.get("notifications") or {}
