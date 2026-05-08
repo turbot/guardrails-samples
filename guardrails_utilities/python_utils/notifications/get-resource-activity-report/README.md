@@ -99,7 +99,16 @@ python fetch_resource_deletions.py --profile my-workspace --days 7
 python fetch_resource_deletions.py --profile my-workspace --date 2026-05-07 --output may7-report.csv
 ```
 
-#### Different workspace with explicit actor ID
+#### Auto-detect Turbot Identity and fetch snapshots
+
+```bash
+python fetch_resource_deletions.py --profile my-workspace --date 2026-05-07 \
+    --resource-type snapshot --auto-detect-actor
+# Auto-detects the Turbot Identity ID and workspace URL from credentials.yml
+# No need for --actor-id or --workspace-url
+```
+
+#### Explicit actor ID (if auto-detect is not desired)
 
 ```bash
 python fetch_resource_deletions.py --profile another-workspace --date 2026-05-07 \
@@ -180,10 +189,11 @@ time range (pick one):
   --until UNTIL           End date exclusive (YYYY-MM-DD), use with --since
   --days DAYS             Rolling window in days (default: 1)
 
-  --actor-id ACTOR_ID     Turbot actor identity ID (auto-detected for known workspaces)
+  --actor-id ACTOR_ID     Turbot actor identity ID (use with --auto-detect-actor or pass explicitly)
+  --auto-detect-actor     Auto-detect Turbot Identity ID from the workspace via GraphQL
   --resource-type TYPE    Resource type alias or full tmod URI (default: all types)
   --output OUTPUT         Output CSV file path (default: auto-generated)
-  --workspace-url URL     Workspace base URL (auto-detected for known workspaces)
+  --workspace-url URL     Workspace base URL (auto-read from credentials.yml if omitted)
 ```
 
 ### Time range behavior
@@ -250,8 +260,116 @@ turbot workspace list
 
 ---
 
+## Case study: Investigating snapshot deletions by Turbot
+
+A customer reported that EC2 snapshots were being deleted in their workspace. The console Resource Activities report timed out due to the workspace having millions of notifications. Here is the workflow used to investigate and produce a daily report.
+
+### Step 1 — Fetch snapshot deletions by Turbot for a specific day
+
+The simplest command — `--auto-detect-actor` queries the workspace to find the Turbot Identity ID automatically, and the workspace URL is read from `credentials.yml`:
+
+```bash
+python fetch_resource_deletions.py \
+    --profile my-workspace \
+    --date 2026-05-07 \
+    --resource-type snapshot \
+    --auto-detect-actor
+# Auto-detected Turbot Identity: 123456789012345
+# Output: my-workspace-resource-deleted-snapshot-2026-05-07.csv
+```
+
+This fetches all snapshot deletions by the Turbot automation identity on May 7, midnight-to-midnight UTC.
+
+### Step 2 — Broaden the scope to all resource types
+
+To check what else Turbot deleted on the same day, omit `--resource-type`:
+
+```bash
+python fetch_resource_deletions.py \
+    --profile my-workspace \
+    --date 2026-05-07 \
+    --auto-detect-actor
+# Output: my-workspace-resource-deleted-all-types-2026-05-07.csv
+```
+
+A typical breakdown might look like:
+
+```
+  127  Object > Snapshot
+   72  Object > Instance
+    7  Object > Function Version
+    5  Object > Subscription
+    3  Object > Launch Template
+    2  Object > Volume
+    1  Object > Service
+  217  TOTAL
+```
+
+### Step 3 — Generate a multi-day report
+
+```bash
+for d in 01 02 03 04 05 06 07; do
+    python fetch_resource_deletions.py \
+        --profile my-workspace \
+        --date 2026-05-$d \
+        --resource-type snapshot \
+        --auto-detect-actor
+done
+```
+
+Each file covers exactly midnight-to-midnight UTC with no overlap, making day-over-day comparison reliable.
+
+### Step 4 — Fetch a date range in a single CSV
+
+```bash
+python fetch_resource_deletions.py \
+    --profile my-workspace \
+    --since 2026-05-01 --until 2026-05-08 \
+    --resource-type snapshot \
+    --auto-detect-actor
+# Output: my-workspace-resource-deleted-snapshot-2026-05-01.csv
+```
+
+### Step 5 — Fetch deletions by all actors (not just Turbot)
+
+Omit `--auto-detect-actor` and `--actor-id` to see deletions by all actors. This helps determine if resources were deleted by Turbot automation, by users, or by external processes:
+
+```bash
+python fetch_resource_deletions.py \
+    --profile my-workspace \
+    --date 2026-05-07 \
+    --resource-type snapshot
+```
+
+The Actor column in the CSV will show who performed each deletion.
+
+### Step 6 — Use an explicit actor ID (alternative to auto-detect)
+
+If you already know the Turbot Identity ID (found via console > Permissions > Turbot Identity), you can pass it directly:
+
+```bash
+python fetch_resource_deletions.py \
+    --profile my-workspace \
+    --date 2026-05-07 \
+    --resource-type snapshot \
+    --actor-id 123456789012345
+```
+
+### Key findings from this investigation
+
+- The console Export CSV is capped at **5,000 rows** — this script has no such limit
+- The console report times out on workspaces with millions of notifications — this script paginates reliably
+- `--auto-detect-actor` queries the workspace for the Turbot Identity ID automatically — no need to look it up manually, and the workspace URL is auto-read from `credentials.yml`
+- The Turbot Identity ID is **different per workspace** — do not reuse an ID from one workspace on another
+- The `metadata.stats.total` in the GraphQL response is **approximate** and does not reflect timestamp filters — use the actual row count
+- Without `--actor-id` or `--auto-detect-actor`, deletions by all actors are returned, including "Unidentified Identity" (typically AWS-side deletions not initiated by Guardrails)
+- Without `--resource-type`, all resource types are fetched — useful for a full picture but requires a time boundary (`--date` or `--since`) to avoid fetching millions of rows
+
+---
+
 ## Notes
 
 - **metadata.stats.total is approximate** — the total count in the GraphQL response does not apply all filter conditions (particularly timestamp boundaries). The actual item count from pagination is the accurate number.
-- **Turbot Identity ID** — the actor identity ID for the Turbot automation identity varies per workspace. Find it via the console under Permissions > Turbot Identity, or pass `--actor-id` explicitly. Omit it to fetch deletions by all actors.
+- **Turbot Identity ID** — the actor identity ID for the Turbot automation identity varies per workspace. Use `--auto-detect-actor` to query it automatically, or find it via the console under Permissions > Turbot Identity and pass `--actor-id` explicitly. Omit both to fetch deletions by all actors.
+- **Workspace URL auto-detection** — the workspace URL is automatically read from `~/.config/turbot/credentials.yml` when `--workspace-url` is not provided. This populates the Detail URL column in the CSV.
 - **Timestamps are UTC** — all `--date`, `--since`, and `--until` values are interpreted as UTC midnight boundaries.

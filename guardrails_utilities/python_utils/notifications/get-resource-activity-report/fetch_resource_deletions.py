@@ -30,6 +30,8 @@ import subprocess
 import sys
 from datetime import datetime, timedelta
 
+import yaml
+
 QUERY_FILE = os.path.join(os.path.dirname(__file__), "resource_deleted_by_turbot.graphql")
 PAGE_SIZE = 200
 
@@ -84,19 +86,53 @@ def resolve_resource_type(value):
     sys.exit(1)
 
 
-def run_query(profile, variables):
+def run_turbot_graphql(profile, query, variables=None):
     cmd = [
         "turbot", "graphql",
         "--profile", profile,
         "--format", "json",
-        "--query", QUERY_FILE,
-        "--variables", json.dumps(variables),
+        "--query", query,
     ]
+    if variables:
+        cmd.extend(["--variables", json.dumps(variables)])
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     if result.returncode != 0:
         print(f"turbot CLI error: {result.stderr.strip()}", file=sys.stderr)
         sys.exit(1)
     return json.loads(result.stdout)
+
+
+def run_query(profile, variables):
+    return run_turbot_graphql(profile, QUERY_FILE, variables)
+
+
+def detect_turbot_identity(profile):
+    query = ("{ resources(filter: \"resourceTypeId:'tmod:@turbot/turbot-iam"
+             "#/resource/types/turbotIdentity' limit:1\") "
+             "{ items { turbot { id title } } } }")
+    try:
+        data = run_turbot_graphql(profile, query)
+        items = data.get("resources", {}).get("items", [])
+        if items:
+            actor_id = items[0]["turbot"]["id"]
+            print(f"Auto-detected Turbot Identity: {actor_id}")
+            return actor_id
+    except (subprocess.TimeoutExpired, json.JSONDecodeError, KeyError):
+        pass
+    print("Warning: could not auto-detect Turbot Identity ID.", file=sys.stderr)
+    return None
+
+
+def detect_workspace_url(profile):
+    try:
+        with open(os.path.expanduser("~/.config/turbot/credentials.yml")) as f:
+            creds = yaml.safe_load(f)
+        url = (creds.get(profile) or {}).get("workspace", "").rstrip("/")
+        if url:
+            return url
+    except (FileNotFoundError, AttributeError):
+        pass
+    return ""
 
 
 def build_filter(actor_id, resource_type_uri, date, since, until, days):
@@ -191,23 +227,25 @@ examples:
     time_group.add_argument("--until", help="End date exclusive (YYYY-MM-DD), use with --since")
     time_group.add_argument("--days", type=int, default=1, help="Rolling window in days (default: 1)")
 
-    parser.add_argument("--actor-id", help="Turbot actor identity ID (auto-detected for known workspaces)")
+    parser.add_argument("--actor-id", help="Turbot actor identity ID")
+    parser.add_argument("--auto-detect-actor", action="store_true",
+                        help="Auto-detect Turbot Identity ID from the workspace")
     parser.add_argument("--resource-type",
                         help="Resource type alias or tmod URI (default: all types)")
     parser.add_argument("--output", help="Output CSV file path (default: auto-generated)")
-    parser.add_argument("--workspace-url", help="Workspace base URL (auto-detected for known workspaces)")
+    parser.add_argument("--workspace-url", help="Workspace base URL (auto-read from credentials.yml if omitted)")
     args = parser.parse_args()
 
-    actor_id = args.actor_id or TURBOT_IDENTITY_IDS.get(args.profile)
-    workspace_url = args.workspace_url or WORKSPACE_URLS.get(args.profile, "")
+    workspace_url = args.workspace_url or WORKSPACE_URLS.get(args.profile) or detect_workspace_url(args.profile)
     resource_type_uri = resolve_resource_type(args.resource_type)
 
+    actor_id = args.actor_id or TURBOT_IDENTITY_IDS.get(args.profile)
+    if not actor_id and args.auto_detect_actor:
+        actor_id = detect_turbot_identity(args.profile)
     if not actor_id:
         print(f"Warning: no actor-id for profile '{args.profile}'. Fetching deletions by ALL actors.",
               file=sys.stderr)
-    if not workspace_url:
-        print(f"Warning: no workspace URL for profile '{args.profile}'. Detail URLs will be incomplete.",
-              file=sys.stderr)
+        print(f"  Use --auto-detect-actor or --actor-id to filter by Turbot Identity.", file=sys.stderr)
 
     if not resource_type_uri and not args.date and not args.since:
         print("Error: fetching all resource types without a time boundary is unsafe (millions of rows).",
