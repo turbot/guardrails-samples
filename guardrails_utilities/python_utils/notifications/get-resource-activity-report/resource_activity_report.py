@@ -161,12 +161,16 @@ def load_profile(profile_name):
             print(f"Error: Profile '{profile_name}' missing '{key}'")
             sys.exit(1)
 
-    workspace = profile["workspace"].rstrip("/")
-    auth_bytes = f"{profile['accessKey']}:{profile['secretKey']}".encode("utf-8")
-    auth_token = b64encode(auth_bytes).decode()
+    workspace = str(profile["workspace"]).rstrip("/")
+    endpoint = f"{workspace}/{GRAPHQL_PATH}"
+
+    access_key = str(profile["accessKey"])
+    secret_key = str(profile["secretKey"])
+    auth_token = b64encode(f"{access_key}:{secret_key}".encode("utf-8")).decode()
+    del access_key, secret_key
 
     return workspace, {
-        "endpoint": f"{workspace}/{GRAPHQL_PATH}",
+        "endpoint": endpoint,
         "headers": {
             "Authorization": f"Basic {auth_token}",
             "Content-Type": "application/json",

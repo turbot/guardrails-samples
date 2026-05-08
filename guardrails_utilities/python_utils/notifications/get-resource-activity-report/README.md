@@ -170,14 +170,19 @@ Short names you can use with `--resource-type` instead of full URIs:
 | `subscription` | `tmod:@turbot/aws-sns#/resource/types/subscription` |
 | `ecs-service` | `tmod:@turbot/aws-ecs#/resource/types/service` |
 
-You can also pass any `tmod:@turbot/...` URI directly.
+You can also pass any `tmod:@turbot/...` URI directly. To find the URI for a resource type not listed above, navigate to the resource type in the Guardrails console and copy the URI from the resource type details, or run:
+
+```bash
+turbot graphql --profile my-workspace --query='{ resourceTypes(filter: "snapshot") { items { uri turbot { title } } } }' --format yaml
+```
 
 ### Command-line reference
 
 ```
 usage: fetch_resource_deletions.py [-h] --profile PROFILE
                                    [--date DATE] [--since SINCE] [--until UNTIL] [--days DAYS]
-                                   [--actor-id ACTOR_ID] [--resource-type RESOURCE_TYPE]
+                                   [--actor-id ACTOR_ID] [--auto-detect-actor]
+                                   [--resource-type RESOURCE_TYPE]
                                    [--output OUTPUT] [--workspace-url WORKSPACE_URL]
 
 options:
@@ -189,8 +194,8 @@ time range (pick one):
   --until UNTIL           End date exclusive (YYYY-MM-DD), use with --since
   --days DAYS             Rolling window in days (default: 1)
 
-  --actor-id ACTOR_ID     Turbot actor identity ID (use with --auto-detect-actor or pass explicitly)
-  --auto-detect-actor     Auto-detect Turbot Identity ID from the workspace via GraphQL
+  --actor-id ACTOR_ID     Turbot actor identity ID (pass explicitly, or use --auto-detect-actor)
+  --auto-detect-actor     Auto-detect Turbot Identity ID from the workspace via GraphQL query
   --resource-type TYPE    Resource type alias or full tmod URI (default: all types)
   --output OUTPUT         Output CSV file path (default: auto-generated)
   --workspace-url URL     Workspace base URL (auto-read from credentials.yml if omitted)

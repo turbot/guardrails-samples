@@ -124,15 +124,15 @@ def detect_turbot_identity(profile):
 
 
 def detect_workspace_url(profile):
+    creds_path = os.path.expanduser("~/.config/turbot/credentials.yml")
     try:
-        with open(os.path.expanduser("~/.config/turbot/credentials.yml")) as f:
+        with open(creds_path) as f:
             creds = yaml.safe_load(f)
-        url = (creds.get(profile) or {}).get("workspace", "").rstrip("/")
-        if url:
-            return url
+        profile_data = creds.get(profile) or {}
+        url = str(profile_data.get("workspace", "")).rstrip("/")
+        return url if url else ""
     except (FileNotFoundError, AttributeError):
-        pass
-    return ""
+        return ""
 
 
 def build_filter(actor_id, resource_type_uri, date, since, until, days):
