@@ -86,7 +86,7 @@ def resolve_resource_type(value):
     sys.exit(1)
 
 
-def run_turbot_graphql(profile, query, variables=None):
+def run_turbot_graphql(profile, query, variables=None, exit_on_error=True):
     cmd = [
         "turbot", "graphql",
         "--profile", profile,
@@ -97,8 +97,11 @@ def run_turbot_graphql(profile, query, variables=None):
         cmd.extend(["--variables", json.dumps(variables)])
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
     if result.returncode != 0:
-        print(f"turbot CLI error: {result.stderr.strip()}", file=sys.stderr)
-        sys.exit(1)
+        err = result.stderr.strip() or result.stdout.strip() or "(no details)"
+        if exit_on_error:
+            print(f"turbot CLI error: {err}", file=sys.stderr)
+            sys.exit(1)
+        raise RuntimeError(err)
     return json.loads(result.stdout)
 
 
@@ -111,15 +114,16 @@ def detect_turbot_identity(profile):
              "#/resource/types/turbotIdentity' limit:1\") "
              "{ items { turbot { id title } } } }")
     try:
-        data = run_turbot_graphql(profile, query)
+        data = run_turbot_graphql(profile, query, exit_on_error=False)
         items = data.get("resources", {}).get("items", [])
         if items:
             actor_id = items[0]["turbot"]["id"]
             print(f"Auto-detected Turbot Identity: {actor_id}")
             return actor_id
-    except (subprocess.TimeoutExpired, json.JSONDecodeError, KeyError):
-        pass
-    print("Warning: could not auto-detect Turbot Identity ID.", file=sys.stderr)
+    except Exception as e:
+        print(f"Warning: auto-detect failed: {e}", file=sys.stderr)
+    print("Warning: could not auto-detect Turbot Identity ID. Fetching deletions by ALL actors.",
+          file=sys.stderr)
     return None
 
 
