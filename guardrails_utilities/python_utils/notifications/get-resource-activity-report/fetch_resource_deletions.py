@@ -151,8 +151,8 @@ def to_csv_row(item, workspace_url):
     trunk_title = (resource.get("trunk") or {}).get("title") or "(deleted)"
     type_msg = f"Object > {res_type_title}" if res_type_title else ""
     actor_str = format_actor(item.get("actor"))
-    notif_id = item["turbot"]["id"]
-    detail_url = f"{workspace_url}/apollo/notifications/{notif_id}"
+    res_id = res_turbot.get("id", "")
+    detail_url = f"{workspace_url}/apollo/resources/{res_id}/activity" if res_id else ""
 
     return [
         ts, nt, type_msg,

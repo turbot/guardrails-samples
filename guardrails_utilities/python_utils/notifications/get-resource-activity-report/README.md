@@ -214,14 +214,14 @@ To prevent accidental fetches of millions of rows, the script blocks queries tha
 | Actor | Actor identity name (e.g., Turbot Identity) |
 | ResourceId | Guardrails resource ID |
 | TrunkPath | Resource hierarchy path, or (deleted) |
-| Detail URL | Direct link to the notification in the console |
+| Detail URL | Link to the resource activity page in the console |
 
 ### Example output
 
 ```csv
 Timestamp,NotificationType,Type / Message,Resource,Actor,ResourceId,TrunkPath,Detail URL
-07-May-2026 13:42:32,RESOURCE DELETED,Object > Snapshot,snap-0abcdef1234567890,Turbot Identity,123456789012345,(deleted),https://my-workspace.cloud.turbot.com/apollo/notifications/987654321098765
-07-May-2026 11:32:25,RESOURCE DELETED,Object > Instance,i-0abcdef1234567890,Turbot Identity,123456789012346,(deleted),https://my-workspace.cloud.turbot.com/apollo/notifications/987654321098766
+07-May-2026 13:42:32,RESOURCE DELETED,Object > Snapshot,snap-0abcdef1234567890,Turbot Identity,123456789012345,(deleted),https://my-workspace.cloud.turbot.com/apollo/resources/123456789012345/activity
+07-May-2026 11:32:25,RESOURCE DELETED,Object > Instance,i-0abcdef1234567890,Turbot Identity,123456789012346,(deleted),https://my-workspace.cloud.turbot.com/apollo/resources/123456789012346/activity
 ```
 
 ---
@@ -247,18 +247,6 @@ List configured profiles:
 ```bash
 turbot workspace list
 ```
-
----
-
-## GraphQL reference files
-
-The `graphql-diff/` directory contains the full GraphQL queries captured from the Guardrails console for reference:
-
-| File | Description |
-|------|-------------|
-| `export-resource-deleted-by-tubot-query.graphql` | Console Export CSV query with all fragments and example variables |
-| `console-resource-deleted-by-turbot-query.graphql` | Console display query (used for in-browser rendering) |
-| `resource_deleted_by_turbot.graphql` | Minimal query used by `fetch_resource_deletions.py` |
 
 ---
 
