@@ -9,17 +9,17 @@ boundary is provided; optionally filter to a specific resource type.
 
 Usage:
     # All resource types deleted by Turbot on a single day
-    python fetch_resource_deletions.py --profile kochgp --date 2026-05-07
+    python fetch_resource_deletions.py --profile my-workspace --date 2026-05-07
 
     # Only snapshots
-    python fetch_resource_deletions.py --profile kochgp --date 2026-05-07 \
+    python fetch_resource_deletions.py --profile my-workspace --date 2026-05-07 \
         --resource-type snapshot
 
     # Date range, all types
-    python fetch_resource_deletions.py --profile kochgp --since 2026-05-01 --until 2026-05-08
+    python fetch_resource_deletions.py --profile my-workspace --since 2026-05-01 --until 2026-05-08
 
     # Rolling window
-    python fetch_resource_deletions.py --profile kochgp --days 3
+    python fetch_resource_deletions.py --profile my-workspace --days 3
 """
 
 import argparse
@@ -34,21 +34,13 @@ QUERY_FILE = os.path.join(os.path.dirname(__file__), "resource_deleted_by_turbot
 PAGE_SIZE = 200
 
 WORKSPACE_URLS = {
-    "kochgp": "https://gp.turbotprod.kochind.cloud",
-    "kochkbs": "https://kbs.turbotprod.kochind.cloud",
-    "kochkbxt": "https://kbxt.turbotprod.kochind.cloud",
-    "kochgdn": "https://gdn.turbotprod.kochind.cloud",
-    "kochinv": "https://inv.turbotprod.kochind.cloud",
-    "kochind": "https://kochind.turbotprod.kochind.cloud",
-    "kochkaes": "https://kaes.turbotprod.kochind.cloud",
-    "kochfhr": "https://fhr.turbotprod.kochind.cloud",
-    "kochkes": "https://kes.turbotprod.kochind.cloud",
-    "kochkmt": "https://kmt.turbotprod.kochind.cloud",
-    "kochmlx": "https://mlx.turbotprod.kochind.cloud",
+    # Add your workspace profiles here:
+    # "my-workspace": "https://my-workspace.cloud.turbot.com",
 }
 
 TURBOT_IDENTITY_IDS = {
-    "kochgp": "218162262814364",
+    # Add Turbot Identity IDs per workspace (find via console > Permissions > Turbot Identity):
+    # "my-workspace": "123456789012345",
 }
 
 RESOURCE_TYPE_ALIASES = {
@@ -185,13 +177,13 @@ resource type aliases:
   Or pass a full URI: tmod:@turbot/aws-ec2#/resource/types/snapshot
 
 examples:
-  %(prog)s --profile kochgp --date 2026-05-07
-  %(prog)s --profile kochgp --date 2026-05-07 --resource-type snapshot
-  %(prog)s --profile kochgp --since 2026-05-01 --until 2026-05-08
-  %(prog)s --profile kochgp --days 7 --resource-type instance
+  %(prog)s --profile my-workspace --date 2026-05-07
+  %(prog)s --profile my-workspace --date 2026-05-07 --resource-type snapshot
+  %(prog)s --profile my-workspace --since 2026-05-01 --until 2026-05-08
+  %(prog)s --profile my-workspace --days 7 --resource-type instance
 """,
     )
-    parser.add_argument("--profile", required=True, help="Turbot CLI profile name (e.g. kochgp)")
+    parser.add_argument("--profile", required=True, help="Turbot CLI profile name (e.g. my-workspace)")
 
     time_group = parser.add_argument_group("time range (pick one)")
     time_group.add_argument("--date", help="Single calendar day, midnight-to-midnight UTC (YYYY-MM-DD)")

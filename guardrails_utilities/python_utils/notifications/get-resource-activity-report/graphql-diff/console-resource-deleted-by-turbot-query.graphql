@@ -434,7 +434,7 @@ fragment resourceTypeMetadataFields on TurbotResourceTypeMetadata {
 ## required variables for the above query to fetch notifications for snapshot deletions by a specific actor:
 
 {
-  "filter": "notificationType:resource_deleted actorIdentityId:218162262814364 resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'",
+  "filter": "notificationType:resource_deleted actorIdentityId:YOUR_ACTOR_IDENTITY_ID resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'",
   "dataSource": "DB"
 }
 
@@ -442,7 +442,7 @@ fragment resourceTypeMetadataFields on TurbotResourceTypeMetadata {
 
 
 {
-  "filter": "notificationType:resource_deleted actorIdentityId:218162262814364 resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'"
+  "filter": "notificationType:resource_deleted actorIdentityId:YOUR_ACTOR_IDENTITY_ID resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'"
 }
 
 ## We can use the above filters to get all the notifications for snapshot deletions by a specific actor. The first filter will query the database directly, while the second filter will use the default data source which may include cached data.

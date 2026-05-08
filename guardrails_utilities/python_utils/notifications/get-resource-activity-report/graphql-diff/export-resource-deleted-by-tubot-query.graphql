@@ -437,21 +437,21 @@ fragment resourceTypeMetadataFields on TurbotResourceTypeMetadata {
     "notificationType:resource_deleted  resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'",
     "limit:300"
   ],
-  "paging": "eyJzb3J0IjpbeyJ0ZXh0IjoiaWQiLCJvcGVyYXRvciI6Ii0ifSx7InRleHQiOiJ0aW1lc3RhbXAiLCJvcGVyYXRvciI6Ii0ifV0sIndoZXJlIjpbeyJwaXZvdCI6ImlkIiwib3BlcmF0b3IiOiI8IiwidmFsdWUiOiIzODUxMzkzOTExMjU4MjIifSx7InBpdm90IjoidGltZXN0YW1wIiwib3BlcmF0b3IiOiI8IiwidmFsdWUiOiIyMDI2LTA1LTA3VDA4OjQ0OjQ2LjI0NVoifV0sIm1vZGUiOiJuZXh0In0="
+  "paging": "YOUR_PAGING_CURSOR_HERE"
 }
 
 ## Variables for the GraphQL query, specifying the filter for 'resource_deleted' notifications related to AWS EC2 snapshot resources by a specific actor, and pagination settings.
 
 
   "filter": [
-    "notificationType:resource_deleted actorIdentityId:218162262814364 resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'",
+    "notificationType:resource_deleted actorIdentityId:YOUR_ACTOR_IDENTITY_ID resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'",
     "limit:300"
   ],
-  "paging": "eyJzb3J0IjpbeyJ0ZXh0IjoiaWQiLCJvcGVyYXRvciI6Ii0ifSx7InRleHQiOiJ0aW1lc3RhbXAiLCJvcGVyYXRvciI6Ii0ifV0sIndoZXJlIjpbeyJwaXZvdCI6ImlkIiwib3BlcmF0b3IiOiI8IiwidmFsdWUiOiIzODUxMzkzOTExMjU4MjIifSx7InBpdm90IjoidGltZXN0YW1wIiwib3BlcmF0b3IiOiI8IiwidmFsdWUiOiIyMDI2LTA1LTA3VDA4OjQ0OjQ2LjI0NVoifV0sIm1vZGUiOiJuZXh0In0="
+  "paging": "YOUR_PAGING_CURSOR_HERE"
 }
 
 ## Variables for the GraphQL query to fetch notifications for snapshot deletions by a specific actor, without pagination settings.
 
 {
-  "filter":"notificationType:resource_deleted actorIdentityId:218162262814364 resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'"
+  "filter":"notificationType:resource_deleted actorIdentityId:YOUR_ACTOR_IDENTITY_ID resourceTypeId:'tmod:@turbot/aws-ec2#/resource/types/snapshot'"
 }

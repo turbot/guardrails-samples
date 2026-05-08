@@ -507,15 +507,15 @@ def main():
         epilog="""
 Examples:
   # Last 7 days, all default activity types, default snapshot type
-  %(prog)s --profile kochgp --days 7
+  %(prog)s --profile my-workspace --days 7
 
   # 7 days of snapshot deletions only, with per-window CSVs (resumable)
-  %(prog)s --profile kochgp --days 7 \\
+  %(prog)s --profile my-workspace --days 7 \\
     --resource-type snapshot --notification-type resource_deleted \\
     --per-window-csv
 
   # Backfill a single window
-  %(prog)s --profile kochgp --resource-type snapshot \\
+  %(prog)s --profile my-workspace --resource-type snapshot \\
     --from 2026-05-01 --to 2026-05-02
         """,
     )
