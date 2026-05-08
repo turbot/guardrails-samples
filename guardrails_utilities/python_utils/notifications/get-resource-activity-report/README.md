@@ -1,148 +1,269 @@
 # Get Resource Activity Report
 
-Export resource create/delete/update activity from one or more Guardrails workspaces to CSV. Filters by actor identity (defaults to the Turbot automation identity) and resource type.
+Export resource deletion activity from Guardrails workspaces to CSV. Two scripts are provided:
 
-This script is useful when the console Resource Activities report times out on workspaces with large notification volumes. It fetches only resource-level CRUD notifications (not control/policy processing activity), keeping the dataset manageable.
+| Script | Backend | Best for |
+|--------|---------|----------|
+| `fetch_resource_deletions.py` | **Turbot CLI** (`turbot graphql`) | Reliable paginated fetches with calendar-day boundaries, bypasses the console 5K export limit |
+| `resource_activity_report.py` | Python `requests` (direct HTTP) | Multi-workspace batch runs, auto-detects Turbot Identity ID |
 
-## Features
-
-- **Multi-workspace support** — run against multiple workspaces in a single invocation
-- **Auto-detects Turbot Identity** — finds the automation actor ID automatically
-- **Configurable resource type** — defaults to EC2 Snapshots, works with any resource type
-- **Configurable time range** — `--days` parameter for lookback window
-- **CSV output** — matches the console Resource Activities report format
-- **Handles large datasets** — paginated queries with timeout retry logic
+Both produce CSV output matching the console Resource Activities export format.
 
 ## Prerequisites
 
 - [Python 3.8+](https://www.python.org/downloads/)
-- [Turbot CLI credentials](https://turbot.com/guardrails/docs/reference/cli/installation#set-up-your-turbot-guardrails-credentials) configured at `~/.config/turbot/credentials.yml`
+- [Turbot CLI](https://turbot.com/guardrails/docs/reference/cli/installation) installed and configured
+- Turbot CLI credentials at `~/.config/turbot/credentials.yml`
 
 ## Setup
 
 ```bash
-cd get-resource-activity-report
+cd guardrails_utilities/python_utils/notifications/get-resource-activity-report
 pip install -r requirements.txt
 ```
 
-### Credentials
-
-The script uses the same credentials file as the Turbot CLI (`~/.config/turbot/credentials.yml`):
-
-```yaml
-my-workspace:
-  workspace: "https://my-workspace.turbot.com"
-  accessKey: "your-access-key"
-  secretKey: "your-secret-key"
-
-another-workspace:
-  workspace: "https://another-workspace.turbot.com"
-  accessKey: "your-access-key"
-  secretKey: "your-secret-key"
-```
-
-## Usage
-
-### Basic — EC2 Snapshots, last 30 days
+Verify turbot CLI connectivity:
 
 ```bash
-python resource_activity_report.py --profile my-workspace
+turbot graphql --profile kochgp --query='{ resource(id:"tmod:@turbot/turbot#/") { turbot { title } } }'
 ```
 
-### Custom time range
+---
+
+## fetch_resource_deletions.py (Recommended)
+
+Uses the turbot CLI for authentication and GraphQL transport. Paginates automatically and writes CSV incrementally (partial data is preserved if interrupted).
+
+### Key features
+
+- **Calendar-day boundaries** — `--date 2026-05-07` fetches midnight-to-midnight UTC, no overlap between consecutive days
+- **All resource types by default** — captures snapshots, instances, volumes, Lambda functions, etc. in a single run
+- **Bypasses the 5K console export limit** — paginated GraphQL fetches with no cap
+- **Resource type aliases** — use `--resource-type snapshot` instead of the full `tmod:` URI
+- **Safety guard** — blocks unbounded queries (all types + no time filter) to prevent fetching millions of rows
+
+### Examples
+
+#### All resource types deleted by Turbot on a single day
 
 ```bash
-# Last 90 days
-python resource_activity_report.py --profile my-workspace --days 90
-
-# Last 7 days
-python resource_activity_report.py --profile my-workspace --days 7
+python fetch_resource_deletions.py --profile kochgp --date 2026-05-07
+# Output: kochgp-resource-deleted-all-types-2026-05-07.csv
 ```
 
-### Multiple workspaces
+#### Only EC2 snapshots on a single day
 
 ```bash
-python resource_activity_report.py \
-  --profile workspace-a \
-  --profile workspace-b \
-  --profile workspace-c \
-  --days 30
+python fetch_resource_deletions.py --profile kochgp --date 2026-05-07 --resource-type snapshot
+# Output: kochgp-resource-deleted-snapshot-2026-05-07.csv
 ```
 
-### Different resource type
+#### Only EC2 instances on a single day
 
 ```bash
-# S3 Buckets
-python resource_activity_report.py --profile my-workspace \
-  --resource-type "tmod:@turbot/aws-s3#/resource/types/bucket"
-
-# EC2 Instances
-python resource_activity_report.py --profile my-workspace \
-  --resource-type "tmod:@turbot/aws-ec2#/resource/types/instance"
+python fetch_resource_deletions.py --profile kochgp --date 2026-05-07 --resource-type instance
+# Output: kochgp-resource-deleted-instance-2026-05-07.csv
 ```
 
-### Specific actor identity
+#### Date range — all types from May 1 to May 8
 
 ```bash
-python resource_activity_report.py --profile my-workspace \
-  --days 90 --actor-id 123456789012345
+python fetch_resource_deletions.py --profile kochgp --since 2026-05-01 --until 2026-05-08
+# Output: kochgp-resource-deleted-all-types-2026-05-01.csv
 ```
 
-### Custom output directory
+#### Date range — snapshots only from May 1 to May 8
 
 ```bash
-python resource_activity_report.py --profile my-workspace \
-  --days 30 --output-dir ./reports
+python fetch_resource_deletions.py --profile kochgp --since 2026-05-01 --until 2026-05-08 --resource-type snapshot
+# Output: kochgp-resource-deleted-snapshot-2026-05-01.csv
 ```
 
-## Output
+#### Rolling window — last 3 days, instances only
 
-One CSV file per workspace: `{profile}-resource-activity-{days}d-{date}.csv`
+```bash
+python fetch_resource_deletions.py --profile kochgp --days 3 --resource-type instance
+# Output: kochgp-resource-deleted-instance-20260508.csv
+```
+
+#### Rolling window — last 7 days, all types
+
+```bash
+python fetch_resource_deletions.py --profile kochgp --days 7
+# Output: kochgp-resource-deleted-all-types-20260508.csv
+```
+
+#### Custom output file
+
+```bash
+python fetch_resource_deletions.py --profile kochgp --date 2026-05-07 --output may7-report.csv
+```
+
+#### Different workspace (kochkbs)
+
+```bash
+python fetch_resource_deletions.py --profile kochkbs --date 2026-05-07 \
+    --actor-id 123456789012345 \
+    --workspace-url "https://kbs.turbotprod.kochind.cloud"
+```
+
+#### Specific resource type by full URI
+
+```bash
+python fetch_resource_deletions.py --profile kochgp --date 2026-05-07 \
+    --resource-type "tmod:@turbot/aws-lambda#/resource/types/functionVersion"
+```
+
+#### Open-ended since (no end date)
+
+```bash
+python fetch_resource_deletions.py --profile kochgp --since 2026-05-01 --resource-type volume
+# Fetches from May 1 to now
+# Output: kochgp-resource-deleted-volume-2026-05-01.csv
+```
+
+#### Day-by-day tracking for a week
+
+```bash
+for d in 01 02 03 04 05 06 07; do
+    python fetch_resource_deletions.py --profile kochgp --date 2026-05-$d
+done
+# Produces: kochgp-resource-deleted-all-types-2026-05-01.csv through -07.csv
+# No overlap between files — each covers midnight-to-midnight UTC
+```
+
+#### Compare two workspaces for the same day
+
+```bash
+python fetch_resource_deletions.py --profile kochgp --date 2026-05-07
+python fetch_resource_deletions.py --profile kochkbs --date 2026-05-07 \
+    --actor-id 123456789012345 \
+    --workspace-url "https://kbs.turbotprod.kochind.cloud"
+```
+
+### Resource type aliases
+
+Short names you can use with `--resource-type` instead of full URIs:
+
+| Alias | Resource type URI |
+|-------|-------------------|
+| `snapshot` | `tmod:@turbot/aws-ec2#/resource/types/snapshot` |
+| `instance` | `tmod:@turbot/aws-ec2#/resource/types/instance` |
+| `volume` | `tmod:@turbot/aws-ec2#/resource/types/volume` |
+| `ami` | `tmod:@turbot/aws-ec2#/resource/types/image` |
+| `launch-template` | `tmod:@turbot/aws-ec2#/resource/types/launchTemplate` |
+| `bucket` | `tmod:@turbot/aws-s3#/resource/types/bucket` |
+| `lambda` | `tmod:@turbot/aws-lambda#/resource/types/function` |
+| `function-version` | `tmod:@turbot/aws-lambda#/resource/types/functionVersion` |
+| `role` | `tmod:@turbot/aws-iam#/resource/types/role` |
+| `vpc` | `tmod:@turbot/aws-vpc-core#/resource/types/vpc` |
+| `security-group` | `tmod:@turbot/aws-vpc-security#/resource/types/securityGroup` |
+| `subscription` | `tmod:@turbot/aws-sns#/resource/types/subscription` |
+| `ecs-service` | `tmod:@turbot/aws-ecs#/resource/types/service` |
+
+You can also pass any `tmod:@turbot/...` URI directly.
+
+### Command-line reference
+
+```
+usage: fetch_resource_deletions.py [-h] --profile PROFILE
+                                   [--date DATE] [--since SINCE] [--until UNTIL] [--days DAYS]
+                                   [--actor-id ACTOR_ID] [--resource-type RESOURCE_TYPE]
+                                   [--output OUTPUT] [--workspace-url WORKSPACE_URL]
+
+options:
+  --profile PROFILE       Turbot CLI profile name (required)
+
+time range (pick one):
+  --date DATE             Single calendar day, midnight-to-midnight UTC (YYYY-MM-DD)
+  --since SINCE           Start date inclusive (YYYY-MM-DD)
+  --until UNTIL           End date exclusive (YYYY-MM-DD), use with --since
+  --days DAYS             Rolling window in days (default: 1)
+
+  --actor-id ACTOR_ID     Turbot actor identity ID (auto-detected for known workspaces)
+  --resource-type TYPE    Resource type alias or full tmod URI (default: all types)
+  --output OUTPUT         Output CSV file path (default: auto-generated)
+  --workspace-url URL     Workspace base URL (auto-detected for known workspaces)
+```
+
+### Time range behavior
+
+| Option | Boundary | Example |
+|--------|----------|---------|
+| `--date 2026-05-07` | `timestamp:>2026-05-07 timestamp:<2026-05-08` | Midnight-to-midnight UTC, no overlap |
+| `--since 2026-05-01 --until 2026-05-08` | `timestamp:>2026-05-01 timestamp:<2026-05-08` | Arbitrary range |
+| `--since 2026-05-01` | `timestamp:>2026-05-01` | From May 1 to now |
+| `--days 3` | `timestamp:>2026-05-05` | Rolling 3 days from today |
+
+### Safety guard
+
+To prevent accidental fetches of millions of rows, the script blocks queries that combine **all resource types** (no `--resource-type`) with **no absolute time boundary** (no `--date` or `--since`). Either add a time boundary or specify a resource type.
+
+---
+
+## Output format
 
 ### Columns
 
 | Column | Description |
 |--------|-------------|
-| Timestamp | Activity timestamp (DD-Mon-YYYY HH:MM:SS) |
-| NotificationType | RESOURCE CREATED, RESOURCE DELETED, or RESOURCE UPDATED |
-| Type / Message | Resource type category and name |
-| Resource | Resource title (e.g., snapshot ID, bucket name) |
-| Actor | Actor identity name |
+| Timestamp | Activity timestamp (DD-Mon-YYYY HH:MM:SS UTC) |
+| NotificationType | RESOURCE DELETED |
+| Type / Message | Resource type category (e.g., Object > Snapshot) |
+| Resource | Resource title (e.g., snap-08789b5a4ab739c33) |
+| Actor | Actor identity name (e.g., Turbot Identity) |
 | ResourceId | Guardrails resource ID |
-| TrunkPath | Full resource hierarchy path |
+| TrunkPath | Resource hierarchy path, or (deleted) |
 | Detail URL | Direct link to the notification in the console |
 
 ### Example output
 
-```
+```csv
 Timestamp,NotificationType,Type / Message,Resource,Actor,ResourceId,TrunkPath,Detail URL
-01-May-2026 04:47:35,RESOURCE DELETED,Object > Snapshot,snap-08170c6ca...,Turbot > Turbot Identity,384593893452312,(deleted),https://...
+07-May-2026 13:42:32,RESOURCE DELETED,Object > Snapshot,snap-03ae5c144a2bab0e8,Turbot Identity,385157353768573,(deleted),https://gp.turbotprod.kochind.cloud/apollo/notifications/385157685600695
+07-May-2026 11:32:25,RESOURCE DELETED,Object > Instance,i-0a1b2c3d4e5f67890,Turbot Identity,385149350192559,(deleted),https://gp.turbotprod.kochind.cloud/apollo/notifications/385149692057073
 ```
 
-## How it works
+---
 
-1. Connects to each workspace using the credentials.yml profile
-2. Auto-detects the Turbot Identity actor ID (resource type `turbotIdentity`)
-3. Queries all resource CRUD notifications for the given resource type and actor via paginated GraphQL
-4. Filters to the requested date range client-side
-5. Writes one CSV per workspace
+## Credentials
 
-### Performance note
+Both scripts use `~/.config/turbot/credentials.yml` (same as Turbot CLI):
 
-The script intentionally avoids combining `actorIdentityId` with `timestamp` filters in the GraphQL query. On workspaces with millions of notifications, this filter combination causes backend query timeouts. Instead, it fetches all resource CRUD notifications (typically hundreds to low thousands) and applies the date filter in Python. This approach completes reliably in under a minute.
+```yaml
+kochgp:
+  workspace: "https://gp.turbotprod.kochind.cloud"
+  accessKey: "your-access-key"
+  secretKey: "your-secret-key"
 
-## Command-line reference
-
+kochkbs:
+  workspace: "https://kbs.turbotprod.kochind.cloud"
+  accessKey: "your-access-key"
+  secretKey: "your-secret-key"
 ```
-usage: resource_activity_report.py [-h] --profile PROFILE [--days DAYS]
-                                   [--resource-type RESOURCE_TYPE]
-                                   [--actor-id ACTOR_ID]
-                                   [--output-dir OUTPUT_DIR]
 
-options:
-  --profile PROFILE       Turbot CLI profile name (repeatable)
-  --days DAYS             Days to look back (default: 30)
-  --resource-type TYPE    Resource type URI (default: EC2 Snapshot)
-  --actor-id ACTOR_ID     Actor identity ID (default: auto-detect)
-  --output-dir OUTPUT_DIR Output directory (default: current)
+List configured profiles:
+
+```bash
+turbot workspace list
 ```
+
+---
+
+## GraphQL reference files
+
+The `graphql-diff/` directory contains the full GraphQL queries captured from the Guardrails console for reference:
+
+| File | Description |
+|------|-------------|
+| `export-resource-deleted-by-tubot-query.graphql` | Console Export CSV query with all fragments and example variables |
+| `console-resource-deleted-by-turbot-query.graphql` | Console display query (used for in-browser rendering) |
+| `resource_deleted_by_turbot.graphql` | Minimal query used by `fetch_resource_deletions.py` |
+
+---
+
+## Notes
+
+- **metadata.stats.total is approximate** — the total count in the GraphQL response does not apply all filter conditions (particularly timestamp boundaries). The actual item count from pagination is the accurate number.
+- **Turbot Identity ID** — the actor identity ID for the Turbot automation identity varies per workspace. For `kochgp` it is `218162262814364`. For other workspaces, pass `--actor-id` or omit it to fetch deletions by all actors.
+- **Timestamps are UTC** — all `--date`, `--since`, and `--until` values are interpreted as UTC midnight boundaries.

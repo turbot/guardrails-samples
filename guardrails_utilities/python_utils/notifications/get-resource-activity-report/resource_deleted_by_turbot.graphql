@@ -1,0 +1,19 @@
+query Notifications($filter: [String!], $paging: String) {
+  notifications(filter: $filter, paging: $paging) {
+    items {
+      notificationType
+      resource {
+        turbot { id title }
+        type { turbot { title } }
+        trunk { title }
+      }
+      actor {
+        identity { title }
+        persona { title }
+      }
+      turbot { id createTimestamp }
+    }
+    paging { next }
+    metadata { stats { total } }
+  }
+}
