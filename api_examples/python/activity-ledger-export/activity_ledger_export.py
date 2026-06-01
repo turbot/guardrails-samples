@@ -160,9 +160,9 @@ def fetch_window(endpoint, headers, base_filter_parts, hours_ago_start, hours_ag
     matching the original single-query behaviour.
     """
     if hours_ago_end == 0:
-        time_filter = "timestamp:>T-{}h".format(hours_ago_start)
+        time_filter = "timestamp:>=T-{}h".format(hours_ago_start)
     else:
-        time_filter = "timestamp:>T-{}h timestamp:<T-{}h".format(hours_ago_start, hours_ago_end)
+        time_filter = "timestamp:>=T-{}h timestamp:<T-{}h".format(hours_ago_start, hours_ago_end)
     filter_parts = base_filter_parts + [time_filter, "limit:{}".format(page_size)]
 
     items = []
