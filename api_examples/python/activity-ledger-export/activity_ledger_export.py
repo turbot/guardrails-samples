@@ -193,6 +193,7 @@ def _paginate(endpoint, headers, filter_parts, label, page_size, progress, progr
         if "errors" in result:
             for error in result['errors']:
                 tprint("  [{}] Error on page {}: {}".format(label, page_num + 1, error.get('message', error)))
+            tprint("  [{}] Stopped after {} item(s) due to API error.".format(label, item_count))
             break
 
         data = result['data']['notifications']
@@ -260,7 +261,7 @@ def item_to_row(item, workspace_url):
     return {
         'notification_id':   str(notification_id),
         'notification_type': item.get('notificationType') or '',
-        'timestamp':         item['turbot']['createTimestamp'],
+        'timestamp':         turbot_data.get('createTimestamp') or '',
         'actor':             actor_title,
         'message':           item.get('message') or '',
         'resource_aka':      akas[0] if akas else '',
@@ -326,35 +327,54 @@ def run_chunk(endpoint, headers, base_filter_parts, resource_type_ids,
                     tprint("  Worker error: {}".format(e))
 
     else:
-        # One worker per CSP root type; base_filter_parts includes the time range.
-        actual_workers = min(workers, len(resource_type_ids))
-        print("\nChunk {:>2}/{}: {}  ({} workers, {} resource types)".format(
-            chunk_num, total_chunks, chunk_label, actual_workers, len(resource_type_ids)))
+        if resource_type_ids:
+            # One worker per CSP root type; base_filter_parts includes the time range.
+            actual_workers = min(workers, len(resource_type_ids))
+            print("\nChunk {:>2}/{}: {}  ({} workers, {} resource types)".format(
+                chunk_num, total_chunks, chunk_label, actual_workers, len(resource_type_ids)))
 
-        progress = {
-            'lock':        threading.Lock(),
-            'types_done':  0,
-            'items_fetched': 0,
-            'total_types': len(resource_type_ids),
-            'start_time':  time.time(),
-        }
-
-        with ThreadPoolExecutor(max_workers=actual_workers) as executor:
-            futures = {
-                executor.submit(
-                    fetch_resource_type,
-                    endpoint, headers, base_filter_parts, rt_id,
-                    page_size, progress, request_timeout, max_retries, write_fn
-                ): rt_id
-                for rt_id in resource_type_ids
+            progress = {
+                'lock':        threading.Lock(),
+                'types_done':  0,
+                'items_fetched': 0,
+                'total_types': len(resource_type_ids),
+                'start_time':  time.time(),
             }
-            for future in as_completed(futures):
-                try:
-                    result = future.result()
-                    if not write_fn:
-                        all_items.extend(result)
-                except Exception as e:
-                    tprint("  Worker error: {}".format(e))
+
+            with ThreadPoolExecutor(max_workers=actual_workers) as executor:
+                futures = {
+                    executor.submit(
+                        fetch_resource_type,
+                        endpoint, headers, base_filter_parts, rt_id,
+                        page_size, progress, request_timeout, max_retries, write_fn
+                    ): rt_id
+                    for rt_id in resource_type_ids
+                }
+                for future in as_completed(futures):
+                    try:
+                        result = future.result()
+                        if not write_fn:
+                            all_items.extend(result)
+                    except Exception as e:
+                        tprint("  Worker error: {}".format(e))
+        else:
+            # No --csp/--resource-type: single worker, no resourceTypeId filter.
+            print("\nChunk {:>2}/{}: {}  (1 worker, all resource types)".format(
+                chunk_num, total_chunks, chunk_label))
+
+            progress = {
+                'lock':        threading.Lock(),
+                'types_done':  0,
+                'items_fetched': 0,
+                'total_types': 1,
+                'start_time':  time.time(),
+            }
+
+            result = _paginate(endpoint, headers, base_filter_parts, "all",
+                               page_size, progress, 'types_done',
+                               request_timeout, max_retries, write_fn)
+            if not write_fn:
+                all_items.extend(result)
 
     if not write_fn:
         all_items.sort(key=lambda x: x['turbot']['createTimestamp'], reverse=True)
@@ -418,8 +438,14 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
     if from_date:
         if hours or days != 7:
             raise click.UsageError("--from-date is mutually exclusive with --days and --hours.")
-        if resume and not os.path.exists(output + '.checkpoint.json') and not os.path.exists(output):
+        checkpoint_exists = os.path.exists(output + '.checkpoint.json')
+        output_exists = os.path.exists(output)
+        if resume and not checkpoint_exists and not output_exists:
             raise click.UsageError("--resume specified but no checkpoint or output file found for '{}'.".format(output))
+        if resume and output_exists and not checkpoint_exists:
+            raise click.UsageError(
+                "--resume found '{}' but no checkpoint file. Cannot safely resume — "
+                "re-running without --resume would overwrite the existing output.".format(output))
     elif hours:
         if days != 7:
             raise click.UsageError("--days and --hours are mutually exclusive.")
@@ -461,13 +487,14 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
         else:
             print("  Warning: Could not resolve Turbot Identity. Falling back to all actors.")
 
-    # Determine resource type IDs for action_notify mode
+    # Determine resource type IDs for action_notify mode.
+    # Empty list means no resourceTypeId filter (query all types unscoped).
     if resource_type:
         resource_type_ids = [t.strip() for t in resource_type.split(',')]
     elif csp:
         resource_type_ids = [CSP_RESOURCE_TYPE_IDS[c.lower()] for c in csp]
     else:
-        resource_type_ids = list(CSP_RESOURCE_TYPE_IDS.values())
+        resource_type_ids = []
 
     # Base filter (no time range, no resourceTypeId — added per worker)
     base_filter_parts = [] if all_notifications else ["notificationType:action_notify"]
@@ -481,7 +508,9 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
 
     notification_mode = "all notification types" if all_notifications else "action_notify only"
     actor_desc = actor_id if actor_id else ("all actors" if (all_actors or all_notifications) else "all actors (fallback)")
-    csp_desc = "all (date-based workers)" if all_notifications else ','.join(resource_type_ids)
+    csp_desc = "all (date-based workers)" if all_notifications else (
+        ','.join(resource_type_ids) if resource_type_ids else "all (no type filter)"
+    )
 
     # -----------------------------------------------------------------------
     # MODE 1: chunked path — --from-date or auto-converted large --days
@@ -510,12 +539,17 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
             print("  The API can COUNT notifications older than ~90 days but cannot RETRIEVE them.")
             print("  Chunks outside that window will return 0 rows even if the DB total shows data.")
 
-        worker_desc = "{} per chunk (1 per day)".format(min(workers, chunk_days)) if all_notifications \
-                      else "{} per chunk (1 per CSP type)".format(min(workers, len(resource_type_ids)))
+        if all_notifications:
+            worker_desc = "{} per chunk (1 per day)".format(min(workers, chunk_days))
+        elif resource_type_ids:
+            worker_desc = "{} per chunk (1 per CSP type)".format(min(workers, len(resource_type_ids)))
+        else:
+            worker_desc = "1 per chunk (no type filter)"
 
         print("\nExporting {} from {} to {}".format(notification_mode, from_date, effective_to_date))
         print("  Actor filter    : {}".format(actor_desc))
         print("  CSP / types     : {}".format(csp_desc))
+        print("  Base filter     : {}".format(base_filter_parts))
         print("  Chunks          : {} x {}-day windows".format(len(chunks), chunk_days))
         print("  Workers         : {}".format(worker_desc))
         print("  Timeout/Retries : {}s / {}".format(timeout, retries))
@@ -542,51 +576,57 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
                     writer.writerow(row)
                 count_tracker[0] += len(rows)
 
-        for idx, (chunk_from, chunk_to) in enumerate(chunks, 1):
-            chunk_key = "{}_{}".format(chunk_from, chunk_to)
+        try:
+            for idx, (chunk_from, chunk_to) in enumerate(chunks, 1):
+                chunk_key = "{}_{}".format(chunk_from, chunk_to)
 
-            if chunk_key in completed_chunks:
-                print("\nChunk {:>2}/{}: {} → {} [SKIP — {:,} rows already written]".format(
-                    idx, len(chunks), chunk_from, chunk_to, completed_chunks[chunk_key]))
-                continue
+                if chunk_key in completed_chunks:
+                    print("\nChunk {:>2}/{}: {} → {} [SKIP — {:,} rows already written]".format(
+                        idx, len(chunks), chunk_from, chunk_to, completed_chunks[chunk_key]))
+                    continue
 
-            chunk_label = "{} → {}".format(chunk_from, chunk_to)
+                chunk_label = "{} → {}".format(chunk_from, chunk_to)
 
-            # For action_notify: pass time range in base filter; workers split by resource type.
-            # For all_notifications: pass time range to run_chunk; workers split by day.
-            if all_notifications:
-                chunk_base = base_filter_parts[:]
-            else:
-                time_filter = "timestamp:>={} timestamp:<{}".format(chunk_from, chunk_to)
-                chunk_base = base_filter_parts + [time_filter]
+                # For action_notify: pass time range in base filter; workers split by resource type.
+                # For all_notifications: pass time range to run_chunk; workers split by day.
+                if all_notifications:
+                    chunk_base = base_filter_parts[:]
+                else:
+                    time_filter = "timestamp:>={} timestamp:<{}".format(chunk_from, chunk_to)
+                    chunk_base = base_filter_parts + [time_filter]
 
-            count_tracker[0] = 0
-            run_chunk(
-                endpoint, headers, chunk_base, resource_type_ids,
-                chunk_from, chunk_to, page_size, workers,
-                chunk_label, idx, len(chunks),
-                all_notifications=all_notifications,
-                request_timeout=timeout, max_retries=retries, write_fn=stream_write
-            )
+                worker_filter_note = "+ timestamp per worker" if all_notifications \
+                    else ("+ resourceTypeId per worker" if resource_type_ids else "")
+                print("  Filter          : {}{}".format(
+                    chunk_base, "  ({})".format(worker_filter_note) if worker_filter_note else ""))
 
-            csvfile.flush()
-            chunk_count = count_tracker[0]
-            total_written += chunk_count
-            completed_chunks[chunk_key] = chunk_count
-            checkpoint_data['completed'].append({'chunk': chunk_key, 'count': chunk_count})
-            with open(checkpoint_path, 'w') as f:
-                json.dump(checkpoint_data, f, indent=2)
+                count_tracker[0] = 0
+                run_chunk(
+                    endpoint, headers, chunk_base, resource_type_ids,
+                    chunk_from, chunk_to, page_size, workers,
+                    chunk_label, idx, len(chunks),
+                    all_notifications=all_notifications,
+                    request_timeout=timeout, max_retries=retries, write_fn=stream_write
+                )
 
-            run_elapsed = time.time() - script_start
-            chunks_remaining = len(chunks) - idx
-            rate_chunks = idx / run_elapsed if run_elapsed > 0 else 0
-            eta_secs = chunks_remaining / rate_chunks if rate_chunks > 0 else 0
-            print("  Chunk {}/{} done: {:,} rows  |  total: {:,}  |  elapsed: {}  |  ETA: {}".format(
-                idx, len(chunks), chunk_count, total_written,
-                fmt_duration(run_elapsed),
-                fmt_duration(eta_secs) if chunks_remaining > 0 else "done"))
+                csvfile.flush()
+                chunk_count = count_tracker[0]
+                total_written += chunk_count
+                completed_chunks[chunk_key] = chunk_count
+                checkpoint_data['completed'].append({'chunk': chunk_key, 'count': chunk_count})
+                with open(checkpoint_path, 'w') as f:
+                    json.dump(checkpoint_data, f, indent=2)
 
-        csvfile.close()
+                run_elapsed = time.time() - script_start
+                chunks_remaining = len(chunks) - idx
+                rate_chunks = idx / run_elapsed if run_elapsed > 0 else 0
+                eta_secs = chunks_remaining / rate_chunks if rate_chunks > 0 else 0
+                print("  Chunk {}/{} done: {:,} rows  |  total: {:,}  |  elapsed: {}  |  ETA: {}".format(
+                    idx, len(chunks), chunk_count, total_written,
+                    fmt_duration(run_elapsed),
+                    fmt_duration(eta_secs) if chunks_remaining > 0 else "done"))
+        finally:
+            csvfile.close()
 
         if len(completed_chunks) == len(chunks) and os.path.exists(checkpoint_path):
             os.remove(checkpoint_path)
@@ -613,7 +653,11 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
 
     print("\nFetching {} for the {}...".format(notification_mode, window_label))
     print("  Actor filter    : {}".format(actor_desc))
-    print("  CSP / types     : {}\n".format(csp_desc))
+    print("  CSP / types     : {}".format(csp_desc))
+    worker_filter_note = "+ resourceTypeId per worker" if resource_type_ids else ""
+    print("  Filter          : {}{}".format(
+        relative_filter_parts, "  ({})".format(worker_filter_note) if worker_filter_note else ""))
+    print()
 
     all_items = run_chunk(
         endpoint, headers, relative_filter_parts, resource_type_ids,
@@ -658,7 +702,7 @@ def activity_ledger_export(config_file, profile, days, hours, from_date, to_date
 
 
 if __name__ == "__main__":
-    if sys.version_info > (3, 4):
+    if sys.version_info >= (3, 5):
         try:
             activity_ledger_export()
         except Exception as e:

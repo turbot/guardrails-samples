@@ -4,7 +4,7 @@ Exports Turbot notifications to a CSV file. Bypasses the 30-day / 5,000-row limi
 
 Two modes:
 
-- **Action notifications only** (default) — the Activity Ledger: enforcement actions taken by Turbot. Typically hundreds to low thousands per day. Parallelized by CSP root type.
+- **Action notifications only** (default) — the Activity Ledger: enforcement actions taken by Turbot. Typically hundreds to low thousands per day. Without `--csp`, uses a single worker with no resource type filter. With `--csp`, parallelizes one worker per specified platform.
 - **All notification types** (`--all-notifications`) — resource discoveries, control evaluations, policy changes, and enforcement actions combined. Typically hundreds of thousands per day. Parallelized by calendar day.
 
 ## Prerequisites
@@ -55,9 +55,9 @@ python3 activity_ledger_export.py --days 90
 | `--actor-id` | Filter by a specific actor identity ID. Defaults to the Turbot Identity for the workspace (action_notify mode only). |
 | `--all-actors` | Include activity from all actors, not just Turbot Identity. |
 | `--all-notifications` | Export all notification types (resource, control, policy, action). Default: action_notify only. Uses date-based parallel workers; `--csp`/`--resource-type` are ignored. |
-| `--csp` | Limit to a specific platform: `aws`, `azure`, `azure-ad`, `gcp`, `kubernetes`, `servicenow`, `github`. Ignored with `--all-notifications`. |
+| `--csp` | Limit to one or more platforms: `aws`, `azure`, `azure-ad`, `gcp`, `kubernetes`, `servicenow`, `github`. Without this flag, all platforms are included with no resource type filter. |
 | `--resource-type` | Filter by resource type IDs, comma-separated. Overrides `--csp`. Ignored with `--all-notifications`. |
-| `--workers` | Parallel workers. For action_notify: one per CSP type (default 7). For `--all-notifications`: one per day per chunk (default 7). |
+| `--workers` | Parallel workers. For action_notify with `--csp`: one per platform (default 7). For `--all-notifications`: one per day per chunk (default 7). |
 | `--page-size` | Number of notifications per API request. Default: `500`. |
 | `--timeout` | Per-request HTTP timeout in seconds. Default: `120`. |
 | `--retries` | Max retries per request on transient errors (429/502/503/504/timeout). Default: `5`. |
@@ -77,6 +77,20 @@ Auto-splits into 7-day chunks and streams rows directly to the CSV file. The Tur
 
 ```shell
 python3 activity_ledger_export.py --days 90 --csp aws
+```
+
+#### Last 90 days, multiple platforms
+
+```shell
+python3 activity_ledger_export.py --days 90 --csp aws --csp azure --csp gcp
+```
+
+#### Filter by specific resource type IDs
+
+```shell
+python3 activity_ledger_export.py \
+  --from-date 2026-01-01 --to-date 2026-03-31 \
+  --resource-type 'tmod:@turbot/aws-s3#/resource/types/bucket,tmod:@turbot/aws-ec2#/resource/types/instance'
 ```
 
 #### Last 90 days, all actors (Turbot + human users)
@@ -135,8 +149,15 @@ python3 activity_ledger_export.py \
 | `resource_trunk` | Full resource hierarchy path (e.g. `Turbot > Org > Account > Region > Bucket`). |
 | `detail_link` | Direct link to the notification in the Guardrails UI. |
 
+## Row count vs. Guardrails console
+
+The row count in the exported CSV may differ from `metadata.stats.total` shown in the GraphQL console for the same filter. This is expected and the CSV is correct.
+
+`metadata.stats.total` is a DB-side count estimate that does not reliably match what the cursor actually returns — it can be higher or lower than the paginated count depending on the workspace. The script paginates until `paging.next` returns null (confirmed by a partial final page), meaning it retrieved everything the API will serve. The discrepancy is an API-side characteristic of `metadata.stats.total`, not a script limitation.
+
 ## Performance notes
 
-- **action_notify**: ~250–2,000 notifications per day in a large workspace. A 90-day run typically completes in 10–30 minutes.
+- **action_notify (no `--csp`)**: single worker, no resource type filter. Volume varies widely by workspace activity — from hundreds to tens of thousands per day.
+- **action_notify (with `--csp`)**: one parallel worker per specified platform, each filtered to that CSP's root resource type.
 - **All notifications**: ~600K–800K per day in a large workspace. A 90-day run takes ~11 hours at 7 parallel workers. Each day is ~250 MB uncompressed CSV.
 - The API has a ~90-day retrieval window. Queries for older data will return 0 rows even if the count metadata shows records.
