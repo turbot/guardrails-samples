@@ -11,83 +11,66 @@ CSP_RESOURCE_TYPES = {
     'gcp': "tmod:@turbot/gcp#/resource/types/gcp",
 }
 
-
-@click.command()
-@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
-@click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
-@click.option('--csp', default="aws", type=click.Choice(['aws', 'azure', 'gcp'], case_sensitive=False), help="[String] Cloud service provider. Default: aws.")
-@click.option('--state', default="active", help="[String] Control states to include, comma-delimited. Default: active. e.g. alarm,error,invalid")
-@click.option('-s', '--sort', default="-total", help="[String] Sort order for results. Default: -total (descending by total).")
-@click.option('-l', '--limit', default=100, type=int, help="[Int] Maximum number of resource types to return.")
-@click.option('-o', '--output', default="control_summaries.csv", help="[String] Output CSV file path.")
-def control_summaries_by_resource_type(config_file, profile, csp, state, sort, limit, output):
-    """Queries control summaries grouped by resource type and exports results to CSV."""
-
-    resource_type_id = CSP_RESOURCE_TYPES[csp.lower()]
-    filter = "resourceTypeId:'{}' state:{}".format(resource_type_id, state)
-
-    config = turbot.Config(config_file, profile)
-    headers = {'Authorization': 'Basic {}'.format(config.auth_token)}
-    endpoint = config.graphql_endpoint
-
-    query = '''
-      query ControlSummariesByResourceType($filter: [String!], $paging: String) {
-        controlSummaries: controlSummariesByResourceType(
-          filter: $filter
-          paging: $paging
-        ) {
-          metadata {
-            stats {
-              control {
-                total
-              }
-            }
+QUERY = '''
+  query ControlSummariesByResourceType($filter: [String!], $paging: String) {
+    controlSummaries: controlSummariesByResourceType(
+      filter: $filter
+      paging: $paging
+    ) {
+      metadata {
+        stats {
+          control {
+            total
           }
-          items {
-            mode: type {
-              uri
-              trunk {
-                title
-                items {
-                  turbot {
-                    id
-                    title
-                  }
-                }
-              }
+        }
+      }
+      items {
+        mode: type {
+          uri
+          trunk {
+            title
+            items {
               turbot {
                 id
                 title
               }
             }
-            summary {
-              control {
-                total
-                alarm
-                invalid
-                error
-                ok
-                skipped
-                tbd
-              }
-            }
           }
-          paging {
-            next
+          turbot {
+            id
+            title
+          }
+        }
+        summary {
+          control {
+            total
+            alarm
+            invalid
+            error
+            ok
+            skipped
+            tbd
           }
         }
       }
-    '''
+      paging {
+        next
+      }
+    }
+  }
+'''
 
+
+def fetch_pages(endpoint, headers, filter_str, sort, limit):
+    """Fetch resource type control summaries, paging through all results up to limit."""
     items = []
     paging = None
-    filter_parts = ["sort:{} limit:{}".format(sort, limit), filter]
-
-    print("Looking for control summaries...")
+    filter_parts = ["sort:{} limit:{}".format(sort, limit), filter_str]
+    first_page = True
 
     while True:
         variables = {'filter': filter_parts, 'paging': paging}
-        result = run_query(endpoint, headers, query, variables)
+        result = run_query(endpoint, headers, QUERY, variables)
 
         if "errors" in result:
             for error in result['errors']:
@@ -96,7 +79,8 @@ def control_summaries_by_resource_type(config_file, profile, csp, state, sort, l
 
         data = result['data']['controlSummaries']
 
-        if not items and data.get('metadata', {}).get('stats', {}).get('control', {}).get('total'):
+        if first_page and data.get('metadata', {}).get('stats', {}).get('control', {}).get('total'):
+            first_page = False
             total = data['metadata']['stats']['control']['total']
             print("Total controls matching filter: {}".format(total))
 
@@ -107,38 +91,75 @@ def control_summaries_by_resource_type(config_file, profile, csp, state, sort, l
 
         if len(items) >= limit or not data['paging']['next']:
             break
-        else:
-            print("{} resource types found...".format(len(items)))
-            paging = data['paging']['next']
+        paging = data['paging']['next']
 
-    items = items[:limit]
+    return items[:limit]
 
-    print("\nFound {} resource type(s)".format(len(items)))
 
-    if not items:
+def build_row(item, level, parent_title):
+    controls = item['summary']['control']
+    trunk_titles = " > ".join(
+        t['turbot']['title'] for t in item['mode']['trunk']['items']
+    ) if item['mode']['trunk']['items'] else ""
+    return {
+        'level': level,
+        'parent_resource_type': parent_title or '',
+        'resource_type_title': item['mode']['turbot']['title'],
+        'resource_type_uri': item['mode']['uri'],
+        'resource_type_id': item['mode']['turbot']['id'],
+        'trunk': trunk_titles,
+        'total': controls['total'],
+        'ok': controls['ok'],
+        'alarm': controls['alarm'],
+        'error': controls['error'],
+        'invalid': controls['invalid'],
+        'tbd': controls['tbd'],
+        'skipped': controls['skipped'],
+    }
+
+
+@click.command()
+@click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
+@click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
+@click.option('--csp', default="aws", type=click.Choice(['aws', 'azure', 'gcp'], case_sensitive=False), help="[String] Cloud service provider. Default: aws.")
+@click.option('--state', default="active", help="[String] Control states to include, comma-delimited. Default: active. e.g. alarm,error,invalid")
+@click.option('-s', '--sort', default="-total", help="[String] Sort order for results. Default: -total (descending by total).")
+@click.option('-l', '--limit', default=100, type=int, help="[Int] Maximum number of parent resource types to return.")
+@click.option('-o', '--output', default="control_summaries.csv", help="[String] Output CSV file path.")
+def control_summaries_by_resource_type(config_file, profile, csp, state, sort, limit, output):
+    """Queries control summaries grouped by resource type, with child breakdown, and exports to CSV."""
+
+    resource_type_id = CSP_RESOURCE_TYPES[csp.lower()]
+    parent_filter = "resourceTypeId:'{}' state:{}".format(resource_type_id, state)
+
+    config = turbot.Config(config_file, profile)
+    headers = {'Authorization': 'Basic {}'.format(config.auth_token)}
+    endpoint = config.graphql_endpoint
+
+    print("Looking for control summaries...")
+    parents = fetch_pages(endpoint, headers, parent_filter, sort, limit)
+
+    print("\nFound {} resource type(s), fetching children...".format(len(parents)))
+
+    if not parents:
         print("No results to export.")
         return
 
     rows = []
-    for item in items:
-        controls = item['summary']['control']
-        trunk_titles = " > ".join(
-            t['turbot']['title'] for t in item['mode']['trunk']['items']
-        ) if item['mode']['trunk']['items'] else ""
-        rows.append({
-            'resource_type_title': item['mode']['turbot']['title'],
-            'resource_type_uri': item['mode']['uri'],
-            'resource_type_id': item['mode']['turbot']['id'],
-            'trunk': trunk_titles,
-            'total': controls['total'],
-            'ok': controls['ok'],
-            'alarm': controls['alarm'],
-            'error': controls['error'],
-            'invalid': controls['invalid'],
-            'tbd': controls['tbd'],
-            'skipped': controls['skipped'],
-        })
+    for parent in parents:
+        parent_uri = parent['mode']['uri']
+        parent_title = parent['mode']['turbot']['title']
 
+        rows.append(build_row(parent, level='parent', parent_title=None))
+
+        child_filter = "resourceTypeId:'{}' state:{}".format(parent_uri, state)
+        children = fetch_pages(endpoint, headers, child_filter, sort, 500)
+        children = [c for c in children if c['mode']['uri'] != parent_uri]
+
+        for child in children:
+            rows.append(build_row(child, level='child', parent_title=parent_title))
+
+    # --- terminal table ---
     table_columns = ['resource_type_title', 'total', 'ok', 'alarm', 'error', 'invalid', 'tbd', 'skipped']
     col_headers = {
         'resource_type_title': 'Resource Type',
@@ -150,12 +171,21 @@ def control_summaries_by_resource_type(config_file, profile, csp, state, sort, l
         'tbd': 'TBD',
         'skipped': 'Skipped',
     }
+
+    # Build display labels: children are indented with "  " prefix
+    display_labels = []
+    for row in rows:
+        if row['level'] == 'child':
+            display_labels.append("  " + row['resource_type_title'])
+        else:
+            display_labels.append(row['resource_type_title'])
+
     col_widths = {}
     for col in table_columns:
-        col_widths[col] = max(
-            len(col_headers[col]),
-            max(len(str(row[col])) for row in rows)
-        )
+        if col == 'resource_type_title':
+            col_widths[col] = max(len(col_headers[col]), max(len(lbl) for lbl in display_labels))
+        else:
+            col_widths[col] = max(len(col_headers[col]), max(len(str(row[col])) for row in rows))
 
     header_line = "  ".join(col_headers[col].ljust(col_widths[col]) if col == 'resource_type_title'
                             else col_headers[col].rjust(col_widths[col])
@@ -164,13 +194,16 @@ def control_summaries_by_resource_type(config_file, profile, csp, state, sort, l
 
     print("\n{}".format(header_line))
     print(separator)
-    for row in rows:
-        line = "  ".join(str(row[col]).ljust(col_widths[col]) if col == 'resource_type_title'
+    for row, label in zip(rows, display_labels):
+        line = "  ".join(label.ljust(col_widths['resource_type_title']) if col == 'resource_type_title'
                          else str(row[col]).rjust(col_widths[col])
                          for col in table_columns)
         print(line)
 
+    # --- CSV ---
     csv_columns = [
+        'level',
+        'parent_resource_type',
         'resource_type_title',
         'resource_type_uri',
         'resource_type_id',
