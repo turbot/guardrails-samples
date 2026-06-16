@@ -42,6 +42,26 @@ python <script>.py
 
 The `turbot` package under `guardrails_utilities/python_utils/turbot/` is installed via `pip install -e .` (setuptools).
 
+### Account offboarding (remove an AWS account from a workspace)
+
+When an AWS account cannot be deleted directly from the Guardrails console, use
+`guardrails_utilities/python_utils/remove_aws_account/delete_resources.py` — the canonical
+offboarding tool. It authenticates via a `~/.config/turbot/credentials.yml` profile (`-p`) and
+targets an account by AKA (`-a "arn:aws:::<accountId>"`). Run it **staged**, never as one bulk delete:
+
+```bash
+cd guardrails_utilities/python_utils/remove_aws_account
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>"               # 1. check (no writes)
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>" --disable     # 2. disable CMDB → wait ~1h
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>" --delete      # 3. delete leftover resources
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>" --delete-acct # 4. delete the account
+```
+
+Validate resource/control counts before and between stages (console or GraphQL). The optional
+`main.tf` in that dir removes Turbot event handlers — apply it only if the account stays live.
+The operator wrapper that resolves the target, maps the workspace host to a profile, and gates each
+destructive stage lives in the `ops` repo skill `offboard-aws-account`.
+
 ### Tests (pytest)
 
 ```bash
@@ -72,3 +92,44 @@ node index.js
 - **Terraform resources** use the `turbot` provider — primary resource types are `turbot_policy_pack`, `turbot_policy_setting`, `turbot_policy_value`, `turbot_mod`, `turbot_folder`, `turbot_smart_folder`, and `turbot_local_directory_user`.
 - **Policy packs** follow a consistent structure: `main.tf` (pack + policy settings), `providers.tf` (provider config), `variables.tf` (input variables), optional `README.md`.
 - **GraphQL queries** interact with the Guardrails API for controls, resources, policies, and notifications — typically using cursor-based paging.
+
+## Calculated Policies
+
+Any policy in Guardrails can be **calculated** instead of set to a static value: its value is computed at runtime from CMDB data. A calculated policy is a two-stage pipeline:
+
+1. **GraphQL input query** — pulls data from the CMDB. In the console this is "Step 2"; in Terraform it is the `template_input` attribute on a `turbot_policy_setting`.
+2. **Nunjucks (Jinja2-style) template** — transforms the query result into the value the policy type expects. In the console this is "Step 3"; in Terraform it is the `template` attribute.
+
+### Terraform shape
+
+```hcl
+resource "turbot_policy_setting" "example" {
+  resource       = turbot_policy_pack.main.id
+  type           = "tmod:@turbot/aws-s3#/policy/types/bucketTagsTemplate"
+  template_input = <<-EOT
+    { resource { metadata } }
+  EOT
+  template       = <<-EOT
+    {{ ... nunjucks ... }}
+  EOT
+}
+```
+
+### Conventions used in this repo
+
+- **`$.` prefix** — inside the template, query results are addressed from the root as `$.resource.metadata`, `$.bucket.tags`, etc. Aliases in the query (`item: function { ... }`) become `$.item`.
+- **Context pivots** — in a calc policy the GraphQL is a *super-set* of the API: `resource` / `bucket` / `function` pivot to *the resource being evaluated*, and `account`, `region`, and `folder` pivot to ancestors of that resource in the hierarchy. No IDs needed.
+- **`get(path: "...")`** — escape hatch to read CMDB attributes not in the schema, e.g. `grantee: get(path: "Acl.Grants[0].Grantee")`.
+- **Approved/Check policies** — `*ApprovedCustom` / `*Custom` templates must emit a `{ "title", "result", "message" }` object rendered with `{{ data | json }}`. Valid `result` values include `Approved`, `Not approved`, `Skip`.
+- **Tags templates** — `*TagsTemplate` policies emit a YAML/JSON map of `key: value`; emit `[]` when there is nothing to set.
+- **`-%}` / `{%-` whitespace trimming** is used heavily to keep rendered output clean.
+
+### Reference examples in the repo (simple → complex)
+
+- `policy_packs/aws/s3/enforce_creator_and_creationtime_tags_for_buckets/policies.tf` — tag template from `metadata`.
+- `policy_packs/aws/lambda/enforce_functions_use_approved_tags/policies.tf` — conditional approval over a required-tag list.
+- `policy_packs/aws/vpc/enforce_vpcs_have_transit_gateways_attached/policies.tf` — aggregation over `descendants` (the canonical "complex" example).
+
+### Teaching / training material
+
+`training/calc-policies/` contains a 2-hour training runbook, an authoring guide, and a simple→complex worked-example ladder. The hands-on console flow is the `calc-policy` 7-minute lab in the `guardrails-docs` repo.
