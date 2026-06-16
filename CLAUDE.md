@@ -42,6 +42,26 @@ python <script>.py
 
 The `turbot` package under `guardrails_utilities/python_utils/turbot/` is installed via `pip install -e .` (setuptools).
 
+### Account offboarding (remove an AWS account from a workspace)
+
+When an AWS account cannot be deleted directly from the Guardrails console, use
+`guardrails_utilities/python_utils/remove_aws_account/delete_resources.py` — the canonical
+offboarding tool. It authenticates via a `~/.config/turbot/credentials.yml` profile (`-p`) and
+targets an account by AKA (`-a "arn:aws:::<accountId>"`). Run it **staged**, never as one bulk delete:
+
+```bash
+cd guardrails_utilities/python_utils/remove_aws_account
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>"               # 1. check (no writes)
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>" --disable     # 2. disable CMDB → wait ~1h
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>" --delete      # 3. delete leftover resources
+python3 delete_resources.py -p <profile> -a "arn:aws:::<acct>" --delete-acct # 4. delete the account
+```
+
+Validate resource/control counts before and between stages (console or GraphQL). The optional
+`main.tf` in that dir removes Turbot event handlers — apply it only if the account stays live.
+The operator wrapper that resolves the target, maps the workspace host to a profile, and gates each
+destructive stage lives in the `ops` repo skill `offboard-aws-account`.
+
 ### Tests (pytest)
 
 ```bash
