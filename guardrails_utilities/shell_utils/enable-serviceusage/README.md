@@ -46,8 +46,9 @@ To run the script, you must have:
 
 --service (Optional)
 
-> [String] The service to enable.
+> [String] Comma-separated list of one or more services to enable.
 > Defaults to `serviceusage.googleapis.com`.
+> Example: `serviceusage.googleapis.com,orgpolicy.googleapis.com`.
 
 --dry-run (Optional)
 
@@ -83,6 +84,13 @@ To run the script, you must have:
 
 ```shell
 ./enable-serviceusage.sh --org-id 123456789012 --service compute.googleapis.com --dry-run false
+```
+
+#### Example 4: Enable multiple services at once
+
+```shell
+./enable-serviceusage.sh --org-id 123456789012 \
+  --service serviceusage.googleapis.com,orgpolicy.googleapis.com --dry-run false
 ```
 
 ## Notes

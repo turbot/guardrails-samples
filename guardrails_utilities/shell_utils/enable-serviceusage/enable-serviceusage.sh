@@ -12,7 +12,7 @@ function displayHelp {
     echo "Mandatory arguments"
     echo "  --org-id: the numeric GCP organization ID whose projects will be processed"
     echo "Optional arguments"
-    echo "  --service: the service to enable (serviceusage.googleapis.com)"
+    echo "  --service: comma-separated service(s) to enable (serviceusage.googleapis.com)"
     echo "  --dry-run: when 'true' only lists projects, when 'false' enables the service (true)"
     echo "  --skip-system: skip projects whose lifecycle state is not ACTIVE (true)"
     echo "  --help: lists all the options and their usages"
@@ -189,6 +189,10 @@ function main {
         exit 0
     fi
 
+    # --service may be a comma-separated list; gcloud services enable accepts
+    # multiple services as separate arguments, so turn commas into spaces.
+    local SERVICES="${SERVICE//,/ }"
+
     local TOTAL=0
     local SUCCEEDED=0
     local FAILED=0
@@ -213,7 +217,7 @@ function main {
         fi
 
         echo "[INFO] Enabling ${SERVICE} on ${PROJECT_ID}"
-        if gcloud services enable "${SERVICE}" --project="${PROJECT_ID}" 2>/tmp/enable_err_$$
+        if gcloud services enable ${SERVICES} --project="${PROJECT_ID}" 2>/tmp/enable_err_$$
         then
             echo "[INFO]    Enabled on ${PROJECT_ID}"
             let "SUCCEEDED += 1"
