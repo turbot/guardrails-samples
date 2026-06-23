@@ -23,6 +23,39 @@ function displayHelp {
     echo "  (roles/serviceusage.serviceUsageAdmin or equivalent)."
 }
 
+# Collect the organization ID plus every folder ID beneath it (recursively),
+# one per line on stdout. Projects can be nested in folders to any depth, so a
+# simple `parent.id=<org>` filter is not enough — we must know every parent
+# container in the org's hierarchy. This walks folders only (far fewer than
+# projects) and needs no Cloud Asset API.
+function collectParentIds {
+    local ORG_ID=$1
+
+    echo "${ORG_ID}"
+
+    local QUEUE
+    QUEUE=$(gcloud resource-manager folders list --organization=${ORG_ID} \
+        --format="value(name)" 2>/dev/null)
+
+    while [[ -n ${QUEUE} ]]
+    do
+        local NEXT=""
+        local FOLDER
+        for FOLDER in ${QUEUE}
+        do
+            echo "${FOLDER}"
+            local SUB
+            SUB=$(gcloud resource-manager folders list --folder=${FOLDER} \
+                --format="value(name)" 2>/dev/null)
+            if [[ -n ${SUB} ]]
+            then
+                NEXT="${NEXT} ${SUB}"
+            fi
+        done
+        QUEUE="${NEXT}"
+    done
+}
+
 function main {
     local SERVICE="serviceusage.googleapis.com"
     local DRY_RUN=true
@@ -126,20 +159,33 @@ function main {
         exit 3
     fi
 
+    echo "[INFO] Mapping the folder hierarchy under organization ${ORG_ID}"
+
+    # Build the set of every parent container (org + all nested folders) so we
+    # can match projects at any depth, not just direct org children.
+    local PARENT_IDS
+    PARENT_IDS=$(collectParentIds "${ORG_ID}")
+    local PARENT_COUNT
+    PARENT_COUNT=$(echo "${PARENT_IDS}" | grep -c .)
+    echo "[INFO] Found ${PARENT_COUNT} container(s) (organization + folders)"
+
     echo "[INFO] Listing projects under organization ${ORG_ID}"
 
-    # Resolve every project in the organization. gcloud paginates automatically
-    # when --format streams; we capture id and lifecycle state as TSV.
+    # List every project the caller can see (with its direct parent id), then
+    # keep only those whose parent is the org or one of its folders. One project
+    # list call + a local join avoids a slow per-folder query and the Cloud Asset
+    # API (which needs a usable quota project).
     local PROJECTS_TSV
-    PROJECTS_TSV=$(gcloud projects list \
-        --filter="parent.id=${ORG_ID} AND parent.type=organization" \
-        --format="value(projectId,lifecycleState)" 2>/dev/null)
+    PROJECTS_TSV=$(echo "${PARENT_IDS}" | awk '
+        NR==FNR { if ($0 != "") ids[$0]=1; next }
+        ($2 in ids) { print $1"\t"$3 }
+    ' - <(gcloud projects list --format="value(projectId,parent.id,lifecycleState)" 2>/dev/null))
 
     if [[ -z ${PROJECTS_TSV} ]]
     then
-        echo "[WARN] No projects found directly under organization ${ORG_ID}." >&2
-        echo "[WARN] Projects nested in folders are not returned by a parent.id filter." >&2
-        echo "[WARN] Consider 'gcloud asset search-all-resources' for a full org-wide list." >&2
+        echo "[WARN] No projects found under organization ${ORG_ID}." >&2
+        echo "[WARN] Check that you have resourcemanager.projects.list permission and" >&2
+        echo "[WARN] that the organization ID is correct." >&2
         exit 0
     fi
 
