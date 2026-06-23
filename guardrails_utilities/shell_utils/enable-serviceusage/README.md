@@ -87,11 +87,13 @@ To run the script, you must have:
 
 ## Notes
 
-- A `parent.id` filter on `gcloud projects list` returns projects whose **direct
-  parent** is the organization. Projects nested inside **folders** are not
-  returned. For a fully org-wide sweep including folder-nested projects, use
-  [`gcloud asset search-all-resources`](https://cloud.google.com/sdk/gcloud/reference/asset/search-all-resources)
-  with `--scope=organizations/<ORG_ID>` and adapt the loop. The script warns when
-  the direct-parent query returns nothing.
+- The script discovers projects at **any depth** in the org. It walks the
+  organization's folder tree (folders only, via `gcloud resource-manager folders
+  list`) to build the full set of parent containers, then filters the project
+  list locally by parent id. This covers folder-nested projects that a plain
+  `parent.id=<org>` filter would miss, and avoids the Cloud Asset API (which
+  requires a usable quota project).
+- It only sees projects the **authenticated account has permission to list**.
+  Projects in the org that the caller cannot access are silently absent.
 - Enabling a service is idempotent — re-running on a project that already has the
   API enabled is a no-op.
