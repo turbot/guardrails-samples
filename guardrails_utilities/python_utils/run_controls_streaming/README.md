@@ -41,7 +41,7 @@ To run the scripts, you must have:
 
 ## Setup
 
-This sections details how to set up an environment in order to run the script.
+This section details how to set up an environment in order to run the script.
 
 ### Virtual environments activation
 
