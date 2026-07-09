@@ -69,7 +69,7 @@ pip3 install -r requirements.txt
 
 ### Turbot configuration
 
-Credentials and end point details need to be configure before being able to connect to a Turbot installation.
+Credentials and endpoint details need to be configured before being able to connect to a Turbot installation.
 This configuration can be entered either using environment variables or a configuration file.
 
 #### Environment variables
