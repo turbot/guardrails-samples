@@ -105,7 +105,7 @@ This script will automatically search for a `credentials.yml` file in `~/.config
 
 ## Executing the script
 
-To run a the Python script:
+To run the Python script:
 
 1. Install and configure the [pre-requisites](#prerequisites)
 1. Using the command line, navigate to the directory for the Python script
