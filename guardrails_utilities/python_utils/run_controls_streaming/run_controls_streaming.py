@@ -77,10 +77,10 @@ def graphql(session, endpoint_url, headers, query, variables):
 @click.option('-c', '--config-file', type=click.Path(dir_okay=False), help="[String] Pass an optional yaml config file.")
 @click.option('-p', '--profile', default="default", help="[String] Profile to be used from config file.")
 @click.option('-f', '--filter', default="state:tbd", help="[String] Used to filter out matching controls.")
-@click.option('-b', '--batch', default=100, help="[Int] Page size, and the number of controls to run before cooldown per cycle.")
-@click.option('-d', '--cooldown', default=120, help="[Int] Number of seconds to pause between batches. Setting this value to `0` will disable cooldown.")
-@click.option('-m', '--max-controls', default=-1, help="[Int] Maximum number of controls to run before stopping. The value `-1` runs until the filter is drained.")
-@click.option('--max-passes', default=-1, help="[Int] Maximum number of passes over the filter. The value `-1` keeps passing until a pass finds no new controls.")
+@click.option('-b', '--batch', default=100, type=click.IntRange(min=1), help="[Int] Page size, and the number of controls to run before cooldown per cycle.")
+@click.option('-d', '--cooldown', default=120, type=click.IntRange(min=0), help="[Int] Number of seconds to pause between batches. Setting this value to `0` will disable cooldown.")
+@click.option('-m', '--max-controls', default=-1, type=click.IntRange(min=-1), help="[Int] Maximum number of controls to run before stopping. The value `-1` runs until the filter is drained.")
+@click.option('--max-passes', default=-1, type=click.IntRange(min=-1), help="[Int] Maximum number of passes over the filter. The value `-1` keeps passing until a pass finds no new controls.")
 @click.option('-e', '--execute', is_flag=True, help="Will re-run controls when found.")
 @click.option('-i', '--insecure', is_flag=True, help="Disable SSL certificate verification.")
 def run_controls(config_file, profile, filter, batch, cooldown, max_controls, max_passes, execute, insecure):
@@ -188,11 +188,12 @@ def run_controls(config_file, profile, filter, batch, cooldown, max_controls, ma
                 try:
                     result = graphql(session, endpoint_url, headers, RUN_MUTATION,
                                      {'input': {'id': control_id}})
-                    if result.get('runControl') is None:
+                    run_control = result.get('runControl') or {}
+                    process_id = (run_control.get('turbot') or {}).get('id')
+                    if process_id is None:
                         print(f"Skipping control ID {control_id} due to missing mutation data.")
                         skipped_controls += 1
                         continue
-                    process_id = result['runControl']['turbot']['id']
                     print(f'{{"controlId": "{control_id}", "processId": "{process_id}"}}')
                     triggered_controls += 1
                 except RuntimeError as e:
