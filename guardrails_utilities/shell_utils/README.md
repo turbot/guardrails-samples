@@ -16,6 +16,8 @@ And run the example:
 
 ### Available scripts
 
-| Title                                          | Description                                         |
-| ---------------------------------------------- | --------------------------------------------------- |
-| [AWS Account Import](./run-controls/README.md) | Run controls based on some filter using BASH shell. |
+| Title                                      | Description                                                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------ |
+| [Run Controls](./run-controls/README.md)   | Run controls based on some filter using BASH shell.                                   |
+| [Turbot AWS](./turbot-aws/README.md)       | Use the AWS CLI with multiple Turbot-managed accounts via Guardrails credentials.     |
+| [Turbot Events](./turbot-events/README.md) | Pause/resume Guardrails event processing by toggling SQS triggers for a TE version.   |
