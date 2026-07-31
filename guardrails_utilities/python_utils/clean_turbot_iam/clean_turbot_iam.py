@@ -329,6 +329,12 @@ def clean(profile, config_file, role_name, external_id, account, region, execute
             failed.append(acct['id'])
         print()
 
+    if denied:
+        with open("access_err.log", "w") as f:
+            for account_id, title, error in denied:
+                f.write("{}  {}\n    {}\n".format(account_id, title, error))
+        print("Wrote {} role assumption failures to access_err.log".format(len(denied)))
+
     if check_access:
         print("Checked {} accounts, {} failed role assumption".format(len(accounts), len(denied)))
         for account_id, title, error in denied:

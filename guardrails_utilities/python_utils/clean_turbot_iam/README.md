@@ -74,3 +74,6 @@ python clean_turbot_iam.py --check-access
   skips it rather than removing the boundary.
 - Accounts where the role assumption or any IAM call fails are reported at the
   end and the script exits non-zero.
+- In any mode, accounts where role assumption failed are also written to
+  `access_err.log` in the current directory (one entry per account with the
+  AWS error text). The file is only created when there is at least one failure.
