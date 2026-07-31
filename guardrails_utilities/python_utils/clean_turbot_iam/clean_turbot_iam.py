@@ -12,7 +12,10 @@ TARGET_POLICIES = [
     ("/turbot/", "turbot_deny"),
 ]
 
-TARGET_ROLE = "turbot_config"
+TARGET_ROLES = [
+    "turbot_config",
+    "turbot_vpc_flow_logging",
+]
 
 ACCOUNTS_QUERY = '''
   query ListAccounts($filter: [String!]!, $paging: String) {
@@ -266,7 +269,8 @@ def clean_role(role_name, env, execute):
 @click.option('-a', '--account', multiple=True, help="[String] Limit run to specific account id(s). May be repeated.")
 @click.option('--region', default="us-east-1", show_default=True, help="[String] AWS region for cli calls.")
 @click.option('-e', '--execute', is_flag=True, help="Apply changes. Without this flag the script only reports what it would do.")
-def clean(profile, config_file, role_name, external_id, account, region, execute):
+@click.option('--check-access', is_flag=True, help="Only test role assumption in each account and report failures. Makes no changes, takes precedence over --execute.")
+def clean(profile, config_file, role_name, external_id, account, region, execute, check_access):
     config = turbot.Config(config_file, profile)
 
     base_env = dict(os.environ)
@@ -280,7 +284,9 @@ def clean(profile, config_file, role_name, external_id, account, region, execute
     partition = identity['Arn'].split(":")[1]
     print("Running as {} (partition: {})".format(identity['Arn'], partition))
 
-    if not execute:
+    if check_access:
+        print("\nCHECK ACCESS: only testing role assumption, no changes will be made.\n")
+    elif not execute:
         print("\nDRY RUN: no changes will be made, use --execute to apply.\n")
 
     print("Fetching accounts from {} ...".format(config.workspace))
@@ -290,6 +296,7 @@ def clean(profile, config_file, role_name, external_id, account, region, execute
     print("Found {} accounts to process\n".format(len(accounts)))
 
     failed = []
+    denied = []
     for acct in accounts:
         print("*****************************")
         print("* {} ({})".format(acct['title'], acct['id']))
@@ -299,6 +306,13 @@ def clean(profile, config_file, role_name, external_id, account, region, execute
         if not env:
             print("    ERROR assuming role: {}".format(error))
             failed.append(acct['id'])
+            denied.append((acct['id'], acct['title'], error))
+            print()
+            continue
+
+        if check_access:
+            print("    ok")
+            print()
             continue
 
         acct_ok = True
@@ -307,12 +321,22 @@ def clean(profile, config_file, role_name, external_id, account, region, execute
             if not clean_policy(policy_arn, env, execute):
                 acct_ok = False
 
-        if not clean_role(TARGET_ROLE, env, execute):
-            acct_ok = False
+        for role in TARGET_ROLES:
+            if not clean_role(role, env, execute):
+                acct_ok = False
 
         if not acct_ok:
             failed.append(acct['id'])
         print()
+
+    if check_access:
+        print("Checked {} accounts, {} failed role assumption".format(len(accounts), len(denied)))
+        for account_id, title, error in denied:
+            print("{}  {}".format(account_id, title))
+            print("    {}".format(error))
+        if denied:
+            exit(1)
+        return
 
     print("Processed {} accounts, {} with errors".format(len(accounts), len(failed)))
     if failed:

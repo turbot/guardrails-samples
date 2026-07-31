@@ -6,8 +6,9 @@ Removes legacy Turbot IAM artifacts from every AWS account in a Guardrails works
   - `arn:<partition>:iam::<account>:policy/turbot_config_policy`
   - `arn:<partition>:iam::<account>:policy/turbot/turbot_lockdown`
   - `arn:<partition>:iam::<account>:policy/turbot/turbot_deny`
-- Deletes the `turbot_config` role (if present), after detaching its managed
-  policies, deleting its inline policies, and removing it from instance profiles.
+- Deletes the `turbot_config` and `turbot_vpc_flow_logging` roles (if present),
+  after detaching their managed policies, deleting their inline policies, and
+  removing them from instance profiles.
 
 The account list comes from the Guardrails GraphQL API. IAM changes are made
 with the AWS CLI by assuming a role in each account, so valid AWS credentials
@@ -56,6 +57,13 @@ Limit to specific accounts:
 
 ```bash
 python clean_turbot_iam.py -a 123456789012 -a 210987654321 --execute
+```
+
+Check cross-account access only (tests role assumption in each account, makes
+no changes, and lists the accounts where it failed along with the AWS error):
+
+```bash
+python clean_turbot_iam.py --check-access
 ```
 
 ## Notes
