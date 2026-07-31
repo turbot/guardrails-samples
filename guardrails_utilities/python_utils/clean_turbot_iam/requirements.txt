@@ -1,0 +1,6 @@
+# Pinned for compatibility with Python 3.8.10
+click>=8.0,<8.2
+pyyaml>=5.4,<6.0.3
+requests>=2.25,<2.32.4
+xdg==5.1.1
+../turbot
