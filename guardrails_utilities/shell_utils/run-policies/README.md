@@ -91,6 +91,11 @@ To run the script:
 > [Integer] policies whether the batch run should actually run the policies when set to `false` or to simply display which policies will be run when set to `true`.
 > Default is set to true
 
+--terminate-running (Optional)
+
+> [Flag] Terminates policies that already have a running or queued process before re-running them.
+> When a batch fails because a policy's process has already started, the script falls back to running that batch's policies individually, terminating the conflicting process and retrying the run.
+
 --help
 
 > Lists all the options and their usages.
@@ -127,4 +132,12 @@ Changing the back off time to 20 seconds.
 
 ```shell
 ./run_policies.sh --filter 'state:error' --sleep-time 20
+```
+
+##### Example 5
+
+Re-run policies, terminating any that already have a running or queued process.
+
+```shell
+./run_policies.sh --filter 'state:error' --dry-run false --terminate-running
 ```
