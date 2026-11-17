@@ -14,9 +14,89 @@ function displayHelp {
     echo "  --sleep-time: time to back off between run batches in seconds (10)"
     echo "  --batch-size: the maximum size of the batch to run next (20)"
     echo "  --dry-run: policies if the actual policies should be run (false)"
+    echo "  --terminate-running: flag to terminate policies already running or queued before re-running"
     echo "Remarks"
     echo "  To list the policies to be re-run quicker then increase the batch size but note that the estimation time"
     echo "  will be calculated based on the larger batch size."
+}
+
+function terminateAndRetryPolicy {
+    local POLICY_ID=$1
+
+    echo "[INFO] Policy ${POLICY_ID} already has a running process, terminating it before re-run"
+
+    local TERMINATE_MUTATION="mutation TerminateProcess(\$input: TerminateProcessInput!) { terminateProcess(input: \$input) { turbot { id } } }"
+    local TERMINATE_VARIABLES='{ "input": { "policyValueId": '${POLICY_ID}' } }'
+    local TERMINATE_RESULT=""
+
+    if [[ -z ${PROFILE} ]]
+    then
+        TERMINATE_RESULT=$(turbot graphql --format json --query "'${TERMINATE_MUTATION}'" --variables "'${TERMINATE_VARIABLES}'")
+    else
+        TERMINATE_RESULT=$(turbot graphql --format json --query "'${TERMINATE_MUTATION}'" --variables "'${TERMINATE_VARIABLES}'" --profile "${PROFILE}")
+    fi
+
+    # The CLI returns error text instead of JSON when the mutation fails, so a parseable response
+    # containing the terminateProcess key means the terminate succeeded (its turbot payload may be null)
+    if ! echo "${TERMINATE_RESULT}" | jq -e 'has("terminateProcess")' > /dev/null 2>&1
+    then
+        echo "[INFO] Skipped policy ${POLICY_ID}, terminate failed: ${TERMINATE_RESULT}"
+        return 1
+    fi
+
+    sleep 1
+
+    local RUN_MUTATION="mutation RunPolicy(\$input: RunPolicyInput!) { runPolicy(input: \$input) { turbot { id } } }"
+    local RUN_VARIABLES='{ "input": { "id": '${POLICY_ID}' } }'
+    local RETRY_RESULT=""
+
+    if [[ -z ${PROFILE} ]]
+    then
+        RETRY_RESULT=$(turbot graphql --format json --query "'${RUN_MUTATION}'" --variables "'${RUN_VARIABLES}'")
+    else
+        RETRY_RESULT=$(turbot graphql --format json --query "'${RUN_MUTATION}'" --variables "'${RUN_VARIABLES}'" --profile "${PROFILE}")
+    fi
+
+    if ! echo "${RETRY_RESULT}" | jq -e '.runPolicy' > /dev/null 2>&1
+    then
+        echo "[INFO] Skipped policy ${POLICY_ID}, retry after terminate failed: ${RETRY_RESULT}"
+        return 1
+    fi
+
+    local PROCESS_ID=$(echo ${RETRY_RESULT} | jq -r '.runPolicy.turbot.id' 2> /dev/null)
+
+    echo "[INFO] Process \"${PROCESS_ID}\" assigned to re-run policy ${POLICY_ID} (after terminating previous process)"
+}
+
+function runSinglePolicy {
+    local POLICY_ID=$1
+
+    local RUN_MUTATION="mutation RunPolicy(\$input: RunPolicyInput!) { runPolicy(input: \$input) { turbot { id } } }"
+    local RUN_VARIABLES='{ "input": { "id": '${POLICY_ID}' } }'
+    local RUN_RESULT=""
+
+    if [[ -z ${PROFILE} ]]
+    then
+        RUN_RESULT=$(turbot graphql --format json --query "'${RUN_MUTATION}'" --variables "'${RUN_VARIABLES}'")
+    else
+        RUN_RESULT=$(turbot graphql --format json --query "'${RUN_MUTATION}'" --variables "'${RUN_VARIABLES}'" --profile "${PROFILE}")
+    fi
+
+    if echo "${RUN_RESULT}" | jq -e '.runPolicy' > /dev/null 2>&1
+    then
+        local PROCESS_ID=$(echo ${RUN_RESULT} | jq -r '.runPolicy.turbot.id' 2> /dev/null)
+        echo "[INFO] Process \"${PROCESS_ID}\" assigned to re-run policy ${POLICY_ID}"
+        return 0
+    fi
+
+    if [[ ${TERMINATE_RUNNING} == true ]] && [[ ${RUN_RESULT} == *"already started"* ]]
+    then
+        terminateAndRetryPolicy ${POLICY_ID}
+        return $?
+    fi
+
+    echo "[INFO] Skipped policy ${POLICY_ID}: ${RUN_RESULT}"
+    return 1
 }
 
 function runPolicies {
@@ -61,10 +141,26 @@ function runPolicies {
         local MUTATION_RESULT=$(turbot graphql --format json --query "'${MUTATION}'" --variables "'${VARIABLES}'" --profile "${PROFILE}")
     fi
 
+    # When any policy in the batch errors (e.g. a process is already running for it), the CLI
+    # returns the error text instead of JSON and the whole batch result is lost. With
+    # --terminate-running, fall back to running this batch's policies individually so the
+    # conflicting policies can be terminated and retried.
+    if [[ ${TERMINATE_RUNNING} == true ]] && ! echo "${MUTATION_RESULT}" | jq -e '.run0.turbot.id' > /dev/null 2>&1
+    then
+        echo "[INFO] Batch run failed (${MUTATION_RESULT}), retrying this batch's policies individually"
+
+        for (( INDEX=0; INDEX<${COLLECTION_COUNT}; INDEX++ ))
+        do
+            runSinglePolicy ${RUN_COLLECTION[${INDEX}]}
+        done
+
+        return
+    fi
+
     for (( INDEX=0; INDEX<${COLLECTION_COUNT}; INDEX++ ))
     do
         local PROCESS_ID=$(echo ${MUTATION_RESULT} | jq '.run'${INDEX}'.turbot.id')
-        echo "[INFO] Process ${PROCESS_ID} assigned to re-run control ${RUN_COLLECTION[${INDEX}]}"
+        echo "[INFO] Process ${PROCESS_ID} assigned to re-run policy ${RUN_COLLECTION[${INDEX}]}"
     done
 }
 
@@ -130,6 +226,7 @@ function main {
     local TIME_SLEEP=20000
     local BATCH_SIZE=20
     local DRY_RUN=true
+    local TERMINATE_RUNNING=false
 
     START=`date +%s`
 
@@ -195,6 +292,10 @@ function main {
                     displayHelp
                     exit 1
                 fi
+            ;;
+            --terminate-running)
+                TERMINATE_RUNNING=true
+                shift 1
             ;;
             --help)
                 displayHelp
